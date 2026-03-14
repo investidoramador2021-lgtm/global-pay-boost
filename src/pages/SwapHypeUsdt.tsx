@@ -1,6 +1,6 @@
 import SwapPairLanding from "@/components/SwapPairLanding";
 
-const SwapHypeUsdtNew = () => (
+const SwapHypeUsdt = () => (
   <SwapPairLanding
     assetA="HYPE"
     assetAName="Hyperliquid"
@@ -9,24 +9,24 @@ const SwapHypeUsdtNew = () => (
     slug="hype-usdt"
     avgSpeed="38s"
     isFeatured
-    headline={<>Instant HYPE to USDT Swap – <span className="text-gradient-neon">No Delays, Sub-Minute Settlement</span></>}
-    subHeadline="MRC GlobalPay's liquidity rails are specifically optimized for HYPE — the high-performance 2026 asset powering Hyperliquid's native L1. Sub-minute settlement. Zero confirmation delays. Direct-to-protocol bridges bypass standard exchange bottlenecks."
-    whyText="Hyperliquid (HYPE) is the standout L1 token of 2026, powering the fastest-growing perpetuals DEX. MRC GlobalPay's liquidity rails are purpose-built for high-performance assets like HYPE — our direct-to-protocol bridges bypass standard exchange withdrawal delays and network confirmation bottlenecks. Pre-funded USDT liquidity vaults ensure your swap settles in under 60 seconds with immediate on-chain finality, even during peak volatility surges."
+    headline={<>Instant HYPE to USDT Swap – <span className="text-gradient-neon">Capitalize on the $40 Breakout</span></>}
+    subHeadline="Swap HYPE to USDT instantly. Capitalize on Hyperliquid's $40 breakout with zero confirmation delays and best-in-class 2026 liquidity rails. Sub-minute settlement. Direct-to-protocol execution."
+    whyText="Hyperliquid (HYPE) is the March 2026 breakout token. Its native L1 chain delivers sub-second finality, and MRC GlobalPay matches that speed with pre-funded USDT liquidity vaults. Our 2026 liquidity architecture utilizes pre-funded vaults and direct-to-protocol routing — eliminating the 3–6 confirmation wait times common on standard exchanges. During high-volatility events when other DEXs face congestion, our direct liquidity routing guarantees execution."
     extraFaqs={[
       {
         q: "Why is MRC GlobalPay the fastest way to swap HYPE?",
-        a: "Our direct-to-protocol liquidity bridges bypass standard exchange withdrawal delays and network confirmation bottlenecks. HYPE swaps settle in under 60 seconds with zero delays via pre-funded liquidity vaults optimized for Hyperliquid's native L1 chain.",
+        a: "Our 2026 liquidity architecture utilizes pre-funded vaults and direct-to-protocol routing. This eliminates the 3–6 confirmation wait times common on standard exchanges, delivering assets to your wallet in under 60 seconds.",
       },
       {
-        q: "Can I swap HYPE to USDT instantly without confirmation delays?",
-        a: "Yes. MRC GlobalPay eliminates the standard 3-6 block confirmation wait. Our liquidity rails connect directly to protocol-level liquidity, enabling immediate settlement with zero confirmation delays — even during high-volume trading events.",
+        q: "Can I swap HYPE during high-volatility events without delays?",
+        a: "Yes. Unlike decentralized venues that experience congestion during pumps, MRC GlobalPay uses pre-funded liquidity vaults that execute regardless of on-chain congestion. Processing: under 60 seconds even during peak volatility.",
       },
       {
-        q: "Is HYPE exchange available with no confirmation delay on MRC GlobalPay?",
+        q: "Is HYPE exchange available with no confirmation delay?",
         a: "Absolutely. Our infrastructure is specifically optimized for high-performance 2026 assets like HYPE. Direct-to-protocol bridges ensure your HYPE to USDT swap instant execution with sub-minute settlement and zero delays.",
       },
     ]}
   />
 );
 
-export default SwapHypeUsdtNew;
+export default SwapHypeUsdt;
