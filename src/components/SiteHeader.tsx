@@ -1,11 +1,11 @@
 import { useState } from "react";
-import { Menu, X } from "lucide-react";
+import { Menu, X, Zap } from "lucide-react";
 import { Button } from "@/components/ui/button";
 
 const navLinks = [
   { label: "How It Works", href: "/#how-it-works" },
   { label: "Features", href: "/#features" },
-  { label: "Popular Pairs", href: "/#popular-pairs" },
+  { label: "Swap Pairs", href: "/#swap-pairs" },
   { label: "FAQ", href: "/#faq" },
 ];
 
@@ -32,8 +32,11 @@ const SiteHeader = () => {
         </nav>
 
         <div className="hidden md:block">
-          <Button asChild>
-            <a href="/#exchange">Start Exchange</a>
+          <Button className="shadow-neon" asChild>
+            <a href="/#exchange">
+              <Zap className="mr-1 h-4 w-4" />
+              Start Swap
+            </a>
           </Button>
         </div>
 
@@ -58,8 +61,11 @@ const SiteHeader = () => {
               {link.label}
             </a>
           ))}
-          <Button className="mt-2 w-full" asChild>
-            <a href="/#exchange" onClick={() => setMobileOpen(false)}>Start Exchange</a>
+          <Button className="mt-2 w-full shadow-neon" asChild>
+            <a href="/#exchange" onClick={() => setMobileOpen(false)}>
+              <Zap className="mr-1 h-4 w-4" />
+              Start Swap
+            </a>
           </Button>
         </div>
       )}

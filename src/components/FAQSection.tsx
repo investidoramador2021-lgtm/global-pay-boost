@@ -8,7 +8,7 @@ import {
 const faqs = [
   {
     q: "Is MRC GlobalPay safe to use?",
-    a: "Yes. MRC GlobalPay uses industry-leading encryption and partners with ChangeNow, a trusted exchange aggregator processing millions of transactions. Your funds go directly from your wallet to the exchange — we never hold your crypto.",
+    a: "Yes. MRC GlobalPay uses end-to-end encryption and partners with ChangeNow, a trusted exchange aggregator processing millions of transactions. Your funds flow directly from your wallet to the exchange — we never hold your crypto.",
   },
   {
     q: "Do I need to create an account?",
@@ -16,7 +16,7 @@ const faqs = [
   },
   {
     q: "How long does an exchange take?",
-    a: "Most exchanges complete within 2-5 minutes, depending on blockchain confirmation times. Bitcoin transactions may take slightly longer due to network congestion.",
+    a: "Most exchanges settle in under 60 seconds once a blockchain confirmation is received. Bitcoin transactions may take slightly longer due to network congestion.",
   },
   {
     q: "What are the fees?",
@@ -28,7 +28,7 @@ const faqs = [
   },
   {
     q: "What if my exchange is stuck or delayed?",
-    a: "Contact our 24/7 support team with your transaction ID. Most delays are caused by blockchain congestion and resolve within 30 minutes. We monitor every transaction to ensure completion.",
+    a: "Contact our 24/7 support team with your transaction ID. Most delays are caused by blockchain congestion and resolve within minutes. We monitor every transaction to ensure completion.",
   },
 ];
 
@@ -41,7 +41,7 @@ const FAQSection = () => {
             Frequently Asked Questions
           </h2>
           <p className="mt-4 font-body text-lg text-muted-foreground">
-            Everything you need to know about exchanging crypto with MRC GlobalPay.
+            Everything you need to know about instant crypto swaps with MRC GlobalPay.
           </p>
         </div>
 
