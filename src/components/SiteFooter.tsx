@@ -16,23 +16,23 @@ const resourceLinks = [
 
 const SiteFooter = () => {
   return (
-    <footer className="border-t border-border bg-muted py-16">
+    <footer className="border-t border-border bg-muted py-10 sm:py-16">
       <div className="container mx-auto px-4">
-        <div className="grid gap-12 sm:grid-cols-2 lg:grid-cols-4">
+        <div className="grid gap-8 sm:grid-cols-2 sm:gap-12 lg:grid-cols-4">
           <div>
-            <a href="/" className="font-display text-xl font-bold tracking-tight text-foreground">
+            <a href="/" className="font-display text-lg font-bold tracking-tight text-foreground sm:text-xl">
               MRC<span className="text-primary">GlobalPay</span>
             </a>
-            <p className="mt-4 font-body text-sm leading-relaxed text-muted-foreground">
+            <p className="mt-3 font-body text-sm leading-relaxed text-muted-foreground sm:mt-4">
               Instant crypto-to-crypto swaps with zero delays. 500+ assets. No registration. Best market rates.
             </p>
           </div>
 
           <div>
-            <h3 className="font-display text-sm font-semibold uppercase tracking-wider text-foreground/80">
+            <h3 className="font-display text-xs font-semibold uppercase tracking-wider text-foreground/80 sm:text-sm">
               Quick Links
             </h3>
-            <ul className="mt-4 space-y-3">
+            <ul className="mt-3 space-y-2 sm:mt-4 sm:space-y-3">
               {quickLinks.map((link) => (
                 <li key={link.label}>
                   <a href={link.href} className="font-body text-sm text-muted-foreground transition-colors hover:text-foreground">
@@ -44,10 +44,10 @@ const SiteFooter = () => {
           </div>
 
           <div>
-            <h3 className="font-display text-sm font-semibold uppercase tracking-wider text-foreground/80">
+            <h3 className="font-display text-xs font-semibold uppercase tracking-wider text-foreground/80 sm:text-sm">
               Resources
             </h3>
-            <ul className="mt-4 space-y-3">
+            <ul className="mt-3 space-y-2 sm:mt-4 sm:space-y-3">
               {resourceLinks.map((link) => (
                 <li key={link.label}>
                   <a href={link.href} className="font-body text-sm text-muted-foreground transition-colors hover:text-foreground">
@@ -59,10 +59,10 @@ const SiteFooter = () => {
           </div>
 
           <div>
-            <h3 className="font-display text-sm font-semibold uppercase tracking-wider text-foreground/80">
+            <h3 className="font-display text-xs font-semibold uppercase tracking-wider text-foreground/80 sm:text-sm">
               Legal
             </h3>
-            <ul className="mt-4 space-y-3">
+            <ul className="mt-3 space-y-2 sm:mt-4 sm:space-y-3">
               <li>
                 <a href="/privacy" className="font-body text-sm text-muted-foreground transition-colors hover:text-foreground">
                   Privacy Policy
@@ -82,7 +82,7 @@ const SiteFooter = () => {
           </div>
         </div>
 
-        <div className="mt-12 border-t border-border pt-8">
+        <div className="mt-8 border-t border-border pt-6 sm:mt-12 sm:pt-8">
           <p className="text-center font-body text-xs text-muted-foreground">
             © {new Date().getFullYear()} MRC GlobalPay. All rights reserved. Cryptocurrency exchange services powered by ChangeNow.
           </p>

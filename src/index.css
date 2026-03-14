@@ -5,7 +5,65 @@
 @tailwind utilities;
 
 @layer base {
+  /* Light mode (default) */
   :root {
+    --background: 0 0% 100%;
+    --foreground: 222 47% 11%;
+
+    --card: 0 0% 100%;
+    --card-foreground: 222 47% 11%;
+
+    --popover: 0 0% 100%;
+    --popover-foreground: 222 47% 11%;
+
+    --primary: 160 84% 39%;
+    --primary-foreground: 0 0% 100%;
+
+    --secondary: 220 70% 50%;
+    --secondary-foreground: 0 0% 100%;
+
+    --muted: 210 40% 96%;
+    --muted-foreground: 215 16% 47%;
+
+    --accent: 210 40% 96%;
+    --accent-foreground: 222 47% 11%;
+
+    --destructive: 0 84% 60%;
+    --destructive-foreground: 0 0% 100%;
+
+    --border: 214 32% 91%;
+    --input: 214 32% 91%;
+    --ring: 160 84% 39%;
+
+    --radius: 0.75rem;
+
+    --sidebar-background: 0 0% 98%;
+    --sidebar-foreground: 222 47% 11%;
+    --sidebar-primary: 160 84% 39%;
+    --sidebar-primary-foreground: 0 0% 100%;
+    --sidebar-accent: 210 40% 96%;
+    --sidebar-accent-foreground: 222 47% 11%;
+    --sidebar-border: 214 32% 91%;
+    --sidebar-ring: 160 84% 39%;
+
+    /* Custom tokens */
+    --surface: 210 40% 96%;
+    --surface-foreground: 222 47% 11%;
+    --trust: 160 84% 39%;
+    --trust-foreground: 0 0% 100%;
+    --neon: 160 84% 39%;
+    --neon-purple: 270 70% 55%;
+    --neon-blue: 220 70% 50%;
+    --hero-gradient: linear-gradient(135deg, hsl(160 84% 39%) 0%, hsl(220 70% 50%) 100%);
+    --shadow-card: 0 4px 24px -4px hsl(220 70% 50% / 0.06);
+    --shadow-elevated: 0 12px 40px -8px hsl(220 70% 50% / 0.12);
+    --shadow-neon: 0 4px 14px -2px hsl(160 84% 39% / 0.25);
+
+    font-family: 'Inter', system-ui, sans-serif;
+  }
+
+  /* Dark mode */
+  .dark {
     --background: 230 15% 8%;
     --foreground: 210 20% 92%;
 
@@ -34,8 +92,6 @@
     --input: 230 12% 20%;
     --ring: 160 100% 45%;
 
-    --radius: 0.75rem;
-
     --sidebar-background: 230 15% 10%;
     --sidebar-foreground: 210 20% 92%;
     --sidebar-primary: 160 100% 45%;
@@ -57,8 +113,6 @@
     --shadow-card: 0 4px 24px -4px hsl(160 100% 45% / 0.06);
     --shadow-elevated: 0 12px 40px -8px hsl(160 100% 45% / 0.12);
     --shadow-neon: 0 0 20px hsl(160 100% 45% / 0.3);
-
-    font-family: 'Inter', system-ui, sans-serif;
   }
 }
 

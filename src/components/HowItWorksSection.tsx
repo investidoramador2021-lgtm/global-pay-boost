@@ -23,23 +23,23 @@ const steps = [
 
 const HowItWorksSection = () => {
   return (
-    <section id="how-it-works" className="bg-background py-20 lg:py-28">
+    <section id="how-it-works" className="bg-background py-14 sm:py-20 lg:py-28">
       <div className="container mx-auto px-4">
         <div className="mx-auto max-w-2xl text-center">
-          <h2 className="font-display text-3xl font-bold tracking-tight text-foreground sm:text-4xl">
+          <h2 className="font-display text-2xl font-bold tracking-tight text-foreground sm:text-3xl lg:text-4xl">
             Four Steps. Under 60 Seconds.
           </h2>
-          <p className="mt-4 font-body text-lg text-muted-foreground">
+          <p className="mt-3 font-body text-base text-muted-foreground sm:mt-4 sm:text-lg">
             No delays, no friction. Just instant settlement.
           </p>
         </div>
 
-        <div className="mt-16 grid gap-8 sm:grid-cols-2 lg:grid-cols-4">
+        <div className="mt-10 grid gap-6 sm:mt-16 sm:grid-cols-2 lg:grid-cols-4 lg:gap-8">
           {steps.map((step) => (
             <div key={step.number} className="text-center">
-              <span className="font-display text-5xl font-extrabold text-primary/20">{step.number}</span>
-              <h3 className="mt-2 font-display text-lg font-semibold text-foreground">{step.title}</h3>
-              <p className="mt-2 font-body text-sm leading-relaxed text-muted-foreground">{step.description}</p>
+              <span className="font-display text-4xl font-extrabold text-primary/20 sm:text-5xl">{step.number}</span>
+              <h3 className="mt-1 font-display text-base font-semibold text-foreground sm:mt-2 sm:text-lg">{step.title}</h3>
+              <p className="mt-1.5 font-body text-sm leading-relaxed text-muted-foreground sm:mt-2">{step.description}</p>
             </div>
           ))}
         </div>
