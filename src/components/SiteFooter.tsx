@@ -64,17 +64,17 @@ const SiteFooter = () => {
             </h3>
             <ul className="mt-4 space-y-3">
               <li>
-                <a href="#" className="font-body text-sm text-primary-foreground/50 transition-colors hover:text-primary-foreground">
+                <a href="/privacy" className="font-body text-sm text-primary-foreground/50 transition-colors hover:text-primary-foreground">
                   Privacy Policy
                 </a>
               </li>
               <li>
-                <a href="#" className="font-body text-sm text-primary-foreground/50 transition-colors hover:text-primary-foreground">
+                <a href="/terms" className="font-body text-sm text-primary-foreground/50 transition-colors hover:text-primary-foreground">
                   Terms of Service
                 </a>
               </li>
               <li>
-                <a href="#" className="font-body text-sm text-primary-foreground/50 transition-colors hover:text-primary-foreground">
+                <a href="/aml" className="font-body text-sm text-primary-foreground/50 transition-colors hover:text-primary-foreground">
                   AML Policy
                 </a>
               </li>

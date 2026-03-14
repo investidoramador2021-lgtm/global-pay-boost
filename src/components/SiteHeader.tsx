@@ -59,7 +59,7 @@ const SiteHeader = () => {
             </a>
           ))}
           <Button className="mt-2 w-full" asChild>
-            <a href="#exchange" onClick={() => setMobileOpen(false)}>Start Exchange</a>
+            <a href="/#exchange" onClick={() => setMobileOpen(false)}>Start Exchange</a>
           </Button>
         </div>
       )}
