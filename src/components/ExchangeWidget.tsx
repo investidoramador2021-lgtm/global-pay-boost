@@ -453,7 +453,7 @@ const ExchangeWidget = () => {
                 <div className="space-y-2 font-body text-sm">
                   <div className="flex justify-between">
                     <span className="text-muted-foreground">Sending</span>
-                    <span className="font-semibold text-foreground">{transaction.amount} {transaction.fromCurrency.toUpperCase()}</span>
+                    <span className="font-semibold text-foreground">{sendAmount} {fromCurrency?.ticker?.toUpperCase()}</span>
                   </div>
                   <div className="flex justify-between">
                     <span className="text-muted-foreground">Receiving to</span>
