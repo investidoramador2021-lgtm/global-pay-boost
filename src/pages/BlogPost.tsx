@@ -159,6 +159,9 @@ const BlogPost = () => {
                 <div className="mt-6 rounded-xl border border-border bg-muted/50 p-4 sm:p-5">
                   <p className="font-display text-sm font-semibold text-foreground">{post.author.name}</p>
                   <p className="font-body text-xs text-primary">{post.author.role}</p>
+                  {post.author.credentials && (
+                    <p className="mt-1 font-body text-[11px] font-medium text-muted-foreground/80">{post.author.credentials}</p>
+                  )}
                   <p className="mt-2 font-body text-xs leading-relaxed text-muted-foreground">{post.author.bio}</p>
                 </div>
               </header>
