@@ -191,35 +191,35 @@ const SwapPairLanding = ({
         </section>
 
         {/* Why Section */}
-        <section className="bg-accent py-20 lg:py-28">
+        <section className="bg-accent py-14 sm:py-20 lg:py-28">
           <div className="container mx-auto px-4">
             <div className="mx-auto max-w-3xl">
-              <h2 className="font-display text-3xl font-bold tracking-tight text-foreground sm:text-4xl">
+              <h2 className="font-display text-2xl font-bold tracking-tight text-foreground sm:text-3xl lg:text-4xl">
                 Why Swap {assetA} to {assetB} on MRC GlobalPay?
               </h2>
-              <p className="mt-6 font-body text-lg leading-relaxed text-muted-foreground">
+              <p className="mt-4 font-body text-base leading-relaxed text-muted-foreground sm:mt-6 sm:text-lg">
                 {whyText}
               </p>
 
-              <div className="mt-10 grid gap-4 sm:grid-cols-3">
-                <div className="rounded-xl border border-border bg-card p-6 shadow-card">
-                  <Zap className="h-8 w-8 text-primary" />
-                  <h3 className="mt-4 font-display text-base font-semibold text-foreground">Zero-Delay Settlement</h3>
-                  <p className="mt-2 font-body text-sm text-muted-foreground">
+              <div className="mt-8 grid gap-3 sm:mt-10 sm:grid-cols-3 sm:gap-4">
+                <div className="rounded-xl border border-border bg-card p-5 shadow-card sm:p-6">
+                  <Zap className="h-6 w-6 text-primary sm:h-8 sm:w-8" />
+                  <h3 className="mt-3 font-display text-sm font-semibold text-foreground sm:mt-4 sm:text-base">Zero-Delay Settlement</h3>
+                  <p className="mt-1.5 font-body text-sm text-muted-foreground sm:mt-2">
                     Pre-funded liquidity vaults execute your swap with immediate on-chain finality — no waiting for 3-6 block confirmations.
                   </p>
                 </div>
-                <div className="rounded-xl border border-border bg-card p-6 shadow-card">
-                  <Shield className="h-8 w-8 text-primary" />
-                  <h3 className="mt-4 font-display text-base font-semibold text-foreground">Non-Custodial</h3>
-                  <p className="mt-2 font-body text-sm text-muted-foreground">
+                <div className="rounded-xl border border-border bg-card p-5 shadow-card sm:p-6">
+                  <Shield className="h-6 w-6 text-primary sm:h-8 sm:w-8" />
+                  <h3 className="mt-3 font-display text-sm font-semibold text-foreground sm:mt-4 sm:text-base">Non-Custodial</h3>
+                  <p className="mt-1.5 font-body text-sm text-muted-foreground sm:mt-2">
                     We never hold your funds. Crypto flows directly between your wallet and our liquidity partners. Zero friction.
                   </p>
                 </div>
-                <div className="rounded-xl border border-border bg-card p-6 shadow-card">
-                  <ArrowRight className="h-8 w-8 text-primary" />
-                  <h3 className="mt-4 font-display text-base font-semibold text-foreground">Best Rate Guaranteed</h3>
-                  <p className="mt-2 font-body text-sm text-muted-foreground">
+                <div className="rounded-xl border border-border bg-card p-5 shadow-card sm:p-6">
+                  <ArrowRight className="h-6 w-6 text-primary sm:h-8 sm:w-8" />
+                  <h3 className="mt-3 font-display text-sm font-semibold text-foreground sm:mt-4 sm:text-base">Best Rate Guaranteed</h3>
+                  <p className="mt-1.5 font-body text-sm text-muted-foreground sm:mt-2">
                     Aggregated rates from multiple top-tier providers. Processing under 60 seconds at the best market price.
                   </p>
                 </div>
