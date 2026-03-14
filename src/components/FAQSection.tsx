@@ -16,7 +16,7 @@ const faqs = [
   },
   {
     q: "How long does an exchange take?",
-    a: "Most exchanges settle in under 60 seconds once a blockchain confirmation is received. Bitcoin transactions may take slightly longer due to network congestion.",
+    a: "Most exchanges settle in under 60 seconds with our 2026 liquidity rails. Our pre-funded vaults and direct-to-protocol routing eliminate the standard 3–6 confirmation wait times.",
   },
   {
     q: "What are the fees?",
@@ -24,7 +24,11 @@ const faqs = [
   },
   {
     q: "Which cryptocurrencies are supported?",
-    a: "We support over 500 cryptocurrencies including Bitcoin (BTC), Ethereum (ETH), Solana (SOL), USDT, USDC, XRP, Dogecoin, BNB, Litecoin, and many more across all major blockchains.",
+    a: "We support over 500 cryptocurrencies including Bitcoin (BTC), Ethereum (ETH), Solana (SOL), HYPE, BERA, TIA, MONAD, PYUSD, USDT, USDC, XRP, Dogecoin, BNB, and many more across all major blockchains.",
+  },
+  {
+    q: "Why is MRC GlobalPay the fastest way to swap HYPE and BERA?",
+    a: "Our 2026 liquidity architecture utilizes pre-funded vaults and direct-to-protocol routing. This eliminates the 3–6 confirmation wait times common on standard exchanges, delivering assets to your wallet in under 60 seconds. For HYPE, we connect directly to Hyperliquid's native L1 chain. For BERA, we leverage Berachain's Proof-of-Liquidity layer for optimal routing.",
   },
   {
     q: "What if my exchange is stuck or delayed?",
@@ -52,12 +56,19 @@ const FAQSection = () => {
                 key={i}
                 value={`item-${i}`}
                 className="rounded-xl border border-border bg-card px-6 shadow-card"
+                itemScope
+                itemType="https://schema.org/Question"
               >
                 <AccordionTrigger className="font-display text-base font-semibold text-foreground hover:no-underline">
-                  {faq.q}
+                  <span itemProp="name">{faq.q}</span>
                 </AccordionTrigger>
-                <AccordionContent className="font-body text-sm leading-relaxed text-muted-foreground">
-                  {faq.a}
+                <AccordionContent
+                  className="font-body text-sm leading-relaxed text-muted-foreground"
+                  itemScope
+                  itemType="https://schema.org/Answer"
+                  itemProp="acceptedAnswer"
+                >
+                  <span itemProp="text">{faq.a}</span>
                 </AccordionContent>
               </AccordionItem>
             ))}

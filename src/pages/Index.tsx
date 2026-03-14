@@ -16,7 +16,7 @@ const Index = () => {
     name: "MRC GlobalPay",
     url: "https://mrcglobalpay.com",
     description:
-      "Instant crypto-to-crypto swaps with zero confirmation delays. Exchange 500+ cryptocurrencies with the best market rates in under 60 seconds.",
+      "Automated high-speed swap engine for 2026 high-performance tokens with zero settlement latency.",
     applicationCategory: "FinanceApplication",
     offers: {
       "@type": "Offer",
@@ -29,7 +29,7 @@ const Index = () => {
     "@type": "Service",
     name: "MRC GlobalPay Instant Crypto Swap",
     serviceType: "CurrencyConversionService",
-    description: "Instant multi-chain crypto-to-crypto liquidity with zero-delay settlement across 500+ digital assets.",
+    description: "Automated high-speed swap engine for 2026 high-performance tokens with zero settlement latency. Direct-to-protocol liquidity bridges for HYPE, BERA, TIA, MONAD, and PYUSD.",
     provider: {
       "@type": "Organization",
       name: "MRC GlobalPay",
@@ -38,14 +38,14 @@ const Index = () => {
     areaServed: "Worldwide",
     hasOfferCatalog: {
       "@type": "OfferCatalog",
-      name: "Crypto Swap Services",
+      name: "Instant Crypto Swap Services",
       itemListElement: [
         {
           "@type": "Offer",
           itemOffered: {
             "@type": "Service",
             name: "Zero-Delay Settlement",
-            description: "Automated swap execution with sub-60-second settlement times across all supported blockchains.",
+            description: "Pre-funded liquidity vaults with direct-to-protocol routing eliminate 3–6 confirmation wait times, delivering assets in under 60 seconds.",
           },
         },
         {
@@ -53,11 +53,38 @@ const Index = () => {
           itemOffered: {
             "@type": "Service",
             name: "Instant Rate Aggregation",
-            description: "Real-time rate aggregation from multiple top-tier liquidity providers for best market rates.",
+            description: "Real-time rate aggregation from multiple top-tier liquidity providers for best market rates across 500+ digital assets.",
           },
         },
       ],
     },
+    potentialAction: [
+      {
+        "@type": "TradeAction",
+        name: "Swap HYPE to USDT",
+        target: "https://mrcglobalpay.com/swap/hype-usdt",
+      },
+      {
+        "@type": "TradeAction",
+        name: "Swap BERA to USDC",
+        target: "https://mrcglobalpay.com/swap/bera-usdt",
+      },
+      {
+        "@type": "TradeAction",
+        name: "Swap TIA to USDT",
+        target: "https://mrcglobalpay.com/swap/tia-usdt",
+      },
+      {
+        "@type": "TradeAction",
+        name: "Swap MONAD to ETH",
+        target: "https://mrcglobalpay.com/swap/monad-usdt",
+      },
+      {
+        "@type": "TradeAction",
+        name: "Swap PYUSD to SOL",
+        target: "https://mrcglobalpay.com/swap/pyusd-usdt",
+      },
+    ],
   };
 
   const faqJsonLd = {
@@ -66,10 +93,18 @@ const Index = () => {
     mainEntity: [
       {
         "@type": "Question",
+        name: "Why is MRC GlobalPay the fastest way to swap HYPE and BERA?",
+        acceptedAnswer: {
+          "@type": "Answer",
+          text: "Our 2026 liquidity architecture utilizes pre-funded vaults and direct-to-protocol routing. This eliminates the 3–6 confirmation wait times common on standard exchanges, delivering assets to your wallet in under 60 seconds.",
+        },
+      },
+      {
+        "@type": "Question",
         name: "How long does a BTC to USDT swap take on MRC GlobalPay?",
         acceptedAnswer: {
           "@type": "Answer",
-          text: "Our liquidity rails execute BTC to USDT swaps instantly, typically settling in under 1 minute.",
+          text: "Our liquidity rails execute BTC to USDT swaps instantly, typically settling in under 1 minute with zero confirmation delays.",
         },
       },
       {
@@ -94,22 +129,22 @@ const Index = () => {
   return (
     <>
       <Helmet>
-        <title>MRC GlobalPay — Instant Crypto Swaps | Zero Delays | 500+ Coins</title>
+        <title>MRC GlobalPay — Instant Crypto Swaps | Zero Delays | 2026 Liquidity Rails</title>
         <meta
           name="description"
-          content="Instant crypto-to-crypto swaps with zero confirmation delays. Swap BTC, ETH, SOL, USDT and 500+ coins in under 60 seconds. No registration. Best market rates."
+          content="Instant crypto swaps with zero confirmation delays. Swap HYPE, BERA, TIA, MONAD, PYUSD and 500+ coins in under 60 seconds. No registration. 2026 liquidity rails with automated settlement."
         />
         <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1" />
         <link rel="canonical" href="https://mrcglobalpay.com" />
-        <meta property="og:title" content="MRC GlobalPay — Instant Crypto Swaps | Zero Delays | 500+ Coins" />
-        <meta property="og:description" content="Swap 500+ cryptocurrencies instantly. Zero delays. Best market rates. No registration." />
+        <meta property="og:title" content="MRC GlobalPay — Instant Crypto Swaps | Zero Delays | 2026 Liquidity Rails" />
+        <meta property="og:description" content="Stop waiting for confirmations. Swap HYPE, SOL, BERA and 500+ coins in under 60 seconds with automated settlement." />
         <meta property="og:type" content="website" />
         <meta property="og:url" content="https://mrcglobalpay.com" />
         <meta property="og:site_name" content="MRC GlobalPay" />
         <meta property="og:image" content="https://pub-bb2e103a32db4e198524a2e9ed8f35b4.r2.dev/22f69f45-cf65-4871-9af4-b68ab4027213/id-preview-243bf129--23f851ec-c820-43c7-bbe2-d2e830f7c268.lovable.app-1773521796493.png" />
         <meta name="twitter:card" content="summary_large_image" />
         <meta name="twitter:title" content="MRC GlobalPay — Instant Crypto Swaps | Zero Delays" />
-        <meta name="twitter:description" content="Swap 500+ cryptocurrencies instantly. Zero delays. Best market rates." />
+        <meta name="twitter:description" content="Swap HYPE, BERA, TIA, MONAD, PYUSD and 500+ coins instantly. Zero delays. 2026 liquidity rails." />
         <meta name="twitter:image" content="https://pub-bb2e103a32db4e198524a2e9ed8f35b4.r2.dev/22f69f45-cf65-4871-9af4-b68ab4027213/id-preview-243bf129--23f851ec-c820-43c7-bbe2-d2e830f7c268.lovable.app-1773521796493.png" />
         <script type="application/ld+json">{JSON.stringify(jsonLd)}</script>
         <script type="application/ld+json">{JSON.stringify(serviceJsonLd)}</script>
