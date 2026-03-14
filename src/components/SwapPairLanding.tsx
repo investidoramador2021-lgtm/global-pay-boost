@@ -16,8 +16,8 @@ interface SwapPairPageProps {
   assetAName: string;
   assetB: string;
   assetBName: string;
-  headline: string;
-  subHeadline: string;
+  headline: ReactNode;
+  subHeadline: ReactNode;
   whyText: string;
   avgSpeed: string;
   slug: string;
