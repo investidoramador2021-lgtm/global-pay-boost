@@ -21,7 +21,7 @@ type Step = "exchange" | "address" | "deposit" | "status";
 
 const STATUS_LABELS: Record<string, { label: string; color: string; icon: React.ReactNode }> = {
   waiting: { label: "Waiting for deposit", color: "text-muted-foreground", icon: <Clock className="h-5 w-5" /> },
-  confirming: { label: "Confirming transaction", color: "text-yellow-500", icon: <Loader2 className="h-5 w-5 animate-spin" /> },
+  confirming: { label: "Confirming transaction", color: "text-primary", icon: <Loader2 className="h-5 w-5 animate-spin" /> },
   exchanging: { label: "Exchanging", color: "text-primary", icon: <Loader2 className="h-5 w-5 animate-spin" /> },
   sending: { label: "Sending to your wallet", color: "text-trust", icon: <Loader2 className="h-5 w-5 animate-spin" /> },
   finished: { label: "Exchange complete!", color: "text-trust", icon: <CheckCircle2 className="h-5 w-5" /> },
