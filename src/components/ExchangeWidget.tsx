@@ -104,41 +104,46 @@ const ExchangeWidget = () => {
   }) => {
     if (!show) return null;
     return (
-      <div className="absolute inset-0 z-10 flex flex-col rounded-2xl border border-border bg-card">
-        <div className="flex items-center gap-2 border-b border-border p-4">
-          <Search className="h-4 w-4 text-muted-foreground" />
-          <input
-            autoFocus
-            placeholder="Search currency..."
-            className="flex-1 bg-transparent font-body text-sm text-foreground outline-none placeholder:text-muted-foreground"
-            value={searchQuery}
-            onChange={(e) => setSearchQuery(e.target.value)}
-          />
-          <button onClick={() => { onClose(); setSearchQuery(""); }} className="font-body text-xs text-muted-foreground hover:text-foreground">
-            Cancel
-          </button>
-        </div>
-        <div className="flex-1 overflow-y-auto p-2" style={{ maxHeight: 280 }}>
-          {sortedCurrencies
-            .filter((c) => c.ticker !== exclude)
-            .map((c) => (
-              <button
-                key={`${c.ticker}-${c.network}`}
-                onClick={() => { onSelect(c); onClose(); setSearchQuery(""); }}
-                className="flex w-full items-center gap-3 rounded-lg px-3 py-2.5 text-left transition-colors hover:bg-accent"
-              >
-                {c.image && <img src={c.image} alt={c.name} className="h-6 w-6 rounded-full" />}
-                <div>
-                  <span className="font-display text-sm font-semibold uppercase text-foreground">{c.ticker}</span>
-                  <span className="ml-2 font-body text-xs text-muted-foreground">{c.name}</span>
-                </div>
-                {c.network && c.network !== c.ticker && (
-                  <span className="ml-auto rounded bg-accent px-1.5 py-0.5 font-body text-[10px] uppercase text-muted-foreground">
-                    {c.network}
-                  </span>
-                )}
-              </button>
-            ))}
+      <div className="fixed inset-0 z-50 flex items-center justify-center bg-foreground/40 p-4" onClick={onClose}>
+        <div
+          className="w-full max-w-md rounded-2xl border border-border bg-card shadow-elevated"
+          onClick={(e) => e.stopPropagation()}
+        >
+          <div className="flex items-center gap-2 border-b border-border p-4">
+            <Search className="h-4 w-4 text-muted-foreground" />
+            <input
+              autoFocus
+              placeholder="Search currency..."
+              className="flex-1 bg-transparent font-body text-sm text-foreground outline-none placeholder:text-muted-foreground"
+              value={searchQuery}
+              onChange={(e) => setSearchQuery(e.target.value)}
+            />
+            <button onClick={() => { onClose(); setSearchQuery(""); }} className="font-body text-xs text-muted-foreground hover:text-foreground">
+              Cancel
+            </button>
+          </div>
+          <div className="overflow-y-auto p-2" style={{ maxHeight: 400 }}>
+            {sortedCurrencies
+              .filter((c) => c.ticker !== exclude)
+              .map((c) => (
+                <button
+                  key={`${c.ticker}-${c.network}`}
+                  onClick={() => { onSelect(c); onClose(); setSearchQuery(""); }}
+                  className="flex w-full items-center gap-3 rounded-lg px-3 py-2.5 text-left transition-colors hover:bg-accent"
+                >
+                  {c.image && <img src={c.image} alt={c.name} className="h-6 w-6 rounded-full" />}
+                  <div>
+                    <span className="font-display text-sm font-semibold uppercase text-foreground">{c.ticker}</span>
+                    <span className="ml-2 font-body text-xs text-muted-foreground">{c.name}</span>
+                  </div>
+                  {c.network && c.network !== c.ticker && (
+                    <span className="ml-auto rounded bg-accent px-1.5 py-0.5 font-body text-[10px] uppercase text-muted-foreground">
+                      {c.network}
+                    </span>
+                  )}
+                </button>
+              ))}
+          </div>
         </div>
       </div>
     );
