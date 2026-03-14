@@ -7,6 +7,8 @@ const TermsOfService = () => (
     <Helmet>
       <title>Terms of Service — MRC GlobalPay</title>
       <meta name="description" content="MRC GlobalPay terms of service for cryptocurrency exchange services." />
+      <meta name="robots" content="index, follow" />
+      <link rel="canonical" href="https://mrcglobalpay.com/terms" />
     </Helmet>
     <SiteHeader />
     <main className="container mx-auto max-w-3xl px-4 py-16">
