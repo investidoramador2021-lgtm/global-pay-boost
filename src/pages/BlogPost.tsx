@@ -1,4 +1,5 @@
-import { useParams, Link, Navigate } from "react-router-dom";
+import { useParams, Link, Navigate, useLocation } from "react-router-dom";
+import { useEffect } from "react";
 import { Helmet } from "react-helmet-async";
 import { Calendar, Clock, ArrowLeft, ArrowRight } from "lucide-react";
 import ReactMarkdown from "react-markdown";
@@ -8,7 +9,13 @@ import { getPostBySlug, getRelatedPosts } from "@/lib/blog-data";
 
 const BlogPost = () => {
   const { slug } = useParams<{ slug: string }>();
+  const location = useLocation();
   const post = slug ? getPostBySlug(slug) : undefined;
+
+  // Scroll to top on route change
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, [location.pathname]);
 
   if (!post) return <Navigate to="/blog" replace />;
 
