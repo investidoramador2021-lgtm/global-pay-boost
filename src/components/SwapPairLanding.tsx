@@ -229,32 +229,32 @@ const SwapPairLanding = ({
         </section>
 
         {/* Live Pair Status */}
-        <section className="bg-background py-16">
+        <section className="bg-background py-10 sm:py-16">
           <div className="container mx-auto px-4">
             <div className="mx-auto max-w-3xl">
-              <h2 className="font-display text-2xl font-bold tracking-tight text-foreground sm:text-3xl text-center">
+              <h2 className="font-display text-xl font-bold tracking-tight text-foreground text-center sm:text-2xl lg:text-3xl">
                 Live {assetA}/{assetB} Pair Status
               </h2>
-              <div className="mt-8 grid grid-cols-2 gap-4 sm:grid-cols-4">
-                <div className="rounded-xl border border-primary/20 bg-card p-5 text-center shadow-card">
-                  <Activity className="mx-auto h-6 w-6 text-primary" />
-                  <p className="mt-2 font-display text-sm font-bold text-foreground">Liquidity</p>
-                  <p className="font-display text-lg font-extrabold text-primary">Deep</p>
+              <div className="mt-6 grid grid-cols-2 gap-3 sm:mt-8 sm:grid-cols-4 sm:gap-4">
+                <div className="rounded-xl border border-primary/20 bg-card p-4 text-center shadow-card sm:p-5">
+                  <Activity className="mx-auto h-5 w-5 text-primary sm:h-6 sm:w-6" />
+                  <p className="mt-1.5 font-display text-xs font-bold text-foreground sm:mt-2 sm:text-sm">Liquidity</p>
+                  <p className="font-display text-base font-extrabold text-primary sm:text-lg">Deep</p>
                 </div>
-                <div className="rounded-xl border border-primary/20 bg-card p-5 text-center shadow-card">
-                  <Zap className="mx-auto h-6 w-6 text-primary" />
-                  <p className="mt-2 font-display text-sm font-bold text-foreground">Status</p>
-                  <p className="font-display text-lg font-extrabold text-primary">Instant</p>
+                <div className="rounded-xl border border-primary/20 bg-card p-4 text-center shadow-card sm:p-5">
+                  <Zap className="mx-auto h-5 w-5 text-primary sm:h-6 sm:w-6" />
+                  <p className="mt-1.5 font-display text-xs font-bold text-foreground sm:mt-2 sm:text-sm">Status</p>
+                  <p className="font-display text-base font-extrabold text-primary sm:text-lg">Instant</p>
                 </div>
-                <div className="rounded-xl border border-primary/20 bg-card p-5 text-center shadow-card">
-                  <Timer className="mx-auto h-6 w-6 text-primary" />
-                  <p className="mt-2 font-display text-sm font-bold text-foreground">Avg. Speed</p>
-                  <p className="font-display text-lg font-extrabold text-primary">{avgSpeed}</p>
+                <div className="rounded-xl border border-primary/20 bg-card p-4 text-center shadow-card sm:p-5">
+                  <Timer className="mx-auto h-5 w-5 text-primary sm:h-6 sm:w-6" />
+                  <p className="mt-1.5 font-display text-xs font-bold text-foreground sm:mt-2 sm:text-sm">Avg. Speed</p>
+                  <p className="font-display text-base font-extrabold text-primary sm:text-lg">{avgSpeed}</p>
                 </div>
-                <div className="rounded-xl border border-primary/20 bg-card p-5 text-center shadow-card">
-                  <Shield className="mx-auto h-6 w-6 text-primary" />
-                  <p className="mt-2 font-display text-sm font-bold text-foreground">KYC</p>
-                  <p className="font-display text-lg font-extrabold text-primary">None</p>
+                <div className="rounded-xl border border-primary/20 bg-card p-4 text-center shadow-card sm:p-5">
+                  <Shield className="mx-auto h-5 w-5 text-primary sm:h-6 sm:w-6" />
+                  <p className="mt-1.5 font-display text-xs font-bold text-foreground sm:mt-2 sm:text-sm">KYC</p>
+                  <p className="font-display text-base font-extrabold text-primary sm:text-lg">None</p>
                 </div>
               </div>
             </div>
@@ -262,23 +262,23 @@ const SwapPairLanding = ({
         </section>
 
         {/* AI FAQ */}
-        <section className="bg-accent py-20 lg:py-28">
+        <section className="bg-accent py-14 sm:py-20 lg:py-28">
           <div className="container mx-auto px-4">
             <div className="mx-auto max-w-3xl">
-              <h2 className="font-display text-3xl font-bold tracking-tight text-foreground sm:text-4xl">
+              <h2 className="font-display text-2xl font-bold tracking-tight text-foreground sm:text-3xl lg:text-4xl">
                 {assetA}/{assetB} Swap — <span className="text-gradient-neon">Your Questions Answered</span>
               </h2>
-              <div className="mt-10">
+              <div className="mt-8 sm:mt-10">
                 <Accordion type="single" collapsible className="space-y-3">
                   {faqs.map((faq, i) => (
                     <AccordionItem
                       key={i}
                       value={`faq-${i}`}
-                      className="rounded-xl border border-border bg-card px-6 shadow-card"
+                      className="rounded-xl border border-border bg-card px-4 shadow-card sm:px-6"
                       itemScope
                       itemType="https://schema.org/Question"
                     >
-                      <AccordionTrigger className="font-display text-base font-semibold text-foreground hover:no-underline">
+                      <AccordionTrigger className="font-display text-sm font-semibold text-foreground hover:no-underline sm:text-base">
                         <span itemProp="name">{faq.q}</span>
                       </AccordionTrigger>
                       <AccordionContent
@@ -298,15 +298,15 @@ const SwapPairLanding = ({
         </section>
 
         {/* CTA */}
-        <section className="bg-background py-16">
+        <section className="bg-background py-12 sm:py-16">
           <div className="container mx-auto px-4 text-center">
-            <h2 className="font-display text-2xl font-bold text-foreground sm:text-3xl">
+            <h2 className="font-display text-xl font-bold text-foreground sm:text-2xl lg:text-3xl">
               Ready to Swap {assetA} to {assetB}?
             </h2>
-            <p className="mt-3 font-body text-muted-foreground">
+            <p className="mt-2 font-body text-sm text-muted-foreground sm:mt-3 sm:text-base">
               Under 60 seconds. Immediate finality. Zero confirmation delays.
             </p>
-            <Button size="lg" className="mt-6 shadow-neon" asChild>
+            <Button size="lg" className="mt-5 shadow-neon w-full sm:mt-6 sm:w-auto" asChild>
               <a href="/#exchange">
                 <Zap className="mr-2 h-5 w-5" />
                 Start Swap Now
