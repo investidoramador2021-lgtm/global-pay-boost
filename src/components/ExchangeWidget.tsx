@@ -463,8 +463,8 @@ const ExchangeWidget = () => {
               </div>
             </div>
 
-            <div className="mt-4 rounded-lg border border-yellow-500/20 bg-yellow-500/5 p-3">
-              <p className="font-body text-xs text-yellow-600">
+            <div className="mt-4 rounded-lg border border-destructive/20 bg-destructive/5 p-3">
+              <p className="font-body text-xs text-destructive">
                 ⚠ Send the exact amount to the deposit address. Sending a different amount or currency may result in loss of funds.
               </p>
             </div>
