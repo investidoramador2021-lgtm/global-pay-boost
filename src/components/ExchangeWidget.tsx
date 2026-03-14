@@ -418,7 +418,7 @@ const ExchangeWidget = () => {
               {/* Deposit address */}
               <div className="rounded-xl border border-border bg-accent p-4">
                 <label className="mb-2 block font-body text-xs font-medium uppercase tracking-wider text-muted-foreground">
-                  Send exactly {transaction.amount} {transaction.fromCurrency.toUpperCase()} to:
+                  Send exactly {sendAmount} {fromCurrency?.ticker?.toUpperCase()} to:
                 </label>
                 <div className="flex items-center gap-2">
                   <code className="flex-1 break-all rounded-lg border border-border bg-background px-3 py-2 font-body text-sm text-foreground">
