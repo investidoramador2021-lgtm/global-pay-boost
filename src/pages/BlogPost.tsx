@@ -30,9 +30,10 @@ const BlogPost = () => {
     datePublished: post.publishedAt,
     dateModified: post.updatedAt,
     author: {
-      "@type": "Organization",
+      "@type": "Person",
       name: post.author.name,
-      url: "https://mrcglobalpay.com",
+      jobTitle: post.author.role,
+      url: "https://mrcglobalpay.com/blog",
     },
     publisher: {
       "@type": "Organization",
