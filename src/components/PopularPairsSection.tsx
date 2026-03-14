@@ -1,15 +1,16 @@
 import { ArrowRight } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import { Link } from "react-router-dom";
 
 const pairs = [
-  { from: "BTC", to: "ETH", fromName: "Bitcoin", toName: "Ethereum" },
-  { from: "BTC", to: "USDT", fromName: "Bitcoin", toName: "Tether" },
-  { from: "ETH", to: "BTC", fromName: "Ethereum", toName: "Bitcoin" },
-  { from: "SOL", to: "USDC", fromName: "Solana", toName: "USD Coin" },
-  { from: "XRP", to: "BTC", fromName: "Ripple", toName: "Bitcoin" },
-  { from: "DOGE", to: "ETH", fromName: "Dogecoin", toName: "Ethereum" },
-  { from: "BNB", to: "BTC", fromName: "BNB", toName: "Bitcoin" },
-  { from: "LTC", to: "USDT", fromName: "Litecoin", toName: "Tether" },
+  { from: "HYPE", to: "USDT", fromName: "Hyperliquid", toName: "Tether", href: "/swap/hype-usdt" },
+  { from: "BERA", to: "USDC", fromName: "Berachain", toName: "USD Coin", href: "/swap/bera-usdt" },
+  { from: "TIA", to: "USDT", fromName: "Celestia", toName: "Tether", href: "/swap/tia-usdt" },
+  { from: "MONAD", to: "ETH", fromName: "Monad", toName: "Ethereum", href: "/swap/monad-usdt" },
+  { from: "PYUSD", to: "SOL", fromName: "PayPal USD", toName: "Solana", href: "/swap/pyusd-usdt" },
+  { from: "SOL", to: "USDT", fromName: "Solana", toName: "Tether", href: "/swap/sol-usdt" },
+  { from: "BTC", to: "USDC", fromName: "Bitcoin", toName: "USD Coin", href: "/swap/btc-usdc" },
+  { from: "ETH", to: "SOL", fromName: "Ethereum", toName: "Solana", href: "/swap/eth-sol" },
 ];
 
 const PopularPairsSection = () => {
@@ -21,15 +22,15 @@ const PopularPairsSection = () => {
             Popular Trading Pairs
           </h2>
           <p className="mt-3 font-body text-base text-muted-foreground sm:mt-4 sm:text-lg">
-            The most traded pairs — all with instant settlement.
+            High-performance 2026 assets — all with instant settlement and zero delays.
           </p>
         </div>
 
         <div className="mt-8 grid gap-3 sm:mt-12 sm:grid-cols-2 sm:gap-4 lg:grid-cols-4">
           {pairs.map((pair) => (
-            <a
+            <Link
               key={`${pair.from}-${pair.to}`}
-              href="#exchange-widget"
+              to={pair.href}
               className="group flex items-center justify-between rounded-xl border border-border bg-card p-4 shadow-card transition-all active:scale-[0.98] hover:shadow-elevated hover:border-primary/30 sm:p-5"
             >
               <div>
@@ -45,7 +46,7 @@ const PopularPairsSection = () => {
               <Button variant="ghost" size="sm" className="text-primary text-xs opacity-0 transition-opacity group-hover:opacity-100 sm:text-sm">
                 Swap
               </Button>
-            </a>
+            </Link>
           ))}
         </div>
       </div>
