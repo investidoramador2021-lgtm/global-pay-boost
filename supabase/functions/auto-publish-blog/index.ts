@@ -73,6 +73,54 @@ const TOPIC_TEMPLATES = [
 
 const COINS = ["Bitcoin", "Ethereum", "Solana", "HYPE", "BERA", "Celestia (TIA)", "Monad", "PYUSD", "XRP", "BNB", "Polygon", "Avalanche", "Arbitrum", "Optimism"];
 
+const MIN_WORD_COUNT = 1400;
+
+function countWords(input: string): number {
+  return input.trim().split(/\s+/).filter(Boolean).length;
+}
+
+function evaluatePostQuality(postData: any): string[] {
+  const issues: string[] = [];
+
+  if (!postData?.title || postData.title.length < 45) {
+    issues.push("title is too short for competitive SEO");
+  }
+
+  if (!postData?.metaTitle || postData.metaTitle.length > 60) {
+    issues.push("metaTitle must exist and stay under 60 characters");
+  }
+
+  if (!postData?.metaDescription || postData.metaDescription.length > 160) {
+    issues.push("metaDescription must exist and stay under 160 characters");
+  }
+
+  const content = typeof postData?.content === "string" ? postData.content : "";
+  const words = countWords(content);
+  if (words < MIN_WORD_COUNT) {
+    issues.push(`content too thin (${words} words, need at least ${MIN_WORD_COUNT})`);
+  }
+
+  const headingCount = (content.match(/^##\s+/gm) || []).length + (content.match(/^###\s+/gm) || []).length;
+  if (headingCount < 8) {
+    issues.push("content needs stronger structure (at least 8 H2/H3 headings)");
+  }
+
+  const internalLinks = content.match(/\]\(\/(?:#exchange|blog|swap|privacy|aml)[^)]+\)/g) || [];
+  if (internalLinks.length < 6) {
+    issues.push("content needs at least 6 internal links");
+  }
+
+  if (!/##\s+FAQ/i.test(content)) {
+    issues.push("content must include a dedicated FAQ section");
+  }
+
+  if (!/##\s+Related Reading/i.test(content)) {
+    issues.push("content must include a Related Reading section");
+  }
+
+  return issues;
+}
+
 serve(async (req) => {
   if (req.method === "OPTIONS") {
     return new Response(null, { headers: corsHeaders });
