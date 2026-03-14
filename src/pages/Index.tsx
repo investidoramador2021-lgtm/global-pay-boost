@@ -31,12 +31,13 @@ const Index = () => {
           name="description"
           content="Exchange 500+ cryptocurrencies instantly with the best rates. No registration required. Swap BTC, ETH, SOL, USDT and more in under 2 minutes."
         />
-        <meta name="robots" content="index, follow" />
+        <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1" />
         <link rel="canonical" href="https://mrcglobalpay.com" />
-        <meta property="og:title" content="MRC GlobalPay — Fast & Secure Crypto Exchange" />
+        <meta property="og:title" content="MRC GlobalPay — Fast & Secure Crypto Exchange | 500+ Coins" />
         <meta property="og:description" content="Swap 500+ cryptocurrencies instantly. No registration. Best rates guaranteed." />
         <meta property="og:type" content="website" />
         <meta property="og:url" content="https://mrcglobalpay.com" />
+        <meta property="og:site_name" content="MRC GlobalPay" />
         <script type="application/ld+json">{JSON.stringify(jsonLd)}</script>
       </Helmet>
 
