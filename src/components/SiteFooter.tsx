@@ -1,17 +1,17 @@
 const quickLinks = [
-  { label: "Buy Bitcoin", href: "#exchange-widget" },
-  { label: "Buy Ethereum", href: "#exchange-widget" },
-  { label: "Swap BTC to ETH", href: "#exchange-widget" },
-  { label: "Swap SOL to USDC", href: "#exchange-widget" },
-  { label: "Buy Solana", href: "#exchange-widget" },
-  { label: "Swap XRP to BTC", href: "#exchange-widget" },
+  { label: "Buy Bitcoin", href: "/#exchange-widget" },
+  { label: "Buy Ethereum", href: "/#exchange-widget" },
+  { label: "Swap BTC to ETH", href: "/#exchange-widget" },
+  { label: "Swap SOL to USDC", href: "/#exchange-widget" },
+  { label: "Buy Solana", href: "/#exchange-widget" },
+  { label: "Swap XRP to BTC", href: "/#exchange-widget" },
 ];
 
 const resourceLinks = [
-  { label: "How It Works", href: "#how-it-works" },
-  { label: "Features", href: "#features" },
-  { label: "Popular Pairs", href: "#popular-pairs" },
-  { label: "FAQ", href: "#faq" },
+  { label: "How It Works", href: "/#how-it-works" },
+  { label: "Features", href: "/#features" },
+  { label: "Popular Pairs", href: "/#popular-pairs" },
+  { label: "FAQ", href: "/#faq" },
 ];
 
 const SiteFooter = () => {
