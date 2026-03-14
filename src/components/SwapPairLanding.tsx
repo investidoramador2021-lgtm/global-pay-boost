@@ -133,31 +133,31 @@ const SwapPairLanding = ({
       <SiteHeader />
       <main>
         {/* Hero */}
-        <section className="relative overflow-hidden bg-background py-20 lg:py-28">
+        <section className="relative overflow-hidden bg-background py-12 sm:py-20 lg:py-28">
           <div className="absolute inset-0 opacity-[0.03]" style={{ backgroundImage: 'radial-gradient(hsl(var(--neon)) 1px, transparent 1px)', backgroundSize: '32px 32px' }} />
           <div className="container relative mx-auto px-4">
             <div className="mx-auto max-w-3xl text-center">
               {isFeatured && (
-                <div className="mb-6 inline-flex items-center gap-2 rounded-full border border-primary/30 bg-primary/10 px-4 py-1.5">
-                  <Activity className="h-4 w-4 text-primary" />
-                  <span className="font-display text-xs font-bold uppercase tracking-wider text-primary">March 2026 Trending</span>
+                <div className="mb-4 inline-flex items-center gap-2 rounded-full border border-primary/30 bg-primary/10 px-3 py-1 sm:mb-6 sm:px-4 sm:py-1.5">
+                  <Activity className="h-3.5 w-3.5 text-primary sm:h-4 sm:w-4" />
+                  <span className="font-display text-[10px] font-bold uppercase tracking-wider text-primary sm:text-xs">March 2026 Trending</span>
                 </div>
               )}
-              <h1 className="font-display text-4xl font-extrabold leading-tight tracking-tight text-foreground sm:text-5xl lg:text-6xl">
+              <h1 className="font-display text-3xl font-extrabold leading-tight tracking-tight text-foreground sm:text-4xl lg:text-5xl xl:text-6xl">
                 {headline}
               </h1>
-              <p className="mt-6 font-body text-lg leading-relaxed text-muted-foreground">
+              <p className="mt-4 font-body text-base leading-relaxed text-muted-foreground sm:mt-6 sm:text-lg">
                 {subHeadline}
               </p>
 
-              <div className="mt-8 flex flex-wrap items-center justify-center gap-4">
-                <Button size="lg" className="shadow-neon" asChild>
+              <div className="mt-6 flex flex-col items-center gap-3 sm:mt-8 sm:flex-row sm:justify-center sm:gap-4">
+                <Button size="lg" className="shadow-neon w-full sm:w-auto" asChild>
                   <a href="/#exchange">
                     <Zap className="mr-2 h-5 w-5" />
                     Swap {assetA} → {assetB} Now
                   </a>
                 </Button>
-                <div className="flex items-center gap-2 rounded-lg border border-neon bg-muted/50 px-4 py-2">
+                <div className="flex items-center gap-2 rounded-lg border border-neon bg-muted/50 px-3 py-2 sm:px-4">
                   <Timer className="h-4 w-4 text-primary" />
                   <span className="font-display text-sm font-bold text-primary">Avg. Speed: {avgSpeed}</span>
                 </div>
