@@ -73,6 +73,54 @@ const TOPIC_TEMPLATES = [
 
 const COINS = ["Bitcoin", "Ethereum", "Solana", "HYPE", "BERA", "Celestia (TIA)", "Monad", "PYUSD", "XRP", "BNB", "Polygon", "Avalanche", "Arbitrum", "Optimism"];
 
+const MIN_WORD_COUNT = 1400;
+
+function countWords(input: string): number {
+  return input.trim().split(/\s+/).filter(Boolean).length;
+}
+
+function evaluatePostQuality(postData: any): string[] {
+  const issues: string[] = [];
+
+  if (!postData?.title || postData.title.length < 45) {
+    issues.push("title is too short for competitive SEO");
+  }
+
+  if (!postData?.metaTitle || postData.metaTitle.length > 60) {
+    issues.push("metaTitle must exist and stay under 60 characters");
+  }
+
+  if (!postData?.metaDescription || postData.metaDescription.length > 160) {
+    issues.push("metaDescription must exist and stay under 160 characters");
+  }
+
+  const content = typeof postData?.content === "string" ? postData.content : "";
+  const words = countWords(content);
+  if (words < MIN_WORD_COUNT) {
+    issues.push(`content too thin (${words} words, need at least ${MIN_WORD_COUNT})`);
+  }
+
+  const headingCount = (content.match(/^##\s+/gm) || []).length + (content.match(/^###\s+/gm) || []).length;
+  if (headingCount < 8) {
+    issues.push("content needs stronger structure (at least 8 H2/H3 headings)");
+  }
+
+  const internalLinks = content.match(/\]\((?:\/#exchange|\/blog(?:\/[^)]*)?|\/swap\/[^)]+|\/privacy|\/aml)\)/g) || [];
+  if (internalLinks.length < 6) {
+    issues.push("content needs at least 6 internal links");
+  }
+
+  if (!/##\s+FAQ/i.test(content)) {
+    issues.push("content must include a dedicated FAQ section");
+  }
+
+  if (!/##\s+Related Reading/i.test(content)) {
+    issues.push("content must include a Related Reading section");
+  }
+
+  return issues;
+}
+
 serve(async (req) => {
   if (req.method === "OPTIONS") {
     return new Response(null, { headers: corsHeaders });
@@ -133,48 +181,63 @@ OUTPUT FORMAT — respond with ONLY a JSON object (no markdown code fences):
 
     console.log(`Generating post about: ${coin} | Author: ${author.name}`);
 
-    // Generate the post using Lovable AI
-    const aiResponse = await fetch(AI_URL, {
-      method: "POST",
-      headers: {
-        Authorization: `Bearer ${lovableApiKey}`,
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        model: "google/gemini-2.5-flash",
-        messages: [
-          { role: "system", content: systemPrompt },
-          { role: "user", content: topic },
-        ],
-        temperature: 0.8,
-        max_tokens: 8000,
-      }),
-    });
+    let postData: any;
+    let qualityIssues: string[] = [];
 
-    if (!aiResponse.ok) {
-      const errText = await aiResponse.text();
-      throw new Error(`AI API failed [${aiResponse.status}]: ${errText}`);
+    for (let attempt = 1; attempt <= 2; attempt++) {
+      const attemptTopic =
+        attempt === 1
+          ? topic
+          : `${topic}\n\nYour previous draft failed quality checks: ${qualityIssues.join(", ")}. Rewrite the article from scratch, preserve E-E-A-T tone, and strictly satisfy all quality requirements.`;
+
+      const aiResponse = await fetch(AI_URL, {
+        method: "POST",
+        headers: {
+          Authorization: `Bearer ${lovableApiKey}`,
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          model: "google/gemini-3-flash-preview",
+          messages: [
+            { role: "system", content: systemPrompt },
+            { role: "user", content: attemptTopic },
+          ],
+          temperature: 0.75,
+          max_tokens: 9000,
+        }),
+      });
+
+      if (!aiResponse.ok) {
+        const errText = await aiResponse.text();
+        throw new Error(`AI API failed [${aiResponse.status}]: ${errText}`);
+      }
+
+      const aiData = await aiResponse.json();
+      let rawContent = aiData.choices?.[0]?.message?.content;
+
+      if (!rawContent) {
+        throw new Error("AI returned empty content");
+      }
+
+      rawContent = rawContent.replace(/^```json\s*\n?/i, "").replace(/\n?```\s*$/i, "").trim();
+
+      try {
+        postData = JSON.parse(rawContent);
+      } catch (e) {
+        console.error("Failed to parse AI response:", rawContent.substring(0, 500));
+        throw new Error(`Failed to parse AI response as JSON: ${e.message}`);
+      }
+
+      qualityIssues = evaluatePostQuality(postData);
+      if (qualityIssues.length === 0) break;
+
+      console.warn(`Quality attempt ${attempt} failed: ${qualityIssues.join(" | ")}`);
     }
 
-    const aiData = await aiResponse.json();
-    let rawContent = aiData.choices?.[0]?.message?.content;
-
-    if (!rawContent) {
-      throw new Error("AI returned empty content");
+    if (qualityIssues.length > 0) {
+      throw new Error(`Generated post rejected by quality gate: ${qualityIssues.join("; ")}`);
     }
 
-    // Strip markdown code fences if present
-    rawContent = rawContent.replace(/^```json\s*\n?/i, "").replace(/\n?```\s*$/i, "").trim();
-
-    let postData;
-    try {
-      postData = JSON.parse(rawContent);
-    } catch (e) {
-      console.error("Failed to parse AI response:", rawContent.substring(0, 500));
-      throw new Error(`Failed to parse AI response as JSON: ${e.message}`);
-    }
-
-    // Generate slug from title
     const slug = postData.title
       .toLowerCase()
       .replace(/[^a-z0-9\s-]/g, "")
