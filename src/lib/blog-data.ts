@@ -202,7 +202,7 @@ Your seed phrase IS your crypto. Never:
 
 When using instant swap services like [MRC GlobalPay](/#exchange):
 
-1. **Verify the URL** — Always type `mrcglobalpay.com` directly or use a bookmark. Never follow links from emails or DMs.
+1. **Verify the URL** — Always type mrcglobalpay.com directly or use a bookmark. Never follow links from emails or DMs.
 2. **Double-check wallet addresses** — Compare the first and last 6 characters. Clipboard malware can silently replace addresses.
 3. **Use non-custodial services** — Platforms that never hold your funds eliminate exchange hack risk entirely. Read our [Privacy Policy](/privacy) to understand how MRC GlobalPay handles your data.
 4. **Start with small test transactions** — Before swapping large amounts, send a small test first.
