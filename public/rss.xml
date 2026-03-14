@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:dc="http://purl.org/dc/elements/1.1/">
+  <channel>
+    <title>MRC GlobalPay Blog</title>
+    <link>https://mrcglobalpay.com/blog</link>
+    <description>Expert guides, market analysis, and security insights for cryptocurrency trading and instant swaps.</description>
+    <language>en-us</language>
+    <lastBuildDate>Fri, 14 Mar 2026 00:00:00 GMT</lastBuildDate>
+    <atom:link href="https://mrcglobalpay.com/rss.xml" rel="self" type="application/rss+xml"/>
+    <item>
+      <title>How to Swap Bitcoin to Ethereum in 2026: Complete Step-by-Step Guide</title>
+      <link>https://mrcglobalpay.com/blog/how-to-swap-bitcoin-to-ethereum-2026</link>
+      <guid isPermaLink="true">https://mrcglobalpay.com/blog/how-to-swap-bitcoin-to-ethereum-2026</guid>
+      <description>A comprehensive walkthrough of converting BTC to ETH using instant swap technology — no sign-ups, best rates, settled in seconds.</description>
+      <dc:creator>MRC GlobalPay Team</dc:creator>
+      <pubDate>Tue, 10 Mar 2026 00:00:00 GMT</pubDate>
+      <category>Guides</category>
+    </item>
+    <item>
+      <title>Understanding Crypto Liquidity Aggregation: How Instant Swaps Get You the Best Rates</title>
+      <link>https://mrcglobalpay.com/blog/understanding-crypto-liquidity-aggregation</link>
+      <guid isPermaLink="true">https://mrcglobalpay.com/blog/understanding-crypto-liquidity-aggregation</guid>
+      <description>How modern aggregation engines compare rates across multiple liquidity sources to deliver optimal pricing for every crypto swap.</description>
+      <dc:creator>MRC GlobalPay Team</dc:creator>
+      <pubDate>Sun, 08 Mar 2026 00:00:00 GMT</pubDate>
+      <category>Education</category>
+    </item>
+    <item>
+      <title>Crypto Security Best Practices: Protecting Your Digital Assets in 2026</title>
+      <link>https://mrcglobalpay.com/blog/crypto-security-best-practices-2026</link>
+      <guid isPermaLink="true">https://mrcglobalpay.com/blog/crypto-security-best-practices-2026</guid>
+      <description>Actionable security tips for protecting your crypto during swaps, storage, and daily usage — from wallet hygiene to phishing detection.</description>
+      <dc:creator>MRC GlobalPay Team</dc:creator>
+      <pubDate>Thu, 05 Mar 2026 00:00:00 GMT</pubDate>
+      <category>Security</category>
+    </item>
+    <item>
+      <title>Top Crypto Trading Pairs for March 2026: Volume, Trends &amp; Analysis</title>
+      <link>https://mrcglobalpay.com/blog/top-crypto-trading-pairs-march-2026</link>
+      <guid isPermaLink="true">https://mrcglobalpay.com/blog/top-crypto-trading-pairs-march-2026</guid>
+      <description>Monthly analysis of the highest-volume cryptocurrency trading pairs — what's moving, why, and how to capitalize on the trends.</description>
+      <dc:creator>MRC GlobalPay Team</dc:creator>
+      <pubDate>Sun, 01 Mar 2026 00:00:00 GMT</pubDate>
+      <category>Market Analysis</category>
+    </item>
+  </channel>
+</rss>
