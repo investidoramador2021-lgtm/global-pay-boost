@@ -105,7 +105,7 @@ function evaluatePostQuality(postData: any): string[] {
     issues.push("content needs stronger structure (at least 8 H2/H3 headings)");
   }
 
-  const internalLinks = content.match(/\]\(\/(?:#exchange|blog|swap|privacy|aml)[^)]+\)/g) || [];
+  const internalLinks = content.match(/\]\((?:\/#exchange|\/blog(?:\/[^)]*)?|\/swap\/[^)]+|\/privacy|\/aml)\)/g) || [];
   if (internalLinks.length < 6) {
     issues.push("content needs at least 6 internal links");
   }
