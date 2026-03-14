@@ -33,7 +33,7 @@ const SiteHeader = () => {
 
         <div className="hidden md:block">
           <Button asChild>
-            <a href="#exchange">Start Exchange</a>
+            <a href="/#exchange">Start Exchange</a>
           </Button>
         </div>
 
