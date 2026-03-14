@@ -1,4 +1,5 @@
-import { useParams, Link, Navigate } from "react-router-dom";
+import { useParams, Link, Navigate, useLocation } from "react-router-dom";
+import { useEffect } from "react";
 import { Helmet } from "react-helmet-async";
 import { Calendar, Clock, ArrowLeft, ArrowRight } from "lucide-react";
 import ReactMarkdown from "react-markdown";
@@ -8,7 +9,13 @@ import { getPostBySlug, getRelatedPosts } from "@/lib/blog-data";
 
 const BlogPost = () => {
   const { slug } = useParams<{ slug: string }>();
+  const location = useLocation();
   const post = slug ? getPostBySlug(slug) : undefined;
+
+  // Scroll to top on route change
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, [location.pathname]);
 
   if (!post) return <Navigate to="/blog" replace />;
 
@@ -23,9 +30,10 @@ const BlogPost = () => {
     datePublished: post.publishedAt,
     dateModified: post.updatedAt,
     author: {
-      "@type": "Organization",
+      "@type": "Person",
       name: post.author.name,
-      url: "https://mrcglobalpay.com",
+      jobTitle: post.author.role,
+      url: "https://mrcglobalpay.com/blog",
     },
     publisher: {
       "@type": "Organization",
@@ -152,6 +160,9 @@ const BlogPost = () => {
                 <div className="mt-6 rounded-xl border border-border bg-muted/50 p-4 sm:p-5">
                   <p className="font-display text-sm font-semibold text-foreground">{post.author.name}</p>
                   <p className="font-body text-xs text-primary">{post.author.role}</p>
+                  {post.author.credentials && (
+                    <p className="mt-1 font-body text-[11px] font-medium text-muted-foreground/80">{post.author.credentials}</p>
+                  )}
                   <p className="mt-2 font-body text-xs leading-relaxed text-muted-foreground">{post.author.bio}</p>
                 </div>
               </header>
