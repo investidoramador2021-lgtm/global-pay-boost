@@ -44,6 +44,10 @@ const App = () => (
               <Route path="/swap/hype-usdt" element={<SwapHypeUsdt />} />
               <Route path="/swap/eth-sol" element={<SwapEthSol />} />
               <Route path="/swap/xrp-usdt" element={<SwapXrpUsdt />} />
+              <Route path="/swap/bera-usdt" element={<SwapBeraUsdt />} />
+              <Route path="/swap/tia-usdt" element={<SwapTiaUsdt />} />
+              <Route path="/swap/monad-usdt" element={<SwapMonadUsdt />} />
+              <Route path="/swap/pyusd-usdt" element={<SwapPyusdUsdt />} />
               {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
               <Route path="*" element={<NotFound />} />
             </Routes>
