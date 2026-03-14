@@ -58,20 +58,20 @@ export interface TransactionStatus {
 }
 
 async function callChangeNow(params: Record<string, string>, method: 'GET' | 'POST' = 'GET', body?: object) {
-  const queryString = new URLSearchParams(params).toString();
-  
   if (method === 'POST') {
     const { data, error } = await supabase.functions.invoke('changenow', {
       method: 'POST',
       body: { ...body, _action: params.action },
-      headers: { 'Content-Type': 'application/json' },
     });
     if (error) throw new Error(error.message);
     return data;
   }
 
-  const { data, error } = await supabase.functions.invoke(`changenow?${queryString}`, {
-    method: 'GET',
+  // For GET requests, we pass params in body since supabase.functions.invoke
+  // doesn't support query params easily. We'll use POST with a _method hint.
+  const { data, error } = await supabase.functions.invoke('changenow', {
+    method: 'POST',
+    body: { _get: true, ...params },
   });
   if (error) throw new Error(error.message);
   return data;
