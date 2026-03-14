@@ -38,10 +38,10 @@ const BlogMarkdown = ({ content }: BlogMarkdownProps) => {
             );
           },
           h2: ({ children }) => (
-            <h2 className="mt-12 mb-4 font-display text-2xl font-bold leading-tight text-foreground sm:text-3xl">{children}</h2>
+            <h2 className="mb-4 mt-12 font-display text-2xl font-bold leading-tight text-foreground sm:text-3xl">{children}</h2>
           ),
           h3: ({ children }) => (
-            <h3 className="mt-8 mb-3 font-display text-xl font-semibold leading-tight text-foreground sm:text-2xl">{children}</h3>
+            <h3 className="mb-3 mt-8 font-display text-xl font-semibold leading-tight text-foreground sm:text-2xl">{children}</h3>
           ),
           p: ({ children }) => <p className="text-base leading-8 text-muted-foreground">{children}</p>,
           ul: ({ children }) => <ul className="ml-6 list-disc space-y-3 text-muted-foreground">{children}</ul>,
@@ -52,8 +52,8 @@ const BlogMarkdown = ({ content }: BlogMarkdownProps) => {
           ),
           strong: ({ children }) => <strong className="font-semibold text-foreground">{children}</strong>,
           hr: () => <hr className="my-8 border-border" />,
-          code: ({ inline, children }) =>
-            inline ? (
+          code: ({ children, ...props }: any) =>
+            props.inline ? (
               <code className="rounded bg-muted px-1.5 py-0.5 text-sm text-foreground">{children}</code>
             ) : (
               <code className="block overflow-x-auto rounded-lg border border-border bg-muted px-4 py-3 text-sm text-foreground">{children}</code>
