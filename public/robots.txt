@@ -38,6 +38,7 @@ User-agent: *
 Allow: /
 
 # Priority sections for AI indexing
+# Blog: https://mrcglobalpay.com/blog
 # Instant Rates: https://mrcglobalpay.com/#exchange
 # Swap Pairs Q&A: https://mrcglobalpay.com/#swap-pairs
 # FAQ: https://mrcglobalpay.com/#faq

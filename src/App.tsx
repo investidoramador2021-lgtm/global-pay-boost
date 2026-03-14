@@ -14,6 +14,8 @@ import SwapBtcUsdc from "./pages/SwapBtcUsdc.tsx";
 import SwapHypeUsdt from "./pages/SwapHypeUsdt.tsx";
 import SwapEthSol from "./pages/SwapEthSol.tsx";
 import SwapXrpUsdt from "./pages/SwapXrpUsdt.tsx";
+import Blog from "./pages/Blog.tsx";
+import BlogPost from "./pages/BlogPost.tsx";
 import NotFound from "./pages/NotFound.tsx";
 
 const queryClient = new QueryClient();
@@ -28,6 +30,8 @@ const App = () => (
           <BrowserRouter>
             <Routes>
               <Route path="/" element={<Index />} />
+              <Route path="/blog" element={<Blog />} />
+              <Route path="/blog/:slug" element={<BlogPost />} />
               <Route path="/privacy" element={<PrivacyPolicy />} />
               <Route path="/terms" element={<TermsOfService />} />
               <Route path="/aml" element={<AMLPolicy />} />

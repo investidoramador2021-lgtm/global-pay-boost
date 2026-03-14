@@ -1,30 +1,31 @@
-# MRC GlobalPay — llms.txt
+# MRC GlobalPay
 
-> MRC GlobalPay is an instant crypto-to-crypto swap platform supporting 500+ digital assets with zero-delay settlement and no registration required.
+> Instant crypto-to-crypto swaps with zero confirmation delays. Exchange 500+ cryptocurrencies with the best market rates in under 60 seconds.
 
-## Key Pages
+## Main Pages
 
-- [Homepage / Instant Swap Widget](https://mrcglobalpay.com/): Real-time exchange widget with live rates for 500+ cryptocurrencies. Avg settlement: under 60 seconds.
-- [Swap Pairs Q&A](https://mrcglobalpay.com/#swap-pairs): Detailed Q&A for popular swap pairs including BTC/USDT, ETH/SOL, XRP/ETH, DOGE/BTC and more.
-- [How It Works](https://mrcglobalpay.com/#how-it-works): Four-step swap process — pick pair, enter wallet, send funds, receive in seconds.
-- [Features](https://mrcglobalpay.com/#features): Sub-60s settlement, zero hidden fees, no KYC, 500+ assets, 24/7 uptime, global access.
-- [FAQ](https://mrcglobalpay.com/#faq): Frequently asked questions about security, fees, processing times, and supported cryptocurrencies.
-- [Popular Trading Pairs](https://mrcglobalpay.com/#popular-pairs): Most traded crypto pairs with instant settlement.
+- [Home](https://mrcglobalpay.com/)
+- [Blog](https://mrcglobalpay.com/blog)
+- [Swap SOL to USDT](https://mrcglobalpay.com/swap/sol-usdt)
+- [Swap BTC to USDC](https://mrcglobalpay.com/swap/btc-usdc)
+- [Swap ETH to SOL](https://mrcglobalpay.com/swap/eth-sol)
+- [Swap XRP to USDT](https://mrcglobalpay.com/swap/xrp-usdt)
+- [Swap HYPE to USDT](https://mrcglobalpay.com/swap/hype-usdt)
 
-## Swap Pair Landing Pages
+## Blog Articles
 
-- [Instant SOL to USDT Swap](https://mrcglobalpay.com/swap/sol-usdt): High-volume retail favorite. Avg speed: 42s.
-- [Instant BTC to USDC Swap](https://mrcglobalpay.com/swap/btc-usdc): Primary institutional and safety pair. Avg speed: 45s.
-- [Instant HYPE to USDT Swap](https://mrcglobalpay.com/swap/hype-usdt): 2026 breakout degen swap pair. Avg speed: 38s.
-- [Instant ETH to SOL Swap](https://mrcglobalpay.com/swap/eth-sol): Top cross-chain bridge-swap for DeFi. Avg speed: 48s.
-- [Instant XRP to USDT Swap](https://mrcglobalpay.com/swap/xrp-usdt): High volume post-ETF clarity. Avg speed: 35s.
+- [How to Swap Bitcoin to Ethereum in 2026](https://mrcglobalpay.com/blog/how-to-swap-bitcoin-to-ethereum-2026)
+- [Understanding Crypto Liquidity Aggregation](https://mrcglobalpay.com/blog/understanding-crypto-liquidity-aggregation)
+- [Crypto Security Best Practices 2026](https://mrcglobalpay.com/blog/crypto-security-best-practices-2026)
+- [Top Crypto Trading Pairs March 2026](https://mrcglobalpay.com/blog/top-crypto-trading-pairs-march-2026)
 
-## Core Facts
+## Legal
 
-- Average swap settlement time: under 60 seconds
-- Supported cryptocurrencies: 500+
-- Registration required: No
-- KYC required: No
-- Hidden fees: None
-- Availability: 24/7/365, worldwide
-- Liquidity: Aggregated from multiple top-tier providers for best market rates
+- [Privacy Policy](https://mrcglobalpay.com/privacy)
+- [Terms of Service](https://mrcglobalpay.com/terms)
+- [AML Policy](https://mrcglobalpay.com/aml)
+
+## Feeds
+
+- [RSS Feed](https://mrcglobalpay.com/rss.xml)
+- [Sitemap](https://mrcglobalpay.com/sitemap.xml)
