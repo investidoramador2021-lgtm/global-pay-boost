@@ -21,9 +21,32 @@ Deno.serve(async (req) => {
   }
 
   try {
-    const url = new URL(req.url);
-    const action = url.searchParams.get('action');
+    // Parse params from URL query string or POST body
+    let params: Record<string, string> = {};
+    let postBody: Record<string, unknown> | null = null;
 
+    const url = new URL(req.url);
+    // Collect query params
+    url.searchParams.forEach((value, key) => {
+      params[key] = value;
+    });
+
+    // If POST, also read body
+    if (req.method === 'POST') {
+      const body = await req.json();
+      // If _get flag is set, this is a "GET" routed through POST
+      if (body._get) {
+        const { _get, ...rest } = body;
+        params = { ...params, ...rest };
+      } else {
+        // Real POST (create transaction)
+        const { _action, ...rest } = body;
+        if (_action) params.action = _action;
+        postBody = rest;
+      }
+    }
+
+    const action = params.action;
     let apiUrl: string;
 
     switch (action) {
@@ -32,8 +55,8 @@ Deno.serve(async (req) => {
         break;
       }
       case 'min-amount': {
-        const from = url.searchParams.get('from');
-        const to = url.searchParams.get('to');
+        const from = params.from;
+        const to = params.to;
         if (!from || !to) {
           return new Response(JSON.stringify({ error: 'Missing from/to params' }), {
             status: 400,
@@ -44,9 +67,9 @@ Deno.serve(async (req) => {
         break;
       }
       case 'estimate': {
-        const from = url.searchParams.get('from');
-        const to = url.searchParams.get('to');
-        const amount = url.searchParams.get('amount');
+        const from = params.from;
+        const to = params.to;
+        const amount = params.amount;
         if (!from || !to || !amount) {
           return new Response(JSON.stringify({ error: 'Missing from/to/amount params' }), {
             status: 400,
@@ -57,17 +80,16 @@ Deno.serve(async (req) => {
         break;
       }
       case 'create-transaction': {
-        if (req.method !== 'POST') {
-          return new Response(JSON.stringify({ error: 'POST required' }), {
-            status: 405,
+        if (!postBody) {
+          return new Response(JSON.stringify({ error: 'POST body required' }), {
+            status: 400,
             headers: { ...corsHeaders, 'Content-Type': 'application/json' },
           });
         }
-        const body = await req.json();
         const response = await fetch(`${CHANGENOW_BASE}/transactions/${apiKey}`, {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify(body),
+          body: JSON.stringify(postBody),
         });
         const data = await response.json();
         if (!response.ok) {
@@ -82,7 +104,7 @@ Deno.serve(async (req) => {
         });
       }
       case 'tx-status': {
-        const id = url.searchParams.get('id');
+        const id = params.id;
         if (!id) {
           return new Response(JSON.stringify({ error: 'Missing id param' }), {
             status: 400,
@@ -93,7 +115,7 @@ Deno.serve(async (req) => {
         break;
       }
       default:
-        return new Response(JSON.stringify({ error: 'Invalid action' }), {
+        return new Response(JSON.stringify({ error: `Invalid action: ${action}` }), {
           status: 400,
           headers: { ...corsHeaders, 'Content-Type': 'application/json' },
         });
