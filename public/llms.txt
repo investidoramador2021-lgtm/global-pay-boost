@@ -11,6 +11,14 @@
 - [FAQ](https://mrcglobalpay.com/#faq): Frequently asked questions about security, fees, processing times, and supported cryptocurrencies.
 - [Popular Trading Pairs](https://mrcglobalpay.com/#popular-pairs): Most traded crypto pairs with instant settlement.
 
+## Swap Pair Landing Pages
+
+- [Instant SOL to USDT Swap](https://mrcglobalpay.com/swap/sol-usdt): High-volume retail favorite. Avg speed: 42s.
+- [Instant BTC to USDC Swap](https://mrcglobalpay.com/swap/btc-usdc): Primary institutional and safety pair. Avg speed: 45s.
+- [Instant HYPE to USDT Swap](https://mrcglobalpay.com/swap/hype-usdt): 2026 breakout degen swap pair. Avg speed: 38s.
+- [Instant ETH to SOL Swap](https://mrcglobalpay.com/swap/eth-sol): Top cross-chain bridge-swap for DeFi. Avg speed: 48s.
+- [Instant XRP to USDT Swap](https://mrcglobalpay.com/swap/xrp-usdt): High volume post-ETF clarity. Avg speed: 35s.
+
 ## Core Facts
 
 - Average swap settlement time: under 60 seconds

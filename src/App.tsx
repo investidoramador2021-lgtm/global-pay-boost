@@ -8,6 +8,11 @@ import Index from "./pages/Index.tsx";
 import PrivacyPolicy from "./pages/PrivacyPolicy.tsx";
 import TermsOfService from "./pages/TermsOfService.tsx";
 import AMLPolicy from "./pages/AMLPolicy.tsx";
+import SwapSolUsdt from "./pages/SwapSolUsdt.tsx";
+import SwapBtcUsdc from "./pages/SwapBtcUsdc.tsx";
+import SwapHypeUsdt from "./pages/SwapHypeUsdt.tsx";
+import SwapEthSol from "./pages/SwapEthSol.tsx";
+import SwapXrpUsdt from "./pages/SwapXrpUsdt.tsx";
 import NotFound from "./pages/NotFound.tsx";
 
 const queryClient = new QueryClient();
@@ -24,6 +29,11 @@ const App = () => (
             <Route path="/privacy" element={<PrivacyPolicy />} />
             <Route path="/terms" element={<TermsOfService />} />
             <Route path="/aml" element={<AMLPolicy />} />
+            <Route path="/swap/sol-usdt" element={<SwapSolUsdt />} />
+            <Route path="/swap/btc-usdc" element={<SwapBtcUsdc />} />
+            <Route path="/swap/hype-usdt" element={<SwapHypeUsdt />} />
+            <Route path="/swap/eth-sol" element={<SwapEthSol />} />
+            <Route path="/swap/xrp-usdt" element={<SwapXrpUsdt />} />
             {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
             <Route path="*" element={<NotFound />} />
           </Routes>
