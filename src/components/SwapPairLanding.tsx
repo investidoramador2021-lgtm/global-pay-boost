@@ -167,24 +167,24 @@ const SwapPairLanding = ({
         </section>
 
         {/* Performance Metrics Bar */}
-        <section className="bg-hero-gradient py-10">
+        <section className="bg-hero-gradient py-6 sm:py-10">
           <div className="container mx-auto px-4">
-            <div className="flex flex-wrap items-center justify-center gap-8 lg:gap-16">
+            <div className="grid grid-cols-2 gap-4 sm:flex sm:flex-wrap sm:items-center sm:justify-center sm:gap-8 lg:gap-16">
               <div className="flex items-center gap-2">
-                <Gauge className="h-5 w-5 text-primary-foreground" />
-                <span className="font-display text-sm font-bold text-primary-foreground">Processing: Under 60s</span>
+                <Gauge className="h-4 w-4 text-primary-foreground sm:h-5 sm:w-5" />
+                <span className="font-display text-xs font-bold text-primary-foreground sm:text-sm">Processing: Under 60s</span>
               </div>
               <div className="flex items-center gap-2">
-                <CheckCircle2 className="h-5 w-5 text-primary-foreground" />
-                <span className="font-display text-sm font-bold text-primary-foreground">Settlement: Immediate Finality</span>
+                <CheckCircle2 className="h-4 w-4 text-primary-foreground sm:h-5 sm:w-5" />
+                <span className="font-display text-xs font-bold text-primary-foreground sm:text-sm">Immediate Finality</span>
               </div>
               <div className="flex items-center gap-2">
-                <Clock className="h-5 w-5 text-primary-foreground" />
-                <span className="font-display text-sm font-bold text-primary-foreground">Friction: Zero Delays</span>
+                <Clock className="h-4 w-4 text-primary-foreground sm:h-5 sm:w-5" />
+                <span className="font-display text-xs font-bold text-primary-foreground sm:text-sm">Zero Delays</span>
               </div>
               <div className="flex items-center gap-2">
-                <Activity className="h-5 w-5 text-primary-foreground" />
-                <span className="font-display text-sm font-bold text-primary-foreground">Liquidity: Deep</span>
+                <Activity className="h-4 w-4 text-primary-foreground sm:h-5 sm:w-5" />
+                <span className="font-display text-xs font-bold text-primary-foreground sm:text-sm">Liquidity: Deep</span>
               </div>
             </div>
           </div>
