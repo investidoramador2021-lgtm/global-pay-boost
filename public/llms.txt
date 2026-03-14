@@ -6,11 +6,18 @@
 
 - [Home](https://mrcglobalpay.com/)
 - [Blog](https://mrcglobalpay.com/blog)
+
+## Swap Landing Pages
+
 - [Swap SOL to USDT](https://mrcglobalpay.com/swap/sol-usdt)
 - [Swap BTC to USDC](https://mrcglobalpay.com/swap/btc-usdc)
 - [Swap ETH to SOL](https://mrcglobalpay.com/swap/eth-sol)
 - [Swap XRP to USDT](https://mrcglobalpay.com/swap/xrp-usdt)
 - [Swap HYPE to USDT](https://mrcglobalpay.com/swap/hype-usdt)
+- [Swap BERA to USDT](https://mrcglobalpay.com/swap/bera-usdt)
+- [Swap TIA to USDT](https://mrcglobalpay.com/swap/tia-usdt)
+- [Swap MONAD to USDT](https://mrcglobalpay.com/swap/monad-usdt)
+- [Swap PYUSD to USDT](https://mrcglobalpay.com/swap/pyusd-usdt)
 
 ## Blog Articles
 

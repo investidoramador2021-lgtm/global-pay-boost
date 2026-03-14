@@ -14,6 +14,10 @@ import SwapBtcUsdc from "./pages/SwapBtcUsdc.tsx";
 import SwapHypeUsdt from "./pages/SwapHypeUsdt.tsx";
 import SwapEthSol from "./pages/SwapEthSol.tsx";
 import SwapXrpUsdt from "./pages/SwapXrpUsdt.tsx";
+import SwapBeraUsdt from "./pages/SwapBeraUsdt.tsx";
+import SwapTiaUsdt from "./pages/SwapTiaUsdt.tsx";
+import SwapMonadUsdt from "./pages/SwapMonadUsdt.tsx";
+import SwapPyusdUsdt from "./pages/SwapPyusdUsdt.tsx";
 import Blog from "./pages/Blog.tsx";
 import BlogPost from "./pages/BlogPost.tsx";
 import NotFound from "./pages/NotFound.tsx";
@@ -40,6 +44,10 @@ const App = () => (
               <Route path="/swap/hype-usdt" element={<SwapHypeUsdt />} />
               <Route path="/swap/eth-sol" element={<SwapEthSol />} />
               <Route path="/swap/xrp-usdt" element={<SwapXrpUsdt />} />
+              <Route path="/swap/bera-usdt" element={<SwapBeraUsdt />} />
+              <Route path="/swap/tia-usdt" element={<SwapTiaUsdt />} />
+              <Route path="/swap/monad-usdt" element={<SwapMonadUsdt />} />
+              <Route path="/swap/pyusd-usdt" element={<SwapPyusdUsdt />} />
               {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
               <Route path="*" element={<NotFound />} />
             </Routes>

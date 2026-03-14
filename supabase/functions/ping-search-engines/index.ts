@@ -15,6 +15,10 @@ const ALL_URLS = [
   `${SITE}/swap/hype-usdt`,
   `${SITE}/swap/eth-sol`,
   `${SITE}/swap/xrp-usdt`,
+  `${SITE}/swap/bera-usdt`,
+  `${SITE}/swap/tia-usdt`,
+  `${SITE}/swap/monad-usdt`,
+  `${SITE}/swap/pyusd-usdt`,
 ];
 
 const corsHeaders = {
@@ -64,7 +68,7 @@ serve(async (req) => {
     results.indexnow = `error: ${e.message}`;
   }
 
-  // 4. Google Indexing API ping via search console (public sitemap re-fetch trigger)
+  // 4. Google RSS ping
   try {
     const gPing = await fetch(`https://www.google.com/ping?sitemap=${encodeURIComponent(`${SITE}/rss.xml`)}`);
     results.google_rss = gPing.ok ? "OK" : `${gPing.status}`;
