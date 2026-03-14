@@ -1,17 +1,17 @@
 const quickLinks = [
-  { label: "Buy Bitcoin", href: "#exchange-widget" },
-  { label: "Buy Ethereum", href: "#exchange-widget" },
-  { label: "Swap BTC to ETH", href: "#exchange-widget" },
-  { label: "Swap SOL to USDC", href: "#exchange-widget" },
-  { label: "Buy Solana", href: "#exchange-widget" },
-  { label: "Swap XRP to BTC", href: "#exchange-widget" },
+  { label: "Buy Bitcoin", href: "/#exchange-widget" },
+  { label: "Buy Ethereum", href: "/#exchange-widget" },
+  { label: "Swap BTC to ETH", href: "/#exchange-widget" },
+  { label: "Swap SOL to USDC", href: "/#exchange-widget" },
+  { label: "Buy Solana", href: "/#exchange-widget" },
+  { label: "Swap XRP to BTC", href: "/#exchange-widget" },
 ];
 
 const resourceLinks = [
-  { label: "How It Works", href: "#how-it-works" },
-  { label: "Features", href: "#features" },
-  { label: "Popular Pairs", href: "#popular-pairs" },
-  { label: "FAQ", href: "#faq" },
+  { label: "How It Works", href: "/#how-it-works" },
+  { label: "Features", href: "/#features" },
+  { label: "Popular Pairs", href: "/#popular-pairs" },
+  { label: "FAQ", href: "/#faq" },
 ];
 
 const SiteFooter = () => {
@@ -64,17 +64,17 @@ const SiteFooter = () => {
             </h3>
             <ul className="mt-4 space-y-3">
               <li>
-                <a href="#" className="font-body text-sm text-primary-foreground/50 transition-colors hover:text-primary-foreground">
+                <a href="/privacy" className="font-body text-sm text-primary-foreground/50 transition-colors hover:text-primary-foreground">
                   Privacy Policy
                 </a>
               </li>
               <li>
-                <a href="#" className="font-body text-sm text-primary-foreground/50 transition-colors hover:text-primary-foreground">
+                <a href="/terms" className="font-body text-sm text-primary-foreground/50 transition-colors hover:text-primary-foreground">
                   Terms of Service
                 </a>
               </li>
               <li>
-                <a href="#" className="font-body text-sm text-primary-foreground/50 transition-colors hover:text-primary-foreground">
+                <a href="/aml" className="font-body text-sm text-primary-foreground/50 transition-colors hover:text-primary-foreground">
                   AML Policy
                 </a>
               </li>

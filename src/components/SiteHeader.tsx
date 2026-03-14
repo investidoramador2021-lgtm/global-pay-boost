@@ -3,10 +3,10 @@ import { Menu, X } from "lucide-react";
 import { Button } from "@/components/ui/button";
 
 const navLinks = [
-  { label: "How It Works", href: "#how-it-works" },
-  { label: "Features", href: "#features" },
-  { label: "Popular Pairs", href: "#popular-pairs" },
-  { label: "FAQ", href: "#faq" },
+  { label: "How It Works", href: "/#how-it-works" },
+  { label: "Features", href: "/#features" },
+  { label: "Popular Pairs", href: "/#popular-pairs" },
+  { label: "FAQ", href: "/#faq" },
 ];
 
 const SiteHeader = () => {
@@ -33,7 +33,7 @@ const SiteHeader = () => {
 
         <div className="hidden md:block">
           <Button asChild>
-            <a href="#exchange">Start Exchange</a>
+            <a href="/#exchange">Start Exchange</a>
           </Button>
         </div>
 
@@ -59,7 +59,7 @@ const SiteHeader = () => {
             </a>
           ))}
           <Button className="mt-2 w-full" asChild>
-            <a href="#exchange" onClick={() => setMobileOpen(false)}>Start Exchange</a>
+            <a href="/#exchange" onClick={() => setMobileOpen(false)}>Start Exchange</a>
           </Button>
         </div>
       )}
