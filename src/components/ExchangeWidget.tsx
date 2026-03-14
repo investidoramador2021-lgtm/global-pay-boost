@@ -1,12 +1,34 @@
 import { useState, useEffect, useCallback, useRef } from "react";
-import { motion } from "framer-motion";
-import { ArrowDownUp, Loader2, Search } from "lucide-react";
+import { motion, AnimatePresence } from "framer-motion";
+import { ArrowDownUp, Loader2, Search, Copy, Check, ArrowLeft, Clock, CheckCircle2, AlertCircle, ExternalLink } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { getCurrencies, getEstimate, getMinAmount, type Currency } from "@/lib/changenow";
+import {
+  getCurrencies,
+  getEstimate,
+  getMinAmount,
+  createTransaction,
+  getTransactionStatus,
+  type Currency,
+  type TransactionResult,
+  type TransactionStatus,
+} from "@/lib/changenow";
 import { useToast } from "@/hooks/use-toast";
 
 const POPULAR_TICKERS = ["btc", "eth", "usdt", "sol", "xrp", "doge", "bnb", "ltc", "usdc", "trx"];
+
+type Step = "exchange" | "address" | "deposit" | "status";
+
+const STATUS_LABELS: Record<string, { label: string; color: string; icon: React.ReactNode }> = {
+  waiting: { label: "Waiting for deposit", color: "text-muted-foreground", icon: <Clock className="h-5 w-5" /> },
+  confirming: { label: "Confirming transaction", color: "text-primary", icon: <Loader2 className="h-5 w-5 animate-spin" /> },
+  exchanging: { label: "Exchanging", color: "text-primary", icon: <Loader2 className="h-5 w-5 animate-spin" /> },
+  sending: { label: "Sending to your wallet", color: "text-trust", icon: <Loader2 className="h-5 w-5 animate-spin" /> },
+  finished: { label: "Exchange complete!", color: "text-trust", icon: <CheckCircle2 className="h-5 w-5" /> },
+  failed: { label: "Exchange failed", color: "text-destructive", icon: <AlertCircle className="h-5 w-5" /> },
+  refunded: { label: "Refunded", color: "text-muted-foreground", icon: <AlertCircle className="h-5 w-5" /> },
+  overdue: { label: "Overdue", color: "text-destructive", icon: <AlertCircle className="h-5 w-5" /> },
+};
 
 const ExchangeWidget = () => {
   const { toast } = useToast();
@@ -23,7 +45,17 @@ const ExchangeWidget = () => {
   const [searchQuery, setSearchQuery] = useState("");
   const debounceRef = useRef<ReturnType<typeof setTimeout>>();
 
-  // Load currencies
+  // Transaction flow state
+  const [step, setStep] = useState<Step>("exchange");
+  const [recipientAddress, setRecipientAddress] = useState("");
+  const [refundAddress, setRefundAddress] = useState("");
+  const [extraId, setExtraId] = useState("");
+  const [creatingTx, setCreatingTx] = useState(false);
+  const [transaction, setTransaction] = useState<TransactionResult | null>(null);
+  const [txStatus, setTxStatus] = useState<TransactionStatus | null>(null);
+  const [copied, setCopied] = useState<string | null>(null);
+  const statusPollRef = useRef<ReturnType<typeof setInterval>>();
+
   useEffect(() => {
     setLoading(true);
     getCurrencies()
@@ -42,7 +74,6 @@ const ExchangeWidget = () => {
       .finally(() => setLoading(false));
   }, []);
 
-  // Get estimate when params change
   const fetchEstimate = useCallback(async () => {
     if (!fromCurrency || !toCurrency || !sendAmount || parseFloat(sendAmount) <= 0) {
       setEstimatedAmount("");
@@ -69,9 +100,74 @@ const ExchangeWidget = () => {
     return () => { if (debounceRef.current) clearTimeout(debounceRef.current); };
   }, [fetchEstimate]);
 
+  // Poll transaction status
+  useEffect(() => {
+    if (step === "status" && transaction?.id) {
+      const poll = async () => {
+        try {
+          const status = await getTransactionStatus(transaction.id);
+          setTxStatus(status);
+          if (["finished", "failed", "refunded"].includes(status.status)) {
+            if (statusPollRef.current) clearInterval(statusPollRef.current);
+          }
+        } catch (err) {
+          console.error("Status poll error:", err);
+        }
+      };
+      poll();
+      statusPollRef.current = setInterval(poll, 15000);
+      return () => { if (statusPollRef.current) clearInterval(statusPollRef.current); };
+    }
+  }, [step, transaction?.id]);
+
   const handleSwap = () => {
     setFromCurrency(toCurrency);
     setToCurrency(fromCurrency);
+  };
+
+  const handleExchangeNow = () => {
+    setStep("address");
+  };
+
+  const handleCreateTransaction = async () => {
+    if (!fromCurrency || !toCurrency || !recipientAddress.trim()) return;
+    setCreatingTx(true);
+    try {
+      const result = await createTransaction({
+        from: fromCurrency.ticker,
+        to: toCurrency.ticker,
+        amount: parseFloat(sendAmount),
+        address: recipientAddress.trim(),
+        ...(extraId && { extraId }),
+        ...(refundAddress && { refundAddress: refundAddress.trim() }),
+      });
+      setTransaction(result);
+      setStep("deposit");
+    } catch (err: unknown) {
+      const msg = err instanceof Error ? err.message : "Transaction creation failed";
+      toast({ title: "Error", description: msg, variant: "destructive" });
+    } finally {
+      setCreatingTx(false);
+    }
+  };
+
+  const handleCopy = async (text: string, label: string) => {
+    await navigator.clipboard.writeText(text);
+    setCopied(label);
+    setTimeout(() => setCopied(null), 2000);
+  };
+
+  const handleProceedToStatus = () => {
+    setStep("status");
+  };
+
+  const handleNewExchange = () => {
+    setStep("exchange");
+    setRecipientAddress("");
+    setRefundAddress("");
+    setExtraId("");
+    setTransaction(null);
+    setTxStatus(null);
   };
 
   const filteredCurrencies = currencies.filter((c) => {
@@ -105,10 +201,7 @@ const ExchangeWidget = () => {
     if (!show) return null;
     return (
       <div className="fixed inset-0 z-50 flex items-center justify-center bg-foreground/40 p-4" onClick={onClose}>
-        <div
-          className="w-full max-w-md rounded-2xl border border-border bg-card shadow-elevated"
-          onClick={(e) => e.stopPropagation()}
-        >
+        <div className="w-full max-w-md rounded-2xl border border-border bg-card shadow-elevated" onClick={(e) => e.stopPropagation()}>
           <div className="flex items-center gap-2 border-b border-border p-4">
             <Search className="h-4 w-4 text-muted-foreground" />
             <input
@@ -157,6 +250,16 @@ const ExchangeWidget = () => {
     );
   }
 
+  const CopyButton = ({ text, label }: { text: string; label: string }) => (
+    <button
+      onClick={() => handleCopy(text, label)}
+      className="flex h-8 w-8 shrink-0 items-center justify-center rounded-lg border border-border bg-background text-muted-foreground transition-colors hover:bg-accent hover:text-foreground"
+      title="Copy"
+    >
+      {copied === label ? <Check className="h-3.5 w-3.5 text-trust" /> : <Copy className="h-3.5 w-3.5" />}
+    </button>
+  );
+
   return (
     <motion.div
       initial={{ opacity: 0, y: 20 }}
@@ -165,98 +268,313 @@ const ExchangeWidget = () => {
       id="exchange-widget"
       className="relative rounded-2xl border border-border bg-card p-6 shadow-elevated sm:p-8"
     >
-      <h2 className="mb-6 font-display text-lg font-semibold text-foreground">Quick Exchange</h2>
+      <AnimatePresence mode="wait">
+        {/* ===== STEP 1: Exchange Form ===== */}
+        {step === "exchange" && (
+          <motion.div key="exchange" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}>
+            <h2 className="mb-6 font-display text-lg font-semibold text-foreground">Quick Exchange</h2>
 
-      {/* You Send */}
-      <div className="relative">
-        <label className="mb-1.5 block font-body text-xs font-medium uppercase tracking-wider text-muted-foreground">
-          You Send
-        </label>
-        <div className="flex items-center gap-3 rounded-xl border border-border bg-accent p-4">
-          <Input
-            type="number"
-            value={sendAmount}
-            onChange={(e) => setSendAmount(e.target.value)}
-            className="flex-1 border-none bg-transparent p-0 font-display text-2xl font-bold text-foreground shadow-none focus-visible:ring-0"
-            min={0}
-            step="any"
-          />
-          <button
-            onClick={() => setShowFromPicker(true)}
-            className="flex items-center gap-2 rounded-lg bg-primary/10 px-3 py-1.5 transition-colors hover:bg-primary/20"
-          >
-            {fromCurrency?.image && <img src={fromCurrency.image} alt="" className="h-5 w-5 rounded-full" />}
-            <span className="font-display text-sm font-semibold uppercase text-primary">
-              {fromCurrency?.ticker || "Select"}
-            </span>
-          </button>
-        </div>
-        {belowMin && (
-          <p className="mt-1 font-body text-xs text-destructive">
-            Minimum amount: {minAmount} {fromCurrency?.ticker?.toUpperCase()}
-          </p>
+            <div className="relative">
+              <label className="mb-1.5 block font-body text-xs font-medium uppercase tracking-wider text-muted-foreground">You Send</label>
+              <div className="flex items-center gap-3 rounded-xl border border-border bg-accent p-4">
+                <Input
+                  type="number"
+                  value={sendAmount}
+                  onChange={(e) => setSendAmount(e.target.value)}
+                  className="flex-1 border-none bg-transparent p-0 font-display text-2xl font-bold text-foreground shadow-none focus-visible:ring-0"
+                  min={0}
+                  step="any"
+                />
+                <button onClick={() => setShowFromPicker(true)} className="flex items-center gap-2 rounded-lg bg-primary/10 px-3 py-1.5 transition-colors hover:bg-primary/20">
+                  {fromCurrency?.image && <img src={fromCurrency.image} alt="" className="h-5 w-5 rounded-full" />}
+                  <span className="font-display text-sm font-semibold uppercase text-primary">{fromCurrency?.ticker || "Select"}</span>
+                </button>
+              </div>
+              {belowMin && (
+                <p className="mt-1 font-body text-xs text-destructive">
+                  Minimum amount: {minAmount} {fromCurrency?.ticker?.toUpperCase()}
+                </p>
+              )}
+              <CurrencyPicker show={showFromPicker} onSelect={setFromCurrency} onClose={() => setShowFromPicker(false)} exclude={toCurrency?.ticker} />
+            </div>
+
+            <div className="my-3 flex justify-center">
+              <button onClick={handleSwap} className="flex h-10 w-10 items-center justify-center rounded-full border border-border bg-background text-primary transition-colors hover:bg-accent" aria-label="Swap currencies">
+                <ArrowDownUp className="h-4 w-4" />
+              </button>
+            </div>
+
+            <div className="relative">
+              <label className="mb-1.5 block font-body text-xs font-medium uppercase tracking-wider text-muted-foreground">You Get (estimated)</label>
+              <div className="flex items-center gap-3 rounded-xl border border-border bg-accent p-4">
+                <span className="flex-1 font-display text-2xl font-bold text-foreground">
+                  {estimating ? <Loader2 className="h-6 w-6 animate-spin text-muted-foreground" /> : `≈ ${estimatedAmount || "—"}`}
+                </span>
+                <button onClick={() => setShowToPicker(true)} className="flex items-center gap-2 rounded-lg bg-trust/10 px-3 py-1.5 transition-colors hover:bg-trust/20">
+                  {toCurrency?.image && <img src={toCurrency.image} alt="" className="h-5 w-5 rounded-full" />}
+                  <span className="font-display text-sm font-semibold uppercase text-trust">{toCurrency?.ticker || "Select"}</span>
+                </button>
+              </div>
+              <CurrencyPicker show={showToPicker} onSelect={setToCurrency} onClose={() => setShowToPicker(false)} exclude={fromCurrency?.ticker} />
+            </div>
+
+            <Button className="mt-6 w-full bg-trust text-trust-foreground hover:bg-trust/90" size="lg" disabled={!estimatedAmount || estimatedAmount === "—" || belowMin} onClick={handleExchangeNow}>
+              Exchange Now
+            </Button>
+            <p className="mt-3 text-center font-body text-xs text-muted-foreground">No hidden fees · No registration required · Powered by ChangeNow</p>
+          </motion.div>
         )}
-        <CurrencyPicker
-          show={showFromPicker}
-          onSelect={setFromCurrency}
-          onClose={() => setShowFromPicker(false)}
-          exclude={toCurrency?.ticker}
-        />
-      </div>
 
-      {/* Swap Button */}
-      <div className="my-3 flex justify-center">
-        <button
-          onClick={handleSwap}
-          className="flex h-10 w-10 items-center justify-center rounded-full border border-border bg-background text-primary transition-colors hover:bg-accent"
-          aria-label="Swap currencies"
-        >
-          <ArrowDownUp className="h-4 w-4" />
-        </button>
-      </div>
+        {/* ===== STEP 2: Recipient Address ===== */}
+        {step === "address" && (
+          <motion.div key="address" initial={{ opacity: 0, x: 20 }} animate={{ opacity: 1, x: 0 }} exit={{ opacity: 0, x: -20 }}>
+            <button onClick={() => setStep("exchange")} className="mb-4 flex items-center gap-1.5 font-body text-sm text-muted-foreground transition-colors hover:text-foreground">
+              <ArrowLeft className="h-4 w-4" /> Back
+            </button>
 
-      {/* You Get */}
-      <div className="relative">
-        <label className="mb-1.5 block font-body text-xs font-medium uppercase tracking-wider text-muted-foreground">
-          You Get (estimated)
-        </label>
-        <div className="flex items-center gap-3 rounded-xl border border-border bg-accent p-4">
-          <span className="flex-1 font-display text-2xl font-bold text-foreground">
-            {estimating ? (
-              <Loader2 className="h-6 w-6 animate-spin text-muted-foreground" />
-            ) : (
-              `≈ ${estimatedAmount || "—"}`
+            <h2 className="mb-2 font-display text-lg font-semibold text-foreground">Enter Recipient Address</h2>
+            <p className="mb-6 font-body text-sm text-muted-foreground">
+              Your <span className="font-semibold uppercase text-foreground">{toCurrency?.ticker}</span> will be sent to this address.
+            </p>
+
+            <div className="space-y-4">
+              <div>
+                <label className="mb-1.5 block font-body text-xs font-medium uppercase tracking-wider text-muted-foreground">
+                  {toCurrency?.ticker?.toUpperCase()} Wallet Address *
+                </label>
+                <Input
+                  placeholder={`Enter your ${toCurrency?.ticker?.toUpperCase()} address`}
+                  value={recipientAddress}
+                  onChange={(e) => setRecipientAddress(e.target.value)}
+                  className="font-body text-sm"
+                />
+              </div>
+
+              {toCurrency?.hasExternalId && (
+                <div>
+                  <label className="mb-1.5 block font-body text-xs font-medium uppercase tracking-wider text-muted-foreground">
+                    Memo / Extra ID (if required)
+                  </label>
+                  <Input
+                    placeholder="Memo, tag, or extra ID"
+                    value={extraId}
+                    onChange={(e) => setExtraId(e.target.value)}
+                    className="font-body text-sm"
+                  />
+                </div>
+              )}
+
+              <div>
+                <label className="mb-1.5 block font-body text-xs font-medium uppercase tracking-wider text-muted-foreground">
+                  {fromCurrency?.ticker?.toUpperCase()} Refund Address (optional)
+                </label>
+                <Input
+                  placeholder={`Enter your ${fromCurrency?.ticker?.toUpperCase()} refund address`}
+                  value={refundAddress}
+                  onChange={(e) => setRefundAddress(e.target.value)}
+                  className="font-body text-sm"
+                />
+              </div>
+            </div>
+
+            {/* Summary */}
+            <div className="mt-6 rounded-xl border border-border bg-accent p-4">
+              <h3 className="mb-3 font-display text-sm font-semibold text-foreground">Exchange Summary</h3>
+              <div className="space-y-2 font-body text-sm">
+                <div className="flex justify-between">
+                  <span className="text-muted-foreground">You send</span>
+                  <span className="font-semibold text-foreground">{sendAmount} {fromCurrency?.ticker?.toUpperCase()}</span>
+                </div>
+                <div className="flex justify-between">
+                  <span className="text-muted-foreground">You get (est.)</span>
+                  <span className="font-semibold text-foreground">≈ {estimatedAmount} {toCurrency?.ticker?.toUpperCase()}</span>
+                </div>
+              </div>
+            </div>
+
+            <Button
+              className="mt-6 w-full bg-trust text-trust-foreground hover:bg-trust/90"
+              size="lg"
+              disabled={!recipientAddress.trim() || creatingTx}
+              onClick={handleCreateTransaction}
+            >
+              {creatingTx ? <><Loader2 className="mr-2 h-4 w-4 animate-spin" /> Creating Exchange...</> : "Confirm & Create Exchange"}
+            </Button>
+          </motion.div>
+        )}
+
+        {/* ===== STEP 3: Deposit Address ===== */}
+        {step === "deposit" && transaction && (
+          <motion.div key="deposit" initial={{ opacity: 0, x: 20 }} animate={{ opacity: 1, x: 0 }} exit={{ opacity: 0, x: -20 }}>
+            <div className="mb-6 text-center">
+              <div className="mx-auto mb-3 flex h-12 w-12 items-center justify-center rounded-full bg-trust/10">
+                <CheckCircle2 className="h-6 w-6 text-trust" />
+              </div>
+              <h2 className="font-display text-lg font-semibold text-foreground">Exchange Created!</h2>
+              <p className="mt-1 font-body text-sm text-muted-foreground">Send your deposit to the address below</p>
+            </div>
+
+            <div className="space-y-4">
+              {/* Deposit address */}
+              <div className="rounded-xl border border-border bg-accent p-4">
+                <label className="mb-2 block font-body text-xs font-medium uppercase tracking-wider text-muted-foreground">
+                  Send exactly {transaction.amount} {transaction.fromCurrency.toUpperCase()} to:
+                </label>
+                <div className="flex items-center gap-2">
+                  <code className="flex-1 break-all rounded-lg border border-border bg-background px-3 py-2 font-body text-sm text-foreground">
+                    {transaction.payinAddress}
+                  </code>
+                  <CopyButton text={transaction.payinAddress} label="deposit" />
+                </div>
+                {transaction.payinExtraId && (
+                  <div className="mt-3">
+                    <label className="mb-1 block font-body text-xs font-medium text-muted-foreground">Memo / Extra ID:</label>
+                    <div className="flex items-center gap-2">
+                      <code className="flex-1 break-all rounded-lg border border-border bg-background px-3 py-2 font-body text-sm text-foreground">
+                        {transaction.payinExtraId}
+                      </code>
+                      <CopyButton text={transaction.payinExtraId} label="memo" />
+                    </div>
+                  </div>
+                )}
+              </div>
+
+              {/* Transaction ID */}
+              <div className="rounded-xl border border-border bg-accent p-4">
+                <label className="mb-1 block font-body text-xs font-medium uppercase tracking-wider text-muted-foreground">Transaction ID</label>
+                <div className="flex items-center gap-2">
+                  <code className="flex-1 break-all font-body text-sm text-foreground">{transaction.id}</code>
+                  <CopyButton text={transaction.id} label="txid" />
+                </div>
+              </div>
+
+              {/* Summary */}
+              <div className="rounded-xl border border-border bg-accent p-4">
+                <div className="space-y-2 font-body text-sm">
+                  <div className="flex justify-between">
+                    <span className="text-muted-foreground">Sending</span>
+                    <span className="font-semibold text-foreground">{transaction.amount} {transaction.fromCurrency.toUpperCase()}</span>
+                  </div>
+                  <div className="flex justify-between">
+                    <span className="text-muted-foreground">Receiving to</span>
+                    <span className="max-w-[200px] truncate font-semibold text-foreground">{transaction.payoutAddress}</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div className="mt-4 rounded-lg border border-destructive/20 bg-destructive/5 p-3">
+              <p className="font-body text-xs text-destructive">
+                ⚠ Send the exact amount to the deposit address. Sending a different amount or currency may result in loss of funds.
+              </p>
+            </div>
+
+            <Button className="mt-6 w-full bg-primary text-primary-foreground hover:bg-primary/90" size="lg" onClick={handleProceedToStatus}>
+              I've Sent the Deposit — Track Status
+            </Button>
+          </motion.div>
+        )}
+
+        {/* ===== STEP 4: Transaction Status ===== */}
+        {step === "status" && transaction && (
+          <motion.div key="status" initial={{ opacity: 0, x: 20 }} animate={{ opacity: 1, x: 0 }} exit={{ opacity: 0, x: -20 }}>
+            <h2 className="mb-6 font-display text-lg font-semibold text-foreground">Transaction Status</h2>
+
+            {/* Status indicator */}
+            {txStatus && (
+              <div className="mb-6">
+                {(() => {
+                  const s = STATUS_LABELS[txStatus.status] || { label: txStatus.status, color: "text-muted-foreground", icon: <Clock className="h-5 w-5" /> };
+                  return (
+                    <div className={`flex items-center gap-3 rounded-xl border border-border bg-accent p-4 ${s.color}`}>
+                      {s.icon}
+                      <div>
+                        <p className="font-display text-sm font-semibold">{s.label}</p>
+                        <p className="font-body text-xs text-muted-foreground">Transaction ID: {txStatus.id}</p>
+                      </div>
+                    </div>
+                  );
+                })()}
+              </div>
             )}
-          </span>
-          <button
-            onClick={() => setShowToPicker(true)}
-            className="flex items-center gap-2 rounded-lg bg-trust/10 px-3 py-1.5 transition-colors hover:bg-trust/20"
-          >
-            {toCurrency?.image && <img src={toCurrency.image} alt="" className="h-5 w-5 rounded-full" />}
-            <span className="font-display text-sm font-semibold uppercase text-trust">
-              {toCurrency?.ticker || "Select"}
-            </span>
-          </button>
-        </div>
-        <CurrencyPicker
-          show={showToPicker}
-          onSelect={setToCurrency}
-          onClose={() => setShowToPicker(false)}
-          exclude={fromCurrency?.ticker}
-        />
-      </div>
 
-      <Button
-        className="mt-6 w-full bg-trust text-trust-foreground hover:bg-trust/90"
-        size="lg"
-        disabled={!estimatedAmount || estimatedAmount === "—" || belowMin}
-      >
-        Exchange Now
-      </Button>
+            {/* Progress steps */}
+            <div className="mb-6 space-y-0">
+              {["waiting", "confirming", "exchanging", "sending", "finished"].map((statusKey, i, arr) => {
+                const currentIdx = arr.indexOf(txStatus?.status || "waiting");
+                const isDone = i < currentIdx;
+                const isCurrent = i === currentIdx;
+                const isFailed = txStatus?.status === "failed" && isCurrent;
+                return (
+                  <div key={statusKey} className="flex items-start gap-3">
+                    <div className="flex flex-col items-center">
+                      <div className={`flex h-6 w-6 items-center justify-center rounded-full border-2 ${
+                        isDone ? "border-trust bg-trust text-trust-foreground" :
+                        isCurrent ? (isFailed ? "border-destructive bg-destructive text-destructive-foreground" : "border-primary bg-primary text-primary-foreground") :
+                        "border-border bg-background text-muted-foreground"
+                      }`}>
+                        {isDone ? <Check className="h-3 w-3" /> : <span className="font-body text-[10px] font-bold">{i + 1}</span>}
+                      </div>
+                      {i < arr.length - 1 && <div className={`h-6 w-0.5 ${isDone ? "bg-trust" : "bg-border"}`} />}
+                    </div>
+                    <div className="pb-6">
+                      <p className={`font-body text-sm ${isDone || isCurrent ? "font-semibold text-foreground" : "text-muted-foreground"}`}>
+                        {STATUS_LABELS[statusKey]?.label || statusKey}
+                      </p>
+                    </div>
+                  </div>
+                );
+              })}
+            </div>
 
-      <p className="mt-3 text-center font-body text-xs text-muted-foreground">
-        No hidden fees · No registration required · Powered by ChangeNow
-      </p>
+            {/* Details */}
+            {txStatus && (
+              <div className="space-y-3">
+                {txStatus.amountSend && (
+                  <div className="flex justify-between font-body text-sm">
+                    <span className="text-muted-foreground">Amount sent</span>
+                    <span className="font-semibold text-foreground">{txStatus.amountSend} {txStatus.fromCurrency.toUpperCase()}</span>
+                  </div>
+                )}
+                {txStatus.amountReceive && (
+                  <div className="flex justify-between font-body text-sm">
+                    <span className="text-muted-foreground">Amount received</span>
+                    <span className="font-semibold text-trust">{txStatus.amountReceive} {txStatus.toCurrency.toUpperCase()}</span>
+                  </div>
+                )}
+                {txStatus.payinHash && (
+                  <div className="flex items-center justify-between font-body text-sm">
+                    <span className="text-muted-foreground">Deposit hash</span>
+                    <span className="max-w-[200px] truncate font-semibold text-foreground">{txStatus.payinHash}</span>
+                  </div>
+                )}
+                {txStatus.payoutHash && (
+                  <div className="flex items-center justify-between font-body text-sm">
+                    <span className="text-muted-foreground">Payout hash</span>
+                    <span className="max-w-[200px] truncate font-semibold text-foreground">{txStatus.payoutHash}</span>
+                  </div>
+                )}
+              </div>
+            )}
+
+            {txStatus?.status === "finished" && (
+              <Button className="mt-6 w-full bg-trust text-trust-foreground hover:bg-trust/90" size="lg" onClick={handleNewExchange}>
+                Start New Exchange
+              </Button>
+            )}
+            {txStatus?.status === "failed" && (
+              <Button className="mt-6 w-full" size="lg" variant="destructive" onClick={handleNewExchange}>
+                Try Again
+              </Button>
+            )}
+            {!["finished", "failed", "refunded"].includes(txStatus?.status || "") && (
+              <p className="mt-4 text-center font-body text-xs text-muted-foreground">
+                Status refreshes automatically every 15 seconds
+              </p>
+            )}
+          </motion.div>
+        )}
+      </AnimatePresence>
     </motion.div>
   );
 };
