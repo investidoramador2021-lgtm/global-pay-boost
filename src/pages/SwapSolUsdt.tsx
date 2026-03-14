@@ -8,11 +8,13 @@ const SwapSolUsdt = () => (
     assetBName="Tether"
     slug="sol-usdt"
     avgSpeed="42s"
-    whyText="Solana's high-throughput network paired with USDT's stability makes SOL/USDT the highest-volume retail swap pair in 2026. MRC GlobalPay uses direct liquidity routing to bypass standard confirmation waits — your USDT settles in under 60 seconds, every time. Whether you're locking in profits from a SOL rally or moving to stables for a re-entry, our pre-funded liquidity vaults guarantee instant execution at the best aggregated rate."
+    headline={<>Swap SOL to USDT Instantly – <span className="text-gradient-neon">No 2026 Network Delays</span></>}
+    subHeadline="Processing: under 60 seconds. Settlement: immediate on-chain finality. Zero confirmation delays. MRC GlobalPay uses direct liquidity routing to bypass standard confirmation waits."
+    whyText="SOL/USDT is the highest-volume retail swap pair in March 2026. Solana's ecosystem explosion — DePIN, gaming, memecoins — drives constant rotation between SOL exposure and USDT stability. Our pre-funded liquidity vaults guarantee processing under 60 seconds with immediate settlement finality, even during peak network congestion."
     extraFaqs={[
       {
-        q: "Why is SOL/USDT the most popular swap in 2026?",
-        a: "Solana's ecosystem explosion — from DePIN to memecoin activity — has driven massive retail volume. Traders constantly rotate between SOL exposure and USDT stability, making this the #1 retail swap pair by volume in March 2026.",
+        q: "Why is SOL/USDT the most popular retail swap in March 2026?",
+        a: "Solana's ecosystem has reached critical mass with DePIN, gaming, and DeFi protocols driving billions in daily on-chain volume. Traders constantly rotate between SOL and USDT, making this the #1 retail pair by volume. Processing: under 60 seconds on MRC GlobalPay.",
       },
     ]}
   />
