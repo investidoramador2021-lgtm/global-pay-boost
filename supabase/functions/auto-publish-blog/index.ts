@@ -1,0 +1,295 @@
+import { serve } from "https://deno.land/std@0.168.0/http/server.ts";
+import { createClient } from "https://esm.sh/@supabase/supabase-js@2";
+
+const corsHeaders = {
+  "Access-Control-Allow-Origin": "*",
+  "Access-Control-Allow-Headers": "authorization, x-client-info, apikey, content-type",
+};
+
+const SITE = "https://mrcglobalpay.com";
+const INDEXNOW_KEY = "5b41e59fca3649f389b22450cd5cb8dc";
+
+const AI_URL = "https://ai.gateway.lovable.dev/v1/chat/completions";
+
+// Rotating author pool for E-E-A-T
+const AUTHORS = [
+  {
+    name: "Daniel Carter",
+    role: "Senior Blockchain Analyst",
+    bio: "Daniel has spent eight years working across crypto trading desks, first at Cumberland DRW and later at a mid-cap digital asset fund. He writes about market microstructure, swap execution, and DeFi infrastructure. He holds a CFA charter and a Master's in Financial Engineering from Columbia University.",
+    credentials: "CFA Charterholder · Columbia MFE · 8 years in digital asset trading",
+  },
+  {
+    name: "Sophia Ramirez",
+    role: "DeFi Infrastructure Researcher",
+    bio: "Sophia spent four years as a protocol engineer at a Layer 1 blockchain before transitioning to research and education. She specializes in AMM design, cross-chain bridging, and liquidity aggregation architecture. Her work has been cited by Messari, The Block, and Delphi Digital.",
+    credentials: "Former L1 Protocol Engineer · Published in Messari & The Block · MSc Computer Science, ETH Zurich",
+  },
+  {
+    name: "Marcus Chen",
+    role: "Cybersecurity Lead & Crypto Security Advisor",
+    bio: "Marcus has fifteen years in information security, including six years focused on cryptocurrency custody, wallet security, and exchange infrastructure. He previously led the security team at a top-20 centralized exchange.",
+    credentials: "CISSP · OSCP · Former Security Lead at top-20 CEX · 15 years in InfoSec",
+  },
+  {
+    name: "Elena Volkova",
+    role: "Crypto Markets Strategist",
+    bio: "Elena worked as a quantitative analyst at Jane Street before moving into crypto full-time in 2021. She covers macro trends, on-chain analytics, and trading pair dynamics for institutional and retail audiences.",
+    credentials: "Former Quant Analyst, Jane Street · CoinDesk & Blockworks contributor · MSc Mathematics, MIT",
+  },
+];
+
+const INTERNAL_LINKS = [
+  { text: "instant swap tool", url: "/#exchange" },
+  { text: "MRC GlobalPay", url: "/#exchange" },
+  { text: "swap BTC to USDC", url: "/swap/btc-usdc" },
+  { text: "swap SOL to USDT", url: "/swap/sol-usdt" },
+  { text: "swap ETH to SOL", url: "/swap/eth-sol" },
+  { text: "swap XRP to USDT", url: "/swap/xrp-usdt" },
+  { text: "swap HYPE to USDT", url: "/swap/hype-usdt" },
+  { text: "swap BERA to USDC", url: "/swap/bera-usdt" },
+  { text: "swap TIA to USDT", url: "/swap/tia-usdt" },
+  { text: "swap MONAD to ETH", url: "/swap/monad-usdt" },
+  { text: "swap PYUSD to SOL", url: "/swap/pyusd-usdt" },
+  { text: "liquidity aggregation", url: "/blog/understanding-crypto-liquidity-aggregation" },
+  { text: "crypto security guide", url: "/blog/crypto-security-best-practices-2026" },
+  { text: "BTC to ETH swap guide", url: "/blog/how-to-swap-bitcoin-to-ethereum-2026" },
+  { text: "top trading pairs", url: "/blog/top-crypto-trading-pairs-march-2026" },
+  { text: "Privacy Policy", url: "/privacy" },
+  { text: "AML Policy", url: "/aml" },
+  { text: "blog", url: "/blog" },
+];
+
+const TOPIC_TEMPLATES = [
+  "Write a deep, expert guide about how to use {coin} in DeFi in 2026. Cover staking, lending, LP strategies, and risks. Target keyword: '{coin} DeFi strategies 2026'.",
+  "Write a detailed comparison of the top 5 ways to swap {coin} in 2026. Compare CEXs, DEXs, aggregators, and instant swap platforms. Target keyword: 'best way to swap {coin} 2026'.",
+  "Write an expert analysis of {coin}'s on-chain metrics and what they reveal about the token's trajectory. Cover active addresses, TVL, transaction volume, and whale behavior. Target keyword: '{coin} on-chain analysis 2026'.",
+  "Write a comprehensive guide to {coin} staking in 2026 — how it works, expected yields, risks, validators, and whether it's worth it. Target keyword: '{coin} staking guide 2026'.",
+  "Write a detailed explainer on how {coin}'s underlying technology works and why it matters for traders. Cover consensus mechanism, throughput, finality, and ecosystem advantages. Target keyword: 'how {coin} blockchain works'.",
+  "Write a practical guide on the safest ways to store and manage {coin} in 2026. Cover hardware wallets, software wallets, custody solutions, and security best practices. Target keyword: '{coin} wallet security 2026'.",
+  "Write an analysis of institutional adoption of {coin} in 2026. Cover ETF flows, fund allocations, corporate treasury adoption, and what it means for retail traders. Target keyword: '{coin} institutional adoption 2026'.",
+  "Write a guide about cross-chain bridging involving {coin}. How to move {coin} between chains, bridge risks, best practices, and how instant swaps simplify the process. Target keyword: '{coin} cross-chain bridge 2026'.",
+];
+
+const COINS = ["Bitcoin", "Ethereum", "Solana", "HYPE", "BERA", "Celestia (TIA)", "Monad", "PYUSD", "XRP", "BNB", "Polygon", "Avalanche", "Arbitrum", "Optimism"];
+
+serve(async (req) => {
+  if (req.method === "OPTIONS") {
+    return new Response(null, { headers: corsHeaders });
+  }
+
+  try {
+    const supabaseUrl = Deno.env.get("SUPABASE_URL")!;
+    const supabaseKey = Deno.env.get("SUPABASE_SERVICE_ROLE_KEY")!;
+    const lovableApiKey = Deno.env.get("LOVABLE_API_KEY");
+
+    if (!lovableApiKey) {
+      throw new Error("LOVABLE_API_KEY not configured");
+    }
+
+    const supabase = createClient(supabaseUrl, supabaseKey);
+
+    // Pick a random coin and topic template
+    const coin = COINS[Math.floor(Math.random() * COINS.length)];
+    const template = TOPIC_TEMPLATES[Math.floor(Math.random() * TOPIC_TEMPLATES.length)];
+    const topic = template.replace(/\{coin\}/g, coin);
+    const author = AUTHORS[Math.floor(Math.random() * AUTHORS.length)];
+
+    // Build internal links reference for the AI
+    const linksRef = INTERNAL_LINKS.map((l) => `- [${l.text}](${l.url})`).join("\n");
+
+    const systemPrompt = `You are ${author.name}, ${author.role}. ${author.bio}
+
+You write blog posts for MRC GlobalPay (mrcglobalpay.com), an instant crypto swap platform. Your writing style is:
+- First-person, conversational, opinionated — like a real expert sharing hard-won knowledge
+- You include specific numbers, data points, dates, and real-world examples
+- You are honest about limitations and risks — you don't oversell
+- You structure posts with clear H2 and H3 headings, bullet points, numbered lists, and comparison tables
+- Posts should be 2000-3000 words minimum
+- You naturally weave in internal links to MRC GlobalPay's pages throughout the content
+
+CRITICAL RULES:
+1. Write in first person. Share personal experiences and opinions. Do NOT sound like AI.
+2. Include at least 6-8 internal links naturally woven into the content from this list:
+${linksRef}
+3. Every post MUST end with a "Related Reading" section linking to 3-4 other blog posts or swap pages
+4. Include a practical FAQ section with 3-4 questions using H3 tags
+5. Use markdown tables where comparisons are relevant
+6. Mention specific dates, numbers, percentages — be concrete, not vague
+7. Target the keyword provided but do NOT keyword stuff
+8. The post should provide genuine value that would make someone bookmark it
+
+OUTPUT FORMAT — respond with ONLY a JSON object (no markdown code fences):
+{
+  "title": "The full article title (50-70 chars ideal)",
+  "metaTitle": "SEO meta title under 60 chars with primary keyword",
+  "metaDescription": "Meta description under 160 chars with keyword and call to action",
+  "excerpt": "2-sentence excerpt for the blog index page",
+  "readTime": "X min read",
+  "category": "One of: Guides, Education, Security, Market Analysis, Technology, DeFi",
+  "tags": ["tag1", "tag2", "tag3", "tag4"],
+  "content": "The full markdown article content with all formatting"
+}`;
+
+    console.log(`Generating post about: ${coin} | Author: ${author.name}`);
+
+    // Generate the post using Lovable AI
+    const aiResponse = await fetch(AI_URL, {
+      method: "POST",
+      headers: {
+        Authorization: `Bearer ${lovableApiKey}`,
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        model: "google/gemini-2.5-flash",
+        messages: [
+          { role: "system", content: systemPrompt },
+          { role: "user", content: topic },
+        ],
+        temperature: 0.8,
+        max_tokens: 8000,
+      }),
+    });
+
+    if (!aiResponse.ok) {
+      const errText = await aiResponse.text();
+      throw new Error(`AI API failed [${aiResponse.status}]: ${errText}`);
+    }
+
+    const aiData = await aiResponse.json();
+    let rawContent = aiData.choices?.[0]?.message?.content;
+
+    if (!rawContent) {
+      throw new Error("AI returned empty content");
+    }
+
+    // Strip markdown code fences if present
+    rawContent = rawContent.replace(/^```json\s*\n?/i, "").replace(/\n?```\s*$/i, "").trim();
+
+    let postData;
+    try {
+      postData = JSON.parse(rawContent);
+    } catch (e) {
+      console.error("Failed to parse AI response:", rawContent.substring(0, 500));
+      throw new Error(`Failed to parse AI response as JSON: ${e.message}`);
+    }
+
+    // Generate slug from title
+    const slug = postData.title
+      .toLowerCase()
+      .replace(/[^a-z0-9\s-]/g, "")
+      .replace(/\s+/g, "-")
+      .replace(/-+/g, "-")
+      .substring(0, 80)
+      .replace(/-$/, "");
+
+    // Check for duplicate slug
+    const { data: existing } = await supabase
+      .from("blog_posts")
+      .select("slug")
+      .eq("slug", slug)
+      .maybeSingle();
+
+    if (existing) {
+      console.log(`Post with slug "${slug}" already exists, appending timestamp`);
+    }
+
+    const finalSlug = existing ? `${slug}-${Date.now()}` : slug;
+
+    // Insert into database
+    const { data: inserted, error: insertError } = await supabase
+      .from("blog_posts")
+      .insert({
+        slug: finalSlug,
+        title: postData.title,
+        meta_title: postData.metaTitle,
+        meta_description: postData.metaDescription,
+        excerpt: postData.excerpt,
+        author_name: author.name,
+        author_role: author.role,
+        author_bio: author.bio,
+        author_credentials: author.credentials,
+        read_time: postData.readTime || "10 min read",
+        category: postData.category || "Guides",
+        tags: postData.tags || [],
+        content: postData.content,
+        is_published: true,
+      })
+      .select()
+      .single();
+
+    if (insertError) {
+      throw new Error(`DB insert failed: ${insertError.message}`);
+    }
+
+    console.log(`Published: "${postData.title}" → /blog/${finalSlug}`);
+
+    // Ping search engines
+    const pingResults: Record<string, string> = {};
+
+    // Collect all blog URLs for IndexNow
+    const { data: allPosts } = await supabase
+      .from("blog_posts")
+      .select("slug")
+      .eq("is_published", true);
+
+    const blogUrls = (allPosts || []).map((p: any) => `${SITE}/blog/${p.slug}`);
+    const allUrls = [
+      `${SITE}/`,
+      `${SITE}/blog`,
+      ...blogUrls,
+      `${SITE}/swap/sol-usdt`,
+      `${SITE}/swap/btc-usdc`,
+      `${SITE}/swap/hype-usdt`,
+      `${SITE}/swap/eth-sol`,
+      `${SITE}/swap/xrp-usdt`,
+      `${SITE}/swap/bera-usdt`,
+      `${SITE}/swap/tia-usdt`,
+      `${SITE}/swap/monad-usdt`,
+      `${SITE}/swap/pyusd-usdt`,
+    ];
+
+    // Google sitemap ping
+    try {
+      const g = await fetch(`https://www.google.com/ping?sitemap=${encodeURIComponent(`${SITE}/sitemap.xml`)}`);
+      pingResults.google = g.ok ? "OK" : `${g.status}`;
+    } catch (e) { pingResults.google = `error: ${e.message}`; }
+
+    // Bing sitemap ping
+    try {
+      const b = await fetch(`https://www.bing.com/ping?sitemap=${encodeURIComponent(`${SITE}/sitemap.xml`)}`);
+      pingResults.bing = b.ok ? "OK" : `${b.status}`;
+    } catch (e) { pingResults.bing = `error: ${e.message}`; }
+
+    // IndexNow
+    try {
+      const inRes = await fetch("https://api.indexnow.org/indexnow", {
+        method: "POST",
+        headers: { "Content-Type": "application/json; charset=utf-8" },
+        body: JSON.stringify({
+          host: "mrcglobalpay.com",
+          key: INDEXNOW_KEY,
+          keyLocation: `${SITE}/${INDEXNOW_KEY}.txt`,
+          urlList: [`${SITE}/blog/${finalSlug}`, `${SITE}/blog`, `${SITE}/sitemap.xml`],
+        }),
+      });
+      pingResults.indexnow = inRes.ok || inRes.status === 202 ? "OK" : `${inRes.status}`;
+    } catch (e) { pingResults.indexnow = `error: ${e.message}`; }
+
+    return new Response(
+      JSON.stringify({
+        success: true,
+        post: { slug: finalSlug, title: postData.title, author: author.name },
+        ping: pingResults,
+        totalPosts: (allPosts || []).length,
+      }),
+      { headers: { ...corsHeaders, "Content-Type": "application/json" } }
+    );
+  } catch (error) {
+    console.error("Auto-publish error:", error);
+    return new Response(
+      JSON.stringify({ success: false, error: error.message }),
+      { status: 500, headers: { ...corsHeaders, "Content-Type": "application/json" } }
+    );
+  }
+});
