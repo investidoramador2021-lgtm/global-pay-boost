@@ -7,6 +7,8 @@ const AMLPolicy = () => (
     <Helmet>
       <title>AML Policy — MRC GlobalPay</title>
       <meta name="description" content="MRC GlobalPay anti-money laundering policy for cryptocurrency exchange services." />
+      <meta name="robots" content="index, follow" />
+      <link rel="canonical" href="https://mrcglobalpay.com/aml" />
     </Helmet>
     <SiteHeader />
     <main className="container mx-auto max-w-3xl px-4 py-16">

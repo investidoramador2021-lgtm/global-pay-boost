@@ -7,6 +7,8 @@ const PrivacyPolicy = () => (
     <Helmet>
       <title>Privacy Policy — MRC GlobalPay</title>
       <meta name="description" content="MRC GlobalPay privacy policy. Learn how we handle your data during cryptocurrency exchanges." />
+      <meta name="robots" content="index, follow" />
+      <link rel="canonical" href="https://mrcglobalpay.com/privacy" />
     </Helmet>
     <SiteHeader />
     <main className="container mx-auto max-w-3xl px-4 py-16">
