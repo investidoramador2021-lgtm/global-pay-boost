@@ -1,25 +1,56 @@
 import { useParams, Link, Navigate, useLocation } from "react-router-dom";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { Helmet } from "react-helmet-async";
 import { Calendar, Clock, ArrowLeft, ArrowRight } from "lucide-react";
 import ReactMarkdown from "react-markdown";
 import SiteHeader from "@/components/SiteHeader";
 import SiteFooter from "@/components/SiteFooter";
-import { getPostBySlug, getRelatedPosts } from "@/lib/blog-data";
+import { fetchPostBySlug, fetchRelatedPosts, type BlogPost } from "@/lib/blog-data";
 
-const BlogPost = () => {
+const BlogPostPage = () => {
   const { slug } = useParams<{ slug: string }>();
   const location = useLocation();
-  const post = slug ? getPostBySlug(slug) : undefined;
+  const [post, setPost] = useState<BlogPost | null | undefined>(undefined);
+  const [related, setRelated] = useState<BlogPost[]>([]);
+  const [loading, setLoading] = useState(true);
 
-  // Scroll to top on route change
   useEffect(() => {
     window.scrollTo(0, 0);
   }, [location.pathname]);
 
-  if (!post) return <Navigate to="/blog" replace />;
+  useEffect(() => {
+    if (!slug) return;
+    setLoading(true);
+    Promise.all([fetchPostBySlug(slug), fetchRelatedPosts(slug)]).then(([p, r]) => {
+      setPost(p || null);
+      setRelated(r);
+      setLoading(false);
+    });
+  }, [slug]);
 
-  const related = getRelatedPosts(post.slug);
+  if (loading) {
+    return (
+      <>
+        <SiteHeader />
+        <main className="min-h-screen bg-background py-16">
+          <div className="container mx-auto px-4">
+            <div className="mx-auto max-w-3xl animate-pulse space-y-4">
+              <div className="h-8 w-3/4 rounded bg-muted" />
+              <div className="h-4 w-1/2 rounded bg-muted" />
+              <div className="mt-8 space-y-3">
+                {[1, 2, 3, 4, 5].map((i) => (
+                  <div key={i} className="h-4 w-full rounded bg-muted" />
+                ))}
+              </div>
+            </div>
+          </div>
+        </main>
+        <SiteFooter />
+      </>
+    );
+  }
+
+  if (!post) return <Navigate to="/blog" replace />;
 
   const jsonLd = {
     "@context": "https://schema.org",
@@ -59,7 +90,6 @@ const BlogPost = () => {
     ],
   };
 
-  // Custom renderer to convert markdown links to React Router Links for internal navigation
   const components = {
     a: ({ href, children, ...props }: any) => {
       if (href && (href.startsWith("/") || href.startsWith("/#"))) {
@@ -101,7 +131,6 @@ const BlogPost = () => {
 
       <SiteHeader />
       <main className="min-h-screen bg-background">
-        {/* Breadcrumb */}
         <nav className="border-b border-border bg-muted/30 py-3" aria-label="Breadcrumb">
           <div className="container mx-auto flex items-center gap-2 px-4 font-body text-xs text-muted-foreground sm:text-sm">
             <Link to="/" className="hover:text-foreground">Home</Link>
@@ -115,7 +144,6 @@ const BlogPost = () => {
         <article className="py-10 sm:py-16">
           <div className="container mx-auto px-4">
             <div className="mx-auto max-w-3xl">
-              {/* Header */}
               <header className="mb-8 sm:mb-12">
                 <Link to="/blog" className="mb-4 inline-flex items-center gap-1 font-body text-sm text-muted-foreground hover:text-foreground">
                   <ArrowLeft className="h-3.5 w-3.5" /> Back to Blog
@@ -156,7 +184,6 @@ const BlogPost = () => {
                   )}
                 </div>
 
-                {/* Author E-E-A-T box */}
                 <div className="mt-6 rounded-xl border border-border bg-muted/50 p-4 sm:p-5">
                   <p className="font-display text-sm font-semibold text-foreground">{post.author.name}</p>
                   <p className="font-body text-xs text-primary">{post.author.role}</p>
@@ -167,12 +194,10 @@ const BlogPost = () => {
                 </div>
               </header>
 
-              {/* Content */}
               <div className="prose prose-sm prose-invert max-w-none font-body text-foreground sm:prose-base prose-headings:font-display prose-headings:text-foreground prose-p:text-muted-foreground prose-strong:text-foreground prose-li:text-muted-foreground prose-a:text-primary prose-a:no-underline hover:prose-a:underline">
                 <ReactMarkdown components={components}>{post.content}</ReactMarkdown>
               </div>
 
-              {/* Tags */}
               <div className="mt-10 flex flex-wrap gap-2 border-t border-border pt-6">
                 {post.tags.map((tag) => (
                   <span key={tag} className="rounded-lg bg-muted px-3 py-1 font-body text-xs text-muted-foreground">
@@ -184,33 +209,33 @@ const BlogPost = () => {
           </div>
         </article>
 
-        {/* Related Posts */}
-        <section className="border-t border-border bg-muted/30 py-12 sm:py-16">
-          <div className="container mx-auto px-4">
-            <h2 className="mb-8 text-center font-display text-2xl font-bold text-foreground">
-              Related Articles
-            </h2>
-            <div className="mx-auto grid max-w-4xl gap-6 sm:grid-cols-3">
-              {related.map((r) => (
-                <Link
-                  key={r.slug}
-                  to={`/blog/${r.slug}`}
-                  className="group rounded-xl border border-border bg-card p-5 transition-all hover:border-primary/40 hover:shadow-md"
-                >
-                  <span className="font-body text-xs text-primary">{r.category}</span>
-                  <h3 className="mt-2 font-display text-sm font-semibold text-foreground transition-colors group-hover:text-primary">
-                    {r.title}
-                  </h3>
-                  <p className="mt-2 flex items-center gap-1 font-body text-xs text-muted-foreground">
-                    Read more <ArrowRight className="h-3 w-3" />
-                  </p>
-                </Link>
-              ))}
+        {related.length > 0 && (
+          <section className="border-t border-border bg-muted/30 py-12 sm:py-16">
+            <div className="container mx-auto px-4">
+              <h2 className="mb-8 text-center font-display text-2xl font-bold text-foreground">
+                Related Articles
+              </h2>
+              <div className="mx-auto grid max-w-4xl gap-6 sm:grid-cols-3">
+                {related.map((r) => (
+                  <Link
+                    key={r.slug}
+                    to={`/blog/${r.slug}`}
+                    className="group rounded-xl border border-border bg-card p-5 transition-all hover:border-primary/40 hover:shadow-md"
+                  >
+                    <span className="font-body text-xs text-primary">{r.category}</span>
+                    <h3 className="mt-2 font-display text-sm font-semibold text-foreground transition-colors group-hover:text-primary">
+                      {r.title}
+                    </h3>
+                    <p className="mt-2 flex items-center gap-1 font-body text-xs text-muted-foreground">
+                      Read more <ArrowRight className="h-3 w-3" />
+                    </p>
+                  </Link>
+                ))}
+              </div>
             </div>
-          </div>
-        </section>
+          </section>
+        )}
 
-        {/* CTA */}
         <section className="border-t border-border bg-muted/50 py-10 text-center sm:py-14">
           <div className="container mx-auto px-4">
             <h2 className="font-display text-xl font-bold text-foreground sm:text-2xl">
@@ -233,4 +258,4 @@ const BlogPost = () => {
   );
 };
 
-export default BlogPost;
+export default BlogPostPage;
