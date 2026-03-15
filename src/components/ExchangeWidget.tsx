@@ -87,6 +87,9 @@ const ExchangeWidget = () => {
       ]);
       setEstimatedAmount(est.estimatedAmount?.toString() || "—");
       setMinAmount(min.minAmount || 0);
+      if (est.transactionSpeedForecast) {
+        setSpeedForecast(est.transactionSpeedForecast);
+      }
     } catch {
       setEstimatedAmount("—");
     } finally {
