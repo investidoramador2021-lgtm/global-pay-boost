@@ -55,15 +55,15 @@ const HeroSection = () => {
               ))}
             </div>
 
-            <div className="mt-6 flex flex-wrap items-center gap-3 sm:mt-8 sm:gap-6">
-              <Button size="lg" className="shadow-neon w-full sm:w-auto" asChild>
+            <div className="mt-6 flex flex-col items-center gap-3 sm:mt-8 sm:flex-row sm:gap-6">
+              <Button size="lg" className="shadow-neon w-full min-h-[52px] text-base font-bold sm:w-auto" asChild>
                 <a href="#exchange-widget">
                   <Zap className="mr-2 h-5 w-5" />
                   Start Swap
                 </a>
               </Button>
 
-              <div className="flex items-center gap-2 rounded-lg border border-neon bg-muted/50 px-3 py-2 sm:px-4">
+              <div className="flex w-full items-center justify-center gap-2 rounded-lg border border-neon bg-muted/50 px-3 py-3 sm:w-auto sm:px-4">
                 <Timer className="h-4 w-4 text-primary" />
                 <span className="font-display text-sm font-bold text-primary">Avg. Swap: 38s</span>
               </div>
