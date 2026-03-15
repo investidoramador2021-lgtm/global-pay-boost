@@ -326,6 +326,10 @@ OUTPUT FORMAT — respond with ONLY a valid JSON object (no markdown fences, no 
       throw new Error(`Generated post rejected by quality gate: ${qualityIssues.join("; ")}`);
     }
 
+    if (!postData?.title || !postData?.content) {
+      throw new Error("Post data is missing title or content after generation");
+    }
+
     const slug = postData.title
       .toLowerCase()
       .replace(/[^a-z0-9\s-]/g, "")
