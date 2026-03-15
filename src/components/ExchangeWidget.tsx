@@ -69,7 +69,44 @@ const ExchangeWidget = () => {
   const [txStatus, setTxStatus] = useState<TransactionStatus | null>(null);
   const [copied, setCopied] = useState<string | null>(null);
   const [speedForecast, setSpeedForecast] = useState<string | null>(null);
+  const [connectedWallet, setConnectedWallet] = useState<{ address: string; type: "evm" | "solana" } | null>(null);
   const statusPollRef = useRef<ReturnType<typeof setInterval>>();
+
+  // Wallet connection handlers
+  const connectMetaMask = async () => {
+    if (typeof window === "undefined" || !(window as any).ethereum) {
+      toast({ title: "MetaMask not found", description: "Please install MetaMask browser extension.", variant: "destructive" });
+      return;
+    }
+    try {
+      const accounts = await (window as any).ethereum.request({ method: "eth_requestAccounts" });
+      if (accounts?.[0]) {
+        setRecipientAddress(accounts[0]);
+        setConnectedWallet({ address: accounts[0], type: "evm" });
+        toast({ title: "Wallet connected", description: `Connected: ${accounts[0].slice(0, 6)}...${accounts[0].slice(-4)}` });
+      }
+    } catch (err: any) {
+      if (err?.code === 4001) return;
+      toast({ title: "Connection failed", description: err?.message || "Could not connect MetaMask", variant: "destructive" });
+    }
+  };
+
+  const connectPhantom = async () => {
+    if (typeof window === "undefined" || !(window as any).solana?.isPhantom) {
+      toast({ title: "Phantom not found", description: "Please install Phantom wallet extension.", variant: "destructive" });
+      return;
+    }
+    try {
+      const resp = await (window as any).solana.connect();
+      const address = resp.publicKey.toString();
+      setRecipientAddress(address);
+      setConnectedWallet({ address, type: "solana" });
+      toast({ title: "Wallet connected", description: `Connected: ${address.slice(0, 6)}...${address.slice(-4)}` });
+    } catch (err: any) {
+      if (err?.code === 4001) return;
+      toast({ title: "Connection failed", description: err?.message || "Could not connect Phantom", variant: "destructive" });
+    }
+  };
 
   useEffect(() => {
     setLoading(true);
