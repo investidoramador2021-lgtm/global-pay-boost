@@ -152,6 +152,19 @@ serve(async (req) => {
 
     const supabase = createClient(supabaseUrl, supabaseKey);
 
+    // Check post count — stop at 100
+    const { count: postCount } = await supabase
+      .from("blog_posts")
+      .select("id", { count: "exact", head: true })
+      .eq("is_published", true);
+
+    if ((postCount ?? 0) >= 100) {
+      return new Response(
+        JSON.stringify({ success: true, message: "Target of 100 posts reached. No new post generated.", totalPosts: postCount }),
+        { headers: { ...corsHeaders, "Content-Type": "application/json" } }
+      );
+    }
+
     // Pick a random coin and topic template
     const coin = COINS[Math.floor(Math.random() * COINS.length)];
     const template = TOPIC_TEMPLATES[Math.floor(Math.random() * TOPIC_TEMPLATES.length)];
