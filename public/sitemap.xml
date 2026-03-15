@@ -13,36 +13,6 @@
     <priority>0.9</priority>
   </url>
   <url>
-    <loc>https://mrcglobalpay.com/blog/how-to-swap-bitcoin-to-ethereum-2026</loc>
-    <lastmod>2026-03-15</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.8</priority>
-  </url>
-  <url>
-    <loc>https://mrcglobalpay.com/blog/understanding-crypto-liquidity-aggregation</loc>
-    <lastmod>2026-03-15</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.8</priority>
-  </url>
-  <url>
-    <loc>https://mrcglobalpay.com/blog/crypto-security-best-practices-2026</loc>
-    <lastmod>2026-03-15</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.8</priority>
-  </url>
-  <url>
-    <loc>https://mrcglobalpay.com/blog/top-crypto-trading-pairs-march-2026</loc>
-    <lastmod>2026-03-15</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.8</priority>
-  </url>
-  <url>
-    <loc>https://mrcglobalpay.com/blog/crypto-mining-payout-optimization-2026</loc>
-    <lastmod>2026-03-15</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.8</priority>
-  </url>
-  <url>
     <loc>https://mrcglobalpay.com/swap/sol-usdt</loc>
     <lastmod>2026-03-15</lastmod>
     <changefreq>daily</changefreq>
@@ -96,6 +66,122 @@
     <changefreq>daily</changefreq>
     <priority>0.9</priority>
   </url>
+  <!-- Blog Posts -->
+  <url>
+    <loc>https://mrcglobalpay.com/blog/how-to-swap-bitcoin-to-ethereum-2026</loc>
+    <lastmod>2026-03-15</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://mrcglobalpay.com/blog/understanding-crypto-liquidity-aggregation</loc>
+    <lastmod>2026-03-15</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://mrcglobalpay.com/blog/crypto-security-best-practices-2026</loc>
+    <lastmod>2026-03-15</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://mrcglobalpay.com/blog/top-crypto-trading-pairs-march-2026</loc>
+    <lastmod>2026-03-15</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://mrcglobalpay.com/blog/crypto-mining-payout-optimization-2026</loc>
+    <lastmod>2026-03-15</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://mrcglobalpay.com/blog/how-to-convert-crypto-to-cash-2026</loc>
+    <lastmod>2026-03-15</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://mrcglobalpay.com/blog/bitcoin-cross-chain-bridge-2026-navigating-the-multi-chain-future</loc>
+    <lastmod>2026-03-15</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://mrcglobalpay.com/blog/how-ethereum-blockchain-works-a-traders-deep-dive-into-its-core-tech</loc>
+    <lastmod>2026-03-15</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://mrcglobalpay.com/blog/arbitrum-cross-chain-bridging-in-2026-navigating-the-multi-chain-future</loc>
+    <lastmod>2026-03-15</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://mrcglobalpay.com/blog/the-best-way-to-swap-ethereum-in-2026-a-deep-dive-for-traders</loc>
+    <lastmod>2026-03-15</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://mrcglobalpay.com/blog/lowest-fee-hype-to-sol-swap-2026</loc>
+    <lastmod>2026-03-15</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://mrcglobalpay.com/blog/quantum-resistant-crypto-swap-platforms-2026</loc>
+    <lastmod>2026-03-15</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://mrcglobalpay.com/blog/ai-agent-wallet-swap-automation-2026</loc>
+    <lastmod>2026-03-15</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://mrcglobalpay.com/blog/instant-crypto-swap-with-apple-pay-2026</loc>
+    <lastmod>2026-03-15</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://mrcglobalpay.com/blog/swap-usdt-for-local-currency-stablecoins-2026</loc>
+    <lastmod>2026-03-15</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://mrcglobalpay.com/blog/cross-chain-swap-bridge-fees-comparison-2026</loc>
+    <lastmod>2026-03-15</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://mrcglobalpay.com/blog/direct-swap-metamask-to-hardware-wallet-2026</loc>
+    <lastmod>2026-03-15</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://mrcglobalpay.com/blog/zero-slippage-stablecoin-swap-for-businesses-2026</loc>
+    <lastmod>2026-03-15</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://mrcglobalpay.com/blog/swap-stablecoins-for-tokenized-treasuries-2026</loc>
+    <lastmod>2026-03-15</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <!-- Legal -->
   <url>
     <loc>https://mrcglobalpay.com/privacy</loc>
     <lastmod>2026-03-15</lastmod>
