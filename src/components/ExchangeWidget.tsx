@@ -590,6 +590,63 @@ const ExchangeWidget = () => {
                   </div>
                 </div>
               </div>
+
+              {/* Useful tips */}
+              <div className="rounded-xl border border-border bg-card p-5 space-y-5">
+                <h3 className="font-display text-base font-semibold text-foreground">Useful tips to know</h3>
+
+                <div>
+                  <p className="font-display text-sm font-semibold text-foreground mb-2">We will process your transaction even if you:</p>
+                  <ul className="space-y-2">
+                    {[
+                      "Send a deposit in the wrong network, if this asset is supported on our service",
+                      "Create a transaction with a wrong coin",
+                      "Send more than one deposit for the same transaction",
+                      "Send a deposit long after the exchange was created or completed",
+                    ].map((tip) => (
+                      <li key={tip} className="flex items-start gap-2 font-body text-sm text-muted-foreground">
+                        <CheckCircle2 className="mt-0.5 h-4 w-4 shrink-0 text-trust" />
+                        <span>{tip}</span>
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+
+                <div className="border-t border-border pt-4">
+                  <p className="font-display text-sm font-semibold text-foreground mb-2">We will not be able to proceed on the initial terms if you:</p>
+                  <ul className="space-y-2">
+                    {[
+                      "Send a deposit for a fixed-rate exchange after the rate expires, provided that the rate declines over this timeframe",
+                      "Make a transaction using the wrong contract address",
+                    ].map((tip) => (
+                      <li key={tip} className="flex items-start gap-2 font-body text-sm text-muted-foreground">
+                        <XCircle className="mt-0.5 h-4 w-4 shrink-0 text-destructive" />
+                        <span>{tip}</span>
+                      </li>
+                    ))}
+                  </ul>
+                  <div className="mt-3 rounded-lg border border-border bg-accent p-3">
+                    <p className="font-body text-xs text-muted-foreground">
+                      In these cases, we encourage you to contact our <a href="mailto:support@globalpayboost.com" className="font-semibold text-trust hover:underline">support team</a>. The exchange can be continued from there, or alternatively, you are free to request a refund.
+                    </p>
+                  </div>
+                </div>
+
+                <div className="border-t border-border pt-4">
+                  <p className="font-display text-sm font-semibold text-foreground mb-2">How to cancel an exchange:</p>
+                  <ul className="space-y-2">
+                    {[
+                      "If you didn't send any funds yet, there is no need to cancel the transaction, you can simply create a new one",
+                      "If you have already sent the funds for the exchange, immediately contact our support team for assistance",
+                    ].map((tip) => (
+                      <li key={tip} className="flex items-start gap-2 font-body text-sm text-muted-foreground">
+                        <Info className="mt-0.5 h-4 w-4 shrink-0 text-blue-500" />
+                        <span>{tip}</span>
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+              </div>
             </div>
 
             <Button className="mt-6 w-full bg-primary text-primary-foreground hover:bg-primary/90" size="lg" onClick={handleProceedToStatus}>
