@@ -245,6 +245,31 @@ OUTPUT FORMAT — respond with ONLY a valid JSON object (no markdown fences, no 
           ],
           temperature: 0.7,
           max_tokens: 16000,
+          tools: [
+            {
+              type: "function",
+              function: {
+                name: "publish_blog_post",
+                description: "Publish a complete, high-quality blog post with all required fields.",
+                parameters: {
+                  type: "object",
+                  properties: {
+                    title: { type: "string", description: "Compelling article title, 50-70 chars" },
+                    metaTitle: { type: "string", description: "SEO meta title under 60 chars" },
+                    metaDescription: { type: "string", description: "Meta description under 155 chars" },
+                    excerpt: { type: "string", description: "Two-sentence excerpt for blog index" },
+                    readTime: { type: "string", description: "e.g. 12 min read" },
+                    category: { type: "string", enum: ["Guides", "Education", "Security", "Market Analysis", "Technology", "DeFi"] },
+                    tags: { type: "array", items: { type: "string" }, description: "4-5 relevant tags" },
+                    content: { type: "string", description: "Full markdown article, 2500-3500 words, with tables, FAQ, Related Reading, and 8+ internal links" },
+                  },
+                  required: ["title", "metaTitle", "metaDescription", "excerpt", "readTime", "category", "tags", "content"],
+                  additionalProperties: false,
+                },
+              },
+            },
+          ],
+          tool_choice: { type: "function", function: { name: "publish_blog_post" } },
         }),
       });
 
@@ -254,65 +279,34 @@ OUTPUT FORMAT — respond with ONLY a valid JSON object (no markdown fences, no 
       }
 
       const aiData = await aiResponse.json();
-      let rawContent = aiData.choices?.[0]?.message?.content;
-
-      if (!rawContent) {
-        throw new Error("AI returned empty content");
-      }
-
-      rawContent = rawContent.replace(/^```json\s*\n?/i, "").replace(/\n?```\s*$/i, "").trim();
-
-      // Fix control characters in JSON string values (newlines, tabs in content field)
-      // Strategy: extract content field separately if JSON.parse fails
-      try {
-        postData = JSON.parse(rawContent);
-      } catch (_firstError) {
+      
+      // Extract from tool call response
+      const toolCall = aiData.choices?.[0]?.message?.tool_calls?.[0];
+      if (toolCall?.function?.arguments) {
         try {
-          // Try fixing common issues: unescaped newlines in string values
-          const fixed = rawContent
-            .replace(/\r\n/g, "\\n")
-            .replace(/\r/g, "\\n")
-            .replace(/\n/g, "\\n")
-            .replace(/\t/g, "\\t");
-          postData = JSON.parse(fixed);
-        } catch (_secondError) {
-          // Last resort: extract fields manually with regex
+          postData = JSON.parse(toolCall.function.arguments);
+        } catch (e) {
+          // Try fixing escaped newlines
           try {
-            const extractField = (field: string): string => {
-              const regex = new RegExp(`"${field}"\\s*:\\s*"((?:[^"\\\\]|\\\\.)*)"`);
-              const match = rawContent.match(regex);
-              return match ? match[1].replace(/\\"/g, '"').replace(/\\n/g, "\n") : "";
-            };
-            const extractArray = (field: string): string[] => {
-              const regex = new RegExp(`"${field}"\\s*:\\s*\\[([^\\]]*)\\]`);
-              const match = rawContent.match(regex);
-              if (!match) return [];
-              return match[1].match(/"([^"]+)"/g)?.map(s => s.replace(/"/g, "")) || [];
-            };
-            // Extract content as everything between "content": " and the closing "} 
-            const contentMatch = rawContent.match(/"content"\s*:\s*"([\s\S]*)"[\s\n]*\}[\s\n]*$/);
-            const contentValue = contentMatch 
-              ? contentMatch[1].replace(/\\"/g, '"').replace(/\\n/g, "\n").replace(/\\t/g, "\t")
-              : "";
-
-            postData = {
-              title: extractField("title"),
-              metaTitle: extractField("metaTitle"),
-              metaDescription: extractField("metaDescription"),
-              excerpt: extractField("excerpt"),
-              readTime: extractField("readTime"),
-              category: extractField("category"),
-              tags: extractArray("tags"),
-              content: contentValue,
-            };
-            if (!postData.title || !postData.content) {
-              throw new Error("Manual extraction failed");
-            }
-            console.log("Used fallback JSON extraction successfully");
-          } catch (e) {
-            console.error("Failed to parse AI response:", rawContent.substring(0, 500));
-            throw new Error(`Failed to parse AI response as JSON: ${e.message}`);
+            const fixed = toolCall.function.arguments
+              .replace(/\r\n/g, "\\n")
+              .replace(/\r/g, "\\n");
+            postData = JSON.parse(fixed);
+          } catch (_) {
+            console.error("Failed to parse tool call args:", toolCall.function.arguments.substring(0, 500));
+            throw new Error(`Failed to parse tool call response: ${e.message}`);
           }
+        }
+      } else {
+        // Fallback: try content field
+        let rawContent = aiData.choices?.[0]?.message?.content;
+        if (!rawContent) throw new Error("AI returned no tool call and no content");
+        rawContent = rawContent.replace(/^```json\s*\n?/i, "").replace(/\n?```\s*$/i, "").trim();
+        try {
+          postData = JSON.parse(rawContent);
+        } catch (e) {
+          const fixed = rawContent.replace(/\r\n/g, "\\n").replace(/\r/g, "\\n").replace(/\n/g, "\\n").replace(/\t/g, "\\t");
+          postData = JSON.parse(fixed);
         }
       }
 
