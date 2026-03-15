@@ -1,15 +1,12 @@
 import { serve } from "https://deno.land/std@0.168.0/http/server.ts";
+import { createClient } from "https://esm.sh/@supabase/supabase-js@2";
 
 const SITE = "https://mrcglobalpay.com";
 const INDEXNOW_KEY = "5b41e59fca3649f389b22450cd5cb8dc";
 
-const ALL_URLS = [
+const STATIC_URLS = [
   `${SITE}/`,
   `${SITE}/blog`,
-  `${SITE}/blog/how-to-swap-bitcoin-to-ethereum-2026`,
-  `${SITE}/blog/understanding-crypto-liquidity-aggregation`,
-  `${SITE}/blog/crypto-security-best-practices-2026`,
-  `${SITE}/blog/top-crypto-trading-pairs-march-2026`,
   `${SITE}/swap/sol-usdt`,
   `${SITE}/swap/btc-usdc`,
   `${SITE}/swap/hype-usdt`,
@@ -19,11 +16,14 @@ const ALL_URLS = [
   `${SITE}/swap/tia-usdt`,
   `${SITE}/swap/monad-usdt`,
   `${SITE}/swap/pyusd-usdt`,
+  `${SITE}/privacy`,
+  `${SITE}/terms`,
+  `${SITE}/aml`,
 ];
 
 const corsHeaders = {
   "Access-Control-Allow-Origin": "*",
-  "Access-Control-Allow-Headers": "authorization, x-client-info, apikey, content-type",
+  "Access-Control-Allow-Headers": "authorization, x-client-info, apikey, content-type, x-supabase-client-platform, x-supabase-client-platform-version, x-supabase-client-runtime, x-supabase-client-runtime-version",
 };
 
 async function safeFetch(label: string, url: string, options?: RequestInit): Promise<string> {
@@ -40,6 +40,19 @@ serve(async (req) => {
     return new Response(null, { headers: corsHeaders });
   }
 
+  // Dynamically fetch all published blog post slugs
+  const supabaseUrl = Deno.env.get("SUPABASE_URL")!;
+  const supabaseKey = Deno.env.get("SUPABASE_ANON_KEY")!;
+  const supabase = createClient(supabaseUrl, supabaseKey);
+
+  const { data: posts } = await supabase
+    .from("blog_posts")
+    .select("slug")
+    .eq("is_published", true);
+
+  const blogUrls = (posts || []).map((p: any) => `${SITE}/blog/${p.slug}`);
+  const ALL_URLS = [...STATIC_URLS, ...blogUrls];
+
   const results: Record<string, string> = {};
 
   // ── 1. Google Sitemap Ping ──
@@ -55,18 +68,20 @@ serve(async (req) => {
   );
 
   // ── 3. IndexNow (Bing, Yandex, Seznam, Naver) ──
+  const indexNowPayload = JSON.stringify({
+    host: "mrcglobalpay.com",
+    key: INDEXNOW_KEY,
+    keyLocation: `${SITE}/${INDEXNOW_KEY}.txt`,
+    urlList: ALL_URLS,
+  });
+
   results.indexnow = await safeFetch(
     "indexnow",
     "https://api.indexnow.org/indexnow",
     {
       method: "POST",
       headers: { "Content-Type": "application/json; charset=utf-8" },
-      body: JSON.stringify({
-        host: "mrcglobalpay.com",
-        key: INDEXNOW_KEY,
-        keyLocation: `${SITE}/${INDEXNOW_KEY}.txt`,
-        urlList: ALL_URLS,
-      }),
+      body: indexNowPayload,
     }
   );
 
@@ -77,7 +92,6 @@ serve(async (req) => {
   );
 
   // ── 5. Ping-O-Matic (XML-RPC) ──
-  // Pings Technorati, Google Blog Search, Weblogs.com, Moreover, etc.
   const pingomaticBody = `<?xml version="1.0"?>
 <methodCall>
   <methodName>weblogUpdates.ping</methodName>
@@ -105,11 +119,11 @@ serve(async (req) => {
     {
       method: "POST",
       headers: { "Content-Type": "text/xml" },
-      body: pingomaticBody.replace("weblogUpdates.ping", "weblogUpdates.ping"),
+      body: pingomaticBody,
     }
   );
 
-  // ── 7. Feed Burner / Google Blog Ping ──
+  // ── 7. Google Blog Ping ──
   results.google_blog_ping = await safeFetch(
     "google_blog_ping",
     "http://blogsearch.google.com/ping/RPC2",
@@ -133,12 +147,7 @@ serve(async (req) => {
     {
       method: "POST",
       headers: { "Content-Type": "application/json; charset=utf-8" },
-      body: JSON.stringify({
-        host: "mrcglobalpay.com",
-        key: INDEXNOW_KEY,
-        keyLocation: `${SITE}/${INDEXNOW_KEY}.txt`,
-        urlList: ALL_URLS,
-      }),
+      body: indexNowPayload,
     }
   );
 
@@ -149,12 +158,7 @@ serve(async (req) => {
     {
       method: "POST",
       headers: { "Content-Type": "application/json; charset=utf-8" },
-      body: JSON.stringify({
-        host: "mrcglobalpay.com",
-        key: INDEXNOW_KEY,
-        keyLocation: `${SITE}/${INDEXNOW_KEY}.txt`,
-        urlList: ALL_URLS,
-      }),
+      body: indexNowPayload,
     }
   );
 
@@ -165,18 +169,30 @@ serve(async (req) => {
     {
       method: "POST",
       headers: { "Content-Type": "application/json; charset=utf-8" },
-      body: JSON.stringify({
-        host: "mrcglobalpay.com",
-        key: INDEXNOW_KEY,
-        keyLocation: `${SITE}/${INDEXNOW_KEY}.txt`,
-        urlList: ALL_URLS,
-      }),
+      body: indexNowPayload,
     }
   );
 
-  return new Response(JSON.stringify({ 
-    success: true, 
-    results, 
+  // ── 12. IndexNow via Seznam ──
+  results.indexnow_seznam = await safeFetch(
+    "indexnow_seznam",
+    "https://search.seznam.cz/indexnow",
+    {
+      method: "POST",
+      headers: { "Content-Type": "application/json; charset=utf-8" },
+      body: indexNowPayload,
+    }
+  );
+
+  // ── 13. Bing URL submission for llms.txt ──
+  results.bing_llms = await safeFetch(
+    "bing_llms",
+    `https://www.bing.com/ping?sitemap=${encodeURIComponent(`${SITE}/llms.txt`)}`
+  );
+
+  return new Response(JSON.stringify({
+    success: true,
+    results,
     pinged_urls: ALL_URLS.length,
     services_pinged: Object.keys(results).length,
     timestamp: new Date().toISOString(),
