@@ -157,10 +157,12 @@ const Index = () => {
       <main>
         <HeroSection />
         <TrustBanner />
+        <LiveSwapTicker />
         <FeaturesSection />
+        <NoLimitsSection />
         <HowItWorksSection />
-        <SwapPairsQA />
         <PopularPairsSection />
+        <SwapPairsQA />
         <FAQSection />
       </main>
       <SiteFooter />
