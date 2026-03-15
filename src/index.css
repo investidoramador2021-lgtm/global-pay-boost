@@ -169,4 +169,13 @@
   .glow-neon {
     box-shadow: 0 0 15px hsl(var(--neon) / 0.2), 0 0 45px hsl(var(--neon) / 0.05);
   }
+  /* Touch target minimum 48px for WCAG */
+  .touch-target {
+    min-height: 48px;
+    min-width: 48px;
+  }
+  /* Safe area for bottom nav on notched devices */
+  .safe-area-bottom {
+    padding-bottom: env(safe-area-inset-bottom, 0px);
+  }
 }

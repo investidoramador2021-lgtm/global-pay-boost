@@ -5,6 +5,7 @@ import { Toaster as Sonner } from "@/components/ui/sonner";
 import { Toaster } from "@/components/ui/toaster";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import { ThemeProvider } from "@/hooks/use-theme";
+import MobileBottomNav from "@/components/MobileBottomNav";
 import Index from "./pages/Index.tsx";
 import PrivacyPolicy from "./pages/PrivacyPolicy.tsx";
 import TermsOfService from "./pages/TermsOfService.tsx";
@@ -32,25 +33,28 @@ const App = () => (
           <Toaster />
           <Sonner />
           <BrowserRouter>
-            <Routes>
-              <Route path="/" element={<Index />} />
-              <Route path="/blog" element={<Blog />} />
-              <Route path="/blog/:slug" element={<BlogPost />} />
-              <Route path="/privacy" element={<PrivacyPolicy />} />
-              <Route path="/terms" element={<TermsOfService />} />
-              <Route path="/aml" element={<AMLPolicy />} />
-              <Route path="/swap/sol-usdt" element={<SwapSolUsdt />} />
-              <Route path="/swap/btc-usdc" element={<SwapBtcUsdc />} />
-              <Route path="/swap/hype-usdt" element={<SwapHypeUsdt />} />
-              <Route path="/swap/eth-sol" element={<SwapEthSol />} />
-              <Route path="/swap/xrp-usdt" element={<SwapXrpUsdt />} />
-              <Route path="/swap/bera-usdt" element={<SwapBeraUsdt />} />
-              <Route path="/swap/tia-usdt" element={<SwapTiaUsdt />} />
-              <Route path="/swap/monad-usdt" element={<SwapMonadUsdt />} />
-              <Route path="/swap/pyusd-usdt" element={<SwapPyusdUsdt />} />
-              {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
-              <Route path="*" element={<NotFound />} />
-            </Routes>
+            <div className="pb-16 lg:pb-0">
+              <Routes>
+                <Route path="/" element={<Index />} />
+                <Route path="/blog" element={<Blog />} />
+                <Route path="/blog/:slug" element={<BlogPost />} />
+                <Route path="/privacy" element={<PrivacyPolicy />} />
+                <Route path="/terms" element={<TermsOfService />} />
+                <Route path="/aml" element={<AMLPolicy />} />
+                <Route path="/swap/sol-usdt" element={<SwapSolUsdt />} />
+                <Route path="/swap/btc-usdc" element={<SwapBtcUsdc />} />
+                <Route path="/swap/hype-usdt" element={<SwapHypeUsdt />} />
+                <Route path="/swap/eth-sol" element={<SwapEthSol />} />
+                <Route path="/swap/xrp-usdt" element={<SwapXrpUsdt />} />
+                <Route path="/swap/bera-usdt" element={<SwapBeraUsdt />} />
+                <Route path="/swap/tia-usdt" element={<SwapTiaUsdt />} />
+                <Route path="/swap/monad-usdt" element={<SwapMonadUsdt />} />
+                <Route path="/swap/pyusd-usdt" element={<SwapPyusdUsdt />} />
+                {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
+                <Route path="*" element={<NotFound />} />
+              </Routes>
+            </div>
+            <MobileBottomNav />
           </BrowserRouter>
         </TooltipProvider>
       </QueryClientProvider>
