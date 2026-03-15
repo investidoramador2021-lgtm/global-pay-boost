@@ -484,11 +484,11 @@ const ExchangeWidget = () => {
                 <label className="mb-1.5 block font-body text-xs font-medium uppercase tracking-wider text-muted-foreground">
                   {toCurrency?.ticker?.toUpperCase()} Wallet Address *
                 </label>
-                <Input
-                  placeholder={`Enter your ${toCurrency?.ticker?.toUpperCase()} address`}
+                <DestinationAddressInput
                   value={recipientAddress}
-                  onChange={(e) => setRecipientAddress(e.target.value)}
-                  className="font-body text-sm"
+                  onChange={setRecipientAddress}
+                  onValidChange={setAddressValid}
+                  currencyTicker={toCurrency?.ticker}
                 />
               </div>
 
