@@ -119,13 +119,22 @@
 @layer base {
   * {
     @apply border-border;
+    -webkit-tap-highlight-color: transparent;
   }
   body {
     @apply bg-background text-foreground antialiased;
     font-family: 'Roboto', system-ui, sans-serif;
+    -webkit-touch-callout: none;
+    overscroll-behavior-y: contain;
   }
   h1, h2, h3, h4, h5, h6 {
     font-family: 'Inter', system-ui, sans-serif;
+  }
+  /* Prevent long-press on functional buttons */
+  button, a, [role="button"] {
+    -webkit-touch-callout: none;
+    -webkit-user-select: none;
+    user-select: none;
   }
 }
 
