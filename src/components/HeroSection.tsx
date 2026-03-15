@@ -16,6 +16,16 @@ const HeroSection = () => {
     <section id="exchange" className="relative overflow-hidden bg-background py-10 sm:py-16 lg:py-24">
       <div className="absolute inset-0 opacity-[0.03]" style={{ backgroundImage: 'radial-gradient(hsl(var(--neon)) 1px, transparent 1px)', backgroundSize: '32px 32px' }} />
 
+      {/* Top banner */}
+      <div className="container relative mx-auto mb-6 px-4 sm:mb-8">
+        <div className="flex items-center justify-center gap-2 rounded-full border border-primary/20 bg-primary/5 px-4 py-2 text-center">
+          <Zap className="h-3.5 w-3.5 shrink-0 text-primary" />
+          <span className="font-body text-xs font-medium text-muted-foreground sm:text-sm">
+            Start swapping from as low as <span className="font-bold text-primary">$2</span> — with <span className="font-bold text-primary">no upper limit</span>
+          </span>
+        </div>
+      </div>
+
       <div className="container relative mx-auto px-4">
         <div className="grid items-start gap-8 lg:grid-cols-2 lg:gap-16">
           {/* Copy */}
