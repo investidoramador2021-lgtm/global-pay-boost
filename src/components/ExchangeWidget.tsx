@@ -510,18 +510,6 @@ const ExchangeWidget = () => {
                 </div>
               )}
 
-              {/* Refund address — only shown when relevant (e.g. BTC sends where address format differs) */}
-              <div>
-                <label className="mb-1.5 block font-body text-xs font-medium uppercase tracking-wider text-muted-foreground">
-                  {fromCurrency?.ticker?.toUpperCase()} Refund Address (optional)
-                </label>
-                <Input
-                  placeholder={`Enter your ${fromCurrency?.ticker?.toUpperCase()} refund address`}
-                  value={refundAddress}
-                  onChange={(e) => setRefundAddress(e.target.value)}
-                  className="font-body text-sm"
-                />
-              </div>
             </div>
 
             {/* Summary */}
