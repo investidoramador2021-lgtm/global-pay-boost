@@ -77,6 +77,27 @@ export type Database = {
         }
         Relationships: []
       }
+      transfer_email_subscriptions: {
+        Row: {
+          created_at: string
+          email: string
+          id: string
+          transaction_id: string
+        }
+        Insert: {
+          created_at?: string
+          email: string
+          id?: string
+          transaction_id: string
+        }
+        Update: {
+          created_at?: string
+          email?: string
+          id?: string
+          transaction_id?: string
+        }
+        Relationships: []
+      }
     }
     Views: {
       [_ in never]: never
