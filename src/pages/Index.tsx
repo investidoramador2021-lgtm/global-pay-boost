@@ -130,6 +130,12 @@ const Index = () => {
     ],
   };
 
+  const handleRefresh = useCallback(async () => {
+    // Force re-fetch of exchange rates by invalidating queries
+    await new Promise((resolve) => setTimeout(resolve, 1000));
+    window.dispatchEvent(new CustomEvent("pull-refresh"));
+  }, []);
+
   return (
     <>
       <Helmet>
@@ -155,19 +161,23 @@ const Index = () => {
         <script type="application/ld+json">{JSON.stringify(faqJsonLd)}</script>
       </Helmet>
 
-      <SiteHeader />
-      <main>
-        <HeroSection />
-        <TrustBanner />
-        <LiveSwapTicker />
-        <FeaturesSection />
-        <NoLimitsSection />
-        <HowItWorksSection />
-        <PopularPairsSection />
-        <SwapPairsQA />
-        <FAQSection />
-      </main>
-      <SiteFooter />
+      <PullToRefresh onRefresh={handleRefresh}>
+        <SiteHeader />
+        <main>
+          <HeroSection />
+          <TrustBanner />
+          <div id="live-swaps">
+            <LiveSwapTicker />
+          </div>
+          <FeaturesSection />
+          <NoLimitsSection />
+          <HowItWorksSection />
+          <PopularPairsSection />
+          <SwapPairsQA />
+          <FAQSection />
+        </main>
+        <SiteFooter />
+      </PullToRefresh>
     </>
   );
 };
