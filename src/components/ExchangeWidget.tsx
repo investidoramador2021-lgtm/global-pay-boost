@@ -63,6 +63,7 @@ const ExchangeWidget = () => {
   // Transaction flow state
   const [step, setStep] = useState<Step>("exchange");
   const [recipientAddress, setRecipientAddress] = useState("");
+  const [addressValid, setAddressValid] = useState(false);
   const [refundAddress, setRefundAddress] = useState("");
   const [extraId, setExtraId] = useState("");
   const [creatingTx, setCreatingTx] = useState(false);
