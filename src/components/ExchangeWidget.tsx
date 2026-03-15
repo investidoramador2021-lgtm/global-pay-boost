@@ -334,7 +334,7 @@ const ExchangeWidget = () => {
               <CurrencyPicker show={showToPicker} onSelect={setToCurrency} onClose={() => setShowToPicker(false)} exclude={fromCurrency?.ticker} />
             </div>
 
-            <Button className="mt-6 w-full bg-trust text-trust-foreground hover:bg-trust/90" size="lg" disabled={!estimatedAmount || estimatedAmount === "—" || belowMin} onClick={handleExchangeNow}>
+            <Button className="mt-6 w-full min-h-[52px] bg-trust text-trust-foreground hover:bg-trust/90 text-base font-bold" size="lg" disabled={!estimatedAmount || estimatedAmount === "—" || belowMin} onClick={handleExchangeNow}>
               Exchange Now
             </Button>
             <div className="mt-3 flex items-center justify-center gap-3">
