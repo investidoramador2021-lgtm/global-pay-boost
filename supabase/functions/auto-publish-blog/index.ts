@@ -310,6 +310,7 @@ OUTPUT FORMAT — respond with ONLY a valid JSON object (no markdown fences, no 
         }
       }
 
+      console.log(`Parsed post: "${postData?.title}" | Words: ${countWords(postData?.content || "")} | Has FAQ: ${/##\s+FAQ/i.test(postData?.content || "")}`);
       qualityIssues = evaluatePostQuality(postData);
       if (qualityIssues.length === 0) break;
 
