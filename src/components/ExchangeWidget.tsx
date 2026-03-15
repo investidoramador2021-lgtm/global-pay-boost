@@ -535,9 +535,9 @@ const ExchangeWidget = () => {
             </div>
 
             <Button
-              className="mt-6 w-full bg-trust text-trust-foreground hover:bg-trust/90"
+              className="mt-6 w-full min-h-[52px] bg-trust text-trust-foreground hover:bg-trust/90 text-base font-bold"
               size="lg"
-              disabled={!recipientAddress.trim() || creatingTx}
+              disabled={!addressValid || creatingTx}
               onClick={handleCreateTransaction}
             >
               {creatingTx ? <><Loader2 className="mr-2 h-4 w-4 animate-spin" /> Creating Exchange...</> : "Confirm & Create Exchange"}
