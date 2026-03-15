@@ -1,7 +1,8 @@
 import { useState, useEffect, useCallback, useRef } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { ArrowDownUp, Loader2, Search, Copy, Check, ArrowLeft, Clock, CheckCircle2, AlertCircle, ExternalLink, Wallet, QrCode, XCircle, Info } from "lucide-react";
+import { ArrowDownUp, Loader2, Search, Copy, Check, ArrowLeft, Clock, CheckCircle2, AlertCircle, ExternalLink, Wallet, QrCode, XCircle, Info, Mail } from "lucide-react";
 import DestinationAddressInput, { tickerToAddressType } from "@/components/DestinationAddressInput";
+import { supabase } from "@/integrations/supabase/client";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { QRCodeSVG } from "qrcode.react";
@@ -73,6 +74,9 @@ const ExchangeWidget = () => {
   const [copied, setCopied] = useState<string | null>(null);
   const [speedForecast, setSpeedForecast] = useState<string | null>(null);
   const [connectedWallet, setConnectedWallet] = useState<{ address: string; type: "evm" | "solana" } | null>(null);
+  const [notifyEmail, setNotifyEmail] = useState("");
+  const [emailSubmitted, setEmailSubmitted] = useState(false);
+  const [emailSubmitting, setEmailSubmitting] = useState(false);
   const statusPollRef = useRef<ReturnType<typeof setInterval>>();
 
   // Wallet connection handlers
@@ -228,6 +232,31 @@ const ExchangeWidget = () => {
     setTransaction(null);
     setTxStatus(null);
     setConnectedWallet(null);
+    setNotifyEmail("");
+    setEmailSubmitted(false);
+  };
+
+  const handleEmailSubscribe = async () => {
+    if (!notifyEmail.trim() || !transaction?.id) return;
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!emailRegex.test(notifyEmail.trim())) {
+      toast({ title: "Invalid email", description: "Please enter a valid email address.", variant: "destructive" });
+      return;
+    }
+    setEmailSubmitting(true);
+    try {
+      const { error } = await supabase.from("transfer_email_subscriptions").insert({
+        transaction_id: transaction.id,
+        email: notifyEmail.trim(),
+      });
+      if (error) throw error;
+      setEmailSubmitted(true);
+      toast({ title: "Subscribed!", description: "You'll receive status updates for this transfer." });
+    } catch (err: any) {
+      toast({ title: "Error", description: err?.message || "Could not subscribe", variant: "destructive" });
+    } finally {
+      setEmailSubmitting(false);
+    }
   };
 
   const filteredCurrencies = currencies.filter((c) => {
@@ -782,6 +811,44 @@ const ExchangeWidget = () => {
                       </li>
                     ))}
                   </ul>
+                </div>
+              </div>
+            </div>
+
+            {/* Email notification box */}
+            <div className="mt-6 rounded-xl border border-border bg-accent p-5">
+              <div className="flex items-start gap-3">
+                <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-primary/10">
+                  <Mail className="h-5 w-5 text-primary" />
+                </div>
+                <div className="flex-1">
+                  <p className="mb-3 font-display text-sm font-semibold text-foreground">
+                    Want to get status on your email?
+                  </p>
+                  {emailSubmitted ? (
+                    <div className="flex items-center gap-2 rounded-lg border border-trust/20 bg-trust/5 p-3">
+                      <CheckCircle2 className="h-4 w-4 text-trust" />
+                      <span className="font-body text-sm text-trust">Subscribed! We'll notify you of updates.</span>
+                    </div>
+                  ) : (
+                    <div className="flex gap-2">
+                      <Input
+                        type="email"
+                        placeholder="Enter your email"
+                        value={notifyEmail}
+                        onChange={(e) => setNotifyEmail(e.target.value)}
+                        className="flex-1 font-body text-sm"
+                        maxLength={255}
+                      />
+                      <Button
+                        onClick={handleEmailSubscribe}
+                        disabled={!notifyEmail.trim() || emailSubmitting}
+                        className="shrink-0 bg-primary text-primary-foreground hover:bg-primary/90 font-semibold"
+                      >
+                        {emailSubmitting ? <Loader2 className="h-4 w-4 animate-spin" /> : "Confirm"}
+                      </Button>
+                    </div>
+                  )}
                 </div>
               </div>
             </div>
