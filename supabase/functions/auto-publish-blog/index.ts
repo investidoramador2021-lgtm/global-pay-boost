@@ -132,6 +132,8 @@ function evaluatePostQuality(postData: any): string[] {
   if (bulletPoints < 8) {
     issues.push("content needs more bullet points for readability (at least 8)");
   }
+
+  return issues;
 }
 
 serve(async (req) => {
