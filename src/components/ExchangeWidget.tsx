@@ -1,6 +1,6 @@
 import { useState, useEffect, useCallback, useRef } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { ArrowDownUp, Loader2, Search, Copy, Check, ArrowLeft, Clock, CheckCircle2, AlertCircle, ExternalLink, Wallet, QrCode, XCircle, Info, Mail } from "lucide-react";
+import { ArrowDownUp, Loader2, Search, Copy, Check, ArrowLeft, Clock, CheckCircle2, AlertCircle, ExternalLink, Wallet, QrCode, XCircle, Info, Mail, RefreshCw } from "lucide-react";
 import DestinationAddressInput, { tickerToAddressType } from "@/components/DestinationAddressInput";
 import { supabase } from "@/integrations/supabase/client";
 import { Button } from "@/components/ui/button";
