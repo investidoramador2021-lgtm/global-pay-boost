@@ -1,7 +1,7 @@
 import { useState, useEffect, useCallback, useRef } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { ArrowDownUp, Loader2, Search, Copy, Check, ArrowLeft, Clock, CheckCircle2, AlertCircle, ExternalLink, Wallet, QrCode, XCircle, Info } from "lucide-react";
-import DestinationAddressInput from "@/components/DestinationAddressInput";
+import DestinationAddressInput, { tickerToAddressType } from "@/components/DestinationAddressInput";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { QRCodeSVG } from "qrcode.react";
