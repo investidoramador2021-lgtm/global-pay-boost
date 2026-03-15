@@ -1,6 +1,7 @@
 import { useState, useEffect, useCallback, useRef } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { ArrowDownUp, Loader2, Search, Copy, Check, ArrowLeft, Clock, CheckCircle2, AlertCircle, ExternalLink, Wallet, QrCode, XCircle, Info } from "lucide-react";
+import DestinationAddressInput from "@/components/DestinationAddressInput";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { QRCodeSVG } from "qrcode.react";
@@ -62,6 +63,7 @@ const ExchangeWidget = () => {
   // Transaction flow state
   const [step, setStep] = useState<Step>("exchange");
   const [recipientAddress, setRecipientAddress] = useState("");
+  const [addressValid, setAddressValid] = useState(false);
   const [refundAddress, setRefundAddress] = useState("");
   const [extraId, setExtraId] = useState("");
   const [creatingTx, setCreatingTx] = useState(false);
@@ -219,6 +221,7 @@ const ExchangeWidget = () => {
   const handleNewExchange = () => {
     setStep("exchange");
     setRecipientAddress("");
+    setAddressValid(false);
     setRefundAddress("");
     setExtraId("");
     setTransaction(null);
@@ -482,11 +485,11 @@ const ExchangeWidget = () => {
                 <label className="mb-1.5 block font-body text-xs font-medium uppercase tracking-wider text-muted-foreground">
                   {toCurrency?.ticker?.toUpperCase()} Wallet Address *
                 </label>
-                <Input
-                  placeholder={`Enter your ${toCurrency?.ticker?.toUpperCase()} address`}
+                <DestinationAddressInput
                   value={recipientAddress}
-                  onChange={(e) => setRecipientAddress(e.target.value)}
-                  className="font-body text-sm"
+                  onChange={setRecipientAddress}
+                  onValidChange={setAddressValid}
+                  currencyTicker={toCurrency?.ticker}
                 />
               </div>
 
@@ -533,9 +536,9 @@ const ExchangeWidget = () => {
             </div>
 
             <Button
-              className="mt-6 w-full bg-trust text-trust-foreground hover:bg-trust/90"
+              className="mt-6 w-full min-h-[52px] bg-trust text-trust-foreground hover:bg-trust/90 text-base font-bold"
               size="lg"
-              disabled={!recipientAddress.trim() || creatingTx}
+              disabled={!addressValid || creatingTx}
               onClick={handleCreateTransaction}
             >
               {creatingTx ? <><Loader2 className="mr-2 h-4 w-4 animate-spin" /> Creating Exchange...</> : "Confirm & Create Exchange"}
