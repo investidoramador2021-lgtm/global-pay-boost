@@ -815,6 +815,44 @@ const ExchangeWidget = () => {
               </div>
             </div>
 
+            {/* Email notification box */}
+            <div className="mt-6 rounded-xl border border-border bg-accent p-5">
+              <div className="flex items-start gap-3">
+                <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-primary/10">
+                  <Mail className="h-5 w-5 text-primary" />
+                </div>
+                <div className="flex-1">
+                  <p className="mb-3 font-display text-sm font-semibold text-foreground">
+                    Want to get status on your email?
+                  </p>
+                  {emailSubmitted ? (
+                    <div className="flex items-center gap-2 rounded-lg border border-trust/20 bg-trust/5 p-3">
+                      <CheckCircle2 className="h-4 w-4 text-trust" />
+                      <span className="font-body text-sm text-trust">Subscribed! We'll notify you of updates.</span>
+                    </div>
+                  ) : (
+                    <div className="flex gap-2">
+                      <Input
+                        type="email"
+                        placeholder="Enter your email"
+                        value={notifyEmail}
+                        onChange={(e) => setNotifyEmail(e.target.value)}
+                        className="flex-1 font-body text-sm"
+                        maxLength={255}
+                      />
+                      <Button
+                        onClick={handleEmailSubscribe}
+                        disabled={!notifyEmail.trim() || emailSubmitting}
+                        className="shrink-0 bg-primary text-primary-foreground hover:bg-primary/90 font-semibold"
+                      >
+                        {emailSubmitting ? <Loader2 className="h-4 w-4 animate-spin" /> : "Confirm"}
+                      </Button>
+                    </div>
+                  )}
+                </div>
+              </div>
+            </div>
+
             <Button className="mt-6 w-full bg-primary text-primary-foreground hover:bg-primary/90" size="lg" onClick={handleProceedToStatus}>
               I've Sent the Deposit — Track Status
             </Button>
