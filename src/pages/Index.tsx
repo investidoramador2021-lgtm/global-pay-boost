@@ -5,6 +5,8 @@ import FeaturesSection from "@/components/FeaturesSection";
 import HowItWorksSection from "@/components/HowItWorksSection";
 import SwapPairsQA from "@/components/SwapPairsQA";
 import PopularPairsSection from "@/components/PopularPairsSection";
+import LiveSwapTicker from "@/components/LiveSwapTicker";
+import NoLimitsSection from "@/components/NoLimitsSection";
 import FAQSection from "@/components/FAQSection";
 import SiteFooter from "@/components/SiteFooter";
 import { Helmet } from "react-helmet-async";
@@ -155,10 +157,12 @@ const Index = () => {
       <main>
         <HeroSection />
         <TrustBanner />
+        <LiveSwapTicker />
         <FeaturesSection />
+        <NoLimitsSection />
         <HowItWorksSection />
-        <SwapPairsQA />
         <PopularPairsSection />
+        <SwapPairsQA />
         <FAQSection />
       </main>
       <SiteFooter />

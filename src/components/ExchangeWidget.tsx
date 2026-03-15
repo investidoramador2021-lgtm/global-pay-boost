@@ -54,6 +54,7 @@ const ExchangeWidget = () => {
   const [transaction, setTransaction] = useState<TransactionResult | null>(null);
   const [txStatus, setTxStatus] = useState<TransactionStatus | null>(null);
   const [copied, setCopied] = useState<string | null>(null);
+  const [speedForecast, setSpeedForecast] = useState<string | null>(null);
   const statusPollRef = useRef<ReturnType<typeof setInterval>>();
 
   useEffect(() => {
@@ -87,6 +88,9 @@ const ExchangeWidget = () => {
       ]);
       setEstimatedAmount(est.estimatedAmount?.toString() || "—");
       setMinAmount(min.minAmount || 0);
+      if (est.transactionSpeedForecast) {
+        setSpeedForecast(est.transactionSpeedForecast);
+      }
     } catch {
       setEstimatedAmount("—");
     } finally {
@@ -298,8 +302,19 @@ const ExchangeWidget = () => {
               <CurrencyPicker show={showFromPicker} onSelect={setFromCurrency} onClose={() => setShowFromPicker(false)} exclude={toCurrency?.ticker} />
             </div>
 
-            <div className="my-3 flex justify-center">
-              <button onClick={handleSwap} className="flex h-10 w-10 items-center justify-center rounded-full border border-border bg-background text-primary transition-colors hover:bg-accent" aria-label="Swap currencies">
+            {/* Rate info bar — inspired by ChangeNow */}
+            <div className="my-3 flex items-center justify-between">
+              <div className="flex items-center gap-3">
+                <span className="flex items-center gap-1 rounded-md border border-trust/20 bg-trust/5 px-2 py-1 font-body text-[11px] font-medium text-trust">
+                  <CheckCircle2 className="h-3 w-3" /> All fees included
+                </span>
+                {fromCurrency && toCurrency && estimatedAmount && estimatedAmount !== "—" && parseFloat(sendAmount) > 0 && (
+                  <span className="font-body text-[11px] text-muted-foreground">
+                    Estimated rate: 1 {fromCurrency.ticker.toUpperCase()} ≈ {(parseFloat(estimatedAmount) / parseFloat(sendAmount)).toFixed(6)} {toCurrency.ticker.toUpperCase()}
+                  </span>
+                )}
+              </div>
+              <button onClick={handleSwap} className="flex h-8 w-8 items-center justify-center rounded-full border border-border bg-background text-primary transition-colors hover:bg-accent" aria-label="Swap currencies">
                 <ArrowDownUp className="h-4 w-4" />
               </button>
             </div>
@@ -321,7 +336,14 @@ const ExchangeWidget = () => {
             <Button className="mt-6 w-full bg-trust text-trust-foreground hover:bg-trust/90" size="lg" disabled={!estimatedAmount || estimatedAmount === "—" || belowMin} onClick={handleExchangeNow}>
               Exchange Now
             </Button>
-            <p className="mt-3 text-center font-body text-xs text-muted-foreground">No hidden fees · No registration required · Powered by ChangeNow</p>
+            <div className="mt-3 flex items-center justify-center gap-3">
+              <p className="font-body text-xs text-muted-foreground">No hidden fees · No registration required</p>
+              {speedForecast && (
+                <span className="flex items-center gap-1 font-body text-xs text-primary">
+                  <Clock className="h-3 w-3" /> ~{speedForecast}
+                </span>
+              )}
+            </div>
           </motion.div>
         )}
 
