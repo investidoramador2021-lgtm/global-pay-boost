@@ -433,34 +433,140 @@ const ExchangeWidget = () => {
               <div className="mx-auto mb-3 flex h-12 w-12 items-center justify-center rounded-full bg-trust/10">
                 <CheckCircle2 className="h-6 w-6 text-trust" />
               </div>
-              <h2 className="font-display text-lg font-semibold text-foreground">Exchange Created!</h2>
-              <p className="mt-1 font-body text-sm text-muted-foreground">Send your deposit to the address below</p>
+              <h2 className="font-display text-lg font-semibold text-foreground">Please send the funds you would like to exchange</h2>
             </div>
 
             <div className="space-y-4">
-              {/* Deposit address */}
+              {/* Amount + Address + QR */}
               <div className="rounded-xl border border-border bg-accent p-4">
-                <label className="mb-2 block font-body text-xs font-medium uppercase tracking-wider text-muted-foreground">
-                  Send exactly {sendAmount} {fromCurrency?.ticker?.toUpperCase()} to:
-                </label>
-                <div className="flex items-center gap-2">
-                  <code className="flex-1 break-all rounded-lg border border-border bg-background px-3 py-2 font-body text-sm text-foreground">
-                    {transaction.payinAddress}
-                  </code>
-                  <CopyButton text={transaction.payinAddress} label="deposit" />
-                </div>
-                {transaction.payinExtraId && (
-                  <div className="mt-3">
-                    <label className="mb-1 block font-body text-xs font-medium text-muted-foreground">Memo / Extra ID:</label>
+                <div className="flex items-start justify-between gap-4">
+                  <div className="flex-1">
+                    <label className="mb-1 block font-body text-xs text-muted-foreground">Amount</label>
+                    <p className="font-display text-xl font-bold text-foreground">
+                      {sendAmount} {fromCurrency?.ticker?.toUpperCase()}
+                    </p>
+                    <label className="mb-1 mt-3 block font-body text-xs text-muted-foreground">To this address</label>
                     <div className="flex items-center gap-2">
-                      <code className="flex-1 break-all rounded-lg border border-border bg-background px-3 py-2 font-body text-sm text-foreground">
-                        {transaction.payinExtraId}
+                      <code className="break-all font-body text-sm font-semibold text-foreground">
+                        {transaction.payinAddress}
                       </code>
-                      <CopyButton text={transaction.payinExtraId} label="memo" />
+                      <CopyButton text={transaction.payinAddress} label="deposit" />
                     </div>
+                    {transaction.payinExtraId && (
+                      <div className="mt-2">
+                        <label className="mb-0.5 block font-body text-xs text-muted-foreground">Memo / Extra ID</label>
+                        <div className="flex items-center gap-2">
+                          <code className="break-all font-body text-sm font-semibold text-foreground">
+                            {transaction.payinExtraId}
+                          </code>
+                          <CopyButton text={transaction.payinExtraId} label="memo" />
+                        </div>
+                      </div>
+                    )}
                   </div>
-                )}
+                  {/* QR Code */}
+                  <div className="shrink-0 rounded-lg border border-border bg-white p-2">
+                    <QRCodeSVG
+                      value={(() => {
+                        const ticker = fromCurrency?.ticker?.toLowerCase() || "";
+                        const addr = transaction.payinAddress;
+                        const amount = sendAmount;
+                        // EVM chains use ethereum: URI
+                        if (["eth", "bnb", "matic", "avax", "arb", "op"].some(t => ticker.includes(t)) || fromCurrency?.network === "eth" || fromCurrency?.network === "bsc" || fromCurrency?.network === "matic") {
+                          return `ethereum:${addr}?value=${amount}`;
+                        }
+                        // Bitcoin
+                        if (ticker === "btc") return `bitcoin:${addr}?amount=${amount}`;
+                        // Solana
+                        if (ticker === "sol") return `solana:${addr}?amount=${amount}`;
+                        // Default: just the address
+                        return addr;
+                      })()}
+                      size={96}
+                      level="M"
+                      className="h-24 w-24"
+                    />
+                  </div>
+                </div>
               </div>
+
+              {/* Warning */}
+              <div className="rounded-lg border border-amber-500/20 bg-amber-500/5 p-3">
+                <p className="font-body text-xs text-amber-600 dark:text-amber-400">
+                  ⚠ Please be careful not to deposit your {fromCurrency?.ticker?.toUpperCase()} from a smart contract.
+                </p>
+              </div>
+
+              {/* Wallet deposit buttons — only for EVM-compatible tokens */}
+              {(() => {
+                const ticker = fromCurrency?.ticker?.toLowerCase() || "";
+                const network = fromCurrency?.network?.toLowerCase() || "";
+                const isEvm = ["eth", "bsc", "matic", "avax", "arb", "op", "base"].includes(network) ||
+                  ["eth", "bnb", "matic", "avax", "usdt", "usdc", "dai", "wbtc", "link", "uni", "aave", "hype", "bera"].some(t => ticker === t);
+                if (!isEvm) return null;
+
+                const handleMetaMask = async () => {
+                  if (typeof window === "undefined" || !(window as any).ethereum) {
+                    toast({ title: "MetaMask not found", description: "Please install MetaMask browser extension to use this feature.", variant: "destructive" });
+                    return;
+                  }
+                  try {
+                    const ethereum = (window as any).ethereum;
+                    const accounts = await ethereum.request({ method: "eth_requestAccounts" });
+                    if (!accounts?.[0]) throw new Error("No account found");
+                    
+                    // For native ETH/BNB transfers
+                    const isNative = ["eth", "bnb", "matic", "avax"].includes(ticker);
+                    if (isNative) {
+                      const weiValue = "0x" + (BigInt(Math.floor(parseFloat(sendAmount) * 1e18))).toString(16);
+                      await ethereum.request({
+                        method: "eth_sendTransaction",
+                        params: [{
+                          from: accounts[0],
+                          to: transaction.payinAddress,
+                          value: weiValue,
+                        }],
+                      });
+                      toast({ title: "Transaction sent!", description: "Your deposit has been submitted via MetaMask." });
+                      handleProceedToStatus();
+                    } else {
+                      // For ERC-20 tokens, just copy address since we'd need the contract address
+                      await navigator.clipboard.writeText(transaction.payinAddress);
+                      toast({ title: "Address copied", description: "Please send the tokens to the copied address via MetaMask." });
+                    }
+                  } catch (err: any) {
+                    if (err?.code === 4001) return; // User rejected
+                    toast({ title: "MetaMask Error", description: err?.message || "Transaction failed", variant: "destructive" });
+                  }
+                };
+
+                return (
+                  <div className="space-y-2">
+                    <label className="block font-body text-xs font-medium text-muted-foreground">Deposit with</label>
+                    <button
+                      onClick={handleMetaMask}
+                      className="flex w-full items-center gap-3 rounded-xl border border-border bg-card p-3 transition-all hover:border-orange-400/50 hover:shadow-card active:scale-[0.99]"
+                    >
+                      <div className="flex h-9 w-9 items-center justify-center rounded-lg bg-orange-500/10">
+                        <Wallet className="h-5 w-5 text-orange-500" />
+                      </div>
+                      <span className="font-display text-sm font-semibold text-foreground">Pay with MetaMask</span>
+                    </button>
+                    <button
+                      onClick={() => {
+                        handleCopy(transaction.payinAddress, "wc-address");
+                        toast({ title: "Address copied", description: "Open your preferred wallet app and send to the copied address." });
+                      }}
+                      className="flex w-full items-center gap-3 rounded-xl border border-border bg-card p-3 transition-all hover:border-blue-400/50 hover:shadow-card active:scale-[0.99]"
+                    >
+                      <div className="flex h-9 w-9 items-center justify-center rounded-lg bg-blue-500/10">
+                        <QrCode className="h-5 w-5 text-blue-500" />
+                      </div>
+                      <span className="font-display text-sm font-semibold text-foreground">Copy for Wallet App</span>
+                    </button>
+                  </div>
+                );
+              })()}
 
               {/* Transaction ID */}
               <div className="rounded-xl border border-border bg-accent p-4">
@@ -484,12 +590,6 @@ const ExchangeWidget = () => {
                   </div>
                 </div>
               </div>
-            </div>
-
-            <div className="mt-4 rounded-lg border border-destructive/20 bg-destructive/5 p-3">
-              <p className="font-body text-xs text-destructive">
-                ⚠ Send the exact amount to the deposit address. Sending a different amount or currency may result in loss of funds.
-              </p>
             </div>
 
             <Button className="mt-6 w-full bg-primary text-primary-foreground hover:bg-primary/90" size="lg" onClick={handleProceedToStatus}>
