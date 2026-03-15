@@ -406,9 +406,75 @@ const ExchangeWidget = () => {
             </button>
 
             <h2 className="mb-2 font-display text-lg font-semibold text-foreground">Enter Recipient Address</h2>
-            <p className="mb-6 font-body text-sm text-muted-foreground">
+            <p className="mb-4 font-body text-sm text-muted-foreground">
               Your <span className="font-semibold uppercase text-foreground">{toCurrency?.ticker}</span> will be sent to this address.
             </p>
+
+            {/* Wallet Connect Buttons */}
+            {(() => {
+              const chainType = getChainType(toCurrency);
+              if (chainType === "other") return null;
+              return (
+                <div className="mb-4 space-y-2">
+                  <label className="block font-body text-xs font-medium uppercase tracking-wider text-muted-foreground">
+                    Connect Wallet
+                  </label>
+                  <div className="flex gap-2">
+                    {chainType === "evm" && (
+                      <button
+                        onClick={connectMetaMask}
+                        className={`flex flex-1 items-center justify-center gap-2 rounded-xl border p-3 transition-all active:scale-[0.98] ${
+                          connectedWallet?.type === "evm"
+                            ? "border-primary bg-primary/10 text-primary"
+                            : "border-border bg-card text-foreground hover:border-primary/50 hover:shadow-card"
+                        }`}
+                      >
+                        <Wallet className="h-5 w-5" />
+                        <span className="font-display text-sm font-semibold">
+                          {connectedWallet?.type === "evm"
+                            ? `${connectedWallet.address.slice(0, 6)}...${connectedWallet.address.slice(-4)}`
+                            : "MetaMask"}
+                        </span>
+                      </button>
+                    )}
+                    {chainType === "solana" && (
+                      <button
+                        onClick={connectPhantom}
+                        className={`flex flex-1 items-center justify-center gap-2 rounded-xl border p-3 transition-all active:scale-[0.98] ${
+                          connectedWallet?.type === "solana"
+                            ? "border-primary bg-primary/10 text-primary"
+                            : "border-border bg-card text-foreground hover:border-primary/50 hover:shadow-card"
+                        }`}
+                      >
+                        <Wallet className="h-5 w-5" />
+                        <span className="font-display text-sm font-semibold">
+                          {connectedWallet?.type === "solana"
+                            ? `${connectedWallet.address.slice(0, 6)}...${connectedWallet.address.slice(-4)}`
+                            : "Phantom"}
+                        </span>
+                      </button>
+                    )}
+                  </div>
+                  {connectedWallet && (
+                    <button
+                      onClick={() => { setConnectedWallet(null); setRecipientAddress(""); }}
+                      className="font-body text-xs text-muted-foreground hover:text-foreground transition-colors"
+                    >
+                      Disconnect wallet
+                    </button>
+                  )}
+                </div>
+              );
+            })()}
+
+            {/* Divider when wallet connect is available */}
+            {getChainType(toCurrency) !== "other" && (
+              <div className="mb-4 flex items-center gap-3">
+                <div className="h-px flex-1 bg-border" />
+                <span className="font-body text-xs text-muted-foreground">or enter manually</span>
+                <div className="h-px flex-1 bg-border" />
+              </div>
+            )}
 
             <div className="space-y-4">
               <div>
