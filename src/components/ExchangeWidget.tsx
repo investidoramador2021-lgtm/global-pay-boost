@@ -221,6 +221,7 @@ const ExchangeWidget = () => {
   const handleNewExchange = () => {
     setStep("exchange");
     setRecipientAddress("");
+    setAddressValid(false);
     setRefundAddress("");
     setExtraId("");
     setTransaction(null);
