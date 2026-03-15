@@ -73,6 +73,9 @@ const ExchangeWidget = () => {
   const [copied, setCopied] = useState<string | null>(null);
   const [speedForecast, setSpeedForecast] = useState<string | null>(null);
   const [connectedWallet, setConnectedWallet] = useState<{ address: string; type: "evm" | "solana" } | null>(null);
+  const [notifyEmail, setNotifyEmail] = useState("");
+  const [emailSubmitted, setEmailSubmitted] = useState(false);
+  const [emailSubmitting, setEmailSubmitting] = useState(false);
   const statusPollRef = useRef<ReturnType<typeof setInterval>>();
 
   // Wallet connection handlers
