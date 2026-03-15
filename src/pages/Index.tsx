@@ -131,14 +131,14 @@ const Index = () => {
   return (
     <>
       <Helmet>
-        <title>MRC GlobalPay — Instant Crypto Swaps | Zero Delays | 2026 Liquidity Rails</title>
+        <title>MRC GlobalPay — Instant Crypto Swaps</title>
         <meta
           name="description"
-          content="Instant crypto swaps with zero confirmation delays. Swap HYPE, BERA, TIA, MONAD, PYUSD and 500+ coins in under 60 seconds. No registration. 2026 liquidity rails with automated settlement."
+          content="Instant crypto swaps with zero confirmation delays. Swap HYPE, BERA, TIA, MONAD, PYUSD and 500+ coins in under 60 seconds. No registration."
         />
         <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1" />
         <link rel="canonical" href="https://mrcglobalpay.com" />
-        <meta property="og:title" content="MRC GlobalPay — Instant Crypto Swaps | Zero Delays | 2026 Liquidity Rails" />
+        <meta property="og:title" content="MRC GlobalPay — Instant Crypto Swaps" />
         <meta property="og:description" content="Stop waiting for confirmations. Swap HYPE, SOL, BERA and 500+ coins in under 60 seconds with automated settlement." />
         <meta property="og:type" content="website" />
         <meta property="og:url" content="https://mrcglobalpay.com" />
