@@ -631,10 +631,62 @@ const ExchangeWidget = () => {
               </span>
             </label>
 
+            {/* Price Lock Countdown */}
+            {addressValid && (
+              <div className="mt-4 flex items-center justify-between rounded-lg border border-border bg-accent/50 px-3 py-2.5">
+                <div className="flex items-center gap-2">
+                  {rateExpired ? (
+                    <AlertCircle className="h-4 w-4 text-destructive" />
+                  ) : (
+                    <div className="relative flex items-center justify-center">
+                      <svg className="h-5 w-5 -rotate-90" viewBox="0 0 20 20">
+                        <circle cx="10" cy="10" r="8" fill="none" strokeWidth="2" className="stroke-muted" />
+                        <circle
+                          cx="10" cy="10" r="8" fill="none" strokeWidth="2"
+                          className={`transition-all duration-1000 ease-linear ${rateLockSeconds <= 10 ? "stroke-amber-400" : "stroke-primary"}`}
+                          strokeDasharray={`${2 * Math.PI * 8}`}
+                          strokeDashoffset={`${2 * Math.PI * 8 * (1 - rateLockSeconds / 60)}`}
+                          strokeLinecap="round"
+                        />
+                      </svg>
+                    </div>
+                  )}
+                  <span
+                    className={`font-body text-xs transition-colors ${
+                      rateExpired
+                        ? "text-destructive"
+                        : rateLockSeconds <= 10
+                        ? "text-amber-400"
+                        : "text-muted-foreground"
+                    }`}
+                  >
+                    {rateExpired ? (
+                      <>Rate expired.</>
+                    ) : (
+                      <>
+                        Rate locked for{" "}
+                        <span style={{ fontFamily: "'Roboto Mono', monospace" }} className="font-semibold">
+                          {String(Math.floor(rateLockSeconds / 60)).padStart(2, "0")}:{String(rateLockSeconds % 60).padStart(2, "0")}
+                        </span>
+                      </>
+                    )}
+                  </span>
+                </div>
+                <button
+                  onClick={handleRefreshRate}
+                  disabled={refreshingRate}
+                  className="flex h-7 w-7 items-center justify-center rounded-md border border-border bg-background text-muted-foreground transition-colors hover:bg-accent hover:text-foreground disabled:opacity-50"
+                  title="Refresh rate"
+                >
+                  <RefreshCw className={`h-3.5 w-3.5 ${refreshingRate ? "animate-spin" : ""}`} />
+                </button>
+              </div>
+            )}
+
             <Button
               className="mt-4 w-full min-h-[52px] bg-trust text-trust-foreground hover:bg-trust/90 text-base font-bold"
               size="lg"
-              disabled={!addressValid || !termsAccepted || creatingTx}
+              disabled={!addressValid || !termsAccepted || creatingTx || rateExpired}
               onClick={handleCreateTransaction}
             >
               {creatingTx ? <><Loader2 className="mr-2 h-4 w-4 animate-spin" /> Creating Exchange...</> : "Confirm & Create Exchange"}
