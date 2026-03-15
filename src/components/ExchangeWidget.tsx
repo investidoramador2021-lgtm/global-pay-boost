@@ -565,15 +565,25 @@ const ExchangeWidget = () => {
                   </div>
                 )}
                 {txStatus.payinHash && (
-                  <div className="flex items-center justify-between font-body text-sm">
+                  <div className="font-body text-sm">
                     <span className="text-muted-foreground">Deposit hash</span>
-                    <span className="max-w-[200px] truncate font-semibold text-foreground">{txStatus.payinHash}</span>
+                    <div className="mt-1 flex items-center gap-2">
+                      <code className="flex-1 break-all rounded-lg border border-border bg-background px-3 py-2 font-body text-xs text-foreground">
+                        {txStatus.payinHash}
+                      </code>
+                      <CopyButton text={txStatus.payinHash} label="payin-hash" />
+                    </div>
                   </div>
                 )}
                 {txStatus.payoutHash && (
-                  <div className="flex items-center justify-between font-body text-sm">
+                  <div className="font-body text-sm">
                     <span className="text-muted-foreground">Payout hash</span>
-                    <span className="max-w-[200px] truncate font-semibold text-foreground">{txStatus.payoutHash}</span>
+                    <div className="mt-1 flex items-center gap-2">
+                      <code className="flex-1 break-all rounded-lg border border-border bg-background px-3 py-2 font-body text-xs text-foreground">
+                        {txStatus.payoutHash}
+                      </code>
+                      <CopyButton text={txStatus.payoutHash} label="payout-hash" />
+                    </div>
                   </div>
                 )}
               </div>
