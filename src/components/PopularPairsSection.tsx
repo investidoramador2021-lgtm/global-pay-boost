@@ -15,14 +15,14 @@ interface PairData {
 }
 
 const PAIRS_CONFIG = [
-  { from: "btc", to: "usdc", fromName: "Bitcoin", toName: "USD Coin", href: "/swap/btc-usdc", fromTicker: "BTC", toTicker: "USDC" },
-  { from: "eth", to: "sol", fromName: "Ethereum", toName: "Solana", href: "/swap/eth-sol", fromTicker: "ETH", toTicker: "SOL" },
-  { from: "sol", to: "usdt", fromName: "Solana", toName: "Tether", href: "/swap/sol-usdt", fromTicker: "SOL", toTicker: "USDT" },
-  { from: "xrp", to: "usdt", fromName: "XRP", toName: "Tether", href: "/swap/xrp-usdt", fromTicker: "XRP", toTicker: "USDT" },
-  { from: "hype", to: "usdt", fromName: "Hyperliquid", toName: "Tether", href: "/swap/hype-usdt", fromTicker: "HYPE", toTicker: "USDT" },
-  { from: "bera", to: "usdt", fromName: "Berachain", toName: "Tether", href: "/swap/bera-usdt", fromTicker: "BERA", toTicker: "USDT" },
-  { from: "tia", to: "usdt", fromName: "Celestia", toName: "Tether", href: "/swap/tia-usdt", fromTicker: "TIA", toTicker: "USDT" },
-  { from: "pyusd", to: "usdt", fromName: "PayPal USD", toName: "Tether", href: "/swap/pyusd-usdt", fromTicker: "PYUSD", toTicker: "USDT" },
+  { from: "btc", to: "eth", fromName: "Bitcoin", toName: "Ethereum", href: "/swap/btc-usdc", fromTicker: "BTC", toTicker: "ETH" },
+  { from: "eth", to: "btc", fromName: "Ethereum", toName: "Bitcoin", href: "/swap/eth-sol", fromTicker: "ETH", toTicker: "BTC" },
+  { from: "btc", to: "usdt", fromName: "Bitcoin", toName: "Tether", href: "/swap/btc-usdc", fromTicker: "BTC", toTicker: "USDT" },
+  { from: "eth", to: "usdt", fromName: "Ethereum", toName: "Tether", href: "/swap/eth-sol", fromTicker: "ETH", toTicker: "USDT" },
+  { from: "xrp", to: "btc", fromName: "XRP", toName: "Bitcoin", href: "/swap/xrp-usdt", fromTicker: "XRP", toTicker: "BTC" },
+  { from: "ltc", to: "btc", fromName: "Litecoin", toName: "Bitcoin", href: "/swap/btc-usdc", fromTicker: "LTC", toTicker: "BTC" },
+  { from: "doge", to: "btc", fromName: "Dogecoin", toName: "Bitcoin", href: "/swap/btc-usdc", fromTicker: "DOGE", toTicker: "BTC" },
+  { from: "trx", to: "usdt", fromName: "TRON", toName: "Tether", href: "/swap/btc-usdc", fromTicker: "TRX", toTicker: "USDT" },
 ];
 
 const PopularPairsSection = () => {
