@@ -66,6 +66,7 @@ const ExchangeWidget = () => {
   const [addressValid, setAddressValid] = useState(false);
   const [refundAddress, setRefundAddress] = useState("");
   const [extraId, setExtraId] = useState("");
+  const [termsAccepted, setTermsAccepted] = useState(false);
   const [creatingTx, setCreatingTx] = useState(false);
   const [transaction, setTransaction] = useState<TransactionResult | null>(null);
   const [txStatus, setTxStatus] = useState<TransactionStatus | null>(null);
@@ -527,10 +528,34 @@ const ExchangeWidget = () => {
               </div>
             </div>
 
+            {/* Terms checkbox */}
+            <label className="mt-5 flex cursor-pointer items-start gap-3">
+              <input
+                type="checkbox"
+                checked={termsAccepted}
+                onChange={(e) => setTermsAccepted(e.target.checked)}
+                className="mt-0.5 h-5 w-5 shrink-0 rounded border-border accent-trust"
+              />
+              <span className="font-body text-xs text-muted-foreground leading-relaxed">
+                I've read and agree to the{" "}
+                <a href="/terms" target="_blank" rel="noopener noreferrer" className="font-semibold text-primary hover:underline">
+                  Terms of Use
+                </a>
+                ,{" "}
+                <a href="/privacy" target="_blank" rel="noopener noreferrer" className="font-semibold text-primary hover:underline">
+                  Privacy Policy
+                </a>
+                {" "}and{" "}
+                <a href="/aml" target="_blank" rel="noopener noreferrer" className="font-semibold text-primary hover:underline">
+                  AML Policy
+                </a>
+              </span>
+            </label>
+
             <Button
-              className="mt-6 w-full min-h-[52px] bg-trust text-trust-foreground hover:bg-trust/90 text-base font-bold"
+              className="mt-4 w-full min-h-[52px] bg-trust text-trust-foreground hover:bg-trust/90 text-base font-bold"
               size="lg"
-              disabled={!addressValid || creatingTx}
+              disabled={!addressValid || !termsAccepted || creatingTx}
               onClick={handleCreateTransaction}
             >
               {creatingTx ? <><Loader2 className="mr-2 h-4 w-4 animate-spin" /> Creating Exchange...</> : "Confirm & Create Exchange"}
