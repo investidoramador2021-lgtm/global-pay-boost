@@ -84,6 +84,19 @@ const SiteFooter = () => {
         </div>
 
         <div className="mt-8 border-t border-border pt-6 sm:mt-12 sm:pt-8">
+          <div className="mx-auto mb-6 max-w-md">
+            <div
+              className="trustpilot-widget"
+              data-locale="en-US"
+              data-template-id="56278e9abfbbba0bdcd568bc"
+              data-businessunit-id="69b6ac5a99f240e8722db342"
+              data-style-height="52px"
+              data-style-width="100%"
+              data-token="7bcf2cb1-257b-45b3-ba85-1bc33cf80fa7"
+            >
+              <a href="https://www.trustpilot.com/review/mrcglobalpay.com" target="_blank" rel="noopener">Trustpilot</a>
+            </div>
+          </div>
           <p className="text-center font-body text-xs text-muted-foreground">
             © {new Date().getFullYear()} MRC GlobalPay. All rights reserved. Cryptocurrency exchange services powered by ChangeNow.
           </p>
