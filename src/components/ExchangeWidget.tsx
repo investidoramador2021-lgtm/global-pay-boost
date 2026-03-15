@@ -79,6 +79,12 @@ const ExchangeWidget = () => {
   const [emailSubmitting, setEmailSubmitting] = useState(false);
   const statusPollRef = useRef<ReturnType<typeof setInterval>>();
 
+  // Price lock timer state
+  const [rateLockSeconds, setRateLockSeconds] = useState(60);
+  const [rateExpired, setRateExpired] = useState(false);
+  const [refreshingRate, setRefreshingRate] = useState(false);
+  const rateLockRef = useRef<ReturnType<typeof setInterval>>();
+
   // Wallet connection handlers
   const connectMetaMask = async () => {
     if (typeof window === "undefined" || !(window as any).ethereum) {
