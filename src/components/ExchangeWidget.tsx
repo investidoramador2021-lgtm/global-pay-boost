@@ -602,7 +602,9 @@ const ExchangeWidget = () => {
                 </div>
                 <div className="flex justify-between">
                   <span className="text-muted-foreground">You get (est.)</span>
-                  <span className="font-semibold text-foreground">≈ {estimatedAmount} {toCurrency?.ticker?.toUpperCase()}</span>
+                  <span className={`font-semibold transition-opacity ${rateExpired ? "text-muted-foreground opacity-50" : "text-foreground"}`}>
+                    {refreshingRate ? <Loader2 className="inline h-3.5 w-3.5 animate-spin" /> : <>≈ {estimatedAmount}</>} {toCurrency?.ticker?.toUpperCase()}
+                  </span>
                 </div>
               </div>
             </div>
