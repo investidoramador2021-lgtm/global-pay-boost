@@ -223,6 +223,7 @@ const ExchangeWidget = () => {
     setExtraId("");
     setTransaction(null);
     setTxStatus(null);
+    setConnectedWallet(null);
   };
 
   const filteredCurrencies = currencies.filter((c) => {
