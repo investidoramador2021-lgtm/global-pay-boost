@@ -26,6 +26,15 @@ const corsHeaders = {
   "Access-Control-Allow-Headers": "authorization, x-client-info, apikey, content-type",
 };
 
+async function safeFetch(label: string, url: string, options?: RequestInit): Promise<string> {
+  try {
+    const res = await fetch(url, options);
+    return res.ok || res.status === 202 ? "OK" : `${res.status}`;
+  } catch (e) {
+    return `error: ${(e as Error).message}`;
+  }
+}
+
 serve(async (req) => {
   if (req.method === "OPTIONS") {
     return new Response(null, { headers: corsHeaders });
@@ -33,50 +42,145 @@ serve(async (req) => {
 
   const results: Record<string, string> = {};
 
-  // 1. Ping Google Sitemap
-  try {
-    const gRes = await fetch(`https://www.google.com/ping?sitemap=${encodeURIComponent(`${SITE}/sitemap.xml`)}`);
-    results.google_sitemap = gRes.ok ? "OK" : `${gRes.status}`;
-  } catch (e) {
-    results.google_sitemap = `error: ${e.message}`;
-  }
+  // ── 1. Google Sitemap Ping ──
+  results.google_sitemap = await safeFetch(
+    "google_sitemap",
+    `https://www.google.com/ping?sitemap=${encodeURIComponent(`${SITE}/sitemap.xml`)}`
+  );
 
-  // 2. Ping Bing Sitemap
-  try {
-    const bRes = await fetch(`https://www.bing.com/ping?sitemap=${encodeURIComponent(`${SITE}/sitemap.xml`)}`);
-    results.bing_sitemap = bRes.ok ? "OK" : `${bRes.status}`;
-  } catch (e) {
-    results.bing_sitemap = `error: ${e.message}`;
-  }
+  // ── 2. Bing Sitemap Ping ──
+  results.bing_sitemap = await safeFetch(
+    "bing_sitemap",
+    `https://www.bing.com/ping?sitemap=${encodeURIComponent(`${SITE}/sitemap.xml`)}`
+  );
 
-  // 3. IndexNow (Bing, Yandex, Seznam, Naver)
-  try {
-    const indexNowPayload = {
-      host: "mrcglobalpay.com",
-      key: INDEXNOW_KEY,
-      keyLocation: `${SITE}/${INDEXNOW_KEY}.txt`,
-      urlList: ALL_URLS,
-    };
-
-    const inRes = await fetch("https://api.indexnow.org/indexnow", {
+  // ── 3. IndexNow (Bing, Yandex, Seznam, Naver) ──
+  results.indexnow = await safeFetch(
+    "indexnow",
+    "https://api.indexnow.org/indexnow",
+    {
       method: "POST",
       headers: { "Content-Type": "application/json; charset=utf-8" },
-      body: JSON.stringify(indexNowPayload),
-    });
-    results.indexnow = inRes.ok || inRes.status === 202 ? "OK" : `${inRes.status}`;
-  } catch (e) {
-    results.indexnow = `error: ${e.message}`;
-  }
+      body: JSON.stringify({
+        host: "mrcglobalpay.com",
+        key: INDEXNOW_KEY,
+        keyLocation: `${SITE}/${INDEXNOW_KEY}.txt`,
+        urlList: ALL_URLS,
+      }),
+    }
+  );
 
-  // 4. Google RSS ping
-  try {
-    const gPing = await fetch(`https://www.google.com/ping?sitemap=${encodeURIComponent(`${SITE}/rss.xml`)}`);
-    results.google_rss = gPing.ok ? "OK" : `${gPing.status}`;
-  } catch (e) {
-    results.google_rss = `error: ${e.message}`;
-  }
+  // ── 4. Google RSS Ping ──
+  results.google_rss = await safeFetch(
+    "google_rss",
+    `https://www.google.com/ping?sitemap=${encodeURIComponent(`${SITE}/rss.xml`)}`
+  );
 
-  return new Response(JSON.stringify({ success: true, results, pinged_urls: ALL_URLS.length }), {
+  // ── 5. Ping-O-Matic (XML-RPC) ──
+  // Pings Technorati, Google Blog Search, Weblogs.com, Moreover, etc.
+  const pingomaticBody = `<?xml version="1.0"?>
+<methodCall>
+  <methodName>weblogUpdates.ping</methodName>
+  <params>
+    <param><value>MRC GlobalPay Blog</value></param>
+    <param><value>${SITE}/blog</value></param>
+    <param><value>${SITE}/rss.xml</value></param>
+  </params>
+</methodCall>`;
+
+  results.pingomatic = await safeFetch(
+    "pingomatic",
+    "https://rpc.pingomatic.com/",
+    {
+      method: "POST",
+      headers: { "Content-Type": "text/xml" },
+      body: pingomaticBody,
+    }
+  );
+
+  // ── 6. Weblogs.com (XML-RPC) ──
+  results.weblogs = await safeFetch(
+    "weblogs",
+    "http://rpc.weblogs.com/RPC2",
+    {
+      method: "POST",
+      headers: { "Content-Type": "text/xml" },
+      body: pingomaticBody.replace("weblogUpdates.ping", "weblogUpdates.ping"),
+    }
+  );
+
+  // ── 7. Feed Burner / Google Blog Ping ──
+  results.google_blog_ping = await safeFetch(
+    "google_blog_ping",
+    "http://blogsearch.google.com/ping/RPC2",
+    {
+      method: "POST",
+      headers: { "Content-Type": "text/xml" },
+      body: pingomaticBody,
+    }
+  );
+
+  // ── 8. Yandex Sitemap Ping ──
+  results.yandex_sitemap = await safeFetch(
+    "yandex",
+    `https://webmaster.yandex.com/ping?sitemap=${encodeURIComponent(`${SITE}/sitemap.xml`)}`
+  );
+
+  // ── 9. IndexNow via Bing directly ──
+  results.indexnow_bing = await safeFetch(
+    "indexnow_bing",
+    "https://www.bing.com/indexnow",
+    {
+      method: "POST",
+      headers: { "Content-Type": "application/json; charset=utf-8" },
+      body: JSON.stringify({
+        host: "mrcglobalpay.com",
+        key: INDEXNOW_KEY,
+        keyLocation: `${SITE}/${INDEXNOW_KEY}.txt`,
+        urlList: ALL_URLS,
+      }),
+    }
+  );
+
+  // ── 10. IndexNow via Yandex directly ──
+  results.indexnow_yandex = await safeFetch(
+    "indexnow_yandex",
+    "https://yandex.com/indexnow",
+    {
+      method: "POST",
+      headers: { "Content-Type": "application/json; charset=utf-8" },
+      body: JSON.stringify({
+        host: "mrcglobalpay.com",
+        key: INDEXNOW_KEY,
+        keyLocation: `${SITE}/${INDEXNOW_KEY}.txt`,
+        urlList: ALL_URLS,
+      }),
+    }
+  );
+
+  // ── 11. IndexNow via Naver ──
+  results.indexnow_naver = await safeFetch(
+    "indexnow_naver",
+    "https://searchadvisor.naver.com/indexnow",
+    {
+      method: "POST",
+      headers: { "Content-Type": "application/json; charset=utf-8" },
+      body: JSON.stringify({
+        host: "mrcglobalpay.com",
+        key: INDEXNOW_KEY,
+        keyLocation: `${SITE}/${INDEXNOW_KEY}.txt`,
+        urlList: ALL_URLS,
+      }),
+    }
+  );
+
+  return new Response(JSON.stringify({ 
+    success: true, 
+    results, 
+    pinged_urls: ALL_URLS.length,
+    services_pinged: Object.keys(results).length,
+    timestamp: new Date().toISOString(),
+  }), {
     headers: { ...corsHeaders, "Content-Type": "application/json" },
   });
 });
