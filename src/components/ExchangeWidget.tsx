@@ -54,6 +54,7 @@ const ExchangeWidget = () => {
   const [transaction, setTransaction] = useState<TransactionResult | null>(null);
   const [txStatus, setTxStatus] = useState<TransactionStatus | null>(null);
   const [copied, setCopied] = useState<string | null>(null);
+  const [speedForecast, setSpeedForecast] = useState<string | null>(null);
   const statusPollRef = useRef<ReturnType<typeof setInterval>>();
 
   useEffect(() => {
