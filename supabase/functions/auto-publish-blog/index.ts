@@ -73,7 +73,7 @@ const TOPIC_TEMPLATES = [
 
 const COINS = ["Bitcoin", "Ethereum", "Solana", "HYPE", "BERA", "Celestia (TIA)", "Monad", "PYUSD", "XRP", "BNB", "Polygon", "Avalanche", "Arbitrum", "Optimism"];
 
-const MIN_WORD_COUNT = 1400;
+const MIN_WORD_COUNT = 2000;
 
 function countWords(input: string): number {
   return input.trim().split(/\s+/).filter(Boolean).length;
