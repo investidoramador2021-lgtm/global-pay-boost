@@ -188,6 +188,50 @@ const ExchangeWidget = () => {
     }
   }, [step, transaction?.id]);
 
+  // Price lock countdown - starts when on address step with a valid address
+  useEffect(() => {
+    if (step === "address" && addressValid) {
+      setRateLockSeconds(60);
+      setRateExpired(false);
+      if (rateLockRef.current) clearInterval(rateLockRef.current);
+      rateLockRef.current = setInterval(() => {
+        setRateLockSeconds((prev) => {
+          if (prev <= 1) {
+            clearInterval(rateLockRef.current!);
+            setRateExpired(true);
+            return 0;
+          }
+          return prev - 1;
+        });
+      }, 1000);
+      return () => { if (rateLockRef.current) clearInterval(rateLockRef.current); };
+    } else if (step !== "address") {
+      if (rateLockRef.current) clearInterval(rateLockRef.current);
+    }
+  }, [step, addressValid]);
+
+  const handleRefreshRate = async () => {
+    setRefreshingRate(true);
+    try {
+      await fetchEstimate();
+    } finally {
+      setRefreshingRate(false);
+      setRateLockSeconds(60);
+      setRateExpired(false);
+      if (rateLockRef.current) clearInterval(rateLockRef.current);
+      rateLockRef.current = setInterval(() => {
+        setRateLockSeconds((prev) => {
+          if (prev <= 1) {
+            clearInterval(rateLockRef.current!);
+            setRateExpired(true);
+            return 0;
+          }
+          return prev - 1;
+        });
+      }, 1000);
+    }
+  };
+
   const handleSwap = () => {
     setFromCurrency(toCurrency);
     setToCurrency(fromCurrency);
