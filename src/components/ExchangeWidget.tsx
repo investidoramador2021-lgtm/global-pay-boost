@@ -20,6 +20,19 @@ const POPULAR_TICKERS = ["btc", "eth", "usdt", "sol", "xrp", "doge", "bnb", "ltc
 
 type Step = "exchange" | "address" | "deposit" | "status";
 
+// Chain detection helpers
+const EVM_NETWORKS = ["eth", "bsc", "matic", "avax", "arb", "op", "base", "celo", "ftm", "one", "glmr", "movr"];
+const SOLANA_NETWORKS = ["sol"];
+
+function getChainType(currency: Currency | null): "evm" | "solana" | "other" {
+  if (!currency) return "other";
+  const network = currency.network?.toLowerCase() || "";
+  const ticker = currency.ticker?.toLowerCase() || "";
+  if (EVM_NETWORKS.includes(network) || ["eth", "bnb", "matic", "avax", "usdt", "usdc", "dai", "wbtc", "link", "uni", "aave", "hype", "bera"].includes(ticker)) return "evm";
+  if (SOLANA_NETWORKS.includes(network) || ticker === "sol") return "solana";
+  return "other";
+}
+
 const STATUS_LABELS: Record<string, { label: string; color: string; icon: React.ReactNode }> = {
   waiting: { label: "Waiting for deposit", color: "text-muted-foreground", icon: <Clock className="h-5 w-5" /> },
   confirming: { label: "Confirming transaction", color: "text-primary", icon: <Loader2 className="h-5 w-5 animate-spin" /> },
