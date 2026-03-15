@@ -20,6 +20,19 @@ const POPULAR_TICKERS = ["btc", "eth", "usdt", "sol", "xrp", "doge", "bnb", "ltc
 
 type Step = "exchange" | "address" | "deposit" | "status";
 
+// Chain detection helpers
+const EVM_NETWORKS = ["eth", "bsc", "matic", "avax", "arb", "op", "base", "celo", "ftm", "one", "glmr", "movr"];
+const SOLANA_NETWORKS = ["sol"];
+
+function getChainType(currency: Currency | null): "evm" | "solana" | "other" {
+  if (!currency) return "other";
+  const network = currency.network?.toLowerCase() || "";
+  const ticker = currency.ticker?.toLowerCase() || "";
+  if (EVM_NETWORKS.includes(network) || ["eth", "bnb", "matic", "avax", "usdt", "usdc", "dai", "wbtc", "link", "uni", "aave", "hype", "bera"].includes(ticker)) return "evm";
+  if (SOLANA_NETWORKS.includes(network) || ticker === "sol") return "solana";
+  return "other";
+}
+
 const STATUS_LABELS: Record<string, { label: string; color: string; icon: React.ReactNode }> = {
   waiting: { label: "Waiting for deposit", color: "text-muted-foreground", icon: <Clock className="h-5 w-5" /> },
   confirming: { label: "Confirming transaction", color: "text-primary", icon: <Loader2 className="h-5 w-5 animate-spin" /> },
@@ -56,7 +69,44 @@ const ExchangeWidget = () => {
   const [txStatus, setTxStatus] = useState<TransactionStatus | null>(null);
   const [copied, setCopied] = useState<string | null>(null);
   const [speedForecast, setSpeedForecast] = useState<string | null>(null);
+  const [connectedWallet, setConnectedWallet] = useState<{ address: string; type: "evm" | "solana" } | null>(null);
   const statusPollRef = useRef<ReturnType<typeof setInterval>>();
+
+  // Wallet connection handlers
+  const connectMetaMask = async () => {
+    if (typeof window === "undefined" || !(window as any).ethereum) {
+      toast({ title: "MetaMask not found", description: "Please install MetaMask browser extension.", variant: "destructive" });
+      return;
+    }
+    try {
+      const accounts = await (window as any).ethereum.request({ method: "eth_requestAccounts" });
+      if (accounts?.[0]) {
+        setRecipientAddress(accounts[0]);
+        setConnectedWallet({ address: accounts[0], type: "evm" });
+        toast({ title: "Wallet connected", description: `Connected: ${accounts[0].slice(0, 6)}...${accounts[0].slice(-4)}` });
+      }
+    } catch (err: any) {
+      if (err?.code === 4001) return;
+      toast({ title: "Connection failed", description: err?.message || "Could not connect MetaMask", variant: "destructive" });
+    }
+  };
+
+  const connectPhantom = async () => {
+    if (typeof window === "undefined" || !(window as any).solana?.isPhantom) {
+      toast({ title: "Phantom not found", description: "Please install Phantom wallet extension.", variant: "destructive" });
+      return;
+    }
+    try {
+      const resp = await (window as any).solana.connect();
+      const address = resp.publicKey.toString();
+      setRecipientAddress(address);
+      setConnectedWallet({ address, type: "solana" });
+      toast({ title: "Wallet connected", description: `Connected: ${address.slice(0, 6)}...${address.slice(-4)}` });
+    } catch (err: any) {
+      if (err?.code === 4001) return;
+      toast({ title: "Connection failed", description: err?.message || "Could not connect Phantom", variant: "destructive" });
+    }
+  };
 
   useEffect(() => {
     setLoading(true);
@@ -173,6 +223,7 @@ const ExchangeWidget = () => {
     setExtraId("");
     setTransaction(null);
     setTxStatus(null);
+    setConnectedWallet(null);
   };
 
   const filteredCurrencies = currencies.filter((c) => {
@@ -356,9 +407,75 @@ const ExchangeWidget = () => {
             </button>
 
             <h2 className="mb-2 font-display text-lg font-semibold text-foreground">Enter Recipient Address</h2>
-            <p className="mb-6 font-body text-sm text-muted-foreground">
+            <p className="mb-4 font-body text-sm text-muted-foreground">
               Your <span className="font-semibold uppercase text-foreground">{toCurrency?.ticker}</span> will be sent to this address.
             </p>
+
+            {/* Wallet Connect Buttons */}
+            {(() => {
+              const chainType = getChainType(toCurrency);
+              if (chainType === "other") return null;
+              return (
+                <div className="mb-4 space-y-2">
+                  <label className="block font-body text-xs font-medium uppercase tracking-wider text-muted-foreground">
+                    Connect Wallet
+                  </label>
+                  <div className="flex gap-2">
+                    {chainType === "evm" && (
+                      <button
+                        onClick={connectMetaMask}
+                        className={`flex flex-1 items-center justify-center gap-2 rounded-xl border p-3 transition-all active:scale-[0.98] ${
+                          connectedWallet?.type === "evm"
+                            ? "border-primary bg-primary/10 text-primary"
+                            : "border-border bg-card text-foreground hover:border-primary/50 hover:shadow-card"
+                        }`}
+                      >
+                        <Wallet className="h-5 w-5" />
+                        <span className="font-display text-sm font-semibold">
+                          {connectedWallet?.type === "evm"
+                            ? `${connectedWallet.address.slice(0, 6)}...${connectedWallet.address.slice(-4)}`
+                            : "MetaMask"}
+                        </span>
+                      </button>
+                    )}
+                    {chainType === "solana" && (
+                      <button
+                        onClick={connectPhantom}
+                        className={`flex flex-1 items-center justify-center gap-2 rounded-xl border p-3 transition-all active:scale-[0.98] ${
+                          connectedWallet?.type === "solana"
+                            ? "border-primary bg-primary/10 text-primary"
+                            : "border-border bg-card text-foreground hover:border-primary/50 hover:shadow-card"
+                        }`}
+                      >
+                        <Wallet className="h-5 w-5" />
+                        <span className="font-display text-sm font-semibold">
+                          {connectedWallet?.type === "solana"
+                            ? `${connectedWallet.address.slice(0, 6)}...${connectedWallet.address.slice(-4)}`
+                            : "Phantom"}
+                        </span>
+                      </button>
+                    )}
+                  </div>
+                  {connectedWallet && (
+                    <button
+                      onClick={() => { setConnectedWallet(null); setRecipientAddress(""); }}
+                      className="font-body text-xs text-muted-foreground hover:text-foreground transition-colors"
+                    >
+                      Disconnect wallet
+                    </button>
+                  )}
+                </div>
+              );
+            })()}
+
+            {/* Divider when wallet connect is available */}
+            {getChainType(toCurrency) !== "other" && (
+              <div className="mb-4 flex items-center gap-3">
+                <div className="h-px flex-1 bg-border" />
+                <span className="font-body text-xs text-muted-foreground">or enter manually</span>
+                <div className="h-px flex-1 bg-border" />
+              </div>
+            )}
 
             <div className="space-y-4">
               <div>
