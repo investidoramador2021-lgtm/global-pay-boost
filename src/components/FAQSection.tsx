@@ -38,24 +38,24 @@ const faqs = [
 
 const FAQSection = () => {
   return (
-    <section id="faq" className="bg-background py-20 lg:py-28">
+    <section id="faq" className="bg-background py-14 sm:py-20 lg:py-28">
       <div className="container mx-auto px-4">
         <div className="mx-auto max-w-2xl text-center">
-          <h2 className="font-display text-3xl font-bold tracking-tight text-foreground sm:text-4xl">
+          <h2 className="font-display text-2xl font-bold tracking-tight text-foreground sm:text-3xl lg:text-4xl">
             Frequently Asked Questions
           </h2>
-          <p className="mt-4 font-body text-lg text-muted-foreground">
+          <p className="mt-3 font-body text-base text-muted-foreground sm:mt-4 sm:text-lg">
             Everything you need to know about instant crypto swaps with MRC GlobalPay.
           </p>
         </div>
 
-        <div className="mx-auto mt-12 max-w-3xl">
-          <Accordion type="single" collapsible className="space-y-3">
+        <div className="mx-auto mt-8 max-w-3xl sm:mt-12">
+          <Accordion type="single" collapsible className="space-y-2 sm:space-y-3">
             {faqs.map((faq, i) => (
               <AccordionItem
                 key={i}
                 value={`item-${i}`}
-                className="rounded-xl border border-border bg-card px-6 shadow-card"
+                className="rounded-xl border border-border bg-card px-4 shadow-card sm:px-6"
                 itemScope
                 itemType="https://schema.org/Question"
               >

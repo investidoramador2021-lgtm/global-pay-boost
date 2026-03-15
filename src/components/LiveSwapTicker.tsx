@@ -79,24 +79,24 @@ const LiveSwapTicker = () => {
         <div className="mx-auto max-w-2xl space-y-2">
           <AnimatePresence initial={false}>
             {swaps.map((swap) => (
-              <motion.div
-                key={swap.id}
-                initial={{ opacity: 0, y: -20, height: 0 }}
-                animate={{ opacity: 1, y: 0, height: "auto" }}
-                exit={{ opacity: 0, height: 0 }}
-                transition={{ duration: 0.3, ease: "easeOut" }}
-                className="flex items-center justify-between rounded-lg border border-border bg-card px-4 py-3"
-              >
-                <div className="flex items-center gap-2">
-                  <span className="inline-flex items-center gap-1 rounded-md bg-trust/10 px-2 py-0.5 font-display text-xs font-bold text-trust">
+                <motion.div
+                  key={swap.id}
+                  initial={{ opacity: 0, y: -20, height: 0 }}
+                  animate={{ opacity: 1, y: 0, height: "auto" }}
+                  exit={{ opacity: 0, height: 0 }}
+                  transition={{ duration: 0.3, ease: "easeOut" }}
+                  className="flex items-center justify-between gap-2 rounded-lg border border-border bg-card px-3 py-2.5 sm:px-4 sm:py-3"
+                >
+                <div className="flex flex-wrap items-center gap-1.5 sm:gap-2">
+                  <span className="inline-flex items-center gap-1 rounded-md bg-trust/10 px-1.5 py-0.5 font-display text-[10px] font-bold text-trust sm:px-2 sm:text-xs">
                     Sent {swap.fromAmount} {swap.from}
                   </span>
-                  <ArrowRight className="h-3 w-3 text-muted-foreground" />
-                  <span className="font-body text-xs text-foreground">
-                    Got <span className="font-semibold">{swap.toAmount} {swap.to}</span>
+                  <ArrowRight className="hidden h-3 w-3 text-muted-foreground sm:block" />
+                  <span className="font-body text-[10px] text-foreground sm:text-xs">
+                    → <span className="font-semibold">{swap.toAmount} {swap.to}</span>
                   </span>
                 </div>
-                <span className="font-body text-[11px] text-muted-foreground">{swap.time}</span>
+                <span className="shrink-0 font-body text-[10px] text-muted-foreground sm:text-[11px]">{swap.time}</span>
               </motion.div>
             ))}
           </AnimatePresence>

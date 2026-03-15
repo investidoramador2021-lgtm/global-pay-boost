@@ -30,14 +30,14 @@ const HeroSection = () => {
             </p>
 
             {/* Network Health Status Bar */}
-            <div className="mt-5 flex flex-wrap items-center gap-2 sm:mt-6">
-              <span className="flex items-center gap-1.5 font-display text-[10px] font-bold uppercase tracking-wider text-muted-foreground sm:text-xs">
+            <div className="mt-5 flex flex-wrap items-center gap-1.5 sm:mt-6 sm:gap-2">
+              <span className="flex w-full items-center gap-1.5 font-display text-[10px] font-bold uppercase tracking-wider text-muted-foreground sm:w-auto sm:text-xs">
                 <Activity className="h-3 w-3 animate-pulse text-primary" /> Network Health
               </span>
               {networkStatus.map((n) => (
                 <span
                   key={n.asset}
-                  className="inline-flex items-center gap-1 rounded-md border border-primary/20 bg-primary/5 px-2 py-0.5 font-display text-[10px] font-bold sm:text-xs"
+                  className="inline-flex items-center gap-0.5 rounded-md border border-primary/20 bg-primary/5 px-1.5 py-0.5 font-display text-[9px] font-bold sm:gap-1 sm:px-2 sm:text-xs"
                 >
                   <span className="text-foreground">{n.asset}:</span>
                   <span className={n.color}>{n.status}</span>
