@@ -1,3 +1,4 @@
+import { useCallback } from "react";
 import SiteHeader from "@/components/SiteHeader";
 import HeroSection from "@/components/HeroSection";
 import TrustBanner from "@/components/TrustBanner";
@@ -9,6 +10,7 @@ import LiveSwapTicker from "@/components/LiveSwapTicker";
 import NoLimitsSection from "@/components/NoLimitsSection";
 import FAQSection from "@/components/FAQSection";
 import SiteFooter from "@/components/SiteFooter";
+import PullToRefresh from "@/components/PullToRefresh";
 import { Helmet } from "react-helmet-async";
 
 const Index = () => {
