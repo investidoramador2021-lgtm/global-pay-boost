@@ -225,7 +225,7 @@ OUTPUT FORMAT — respond with ONLY a valid JSON object (no markdown fences, no 
     let postData: any;
     let qualityIssues: string[] = [];
 
-    for (let attempt = 1; attempt <= 2; attempt++) {
+    for (let attempt = 1; attempt <= 3; attempt++) {
       const attemptTopic =
         attempt === 1
           ? topic
