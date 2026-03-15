@@ -281,7 +281,7 @@ const ExchangeWidget = () => {
 
             <div className="relative">
               <label className="mb-1.5 block font-body text-xs font-medium uppercase tracking-wider text-muted-foreground">You Send</label>
-              <div className="flex items-center gap-3 rounded-xl border border-border bg-accent p-4">
+              <div className="flex items-center gap-3 rounded-xl border border-border bg-accent p-4 sm:p-4">
                 <Input
                   type="number"
                   value={sendAmount}
@@ -290,7 +290,7 @@ const ExchangeWidget = () => {
                   min={0}
                   step="any"
                 />
-                <button onClick={() => setShowFromPicker(true)} className="flex items-center gap-2 rounded-lg bg-primary/10 px-3 py-1.5 transition-colors hover:bg-primary/20">
+                <button onClick={() => setShowFromPicker(true)} className="flex items-center gap-2 rounded-lg bg-primary/10 px-4 py-2.5 transition-colors hover:bg-primary/20 touch-target">
                   {fromCurrency?.image && <img src={fromCurrency.image} alt="" className="h-5 w-5 rounded-full" />}
                   <span className="font-display text-sm font-semibold uppercase text-primary">{fromCurrency?.ticker || "Select"}</span>
                 </button>
