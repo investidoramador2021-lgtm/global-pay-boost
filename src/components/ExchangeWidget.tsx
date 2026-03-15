@@ -336,7 +336,14 @@ const ExchangeWidget = () => {
             <Button className="mt-6 w-full bg-trust text-trust-foreground hover:bg-trust/90" size="lg" disabled={!estimatedAmount || estimatedAmount === "—" || belowMin} onClick={handleExchangeNow}>
               Exchange Now
             </Button>
-            <p className="mt-3 text-center font-body text-xs text-muted-foreground">No hidden fees · No registration required · Powered by ChangeNow</p>
+            <div className="mt-3 flex items-center justify-center gap-3">
+              <p className="font-body text-xs text-muted-foreground">No hidden fees · No registration required</p>
+              {speedForecast && (
+                <span className="flex items-center gap-1 font-body text-xs text-primary">
+                  <Clock className="h-3 w-3" /> ~{speedForecast}
+                </span>
+              )}
+            </div>
           </motion.div>
         )}
 
