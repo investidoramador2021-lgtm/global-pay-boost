@@ -1,7 +1,7 @@
 import { useState, useEffect, useCallback, useRef } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { ArrowDownUp, Loader2, Search, Copy, Check, ArrowLeft, Clock, CheckCircle2, AlertCircle, ExternalLink, Wallet, QrCode, XCircle, Info } from "lucide-react";
-import DestinationAddressInput from "@/components/DestinationAddressInput";
+import DestinationAddressInput, { tickerToAddressType } from "@/components/DestinationAddressInput";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { QRCodeSVG } from "qrcode.react";
@@ -409,7 +409,9 @@ const ExchangeWidget = () => {
               <ArrowLeft className="h-4 w-4" /> Back
             </button>
 
-            <h2 className="mb-2 font-display text-lg font-semibold text-foreground">Enter Recipient Address</h2>
+            <h2 className="mb-2 font-display text-lg font-semibold text-foreground">
+              Enter your {toCurrency?.ticker?.toUpperCase()} Recipient Address
+            </h2>
             <p className="mb-4 font-body text-sm text-muted-foreground">
               Your <span className="font-semibold uppercase text-foreground">{toCurrency?.ticker}</span> will be sent to this address.
             </p>
@@ -490,6 +492,7 @@ const ExchangeWidget = () => {
                   onChange={setRecipientAddress}
                   onValidChange={setAddressValid}
                   currencyTicker={toCurrency?.ticker}
+                  expectedNetworkType={tickerToAddressType(toCurrency?.ticker, toCurrency?.network)}
                 />
               </div>
 
@@ -507,6 +510,7 @@ const ExchangeWidget = () => {
                 </div>
               )}
 
+              {/* Refund address — only shown when relevant (e.g. BTC sends where address format differs) */}
               <div>
                 <label className="mb-1.5 block font-body text-xs font-medium uppercase tracking-wider text-muted-foreground">
                   {fromCurrency?.ticker?.toUpperCase()} Refund Address (optional)
