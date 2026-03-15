@@ -101,13 +101,18 @@ function evaluatePostQuality(postData: any): string[] {
   }
 
   const headingCount = (content.match(/^##\s+/gm) || []).length + (content.match(/^###\s+/gm) || []).length;
-  if (headingCount < 8) {
-    issues.push("content needs stronger structure (at least 8 H2/H3 headings)");
+  if (headingCount < 10) {
+    issues.push("content needs stronger structure (at least 10 H2/H3 headings)");
+  }
+
+  const h2Count = (content.match(/^##\s+[^#]/gm) || []).length;
+  if (h2Count < 6) {
+    issues.push("content needs at least 6 H2 sections");
   }
 
   const internalLinks = content.match(/\]\((?:\/#exchange|\/blog(?:\/[^)]*)?|\/swap\/[^)]+|\/privacy|\/aml)\)/g) || [];
-  if (internalLinks.length < 6) {
-    issues.push("content needs at least 6 internal links");
+  if (internalLinks.length < 8) {
+    issues.push("content needs at least 8 internal links");
   }
 
   if (!/##\s+FAQ/i.test(content)) {
@@ -118,7 +123,15 @@ function evaluatePostQuality(postData: any): string[] {
     issues.push("content must include a Related Reading section");
   }
 
-  return issues;
+  const hasTables = /\|.*\|.*\|/.test(content);
+  if (!hasTables) {
+    issues.push("content must include at least one comparison table");
+  }
+
+  const bulletPoints = (content.match(/^[-*]\s+/gm) || []).length;
+  if (bulletPoints < 8) {
+    issues.push("content needs more bullet points for readability (at least 8)");
+  }
 }
 
 serve(async (req) => {
