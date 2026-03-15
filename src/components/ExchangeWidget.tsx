@@ -231,6 +231,31 @@ const ExchangeWidget = () => {
     setTransaction(null);
     setTxStatus(null);
     setConnectedWallet(null);
+    setNotifyEmail("");
+    setEmailSubmitted(false);
+  };
+
+  const handleEmailSubscribe = async () => {
+    if (!notifyEmail.trim() || !transaction?.id) return;
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!emailRegex.test(notifyEmail.trim())) {
+      toast({ title: "Invalid email", description: "Please enter a valid email address.", variant: "destructive" });
+      return;
+    }
+    setEmailSubmitting(true);
+    try {
+      const { error } = await supabase.from("transfer_email_subscriptions").insert({
+        transaction_id: transaction.id,
+        email: notifyEmail.trim(),
+      });
+      if (error) throw error;
+      setEmailSubmitted(true);
+      toast({ title: "Subscribed!", description: "You'll receive status updates for this transfer." });
+    } catch (err: any) {
+      toast({ title: "Error", description: err?.message || "Could not subscribe", variant: "destructive" });
+    } finally {
+      setEmailSubmitting(false);
+    }
   };
 
   const filteredCurrencies = currencies.filter((c) => {
