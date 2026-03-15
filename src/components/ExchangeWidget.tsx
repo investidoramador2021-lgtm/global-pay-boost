@@ -66,6 +66,7 @@ const ExchangeWidget = () => {
   const [addressValid, setAddressValid] = useState(false);
   const [refundAddress, setRefundAddress] = useState("");
   const [extraId, setExtraId] = useState("");
+  const [termsAccepted, setTermsAccepted] = useState(false);
   const [creatingTx, setCreatingTx] = useState(false);
   const [transaction, setTransaction] = useState<TransactionResult | null>(null);
   const [txStatus, setTxStatus] = useState<TransactionStatus | null>(null);
