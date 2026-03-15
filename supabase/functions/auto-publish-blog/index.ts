@@ -262,11 +262,58 @@ OUTPUT FORMAT — respond with ONLY a valid JSON object (no markdown fences, no 
 
       rawContent = rawContent.replace(/^```json\s*\n?/i, "").replace(/\n?```\s*$/i, "").trim();
 
+      // Fix control characters in JSON string values (newlines, tabs in content field)
+      // Strategy: extract content field separately if JSON.parse fails
       try {
         postData = JSON.parse(rawContent);
-      } catch (e) {
-        console.error("Failed to parse AI response:", rawContent.substring(0, 500));
-        throw new Error(`Failed to parse AI response as JSON: ${e.message}`);
+      } catch (_firstError) {
+        try {
+          // Try fixing common issues: unescaped newlines in string values
+          const fixed = rawContent
+            .replace(/\r\n/g, "\\n")
+            .replace(/\r/g, "\\n")
+            .replace(/\n/g, "\\n")
+            .replace(/\t/g, "\\t");
+          postData = JSON.parse(fixed);
+        } catch (_secondError) {
+          // Last resort: extract fields manually with regex
+          try {
+            const extractField = (field: string): string => {
+              const regex = new RegExp(`"${field}"\\s*:\\s*"((?:[^"\\\\]|\\\\.)*)"`);
+              const match = rawContent.match(regex);
+              return match ? match[1].replace(/\\"/g, '"').replace(/\\n/g, "\n") : "";
+            };
+            const extractArray = (field: string): string[] => {
+              const regex = new RegExp(`"${field}"\\s*:\\s*\\[([^\\]]*)\\]`);
+              const match = rawContent.match(regex);
+              if (!match) return [];
+              return match[1].match(/"([^"]+)"/g)?.map(s => s.replace(/"/g, "")) || [];
+            };
+            // Extract content as everything between "content": " and the closing "} 
+            const contentMatch = rawContent.match(/"content"\s*:\s*"([\s\S]*)"[\s\n]*\}[\s\n]*$/);
+            const contentValue = contentMatch 
+              ? contentMatch[1].replace(/\\"/g, '"').replace(/\\n/g, "\n").replace(/\\t/g, "\t")
+              : "";
+
+            postData = {
+              title: extractField("title"),
+              metaTitle: extractField("metaTitle"),
+              metaDescription: extractField("metaDescription"),
+              excerpt: extractField("excerpt"),
+              readTime: extractField("readTime"),
+              category: extractField("category"),
+              tags: extractArray("tags"),
+              content: contentValue,
+            };
+            if (!postData.title || !postData.content) {
+              throw new Error("Manual extraction failed");
+            }
+            console.log("Used fallback JSON extraction successfully");
+          } catch (e) {
+            console.error("Failed to parse AI response:", rawContent.substring(0, 500));
+            throw new Error(`Failed to parse AI response as JSON: ${e.message}`);
+          }
+        }
       }
 
       qualityIssues = evaluatePostQuality(postData);
