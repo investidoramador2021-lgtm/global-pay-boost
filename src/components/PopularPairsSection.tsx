@@ -40,12 +40,15 @@ const PopularPairsSection = () => {
 
   useEffect(() => {
     PAIRS_CONFIG.forEach((config, idx) => {
-      getEstimate(config.from, config.to, "1")
+      const amt = config.amount;
+      getEstimate(config.from, config.to, amt)
         .then((est) => {
+          // Normalize rate to "per 1 unit"
+          const perUnit = est.estimatedAmount ? est.estimatedAmount / parseFloat(amt) : null;
           setPairs((prev) =>
             prev.map((p, i) =>
               i === idx
-                ? { ...p, rate: est.estimatedAmount?.toString() || null, loading: false }
+                ? { ...p, rate: perUnit?.toString() || null, loading: false }
                 : p
             )
           );
