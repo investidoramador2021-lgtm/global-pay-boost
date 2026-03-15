@@ -1,65 +1,110 @@
 import { useState, useEffect, useCallback, useRef } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { CheckCircle2, AlertCircle, Clipboard, Loader2 } from "lucide-react";
+import { CheckCircle2, AlertCircle, Clipboard, Loader2, ShieldAlert } from "lucide-react";
 
-// ── Address validation ──────────────────────────────────────────────
+// ── Network types ───────────────────────────────────────────────────
+
+export type AddressNetworkType = "evm" | "btc" | "sol" | "unknown";
 
 interface DetectedNetwork {
   name: string;
   shortName: string;
-  /** emoji or unicode icon */
   icon: string;
+  type: AddressNetworkType;
 }
+
+// ── Address detection ───────────────────────────────────────────────
 
 const BASE58_REGEX = /^[123456789ABCDEFGHJKLMNPQRSTUVWXYZabcdefghijkmnopqrstuvwxyz]+$/;
 
 function detectNetwork(address: string): DetectedNetwork | null {
-  const trimmed = address.trim();
-  if (!trimmed) return null;
+  const t = address.trim();
+  if (!t) return null;
 
-  // Ethereum / EVM — 0x prefix, 42 hex chars
-  if (/^0x[0-9a-fA-F]{40}$/.test(trimmed)) {
-    return { name: "Ethereum / EVM", shortName: "ETH", icon: "⟠" };
+  // Ethereum / EVM — starts with 0x, exactly 42 hex characters
+  if (/^0x[0-9a-fA-F]{40}$/.test(t)) {
+    return { name: "Ethereum / EVM", shortName: "ETH", icon: "⟠", type: "evm" };
   }
 
   // Bitcoin — Legacy (1…), P2SH (3…), Bech32 (bc1…)
-  if (/^1[a-km-zA-HJ-NP-Z1-9]{25,34}$/.test(trimmed)) {
-    return { name: "Bitcoin (Legacy)", shortName: "BTC", icon: "₿" };
+  if (/^1[a-km-zA-HJ-NP-Z1-9]{25,34}$/.test(t)) {
+    return { name: "Bitcoin (Legacy)", shortName: "BTC", icon: "₿", type: "btc" };
   }
-  if (/^3[a-km-zA-HJ-NP-Z1-9]{25,34}$/.test(trimmed)) {
-    return { name: "Bitcoin (P2SH)", shortName: "BTC", icon: "₿" };
+  if (/^3[a-km-zA-HJ-NP-Z1-9]{25,34}$/.test(t)) {
+    return { name: "Bitcoin (P2SH)", shortName: "BTC", icon: "₿", type: "btc" };
   }
-  if (/^bc1[a-zA-HJ-NP-Z0-9]{25,90}$/.test(trimmed)) {
-    return { name: "Bitcoin (Bech32)", shortName: "BTC", icon: "₿" };
-  }
-
-  // Solana — Base58, 32-44 chars, no 0x prefix
-  if (trimmed.length >= 32 && trimmed.length <= 44 && BASE58_REGEX.test(trimmed)) {
-    return { name: "Solana", shortName: "SOL", icon: "◎" };
+  if (/^bc1[a-zA-HJ-NP-Z0-9]{25,90}$/.test(t)) {
+    return { name: "Bitcoin (Bech32)", shortName: "BTC", icon: "₿", type: "btc" };
   }
 
-  // Hyperliquid (HYPE) — uses 0x addresses identical to EVM
-  // (already matched above as EVM — kept separate if the user specifically uses a HYPE network context)
+  // Solana — Base58, 32-44 chars, no 0x or bc1 prefix
+  if (t.length >= 32 && t.length <= 44 && !t.startsWith("0x") && !t.startsWith("bc1") && BASE58_REGEX.test(t)) {
+    return { name: "Solana", shortName: "SOL", icon: "◎", type: "sol" };
+  }
 
   return null;
 }
 
-type ValidationState = "empty" | "typing" | "valid" | "invalid";
+function detectPartialNetwork(address: string): DetectedNetwork | null {
+  const t = address.trim();
+  if (!t) return null;
+  if (t.startsWith("0x") && t.length < 42) return { name: "Ethereum / EVM", shortName: "ETH", icon: "⟠", type: "evm" };
+  if (t.startsWith("bc1") && t.length < 26) return { name: "Bitcoin (Bech32)", shortName: "BTC", icon: "₿", type: "btc" };
+  if ((t.startsWith("1") || t.startsWith("3")) && t.length < 26 && BASE58_REGEX.test(t)) return { name: "Bitcoin", shortName: "BTC", icon: "₿", type: "btc" };
+  if (t.length < 32 && BASE58_REGEX.test(t) && !t.startsWith("0x") && !t.startsWith("bc1")) return { name: "Solana", shortName: "SOL", icon: "◎", type: "sol" };
+  return null;
+}
 
-function getValidationState(address: string): { state: ValidationState; network: DetectedNetwork | null } {
+// ── Validation state ────────────────────────────────────────────────
+
+export type ValidationState = "empty" | "typing" | "valid" | "invalid" | "mismatch";
+
+export interface ValidationResult {
+  state: ValidationState;
+  detectedNetwork: DetectedNetwork | null;
+}
+
+function getValidationResult(address: string, expectedType: AddressNetworkType | null): ValidationResult {
   const trimmed = address.trim();
-  if (!trimmed) return { state: "empty", network: null };
+  if (!trimmed) return { state: "empty", detectedNetwork: null };
 
-  const network = detectNetwork(trimmed);
-  if (network) return { state: "valid", network };
+  const detected = detectNetwork(trimmed);
+  if (detected) {
+    // Cross-validate: if we know what network is expected, check for mismatch
+    if (expectedType && expectedType !== "unknown" && detected.type !== expectedType) {
+      return { state: "mismatch", detectedNetwork: detected };
+    }
+    return { state: "valid", detectedNetwork: detected };
+  }
 
-  // Partial match heuristics — user is still typing
-  if (trimmed.startsWith("0x") && trimmed.length < 42) return { state: "typing", network: { name: "Ethereum / EVM", shortName: "ETH", icon: "⟠" } };
-  if (trimmed.startsWith("bc1") && trimmed.length < 26) return { state: "typing", network: { name: "Bitcoin (Bech32)", shortName: "BTC", icon: "₿" } };
-  if ((trimmed.startsWith("1") || trimmed.startsWith("3")) && trimmed.length < 26 && BASE58_REGEX.test(trimmed)) return { state: "typing", network: { name: "Bitcoin", shortName: "BTC", icon: "₿" } };
-  if (trimmed.length < 32 && BASE58_REGEX.test(trimmed) && !trimmed.startsWith("0x")) return { state: "typing", network: { name: "Solana", shortName: "SOL", icon: "◎" } };
+  // Partial match — user is still typing
+  const partial = detectPartialNetwork(trimmed);
+  if (partial) return { state: "typing", detectedNetwork: partial };
 
-  return { state: "invalid", network: null };
+  return { state: "invalid", detectedNetwork: null };
+}
+
+// ── Helper: map currency ticker/network to expected address type ────
+
+const EVM_TICKERS = new Set(["eth", "bnb", "matic", "avax", "usdt", "usdc", "dai", "wbtc", "link", "uni", "aave", "hype", "bera", "op", "arb", "ftm", "celo"]);
+const EVM_NETWORKS = new Set(["eth", "bsc", "matic", "avax", "arb", "op", "base", "celo", "ftm", "one", "glmr", "movr"]);
+
+export function tickerToAddressType(ticker?: string, network?: string): AddressNetworkType {
+  const t = ticker?.toLowerCase() || "";
+  const n = network?.toLowerCase() || "";
+  if (t === "btc") return "btc";
+  if (t === "sol" || n === "sol") return "sol";
+  if (EVM_TICKERS.has(t) || EVM_NETWORKS.has(n)) return "evm";
+  return "unknown";
+}
+
+export function addressTypeLabel(type: AddressNetworkType): string {
+  switch (type) {
+    case "evm": return "Ethereum / EVM";
+    case "btc": return "Bitcoin";
+    case "sol": return "Solana";
+    default: return "this network";
+  }
 }
 
 // ── Component ───────────────────────────────────────────────────────
@@ -70,6 +115,8 @@ interface DestinationAddressInputProps {
   onValidChange?: (isValid: boolean) => void;
   /** Currency ticker for contextual placeholder */
   currencyTicker?: string;
+  /** Expected address network type for cross-validation */
+  expectedNetworkType?: AddressNetworkType;
   className?: string;
 }
 
@@ -78,6 +125,7 @@ const DestinationAddressInput = ({
   onChange,
   onValidChange,
   currencyTicker,
+  expectedNetworkType,
   className,
 }: DestinationAddressInputProps) => {
   const [focused, setFocused] = useState(false);
@@ -85,9 +133,9 @@ const DestinationAddressInput = ({
   const inputRef = useRef<HTMLInputElement>(null);
   const prevValidRef = useRef<boolean | null>(null);
 
-  const { state, network } = getValidationState(value);
+  const { state, detectedNetwork } = getValidationResult(value, expectedNetworkType ?? null);
 
-  // Notify parent of validity changes
+  // Notify parent — only "valid" (and matching) counts
   useEffect(() => {
     const isValid = state === "valid";
     if (prevValidRef.current !== isValid) {
@@ -101,41 +149,40 @@ const DestinationAddressInput = ({
       setPasting(true);
       const text = await navigator.clipboard.readText();
       if (text) {
-        // Sanitize: only allow alphanumeric + expected address chars, max 128 chars
-        const sanitized = text.trim().slice(0, 128).replace(/[^a-zA-Z0-9]/g, "");
-        // Re-add 0x prefix if it was stripped (hex addresses)
-        const cleaned = text.trim().slice(0, 128);
-        onChange(cleaned);
+        onChange(text.trim().slice(0, 128));
         inputRef.current?.focus();
       }
     } catch {
-      // Clipboard permission denied — silently ignore
+      // Clipboard permission denied
     } finally {
       setTimeout(() => setPasting(false), 300);
     }
   }, [onChange]);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    // Limit length and strip dangerous characters
-    const raw = e.target.value.slice(0, 128);
-    onChange(raw);
+    onChange(e.target.value.slice(0, 128));
   };
 
-  // Border / ring color based on state
-  const borderClass =
-    state === "valid"
-      ? "border-trust ring-trust/30"
-      : state === "invalid"
-        ? "border-destructive ring-destructive/30"
-        : focused
-          ? "border-primary ring-primary/20"
-          : "border-border";
+  // Visual states
+  const isMismatch = state === "mismatch";
+  const isInvalid = state === "invalid";
+  const isValid = state === "valid";
 
-  const ringClass = focused || state === "valid" || state === "invalid" ? "ring-2" : "";
+  const borderClass =
+    isMismatch
+      ? "border-destructive ring-destructive/30"
+      : isValid
+        ? "border-trust ring-trust/30"
+        : isInvalid
+          ? "border-destructive ring-destructive/30"
+          : focused
+            ? "border-primary ring-primary/20"
+            : "border-border";
+
+  const ringClass = focused || isValid || isInvalid || isMismatch ? "ring-2" : "";
 
   return (
     <div className={className}>
-      {/* Input container */}
       <div
         className={`relative flex items-center gap-2 rounded-xl bg-accent px-4 py-3.5 transition-all duration-200 ${borderClass} ${ringClass} border`}
       >
@@ -159,9 +206,9 @@ const DestinationAddressInput = ({
           maxLength={128}
         />
 
-        {/* Network detected badge — pulsing while typing */}
+        {/* Badge */}
         <AnimatePresence mode="wait">
-          {state === "typing" && network && (
+          {state === "typing" && detectedNetwork && (
             <motion.span
               key="typing-badge"
               initial={{ opacity: 0, scale: 0.8 }}
@@ -174,11 +221,11 @@ const DestinationAddressInput = ({
                 <span className="relative inline-flex h-2 w-2 rounded-full bg-primary" />
               </span>
               <span className="font-display text-[11px] font-semibold text-primary">
-                {network.icon} {network.shortName}
+                {detectedNetwork.icon} {detectedNetwork.shortName}
               </span>
             </motion.span>
           )}
-          {state === "valid" && network && (
+          {isValid && detectedNetwork && (
             <motion.span
               key="valid-badge"
               initial={{ opacity: 0, scale: 0.8 }}
@@ -188,7 +235,21 @@ const DestinationAddressInput = ({
             >
               <CheckCircle2 className="h-3.5 w-3.5 text-trust" />
               <span className="font-display text-[11px] font-semibold text-trust">
-                {network.icon} {network.shortName}
+                {detectedNetwork.icon} {detectedNetwork.shortName}
+              </span>
+            </motion.span>
+          )}
+          {isMismatch && detectedNetwork && (
+            <motion.span
+              key="mismatch-badge"
+              initial={{ opacity: 0, scale: 0.8 }}
+              animate={{ opacity: 1, scale: 1 }}
+              exit={{ opacity: 0, scale: 0.8 }}
+              className="flex shrink-0 items-center gap-1.5 rounded-md border border-destructive/30 bg-destructive/10 px-2 py-1"
+            >
+              <ShieldAlert className="h-3.5 w-3.5 text-destructive" />
+              <span className="font-display text-[11px] font-semibold text-destructive">
+                {detectedNetwork.icon} {detectedNetwork.shortName}
               </span>
             </motion.span>
           )}
@@ -210,9 +271,9 @@ const DestinationAddressInput = ({
         </button>
       </div>
 
-      {/* Status message */}
+      {/* Status messages */}
       <AnimatePresence mode="wait">
-        {state === "valid" && network && (
+        {isValid && detectedNetwork && (
           <motion.p
             key="valid-msg"
             initial={{ opacity: 0, y: -4 }}
@@ -221,10 +282,27 @@ const DestinationAddressInput = ({
             className="mt-2 flex items-center gap-1.5 font-body text-xs text-trust"
           >
             <CheckCircle2 className="h-3.5 w-3.5" />
-            This is a valid {network.name} address.
+            ✓ This is a valid {detectedNetwork.name} address.
           </motion.p>
         )}
-        {state === "invalid" && (
+        {isMismatch && detectedNetwork && expectedNetworkType && (
+          <motion.div
+            key="mismatch-msg"
+            initial={{ opacity: 0, y: -4 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: -4 }}
+            className="mt-2 rounded-lg border border-destructive/30 bg-destructive/5 p-3"
+          >
+            <p className="flex items-start gap-2 font-body text-xs font-medium text-destructive">
+              <ShieldAlert className="mt-0.5 h-4 w-4 shrink-0" />
+              <span>
+                <strong>Error:</strong> This is a {detectedNetwork.name} address. Please provide a valid{" "}
+                <strong>{addressTypeLabel(expectedNetworkType)}</strong> address to avoid loss of funds.
+              </span>
+            </p>
+          </motion.div>
+        )}
+        {isInvalid && (
           <motion.p
             key="invalid-msg"
             initial={{ opacity: 0, y: -4 }}
