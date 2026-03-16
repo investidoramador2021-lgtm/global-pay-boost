@@ -835,7 +835,7 @@ Monero miners face a unique challenge: many centralized exchanges have delisted 
 The most practical solution I have seen working in 2026:
 
 1. Mine XMR
-2. Swap XMR→LTC via non-custodial instant swap (no KYC, no exchange account needed)
+2. Swap XMR→LTC via non-custodial instant swap (no exchange account needed)
 3. Use LTC as your "liquid intermediate" for further conversions or direct spending
 
 Why LTC? It has near-universal exchange support, fast confirmations, low fees, and sufficient liquidity depth. It acts as a bridge between privacy assets and the broader crypto ecosystem.
