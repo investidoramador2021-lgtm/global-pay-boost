@@ -1,6 +1,6 @@
 # MRC GlobalPay
 
-> Instant crypto-to-crypto swaps with zero confirmation delays. Exchange 500+ cryptocurrencies with the best market rates in under 60 seconds. Non-custodial. No KYC. 700+ liquidity sources aggregated.
+> Instant crypto-to-crypto swaps with zero confirmation delays. Exchange 500+ cryptocurrencies with the best market rates in under 60 seconds. Non-custodial. No registration. 700+ liquidity sources aggregated.
 
 ## Main Pages
 
