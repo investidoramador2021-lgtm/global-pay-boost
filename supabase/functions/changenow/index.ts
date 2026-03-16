@@ -7,6 +7,28 @@ const corsHeaders = {
 
 const CHANGENOW_BASE = 'https://api.changenow.io/v1';
 
+// Validation helpers
+const TICKER_RE = /^[a-z0-9]{1,20}$/i;
+const TX_ID_RE = /^[a-zA-Z0-9_-]{1,64}$/;
+
+function isValidTicker(v: string): boolean {
+  return TICKER_RE.test(v);
+}
+function isValidAmount(v: string): boolean {
+  const n = Number(v);
+  return isFinite(n) && n > 0;
+}
+function isValidTxId(v: string): boolean {
+  return TX_ID_RE.test(v);
+}
+
+function badRequest(msg: string) {
+  return new Response(JSON.stringify({ error: msg }), {
+    status: 400,
+    headers: { ...corsHeaders, 'Content-Type': 'application/json' },
+  });
+}
+
 Deno.serve(async (req) => {
   if (req.method === 'OPTIONS') {
     return new Response(null, { headers: corsHeaders });
@@ -21,25 +43,20 @@ Deno.serve(async (req) => {
   }
 
   try {
-    // Parse params from URL query string or POST body
     let params: Record<string, string> = {};
     let postBody: Record<string, unknown> | null = null;
 
     const url = new URL(req.url);
-    // Collect query params
     url.searchParams.forEach((value, key) => {
       params[key] = value;
     });
 
-    // If POST, also read body
     if (req.method === 'POST') {
       const body = await req.json();
-      // If _get flag is set, this is a "GET" routed through POST
       if (body._get) {
         const { _get, ...rest } = body;
         params = { ...params, ...rest };
       } else {
-        // Real POST (create transaction)
         const { _action, ...rest } = body;
         if (_action) params.action = _action;
         postBody = rest;
@@ -57,12 +74,8 @@ Deno.serve(async (req) => {
       case 'min-amount': {
         const from = params.from;
         const to = params.to;
-        if (!from || !to) {
-          return new Response(JSON.stringify({ error: 'Missing from/to params' }), {
-            status: 400,
-            headers: { ...corsHeaders, 'Content-Type': 'application/json' },
-          });
-        }
+        if (!from || !to) return badRequest('Missing from/to params');
+        if (!isValidTicker(from) || !isValidTicker(to)) return badRequest('Invalid ticker format');
         apiUrl = `${CHANGENOW_BASE}/min-amount/${from}_${to}?api_key=${apiKey}`;
         break;
       }
@@ -70,22 +83,14 @@ Deno.serve(async (req) => {
         const from = params.from;
         const to = params.to;
         const amount = params.amount;
-        if (!from || !to || !amount) {
-          return new Response(JSON.stringify({ error: 'Missing from/to/amount params' }), {
-            status: 400,
-            headers: { ...corsHeaders, 'Content-Type': 'application/json' },
-          });
-        }
+        if (!from || !to || !amount) return badRequest('Missing from/to/amount params');
+        if (!isValidTicker(from) || !isValidTicker(to)) return badRequest('Invalid ticker format');
+        if (!isValidAmount(amount)) return badRequest('Invalid amount');
         apiUrl = `${CHANGENOW_BASE}/exchange-amount/${amount}/${from}_${to}?api_key=${apiKey}`;
         break;
       }
       case 'create-transaction': {
-        if (!postBody) {
-          return new Response(JSON.stringify({ error: 'POST body required' }), {
-            status: 400,
-            headers: { ...corsHeaders, 'Content-Type': 'application/json' },
-          });
-        }
+        if (!postBody) return badRequest('POST body required');
         const response = await fetch(`${CHANGENOW_BASE}/transactions/${apiKey}`, {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
@@ -106,20 +111,13 @@ Deno.serve(async (req) => {
       }
       case 'tx-status': {
         const id = params.id;
-        if (!id) {
-          return new Response(JSON.stringify({ error: 'Missing id param' }), {
-            status: 400,
-            headers: { ...corsHeaders, 'Content-Type': 'application/json' },
-          });
-        }
+        if (!id) return badRequest('Missing id param');
+        if (!isValidTxId(id)) return badRequest('Invalid transaction id format');
         apiUrl = `${CHANGENOW_BASE}/transactions/${id}/${apiKey}`;
         break;
       }
       default:
-        return new Response(JSON.stringify({ error: `Invalid action: ${action}` }), {
-          status: 400,
-          headers: { ...corsHeaders, 'Content-Type': 'application/json' },
-        });
+        return badRequest(`Invalid action: ${action}`);
     }
 
     const response = await fetch(apiUrl!);
