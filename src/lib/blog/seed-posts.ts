@@ -754,7 +754,7 @@ The highest-impact change is removing the centralized exchange from your payout 
 
 **Total friction: 1 transparent fee + near-zero latency.**
 
-This is not theoretical. Non-custodial swap aggregators in 2026 can execute KAS→USDT, LTC→BTC, ETC→SOL, and XMR→LTC conversions in under 60 seconds with no account registration, no KYC bottleneck, and no deposit confirmation wait.
+This is not theoretical. Non-custodial swap aggregators in 2026 can execute KAS→USDT, LTC→BTC, ETC→SOL, and XMR→LTC conversions in under 60 seconds with no account registration, no bottleneck, and no deposit confirmation wait.
 
 ### Step 2: Optimize your pair selection
 
@@ -835,7 +835,7 @@ Monero miners face a unique challenge: many centralized exchanges have delisted 
 The most practical solution I have seen working in 2026:
 
 1. Mine XMR
-2. Swap XMR→LTC via non-custodial instant swap (no KYC, no exchange account needed)
+2. Swap XMR→LTC via non-custodial instant swap (no exchange account needed)
 3. Use LTC as your "liquid intermediate" for further conversions or direct spending
 
 Why LTC? It has near-universal exchange support, fast confirmations, low fees, and sufficient liquidity depth. It acts as a bridge between privacy assets and the broader crypto ecosystem.
@@ -941,7 +941,7 @@ Here is the step-by-step implementation I walk through with every mining client:
 ### Privacy mining (XMR)
 - **Primary pair:** XMR/LTC (bridge strategy)
 - **Conversion cadence:** Daily or on-demand
-- **Key advantage:** No KYC, no exchange account, no delisting risk
+- **Key advantage:** No registration, no exchange account, no delisting risk
 
 ### Industrial farms (100+ GH/s)
 - **Primary pairs:** KAS/BTC, LTC/USDT

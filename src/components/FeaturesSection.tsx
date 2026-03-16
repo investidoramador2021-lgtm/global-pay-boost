@@ -15,7 +15,7 @@ const features = [
   {
     icon: Lock,
     title: "No Registration",
-    description: "Start swapping immediately. No KYC, no account creation, no personal data stored anywhere.",
+    description: "Start swapping immediately. No account creation, no personal data stored anywhere.",
   },
   {
     icon: ArrowLeftRight,
