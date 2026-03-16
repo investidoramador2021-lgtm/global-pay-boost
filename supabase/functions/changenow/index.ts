@@ -126,7 +126,8 @@ Deno.serve(async (req) => {
     const data = await response.json();
 
     if (!response.ok) {
-      return new Response(JSON.stringify({ error: data.message || 'API call failed', details: data }), {
+      console.error('ChangeNow API error:', JSON.stringify(data));
+      return new Response(JSON.stringify({ error: 'Exchange service error. Please try again.' }), {
         status: response.status,
         headers: { ...corsHeaders, 'Content-Type': 'application/json' },
       });
