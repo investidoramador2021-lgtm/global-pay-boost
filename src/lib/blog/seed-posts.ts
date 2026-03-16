@@ -941,7 +941,7 @@ Here is the step-by-step implementation I walk through with every mining client:
 ### Privacy mining (XMR)
 - **Primary pair:** XMR/LTC (bridge strategy)
 - **Conversion cadence:** Daily or on-demand
-- **Key advantage:** No KYC, no exchange account, no delisting risk
+- **Key advantage:** No registration, no exchange account, no delisting risk
 
 ### Industrial farms (100+ GH/s)
 - **Primary pairs:** KAS/BTC, LTC/USDT
