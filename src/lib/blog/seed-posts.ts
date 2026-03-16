@@ -754,7 +754,7 @@ The highest-impact change is removing the centralized exchange from your payout 
 
 **Total friction: 1 transparent fee + near-zero latency.**
 
-This is not theoretical. Non-custodial swap aggregators in 2026 can execute KAS→USDT, LTC→BTC, ETC→SOL, and XMR→LTC conversions in under 60 seconds with no account registration, no KYC bottleneck, and no deposit confirmation wait.
+This is not theoretical. Non-custodial swap aggregators in 2026 can execute KAS→USDT, LTC→BTC, ETC→SOL, and XMR→LTC conversions in under 60 seconds with no account registration, no bottleneck, and no deposit confirmation wait.
 
 ### Step 2: Optimize your pair selection
 
