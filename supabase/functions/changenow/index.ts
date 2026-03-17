@@ -116,9 +116,22 @@ Deno.serve(async (req) => {
         if (!isValidTicker(from) || !isValidTicker(to)) return badRequest('Invalid ticker format');
         if (!isValidAmount(amount)) return badRequest('Invalid amount');
         const fixedEst = params.fixedRate === 'true';
-        apiUrl = fixedEst
-          ? `${CHANGENOW_BASE}/exchange-amount/fixed-rate/${amount}/${from}_${to}?api_key=${apiKey}`
-          : `${CHANGENOW_BASE}/exchange-amount/${amount}/${from}_${to}?api_key=${apiKey}`;
+
+        if (fixedEst) {
+          const fixedUrl = `${CHANGENOW_BASE}/exchange-amount/fixed-rate/${amount}/${from}_${to}?api_key=${apiKey}`;
+          const fixedResp = await fetch(fixedUrl);
+          const fixedParsed = await parseJsonResponse(fixedResp);
+
+          if (fixedResp.ok && fixedParsed.isJson) {
+            return jsonResponse(fixedParsed.data);
+          }
+
+          // Fixed rate out_of_range or unavailable — fall back to standard rate
+          console.error('ChangeNow fixed estimate fallback triggered:', fixedParsed.isJson ? JSON.stringify(fixedParsed.data) : fixedParsed.text);
+        }
+
+        // Standard (expected) rate — no upper limit
+        apiUrl = `${CHANGENOW_BASE}/exchange-amount/${amount}/${from}_${to}?api_key=${apiKey}`;
         break;
       }
       case 'create-transaction': {
