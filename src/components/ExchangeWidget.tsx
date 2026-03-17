@@ -1,6 +1,6 @@
 import { useState, useEffect, useCallback, useRef } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { ArrowDownUp, Loader2, Search, Copy, Check, ArrowLeft, Clock, CheckCircle2, AlertCircle, ExternalLink, Wallet, QrCode, XCircle, Info, Mail, RefreshCw } from "lucide-react";
+import { ArrowDownUp, Loader2, Search, Copy, Check, ArrowLeft, Clock, CheckCircle2, AlertCircle, ExternalLink, Wallet, QrCode, XCircle, Info, Mail, RefreshCw, Shield, Lock } from "lucide-react";
 import DestinationAddressInput, { tickerToAddressType } from "@/components/DestinationAddressInput";
 import { supabase } from "@/integrations/supabase/client";
 import { Button } from "@/components/ui/button";
@@ -411,7 +411,39 @@ const ExchangeWidget = () => {
         {/* ===== STEP 1: Exchange Form ===== */}
         {step === "exchange" && (
           <motion.div key="exchange" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}>
-            <h2 className="mb-6 font-display text-lg font-semibold text-foreground">Quick Exchange</h2>
+            <div className="mb-6 flex items-center justify-between">
+              <h2 className="font-display text-lg font-semibold text-foreground">Institutional Asset Swap</h2>
+              <span className="flex items-center gap-1.5 rounded-full border border-trust/30 bg-trust/10 px-2.5 py-1 font-body text-[10px] font-semibold uppercase tracking-wider text-trust">
+                <span className="relative flex h-2 w-2">
+                  <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-trust opacity-75"></span>
+                  <span className="relative inline-flex h-2 w-2 rounded-full bg-trust"></span>
+                </span>
+                System Online
+              </span>
+            </div>
+
+            {/* Popular Assets Quick Select */}
+            <div className="mb-4 flex items-center gap-2">
+              <span className="font-body text-[10px] font-medium uppercase tracking-wider text-muted-foreground">Popular:</span>
+              {["btc", "eth", "usdt", "sol"].map((ticker) => {
+                const c = currencies.find((cur) => cur.ticker === ticker);
+                if (!c) return null;
+                return (
+                  <button
+                    key={ticker}
+                    onClick={() => setFromCurrency(c)}
+                    className={`flex items-center gap-1.5 rounded-lg border px-3 py-1.5 font-display text-xs font-semibold uppercase transition-colors ${
+                      fromCurrency?.ticker === ticker
+                        ? "border-primary bg-primary/10 text-primary"
+                        : "border-border bg-accent text-foreground hover:border-primary/40"
+                    }`}
+                  >
+                    {c.image && <img src={c.image} alt="" className="h-4 w-4 rounded-full" />}
+                    {ticker}
+                  </button>
+                );
+              })}
+            </div>
 
             <div className="relative">
               <label className="mb-1.5 block font-body text-xs font-medium uppercase tracking-wider text-muted-foreground">You Send</label>
@@ -468,32 +500,25 @@ const ExchangeWidget = () => {
               <CurrencyPicker show={showToPicker} onSelect={setToCurrency} onClose={() => setShowToPicker(false)} exclude={fromCurrency?.ticker} />
             </div>
 
-            {/* Popular Assets Quick Select */}
-            <div className="mt-5 flex items-center gap-2">
-              <span className="font-body text-[10px] font-medium uppercase tracking-wider text-muted-foreground">Popular:</span>
-              {["btc", "eth", "usdt", "sol"].map((ticker) => {
-                const c = currencies.find((cur) => cur.ticker === ticker);
-                if (!c) return null;
-                return (
-                  <button
-                    key={ticker}
-                    onClick={() => setFromCurrency(c)}
-                    className={`flex items-center gap-1.5 rounded-lg border px-3 py-1.5 font-display text-xs font-semibold uppercase transition-colors ${
-                      fromCurrency?.ticker === ticker
-                        ? "border-primary bg-primary/10 text-primary"
-                        : "border-border bg-accent text-foreground hover:border-primary/40"
-                    }`}
-                  >
-                    {c.image && <img src={c.image} alt="" className="h-4 w-4 rounded-full" />}
-                    {ticker}
-                  </button>
-                );
-              })}
-            </div>
-
-            <Button className="mt-5 w-full min-h-[52px] bg-primary text-primary-foreground hover:bg-primary/90 shadow-neon text-base font-bold" size="lg" disabled={!estimatedAmount || estimatedAmount === "—" || belowMin} onClick={handleExchangeNow}>
+            <Button className="mt-5 w-full min-h-[52px] bg-primary text-primary-foreground hover:bg-primary/90 hover:shadow-neon shadow-card text-base font-bold transition-shadow duration-300" size="lg" disabled={!estimatedAmount || estimatedAmount === "—" || belowMin} onClick={handleExchangeNow}>
               Exchange Now
             </Button>
+
+            {/* Trust signals row */}
+            <div className="mt-4 grid grid-cols-3 gap-2">
+              <div className="flex flex-col items-center gap-1 rounded-lg border border-border bg-accent/50 p-2.5 text-center">
+                <Shield className="h-4 w-4 text-primary" />
+                <span className="font-body text-[10px] font-medium text-muted-foreground">Reliable Exchange</span>
+              </div>
+              <div className="flex flex-col items-center gap-1 rounded-lg border border-border bg-accent/50 p-2.5 text-center">
+                <Lock className="h-4 w-4 text-primary" />
+                <span className="font-body text-[10px] font-medium text-muted-foreground">Highest Protection</span>
+              </div>
+              <div className="flex flex-col items-center gap-1 rounded-lg border border-border bg-accent/50 p-2.5 text-center">
+                <CheckCircle2 className="h-4 w-4 text-primary" />
+                <span className="font-body text-[10px] font-medium text-muted-foreground">Complete Anonymity</span>
+              </div>
+            </div>
             <div className="mt-3 flex items-center justify-center gap-3">
               <p className="font-body text-xs text-muted-foreground">No hidden fees · No registration required</p>
               {speedForecast && (
