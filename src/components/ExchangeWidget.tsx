@@ -161,11 +161,7 @@ const ExchangeWidget = () => {
     } catch {
       setMinAmount(0);
     }
-    } catch {
-      setEstimatedAmount("—");
-    } finally {
-      setEstimating(false);
-    }
+    setEstimating(false);
   }, [fromCurrency, toCurrency, sendAmount, fixedRate]);
 
   useEffect(() => {
