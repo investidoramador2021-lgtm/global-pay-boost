@@ -127,7 +127,17 @@ Deno.serve(async (req) => {
     }
 
     const response = await fetch(apiUrl!);
-    const data = await response.json();
+    const text = await response.text();
+    let data: unknown;
+    try {
+      data = JSON.parse(text);
+    } catch {
+      console.error('ChangeNow API non-JSON response:', text);
+      return new Response(JSON.stringify({ error: 'Exchange service unavailable. Please try again.' }), {
+        status: 502,
+        headers: { ...corsHeaders, 'Content-Type': 'application/json' },
+      });
+    }
 
     if (!response.ok) {
       console.error('ChangeNow API error:', JSON.stringify(data));
