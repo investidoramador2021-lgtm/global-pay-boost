@@ -148,8 +148,8 @@ const ExchangeWidget = () => {
     setEstimating(true);
     try {
       const [est, min] = await Promise.all([
-        getEstimate(fromCurrency.ticker, toCurrency.ticker, sendAmount),
-        getMinAmount(fromCurrency.ticker, toCurrency.ticker),
+        getEstimate(fromCurrency.ticker, toCurrency.ticker, sendAmount, fixedRate),
+        getMinAmount(fromCurrency.ticker, toCurrency.ticker, fixedRate),
       ]);
       setEstimatedAmount(est.estimatedAmount?.toString() || "—");
       setMinAmount(min.minAmount || 0);
@@ -161,7 +161,7 @@ const ExchangeWidget = () => {
     } finally {
       setEstimating(false);
     }
-  }, [fromCurrency, toCurrency, sendAmount]);
+  }, [fromCurrency, toCurrency, sendAmount, fixedRate]);
 
   useEffect(() => {
     if (debounceRef.current) clearTimeout(debounceRef.current);
