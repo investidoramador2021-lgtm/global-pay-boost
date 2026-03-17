@@ -97,8 +97,13 @@ const SiteFooter = () => {
               <a href="https://www.trustpilot.com/review/mrcglobalpay.com" target="_blank" rel="noopener">Trustpilot</a>
             </div>
           </div>
+          <div className="mb-3 flex items-center justify-center gap-2">
+            <span className="inline-flex items-center gap-1.5 rounded-full border border-primary/20 bg-primary/5 px-3 py-1 font-body text-[11px] font-medium text-muted-foreground">
+              Liquidity provided by top-tier partners
+            </span>
+          </div>
           <p className="text-center font-body text-xs text-muted-foreground">
-            © {new Date().getFullYear()} MRC GlobalPay. All rights reserved. Cryptocurrency exchange services powered by ChangeNow.
+            © {new Date().getFullYear()} MRC GlobalPay. All rights reserved.
           </p>
         </div>
       </div>

@@ -468,7 +468,30 @@ const ExchangeWidget = () => {
               <CurrencyPicker show={showToPicker} onSelect={setToCurrency} onClose={() => setShowToPicker(false)} exclude={fromCurrency?.ticker} />
             </div>
 
-            <Button className="mt-6 w-full min-h-[52px] bg-trust text-trust-foreground hover:bg-trust/90 text-base font-bold" size="lg" disabled={!estimatedAmount || estimatedAmount === "—" || belowMin} onClick={handleExchangeNow}>
+            {/* Popular Assets Quick Select */}
+            <div className="mt-5 flex items-center gap-2">
+              <span className="font-body text-[10px] font-medium uppercase tracking-wider text-muted-foreground">Popular:</span>
+              {["btc", "eth", "usdt", "sol"].map((ticker) => {
+                const c = currencies.find((cur) => cur.ticker === ticker);
+                if (!c) return null;
+                return (
+                  <button
+                    key={ticker}
+                    onClick={() => setFromCurrency(c)}
+                    className={`flex items-center gap-1.5 rounded-lg border px-3 py-1.5 font-display text-xs font-semibold uppercase transition-colors ${
+                      fromCurrency?.ticker === ticker
+                        ? "border-primary bg-primary/10 text-primary"
+                        : "border-border bg-accent text-foreground hover:border-primary/40"
+                    }`}
+                  >
+                    {c.image && <img src={c.image} alt="" className="h-4 w-4 rounded-full" />}
+                    {ticker}
+                  </button>
+                );
+              })}
+            </div>
+
+            <Button className="mt-5 w-full min-h-[52px] bg-primary text-primary-foreground hover:bg-primary/90 shadow-neon text-base font-bold" size="lg" disabled={!estimatedAmount || estimatedAmount === "—" || belowMin} onClick={handleExchangeNow}>
               Exchange Now
             </Button>
             <div className="mt-3 flex items-center justify-center gap-3">

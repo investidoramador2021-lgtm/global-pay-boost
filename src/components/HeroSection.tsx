@@ -1,82 +1,42 @@
-import { Zap, Timer, Shield, Activity } from "lucide-react";
-import { Button } from "@/components/ui/button";
+import { Shield, Lock, Server } from "lucide-react";
 import ExchangeWidget from "@/components/ExchangeWidget";
-
-const networkStatus = [
-  { asset: "HYPE", status: "Instant", color: "text-primary" },
-  { asset: "SOL", status: "Fast", color: "text-primary" },
-  { asset: "MONAD", status: "Instant", color: "text-primary" },
-  { asset: "BERA", status: "Instant", color: "text-primary" },
-  { asset: "TIA", status: "Fast", color: "text-primary" },
-  { asset: "PYUSD", status: "Instant", color: "text-primary" },
-];
 
 const HeroSection = () => {
   return (
     <section id="exchange" className="relative overflow-hidden bg-background py-10 sm:py-16 lg:py-24">
       <div className="absolute inset-0 opacity-[0.03]" style={{ backgroundImage: 'radial-gradient(hsl(var(--neon)) 1px, transparent 1px)', backgroundSize: '32px 32px' }} />
 
-      {/* Top banner */}
-      <div className="container relative mx-auto mb-6 px-4 sm:mb-8">
-        <div className="flex items-center justify-center gap-2 rounded-full border border-primary/20 bg-primary/5 px-4 py-2 text-center">
-          <Zap className="h-3.5 w-3.5 shrink-0 text-primary" />
-          <span className="font-body text-xs font-medium text-muted-foreground sm:text-sm">
-            Start swapping from as low as <span className="font-bold text-primary">$2</span> — with <span className="font-bold text-primary">no upper limit</span>
-          </span>
-        </div>
-      </div>
-
       <div className="container relative mx-auto px-4">
         <div className="grid items-start gap-8 lg:grid-cols-2 lg:gap-16">
           {/* Copy */}
           <div className="order-2 lg:order-1 pt-0 sm:pt-4 lg:pt-8">
             <h1 className="font-display text-3xl font-extrabold leading-tight tracking-tight text-foreground sm:text-4xl lg:text-5xl xl:text-6xl">
-              Instant Crypto Swaps.{" "}
-              <span className="text-gradient-neon">Zero Delays.</span>{" "}
-              2026 Liquidity Rails.
+              Secure Digital Asset Swaps.{" "}
+              <span className="text-gradient-neon">The Professional Way.</span>
             </h1>
             <p className="mt-4 max-w-lg font-body text-base leading-relaxed text-muted-foreground sm:mt-6 sm:text-lg">
-              Stop waiting for confirmations. Swap HYPE, SOL, and BERA in under 60 seconds with automated settlement and institutional-grade depth.
+              Instant cross-chain liquidity for over 1,000+ assets. Private, secure, and non-custodial.
             </p>
 
-            {/* Network Health Status Bar */}
-            <div className="mt-5 flex flex-wrap items-center gap-1.5 sm:mt-6 sm:gap-2">
-              <span className="flex w-full items-center gap-1.5 font-display text-[10px] font-bold uppercase tracking-wider text-muted-foreground sm:w-auto sm:text-xs">
-                <Activity className="h-3 w-3 animate-pulse text-primary" /> Network Health
-              </span>
-              {networkStatus.map((n) => (
-                <span
-                  key={n.asset}
-                  className="inline-flex items-center gap-0.5 rounded-md border border-primary/20 bg-primary/5 px-1.5 py-0.5 font-display text-[9px] font-bold sm:gap-1 sm:px-2 sm:text-xs"
-                >
-                  <span className="text-foreground">{n.asset}:</span>
-                  <span className={n.color}>{n.status}</span>
-                </span>
-              ))}
-            </div>
-
-            <div className="mt-6 flex flex-col items-center gap-3 sm:mt-8 sm:flex-row sm:gap-6">
-              <Button size="lg" className="shadow-neon w-full min-h-[52px] text-base font-bold sm:w-auto" asChild>
-                <a href="#exchange-widget">
-                  <Zap className="mr-2 h-5 w-5" />
-                  Start Swap
-                </a>
-              </Button>
-
-              <div className="flex w-full items-center justify-center gap-2 rounded-lg border border-neon bg-muted/50 px-3 py-3 sm:w-auto sm:px-4">
-                <Timer className="h-4 w-4 text-primary" />
-                <span className="font-display text-sm font-bold text-primary">Avg. Swap: 38s</span>
+            {/* Trust Bar — 3 icons */}
+            <div className="mt-6 grid grid-cols-3 gap-3 sm:mt-8 sm:gap-4">
+              <div className="flex flex-col items-center gap-2 rounded-xl border border-border bg-card p-4 text-center shadow-card">
+                <div className="flex h-10 w-10 items-center justify-center rounded-full bg-primary/10">
+                  <Shield className="h-5 w-5 text-primary" />
+                </div>
+                <span className="font-display text-xs font-semibold text-foreground sm:text-sm">No Registration Required</span>
               </div>
-            </div>
-
-            <div className="mt-6 flex flex-wrap gap-4 sm:mt-8 sm:gap-6">
-              <div className="flex items-center gap-2">
-                <Shield className="h-4 w-4 text-primary sm:h-5 sm:w-5" />
-                <span className="font-body text-xs font-medium text-foreground sm:text-sm">No registration required</span>
+              <div className="flex flex-col items-center gap-2 rounded-xl border border-border bg-card p-4 text-center shadow-card">
+                <div className="flex h-10 w-10 items-center justify-center rounded-full bg-primary/10">
+                  <Lock className="h-5 w-5 text-primary" />
+                </div>
+                <span className="font-display text-xs font-semibold text-foreground sm:text-sm">Non-Custodial</span>
               </div>
-              <div className="flex items-center gap-2">
-                <Zap className="h-4 w-4 text-primary sm:h-5 sm:w-5" />
-                <span className="font-body text-xs font-medium text-foreground sm:text-sm">500+ cryptocurrencies</span>
+              <div className="flex flex-col items-center gap-2 rounded-xl border border-border bg-card p-4 text-center shadow-card">
+                <div className="flex h-10 w-10 items-center justify-center rounded-full bg-primary/10">
+                  <Server className="h-5 w-5 text-primary" />
+                </div>
+                <span className="font-display text-xs font-semibold text-foreground sm:text-sm">Secure API-Powered</span>
               </div>
             </div>
           </div>
