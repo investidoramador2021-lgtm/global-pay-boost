@@ -444,13 +444,16 @@ const ExchangeWidget = () => {
             <div className="mb-4 flex items-center gap-2">
               <button
                 onClick={() => setFixedRate(true)}
-                className={`rounded-lg border px-3 py-1.5 font-body text-xs font-semibold transition-colors ${
+                className={`relative rounded-lg border px-3 py-1.5 font-body text-xs font-semibold transition-colors ${
                   fixedRate
-                    ? "border-primary bg-primary/10 text-primary"
+                    ? "border-primary bg-primary/10 text-primary ring-1 ring-primary/30"
                     : "border-border bg-accent text-muted-foreground hover:border-primary/40"
                 }`}
               >
                 <Lock className="mr-1 inline h-3 w-3" /> Fixed Rate
+                <span className="ml-1.5 inline-flex rounded bg-primary/20 px-1.5 py-0.5 font-body text-[9px] font-bold uppercase tracking-wider text-primary">
+                  Recommended
+                </span>
               </button>
               <button
                 onClick={() => setFixedRate(false)}
