@@ -411,7 +411,39 @@ const ExchangeWidget = () => {
         {/* ===== STEP 1: Exchange Form ===== */}
         {step === "exchange" && (
           <motion.div key="exchange" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}>
-            <h2 className="mb-6 font-display text-lg font-semibold text-foreground">Quick Exchange</h2>
+            <div className="mb-6 flex items-center justify-between">
+              <h2 className="font-display text-lg font-semibold text-foreground">Institutional Asset Swap</h2>
+              <span className="flex items-center gap-1.5 rounded-full border border-trust/30 bg-trust/10 px-2.5 py-1 font-body text-[10px] font-semibold uppercase tracking-wider text-trust">
+                <span className="relative flex h-2 w-2">
+                  <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-trust opacity-75"></span>
+                  <span className="relative inline-flex h-2 w-2 rounded-full bg-trust"></span>
+                </span>
+                System Online
+              </span>
+            </div>
+
+            {/* Popular Assets Quick Select */}
+            <div className="mb-4 flex items-center gap-2">
+              <span className="font-body text-[10px] font-medium uppercase tracking-wider text-muted-foreground">Popular:</span>
+              {["btc", "eth", "usdt", "sol"].map((ticker) => {
+                const c = currencies.find((cur) => cur.ticker === ticker);
+                if (!c) return null;
+                return (
+                  <button
+                    key={ticker}
+                    onClick={() => setFromCurrency(c)}
+                    className={`flex items-center gap-1.5 rounded-lg border px-3 py-1.5 font-display text-xs font-semibold uppercase transition-colors ${
+                      fromCurrency?.ticker === ticker
+                        ? "border-primary bg-primary/10 text-primary"
+                        : "border-border bg-accent text-foreground hover:border-primary/40"
+                    }`}
+                  >
+                    {c.image && <img src={c.image} alt="" className="h-4 w-4 rounded-full" />}
+                    {ticker}
+                  </button>
+                );
+              })}
+            </div>
 
             <div className="relative">
               <label className="mb-1.5 block font-body text-xs font-medium uppercase tracking-wider text-muted-foreground">You Send</label>
