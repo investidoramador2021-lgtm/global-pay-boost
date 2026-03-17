@@ -147,15 +147,20 @@ const ExchangeWidget = () => {
     }
     setEstimating(true);
     try {
-      const [est, min] = await Promise.all([
-        getEstimate(fromCurrency.ticker, toCurrency.ticker, sendAmount, fixedRate),
-        getMinAmount(fromCurrency.ticker, toCurrency.ticker, fixedRate),
-      ]);
+      const est = await getEstimate(fromCurrency.ticker, toCurrency.ticker, sendAmount, fixedRate);
       setEstimatedAmount(est.estimatedAmount?.toString() || "—");
-      setMinAmount(min.minAmount || 0);
       if (est.transactionSpeedForecast) {
         setSpeedForecast(est.transactionSpeedForecast);
       }
+    } catch {
+      setEstimatedAmount("—");
+    }
+    try {
+      const min = await getMinAmount(fromCurrency.ticker, toCurrency.ticker, fixedRate);
+      setMinAmount(min.minAmount || 0);
+    } catch {
+      setMinAmount(0);
+    }
     } catch {
       setEstimatedAmount("—");
     } finally {
