@@ -154,14 +154,16 @@ const ExchangeWidget = () => {
       }
     } catch {
       setEstimatedAmount("—");
+      setSpeedForecast(null);
     }
     try {
       const min = await getMinAmount(fromCurrency.ticker, toCurrency.ticker, fixedRate);
       setMinAmount(min.minAmount || 0);
     } catch {
       setMinAmount(0);
+    } finally {
+      setEstimating(false);
     }
-    setEstimating(false);
   }, [fromCurrency, toCurrency, sendAmount, fixedRate]);
 
   useEffect(() => {
