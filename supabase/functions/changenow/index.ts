@@ -76,7 +76,10 @@ Deno.serve(async (req) => {
         const to = params.to;
         if (!from || !to) return badRequest('Missing from/to params');
         if (!isValidTicker(from) || !isValidTicker(to)) return badRequest('Invalid ticker format');
-        apiUrl = `${CHANGENOW_BASE}/min-amount/${from}_${to}?api_key=${apiKey}`;
+        const fixedMin = params.fixedRate === 'true';
+        apiUrl = fixedMin
+          ? `${CHANGENOW_BASE}/min-amount-fixed/${from}_${to}?api_key=${apiKey}`
+          : `${CHANGENOW_BASE}/min-amount/${from}_${to}?api_key=${apiKey}`;
         break;
       }
       case 'estimate': {
@@ -86,7 +89,10 @@ Deno.serve(async (req) => {
         if (!from || !to || !amount) return badRequest('Missing from/to/amount params');
         if (!isValidTicker(from) || !isValidTicker(to)) return badRequest('Invalid ticker format');
         if (!isValidAmount(amount)) return badRequest('Invalid amount');
-        apiUrl = `${CHANGENOW_BASE}/exchange-amount/${amount}/${from}_${to}?api_key=${apiKey}`;
+        const fixedEst = params.fixedRate === 'true';
+        apiUrl = fixedEst
+          ? `${CHANGENOW_BASE}/exchange-amount/fixed-rate/${amount}/${from}_${to}?api_key=${apiKey}`
+          : `${CHANGENOW_BASE}/exchange-amount/${amount}/${from}_${to}?api_key=${apiKey}`;
         break;
       }
       case 'create-transaction': {

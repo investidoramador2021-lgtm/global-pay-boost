@@ -73,6 +73,7 @@ const ExchangeWidget = () => {
   const [txStatus, setTxStatus] = useState<TransactionStatus | null>(null);
   const [copied, setCopied] = useState<string | null>(null);
   const [speedForecast, setSpeedForecast] = useState<string | null>(null);
+  const [fixedRate, setFixedRate] = useState(true);
   const [connectedWallet, setConnectedWallet] = useState<{ address: string; type: "evm" | "solana" } | null>(null);
   const [notifyEmail, setNotifyEmail] = useState("");
   const [emailSubmitted, setEmailSubmitted] = useState(false);
@@ -147,8 +148,8 @@ const ExchangeWidget = () => {
     setEstimating(true);
     try {
       const [est, min] = await Promise.all([
-        getEstimate(fromCurrency.ticker, toCurrency.ticker, sendAmount),
-        getMinAmount(fromCurrency.ticker, toCurrency.ticker),
+        getEstimate(fromCurrency.ticker, toCurrency.ticker, sendAmount, fixedRate),
+        getMinAmount(fromCurrency.ticker, toCurrency.ticker, fixedRate),
       ]);
       setEstimatedAmount(est.estimatedAmount?.toString() || "—");
       setMinAmount(min.minAmount || 0);
@@ -160,7 +161,7 @@ const ExchangeWidget = () => {
     } finally {
       setEstimating(false);
     }
-  }, [fromCurrency, toCurrency, sendAmount]);
+  }, [fromCurrency, toCurrency, sendAmount, fixedRate]);
 
   useEffect(() => {
     if (debounceRef.current) clearTimeout(debounceRef.current);
@@ -354,6 +355,23 @@ const ExchangeWidget = () => {
               Cancel
             </button>
           </div>
+          {/* Mobile Quick-Select */}
+          <div className="flex gap-2 border-b border-border px-4 pb-3">
+            {["btc", "eth", "sol", "usdc"].map((ticker) => {
+              const c = currencies.find((cur) => cur.ticker === ticker);
+              if (!c) return null;
+              return (
+                <button
+                  key={ticker}
+                  onClick={() => { onSelect(c); onClose(); setSearchQuery(""); }}
+                  className="flex items-center gap-1.5 rounded-lg border border-border bg-accent px-3 py-1.5 font-display text-xs font-semibold uppercase text-foreground transition-colors hover:border-primary/40"
+                >
+                  {c.image && <img src={c.image} alt="" className="h-4 w-4 rounded-full" />}
+                  {ticker}
+                </button>
+              );
+            })}
+          </div>
           <div className="overflow-y-auto p-2" style={{ maxHeight: 400 }}>
             {sortedCurrencies
               .filter((c) => c.ticker !== exclude)
@@ -420,6 +438,30 @@ const ExchangeWidget = () => {
                 </span>
                 System Online
               </span>
+            </div>
+
+            {/* Rate Type Toggle */}
+            <div className="mb-4 flex items-center gap-2">
+              <button
+                onClick={() => setFixedRate(true)}
+                className={`rounded-lg border px-3 py-1.5 font-body text-xs font-semibold transition-colors ${
+                  fixedRate
+                    ? "border-primary bg-primary/10 text-primary"
+                    : "border-border bg-accent text-muted-foreground hover:border-primary/40"
+                }`}
+              >
+                <Lock className="mr-1 inline h-3 w-3" /> Fixed Rate
+              </button>
+              <button
+                onClick={() => setFixedRate(false)}
+                className={`rounded-lg border px-3 py-1.5 font-body text-xs font-semibold transition-colors ${
+                  !fixedRate
+                    ? "border-primary bg-primary/10 text-primary"
+                    : "border-border bg-accent text-muted-foreground hover:border-primary/40"
+                }`}
+              >
+                Expected Rate
+              </button>
             </div>
 
             {/* Popular Assets Quick Select */}
@@ -505,7 +547,7 @@ const ExchangeWidget = () => {
             </Button>
 
             {/* Trust signals row */}
-            <div className="mt-4 grid grid-cols-3 gap-2">
+            <div className="mt-2 grid grid-cols-3 gap-2">
               <div className="flex flex-col items-center gap-1 rounded-lg border border-border bg-accent/50 p-2.5 text-center">
                 <Shield className="h-4 w-4 text-primary" />
                 <span className="font-body text-[10px] font-medium text-muted-foreground">Reliable Exchange</span>
