@@ -29,6 +29,22 @@ function badRequest(msg: string) {
   });
 }
 
+function jsonResponse(data: unknown, status = 200) {
+  return new Response(JSON.stringify(data), {
+    status,
+    headers: { ...corsHeaders, 'Content-Type': 'application/json' },
+  });
+}
+
+async function parseJsonResponse(response: Response) {
+  const text = await response.text();
+  try {
+    return { isJson: true as const, data: JSON.parse(text), text };
+  } catch {
+    return { isJson: false as const, data: null, text };
+  }
+}
+
 Deno.serve(async (req) => {
   if (req.method === 'OPTIONS') {
     return new Response(null, { headers: corsHeaders });
@@ -77,9 +93,19 @@ Deno.serve(async (req) => {
         if (!from || !to) return badRequest('Missing from/to params');
         if (!isValidTicker(from) || !isValidTicker(to)) return badRequest('Invalid ticker format');
         const fixedMin = params.fixedRate === 'true';
-        apiUrl = fixedMin
-          ? `${CHANGENOW_BASE}/min-amount-fixed/${from}_${to}?api_key=${apiKey}`
-          : `${CHANGENOW_BASE}/min-amount/${from}_${to}?api_key=${apiKey}`;
+
+        if (fixedMin) {
+          const fixedResponse = await fetch(`${CHANGENOW_BASE}/min-amount-fixed/${from}_${to}?api_key=${apiKey}`);
+          const fixedParsed = await parseJsonResponse(fixedResponse);
+
+          if (fixedResponse.ok && fixedParsed.isJson) {
+            return jsonResponse(fixedParsed.data);
+          }
+
+          console.error('ChangeNow fixed min-amount fallback triggered:', fixedParsed.isJson ? JSON.stringify(fixedParsed.data) : fixedParsed.text);
+        }
+
+        apiUrl = `${CHANGENOW_BASE}/min-amount/${from}_${to}?api_key=${apiKey}`;
         break;
       }
       case 'estimate': {
@@ -102,18 +128,16 @@ Deno.serve(async (req) => {
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify(postBody),
         });
-        const data = await response.json();
-        if (!response.ok) {
-          console.error('ChangeNow transaction error:', JSON.stringify(data));
-          return new Response(JSON.stringify({ error: 'Exchange service error. Please try again.' }), {
-            status: response.status,
-            headers: { ...corsHeaders, 'Content-Type': 'application/json' },
-          });
+        const parsed = await parseJsonResponse(response);
+        if (!parsed.isJson) {
+          console.error('ChangeNow transaction non-JSON response:', parsed.text);
+          return jsonResponse({ error: 'Exchange service unavailable. Please try again.' }, 502);
         }
-        return new Response(JSON.stringify(data), {
-          status: 200,
-          headers: { ...corsHeaders, 'Content-Type': 'application/json' },
-        });
+        if (!response.ok) {
+          console.error('ChangeNow transaction error:', JSON.stringify(parsed.data));
+          return jsonResponse({ error: 'Exchange service error. Please try again.' }, response.status);
+        }
+        return jsonResponse(parsed.data);
       }
       case 'tx-status': {
         const id = params.id;
@@ -127,30 +151,26 @@ Deno.serve(async (req) => {
     }
 
     const response = await fetch(apiUrl!);
-    const text = await response.text();
-    let data: unknown;
-    try {
-      data = JSON.parse(text);
-    } catch {
-      console.error('ChangeNow API non-JSON response:', text);
-      return new Response(JSON.stringify({ error: 'Exchange service unavailable. Please try again.' }), {
-        status: 502,
-        headers: { ...corsHeaders, 'Content-Type': 'application/json' },
-      });
+    const parsed = await parseJsonResponse(response);
+    const softFallback = action === 'estimate'
+      ? { estimatedAmount: null, transactionSpeedForecast: null, warningMessage: 'Rate unavailable right now.' }
+      : action === 'min-amount'
+        ? { minAmount: 0, warningMessage: 'Minimum amount unavailable right now.' }
+        : null;
+
+    if (!parsed.isJson) {
+      console.error('ChangeNow API non-JSON response:', parsed.text);
+      if (softFallback) return jsonResponse(softFallback);
+      return jsonResponse({ error: 'Exchange service unavailable. Please try again.' }, 502);
     }
 
     if (!response.ok) {
-      console.error('ChangeNow API error:', JSON.stringify(data));
-      return new Response(JSON.stringify({ error: 'Exchange service error. Please try again.' }), {
-        status: response.status,
-        headers: { ...corsHeaders, 'Content-Type': 'application/json' },
-      });
+      console.error('ChangeNow API error:', JSON.stringify(parsed.data));
+      if (softFallback) return jsonResponse(softFallback);
+      return jsonResponse({ error: 'Exchange service error. Please try again.' }, response.status);
     }
 
-    return new Response(JSON.stringify(data), {
-      status: 200,
-      headers: { ...corsHeaders, 'Content-Type': 'application/json' },
-    });
+    return jsonResponse(parsed.data);
   } catch (error: unknown) {
     const msg = error instanceof Error ? error.message : 'Unknown error';
     console.error('ChangeNow API error:', msg);
