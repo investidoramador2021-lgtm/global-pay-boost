@@ -29,6 +29,22 @@ function badRequest(msg: string) {
   });
 }
 
+function jsonResponse(data: unknown, status = 200) {
+  return new Response(JSON.stringify(data), {
+    status,
+    headers: { ...corsHeaders, 'Content-Type': 'application/json' },
+  });
+}
+
+async function parseJsonResponse(response: Response) {
+  const text = await response.text();
+  try {
+    return { isJson: true as const, data: JSON.parse(text), text };
+  } catch {
+    return { isJson: false as const, data: null, text };
+  }
+}
+
 Deno.serve(async (req) => {
   if (req.method === 'OPTIONS') {
     return new Response(null, { headers: corsHeaders });
