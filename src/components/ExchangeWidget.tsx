@@ -530,7 +530,7 @@ const ExchangeWidget = () => {
             </Button>
 
             {/* Trust signals row */}
-            <div className="mt-4 grid grid-cols-3 gap-2">
+            <div className="mt-2 grid grid-cols-3 gap-2">
               <div className="flex flex-col items-center gap-1 rounded-lg border border-border bg-accent/50 p-2.5 text-center">
                 <Shield className="h-4 w-4 text-primary" />
                 <span className="font-body text-[10px] font-medium text-muted-foreground">Reliable Exchange</span>
