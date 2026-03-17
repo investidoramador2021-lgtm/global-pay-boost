@@ -327,6 +327,49 @@ const ExchangeWidget = () => {
 
   const belowMin = parseFloat(sendAmount) > 0 && minAmount > 0 && parseFloat(sendAmount) < minAmount;
 
+  const BATCH_SIZE = 50;
+
+  const CurrencyList = ({ currencies: items, onSelect }: { currencies: Currency[]; onSelect: (c: Currency) => void }) => {
+    const [visibleCount, setVisibleCount] = useState(BATCH_SIZE);
+    const listRef = useRef<HTMLDivElement>(null);
+
+    const handleScroll = useCallback(() => {
+      const el = listRef.current;
+      if (!el) return;
+      if (el.scrollTop + el.clientHeight >= el.scrollHeight - 100) {
+        setVisibleCount((prev) => Math.min(prev + BATCH_SIZE, items.length));
+      }
+    }, [items.length]);
+
+    useEffect(() => { setVisibleCount(BATCH_SIZE); }, [items.length]);
+
+    return (
+      <div ref={listRef} onScroll={handleScroll} className="overflow-y-auto p-2" style={{ maxHeight: 400 }}>
+        {items.slice(0, visibleCount).map((c) => (
+          <button
+            key={`${c.ticker}-${c.network}`}
+            onClick={() => onSelect(c)}
+            className="flex w-full items-center gap-3 rounded-lg px-3 py-2.5 text-left transition-colors hover:bg-accent"
+          >
+            {c.image && <img src={c.image} alt={c.name} className="h-6 w-6 rounded-full" loading="lazy" />}
+            <div>
+              <span className="font-display text-sm font-semibold uppercase text-foreground">{c.ticker}</span>
+              <span className="ml-2 font-body text-xs text-muted-foreground">{c.name}</span>
+            </div>
+            {c.network && c.network !== c.ticker && (
+              <span className="ml-auto rounded bg-accent px-1.5 py-0.5 font-body text-[10px] uppercase text-muted-foreground">
+                {c.network}
+              </span>
+            )}
+          </button>
+        ))}
+        {visibleCount < items.length && (
+          <div className="py-2 text-center font-body text-xs text-muted-foreground">Scroll for more...</div>
+        )}
+      </div>
+    );
+  };
+
   const CurrencyPicker = ({
     show,
     onSelect,
@@ -372,28 +415,10 @@ const ExchangeWidget = () => {
               );
             })}
           </div>
-          <div className="overflow-y-auto p-2" style={{ maxHeight: 400 }}>
-            {sortedCurrencies
-              .filter((c) => c.ticker !== exclude)
-              .map((c) => (
-                <button
-                  key={`${c.ticker}-${c.network}`}
-                  onClick={() => { onSelect(c); onClose(); setSearchQuery(""); }}
-                  className="flex w-full items-center gap-3 rounded-lg px-3 py-2.5 text-left transition-colors hover:bg-accent"
-                >
-                  {c.image && <img src={c.image} alt={c.name} className="h-6 w-6 rounded-full" />}
-                  <div>
-                    <span className="font-display text-sm font-semibold uppercase text-foreground">{c.ticker}</span>
-                    <span className="ml-2 font-body text-xs text-muted-foreground">{c.name}</span>
-                  </div>
-                  {c.network && c.network !== c.ticker && (
-                    <span className="ml-auto rounded bg-accent px-1.5 py-0.5 font-body text-[10px] uppercase text-muted-foreground">
-                      {c.network}
-                    </span>
-                  )}
-                </button>
-              ))}
-          </div>
+          <CurrencyList
+            currencies={sortedCurrencies.filter((c) => c.ticker !== exclude)}
+            onSelect={(c) => { onSelect(c); onClose(); setSearchQuery(""); }}
+          />
         </div>
       </div>
     );
@@ -444,13 +469,16 @@ const ExchangeWidget = () => {
             <div className="mb-4 flex items-center gap-2">
               <button
                 onClick={() => setFixedRate(true)}
-                className={`rounded-lg border px-3 py-1.5 font-body text-xs font-semibold transition-colors ${
+                className={`relative rounded-lg border px-3 py-1.5 font-body text-xs font-semibold transition-colors ${
                   fixedRate
-                    ? "border-primary bg-primary/10 text-primary"
+                    ? "border-primary bg-primary/10 text-primary ring-1 ring-primary/30"
                     : "border-border bg-accent text-muted-foreground hover:border-primary/40"
                 }`}
               >
                 <Lock className="mr-1 inline h-3 w-3" /> Fixed Rate
+                <span className="ml-1.5 inline-flex rounded bg-primary/20 px-1.5 py-0.5 font-body text-[9px] font-bold uppercase tracking-wider text-primary">
+                  Recommended
+                </span>
               </button>
               <button
                 onClick={() => setFixedRate(false)}
