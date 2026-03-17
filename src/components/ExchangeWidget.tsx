@@ -325,6 +325,8 @@ const ExchangeWidget = () => {
     return a.name.localeCompare(b.name);
   });
 
+  const belowMin = parseFloat(sendAmount) > 0 && minAmount > 0 && parseFloat(sendAmount) < minAmount;
+
   const BATCH_SIZE = 50;
 
   const CurrencyList = ({ currencies: items, onSelect }: { currencies: Currency[]; onSelect: (c: Currency) => void }) => {
