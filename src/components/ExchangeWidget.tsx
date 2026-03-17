@@ -372,28 +372,10 @@ const ExchangeWidget = () => {
               );
             })}
           </div>
-          <div className="overflow-y-auto p-2" style={{ maxHeight: 400 }}>
-            {sortedCurrencies
-              .filter((c) => c.ticker !== exclude)
-              .map((c) => (
-                <button
-                  key={`${c.ticker}-${c.network}`}
-                  onClick={() => { onSelect(c); onClose(); setSearchQuery(""); }}
-                  className="flex w-full items-center gap-3 rounded-lg px-3 py-2.5 text-left transition-colors hover:bg-accent"
-                >
-                  {c.image && <img src={c.image} alt={c.name} className="h-6 w-6 rounded-full" />}
-                  <div>
-                    <span className="font-display text-sm font-semibold uppercase text-foreground">{c.ticker}</span>
-                    <span className="ml-2 font-body text-xs text-muted-foreground">{c.name}</span>
-                  </div>
-                  {c.network && c.network !== c.ticker && (
-                    <span className="ml-auto rounded bg-accent px-1.5 py-0.5 font-body text-[10px] uppercase text-muted-foreground">
-                      {c.network}
-                    </span>
-                  )}
-                </button>
-              ))}
-          </div>
+          <CurrencyList
+            currencies={sortedCurrencies.filter((c) => c.ticker !== exclude)}
+            onSelect={(c) => { onSelect(c); onClose(); setSearchQuery(""); }}
+          />
         </div>
       </div>
     );

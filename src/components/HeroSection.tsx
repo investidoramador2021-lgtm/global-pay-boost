@@ -3,7 +3,7 @@ import ExchangeWidget from "@/components/ExchangeWidget";
 
 const HeroSection = () => {
   return (
-    <section id="exchange" className="relative overflow-hidden bg-background py-10 sm:py-16 lg:py-24">
+    <section id="exchange" className="relative overflow-hidden bg-background py-6 sm:py-12 lg:py-20">
       <div className="absolute inset-0 opacity-[0.03]" style={{ backgroundImage: 'radial-gradient(hsl(var(--neon)) 1px, transparent 1px)', backgroundSize: '32px 32px' }} />
 
       <div className="container relative mx-auto px-4">
