@@ -93,9 +93,19 @@ Deno.serve(async (req) => {
         if (!from || !to) return badRequest('Missing from/to params');
         if (!isValidTicker(from) || !isValidTicker(to)) return badRequest('Invalid ticker format');
         const fixedMin = params.fixedRate === 'true';
-        apiUrl = fixedMin
-          ? `${CHANGENOW_BASE}/min-amount-fixed/${from}_${to}?api_key=${apiKey}`
-          : `${CHANGENOW_BASE}/min-amount/${from}_${to}?api_key=${apiKey}`;
+
+        if (fixedMin) {
+          const fixedResponse = await fetch(`${CHANGENOW_BASE}/min-amount-fixed/${from}_${to}?api_key=${apiKey}`);
+          const fixedParsed = await parseJsonResponse(fixedResponse);
+
+          if (fixedResponse.ok && fixedParsed.isJson) {
+            return jsonResponse(fixedParsed.data);
+          }
+
+          console.error('ChangeNow fixed min-amount fallback triggered:', fixedParsed.isJson ? JSON.stringify(fixedParsed.data) : fixedParsed.text);
+        }
+
+        apiUrl = `${CHANGENOW_BASE}/min-amount/${from}_${to}?api_key=${apiKey}`;
         break;
       }
       case 'estimate': {
