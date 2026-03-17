@@ -73,6 +73,7 @@ const ExchangeWidget = () => {
   const [txStatus, setTxStatus] = useState<TransactionStatus | null>(null);
   const [copied, setCopied] = useState<string | null>(null);
   const [speedForecast, setSpeedForecast] = useState<string | null>(null);
+  const [fixedRate, setFixedRate] = useState(true);
   const [connectedWallet, setConnectedWallet] = useState<{ address: string; type: "evm" | "solana" } | null>(null);
   const [notifyEmail, setNotifyEmail] = useState("");
   const [emailSubmitted, setEmailSubmitted] = useState(false);
