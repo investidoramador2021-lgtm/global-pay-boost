@@ -355,6 +355,23 @@ const ExchangeWidget = () => {
               Cancel
             </button>
           </div>
+          {/* Mobile Quick-Select */}
+          <div className="flex gap-2 border-b border-border px-4 pb-3">
+            {["btc", "eth", "sol", "usdc"].map((ticker) => {
+              const c = currencies.find((cur) => cur.ticker === ticker);
+              if (!c) return null;
+              return (
+                <button
+                  key={ticker}
+                  onClick={() => { onSelect(c); onClose(); setSearchQuery(""); }}
+                  className="flex items-center gap-1.5 rounded-lg border border-border bg-accent px-3 py-1.5 font-display text-xs font-semibold uppercase text-foreground transition-colors hover:border-primary/40"
+                >
+                  {c.image && <img src={c.image} alt="" className="h-4 w-4 rounded-full" />}
+                  {ticker}
+                </button>
+              );
+            })}
+          </div>
           <div className="overflow-y-auto p-2" style={{ maxHeight: 400 }}>
             {sortedCurrencies
               .filter((c) => c.ticker !== exclude)
