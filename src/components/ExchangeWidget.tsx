@@ -423,6 +423,30 @@ const ExchangeWidget = () => {
               </span>
             </div>
 
+            {/* Rate Type Toggle */}
+            <div className="mb-4 flex items-center gap-2">
+              <button
+                onClick={() => setFixedRate(true)}
+                className={`rounded-lg border px-3 py-1.5 font-body text-xs font-semibold transition-colors ${
+                  fixedRate
+                    ? "border-primary bg-primary/10 text-primary"
+                    : "border-border bg-accent text-muted-foreground hover:border-primary/40"
+                }`}
+              >
+                <Lock className="mr-1 inline h-3 w-3" /> Fixed Rate
+              </button>
+              <button
+                onClick={() => setFixedRate(false)}
+                className={`rounded-lg border px-3 py-1.5 font-body text-xs font-semibold transition-colors ${
+                  !fixedRate
+                    ? "border-primary bg-primary/10 text-primary"
+                    : "border-border bg-accent text-muted-foreground hover:border-primary/40"
+                }`}
+              >
+                Expected Rate
+              </button>
+            </div>
+
             {/* Popular Assets Quick Select */}
             <div className="mb-4 flex items-center gap-2">
               <span className="font-body text-[10px] font-medium uppercase tracking-wider text-muted-foreground">Popular:</span>
