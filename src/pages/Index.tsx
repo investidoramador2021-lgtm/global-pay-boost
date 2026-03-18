@@ -139,10 +139,10 @@ const Index = () => {
   return (
     <>
       <Helmet>
-        <title>MRC GlobalPay | Anonymous Crypto Dust Swap | Accountless Trading</title>
+        <title>MRC GlobalPay | Micro-Swap Crypto Dust from $0.30 | Accountless</title>
         <meta
           name="description"
-          content="Swap crypto dust as low as $0.60. No registration or accounts required. 500+ tokens supported. The fastest way to clean your wallet and convert small balances privately."
+          content="Swap crypto dust as low as $0.30. No accounts or registration. 500+ tokens. The fastest way to convert small balances privately."
         />
         <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1" />
         <link rel="canonical" href="https://mrcglobalpay.com" />
