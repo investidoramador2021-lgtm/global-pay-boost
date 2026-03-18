@@ -43,7 +43,7 @@ const HeroSection = () => {
               <span className="text-gradient-neon">The Professional Way.</span>
             </h1>
             <p className="mt-4 max-w-lg font-body text-base leading-relaxed text-muted-foreground sm:mt-6 sm:text-lg">
-              Instant cross-chain liquidity for over 1,000+ assets. Private, secure, and non-custodial.
+              Fast, secure, and private. Direct wallet-to-wallet swaps from $0.60.
             </p>
 
             {/* Trust Bar — 3 icons with staggered animation */}
