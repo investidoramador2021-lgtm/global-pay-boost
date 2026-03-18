@@ -72,7 +72,7 @@ const HeroSection = () => {
                 🧹 Clean Your Wallet
               </h2>
               <p className="mt-2 font-body text-sm leading-relaxed text-muted-foreground">
-                Tired of "unspendable" dust? Most platforms have high minimums. We support micro-swaps starting at $0.60. Convert leftover balances from 500+ tokens instantly with zero onboarding.
+                Tired of "unspendable" dust? Most platforms have high minimums. We support micro-swaps starting at $0.30. Convert leftover balances from 500+ tokens instantly with zero onboarding.
               </p>
             </div>
           </div>
