@@ -14,8 +14,8 @@ const features = [
   },
   {
     icon: Lock,
-    title: "No Registration",
-    description: "Start swapping immediately. No account creation, no personal data stored anywhere.",
+    title: "No Account Required",
+    description: "Permissionless trading — start swapping immediately. No sign-ups, no personal data, no onboarding friction.",
   },
   {
     icon: ArrowLeftRight,

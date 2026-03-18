@@ -595,7 +595,7 @@ const ExchangeWidget = () => {
               </div>
             </div>
             <div className="mt-3 flex items-center justify-center gap-3">
-              <p className="font-body text-xs text-muted-foreground">No hidden fees · No registration required</p>
+              <p className="font-body text-xs text-muted-foreground">No hidden fees · No account required · Permissionless</p>
               {speedForecast && (
                 <span className="flex items-center gap-1 font-body text-xs text-primary">
                   <Clock className="h-3 w-3" /> ~{speedForecast}

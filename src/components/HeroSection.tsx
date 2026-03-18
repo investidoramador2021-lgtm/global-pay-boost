@@ -3,9 +3,9 @@ import { Shield, Lock, Server } from "lucide-react";
 import ExchangeWidget from "@/components/ExchangeWidget";
 
 const trustCards = [
-  { icon: Shield, label: "No Registration Required" },
+  { icon: Shield, label: "No Account Required" },
   { icon: Lock, label: "Non-Custodial" },
-  { icon: Server, label: "Secure API-Powered" },
+  { icon: Server, label: "Direct Settlement" },
 ];
 
 const HeroSection = () => {
