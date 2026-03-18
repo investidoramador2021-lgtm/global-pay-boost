@@ -146,8 +146,8 @@ const Index = () => {
         />
         <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1" />
         <link rel="canonical" href="https://mrcglobalpay.com" />
-        <meta property="og:title" content="MRC GlobalPay | Anonymous Crypto Dust Swap | Accountless Trading" />
-        <meta property="og:description" content="Swap crypto dust as low as $0.60. No registration or accounts required. 500+ tokens supported. Convert small balances privately." />
+        <meta property="og:title" content="MRC GlobalPay | Micro-Swap Crypto Dust from $0.30 | Accountless" />
+        <meta property="og:description" content="Swap crypto dust as low as $0.30. No accounts or registration. 500+ tokens. Convert small balances privately." />
         <meta property="og:type" content="website" />
         <meta property="og:url" content="https://mrcglobalpay.com" />
         <meta property="og:site_name" content="MRC GlobalPay" />
