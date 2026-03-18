@@ -560,7 +560,9 @@ const ExchangeWidget = () => {
             </div>
 
             <div className="relative">
-              <label className="mb-1.5 block font-body text-xs font-medium uppercase tracking-wider text-muted-foreground">You Get (estimated)</label>
+              <label className="mb-1.5 block font-body text-xs font-medium uppercase tracking-wider text-muted-foreground">
+                You Get {fixedRate ? <span className="text-trust font-bold">(GUARANTEED)</span> : "(estimated)"}
+              </label>
               <div className="flex items-center gap-3 rounded-xl border border-border bg-accent p-4 sm:p-4">
                 <span className="flex-1 font-display text-2xl font-bold text-foreground">
                   {estimating ? <Loader2 className="h-6 w-6 animate-spin text-muted-foreground" /> : `≈ ${estimatedAmount || "—"}`}
