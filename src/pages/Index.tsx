@@ -97,34 +97,34 @@ const Index = () => {
     mainEntity: [
       {
         "@type": "Question",
-        name: "Why is MRC GlobalPay the fastest way to swap HYPE and BERA?",
+        name: "What is the minimum amount I can swap?",
         acceptedAnswer: {
           "@type": "Answer",
-          text: "Our 2026 liquidity architecture utilizes pre-funded vaults and direct-to-protocol routing. This eliminates the 3–6 confirmation wait times common on standard exchanges, delivering assets to your wallet in under 60 seconds.",
+          text: "We support micro-swaps starting as low as $0.30 to $0.60, depending on the coin pair. This makes us the ideal tool for clearing out 'crypto dust' that other exchanges won't touch.",
         },
       },
       {
         "@type": "Question",
-        name: "How long does a BTC to USDT swap take on MRC GlobalPay?",
+        name: "Do I need to create an account or provide ID?",
         acceptedAnswer: {
           "@type": "Answer",
-          text: "Our liquidity rails execute BTC to USDT swaps instantly, typically settling in under 1 minute with zero confirmation delays.",
+          text: "No. We offer a completely accountless experience. You can swap wallet-to-wallet instantly without any onboarding or registration.",
         },
       },
       {
         "@type": "Question",
-        name: "Can I swap ETH to SOL without creating an account?",
+        name: "Is the exchange rate guaranteed?",
         acceptedAnswer: {
           "@type": "Answer",
-          text: "Yes. MRC GlobalPay requires zero registration. Enter your SOL wallet address, send your ETH, and receive SOL within 45-90 seconds.",
+          text: "Yes. When you select our Fixed Rate option, the amount you see is exactly what you get. We protect you from price volatility during the transaction.",
         },
       },
       {
         "@type": "Question",
-        name: "Is MRC GlobalPay safe to use?",
+        name: "Which tokens are supported for dust swaps?",
         acceptedAnswer: {
           "@type": "Answer",
-          text: "Yes. All transactions are encrypted end-to-end. We never custody your funds — crypto flows directly between your wallet and our liquidity partners.",
+          text: "We support over 500+ assets, including BTC, ETH, SOL, and dozens of low-cap tokens. If it's in your wallet, you can likely swap it here.",
         },
       },
     ],
@@ -139,22 +139,22 @@ const Index = () => {
   return (
     <>
       <Helmet>
-        <title>MRC GlobalPay | Anonymous Crypto Dust Swap | Accountless Trading</title>
+        <title>MRC GlobalPay | Micro-Swap Crypto Dust from $0.30 | Accountless</title>
         <meta
           name="description"
-          content="Swap crypto dust as low as $0.60. No registration or accounts required. 500+ tokens supported. The fastest way to clean your wallet and convert small balances privately."
+          content="Swap crypto dust as low as $0.30. No accounts or registration. 500+ tokens. The fastest way to convert small balances privately."
         />
         <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1" />
         <link rel="canonical" href="https://mrcglobalpay.com" />
-        <meta property="og:title" content="MRC GlobalPay | Anonymous Crypto Dust Swap | Accountless Trading" />
-        <meta property="og:description" content="Swap crypto dust as low as $0.60. No registration or accounts required. 500+ tokens supported. Convert small balances privately." />
+        <meta property="og:title" content="MRC GlobalPay | Micro-Swap Crypto Dust from $0.30 | Accountless" />
+        <meta property="og:description" content="Swap crypto dust as low as $0.30. No accounts or registration. 500+ tokens. Convert small balances privately." />
         <meta property="og:type" content="website" />
         <meta property="og:url" content="https://mrcglobalpay.com" />
         <meta property="og:site_name" content="MRC GlobalPay" />
         <meta property="og:image" content="https://pub-bb2e103a32db4e198524a2e9ed8f35b4.r2.dev/22f69f45-cf65-4871-9af4-b68ab4027213/id-preview-243bf129--23f851ec-c820-43c7-bbe2-d2e830f7c268.lovable.app-1773521796493.png" />
         <meta name="twitter:card" content="summary_large_image" />
-        <meta name="twitter:title" content="MRC GlobalPay | Anonymous Crypto Dust Swap | Accountless Trading" />
-        <meta name="twitter:description" content="Swap crypto dust as low as $0.60. No registration. 500+ tokens. Convert small balances privately." />
+        <meta name="twitter:title" content="MRC GlobalPay | Micro-Swap Crypto Dust from $0.30 | Accountless" />
+        <meta name="twitter:description" content="Swap crypto dust as low as $0.30. No accounts or registration. 500+ tokens. Convert small balances privately." />
         <meta name="twitter:image" content="https://pub-bb2e103a32db4e198524a2e9ed8f35b4.r2.dev/22f69f45-cf65-4871-9af4-b68ab4027213/id-preview-243bf129--23f851ec-c820-43c7-bbe2-d2e830f7c268.lovable.app-1773521796493.png" />
         <script type="application/ld+json">{JSON.stringify(jsonLd)}</script>
         <script type="application/ld+json">{JSON.stringify(serviceJsonLd)}</script>

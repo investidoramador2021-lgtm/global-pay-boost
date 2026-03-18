@@ -105,6 +105,9 @@ const SiteFooter = () => {
               Liquidity provided by top-tier partners
             </span>
           </div>
+          <p className="sr-only" aria-hidden="true">
+            Low minimum crypto exchange, swap under $1, crypto dust converter, accountless trading 2026.
+          </p>
         </div>
       </div>
     </footer>

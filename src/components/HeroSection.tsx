@@ -43,7 +43,7 @@ const HeroSection = () => {
               <span className="text-gradient-neon">The Professional Way.</span>
             </h1>
             <p className="mt-4 max-w-lg font-body text-base leading-relaxed text-muted-foreground sm:mt-6 sm:text-lg">
-              Fast, secure, and private. Direct wallet-to-wallet swaps from $0.60.
+              Fast, secure, and private. Direct wallet-to-wallet swaps from $0.30.
             </p>
 
             {/* Trust Bar — 3 icons with staggered animation */}
@@ -72,7 +72,7 @@ const HeroSection = () => {
                 🧹 Clean Your Wallet
               </h2>
               <p className="mt-2 font-body text-sm leading-relaxed text-muted-foreground">
-                Tired of "unspendable" dust? Most platforms have high minimums. We support micro-swaps starting at $0.60. Convert leftover balances from 500+ tokens instantly with zero onboarding.
+                Tired of "unspendable" dust? Most platforms have high minimums. We support micro-swaps starting at $0.30. Convert leftover balances from 500+ tokens instantly with zero onboarding.
               </p>
             </div>
           </div>

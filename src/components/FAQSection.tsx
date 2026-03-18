@@ -7,28 +7,28 @@ import {
 
 const faqs = [
   {
-    q: "Is MRC GlobalPay safe to use?",
-    a: "Yes. MRC GlobalPay uses end-to-end encryption and partners with ChangeNow, a trusted exchange aggregator processing millions of transactions. Your funds flow directly from your wallet to the exchange — we never hold your crypto.",
+    q: "What is the minimum amount I can swap?",
+    a: "We support micro-swaps starting as low as $0.30 to $0.60, depending on the coin pair. This makes us the ideal tool for clearing out 'crypto dust' that other exchanges won't touch.",
   },
   {
-    q: "Do I need to create an account?",
-    a: "No. MRC GlobalPay is fully permissionless — no account required, no sign-ups, no personal data collected. Just select your trading pair, enter your receiving wallet address, send your funds, and you're done.",
+    q: "Do I need to create an account or provide ID?",
+    a: "No. We offer a completely accountless experience. You can swap wallet-to-wallet instantly without any onboarding or registration.",
   },
   {
-    q: "How long does an exchange take?",
+    q: "Is the exchange rate guaranteed?",
+    a: "Yes. When you select our Fixed Rate option, the amount you see is exactly what you get. We protect you from price volatility during the transaction.",
+  },
+  {
+    q: "Which tokens are supported for dust swaps?",
+    a: "We support over 500+ assets, including BTC, ETH, SOL, and dozens of low-cap tokens. If it's in your wallet, you can likely swap it here.",
+  },
+  {
+    q: "How long does a micro-swap take?",
     a: "Most exchanges settle in under 60 seconds with our 2026 liquidity rails. Our pre-funded vaults and direct-to-protocol routing eliminate the standard 3–6 confirmation wait times.",
   },
   {
     q: "What are the fees?",
     a: "Our fees are built into the exchange rate displayed — there are no hidden charges. You always see the exact amount you'll receive before confirming the swap.",
-  },
-  {
-    q: "Which cryptocurrencies are supported?",
-    a: "We support over 500 cryptocurrencies including Bitcoin (BTC), Ethereum (ETH), Solana (SOL), HYPE, BERA, TIA, MONAD, PYUSD, USDT, USDC, XRP, Dogecoin, BNB, and many more across all major blockchains.",
-  },
-  {
-    q: "Why is MRC GlobalPay the fastest way to swap HYPE and BERA?",
-    a: "Our 2026 liquidity architecture utilizes pre-funded vaults and direct-to-protocol routing. This eliminates the 3–6 confirmation wait times common on standard exchanges, delivering assets to your wallet in under 60 seconds. For HYPE, we connect directly to Hyperliquid's native L1 chain. For BERA, we leverage Berachain's Proof-of-Liquidity layer for optimal routing.",
   },
   {
     q: "What if my exchange is stuck or delayed?",
