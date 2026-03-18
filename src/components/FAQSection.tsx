@@ -12,7 +12,7 @@ const faqs = [
   },
   {
     q: "Do I need to create an account?",
-    a: "No. Our exchange is completely registration-free. Just select your trading pair, enter your receiving wallet address, send your funds, and you're done.",
+    a: "No. MRC GlobalPay is fully permissionless — no account required, no sign-ups, no personal data collected. Just select your trading pair, enter your receiving wallet address, send your funds, and you're done.",
   },
   {
     q: "How long does an exchange take?",

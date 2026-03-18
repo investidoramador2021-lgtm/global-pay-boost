@@ -3,9 +3,9 @@ import { Shield, Lock, Server } from "lucide-react";
 import ExchangeWidget from "@/components/ExchangeWidget";
 
 const trustCards = [
-  { icon: Shield, label: "No Registration Required" },
+  { icon: Shield, label: "No Account Required" },
   { icon: Lock, label: "Non-Custodial" },
-  { icon: Server, label: "Secure API-Powered" },
+  { icon: Server, label: "Direct Settlement" },
 ];
 
 const HeroSection = () => {
@@ -43,7 +43,7 @@ const HeroSection = () => {
               <span className="text-gradient-neon">The Professional Way.</span>
             </h1>
             <p className="mt-4 max-w-lg font-body text-base leading-relaxed text-muted-foreground sm:mt-6 sm:text-lg">
-              Instant cross-chain liquidity for over 1,000+ assets. Private, secure, and non-custodial.
+              Fast, secure, and private. Direct wallet-to-wallet swaps from $0.60.
             </p>
 
             {/* Trust Bar — 3 icons with staggered animation */}
@@ -64,6 +64,16 @@ const HeroSection = () => {
                   <span className="font-display text-xs font-semibold text-foreground sm:text-sm">{card.label}</span>
                 </div>
               ))}
+            </div>
+
+            {/* Dust Hook */}
+            <div className="mt-6 rounded-xl border border-primary/20 bg-primary/5 p-4 sm:mt-8 sm:p-5">
+              <h2 className="font-display text-base font-bold text-foreground sm:text-lg">
+                🧹 Clean Your Wallet
+              </h2>
+              <p className="mt-2 font-body text-sm leading-relaxed text-muted-foreground">
+                Tired of "unspendable" dust? Most platforms have high minimums. We support micro-swaps starting at $0.60. Convert leftover balances from 500+ tokens instantly with zero onboarding.
+              </p>
             </div>
           </div>
 
