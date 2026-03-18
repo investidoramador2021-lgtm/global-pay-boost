@@ -97,34 +97,34 @@ const Index = () => {
     mainEntity: [
       {
         "@type": "Question",
-        name: "Why is MRC GlobalPay the fastest way to swap HYPE and BERA?",
+        name: "What is the minimum amount I can swap?",
         acceptedAnswer: {
           "@type": "Answer",
-          text: "Our 2026 liquidity architecture utilizes pre-funded vaults and direct-to-protocol routing. This eliminates the 3–6 confirmation wait times common on standard exchanges, delivering assets to your wallet in under 60 seconds.",
+          text: "We support micro-swaps starting as low as $0.30 to $0.60, depending on the coin pair. This makes us the ideal tool for clearing out 'crypto dust' that other exchanges won't touch.",
         },
       },
       {
         "@type": "Question",
-        name: "How long does a BTC to USDT swap take on MRC GlobalPay?",
+        name: "Do I need to create an account or provide ID?",
         acceptedAnswer: {
           "@type": "Answer",
-          text: "Our liquidity rails execute BTC to USDT swaps instantly, typically settling in under 1 minute with zero confirmation delays.",
+          text: "No. We offer a completely accountless experience. You can swap wallet-to-wallet instantly without any onboarding or registration.",
         },
       },
       {
         "@type": "Question",
-        name: "Can I swap ETH to SOL without creating an account?",
+        name: "Is the exchange rate guaranteed?",
         acceptedAnswer: {
           "@type": "Answer",
-          text: "Yes. MRC GlobalPay requires zero registration. Enter your SOL wallet address, send your ETH, and receive SOL within 45-90 seconds.",
+          text: "Yes. When you select our Fixed Rate option, the amount you see is exactly what you get. We protect you from price volatility during the transaction.",
         },
       },
       {
         "@type": "Question",
-        name: "Is MRC GlobalPay safe to use?",
+        name: "Which tokens are supported for dust swaps?",
         acceptedAnswer: {
           "@type": "Answer",
-          text: "Yes. All transactions are encrypted end-to-end. We never custody your funds — crypto flows directly between your wallet and our liquidity partners.",
+          text: "We support over 500+ assets, including BTC, ETH, SOL, and dozens of low-cap tokens. If it's in your wallet, you can likely swap it here.",
         },
       },
     ],
