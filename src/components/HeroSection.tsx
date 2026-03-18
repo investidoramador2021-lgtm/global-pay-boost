@@ -65,6 +65,16 @@ const HeroSection = () => {
                 </div>
               ))}
             </div>
+
+            {/* Dust Hook */}
+            <div className="mt-6 rounded-xl border border-primary/20 bg-primary/5 p-4 sm:mt-8 sm:p-5">
+              <h2 className="font-display text-base font-bold text-foreground sm:text-lg">
+                🧹 Clean Your Wallet
+              </h2>
+              <p className="mt-2 font-body text-sm leading-relaxed text-muted-foreground">
+                Tired of "unspendable" dust? Most platforms have high minimums. We support micro-swaps starting at $0.60. Convert leftover balances from 500+ tokens instantly with zero onboarding.
+              </p>
+            </div>
           </div>
 
           {/* Widget */}
