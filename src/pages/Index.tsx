@@ -11,6 +11,7 @@ import NoLimitsSection from "@/components/NoLimitsSection";
 import FAQSection from "@/components/FAQSection";
 import SiteFooter from "@/components/SiteFooter";
 import PullToRefresh from "@/components/PullToRefresh";
+import ShadowSeoFaq from "@/components/ShadowSeoFaq";
 import { Helmet } from "react-helmet-async";
 
 const Index = () => {
