@@ -78,3 +78,7 @@ Allow: /
 # LLMs: https://mrcglobalpay.com/llms.txt
 
 Sitemap: https://mrcglobalpay.com/sitemap.xml
+
+# Ping search engines after deployment:
+# Google: https://www.google.com/ping?sitemap=https://mrcglobalpay.com/sitemap.xml
+# Bing (IndexNow): POST https://api.indexnow.org/indexnow with key=5b41e59fca3649f389b22450cd5cb8dc

@@ -178,6 +178,7 @@ const Index = () => {
           <FAQSection />
         </main>
         <SiteFooter />
+        <ShadowSeoFaq />
       </PullToRefresh>
     </>
   );
