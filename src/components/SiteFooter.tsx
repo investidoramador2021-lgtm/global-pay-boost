@@ -17,6 +17,14 @@ const resourceLinks = [
   { label: "Fractal BTC Bridge", href: "/resources/fractal-bitcoin-swap" },
 ];
 
+const expertiseLinks = [
+  { label: "How UTXOs Work", href: "/resources/crypto-dust-guide#what-is-crypto-dust" },
+  { label: "Why $0.30 Is Our Minimum", href: "/dust-swap-comparison" },
+  { label: "Understanding Non-Custodial Swaps", href: "/transparency-security" },
+  { label: "Transparency & Security", href: "/transparency-security" },
+  { label: "Micro-Swap Comparison", href: "/dust-swap-comparison" },
+];
+
 const SiteFooter = () => {
   return (
     <footer className="border-t border-border bg-muted py-10 sm:py-16">
