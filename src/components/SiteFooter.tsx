@@ -29,7 +29,7 @@ const SiteFooter = () => {
   return (
     <footer className="border-t border-border bg-muted py-10 sm:py-16">
       <div className="container mx-auto px-4">
-        <div className="grid gap-8 sm:grid-cols-2 sm:gap-12 lg:grid-cols-4">
+        <div className="grid gap-8 sm:grid-cols-2 sm:gap-12 lg:grid-cols-5">
           <div>
             <a href="/" className="font-display text-lg font-bold tracking-tight text-foreground sm:text-xl">
               MRC<span className="text-primary">GlobalPay</span>
