@@ -13,6 +13,8 @@ const resourceLinks = [
   { label: "Swap Pairs", href: "/#swap-pairs" },
   { label: "Blog", href: "/blog" },
   { label: "FAQ", href: "/#faq" },
+  { label: "How to Swap Dust", href: "/resources/crypto-dust-guide" },
+  { label: "Fractal BTC Bridge", href: "/resources/fractal-bitcoin-swap" },
 ];
 
 const SiteFooter = () => {
