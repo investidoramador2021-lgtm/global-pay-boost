@@ -56,6 +56,8 @@ const App = () => (
                 <Route path="/swap/pyusd-usdt" element={<SwapPyusdUsdt />} />
                 <Route path="/resources/crypto-dust-guide" element={<CryptoDustGuide />} />
                 <Route path="/resources/fractal-bitcoin-swap" element={<FractalBitcoinSwap />} />
+                <Route path="/transparency-security" element={<TransparencySecurity />} />
+                <Route path="/dust-swap-comparison" element={<DustSwapComparison />} />
                 {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
                 <Route path="*" element={<NotFound />} />
               </Routes>

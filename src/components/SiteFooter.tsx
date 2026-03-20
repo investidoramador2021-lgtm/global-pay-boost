@@ -71,6 +71,21 @@ const SiteFooter = () => {
 
           <div>
             <h3 className="font-display text-xs font-semibold uppercase tracking-wider text-foreground/80 sm:text-sm">
+              Expertise
+            </h3>
+            <ul className="mt-3 space-y-2 sm:mt-4 sm:space-y-3">
+              {expertiseLinks.map((link) => (
+                <li key={link.label}>
+                  <a href={link.href} className="font-body text-sm text-muted-foreground transition-colors hover:text-foreground">
+                    {link.label}
+                  </a>
+                </li>
+              ))}
+            </ul>
+          </div>
+
+          <div>
+            <h3 className="font-display text-xs font-semibold uppercase tracking-wider text-foreground/80 sm:text-sm">
               Legal
             </h3>
             <ul className="mt-3 space-y-2 sm:mt-4 sm:space-y-3">
