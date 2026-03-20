@@ -21,6 +21,8 @@ import SwapMonadUsdt from "./pages/SwapMonadUsdt.tsx";
 import SwapPyusdUsdt from "./pages/SwapPyusdUsdt.tsx";
 import Blog from "./pages/Blog.tsx";
 import BlogPost from "./pages/BlogPost.tsx";
+import CryptoDustGuide from "./pages/CryptoDustGuide.tsx";
+import FractalBitcoinSwap from "./pages/FractalBitcoinSwap.tsx";
 import NotFound from "./pages/NotFound.tsx";
 
 const queryClient = new QueryClient();
@@ -50,6 +52,8 @@ const App = () => (
                 <Route path="/swap/tia-usdt" element={<SwapTiaUsdt />} />
                 <Route path="/swap/monad-usdt" element={<SwapMonadUsdt />} />
                 <Route path="/swap/pyusd-usdt" element={<SwapPyusdUsdt />} />
+                <Route path="/resources/crypto-dust-guide" element={<CryptoDustGuide />} />
+                <Route path="/resources/fractal-bitcoin-swap" element={<FractalBitcoinSwap />} />
                 {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
                 <Route path="*" element={<NotFound />} />
               </Routes>
