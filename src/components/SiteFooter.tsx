@@ -17,11 +17,19 @@ const resourceLinks = [
   { label: "Fractal BTC Bridge", href: "/resources/fractal-bitcoin-swap" },
 ];
 
+const expertiseLinks = [
+  { label: "How UTXOs Work", href: "/resources/crypto-dust-guide#what-is-crypto-dust" },
+  { label: "Why $0.30 Is Our Minimum", href: "/dust-swap-comparison" },
+  { label: "Understanding Non-Custodial Swaps", href: "/transparency-security" },
+  { label: "Transparency & Security", href: "/transparency-security" },
+  { label: "Micro-Swap Comparison", href: "/dust-swap-comparison" },
+];
+
 const SiteFooter = () => {
   return (
     <footer className="border-t border-border bg-muted py-10 sm:py-16">
       <div className="container mx-auto px-4">
-        <div className="grid gap-8 sm:grid-cols-2 sm:gap-12 lg:grid-cols-4">
+        <div className="grid gap-8 sm:grid-cols-2 sm:gap-12 lg:grid-cols-5">
           <div>
             <a href="/" className="font-display text-lg font-bold tracking-tight text-foreground sm:text-xl">
               MRC<span className="text-primary">GlobalPay</span>
@@ -52,6 +60,21 @@ const SiteFooter = () => {
             </h3>
             <ul className="mt-3 space-y-2 sm:mt-4 sm:space-y-3">
               {resourceLinks.map((link) => (
+                <li key={link.label}>
+                  <a href={link.href} className="font-body text-sm text-muted-foreground transition-colors hover:text-foreground">
+                    {link.label}
+                  </a>
+                </li>
+              ))}
+            </ul>
+          </div>
+
+          <div>
+            <h3 className="font-display text-xs font-semibold uppercase tracking-wider text-foreground/80 sm:text-sm">
+              Expertise
+            </h3>
+            <ul className="mt-3 space-y-2 sm:mt-4 sm:space-y-3">
+              {expertiseLinks.map((link) => (
                 <li key={link.label}>
                   <a href={link.href} className="font-body text-sm text-muted-foreground transition-colors hover:text-foreground">
                     {link.label}
