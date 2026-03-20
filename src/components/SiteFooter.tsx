@@ -85,7 +85,36 @@ const SiteFooter = () => {
           </div>
         </div>
 
+        {/* Technical Partners */}
         <div className="mt-8 border-t border-border pt-6 sm:mt-12 sm:pt-8">
+          <div className="mb-6">
+            <h3 className="font-display text-xs font-semibold uppercase tracking-wider text-foreground/60 mb-3 text-center sm:text-left">
+              Technical Partners
+            </h3>
+            <div className="flex flex-wrap items-center justify-center gap-6 sm:justify-start">
+              {["ChangeNOW", "Fireblocks", "Vanguard Talent"].map((partner) => (
+                <span
+                  key={partner}
+                  className="rounded border border-border bg-muted/50 px-3 py-1.5 font-body text-xs font-medium text-muted-foreground grayscale"
+                >
+                  {partner}
+                </span>
+              ))}
+            </div>
+          </div>
+
+          {/* System Status */}
+          <div className="mb-6 flex flex-wrap items-center justify-center gap-x-4 gap-y-1 rounded-lg border border-border bg-muted/30 px-4 py-2.5 text-xs text-muted-foreground sm:justify-start">
+            <span className="inline-flex items-center gap-1.5">
+              <span className="inline-block h-2 w-2 rounded-full bg-green-500 animate-pulse" />
+              Network Status: Optimal
+            </span>
+            <span className="hidden sm:inline text-border">|</span>
+            <span>Liquidity: Global Aggregate</span>
+            <span className="hidden sm:inline text-border">|</span>
+            <span>Protocol: Non-Custodial</span>
+          </div>
+
           <div className="mx-auto mb-6 max-w-md">
             <div
               className="trustpilot-widget"
