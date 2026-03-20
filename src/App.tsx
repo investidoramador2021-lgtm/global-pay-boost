@@ -21,6 +21,8 @@ import SwapMonadUsdt from "./pages/SwapMonadUsdt.tsx";
 import SwapPyusdUsdt from "./pages/SwapPyusdUsdt.tsx";
 import Blog from "./pages/Blog.tsx";
 import BlogPost from "./pages/BlogPost.tsx";
+import CryptoDustGuide from "./pages/CryptoDustGuide.tsx";
+import FractalBitcoinSwap from "./pages/FractalBitcoinSwap.tsx";
 import NotFound from "./pages/NotFound.tsx";
 
 const queryClient = new QueryClient();
