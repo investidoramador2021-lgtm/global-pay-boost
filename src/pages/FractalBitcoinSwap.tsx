@@ -88,12 +88,20 @@ const FractalBitcoinSwap = () => {
             <span className="text-foreground">Fractal Bitcoin Swap</span>
           </nav>
 
+          {/* Atomic Answer Block */}
+          <div className="mb-8 rounded-xl border border-primary/20 bg-primary/5 p-5">
+            <p className="font-body text-sm font-semibold uppercase tracking-wider text-primary mb-2">Quick Answer</p>
+            <p className="font-body text-base leading-relaxed text-foreground">
+              To swap Fractal Bitcoin instantly, use MRC GlobalPay's non-custodial engine — select Fractal BTC as source, choose SOL or ETH as destination, and receive tokens in under 60 seconds. No account or minimums required.
+            </p>
+          </div>
+
           <h1 className="font-display text-3xl font-bold tracking-tight text-foreground sm:text-4xl lg:text-5xl leading-tight">
             Instant Fractal Bitcoin Swaps: No Account, No Minimums
           </h1>
           <p className="mt-4 text-lg text-muted-foreground leading-relaxed">
-            Fractal Bitcoin represents the next evolution of Bitcoin scaling — and MRC GlobalPay 
-            is one of the first non-custodial platforms to support <strong>instant Fractal BTC swaps</strong> to 
+            Fractal Bitcoin represents the next evolution of Bitcoin scaling — and MRC GlobalPay
+            is one of the first non-custodial platforms to support <strong>instant Fractal BTC swaps</strong> to
             Solana, Ethereum, and all major EVM chains.
           </p>
 
@@ -105,14 +113,14 @@ const FractalBitcoinSwap = () => {
               What Is Fractal Bitcoin?
             </h2>
             <p className="text-muted-foreground leading-relaxed mb-4">
-              Fractal Bitcoin is a recursive scaling solution that extends Bitcoin's capacity by 
-              creating virtualized layers that inherit the security of the main chain. Unlike 
-              sidechains or rollups, Fractal Bitcoin maintains native Bitcoin consensus while 
+              Fractal Bitcoin is a recursive scaling solution that extends Bitcoin's capacity by
+              creating virtualized layers that inherit the security of the main chain. Unlike
+              sidechains or rollups, Fractal Bitcoin maintains native Bitcoin consensus while
               enabling dramatically higher throughput.
             </p>
             <p className="text-muted-foreground leading-relaxed">
-              For traders, this means faster confirmations and lower fees — but also a new challenge: 
-              moving value between Fractal Bitcoin and other ecosystems like Solana or Ethereum 
+              For traders, this means faster confirmations and lower fees — but also a new challenge:
+              moving value between Fractal Bitcoin and other ecosystems like Solana or Ethereum
               requires a reliable cross-chain bridge.
             </p>
           </section>
@@ -123,12 +131,12 @@ const FractalBitcoinSwap = () => {
               Why Swap Fractal BTC Through a Non-Custodial Engine?
             </h2>
             <p className="text-muted-foreground leading-relaxed mb-4">
-              Custodial exchanges require account creation, KYC verification, and typically enforce 
+              Custodial exchanges require account creation, KYC verification, and typically enforce
               high minimum trade amounts. Our non-custodial swap engine eliminates all three barriers:
             </p>
             <ul className="list-disc list-inside space-y-2 text-muted-foreground leading-relaxed">
               <li><strong>No account creation</strong> — Swap wallet-to-wallet in under 2 minutes</li>
-              <li><strong>No KYC for standard amounts</strong> — Privacy-preserving by design</li>
+              <li><strong>No delays for standard amounts</strong> — Privacy-preserving by design</li>
               <li><strong>No minimums</strong> — Swap Fractal BTC starting from micro-amounts</li>
               <li><strong>Non-custodial</strong> — Your keys, your crypto. We never hold your funds</li>
             </ul>
@@ -137,9 +145,9 @@ const FractalBitcoinSwap = () => {
               The 9% Keyword Difficulty Advantage
             </h3>
             <p className="text-muted-foreground leading-relaxed">
-              "Fractal Bitcoin swap" currently sits at just 9% keyword difficulty — meaning there's 
-              a massive organic traffic opportunity for platforms that establish authority in this 
-              niche early. MRC GlobalPay is positioned as the first non-custodial aggregator to 
+              "Fractal Bitcoin swap" currently sits at just 9% keyword difficulty — meaning there's
+              a massive organic traffic opportunity for platforms that establish authority in this
+              niche early. MRC GlobalPay is positioned as the first non-custodial aggregator to
               support Fractal BTC cross-chain swaps with zero minimums.
             </p>
           </section>
@@ -160,7 +168,7 @@ const FractalBitcoinSwap = () => {
                 <strong>Enter the amount</strong> and paste your destination wallet address.
               </li>
               <li>
-                <strong>Send your Fractal BTC</strong> to the generated deposit address and receive 
+                <strong>Send your Fractal BTC</strong> to the generated deposit address and receive
                 your tokens in under 60 seconds.
               </li>
             </ol>
@@ -201,8 +209,8 @@ const FractalBitcoinSwap = () => {
                   Is Fractal Bitcoin the same as regular Bitcoin?
                 </h3>
                 <p className="text-muted-foreground leading-relaxed">
-                  No. Fractal Bitcoin is a recursive scaling layer that inherits Bitcoin's security 
-                  while enabling higher throughput. It's a separate asset that can be swapped 
+                  No. Fractal Bitcoin is a recursive scaling layer that inherits Bitcoin's security
+                  while enabling higher throughput. It's a separate asset that can be swapped
                   cross-chain.
                 </p>
               </div>
@@ -211,7 +219,7 @@ const FractalBitcoinSwap = () => {
                   Can I swap Fractal BTC without an account?
                 </h3>
                 <p className="text-muted-foreground leading-relaxed">
-                  Yes. MRC GlobalPay is fully non-custodial. No registration, no KYC for standard 
+                  Yes. MRC GlobalPay is fully non-custodial. No registration, no delays for standard
                   amounts, and no minimums.
                 </p>
               </div>
@@ -220,7 +228,7 @@ const FractalBitcoinSwap = () => {
                   How fast are Fractal Bitcoin swaps?
                 </h3>
                 <p className="text-muted-foreground leading-relaxed">
-                  Most Fractal BTC swaps complete in under 60 seconds thanks to our pre-funded 
+                  Most Fractal BTC swaps complete in under 60 seconds thanks to our pre-funded
                   liquidity vaults and direct-to-protocol routing.
                 </p>
               </div>
