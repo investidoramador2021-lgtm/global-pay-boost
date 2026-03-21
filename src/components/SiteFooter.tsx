@@ -25,6 +25,9 @@ const expertiseLinks = [
   { label: "Micro-Swap Comparison", href: "/dust-swap-comparison" },
 ];
 
+const complianceText =
+  "Registered Money Services Business (MSB) — Canada. Adhering to 2026 AML and FINTRAC standards.";
+
 const SiteFooter = () => {
   return (
     <footer className="border-t border-border bg-muted py-10 sm:py-16">
@@ -124,6 +127,19 @@ const SiteFooter = () => {
                 </span>
               ))}
             </div>
+          </div>
+
+          {/* Compliance & Security */}
+          <div className="mb-6 rounded-lg border border-border bg-muted/30 px-4 py-3">
+            <h3 className="font-display text-xs font-semibold uppercase tracking-wider text-foreground/60 mb-2">
+              Compliance & Security
+            </h3>
+            <p className="font-body text-xs leading-relaxed text-muted-foreground">
+              {complianceText}{" "}
+              <a href="/transparency-security" className="text-primary hover:underline">
+                Learn more →
+              </a>
+            </p>
           </div>
 
           {/* System Status */}

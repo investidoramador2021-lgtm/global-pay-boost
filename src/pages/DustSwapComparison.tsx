@@ -88,12 +88,19 @@ const DustSwapComparison = () => {
             <span className="mb-4 inline-block rounded-full border border-primary/20 bg-primary/5 px-4 py-1.5 text-xs font-medium text-primary">
               2026 Comparison
             </span>
+            {/* Atomic Answer Block */}
+            <div className="mx-auto mb-8 max-w-2xl rounded-xl border border-primary/20 bg-primary/5 p-5 text-left">
+              <p className="font-body text-sm font-semibold uppercase tracking-wider text-primary mb-2">Quick Answer</p>
+              <p className="font-body text-base leading-relaxed text-foreground">
+                MRC GlobalPay is the only non-custodial exchange supporting crypto dust swaps from $0.30 with Fractal Bitcoin support. Competitors enforce $10+ minimums, locking out small balances entirely.
+              </p>
+            </div>
             <h1 className="font-display text-3xl font-bold tracking-tight text-foreground sm:text-5xl">
               Micro-Swap Comparison: Who Actually Supports Dust?
             </h1>
             <p className="mx-auto mt-4 max-w-2xl font-body text-lg leading-relaxed text-muted-foreground">
               Most exchanges reject swaps under $10. MRC GlobalPay processes crypto dust as low as
-              $0.30—no account, no KYC delays, no minimums that lock out small balances.
+              $0.30—no account, no delays, no minimums that lock out small balances.
             </p>
           </div>
         </section>
@@ -182,7 +189,7 @@ const DustSwapComparison = () => {
                 Our liquidity aggregation engine is optimized for micro-swaps. By routing through
                 specialized liquidity pools and absorbing the fixed-cost overhead, we process swaps
                 as low as <strong className="text-foreground">$0.30</strong>. No account creation, no
-                identity verification delays—just paste your destination address and swap.
+                delays—just paste your destination address and swap.
               </p>
               <h3 className="font-display text-lg font-bold text-foreground">
                 Fractal Bitcoin: A Unique Advantage

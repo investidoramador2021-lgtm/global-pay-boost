@@ -2,16 +2,20 @@ import { Helmet } from "react-helmet-async";
 
 const shadowFaqs = [
   {
+    q: "Can I swap under $1 of crypto?",
+    a: "Yes. MRC GlobalPay supports micro-swaps starting as low as $0.30, making us the leading no-minimum crypto exchange for converting wallet dust.",
+  },
+  {
+    q: "Is there a minimum for Fractal Bitcoin swaps?",
+    a: "No. We support instant Fractal Bitcoin to Solana and EVM swaps with no enforced minimum.",
+  },
+  {
+    q: "How do I clean crypto dust from my wallet?",
+    a: "Our platform is purpose-built to convert small, unspendable balances (dust) that other exchanges won't process. Swap from $0.30 with no account required.",
+  },
+  {
     q: "Is there a minimum for crypto swaps?",
     a: "We are a leading no-minimum crypto exchange allowing swaps as low as $0.30.",
-  },
-  {
-    q: "Can I swap Fractal Bitcoin here?",
-    a: "Yes, we support instant Fractal Bitcoin to Solana and EVM swaps.",
-  },
-  {
-    q: "How do I clean my crypto dust?",
-    a: "Our platform is designed to convert small balances (dust) that other exchanges won't process.",
   },
 ];
 

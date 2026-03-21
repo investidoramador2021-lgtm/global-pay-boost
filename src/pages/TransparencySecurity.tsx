@@ -26,49 +26,6 @@ const pageJsonLd = {
   dateModified: "2026-03-20",
 };
 
-const personSchemaTeam = [
-  {
-    "@context": "https://schema.org",
-    "@type": "Person",
-    name: "Daniel Carter",
-    jobTitle: "Senior Blockchain Analyst",
-    worksFor: { "@type": "Organization", name: "MRC GlobalPay" },
-    description:
-      "CFA Charterholder with 8 years in digital asset trading. Former Cumberland DRW. Columbia MFE.",
-    knowsAbout: ["Cryptocurrency Trading", "DeFi Infrastructure", "Market Microstructure"],
-  },
-  {
-    "@context": "https://schema.org",
-    "@type": "Person",
-    name: "Sophia Ramirez",
-    jobTitle: "DeFi Infrastructure Researcher",
-    worksFor: { "@type": "Organization", name: "MRC GlobalPay" },
-    description:
-      "Former L1 Protocol Engineer. Published in Messari & The Block. MSc Computer Science, ETH Zurich.",
-    knowsAbout: ["AMM Design", "Cross-Chain Bridging", "Liquidity Aggregation"],
-  },
-  {
-    "@context": "https://schema.org",
-    "@type": "Person",
-    name: "Marcus Chen",
-    jobTitle: "Cybersecurity Lead & Crypto Security Advisor",
-    worksFor: { "@type": "Organization", name: "MRC GlobalPay" },
-    description:
-      "CISSP & OSCP certified. 15 years in InfoSec. Former Security Lead at top-20 CEX.",
-    knowsAbout: ["Cryptocurrency Custody", "Wallet Security", "Exchange Infrastructure"],
-  },
-  {
-    "@context": "https://schema.org",
-    "@type": "Person",
-    name: "Elena Volkova",
-    jobTitle: "Crypto Markets Strategist",
-    worksFor: { "@type": "Organization", name: "MRC GlobalPay" },
-    description:
-      "Former Quant Analyst at Jane Street. CoinDesk & Blockworks contributor. MSc Mathematics, MIT.",
-    knowsAbout: ["On-Chain Analytics", "Trading Pair Dynamics", "Macro Crypto Trends"],
-  },
-];
-
 const auditItems = [
   { label: "Non-Custodial Architecture Verified", status: "pass" },
   { label: "API Endpoint Penetration Test", status: "pass" },
@@ -96,11 +53,6 @@ const TransparencySecurity = () => {
         <meta property="og:url" content="https://mrcglobalpay.com/transparency-security" />
         <meta property="og:type" content="website" />
         <script type="application/ld+json">{JSON.stringify(pageJsonLd)}</script>
-        {personSchemaTeam.map((person, i) => (
-          <script key={i} type="application/ld+json">
-            {JSON.stringify(person)}
-          </script>
-        ))}
       </Helmet>
 
       <SiteHeader />
@@ -263,39 +215,31 @@ const TransparencySecurity = () => {
           </div>
         </section>
 
-        {/* Team E-E-A-T */}
+        {/* About — Protocol Mission */}
         <section className="border-t border-border bg-muted/20 py-12 sm:py-20">
           <div className="container mx-auto max-w-4xl px-4">
             <h2 className="mb-2 text-center font-display text-2xl font-bold text-foreground sm:text-3xl">
-              Our Expert Team
+              About MRC GlobalPay
             </h2>
-            <p className="mx-auto mb-10 max-w-xl text-center font-body text-muted-foreground">
-              MRC GlobalPay is guided by professionals with deep expertise in blockchain
-              infrastructure, cybersecurity, and quantitative finance.
+            <p className="mx-auto mb-8 max-w-xl text-center font-body text-muted-foreground">
+              Our mission is to make crypto accessible to everyone — regardless of balance size.
             </p>
-            <div className="grid gap-6 sm:grid-cols-2">
-              {personSchemaTeam.map((person) => (
-                <div
-                  key={person.name}
-                  className="rounded-xl border border-border bg-card p-6"
-                >
-                  <h3 className="font-display text-lg font-bold text-foreground">{person.name}</h3>
-                  <p className="font-body text-sm font-medium text-primary">{person.jobTitle}</p>
-                  <p className="mt-3 font-body text-sm leading-relaxed text-muted-foreground">
-                    {person.description}
-                  </p>
-                  <div className="mt-3 flex flex-wrap gap-1.5">
-                    {person.knowsAbout.map((topic: string) => (
-                      <span
-                        key={topic}
-                        className="rounded-full bg-muted px-2.5 py-0.5 text-[11px] font-medium text-muted-foreground"
-                      >
-                        {topic}
-                      </span>
-                    ))}
-                  </div>
-                </div>
-              ))}
+            <div className="mx-auto max-w-2xl space-y-4 font-body leading-relaxed text-muted-foreground">
+              <p>
+                MRC GlobalPay is a <strong className="text-foreground">registered Money Services Business (MSB)</strong> headquartered
+                in Ottawa, Canada, operating under FINTRAC regulations. We provide non-custodial, instant crypto-to-crypto
+                swaps with industry-leading low minimums starting at $0.30.
+              </p>
+              <p>
+                Our protocol aggregates liquidity from top-tier providers including ChangeNOW and institutional-grade
+                infrastructure partners, enabling micro-swaps that traditional exchanges cannot economically support.
+                We are purpose-built for the underserved segment of crypto users holding small, fragmented balances
+                across multiple wallets.
+              </p>
+              <p>
+                Every swap is non-custodial — we never hold, store, or access user funds or private keys.
+                Our architecture prioritizes direct settlement, permissionless trading, and transparent fee structures.
+              </p>
             </div>
           </div>
         </section>

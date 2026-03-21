@@ -15,79 +15,44 @@ import ShadowSeoFaq from "@/components/ShadowSeoFaq";
 import { Helmet } from "react-helmet-async";
 
 const Index = () => {
-  const jsonLd = {
+  const financialServiceJsonLd = {
     "@context": "https://schema.org",
-    "@type": "WebApplication",
+    "@type": "FinancialService",
     name: "MRC GlobalPay",
     url: "https://mrcglobalpay.com",
     description:
-      "Automated high-speed swap engine for 2026 high-performance tokens with zero settlement latency.",
-    applicationCategory: "FinanceApplication",
-    offers: {
-      "@type": "Offer",
-      category: "Cryptocurrency Exchange",
-    },
-  };
-
-  const serviceJsonLd = {
-    "@context": "https://schema.org",
-    "@type": "Service",
-    name: "MRC GlobalPay Instant Crypto Swap",
+      "Registered Money Services Business (MSB) offering instant, non-custodial crypto-to-crypto swaps with no minimums. 500+ assets supported.",
+    areaServed: "Worldwide",
     serviceType: "CurrencyConversionService",
-    description: "Automated high-speed swap engine for 2026 high-performance tokens with zero settlement latency. Direct-to-protocol liquidity bridges for HYPE, BERA, TIA, MONAD, and PYUSD.",
     provider: {
       "@type": "Organization",
       name: "MRC GlobalPay",
       url: "https://mrcglobalpay.com",
+      legalName: "MRC Global Pay",
+      address: {
+        "@type": "PostalAddress",
+        addressLocality: "Ottawa",
+        addressRegion: "ON",
+        addressCountry: "CA",
+      },
+      hasCredential: {
+        "@type": "DefinedTerm",
+        name: "Money Services Business (MSB)",
+        description:
+          "Registered with FINTRAC under Canadian AML/CTF regulations.",
+      },
     },
-    areaServed: "Worldwide",
-    hasOfferCatalog: {
-      "@type": "OfferCatalog",
-      name: "Instant Crypto Swap Services",
-      itemListElement: [
-        {
-          "@type": "Offer",
-          itemOffered: {
-            "@type": "Service",
-            name: "Zero-Delay Settlement",
-            description: "Pre-funded liquidity vaults with direct-to-protocol routing eliminate 3–6 confirmation wait times, delivering assets in under 60 seconds.",
-          },
-        },
-        {
-          "@type": "Offer",
-          itemOffered: {
-            "@type": "Service",
-            name: "Instant Rate Aggregation",
-            description: "Real-time rate aggregation from multiple top-tier liquidity providers for best market rates across 500+ digital assets.",
-          },
-        },
-      ],
+    offers: {
+      "@type": "Offer",
+      category: "Cryptocurrency Exchange",
+      description:
+        "Non-custodial crypto swaps from $0.30 with no account required.",
     },
     potentialAction: [
       {
         "@type": "TradeAction",
-        name: "Swap HYPE to USDT",
-        target: "https://mrcglobalpay.com/swap/hype-usdt",
-      },
-      {
-        "@type": "TradeAction",
-        name: "Swap BERA to USDC",
-        target: "https://mrcglobalpay.com/swap/bera-usdt",
-      },
-      {
-        "@type": "TradeAction",
-        name: "Swap TIA to USDT",
-        target: "https://mrcglobalpay.com/swap/tia-usdt",
-      },
-      {
-        "@type": "TradeAction",
-        name: "Swap MONAD to ETH",
-        target: "https://mrcglobalpay.com/swap/monad-usdt",
-      },
-      {
-        "@type": "TradeAction",
-        name: "Swap PYUSD to SOL",
-        target: "https://mrcglobalpay.com/swap/pyusd-usdt",
+        name: "Swap Crypto Dust",
+        target: "https://mrcglobalpay.com/#exchange",
       },
     ],
   };
@@ -98,10 +63,26 @@ const Index = () => {
     mainEntity: [
       {
         "@type": "Question",
-        name: "What is the minimum amount I can swap?",
+        name: "Can I swap under $1 of crypto?",
         acceptedAnswer: {
           "@type": "Answer",
-          text: "We support micro-swaps starting as low as $0.30 to $0.60, depending on the coin pair. This makes us the ideal tool for clearing out 'crypto dust' that other exchanges won't touch.",
+          text: "Yes. MRC GlobalPay supports micro-swaps starting as low as $0.30, depending on the coin pair. We are the leading no-minimum crypto exchange for converting wallet dust.",
+        },
+      },
+      {
+        "@type": "Question",
+        name: "Is there a minimum for Fractal Bitcoin swaps?",
+        acceptedAnswer: {
+          "@type": "Answer",
+          text: "No enforced minimum. MRC GlobalPay is one of the first non-custodial platforms to support Fractal Bitcoin swaps to Solana, Ethereum, and 500+ tokens.",
+        },
+      },
+      {
+        "@type": "Question",
+        name: "How do I clean crypto dust from my wallet?",
+        acceptedAnswer: {
+          "@type": "Answer",
+          text: "Use MRC GlobalPay to convert small, unspendable balances (crypto dust) into usable tokens. No account creation required — just select your dust token, enter any amount from $0.30, and swap instantly.",
         },
       },
       {
@@ -109,7 +90,7 @@ const Index = () => {
         name: "Do I need to create an account or provide ID?",
         acceptedAnswer: {
           "@type": "Answer",
-          text: "No. We offer a completely accountless experience. You can swap wallet-to-wallet instantly without any onboarding or registration.",
+          text: "No. We offer a completely accountless, permissionless trading experience. Swap wallet-to-wallet instantly without any onboarding or registration.",
         },
       },
       {
@@ -125,14 +106,13 @@ const Index = () => {
         name: "Which tokens are supported for dust swaps?",
         acceptedAnswer: {
           "@type": "Answer",
-          text: "We support over 500+ assets, including BTC, ETH, SOL, and dozens of low-cap tokens. If it's in your wallet, you can likely swap it here.",
+          text: "We support over 500+ assets, including BTC, ETH, SOL, Fractal Bitcoin, and dozens of low-cap tokens. If it's in your wallet, you can likely swap it here.",
         },
       },
     ],
   };
 
   const handleRefresh = useCallback(async () => {
-    // Force re-fetch of exchange rates by invalidating queries
     await new Promise((resolve) => setTimeout(resolve, 1000));
     window.dispatchEvent(new CustomEvent("pull-refresh"));
   }, []);
@@ -157,8 +137,7 @@ const Index = () => {
         <meta name="twitter:title" content="MRC GlobalPay | No Minimum Crypto Exchange | Swap Dust from $0.30" />
         <meta name="twitter:description" content="Instant, accountless crypto swaps with no minimums. Support for Fractal Bitcoin, Solana, and 500+ assets. Convert wallet dust under $1 securely." />
         <meta name="twitter:image" content="https://pub-bb2e103a32db4e198524a2e9ed8f35b4.r2.dev/22f69f45-cf65-4871-9af4-b68ab4027213/id-preview-243bf129--23f851ec-c820-43c7-bbe2-d2e830f7c268.lovable.app-1773521796493.png" />
-        <script type="application/ld+json">{JSON.stringify(jsonLd)}</script>
-        <script type="application/ld+json">{JSON.stringify(serviceJsonLd)}</script>
+        <script type="application/ld+json">{JSON.stringify(financialServiceJsonLd)}</script>
         <script type="application/ld+json">{JSON.stringify(faqJsonLd)}</script>
       </Helmet>
 
