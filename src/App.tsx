@@ -25,6 +25,7 @@ import CryptoDustGuide from "./pages/CryptoDustGuide.tsx";
 import FractalBitcoinSwap from "./pages/FractalBitcoinSwap.tsx";
 import TransparencySecurity from "./pages/TransparencySecurity.tsx";
 import DustSwapComparison from "./pages/DustSwapComparison.tsx";
+import KeywordPage from "./pages/KeywordPage.tsx";
 import NotFound from "./pages/NotFound.tsx";
 
 const queryClient = new QueryClient();
@@ -58,6 +59,19 @@ const App = () => (
                 <Route path="/resources/fractal-bitcoin-swap" element={<FractalBitcoinSwap />} />
                 <Route path="/transparency-security" element={<TransparencySecurity />} />
                 <Route path="/dust-swap-comparison" element={<DustSwapComparison />} />
+                {/* SEO keyword landing pages */}
+                <Route path="/swap/*" element={<KeywordPage />} />
+                <Route path="/buy/*" element={<KeywordPage />} />
+                <Route path="/guides/*" element={<KeywordPage />} />
+                <Route path="/tools/*" element={<KeywordPage />} />
+                <Route path="/ecosystem/*" element={<KeywordPage />} />
+                <Route path="/alternatives/*" element={<KeywordPage />} />
+                <Route path="/reviews/*" element={<KeywordPage />} />
+                <Route path="/bridge/*" element={<KeywordPage />} />
+                <Route path="/trade/*" element={<KeywordPage />} />
+                <Route path="/price/*" element={<KeywordPage />} />
+                <Route path="/local-crypto-exchange" element={<KeywordPage />} />
+                <Route path="/exchange-iu" element={<KeywordPage />} />
                 {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
                 <Route path="*" element={<NotFound />} />
               </Routes>
