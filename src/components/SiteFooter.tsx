@@ -118,7 +118,7 @@ const SiteFooter = () => {
               Technical Partners
             </h3>
             <div className="flex flex-wrap items-center justify-center gap-6 sm:justify-start">
-              {["ChangeNOW", "Fireblocks", "Vanguard Talent"].map((partner) => (
+              {["ChangeNOW", "Fireblocks"].map((partner) => (
                 <span
                   key={partner}
                   className="rounded border border-border bg-muted/50 px-3 py-1.5 font-body text-xs font-medium text-muted-foreground grayscale"
