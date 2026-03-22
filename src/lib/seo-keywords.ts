@@ -97,7 +97,7 @@ export const seoKeywords = [
   { keyword: "adaswap dex", intentType: "Commercial", targetUrl: "/alternatives/adaswap", primaryH1: "Alternative to AdaSwap DEX", benefitHook: "Faster Cardano-based ecosystem swaps." },
   { keyword: "30 trx to usdt", intentType: "Commercial", targetUrl: "/swap/30-trx-to-usdt", primaryH1: "Convert 30 TRX to USDT", benefitHook: "Micro-swaps starting at just $0.30." },
   { keyword: "swap bitcoin for solana", intentType: "Commercial", targetUrl: "/swap/btc-to-sol-instant", primaryH1: "Swap Bitcoin for Solana Instantly", benefitHook: "Direct BTC-to-SOL non-custodial bridge." },
-].map((k) => ({ ...k, cluster: getCluster(k.keyword, k.targetUrl) }));
+].map((k) => ({ ...k, cluster: getCluster(k.keyword, k.targetUrl) })) as SeoKeyword[];
 
 export function getRelatedKeywords(current: SeoKeyword, max = 6): SeoKeyword[] {
   return seoKeywords
