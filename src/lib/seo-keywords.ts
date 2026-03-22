@@ -25,7 +25,7 @@ function getCluster(keyword: string, url: string): string {
   return "general";
 }
 
-export const seoKeywords: SeoKeyword[] = [
+export const seoKeywords = [
   { keyword: "usdt to trx", intentType: "Commercial", targetUrl: "/swap/usdt-to-trx", primaryH1: "Swap USDT to TRX Instantly", benefitHook: "Fastest Tron bridge with $0.30 minimum." },
   { keyword: "buy and send bitcoin no verification reddit", intentType: "Commercial", targetUrl: "/buy/bitcoin-no-verification", primaryH1: "Buy Bitcoin No Verification (Reddit Choice)", benefitHook: "Non-custodial and accountless execution." },
   { keyword: "usd to xmr", intentType: "Commercial", targetUrl: "/swap/usd-to-xmr", primaryH1: "Exchange USD to Monero (XMR)", benefitHook: "High-privacy Monero swaps with no KYC." },
