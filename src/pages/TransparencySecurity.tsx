@@ -161,11 +161,6 @@ const TransparencySecurity = () => {
                   role: "Custody & Settlement Infrastructure",
                   desc: "Enterprise-grade MPC wallet infrastructure ensuring secure transaction signing and settlement.",
                 },
-                {
-                  name: "Vanguard Talent",
-                  role: "Security & Compliance Advisor",
-                  desc: "Strategic partner providing cybersecurity advisory and regulatory compliance consulting.",
-                },
               ].map((partner) => (
                 <div
                   key={partner.name}
