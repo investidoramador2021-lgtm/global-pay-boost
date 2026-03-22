@@ -25,6 +25,7 @@ import CryptoDustGuide from "./pages/CryptoDustGuide.tsx";
 import FractalBitcoinSwap from "./pages/FractalBitcoinSwap.tsx";
 import TransparencySecurity from "./pages/TransparencySecurity.tsx";
 import DustSwapComparison from "./pages/DustSwapComparison.tsx";
+import KeywordPage from "./pages/KeywordPage.tsx";
 import NotFound from "./pages/NotFound.tsx";
 
 const queryClient = new QueryClient();
