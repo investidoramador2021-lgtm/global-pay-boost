@@ -1,10 +1,31 @@
 const quickLinks = [
-  { label: "Buy Bitcoin", href: "/#exchange-widget" },
-  { label: "Buy Ethereum", href: "/#exchange-widget" },
-  { label: "Swap BTC to ETH", href: "/#exchange-widget" },
-  { label: "Swap SOL to USDC", href: "/#exchange-widget" },
-  { label: "Buy Solana", href: "/#exchange-widget" },
+  { label: "Buy Bitcoin", href: "/buy/bitcoin-no-kyc" },
+  { label: "Buy Ethereum", href: "/buy/ethereum" },
+  { label: "Buy Solana", href: "/buy/solana-no-kyc" },
+  { label: "Swap BNB to SOL", href: "/swap/bnb-to-sol" },
   { label: "Swap XRP to BTC", href: "/#exchange-widget" },
+  { label: "Bridge ETH to SOL", href: "/bridge/eth-to-sol" },
+];
+
+const popularSwaps = [
+  { label: "USDT to TRX", href: "/swap/usdt-to-trx" },
+  { label: "USDC to SOL", href: "/swap/usdc-sol" },
+  { label: "XMR to ETH", href: "/swap/xmr-to-eth" },
+  { label: "SHIB to USDT", href: "/swap/shiba-to-usdt" },
+  { label: "BTC to SOL", href: "/swap/btc-to-sol-instant" },
+  { label: "BNB Swap", href: "/swap/bnb" },
+];
+
+const moreLinks = [
+  { label: "PulseChain Bridge", href: "/bridge/pulsechain" },
+  { label: "Bridge SOL to BNB", href: "/bridge/solana-to-bnb" },
+  { label: "Tangem Wallet Review", href: "/reviews/tangem-wallet" },
+  { label: "Best XRP Wallet", href: "/reviews/best-xrp-wallet" },
+  { label: "Trade Trump/SOL", href: "/trade/trump-sol" },
+  { label: "SOL Wallet Tracker", href: "/tools/sol-wallet-tracker" },
+  { label: "Buy Celo", href: "/buy/celo" },
+  { label: "AdaSwap Alternative", href: "/alternatives/adaswap" },
+  { label: "Holo Exchange Alt", href: "/alternatives/holo-exchange" },
 ];
 
 const resourceLinks = [
