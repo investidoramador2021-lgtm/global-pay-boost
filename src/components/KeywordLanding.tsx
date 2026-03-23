@@ -87,6 +87,13 @@ const KeywordLanding = ({ data }: Props) => {
         "@type": "FinancialService",
         name: "MRC GlobalPay",
         url: "https://mrcglobalpay.com",
+        "@id": "https://mrcglobalpay.com/#organization",
+        address: {
+          "@type": "PostalAddress",
+          addressLocality: "Ottawa",
+          addressRegion: "ON",
+          addressCountry: "CA",
+        },
         hasCredential: {
           "@type": "DefinedTerm",
           name: "Money Services Business (MSB)",
