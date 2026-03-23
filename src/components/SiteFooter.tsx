@@ -188,7 +188,7 @@ const SiteFooter = () => {
             <p className="font-body text-xs leading-relaxed text-muted-foreground">
               {complianceText}{" "}
               <a href="/transparency-security" className="text-primary hover:underline">
-                Learn more →
+                View our transparency &amp; security practices
               </a>
             </p>
           </div>
