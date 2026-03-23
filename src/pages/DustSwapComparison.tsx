@@ -63,10 +63,10 @@ const DustSwapComparison = () => {
   return (
     <>
       <Helmet>
-        <title>Micro-Swap Comparison 2026 | No Minimum Crypto Exchange | MRC GlobalPay</title>
+        <title>Micro-Swap Comparison 2026 | MRC GlobalPay</title>
         <meta
           name="description"
-          content="Compare MRC GlobalPay's $0.30 minimum crypto dust swaps against ChangeNOW, SimpleSwap, and Changelly. See why we're the best no-minimum crypto exchange in 2026."
+          content="Compare MRC GlobalPay's $0.30 minimum dust swaps vs ChangeNOW, SimpleSwap, and Changelly. The best no-minimum crypto exchange in 2026."
         />
         <link rel="canonical" href="https://mrcglobalpay.com/dust-swap-comparison" />
         <meta property="og:title" content="Micro-Swap Comparison 2026 | MRC GlobalPay" />
