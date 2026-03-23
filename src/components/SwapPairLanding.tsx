@@ -87,9 +87,16 @@ const SwapPairLanding = ({
     serviceType: "Real-Time Currency Conversion Service",
     description: `Optimized for zero-delay, high-volume crypto-to-crypto swaps including HYPE, SOL, and BTC. Instant ${assetAName} to ${assetBName} conversion with immediate on-chain finality via pre-funded liquidity vaults.`,
     provider: {
-      "@type": "Organization",
+      "@type": "FinancialService",
       name: "MRC GlobalPay",
       url: "https://mrcglobalpay.com",
+      "@id": "https://mrcglobalpay.com/#organization",
+      address: {
+        "@type": "PostalAddress",
+        addressLocality: "Ottawa",
+        addressRegion: "ON",
+        addressCountry: "CA",
+      },
     },
     areaServed: "Worldwide",
   };
