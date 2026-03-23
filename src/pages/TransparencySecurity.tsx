@@ -39,7 +39,7 @@ const TransparencySecurity = () => {
   return (
     <>
       <Helmet>
-        <title>Transparency & Security | MRC GlobalPay — Canadian MSB Compliance</title>
+        <title>Transparency & Security | MRC GlobalPay</title>
         <meta
           name="description"
           content="MRC GlobalPay operates as a Canadian MSB-compliant, non-custodial crypto exchange. Learn about our security audits, liquidity partners, and data practices."

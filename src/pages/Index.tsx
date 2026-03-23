@@ -120,7 +120,7 @@ const Index = () => {
   return (
     <>
       <Helmet>
-        <title>MRC GlobalPay | No Minimum Crypto Exchange | Swap Dust from $0.30</title>
+        <title>MRC GlobalPay | No Minimum Crypto Exchange</title>
         <meta
           name="description"
           content="Instant, accountless crypto swaps with no minimums. Support for Fractal Bitcoin, Solana, and 500+ assets. Convert wallet dust under $1 securely."

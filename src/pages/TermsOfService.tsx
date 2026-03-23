@@ -6,7 +6,7 @@ const TermsOfService = () => (
   <>
     <Helmet>
       <title>Terms of Service — MRC GlobalPay</title>
-      <meta name="description" content="MRC GlobalPay terms of service for cryptocurrency exchange services." />
+      <meta name="description" content="MRC GlobalPay terms of service for non-custodial cryptocurrency exchange. Read about user responsibilities, swap policies, and service limitations." />
       <meta name="robots" content="index, follow" />
       <link rel="canonical" href="https://mrcglobalpay.com/terms" />
     </Helmet>

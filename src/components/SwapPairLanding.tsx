@@ -38,8 +38,8 @@ const SwapPairLanding = ({
   isFeatured = false,
   extraFaqs = [],
 }: SwapPairPageProps) => {
-  const title = `Instant ${assetA} to ${assetB} Swap – Zero Delays, March 2026 | MRC GlobalPay`;
-  const description = `Instant ${assetAName} to ${assetBName} swaps. Processing: under 60 seconds. Settlement: immediate on-chain finality. Zero confirmation delays. No registration. Best March 2026 rates.`;
+  const title = `Swap ${assetA} to ${assetB} Instantly | MRC GlobalPay`;
+  const description = `Instant ${assetAName} to ${assetBName} swaps in under 60 seconds. No registration, zero delays. Best rates March 2026.`;
   const url = `https://mrcglobalpay.com/swap/${slug}`;
 
   const aeoFaq = {
