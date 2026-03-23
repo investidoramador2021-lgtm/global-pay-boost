@@ -1,10 +1,31 @@
 const quickLinks = [
-  { label: "Buy Bitcoin", href: "/#exchange-widget" },
-  { label: "Buy Ethereum", href: "/#exchange-widget" },
-  { label: "Swap BTC to ETH", href: "/#exchange-widget" },
-  { label: "Swap SOL to USDC", href: "/#exchange-widget" },
-  { label: "Buy Solana", href: "/#exchange-widget" },
+  { label: "Buy Bitcoin", href: "/buy/bitcoin-no-kyc" },
+  { label: "Buy Ethereum", href: "/buy/ethereum" },
+  { label: "Buy Solana", href: "/buy/solana-no-kyc" },
+  { label: "Swap BNB to SOL", href: "/swap/bnb-to-sol" },
   { label: "Swap XRP to BTC", href: "/#exchange-widget" },
+  { label: "Bridge ETH to SOL", href: "/bridge/eth-to-sol" },
+];
+
+const popularSwaps = [
+  { label: "USDT to TRX", href: "/swap/usdt-to-trx" },
+  { label: "USDC to SOL", href: "/swap/usdc-sol" },
+  { label: "XMR to ETH", href: "/swap/xmr-to-eth" },
+  { label: "SHIB to USDT", href: "/swap/shiba-to-usdt" },
+  { label: "BTC to SOL", href: "/swap/btc-to-sol-instant" },
+  { label: "BNB Swap", href: "/swap/bnb" },
+];
+
+const moreLinks = [
+  { label: "PulseChain Bridge", href: "/bridge/pulsechain" },
+  { label: "Bridge SOL to BNB", href: "/bridge/solana-to-bnb" },
+  { label: "Tangem Wallet Review", href: "/reviews/tangem-wallet" },
+  { label: "Best XRP Wallet", href: "/reviews/best-xrp-wallet" },
+  { label: "Trade Trump/SOL", href: "/trade/trump-sol" },
+  { label: "SOL Wallet Tracker", href: "/tools/sol-wallet-tracker" },
+  { label: "Buy Celo", href: "/buy/celo" },
+  { label: "AdaSwap Alternative", href: "/alternatives/adaswap" },
+  { label: "Holo Exchange Alt", href: "/alternatives/holo-exchange" },
 ];
 
 const resourceLinks = [
@@ -32,7 +53,7 @@ const SiteFooter = () => {
   return (
     <footer className="border-t border-border bg-muted py-10 sm:py-16">
       <div className="container mx-auto px-4">
-        <div className="grid gap-8 sm:grid-cols-2 sm:gap-12 lg:grid-cols-5">
+        <div className="grid gap-8 sm:grid-cols-2 sm:gap-12 lg:grid-cols-4 xl:grid-cols-7">
           <div>
             <a href="/" className="font-display text-lg font-bold tracking-tight text-foreground sm:text-xl">
               MRC<span className="text-primary">GlobalPay</span>
@@ -107,6 +128,36 @@ const SiteFooter = () => {
                   AML Policy
                 </a>
               </li>
+            </ul>
+          </div>
+
+          <div>
+            <h3 className="font-display text-xs font-semibold uppercase tracking-wider text-foreground/80 sm:text-sm">
+              Popular Swaps
+            </h3>
+            <ul className="mt-3 space-y-2 sm:mt-4 sm:space-y-3">
+              {popularSwaps.map((link) => (
+                <li key={link.label}>
+                  <a href={link.href} className="font-body text-sm text-muted-foreground transition-colors hover:text-foreground">
+                    {link.label}
+                  </a>
+                </li>
+              ))}
+            </ul>
+          </div>
+
+          <div>
+            <h3 className="font-display text-xs font-semibold uppercase tracking-wider text-foreground/80 sm:text-sm">
+              More
+            </h3>
+            <ul className="mt-3 space-y-2 sm:mt-4 sm:space-y-3">
+              {moreLinks.map((link) => (
+                <li key={link.label}>
+                  <a href={link.href} className="font-body text-sm text-muted-foreground transition-colors hover:text-foreground">
+                    {link.label}
+                  </a>
+                </li>
+              ))}
             </ul>
           </div>
         </div>
