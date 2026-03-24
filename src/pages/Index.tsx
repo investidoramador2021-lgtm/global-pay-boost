@@ -25,33 +25,27 @@ const Index = () => {
     description:
       "Registered Money Services Business (MSB) offering instant, non-custodial crypto-to-crypto swaps with no minimums. 500+ assets supported.",
     image: "https://pub-bb2e103a32db4e198524a2e9ed8f35b4.r2.dev/22f69f45-cf65-4871-9af4-b68ab4027213/id-preview-243bf129--23f851ec-c820-43c7-bbe2-d2e830f7c268.lovable.app-1773521796493.png",
+    logo: "https://pub-bb2e103a32db4e198524a2e9ed8f35b4.r2.dev/22f69f45-cf65-4871-9af4-b68ab4027213/id-preview-243bf129--23f851ec-c820-43c7-bbe2-d2e830f7c268.lovable.app-1773521796493.png",
     address: {
       "@type": "PostalAddress",
+      streetAddress: "100 Metcalfe Street",
       addressLocality: "Ottawa",
       addressRegion: "ON",
+      postalCode: "K1P 5M1",
       addressCountry: "CA",
     },
-    areaServed: "Worldwide",
-    serviceType: "CurrencyConversionService",
-    hasCredential: {
-      "@type": "DefinedTerm",
-      name: "Money Services Business (MSB)",
-      description:
-        "Registered with FINTRAC under Canadian AML/CTF regulations.",
+    areaServed: {
+      "@type": "Place",
+      name: "Worldwide",
     },
-    offers: {
-      "@type": "Offer",
-      category: "Cryptocurrency Exchange",
-      description:
-        "Non-custodial crypto swaps from $0.30 with no account required.",
+    serviceType: "Cryptocurrency Exchange",
+    currenciesAccepted: "BTC, ETH, SOL, USDT, USDC",
+    priceRange: "$0.30+",
+    potentialAction: {
+      "@type": "SearchAction",
+      target: "https://mrcglobalpay.com/#exchange",
+      name: "Swap Cryptocurrency",
     },
-    potentialAction: [
-      {
-        "@type": "TradeAction",
-        name: "Swap Crypto Dust",
-        target: "https://mrcglobalpay.com/#exchange",
-      },
-    ],
   };
 
   const faqJsonLd = {
