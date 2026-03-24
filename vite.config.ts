@@ -98,9 +98,12 @@ export default defineConfig(({ mode }) => ({
       output: {
         manualChunks: {
           "vendor-react": ["react", "react-dom", "react-router-dom"],
-          "vendor-ui": ["@radix-ui/react-accordion", "@radix-ui/react-dialog", "@radix-ui/react-dropdown-menu", "@radix-ui/react-popover", "@radix-ui/react-select", "@radix-ui/react-tooltip"],
+          "vendor-ui": ["@radix-ui/react-accordion", "@radix-ui/react-dialog", "@radix-ui/react-dropdown-menu", "@radix-ui/react-popover", "@radix-ui/react-select", "@radix-ui/react-tooltip", "@radix-ui/react-tabs"],
           "vendor-query": ["@tanstack/react-query"],
           "vendor-helmet": ["react-helmet-async"],
+          "vendor-motion": ["framer-motion"],
+          "vendor-qr": ["qrcode.react"],
+          "vendor-supabase": ["@supabase/supabase-js"],
         },
       },
     },
