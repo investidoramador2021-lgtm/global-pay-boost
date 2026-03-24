@@ -2,14 +2,15 @@ const quickLinks = [
   { label: "Buy Bitcoin", href: "/buy/bitcoin-no-kyc" },
   { label: "Buy Ethereum", href: "/buy/ethereum" },
   { label: "Buy Solana", href: "/buy/solana-no-kyc" },
+  { label: "Buy Solana No Verification", href: "/buy/solana-no-verification" },
   { label: "Swap BNB to SOL", href: "/swap/bnb-to-sol" },
-  { label: "Swap XRP to BTC", href: "/#exchange-widget" },
   { label: "Bridge ETH to SOL", href: "/bridge/eth-to-sol" },
 ];
 
 const popularSwaps = [
   { label: "USDT to TRX", href: "/swap/usdt-to-trx" },
   { label: "USDC to SOL", href: "/swap/usdc-sol" },
+  { label: "USDC Solana", href: "/swap/usdc-solana" },
   { label: "XMR to ETH", href: "/swap/xmr-to-eth" },
   { label: "SHIB to USDT", href: "/swap/shiba-to-usdt" },
   { label: "BTC to SOL", href: "/swap/btc-to-sol-instant" },
@@ -26,6 +27,9 @@ const moreLinks = [
   { label: "Buy Celo", href: "/buy/celo" },
   { label: "AdaSwap Alternative", href: "/alternatives/adaswap" },
   { label: "Holo Exchange Alt", href: "/alternatives/holo-exchange" },
+  { label: "DAG Crypto", href: "/ecosystem/dag-crypto" },
+  { label: "Jambo Solana", href: "/ecosystem/jambo-solana" },
+  { label: "Xcoins Alternative", href: "/alternatives/xcoins" },
 ];
 
 const resourceLinks = [
@@ -36,6 +40,7 @@ const resourceLinks = [
   { label: "FAQ", href: "/#faq" },
   { label: "How to Swap Dust", href: "/resources/crypto-dust-guide" },
   { label: "Fractal BTC Bridge", href: "/resources/fractal-bitcoin-swap" },
+  { label: "Best Place to Buy Solana", href: "/guides/best-place-to-buy-solana" },
 ];
 
 const expertiseLinks = [
