@@ -5,6 +5,9 @@ const quickLinks = [
   { label: "Buy Solana No Verification", href: "/buy/solana-no-verification" },
   { label: "Swap BNB to SOL", href: "/swap/bnb-to-sol" },
   { label: "Bridge ETH to SOL", href: "/bridge/eth-to-sol" },
+  { label: "Buy Ether Instant", href: "/buy/ether-instant" },
+  { label: "Buy XDC", href: "/buy/xdc" },
+  { label: "Buy LTC PayPal", href: "/buy/ltc-paypal" },
 ];
 
 const popularSwaps = [
@@ -15,6 +18,15 @@ const popularSwaps = [
   { label: "SHIB to USDT", href: "/swap/shiba-to-usdt" },
   { label: "BTC to SOL", href: "/swap/btc-to-sol-instant" },
   { label: "BNB Swap", href: "/swap/bnb" },
+  { label: "USDT to SOL", href: "/swap/usdt-to-sol" },
+  { label: "USDT to Solana", href: "/swap/usdt-to-solana" },
+  { label: "USDT to LTC", href: "/swap/usdt-to-ltc" },
+  { label: "ETH to SOL", href: "/swap/eth-to-sol" },
+  { label: "USDT TRX Instant", href: "/swap/usdt-trx-instant" },
+  { label: "SOL to IDR", href: "/swap/solana-to-idr" },
+  { label: "30 TRX to USDT", href: "/swap/30-trx-to-usdt" },
+  { label: "VINU Swap", href: "/swap/vinu" },
+  { label: "USD to XMR", href: "/swap/usd-to-xmr" },
 ];
 
 const moreLinks = [
@@ -30,6 +42,18 @@ const moreLinks = [
   { label: "DAG Crypto", href: "/ecosystem/dag-crypto" },
   { label: "Jambo Solana", href: "/ecosystem/jambo-solana" },
   { label: "Xcoins Alternative", href: "/alternatives/xcoins" },
+  { label: "Topper Crypto Alt", href: "/alternatives/topper-crypto" },
+  { label: "Kraken Monero Alt", href: "/alternatives/kraken-monero" },
+  { label: "DAG Coins", href: "/ecosystem/dag-coins" },
+  { label: "DUSD Portal", href: "/ecosystem/dusd" },
+  { label: "Tether Pro", href: "/ecosystem/tether-pro" },
+  { label: "Shiba Inu Card", href: "/ecosystem/shiba-inu-card" },
+  { label: "ARK XRP", href: "/ecosystem/ark-xrp" },
+  { label: "Trade Alpaca", href: "/trade/alpaca" },
+  { label: "Best ERC20 Wallet", href: "/reviews/best-erc20-wallet" },
+  { label: "DGB Wallet", href: "/reviews/dgb-wallet" },
+  { label: "BSV Wallet", href: "/reviews/bsv-wallet" },
+  { label: "Best Ripple Wallet", href: "/reviews/best-ripple-wallet" },
 ];
 
 const resourceLinks = [
@@ -41,6 +65,27 @@ const resourceLinks = [
   { label: "How to Swap Dust", href: "/resources/crypto-dust-guide" },
   { label: "Fractal BTC Bridge", href: "/resources/fractal-bitcoin-swap" },
   { label: "Best Place to Buy Solana", href: "/guides/best-place-to-buy-solana" },
+  { label: "How to Buy Litecoin", href: "/guides/how-to-buy-litecoin" },
+  { label: "How to Mine Litecoin", href: "/guides/how-to-mine-litecoin" },
+  { label: "Litecoin Mining Guide", href: "/guides/litecoin-mining" },
+  { label: "Is Solana a Good Investment?", href: "/guides/is-solana-a-good-investment" },
+  { label: "Best Short-Term Crypto", href: "/guides/best-short-term-crypto" },
+  { label: "Trade Meme Coins", href: "/guides/how-to-trade-meme-coins" },
+  { label: "USDT ERC20 Meaning", href: "/guides/usdt-erc20-meaning" },
+  { label: "Wrapped BTC Guide", href: "/guides/wrapped-btc-to-bitcoin" },
+  { label: "Orange Fren XMR Alt", href: "/guides/buy-xmr-orange-fren-alternative" },
+  { label: "Swap Nodes in Pairs", href: "/guides/swap-nodes-in-pairs" },
+  { label: "LTC Tracker", href: "/tools/ltc-tracker" },
+  { label: "Litecoin Tracker", href: "/tools/litecoin-tracker" },
+  { label: "Rate of Change", href: "/tools/instant-rate-change" },
+  { label: "Swap Bot", href: "/tools/swap-bot" },
+  { label: "Coin Exchange Near Me", href: "/local-crypto-exchange" },
+  { label: "Exchange IU", href: "/exchange-iu" },
+  { label: "Harmony ONE Price", href: "/price/harmony-one" },
+  { label: "Buy Solana PayPal", href: "/buy/solana-paypal" },
+  { label: "Buy Monero No KYC", href: "/buy/monero-no-kyc" },
+  { label: "BNB Meme Coin Trading", href: "/trade/bnb-meme-coins" },
+  { label: "Bitcoin No Verification", href: "/buy/bitcoin-no-verification" },
 ];
 
 const expertiseLinks = [
