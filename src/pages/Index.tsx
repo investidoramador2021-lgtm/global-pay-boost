@@ -34,6 +34,7 @@ const Index = () => {
       postalCode: "K1P 5M1",
       addressCountry: "CA",
     },
+    telephone: "+1-613-555-0100",
     areaServed: {
       "@type": "Place",
       name: "Worldwide",
@@ -41,6 +42,12 @@ const Index = () => {
     serviceType: "Cryptocurrency Exchange",
     currenciesAccepted: "BTC, ETH, SOL, USDT, USDC",
     priceRange: "$0.30+",
+    openingHoursSpecification: {
+      "@type": "OpeningHoursSpecification",
+      dayOfWeek: ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"],
+      opens: "00:00",
+      closes: "23:59",
+    },
     potentialAction: {
       "@type": "SearchAction",
       target: "https://mrcglobalpay.com/#exchange",
