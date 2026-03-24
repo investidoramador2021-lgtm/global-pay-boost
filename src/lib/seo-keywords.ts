@@ -5,6 +5,7 @@ export interface SeoKeyword {
   primaryH1: string;
   benefitHook: string;
   cluster: string;
+  canonicalUrl?: string;
 }
 
 function getCluster(keyword: string, url: string): string {
@@ -34,7 +35,7 @@ export const seoKeywords = [
   { keyword: "is solana a good investment", intentType: "Informational", targetUrl: "/guides/is-solana-a-good-investment", primaryH1: "Is Solana a Good Investment in 2026?", benefitHook: "Market analysis plus instant SOL swap tool." },
   { keyword: "ltc transaction tracker", intentType: "Utility", targetUrl: "/tools/ltc-tracker", primaryH1: "Litecoin (LTC) Transaction Tracker", benefitHook: "Track and swap Litecoin in one dashboard." },
   { keyword: "best way to buy monero no kyc", intentType: "Commercial", targetUrl: "/buy/monero-no-kyc", primaryH1: "Best Way to Buy Monero (No KYC)", benefitHook: "Secure and anonymous XMR swapping." },
-  { keyword: "eth to sol", intentType: "Commercial", targetUrl: "/swap/eth-to-sol", primaryH1: "Swap ETH to SOL Bridge", benefitHook: "Instant Ethereum to Solana cross-chain bridge." },
+  { keyword: "eth to sol", intentType: "Commercial", targetUrl: "/swap/eth-to-sol", primaryH1: "Swap ETH to SOL Bridge", benefitHook: "Instant Ethereum to Solana cross-chain bridge.", canonicalUrl: "/swap/eth-sol" },
   { keyword: "buy solana no kyc", intentType: "Commercial", targetUrl: "/buy/solana-no-kyc", primaryH1: "Buy Solana with No KYC", benefitHook: "Non-custodial SOL swaps starting at $0.30." },
   { keyword: "can i send wrapped bitcoin to a bitcoin wallet", intentType: "Informational", targetUrl: "/guides/wrapped-btc-to-bitcoin", primaryH1: "Can I Send Wrapped BTC to a BTC Wallet?", benefitHook: "Technical guide for cross-chain safety." },
   { keyword: "exchange iu", intentType: "Commercial", targetUrl: "/exchange-iu", primaryH1: "Exchange IU Crypto Portal", benefitHook: "Dedicated entry for IU ecosystem assets." },
@@ -42,7 +43,7 @@ export const seoKeywords = [
   { keyword: "litecoin mining", intentType: "Informational", targetUrl: "/guides/litecoin-mining", primaryH1: "Litecoin Mining Guide 2026", benefitHook: "Mine LTC and swap rewards instantly." },
   { keyword: "solana to idr", intentType: "Commercial", targetUrl: "/swap/solana-to-idr", primaryH1: "Convert Solana to IDR (Rupiah)", benefitHook: "Localized rates for the Indonesian market." },
   { keyword: "usdt to ltc", intentType: "Commercial", targetUrl: "/swap/usdt-to-ltc", primaryH1: "Swap USDT to Litecoin (LTC)", benefitHook: "Instant stablecoin to LTC exit." },
-  { keyword: "usdt to solana", intentType: "Commercial", targetUrl: "/swap/usdt-to-solana", primaryH1: "USDT to Solana Swap Portal", benefitHook: "Fastest SPL-token bridge." },
+  { keyword: "usdt to solana", intentType: "Commercial", targetUrl: "/swap/usdt-to-solana", primaryH1: "USDT to Solana Swap Portal", benefitHook: "Fastest SPL-token bridge.", canonicalUrl: "/swap/usdt-to-sol" },
   { keyword: "bnb meme coin trading platform", intentType: "Commercial", targetUrl: "/trade/bnb-meme-coins", primaryH1: "Best BNB Meme Coin Trading Platform", benefitHook: "Trade the latest BSC memes with zero lag." },
   { keyword: "buy solana with paypal", intentType: "Commercial", targetUrl: "/buy/solana-paypal", primaryH1: "Buy Solana (SOL) with PayPal", benefitHook: "Easy checkout for instant Solana swaps." },
   { keyword: "how to buy litecoin", intentType: "Informational", targetUrl: "/guides/how-to-buy-litecoin", primaryH1: "How to Buy Litecoin (LTC) Fast", benefitHook: "Step-by-step onboarding for new traders." },
@@ -62,16 +63,16 @@ export const seoKeywords = [
   { keyword: "dags coins", intentType: "Informational", targetUrl: "/ecosystem/dag-coins", primaryH1: "Investing in DAG Coins", benefitHook: "A list of the top DAG-based assets." },
   { keyword: "dusd portal", intentType: "Commercial", targetUrl: "/ecosystem/dusd", primaryH1: "DUSD Stablecoin Portal", benefitHook: "Gateway for Decentralized USD swaps." },
   { keyword: "how to trade meme coins", intentType: "Informational", targetUrl: "/guides/how-to-trade-meme-coins", primaryH1: "How to Trade Meme Coins Successfully", benefitHook: "Risk management and instant trading tools." },
-  { keyword: "usdc sol", intentType: "Commercial", targetUrl: "/swap/usdc-sol", primaryH1: "USDC to SOL Instant Swap", benefitHook: "High-speed stablecoin conversion." },
+  { keyword: "usdc sol", intentType: "Commercial", targetUrl: "/swap/usdc-sol", primaryH1: "USDC to SOL Instant Swap", benefitHook: "High-speed stablecoin conversion.", canonicalUrl: "/swap/usdc-solana" },
   { keyword: "pulsechain bridge", intentType: "Commercial", targetUrl: "/bridge/pulsechain", primaryH1: "PulseChain Bridge & Swap", benefitHook: "Instant access to the PulseChain ecosystem." },
   { keyword: "swap bot login", intentType: "Utility", targetUrl: "/tools/swap-bot", primaryH1: "Crypto Swap Bot Login", benefitHook: "Manage your automated trading bot." },
   { keyword: "tether pro", intentType: "Commercial", targetUrl: "/ecosystem/tether-pro", primaryH1: "Tether Pro Advanced Swaps", benefitHook: "High-volume USDT liquidity for pros." },
   { keyword: "where can i purchase ether", intentType: "Commercial", targetUrl: "/buy/ethereum", primaryH1: "Where to Purchase Ether (ETH)", benefitHook: "Direct and fast Ethereum entry points." },
   { keyword: "24. swap nodes in pairs", intentType: "Informational", targetUrl: "/guides/swap-nodes-in-pairs", primaryH1: "24. Swap Nodes in Pairs Explained", benefitHook: "Technical guide for blockchain developers." },
-  { keyword: "buy solana without kyc", intentType: "Commercial", targetUrl: "/buy/solana-no-verification", primaryH1: "Buy Solana Without KYC", benefitHook: "Immediate and private SOL access." },
+  { keyword: "buy solana without kyc", intentType: "Commercial", targetUrl: "/buy/solana-no-verification", primaryH1: "Buy Solana Without KYC", benefitHook: "Immediate and private SOL access.", canonicalUrl: "/buy/solana-no-kyc" },
   { keyword: "kraken monero", intentType: "Commercial", targetUrl: "/alternatives/kraken-monero", primaryH1: "Kraken Monero Alternative", benefitHook: "The non-custodial way to swap XMR." },
   { keyword: "usdt erc20 meaning", intentType: "Informational", targetUrl: "/guides/usdt-erc20-meaning", primaryH1: "What is USDT ERC20?", benefitHook: "Educational breakdown of Ethereum USDT." },
-  { keyword: "usdt swap trx", intentType: "Commercial", targetUrl: "/swap/usdt-trx-instant", primaryH1: "Instant USDT to TRX Swap", benefitHook: "Fastest Tron network liquidity." },
+  { keyword: "usdt swap trx", intentType: "Commercial", targetUrl: "/swap/usdt-trx-instant", primaryH1: "Instant USDT to TRX Swap", benefitHook: "Fastest Tron network liquidity.", canonicalUrl: "/swap/usdt-to-trx" },
   { keyword: "where can i buy ether", intentType: "Commercial", targetUrl: "/buy/ether-instant", primaryH1: "Where to Buy Ether Instantly", benefitHook: "Top-rated no-KYC ETH platforms." },
   { keyword: "where can i buy xdc", intentType: "Commercial", targetUrl: "/buy/xdc", primaryH1: "Where to Buy XDC Network", benefitHook: "Instant exchange for XDC assets." },
   { keyword: "binance vinu", intentType: "Commercial", targetUrl: "/swap/vinu", primaryH1: "Binance Vita Inu (VINU) Swap", benefitHook: "Trade VINU with zero account required." },
