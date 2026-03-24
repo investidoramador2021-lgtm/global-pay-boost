@@ -21,6 +21,7 @@ const SwapBeraUsdt = lazy(() => import("./pages/SwapBeraUsdt.tsx"));
 const SwapTiaUsdt = lazy(() => import("./pages/SwapTiaUsdt.tsx"));
 const SwapMonadUsdt = lazy(() => import("./pages/SwapMonadUsdt.tsx"));
 const SwapPyusdUsdt = lazy(() => import("./pages/SwapPyusdUsdt.tsx"));
+const SwapBnbUsdc = lazy(() => import("./pages/SwapBnbUsdc.tsx"));
 const Blog = lazy(() => import("./pages/Blog.tsx"));
 const BlogPost = lazy(() => import("./pages/BlogPost.tsx"));
 const CryptoDustGuide = lazy(() => import("./pages/CryptoDustGuide.tsx"));
@@ -58,6 +59,7 @@ const App = () => (
                   <Route path="/swap/tia-usdt" element={<SwapTiaUsdt />} />
                   <Route path="/swap/monad-usdt" element={<SwapMonadUsdt />} />
                   <Route path="/swap/pyusd-usdt" element={<SwapPyusdUsdt />} />
+                  <Route path="/swap/bnb-usdc" element={<SwapBnbUsdc />} />
                   <Route path="/resources/crypto-dust-guide" element={<CryptoDustGuide />} />
                   <Route path="/resources/fractal-bitcoin-swap" element={<FractalBitcoinSwap />} />
                   <Route path="/transparency-security" element={<TransparencySecurity />} />
