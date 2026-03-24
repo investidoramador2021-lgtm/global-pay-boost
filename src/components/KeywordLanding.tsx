@@ -45,9 +45,10 @@ const BoolCell = ({ value }: { value: boolean | string }) => {
 };
 
 const KeywordLanding = ({ data }: Props) => {
-  const { keyword, primaryH1, benefitHook, targetUrl, intentType } = data;
+  const { keyword, primaryH1, benefitHook, targetUrl, intentType, canonicalUrl } = data;
   const related = getRelatedKeywords(data);
   const url = `https://mrcglobalpay.com${targetUrl}`;
+  const canonical = canonicalUrl ? `https://mrcglobalpay.com${canonicalUrl}` : url;
   const truncatedKw = keyword.length > 35 ? keyword.slice(0, 35).trim() : keyword;
   const title = `${truncatedKw} | $0.30 Min | MRC GlobalPay`;
   const description = `${benefitHook} Swap from $0.30 with no account. 500+ tokens on MRC GlobalPay.`;
@@ -109,7 +110,7 @@ const KeywordLanding = ({ data }: Props) => {
       <Helmet>
         <title>{title}</title>
         <meta name="description" content={description} />
-        <link rel="canonical" href={url} />
+        <link rel="canonical" href={canonical} />
         <meta property="og:title" content={title} />
         <meta property="og:description" content={description} />
         <meta property="og:url" content={url} />
