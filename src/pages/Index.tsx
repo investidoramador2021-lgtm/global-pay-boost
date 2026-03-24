@@ -49,9 +49,10 @@ const Index = () => {
       closes: "23:59",
     },
     potentialAction: {
-      "@type": "SearchAction",
+      "@type": "TradeAction",
       target: "https://mrcglobalpay.com/#exchange",
       name: "Swap Cryptocurrency",
+      description: "Instantly swap 500+ cryptocurrencies with no account required.",
     },
   };
 
