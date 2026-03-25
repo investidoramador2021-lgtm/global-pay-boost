@@ -19,7 +19,8 @@ const PrivacyPolicy = () => (
       <meta property="og:image" content="https://pub-bb2e103a32db4e198524a2e9ed8f35b4.r2.dev/22f69f45-cf65-4871-9af4-b68ab4027213/id-preview-243bf129--23f851ec-c820-43c7-bbe2-d2e830f7c268.lovable.app-1773521796493.png" />
       <meta name="twitter:card" content="summary_large_image" />
       <meta name="twitter:title" content="Privacy Policy — MRC GlobalPay" />
-      <meta name="twitter:description" content="MRC GlobalPay privacy policy. Learn how we handle your data during cryptocurrency exchanges." />
+        <meta name="twitter:description" content="MRC GlobalPay privacy policy. Learn how we handle your data during cryptocurrency exchanges." />
+        <meta name="twitter:image" content="https://pub-bb2e103a32db4e198524a2e9ed8f35b4.r2.dev/22f69f45-cf65-4871-9af4-b68ab4027213/id-preview-243bf129--23f851ec-c820-43c7-bbe2-d2e830f7c268.lovable.app-1773521796493.png" />
     </Helmet>
     <SiteHeader />
     <main className="relative overflow-hidden">

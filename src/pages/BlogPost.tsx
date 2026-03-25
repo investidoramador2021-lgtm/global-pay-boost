@@ -101,12 +101,18 @@ const BlogPostPage = () => {
         <meta property="og:description" content={post.metaDescription} />
         <meta property="og:type" content="article" />
         <meta property="og:url" content={`https://mrcglobalpay.com/blog/${post.slug}`} />
+        <meta property="og:site_name" content="MRC GlobalPay" />
+        <meta property="og:image" content="https://pub-bb2e103a32db4e198524a2e9ed8f35b4.r2.dev/22f69f45-cf65-4871-9af4-b68ab4027213/id-preview-243bf129--23f851ec-c820-43c7-bbe2-d2e830f7c268.lovable.app-1773521796493.png" />
         <meta property="article:published_time" content={post.publishedAt} />
         <meta property="article:modified_time" content={post.updatedAt} />
         <meta property="article:section" content={post.category} />
         {post.tags.map((tag) => (
           <meta property="article:tag" content={tag} key={tag} />
         ))}
+        <meta name="twitter:card" content="summary_large_image" />
+        <meta name="twitter:title" content={`${post.metaTitle} | MRC GlobalPay`} />
+        <meta name="twitter:description" content={post.metaDescription} />
+        <meta name="twitter:image" content="https://pub-bb2e103a32db4e198524a2e9ed8f35b4.r2.dev/22f69f45-cf65-4871-9af4-b68ab4027213/id-preview-243bf129--23f851ec-c820-43c7-bbe2-d2e830f7c268.lovable.app-1773521796493.png" />
         <link rel="alternate" type="application/rss+xml" title="MRC GlobalPay Blog RSS" href="https://mrcglobalpay.com/rss.xml" />
         <script type="application/ld+json">{JSON.stringify(jsonLd)}</script>
         <script type="application/ld+json">{JSON.stringify(breadcrumbJsonLd)}</script>
