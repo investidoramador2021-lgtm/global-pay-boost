@@ -5,6 +5,7 @@ import {
   AccordionTrigger,
 } from "@/components/ui/accordion";
 import { Helmet } from "react-helmet-async";
+import { shadowFaqs } from "@/components/ShadowSeoFaq";
 
 const faqs = [
   {
@@ -37,10 +38,12 @@ const faqs = [
   },
 ];
 
+const allFaqs = [...faqs.map(f => ({ q: f.q, a: f.a })), ...shadowFaqs];
+
 const faqJsonLd = {
   "@context": "https://schema.org",
   "@type": "FAQPage",
-  mainEntity: faqs.map((faq) => ({
+  mainEntity: allFaqs.map((faq) => ({
     "@type": "Question",
     name: faq.q,
     acceptedAnswer: {
