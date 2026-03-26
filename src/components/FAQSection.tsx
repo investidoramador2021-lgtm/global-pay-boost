@@ -38,10 +38,12 @@ const faqs = [
   },
 ];
 
+const allFaqs = [...faqs.map(f => ({ q: f.q, a: f.a })), ...shadowFaqs];
+
 const faqJsonLd = {
   "@context": "https://schema.org",
   "@type": "FAQPage",
-  mainEntity: faqs.map((faq) => ({
+  mainEntity: allFaqs.map((faq) => ({
     "@type": "Question",
     name: faq.q,
     acceptedAnswer: {
