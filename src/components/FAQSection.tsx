@@ -5,6 +5,7 @@ import {
   AccordionTrigger,
 } from "@/components/ui/accordion";
 import { Helmet } from "react-helmet-async";
+import { shadowFaqs } from "@/components/ShadowSeoFaq";
 
 const faqs = [
   {
