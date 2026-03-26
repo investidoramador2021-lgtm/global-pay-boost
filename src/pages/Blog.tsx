@@ -33,19 +33,19 @@ const Blog = () => {
   return (
     <>
       <Helmet>
-        <title>Crypto Blog — Guides, Analysis & Security | MRC GlobalPay</title>
-        <meta name="description" content="Expert crypto guides, market analysis, and security best practices. Learn how to swap Bitcoin, Ethereum, Solana and 500+ coins safely and efficiently." />
+        <title>Crypto Meta Aggregator Blog — Swap Guides & Analysis | MRC GlobalPay</title>
+        <meta name="description" content="MRC GlobalPay is your crypto meta aggregator and DEX aggregator hub. Expert swap guides, market analysis, and security insights for 500+ coins." />
         <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1" />
         <link rel="canonical" href="https://mrcglobalpay.com/blog" />
-        <meta property="og:title" content="Crypto Blog — Guides, Analysis & Security | MRC GlobalPay" />
-        <meta property="og:description" content="Expert crypto guides, market analysis, and security best practices from MRC GlobalPay." />
+        <meta property="og:title" content="Crypto Meta Aggregator Blog — Swap Guides & Analysis | MRC GlobalPay" />
+        <meta property="og:description" content="MRC GlobalPay is your crypto meta aggregator and DEX aggregator hub. Expert swap guides and market analysis." />
         <meta property="og:type" content="website" />
         <meta property="og:url" content="https://mrcglobalpay.com/blog" />
         <meta property="og:site_name" content="MRC GlobalPay" />
         <meta property="og:image" content="https://pub-bb2e103a32db4e198524a2e9ed8f35b4.r2.dev/22f69f45-cf65-4871-9af4-b68ab4027213/id-preview-243bf129--23f851ec-c820-43c7-bbe2-d2e830f7c268.lovable.app-1773521796493.png" />
         <meta name="twitter:card" content="summary_large_image" />
-        <meta name="twitter:title" content="Crypto Blog — Guides, Analysis & Security | MRC GlobalPay" />
-        <meta name="twitter:description" content="Expert crypto guides, market analysis, and security best practices from MRC GlobalPay." />
+        <meta name="twitter:title" content="Crypto Meta Aggregator Blog — Swap Guides & Analysis | MRC GlobalPay" />
+        <meta name="twitter:description" content="MRC GlobalPay is your crypto meta aggregator and DEX aggregator hub. Expert swap guides and market analysis." />
         <meta name="twitter:image" content="https://pub-bb2e103a32db4e198524a2e9ed8f35b4.r2.dev/22f69f45-cf65-4871-9af4-b68ab4027213/id-preview-243bf129--23f851ec-c820-43c7-bbe2-d2e830f7c268.lovable.app-1773521796493.png" />
         <link rel="alternate" type="application/rss+xml" title="MRC GlobalPay Blog RSS" href="https://mrcglobalpay.com/rss.xml" />
         <script type="application/ld+json">{JSON.stringify(jsonLd)}</script>
@@ -56,11 +56,25 @@ const Blog = () => {
         <section className="border-b border-border bg-muted/50 py-12 sm:py-20">
           <div className="container mx-auto px-4 text-center">
             <h1 className="font-display text-3xl font-bold tracking-tight text-foreground sm:text-5xl">
-              Crypto <span className="text-primary">Insights</span> & Guides
+              Crypto Meta Aggregator <span className="text-primary">Insights</span> & Guides
             </h1>
             <p className="mx-auto mt-4 max-w-2xl font-body text-base text-muted-foreground sm:text-lg">
-              Expert analysis, step-by-step swap guides, and security best practices from our blockchain research team.
+              As a leading crypto meta aggregator and DEX aggregator, MRC GlobalPay compares rates across multiple exchanges in real time. Explore our expert analysis, step-by-step swap guides, and security best practices from our blockchain research team.
             </p>
+          </div>
+        </section>
+
+        <section className="border-b border-border bg-background py-10 sm:py-14">
+          <div className="container mx-auto px-4">
+            <div className="mx-auto max-w-3xl space-y-4 text-center">
+              <h2 className="font-display text-xl font-bold text-foreground sm:text-2xl">Why Use a Meta Aggregator for Crypto Swaps?</h2>
+              <p className="font-body text-sm leading-relaxed text-muted-foreground sm:text-base">
+                A meta aggregator scans dozens of decentralized exchanges (DEXs), centralized platforms, and liquidity pools simultaneously to find you the best available rate for any token pair. Unlike a single DEX aggregator that only routes through one protocol, a crypto meta aggregator like MRC GlobalPay compares quotes from multiple DEX aggregators and instant-swap services at once — ensuring you always get the lowest slippage and tightest spread.
+              </p>
+              <p className="font-body text-sm leading-relaxed text-muted-foreground sm:text-base">
+                Whether you're converting dust-sized balances starting at $0.30 or executing larger swaps across 500+ cryptocurrencies, our meta aggregator engine handles the complexity so you don't have to. No registration, no KYC, no minimum limits — just the best rate delivered in under 60 seconds. Browse our guides below to learn advanced swap strategies, security tips, and how to maximize value with a DEX aggregator workflow.
+              </p>
+            </div>
           </div>
         </section>
 
