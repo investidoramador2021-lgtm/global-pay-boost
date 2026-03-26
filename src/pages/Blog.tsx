@@ -22,7 +22,7 @@ const Blog = () => {
     "@type": "Blog",
     name: "MRC GlobalPay Blog",
     url: "https://mrcglobalpay.com/blog",
-    description: "Expert guides, market analysis, and security insights for cryptocurrency trading and instant swaps.",
+    description: "MRC GlobalPay is your crypto meta aggregator and DEX aggregator hub. Expert swap guides, market analysis, and security insights for 500+ coins.",
     publisher: {
       "@type": "Organization",
       name: "MRC GlobalPay",
