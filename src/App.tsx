@@ -1,6 +1,6 @@
 import { lazy, Suspense } from "react";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
-import { BrowserRouter, Route, Routes } from "react-router-dom";
+import { BrowserRouter, Route, Routes, Navigate } from "react-router-dom";
 import { HelmetProvider } from "react-helmet-async";
 import { Toaster as Sonner } from "@/components/ui/sonner";
 import { Toaster } from "@/components/ui/toaster";
@@ -77,6 +77,13 @@ const App = () => (
                   <Route path="/price/*" element={<KeywordPage />} />
                   <Route path="/local-crypto-exchange" element={<KeywordPage />} />
                   <Route path="/exchange-iu" element={<KeywordPage />} />
+                  {/* Redirect old WordPress URLs to home */}
+                  <Route path="/pt/*" element={<Navigate to="/" replace />} />
+                  <Route path="/fr/*" element={<Navigate to="/" replace />} />
+                  <Route path="/es/*" element={<Navigate to="/" replace />} />
+                  <Route path="/de/*" element={<Navigate to="/" replace />} />
+                  <Route path="/wp-*" element={<Navigate to="/" replace />} />
+                  <Route path="/wordpress/*" element={<Navigate to="/" replace />} />
                   {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
                   <Route path="*" element={<NotFound />} />
                 </Routes>
