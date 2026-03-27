@@ -56,6 +56,11 @@ const Index = () => {
     },
   };
 
+  const handleRefresh = useCallback(async () => {
+    await new Promise((resolve) => setTimeout(resolve, 1000));
+    window.dispatchEvent(new CustomEvent("pull-refresh"));
+  }, []);
+
   return (
     <>
       <Helmet>
