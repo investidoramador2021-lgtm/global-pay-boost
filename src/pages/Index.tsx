@@ -56,61 +56,6 @@ const Index = () => {
     },
   };
 
-  const faqJsonLd = {
-    "@context": "https://schema.org",
-    "@type": "FAQPage",
-    mainEntity: [
-      {
-        "@type": "Question",
-        name: "Can I swap under $1 of crypto?",
-        acceptedAnswer: {
-          "@type": "Answer",
-          text: "Yes. MRC GlobalPay supports micro-swaps starting as low as $0.30, depending on the coin pair. We are the leading no-minimum crypto exchange for converting wallet dust.",
-        },
-      },
-      {
-        "@type": "Question",
-        name: "Is there a minimum for Fractal Bitcoin swaps?",
-        acceptedAnswer: {
-          "@type": "Answer",
-          text: "No enforced minimum. MRC GlobalPay is one of the first non-custodial platforms to support Fractal Bitcoin swaps to Solana, Ethereum, and 500+ tokens.",
-        },
-      },
-      {
-        "@type": "Question",
-        name: "How do I clean crypto dust from my wallet?",
-        acceptedAnswer: {
-          "@type": "Answer",
-          text: "Use MRC GlobalPay to convert small, unspendable balances (crypto dust) into usable tokens. No account creation required — just select your dust token, enter any amount from $0.30, and swap instantly.",
-        },
-      },
-      {
-        "@type": "Question",
-        name: "Do I need to create an account or provide ID?",
-        acceptedAnswer: {
-          "@type": "Answer",
-          text: "No. We offer a completely accountless, permissionless trading experience. Swap wallet-to-wallet instantly without any onboarding or registration.",
-        },
-      },
-      {
-        "@type": "Question",
-        name: "Is the exchange rate guaranteed?",
-        acceptedAnswer: {
-          "@type": "Answer",
-          text: "Yes. When you select our Fixed Rate option, the amount you see is exactly what you get. We protect you from price volatility during the transaction.",
-        },
-      },
-      {
-        "@type": "Question",
-        name: "Which tokens are supported for dust swaps?",
-        acceptedAnswer: {
-          "@type": "Answer",
-          text: "We support over 500+ assets, including BTC, ETH, SOL, Fractal Bitcoin, and dozens of low-cap tokens. If it's in your wallet, you can likely swap it here.",
-        },
-      },
-    ],
-  };
-
   const handleRefresh = useCallback(async () => {
     await new Promise((resolve) => setTimeout(resolve, 1000));
     window.dispatchEvent(new CustomEvent("pull-refresh"));
@@ -137,7 +82,6 @@ const Index = () => {
         <meta name="twitter:description" content="Instant, accountless crypto swaps with no minimums. Support for Fractal Bitcoin, Solana, and 500+ assets. Convert wallet dust under $1 securely." />
         <meta name="twitter:image" content="https://pub-bb2e103a32db4e198524a2e9ed8f35b4.r2.dev/22f69f45-cf65-4871-9af4-b68ab4027213/id-preview-243bf129--23f851ec-c820-43c7-bbe2-d2e830f7c268.lovable.app-1773521796493.png" />
         <script type="application/ld+json">{JSON.stringify(financialServiceJsonLd)}</script>
-        <script type="application/ld+json">{JSON.stringify(faqJsonLd)}</script>
       </Helmet>
 
       <PullToRefresh onRefresh={handleRefresh}>
