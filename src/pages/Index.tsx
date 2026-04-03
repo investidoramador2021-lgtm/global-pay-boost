@@ -19,6 +19,9 @@ import ShadowSeoFaq from "@/components/ShadowSeoFaq";
 import { Helmet } from "react-helmet-async";
 
 const Index = () => {
+  const { pathname } = useLocation();
+  const lang = getLangFromPath(pathname);
+  const homeUrl = `https://mrcglobalpay.com${langPath(lang, "/")}`;
   const { t } = useTranslation();
   const financialServiceJsonLd = {
     "@context": "https://schema.org",
