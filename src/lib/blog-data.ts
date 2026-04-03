@@ -1,5 +1,6 @@
 import { supabase } from "@/integrations/supabase/client";
 import { SEED_POSTS } from "@/lib/blog/seed-posts";
+import { TRANSLATED_BTC_ETH_POSTS } from "@/lib/blog/translated-btc-eth-posts";
 import type { BlogPost, BlogAuthor } from "@/lib/blog/types";
 
 export type { BlogPost, BlogAuthor } from "@/lib/blog/types";
