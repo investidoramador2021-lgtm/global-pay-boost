@@ -5,13 +5,13 @@ import SiteHeader from "@/components/SiteHeader";
 import SiteFooter from "@/components/SiteFooter";
 
 const SIZES = [
-  { label: "Small", w: 360, h: 420 },
+  { label: "Small", w: 320, h: 420 },
   { label: "Medium", w: 400, h: 440 },
   { label: "Large", w: 480, h: 460 },
 ];
 
 const GetWidget = () => {
-  const [size, setSize] = useState(1);
+  const [size, setSize] = useState(0); // Default to Small on initial render
   const [copied, setCopied] = useState(false);
   const { w, h } = SIZES[size];
 
@@ -69,11 +69,11 @@ const GetWidget = () => {
         </section>
 
         {/* Widget Preview + Code */}
-        <section className="container mx-auto px-4 pb-20">
+        <section className="container mx-auto px-4 py-12">
           <div className="mx-auto max-w-5xl">
             <h2 className="mb-8 text-center text-2xl font-bold text-foreground">Preview & Get Your Code</h2>
             <div className="grid gap-8 lg:grid-cols-2">
-              {/* Preview */}
+              {/* Static Widget Mockup */}
               <div className="flex flex-col items-center">
                 <div className="mb-4 flex gap-2">
                   {SIZES.map((s, i) => (
@@ -90,15 +90,60 @@ const GetWidget = () => {
                     </button>
                   ))}
                 </div>
-                <div className="rounded-2xl border border-border bg-muted/30 p-4" style={{ width: w + 32 }}>
-                  <iframe
-                    src="/embed/widget"
-                    width={w}
-                    height={h}
-                    style={{ border: "none", borderRadius: 16, overflow: "hidden" }}
-                    title="Widget Preview"
-                    loading="lazy"
-                  />
+                <div
+                  className="w-full rounded-2xl border border-white/[0.12] p-5 mx-auto"
+                  style={{
+                    maxWidth: w,
+                    background: "linear-gradient(135deg, rgba(20,22,36,0.92) 0%, rgba(14,16,28,0.96) 100%)",
+                    backdropFilter: "blur(24px)",
+                    boxShadow: "0 8px 32px rgba(0,0,0,0.4), inset 0 1px 0 rgba(255,255,255,0.05)",
+                  }}
+                >
+                  {/* Header */}
+                  <div className="flex items-center justify-between mb-4">
+                    <div className="flex items-center gap-2">
+                      <div className="h-2 w-2 rounded-full bg-emerald-400 animate-pulse" />
+                      <span className="text-[10px] font-medium text-white/50 uppercase tracking-wider">Crypto Swap</span>
+                    </div>
+                    <span className="text-[10px] text-white/30">Dust-friendly • From $0.30</span>
+                  </div>
+                  {/* From */}
+                  <div className="rounded-xl bg-white/[0.04] border border-white/[0.06] p-3 mb-2">
+                    <label className="text-[10px] uppercase tracking-wider text-white/40 mb-1.5 block">You Send</label>
+                    <div className="flex items-center justify-between">
+                      <span className="flex items-center gap-2 rounded-lg bg-white/[0.06] px-3 py-2 text-sm font-medium text-white/90 border border-white/[0.08]">
+                        ₿ BTC <span className="text-white/30 text-xs">▾</span>
+                      </span>
+                      <span className="text-lg font-semibold text-white/20">0.00</span>
+                    </div>
+                  </div>
+                  {/* Swap arrow */}
+                  <div className="flex justify-center -my-1 relative z-10">
+                    <div className="rounded-full bg-white/[0.06] border border-white/[0.1] p-1.5">
+                      <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M8 3v10M5 10l3 3 3-3" stroke="white" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" /></svg>
+                    </div>
+                  </div>
+                  {/* To */}
+                  <div className="rounded-xl bg-white/[0.04] border border-white/[0.06] p-3 mt-2 mb-4">
+                    <label className="text-[10px] uppercase tracking-wider text-white/40 mb-1.5 block">You Get</label>
+                    <div className="flex items-center justify-between">
+                      <span className="flex items-center gap-2 rounded-lg bg-white/[0.06] px-3 py-2 text-sm font-medium text-white/90 border border-white/[0.08]">
+                        ₮ USDT <span className="text-white/30 text-xs">▾</span>
+                      </span>
+                      <span className="text-lg font-semibold text-white/30">—</span>
+                    </div>
+                  </div>
+                  {/* CTA */}
+                  <div
+                    className="w-full rounded-xl py-3 text-center text-sm font-bold uppercase tracking-wider"
+                    style={{ background: "linear-gradient(135deg, hsl(160 100% 45%) 0%, hsl(200 100% 45%) 100%)", color: "#0a0c14", boxShadow: "0 4px 16px rgba(0,200,150,0.3)" }}
+                  >
+                    Swap Now →
+                  </div>
+                  {/* Powered by */}
+                  <div className="mt-3 text-center">
+                    <span className="text-[10px] text-white/30">Powered by <span className="font-semibold">MRC GlobalPay</span></span>
+                  </div>
                 </div>
               </div>
 
@@ -111,7 +156,7 @@ const GetWidget = () => {
                   Paste this into your HTML. That's it — no API keys, no sign-up required.
                 </p>
                 <div className="relative rounded-xl border border-border bg-card">
-                  <pre className="overflow-x-auto p-4 text-xs text-foreground/80 leading-relaxed">
+                  <pre className="overflow-x-auto p-4 pr-20 text-xs text-foreground/80 leading-relaxed whitespace-pre-wrap break-all">
                     <code>{embedCode}</code>
                   </pre>
                   <button
