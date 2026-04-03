@@ -59,6 +59,10 @@ export async function fetchPostBySlug(slug: string, lang = "en"): Promise<BlogPo
     if (translatedLiquidity && translatedLiquidity.slug === slug) {
       return translatedLiquidity;
     }
+    const translatedSecurity = TRANSLATED_SECURITY_POSTS[lang];
+    if (translatedSecurity && translatedSecurity.slug === slug) {
+      return translatedSecurity;
+    }
   }
 
   const { data } = await supabase
