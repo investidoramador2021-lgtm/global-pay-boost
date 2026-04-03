@@ -254,8 +254,8 @@ const CryptoDustGuide = () => {
 
           {/* Section 4 - Supported Chains */}
           <section className="mb-12">
-            <h2 className="font-display text-2xl font-bold text-foreground mb-4">
-              Supported Chains &amp; Tokens for Dust Swaps
+            <h2 id="which-chains-and-tokens-support-dust-swaps" className="scroll-mt-24 font-display text-2xl font-bold text-foreground mb-4">
+              Which Chains &amp; Tokens Support Dust Swaps?
             </h2>
             <p className="text-muted-foreground leading-relaxed mb-4">
               MRC GlobalPay supports over 500 assets across all major chains — including Ethereum,
