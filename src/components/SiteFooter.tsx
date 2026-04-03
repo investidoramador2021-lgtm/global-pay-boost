@@ -185,10 +185,9 @@ const SiteFooter = () => {
           <h3 className="mb-6 text-center font-display text-sm font-semibold uppercase tracking-wider text-foreground/70 sm:text-left">
             Swap Pairs Directory
           </h3>
-          <div className="grid gap-8 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5">
-            <FooterLinkList title="Stablecoin Swaps" links={stablecoinSwaps} />
-            <FooterLinkList title="Major Pairs & Bridges" links={majorPairs} />
-            <FooterLinkList title="Meme & Altcoins" links={memeAndAltcoins} />
+          <div className="grid gap-8 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
+            <FooterLinkList title="Popular Crypto Swaps" links={popularCryptoSwaps} />
+            <FooterLinkList title="Stablecoin Bridges" links={stablecoinBridges} />
             <FooterLinkList title="Buy Crypto" links={buyLinks} />
             <FooterLinkList title="Tools & Alternatives" links={toolsAndAlternatives} />
           </div>
