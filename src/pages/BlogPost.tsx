@@ -30,7 +30,7 @@ const BlogPostPage = () => {
       setRelated(r);
       setLoading(false);
     });
-  }, [slug]);
+  }, [slug, lang]);
 
   // Extract H2 headings as FAQ items for FAQPage schema (must be before early returns)
   const faqItems = useMemo(() => {
