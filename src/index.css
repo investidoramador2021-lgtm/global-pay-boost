@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=Roboto:wght@300;400;500;700&family=Roboto+Mono:wght@400;500;600;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=Roboto:wght@300;400;500;700&family=Roboto+Mono:wght@400;500;600;700&family=Heebo:wght@400;500;600;700&family=Noto+Sans+JP:wght@400;500;700&family=Noto+Nastaliq+Urdu:wght@400;700&family=Vazirmatn:wght@400;500;600;700&display=swap');
 
 @tailwind base;
 @tailwind components;
@@ -178,4 +178,15 @@
   .safe-area-bottom {
     padding-bottom: env(safe-area-inset-bottom, 0px);
   }
+
+  /* RTL: flip directional icons (arrows, chevrons) */
+  html[dir='rtl'] .rtl-flip {
+    transform: scaleX(-1);
+  }
 }
+
+/* Language-specific font families */
+html[lang='he'] body { font-family: 'Heebo', 'Inter', sans-serif; }
+html[lang='ja'] body { font-family: 'Noto Sans JP', 'Inter', sans-serif; }
+html[lang='ur'] body { font-family: 'Noto Nastaliq Urdu', 'Inter', sans-serif; }
+html[lang='fa'] body { font-family: 'Vazirmatn', 'Inter', sans-serif; }

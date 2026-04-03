@@ -51,7 +51,7 @@ const SiteHeader = () => {
           <div className="hidden lg:block">
             <Button className="shadow-neon" size="sm" asChild>
               <a href="/#exchange">
-                <Zap className="mr-1 h-4 w-4" />
+                <Zap className="me-1 h-4 w-4" />
                 {t("nav.startSwap")}
               </a>
             </Button>
@@ -81,7 +81,7 @@ const SiteHeader = () => {
           ))}
           <Button className="mt-2 w-full shadow-neon" size="sm" asChild>
             <a href="/#exchange" onClick={() => setMobileOpen(false)}>
-              <Zap className="mr-1 h-4 w-4" />
+              <Zap className="me-1 h-4 w-4" />
               {t("nav.startSwap")}
             </a>
           </Button>
