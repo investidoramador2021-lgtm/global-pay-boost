@@ -29,7 +29,7 @@ function getCluster(keyword: string, url: string): string {
 export const seoKeywords = [
   { keyword: "usdt to trx", intentType: "Commercial", targetUrl: "/swap/usdt-to-trx", primaryH1: "Swap USDT to TRX Instantly", benefitHook: "Fastest Tron bridge with $0.30 minimum." },
   { keyword: "buy and send bitcoin no verification reddit", intentType: "Commercial", targetUrl: "/buy/bitcoin-no-verification", primaryH1: "Buy Bitcoin No Verification (Reddit Choice)", benefitHook: "Non-custodial and accountless execution." },
-  { keyword: "usd to xmr", intentType: "Commercial", targetUrl: "/swap/usd-to-xmr", primaryH1: "Exchange USD to Monero (XMR)", benefitHook: "High-privacy Monero swaps with no KYC." },
+  { keyword: "usd to xmr", intentType: "Commercial", targetUrl: "/swap/usd-to-xmr", primaryH1: "Exchange USD to Monero (XMR)", benefitHook: "High-privacy Monero swaps with no registration." },
   { keyword: "usdt to sol", intentType: "Commercial", targetUrl: "/swap/usdt-to-sol", primaryH1: "Convert USDT to Solana (SOL)", benefitHook: "Low-fee Solana ecosystem entry." },
   { keyword: "coin exchange near me", intentType: "Commercial", targetUrl: "/local-crypto-exchange", primaryH1: "Best Digital Coin Exchange Near Me", benefitHook: "The global alternative to local kiosks." },
   { keyword: "is solana a good investment", intentType: "Informational", targetUrl: "/guides/is-solana-a-good-investment", primaryH1: "Is Solana a Good Investment in 2026?", benefitHook: "Market analysis plus instant SOL swap tool." },
