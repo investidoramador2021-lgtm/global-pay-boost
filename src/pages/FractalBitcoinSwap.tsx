@@ -60,6 +60,7 @@ const howToJsonLd = {
 };
 
 const FractalBitcoinSwap = () => {
+  const pageUrl = usePageUrl("/resources/fractal-bitcoin-swap");
   return (
     <>
       <Helmet>
@@ -68,14 +69,14 @@ const FractalBitcoinSwap = () => {
           name="description"
           content="Swap Fractal Bitcoin to Solana, Ethereum, and 500+ tokens instantly. No account, no minimums. Non-custodial cross-chain swaps."
         />
-        <link rel="canonical" href="https://mrcglobalpay.com/resources/fractal-bitcoin-swap" />
+        <link rel="canonical" href={pageUrl} />
         <meta property="og:title" content="Fractal Bitcoin Swap | Instant FB to SOL & ETH" />
         <meta
           property="og:description"
           content="Swap Fractal Bitcoin to Solana, Ethereum, and 500+ tokens instantly. No account required."
         />
         <meta property="og:type" content="article" />
-        <meta property="og:url" content="https://mrcglobalpay.com/resources/fractal-bitcoin-swap" />
+        <meta property="og:url" content={pageUrl} />
         <meta property="og:site_name" content="MRC GlobalPay" />
         <meta property="og:image" content="https://pub-bb2e103a32db4e198524a2e9ed8f35b4.r2.dev/22f69f45-cf65-4871-9af4-b68ab4027213/id-preview-243bf129--23f851ec-c820-43c7-bbe2-d2e830f7c268.lovable.app-1773521796493.png" />
         <meta name="twitter:card" content="summary_large_image" />

@@ -114,6 +114,7 @@ const dustFaqJsonLd = {
 };
 
 const CryptoDustGuide = () => {
+  const pageUrl = usePageUrl("/resources/crypto-dust-guide");
   return (
     <>
       <Helmet>
@@ -122,14 +123,14 @@ const CryptoDustGuide = () => {
           name="description"
           content="The complete 2026 guide to swapping crypto dust. $0.30 minimum, no registration required. Convert unspendable wallet balances with 500+ tokens supported."
         />
-        <link rel="canonical" href="https://mrcglobalpay.com/resources/crypto-dust-guide" />
+        <link rel="canonical" href={pageUrl} />
         <meta property="og:title" content="Crypto Dust Swap Guide — $0.30 Minimum, No Registration Required | MRC GlobalPay" />
         <meta
           property="og:description"
           content="Convert unspendable crypto dust into usable assets. $0.30 minimum, no registration required. 500+ tokens supported."
         />
         <meta property="og:type" content="article" />
-        <meta property="og:url" content="https://mrcglobalpay.com/resources/crypto-dust-guide" />
+        <meta property="og:url" content={pageUrl} />
         <meta property="og:site_name" content="MRC GlobalPay" />
         <meta property="og:image" content="https://pub-bb2e103a32db4e198524a2e9ed8f35b4.r2.dev/22f69f45-cf65-4871-9af4-b68ab4027213/id-preview-243bf129--23f851ec-c820-43c7-bbe2-d2e830f7c268.lovable.app-1773521796493.png" />
         <meta name="twitter:card" content="summary_large_image" />
