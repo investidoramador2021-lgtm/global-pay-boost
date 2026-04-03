@@ -1,5 +1,7 @@
 import { Helmet } from "react-helmet-async";
+import { useLocation } from "react-router-dom";
 import { Zap, CheckCircle, XCircle, ArrowRight } from "lucide-react";
+import { getLangFromPath, langPath } from "@/i18n";
 import { Button } from "@/components/ui/button";
 import {
   Accordion,
@@ -46,10 +48,13 @@ const BoolCell = ({ value }: { value: boolean | string }) => {
 };
 
 const KeywordLanding = ({ data }: Props) => {
+  const { pathname } = useLocation();
+  const lang = getLangFromPath(pathname);
+  const lp = (path: string) => langPath(lang, path);
   const { keyword, primaryH1, benefitHook, targetUrl, intentType, canonicalUrl } = data;
   const related = getRelatedKeywords(data);
-  const url = `https://mrcglobalpay.com${targetUrl}`;
-  const canonical = canonicalUrl ? `https://mrcglobalpay.com${canonicalUrl}` : url;
+  const canonicalPath = canonicalUrl || targetUrl;
+  const canonical = `https://mrcglobalpay.com${lp(canonicalPath)}`;
   const truncatedKw = keyword.length > 35 ? keyword.slice(0, 35).trim() : keyword;
   const title = `${truncatedKw} | $0.30 Min | MRC GlobalPay`;
   const description = `${benefitHook} Swap from $0.30 with no account. 500+ tokens on MRC GlobalPay.`;
@@ -111,10 +116,11 @@ const KeywordLanding = ({ data }: Props) => {
       <Helmet>
         <title>{title}</title>
         <meta name="description" content={description} />
+        <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1" />
         <link rel="canonical" href={canonical} />
         <meta property="og:title" content={title} />
         <meta property="og:description" content={description} />
-        <meta property="og:url" content={url} />
+        <meta property="og:url" content={canonical} />
         <meta property="og:type" content="website" />
         <meta property="og:site_name" content="MRC GlobalPay" />
         <meta property="og:image" content="https://pub-bb2e103a32db4e198524a2e9ed8f35b4.r2.dev/22f69f45-cf65-4871-9af4-b68ab4027213/id-preview-243bf129--23f851ec-c820-43c7-bbe2-d2e830f7c268.lovable.app-1773521796493.png" />

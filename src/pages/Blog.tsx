@@ -1,12 +1,17 @@
 import { useState, useEffect } from "react";
 import { Helmet } from "react-helmet-async";
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import { Calendar, Clock, ArrowRight } from "lucide-react";
 import SiteHeader from "@/components/SiteHeader";
 import SiteFooter from "@/components/SiteFooter";
 import { fetchAllPosts, type BlogPost } from "@/lib/blog-data";
+import { getLangFromPath, langPath } from "@/i18n";
 
 const Blog = () => {
+  const { pathname } = useLocation();
+  const lang = getLangFromPath(pathname);
+  const lp = (path: string) => langPath(lang, path);
+  const blogUrl = `https://mrcglobalpay.com${lp("/blog")}`;
   const [posts, setPosts] = useState<BlogPost[]>([]);
   const [loading, setLoading] = useState(true);
 
@@ -36,11 +41,11 @@ const Blog = () => {
         <title>Crypto Meta Aggregator Blog — Swap Guides & Analysis | MRC GlobalPay</title>
         <meta name="description" content="MRC GlobalPay is your crypto meta aggregator and DEX aggregator hub. Expert swap guides, market analysis, and security insights for 500+ coins." />
         <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1" />
-        <link rel="canonical" href="https://mrcglobalpay.com/blog" />
+        <link rel="canonical" href={blogUrl} />
         <meta property="og:title" content="Crypto Meta Aggregator Blog — Swap Guides & Analysis | MRC GlobalPay" />
         <meta property="og:description" content="MRC GlobalPay is your crypto meta aggregator and DEX aggregator hub. Expert swap guides and market analysis." />
         <meta property="og:type" content="website" />
-        <meta property="og:url" content="https://mrcglobalpay.com/blog" />
+        <meta property="og:url" content={blogUrl} />
         <meta property="og:site_name" content="MRC GlobalPay" />
         <meta property="og:image" content="https://pub-bb2e103a32db4e198524a2e9ed8f35b4.r2.dev/22f69f45-cf65-4871-9af4-b68ab4027213/id-preview-243bf129--23f851ec-c820-43c7-bbe2-d2e830f7c268.lovable.app-1773521796493.png" />
         <meta name="twitter:card" content="summary_large_image" />

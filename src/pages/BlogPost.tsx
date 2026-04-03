@@ -72,12 +72,14 @@ const BlogPostPage = () => {
 
   if (!post) return <Navigate to={lp("/blog")} replace />;
 
+  const postUrl = `https://mrcglobalpay.com${lp(`/blog/${post.slug}`)}`;
+
   const jsonLd = {
     "@context": "https://schema.org",
     "@type": "BlogPosting",
     headline: post.title,
     description: post.metaDescription,
-    url: `https://mrcglobalpay.com/blog/${post.slug}`,
+    url: postUrl,
     datePublished: post.publishedAt,
     dateModified: post.updatedAt,
     author: {
@@ -93,7 +95,7 @@ const BlogPostPage = () => {
     },
     mainEntityOfPage: {
       "@type": "WebPage",
-      "@id": `https://mrcglobalpay.com/blog/${post.slug}`,
+      "@id": postUrl,
     },
     wordCount: post.content.split(/\s+/).length,
     articleSection: post.category,
@@ -104,9 +106,9 @@ const BlogPostPage = () => {
     "@context": "https://schema.org",
     "@type": "BreadcrumbList",
     itemListElement: [
-      { "@type": "ListItem", position: 1, name: "Home", item: "https://mrcglobalpay.com" },
-      { "@type": "ListItem", position: 2, name: "Blog", item: "https://mrcglobalpay.com/blog" },
-      { "@type": "ListItem", position: 3, name: post.title, item: `https://mrcglobalpay.com/blog/${post.slug}` },
+      { "@type": "ListItem", position: 1, name: "Home", item: `https://mrcglobalpay.com${lp("/")}` },
+      { "@type": "ListItem", position: 2, name: "Blog", item: `https://mrcglobalpay.com${lp("/blog")}` },
+      { "@type": "ListItem", position: 3, name: post.title, item: postUrl },
     ],
   };
 
@@ -128,11 +130,11 @@ const BlogPostPage = () => {
         <title>{post.metaTitle} | MRC GlobalPay</title>
         <meta name="description" content={post.metaDescription} />
         <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1" />
-        <link rel="canonical" href={`https://mrcglobalpay.com/blog/${post.slug}`} />
+        <link rel="canonical" href={postUrl} />
         <meta property="og:title" content={post.metaTitle} />
         <meta property="og:description" content={post.metaDescription} />
         <meta property="og:type" content="article" />
-        <meta property="og:url" content={`https://mrcglobalpay.com/blog/${post.slug}`} />
+        <meta property="og:url" content={postUrl} />
         <meta property="og:site_name" content="MRC GlobalPay" />
         <meta property="og:image" content="https://pub-bb2e103a32db4e198524a2e9ed8f35b4.r2.dev/22f69f45-cf65-4871-9af4-b68ab4027213/id-preview-243bf129--23f851ec-c820-43c7-bbe2-d2e830f7c268.lovable.app-1773521796493.png" />
         <meta property="article:published_time" content={post.publishedAt} />

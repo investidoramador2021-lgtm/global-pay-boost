@@ -1,5 +1,7 @@
 import { useCallback } from "react";
 import { useTranslation } from "react-i18next";
+import { useLocation } from "react-router-dom";
+import { getLangFromPath, langPath } from "@/i18n";
 import SiteHeader from "@/components/SiteHeader";
 import HeroSection from "@/components/HeroSection";
 import TrustBanner from "@/components/TrustBanner";
@@ -17,6 +19,9 @@ import ShadowSeoFaq from "@/components/ShadowSeoFaq";
 import { Helmet } from "react-helmet-async";
 
 const Index = () => {
+  const { pathname } = useLocation();
+  const lang = getLangFromPath(pathname);
+  const homeUrl = `https://mrcglobalpay.com${langPath(lang, "/")}`;
   const { t } = useTranslation();
   const financialServiceJsonLd = {
     "@context": "https://schema.org",
@@ -95,7 +100,7 @@ const Index = () => {
         <meta property="og:title" content={t("meta.ogTitle")} />
         <meta property="og:description" content={t("meta.description")} />
         <meta property="og:type" content="website" />
-        <meta property="og:url" content="https://mrcglobalpay.com" />
+        <meta property="og:url" content={homeUrl} />
         <meta property="og:site_name" content="MRC GlobalPay" />
         <meta property="og:image" content="https://pub-bb2e103a32db4e198524a2e9ed8f35b4.r2.dev/22f69f45-cf65-4871-9af4-b68ab4027213/id-preview-243bf129--23f851ec-c820-43c7-bbe2-d2e830f7c268.lovable.app-1773521796493.png" />
         <meta name="twitter:card" content="summary_large_image" />
