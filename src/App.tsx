@@ -88,16 +88,13 @@ const App = () => (
                   <Route element={<LangLayout />}>
                     {AppRoutes()}
                   </Route>
-                  {/* Portuguese */}
-                  <Route path="/pt" element={<LangLayout />}>
-                    {AppRoutes()}
-                  </Route>
-                  {/* Spanish */}
-                  <Route path="/es" element={<LangLayout />}>
-                    {AppRoutes()}
-                  </Route>
+                  {/* All non-English language prefixes */}
+                  {["es","pt","fr","ja","fa","ur","he","af","hi","vi","tr","uk"].map((lang) => (
+                    <Route key={lang} path={`/${lang}`} element={<LangLayout />}>
+                      {AppRoutes()}
+                    </Route>
+                  ))}
                   {/* Redirect old WordPress URLs to home */}
-                  <Route path="/fr/*" element={<Navigate to="/" replace />} />
                   <Route path="/de/*" element={<Navigate to="/" replace />} />
                   <Route path="/wp-*" element={<Navigate to="/" replace />} />
                   <Route path="/wordpress/*" element={<Navigate to="/" replace />} />
