@@ -171,7 +171,7 @@ const BlogPostPage = () => {
           <div className="container mx-auto px-4">
             <div className="mx-auto max-w-3xl">
               <header className="mb-8 sm:mb-12">
-                <Link to="/blog" className="mb-4 inline-flex items-center gap-1 font-body text-sm text-muted-foreground hover:text-foreground">
+                <Link to={lp("/blog")} className="mb-4 inline-flex items-center gap-1 font-body text-sm text-muted-foreground hover:text-foreground">
                   <ArrowLeft className="h-3.5 w-3.5" /> Back to Blog
                 </Link>
                 <div className="mt-4 flex flex-wrap items-center gap-3">
