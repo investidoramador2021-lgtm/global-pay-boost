@@ -2,10 +2,11 @@ import { useEffect } from "react";
 import { Outlet, useLocation } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import { getLangFromPath } from "@/i18n";
+import HreflangTags from "@/components/HreflangTags";
 
 /**
  * Syncs the i18n language with the URL path prefix on every navigation.
- * Wraps all routes so child components always have the correct language.
+ * Injects hreflang tags and sets <html lang="..."> for every page.
  */
 const LangLayout = () => {
   const { i18n } = useTranslation();
@@ -18,7 +19,12 @@ const LangLayout = () => {
     }
   }, [pathname, i18n]);
 
-  return <Outlet />;
+  return (
+    <>
+      <HreflangTags />
+      <Outlet />
+    </>
+  );
 };
 
 export default LangLayout;
