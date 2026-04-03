@@ -9,6 +9,8 @@ import { ThemeProvider } from "@/hooks/use-theme";
 import MobileBottomNav from "@/components/MobileBottomNav";
 import LangLayout from "@/components/LangLayout";
 import Index from "./pages/Index.tsx";
+import Blog from "./pages/Blog.tsx";
+import BlogPost from "./pages/BlogPost.tsx";
 
 const PrivacyPolicy = lazy(() => import("./pages/PrivacyPolicy.tsx"));
 const TermsOfService = lazy(() => import("./pages/TermsOfService.tsx"));
@@ -23,8 +25,6 @@ const SwapTiaUsdt = lazy(() => import("./pages/SwapTiaUsdt.tsx"));
 const SwapMonadUsdt = lazy(() => import("./pages/SwapMonadUsdt.tsx"));
 const SwapPyusdUsdt = lazy(() => import("./pages/SwapPyusdUsdt.tsx"));
 const SwapBnbUsdc = lazy(() => import("./pages/SwapBnbUsdc.tsx"));
-const Blog = lazy(() => import("./pages/Blog.tsx"));
-const BlogPost = lazy(() => import("./pages/BlogPost.tsx"));
 const CryptoDustGuide = lazy(() => import("./pages/CryptoDustGuide.tsx"));
 const FractalBitcoinSwap = lazy(() => import("./pages/FractalBitcoinSwap.tsx"));
 const TransparencySecurity = lazy(() => import("./pages/TransparencySecurity.tsx"));
