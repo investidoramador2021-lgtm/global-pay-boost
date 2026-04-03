@@ -1,12 +1,17 @@
 import { useState, useEffect } from "react";
 import { Helmet } from "react-helmet-async";
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import { Calendar, Clock, ArrowRight } from "lucide-react";
 import SiteHeader from "@/components/SiteHeader";
 import SiteFooter from "@/components/SiteFooter";
 import { fetchAllPosts, type BlogPost } from "@/lib/blog-data";
+import { getLangFromPath, langPath } from "@/i18n";
 
 const Blog = () => {
+  const { pathname } = useLocation();
+  const lang = getLangFromPath(pathname);
+  const lp = (path: string) => langPath(lang, path);
+  const blogUrl = `https://mrcglobalpay.com${lp("/blog")}`;
   const [posts, setPosts] = useState<BlogPost[]>([]);
   const [loading, setLoading] = useState(true);
 
