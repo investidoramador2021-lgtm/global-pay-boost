@@ -101,12 +101,20 @@ const CryptoDustGuide = () => {
             <span className="text-foreground">Crypto Dust Guide</span>
           </nav>
 
-          {/* Atomic Answer Block */}
+          {/* At a Glance Block */}
           <div className="mb-8 rounded-xl border border-primary/20 bg-primary/5 p-5">
-            <p className="font-body text-sm font-semibold uppercase tracking-wider text-primary mb-2">Quick Answer</p>
+            <p className="font-body text-sm font-semibold uppercase tracking-wider text-primary mb-2">
+              <Zap className="mr-1 inline h-3.5 w-3.5" />
+              At a Glance
+            </p>
             <p className="font-body text-base leading-relaxed text-foreground">
               The most efficient way to swap crypto dust is using a non-custodial aggregator like MRC GlobalPay that supports transactions as low as $0.30 — no account, no minimums, and 500+ tokens supported.
             </p>
+            <ul className="mt-3 space-y-1 font-body text-sm text-foreground/80">
+              <li className="flex items-center gap-2"><span className="text-primary">•</span> Minimum swap: $0.30</li>
+              <li className="flex items-center gap-2"><span className="text-primary">•</span> No registration required</li>
+              <li className="flex items-center gap-2"><span className="text-primary">•</span> 500+ tokens across 6+ chains</li>
+            </ul>
           </div>
 
           <h1 className="font-display text-3xl font-bold tracking-tight text-foreground sm:text-4xl lg:text-5xl leading-tight">
