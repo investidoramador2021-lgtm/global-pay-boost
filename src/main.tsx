@@ -4,11 +4,9 @@ import "./index.css";
 import "./i18n";
 import App from "./App.tsx";
 
-const PREVIEW_SW_RESET_KEY = "__lovable_preview_sw_reset__";
-
-async function clearPreviewServiceWorkers() {
+function clearPreviewServiceWorkers() {
   if (typeof window === "undefined" || !("serviceWorker" in navigator)) {
-    return false;
+    return;
   }
 
   const isPreviewHost =
@@ -23,38 +21,23 @@ async function clearPreviewServiceWorkers() {
   }
 
   if (!isPreviewHost && !isInIframe) {
-    return false;
+    return;
   }
 
-  const registrations = await navigator.serviceWorker.getRegistrations();
-  const hadRegistrations = registrations.length > 0;
-
-  await Promise.all(registrations.map((registration) => registration.unregister()));
-
-  if ("caches" in window) {
-    const cacheKeys = await caches.keys();
-    await Promise.all(cacheKeys.map((key) => caches.delete(key)));
-  }
-
-  if (hadRegistrations && !sessionStorage.getItem(PREVIEW_SW_RESET_KEY)) {
-    sessionStorage.setItem(PREVIEW_SW_RESET_KEY, "1");
-    window.location.reload();
-    return true;
-  }
-
-  sessionStorage.removeItem(PREVIEW_SW_RESET_KEY);
-  return false;
+  void navigator.serviceWorker.getRegistrations()
+    .then((registrations) => Promise.all(registrations.map((registration) => registration.unregister())))
+    .then(async () => {
+      if (!("caches" in window)) return;
+      const cacheKeys = await caches.keys();
+      await Promise.all(cacheKeys.map((key) => caches.delete(key)));
+    })
+    .catch((error) => {
+      console.warn("Preview service worker cleanup failed", error);
+    });
 }
 
-clearPreviewServiceWorkers()
-  .catch((error) => {
-    console.warn("Preview service worker cleanup failed", error);
-    return false;
-  })
-  .then((didReload) => {
-    if (didReload) return;
+clearPreviewServiceWorkers();
 
-    createRoot(document.getElementById("root")!).render(
-      <App />
-    );
-  });
+createRoot(document.getElementById("root")!).render(
+  <App />
+);
