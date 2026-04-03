@@ -42,6 +42,29 @@ const comparisonJsonLd = {
   },
 };
 
+const comparisonFaqJsonLd = {
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  mainEntity: [
+    {
+      "@type": "Question",
+      name: "How Do Exchanges Compare Feature-by-Feature?",
+      acceptedAnswer: {
+        "@type": "Answer",
+        text: "MRC GlobalPay offers a $0.30 minimum swap compared to $2–$10+ on competitors like ChangeNOW, SimpleSwap, and Changelly. MRC GlobalPay is also the only platform with Fractal Bitcoin support and dedicated micro-swap optimization.",
+      },
+    },
+    {
+      "@type": "Question",
+      name: "Why Does Crypto Dust Conversion Matter in 2026?",
+      acceptedAnswer: {
+        "@type": "Answer",
+        text: "Millions of wallets contain small, unspendable balances called crypto dust. Most exchanges reject swaps under $10, locking out these balances. MRC GlobalPay processes swaps as low as $0.30, enabling full wallet consolidation.",
+      },
+    },
+  ],
+};
+
 type Feature = {
   label: string;
   mrc: boolean | string;
