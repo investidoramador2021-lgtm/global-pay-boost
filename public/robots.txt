@@ -86,6 +86,20 @@ Allow: /resources/
 
 Sitemap: https://mrcglobalpay.com/sitemap.xml
 
+# Language subdirectories
+Allow: /es/
+Allow: /pt/
+Allow: /fr/
+Allow: /ja/
+Allow: /fa/
+Allow: /ur/
+Allow: /he/
+Allow: /af/
+Allow: /hi/
+Allow: /vi/
+Allow: /tr/
+Allow: /uk/
+
 # Ping search engines after deployment:
 # Google: https://www.google.com/ping?sitemap=https://mrcglobalpay.com/sitemap.xml
 # Bing (IndexNow): POST https://api.indexnow.org/indexnow with key=5b41e59fca3649f389b22450cd5cb8dc
