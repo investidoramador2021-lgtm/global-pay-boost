@@ -7,6 +7,7 @@ import { Toaster } from "@/components/ui/toaster";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import { ThemeProvider } from "@/hooks/use-theme";
 import MobileBottomNav from "@/components/MobileBottomNav";
+import LangLayout from "@/components/LangLayout";
 import Index from "./pages/Index.tsx";
 
 const PrivacyPolicy = lazy(() => import("./pages/PrivacyPolicy.tsx"));
@@ -33,6 +34,45 @@ const NotFound = lazy(() => import("./pages/NotFound.tsx"));
 
 const queryClient = new QueryClient();
 
+/** All app routes — rendered once at root and once per language prefix */
+const AppRoutes = () => (
+  <>
+    <Route index element={<Index />} />
+    <Route path="blog" element={<Blog />} />
+    <Route path="blog/:slug" element={<BlogPost />} />
+    <Route path="privacy" element={<PrivacyPolicy />} />
+    <Route path="terms" element={<TermsOfService />} />
+    <Route path="aml" element={<AMLPolicy />} />
+    <Route path="swap/sol-usdt" element={<SwapSolUsdt />} />
+    <Route path="swap/btc-usdc" element={<SwapBtcUsdc />} />
+    <Route path="swap/hype-usdt" element={<SwapHypeUsdt />} />
+    <Route path="swap/eth-sol" element={<SwapEthSol />} />
+    <Route path="swap/xrp-usdt" element={<SwapXrpUsdt />} />
+    <Route path="swap/bera-usdt" element={<SwapBeraUsdt />} />
+    <Route path="swap/tia-usdt" element={<SwapTiaUsdt />} />
+    <Route path="swap/monad-usdt" element={<SwapMonadUsdt />} />
+    <Route path="swap/pyusd-usdt" element={<SwapPyusdUsdt />} />
+    <Route path="swap/bnb-usdc" element={<SwapBnbUsdc />} />
+    <Route path="resources/crypto-dust-guide" element={<CryptoDustGuide />} />
+    <Route path="resources/fractal-bitcoin-swap" element={<FractalBitcoinSwap />} />
+    <Route path="transparency-security" element={<TransparencySecurity />} />
+    <Route path="dust-swap-comparison" element={<DustSwapComparison />} />
+    {/* SEO keyword landing pages */}
+    <Route path="swap/*" element={<KeywordPage />} />
+    <Route path="buy/*" element={<KeywordPage />} />
+    <Route path="guides/*" element={<KeywordPage />} />
+    <Route path="tools/*" element={<KeywordPage />} />
+    <Route path="ecosystem/*" element={<KeywordPage />} />
+    <Route path="alternatives/*" element={<KeywordPage />} />
+    <Route path="reviews/*" element={<KeywordPage />} />
+    <Route path="bridge/*" element={<KeywordPage />} />
+    <Route path="trade/*" element={<KeywordPage />} />
+    <Route path="price/*" element={<KeywordPage />} />
+    <Route path="local-crypto-exchange" element={<KeywordPage />} />
+    <Route path="exchange-iu" element={<KeywordPage />} />
+  </>
+);
+
 const App = () => (
   <ThemeProvider>
     <HelmetProvider>
@@ -44,43 +84,20 @@ const App = () => (
             <div className="pb-16 lg:pb-0">
               <Suspense fallback={<div className="min-h-screen bg-background" />}>
                 <Routes>
-                  <Route path="/" element={<Index />} />
-                  <Route path="/blog" element={<Blog />} />
-                  <Route path="/blog/:slug" element={<BlogPost />} />
-                  <Route path="/privacy" element={<PrivacyPolicy />} />
-                  <Route path="/terms" element={<TermsOfService />} />
-                  <Route path="/aml" element={<AMLPolicy />} />
-                  <Route path="/swap/sol-usdt" element={<SwapSolUsdt />} />
-                  <Route path="/swap/btc-usdc" element={<SwapBtcUsdc />} />
-                  <Route path="/swap/hype-usdt" element={<SwapHypeUsdt />} />
-                  <Route path="/swap/eth-sol" element={<SwapEthSol />} />
-                  <Route path="/swap/xrp-usdt" element={<SwapXrpUsdt />} />
-                  <Route path="/swap/bera-usdt" element={<SwapBeraUsdt />} />
-                  <Route path="/swap/tia-usdt" element={<SwapTiaUsdt />} />
-                  <Route path="/swap/monad-usdt" element={<SwapMonadUsdt />} />
-                  <Route path="/swap/pyusd-usdt" element={<SwapPyusdUsdt />} />
-                  <Route path="/swap/bnb-usdc" element={<SwapBnbUsdc />} />
-                  <Route path="/resources/crypto-dust-guide" element={<CryptoDustGuide />} />
-                  <Route path="/resources/fractal-bitcoin-swap" element={<FractalBitcoinSwap />} />
-                  <Route path="/transparency-security" element={<TransparencySecurity />} />
-                  <Route path="/dust-swap-comparison" element={<DustSwapComparison />} />
-                  {/* SEO keyword landing pages */}
-                  <Route path="/swap/*" element={<KeywordPage />} />
-                  <Route path="/buy/*" element={<KeywordPage />} />
-                  <Route path="/guides/*" element={<KeywordPage />} />
-                  <Route path="/tools/*" element={<KeywordPage />} />
-                  <Route path="/ecosystem/*" element={<KeywordPage />} />
-                  <Route path="/alternatives/*" element={<KeywordPage />} />
-                  <Route path="/reviews/*" element={<KeywordPage />} />
-                  <Route path="/bridge/*" element={<KeywordPage />} />
-                  <Route path="/trade/*" element={<KeywordPage />} />
-                  <Route path="/price/*" element={<KeywordPage />} />
-                  <Route path="/local-crypto-exchange" element={<KeywordPage />} />
-                  <Route path="/exchange-iu" element={<KeywordPage />} />
+                  {/* English (default, no prefix) */}
+                  <Route element={<LangLayout />}>
+                    {AppRoutes()}
+                  </Route>
+                  {/* Portuguese */}
+                  <Route path="/pt" element={<LangLayout />}>
+                    {AppRoutes()}
+                  </Route>
+                  {/* Spanish */}
+                  <Route path="/es" element={<LangLayout />}>
+                    {AppRoutes()}
+                  </Route>
                   {/* Redirect old WordPress URLs to home */}
-                  <Route path="/pt/*" element={<Navigate to="/" replace />} />
                   <Route path="/fr/*" element={<Navigate to="/" replace />} />
-                  <Route path="/es/*" element={<Navigate to="/" replace />} />
                   <Route path="/de/*" element={<Navigate to="/" replace />} />
                   <Route path="/wp-*" element={<Navigate to="/" replace />} />
                   <Route path="/wordpress/*" element={<Navigate to="/" replace />} />
