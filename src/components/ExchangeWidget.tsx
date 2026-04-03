@@ -478,7 +478,7 @@ const ExchangeWidget = () => {
                     : "border-border bg-accent text-muted-foreground hover:border-primary/40"
                 }`}
               >
-                <Lock className="mr-1 inline h-3 w-3" /> Fixed Rate
+                <Lock className="me-1 inline h-3 w-3" /> Fixed Rate
                 <span className="ms-1.5 inline-flex rounded bg-primary/20 px-1.5 py-0.5 font-body text-[9px] font-bold uppercase tracking-wider text-primary">
                   Recommended
                 </span>
@@ -818,7 +818,7 @@ const ExchangeWidget = () => {
               disabled={!addressValid || !termsAccepted || creatingTx || rateExpired}
               onClick={handleCreateTransaction}
             >
-              {creatingTx ? <><Loader2 className="mr-2 h-4 w-4 animate-spin" /> Creating Exchange...</> : "Confirm & Create Exchange"}
+              {creatingTx ? <><Loader2 className="me-2 h-4 w-4 animate-spin" /> Creating Exchange...</> : "Confirm & Create Exchange"}
             </Button>
           </motion.div>
         )}
