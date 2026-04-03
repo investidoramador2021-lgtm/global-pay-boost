@@ -53,6 +53,22 @@ const BlogPostPage = () => {
 
   if (!post) return <Navigate to="/blog" replace />;
 
+  // Extract H2 headings as FAQ items for FAQPage schema
+  const faqItems = useMemo(() => {
+    const headings = extractHeadings(post.content);
+    return headings
+      .filter((h) => h.level === 2 && h.text.includes("?"))
+      .map((h) => {
+        // Extract the paragraph after the heading as the answer
+        const regex = new RegExp(`## ${h.text.replace(/[.*+?^${}()|[\]\\]/g, "\\$&")}\\n+([\\s\\S]*?)(?=\\n## |$)`);
+        const match = post.content.match(regex);
+        const answer = match
+          ? match[1].replace(/###.*/g, "").replace(/\n+/g, " ").replace(/\[([^\]]+)\]\([^)]+\)/g, "$1").replace(/\*\*/g, "").trim().slice(0, 300)
+          : post.metaDescription;
+        return { question: h.text, answer };
+      });
+  }, [post.content, post.metaDescription]);
+
   const jsonLd = {
     "@context": "https://schema.org",
     "@type": "BlogPosting",
@@ -90,6 +106,18 @@ const BlogPostPage = () => {
       { "@type": "ListItem", position: 3, name: post.title, item: `https://mrcglobalpay.com/blog/${post.slug}` },
     ],
   };
+
+  const faqJsonLd = faqItems.length > 0
+    ? {
+        "@context": "https://schema.org",
+        "@type": "FAQPage",
+        mainEntity: faqItems.map((f) => ({
+          "@type": "Question",
+          name: f.question,
+          acceptedAnswer: { "@type": "Answer", text: f.answer },
+        })),
+      }
+    : null;
 
   return (
     <>
