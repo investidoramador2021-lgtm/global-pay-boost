@@ -30,6 +30,8 @@ const FractalBitcoinSwap = lazy(() => import("./pages/FractalBitcoinSwap.tsx"));
 const TransparencySecurity = lazy(() => import("./pages/TransparencySecurity.tsx"));
 const DustSwapComparison = lazy(() => import("./pages/DustSwapComparison.tsx"));
 const KeywordPage = lazy(() => import("./pages/KeywordPage.tsx"));
+const GetWidget = lazy(() => import("./pages/GetWidget.tsx"));
+const EmbedWidget = lazy(() => import("./pages/EmbedWidget.tsx"));
 const NotFound = lazy(() => import("./pages/NotFound.tsx"));
 
 const queryClient = new QueryClient();
@@ -70,6 +72,7 @@ const AppRoutes = () => (
     <Route path="price/*" element={<KeywordPage />} />
     <Route path="local-crypto-exchange" element={<KeywordPage />} />
     <Route path="exchange-iu" element={<KeywordPage />} />
+    <Route path="get-widget" element={<GetWidget />} />
   </>
 );
 
@@ -94,6 +97,8 @@ const App = () => (
                       {AppRoutes()}
                     </Route>
                   ))}
+                  {/* Standalone embed widget (no header/footer/nav) */}
+                  <Route path="/embed/widget" element={<EmbedWidget />} />
                   {/* Redirect old WordPress URLs to home */}
                   <Route path="/de/*" element={<Navigate to="/" replace />} />
                   <Route path="/wp-*" element={<Navigate to="/" replace />} />
