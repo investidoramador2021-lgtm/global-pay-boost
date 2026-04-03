@@ -8,14 +8,7 @@ const NotFound = () => {
 
   useEffect(() => {
     console.error("404 Error: User attempted to access non-existent route:", location.pathname);
-    
-    // Redirect old WordPress/legacy paths to home
-    const legacyPrefixes = ["/pt/", "/fr/", "/es/", "/de/", "/wp-", "/wordpress/"];
-    if (legacyPrefixes.some(p => location.pathname.startsWith(p))) {
-      navigate("/", { replace: true });
-      return;
-    }
-  }, [location.pathname, navigate]);
+  }, [location.pathname]);
 
   return (
     <>
