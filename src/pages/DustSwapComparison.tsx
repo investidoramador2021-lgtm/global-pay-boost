@@ -136,8 +136,8 @@ const DustSwapComparison = () => {
         {/* Comparison Table */}
         <section className="py-12 sm:py-20">
           <div className="container mx-auto max-w-5xl px-4">
-            <h2 className="mb-8 text-center font-display text-2xl font-bold text-foreground">
-              Feature-by-Feature Breakdown
+            <h2 id="how-do-exchanges-compare-feature-by-feature" className="scroll-mt-24 mb-8 text-center font-display text-2xl font-bold text-foreground">
+              How Do Exchanges Compare Feature-by-Feature?
             </h2>
             <div className="overflow-hidden rounded-xl border border-border">
               <Table>
