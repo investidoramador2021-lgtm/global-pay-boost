@@ -5,22 +5,24 @@ import { Link } from "react-router-dom";
 
 const guideJsonLd = {
   "@context": "https://schema.org",
-  "@type": "Guide",
-  name: "The Complete 2026 Guide to Swapping Crypto Dust & Small Balances",
+  "@type": "Product",
+  name: "MRC GlobalPay Crypto Dust Swap Service",
   description:
-    "Learn how to convert unspendable crypto dust into usable assets with no-minimum swaps starting at $0.30.",
+    "Convert unspendable crypto dust into usable assets. $0.30 minimum. No registration required. Non-custodial, 500+ tokens supported.",
   url: "https://mrcglobalpay.com/resources/crypto-dust-guide",
-  author: {
-    "@type": "Organization",
+  brand: {
+    "@type": "Brand",
     name: "MRC GlobalPay",
-    url: "https://mrcglobalpay.com",
   },
-  datePublished: "2026-03-01",
-  dateModified: "2026-03-20",
-  about: [
-    { "@type": "Thing", name: "Crypto Dust Swap" },
-    { "@type": "Thing", name: "No Minimum Crypto Exchange" },
-  ],
+  offers: {
+    "@type": "Offer",
+    price: "0.30",
+    priceCurrency: "USD",
+    priceValidUntil: "2026-12-31",
+    availability: "https://schema.org/InStock",
+    url: "https://mrcglobalpay.com/resources/crypto-dust-guide",
+    description: "Crypto dust swaps starting at $0.30 minimum. No registration required.",
+  },
 };
 
 const howToJsonLd = {
