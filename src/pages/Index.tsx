@@ -9,6 +9,7 @@ import PopularPairsSection from "@/components/PopularPairsSection";
 import LiveSwapTicker from "@/components/LiveSwapTicker";
 import NoLimitsSection from "@/components/NoLimitsSection";
 import FAQSection from "@/components/FAQSection";
+import MsbTrustBar from "@/components/MsbTrustBar";
 import SiteFooter from "@/components/SiteFooter";
 import PullToRefresh from "@/components/PullToRefresh";
 import ShadowSeoFaq from "@/components/ShadowSeoFaq";
@@ -122,6 +123,7 @@ const Index = () => {
           <SwapPairsQA />
           <FAQSection />
         </main>
+        <MsbTrustBar />
         <SiteFooter />
         <ShadowSeoFaq />
       </PullToRefresh>
