@@ -108,12 +108,20 @@ const DustSwapComparison = () => {
             <span className="mb-4 inline-block rounded-full border border-primary/20 bg-primary/5 px-4 py-1.5 text-xs font-medium text-primary">
               2026 Comparison
             </span>
-            {/* Atomic Answer Block */}
+            {/* At a Glance Block */}
             <div className="mx-auto mb-8 max-w-2xl rounded-xl border border-primary/20 bg-primary/5 p-5 text-left">
-              <p className="font-body text-sm font-semibold uppercase tracking-wider text-primary mb-2">Quick Answer</p>
+              <p className="font-body text-sm font-semibold uppercase tracking-wider text-primary mb-2">
+                <Zap className="mr-1 inline h-3.5 w-3.5" />
+                At a Glance
+              </p>
               <p className="font-body text-base leading-relaxed text-foreground">
                 MRC GlobalPay is the only non-custodial exchange supporting crypto dust swaps from $0.30 with Fractal Bitcoin support. Competitors enforce $10+ minimums, locking out small balances entirely.
               </p>
+              <ul className="mt-3 space-y-1 font-body text-sm text-foreground/80">
+                <li className="flex items-center gap-2"><span className="text-primary">•</span> Minimum: $0.30 vs $10+ on competitors</li>
+                <li className="flex items-center gap-2"><span className="text-primary">•</span> No registration required</li>
+                <li className="flex items-center gap-2"><span className="text-primary">•</span> Fractal Bitcoin support (exclusive)</li>
+              </ul>
             </div>
             <h1 className="font-display text-3xl font-bold tracking-tight text-foreground sm:text-5xl">
               Micro-Swap Comparison: Who Actually Supports Dust?
