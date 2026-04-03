@@ -66,6 +66,18 @@ export async function fetchPostBySlug(slug: string, lang = "en"): Promise<BlogPo
     if (translatedSecurity && translatedSecurity.slug === slug) {
       return translatedSecurity;
     }
+    const translatedTradingPairs = TRANSLATED_TRADING_PAIRS_POSTS[lang];
+    if (translatedTradingPairs && translatedTradingPairs.slug === slug) {
+      return translatedTradingPairs;
+    }
+    const translatedMining = TRANSLATED_MINING_POSTS[lang];
+    if (translatedMining && translatedMining.slug === slug) {
+      return translatedMining;
+    }
+    const translatedBridge = TRANSLATED_BRIDGE_POSTS[lang];
+    if (translatedBridge && translatedBridge.slug === slug) {
+      return translatedBridge;
+    }
   }
 
   const { data } = await supabase
