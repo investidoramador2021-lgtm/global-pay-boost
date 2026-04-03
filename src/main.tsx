@@ -1,6 +1,13 @@
+import React from "react";
 import { createRoot } from "react-dom/client";
-import App from "./App.tsx";
 import "./index.css";
-import "./i18n";
 
-createRoot(document.getElementById("root")!).render(<App />);
+// i18n must init after React is available
+import("./i18n").then(() => {
+  // Dynamic import App after i18n is ready
+  import("./App.tsx").then(({ default: App }) => {
+    createRoot(document.getElementById("root")!).render(
+      <App />
+    );
+  });
+});
