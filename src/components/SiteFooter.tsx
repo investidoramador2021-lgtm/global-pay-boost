@@ -1,4 +1,4 @@
-const stablecoinSwaps = [
+const stablecoinBridges = [
   { label: "USDT to TRX", href: "/swap/usdt-to-trx", title: "Swap USDT to TRX instantly" },
   { label: "USDT to SOL", href: "/swap/usdt-to-sol", title: "Swap USDT to SOL instantly" },
   { label: "USDT to Solana", href: "/swap/usdt-to-solana", title: "Swap USDT to Solana instantly" },
@@ -10,6 +10,9 @@ const stablecoinSwaps = [
   { label: "PYUSD to USDT", href: "/swap/pyusd-to-usdt", title: "Swap PayPal USD to USDT instantly" },
   { label: "USD to XMR", href: "/swap/usd-to-xmr", title: "Convert USD to Monero privately" },
   { label: "SOL to IDR", href: "/swap/solana-to-idr", title: "Convert Solana to Indonesian Rupiah" },
+  { label: "ETH to SOL Bridge", href: "/bridge/eth-to-sol", title: "Bridge Ethereum to Solana instantly" },
+  { label: "SOL to BNB Bridge", href: "/bridge/solana-to-bnb", title: "Bridge Solana to BNB Chain instantly" },
+  { label: "PulseChain Bridge", href: "/bridge/pulsechain", title: "Bridge assets to PulseChain instantly" },
 ];
 
 const popularCryptoSwaps = [
