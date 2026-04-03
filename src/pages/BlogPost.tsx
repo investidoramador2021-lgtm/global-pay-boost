@@ -127,7 +127,7 @@ const BlogPostPage = () => {
   return (
     <>
       <Helmet>
-        <title>{post.metaTitle} | MRC GlobalPay</title>
+        <title>{post.metaTitle.length > 45 ? post.metaTitle.slice(0, 45).trim() : post.metaTitle} | MRC GlobalPay</title>
         <meta name="description" content={post.metaDescription} />
         <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1" />
         <link rel="canonical" href={postUrl} />
