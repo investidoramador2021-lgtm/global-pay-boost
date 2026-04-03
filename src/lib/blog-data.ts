@@ -1,5 +1,8 @@
 import { supabase } from "@/integrations/supabase/client";
 import { SEED_POSTS } from "@/lib/blog/seed-posts";
+import { TRANSLATED_BTC_ETH_POSTS } from "@/lib/blog/translated-btc-eth-posts";
+import { TRANSLATED_LIQUIDITY_POSTS } from "@/lib/blog/translated-liquidity-posts";
+import { TRANSLATED_SECURITY_POSTS } from "@/lib/blog/translated-security-posts";
 import type { BlogPost, BlogAuthor } from "@/lib/blog/types";
 
 export type { BlogPost, BlogAuthor } from "@/lib/blog/types";
@@ -26,32 +29,6 @@ function dbRowToPost(row: any): BlogPost {
   };
 }
 
-async function loadTranslatedPostBySlug(slug: string, lang: string): Promise<BlogPost | undefined> {
-  if (lang === "en") return undefined;
-
-  const loaders = [
-    () => import("@/lib/blog/translated-btc-eth-posts").then((m) => (m.TRANSLATED_BTC_ETH_POSTS as Record<string, BlogPost | undefined>)[lang]),
-    () => import("@/lib/blog/translated-liquidity-posts").then((m) => (m.TRANSLATED_LIQUIDITY_POSTS as Record<string, BlogPost | undefined>)[lang]),
-    () => import("@/lib/blog/translated-security-posts").then((m) => (m.TRANSLATED_SECURITY_POSTS as Record<string, BlogPost | undefined>)[lang]),
-    () => import("@/lib/blog/translated-trading-pairs-posts").then((m) => (m.TRANSLATED_TRADING_PAIRS_POSTS as Record<string, BlogPost | undefined>)[lang]),
-    () => import("@/lib/blog/translated-mining-posts").then((m) => (m.TRANSLATED_MINING_POSTS as Record<string, BlogPost | undefined>)[lang]),
-    () => import("@/lib/blog/translated-bridge-posts").then((m) => (m.TRANSLATED_BRIDGE_POSTS as Record<string, BlogPost | undefined>)[lang]),
-  ];
-
-  for (const load of loaders) {
-    try {
-      const post = await load();
-      if (post?.slug === slug) {
-        return post;
-      }
-    } catch (error) {
-      console.error("Error loading translated blog post:", error);
-    }
-  }
-
-  return undefined;
-}
-
 export async function fetchAllPosts(): Promise<BlogPost[]> {
   const { data, error } = await supabase
     .from("blog_posts")
@@ -72,9 +49,20 @@ export async function fetchAllPosts(): Promise<BlogPost[]> {
 }
 
 export async function fetchPostBySlug(slug: string, lang = "en"): Promise<BlogPost | undefined> {
-  const translatedPost = await loadTranslatedPostBySlug(slug, lang);
-  if (translatedPost) {
-    return translatedPost;
+  // For non-English languages, check translated posts first
+  if (lang !== "en") {
+    const translatedBtcEth = TRANSLATED_BTC_ETH_POSTS[lang];
+    if (translatedBtcEth && translatedBtcEth.slug === slug) {
+      return translatedBtcEth;
+    }
+    const translatedLiquidity = TRANSLATED_LIQUIDITY_POSTS[lang];
+    if (translatedLiquidity && translatedLiquidity.slug === slug) {
+      return translatedLiquidity;
+    }
+    const translatedSecurity = TRANSLATED_SECURITY_POSTS[lang];
+    if (translatedSecurity && translatedSecurity.slug === slug) {
+      return translatedSecurity;
+    }
   }
 
   const { data } = await supabase

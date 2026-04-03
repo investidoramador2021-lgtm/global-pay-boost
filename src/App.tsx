@@ -1,3 +1,4 @@
+import { lazy, Suspense } from "react";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { BrowserRouter, Route, Routes, Navigate } from "react-router-dom";
 import { HelmetProvider } from "react-helmet-async";
@@ -8,30 +9,32 @@ import { ThemeProvider } from "@/hooks/use-theme";
 import MobileBottomNav from "@/components/MobileBottomNav";
 import LangLayout from "@/components/LangLayout";
 import Index from "./pages/Index.tsx";
-import PrivacyPolicy from "./pages/PrivacyPolicy.tsx";
-import TermsOfService from "./pages/TermsOfService.tsx";
-import AMLPolicy from "./pages/AMLPolicy.tsx";
-import SwapSolUsdt from "./pages/SwapSolUsdt.tsx";
-import SwapBtcUsdc from "./pages/SwapBtcUsdc.tsx";
-import SwapHypeUsdt from "./pages/SwapHypeUsdt.tsx";
-import SwapEthSol from "./pages/SwapEthSol.tsx";
-import SwapXrpUsdt from "./pages/SwapXrpUsdt.tsx";
-import SwapBeraUsdt from "./pages/SwapBeraUsdt.tsx";
-import SwapTiaUsdt from "./pages/SwapTiaUsdt.tsx";
-import SwapMonadUsdt from "./pages/SwapMonadUsdt.tsx";
-import SwapPyusdUsdt from "./pages/SwapPyusdUsdt.tsx";
-import SwapBnbUsdc from "./pages/SwapBnbUsdc.tsx";
-import Blog from "./pages/Blog.tsx";
-import BlogPost from "./pages/BlogPost.tsx";
-import CryptoDustGuide from "./pages/CryptoDustGuide.tsx";
-import FractalBitcoinSwap from "./pages/FractalBitcoinSwap.tsx";
-import TransparencySecurity from "./pages/TransparencySecurity.tsx";
-import DustSwapComparison from "./pages/DustSwapComparison.tsx";
-import KeywordPage from "./pages/KeywordPage.tsx";
-import NotFound from "./pages/NotFound.tsx";
+
+const PrivacyPolicy = lazy(() => import("./pages/PrivacyPolicy.tsx"));
+const TermsOfService = lazy(() => import("./pages/TermsOfService.tsx"));
+const AMLPolicy = lazy(() => import("./pages/AMLPolicy.tsx"));
+const SwapSolUsdt = lazy(() => import("./pages/SwapSolUsdt.tsx"));
+const SwapBtcUsdc = lazy(() => import("./pages/SwapBtcUsdc.tsx"));
+const SwapHypeUsdt = lazy(() => import("./pages/SwapHypeUsdt.tsx"));
+const SwapEthSol = lazy(() => import("./pages/SwapEthSol.tsx"));
+const SwapXrpUsdt = lazy(() => import("./pages/SwapXrpUsdt.tsx"));
+const SwapBeraUsdt = lazy(() => import("./pages/SwapBeraUsdt.tsx"));
+const SwapTiaUsdt = lazy(() => import("./pages/SwapTiaUsdt.tsx"));
+const SwapMonadUsdt = lazy(() => import("./pages/SwapMonadUsdt.tsx"));
+const SwapPyusdUsdt = lazy(() => import("./pages/SwapPyusdUsdt.tsx"));
+const SwapBnbUsdc = lazy(() => import("./pages/SwapBnbUsdc.tsx"));
+const Blog = lazy(() => import("./pages/Blog.tsx"));
+const BlogPost = lazy(() => import("./pages/BlogPost.tsx"));
+const CryptoDustGuide = lazy(() => import("./pages/CryptoDustGuide.tsx"));
+const FractalBitcoinSwap = lazy(() => import("./pages/FractalBitcoinSwap.tsx"));
+const TransparencySecurity = lazy(() => import("./pages/TransparencySecurity.tsx"));
+const DustSwapComparison = lazy(() => import("./pages/DustSwapComparison.tsx"));
+const KeywordPage = lazy(() => import("./pages/KeywordPage.tsx"));
+const NotFound = lazy(() => import("./pages/NotFound.tsx"));
 
 const queryClient = new QueryClient();
 
+/** All app routes — rendered once at root and once per language prefix */
 const AppRoutes = () => (
   <>
     <Route index element={<Index />} />
@@ -54,6 +57,7 @@ const AppRoutes = () => (
     <Route path="resources/fractal-bitcoin-swap" element={<FractalBitcoinSwap />} />
     <Route path="transparency-security" element={<TransparencySecurity />} />
     <Route path="dust-swap-comparison" element={<DustSwapComparison />} />
+    {/* SEO keyword landing pages */}
     <Route path="swap/*" element={<KeywordPage />} />
     <Route path="buy/*" element={<KeywordPage />} />
     <Route path="guides/*" element={<KeywordPage />} />
@@ -78,20 +82,26 @@ const App = () => (
           <Sonner />
           <BrowserRouter>
             <div className="pb-16 lg:pb-0">
-              <Routes>
-                <Route element={<LangLayout />}>
-                  {AppRoutes()}
-                </Route>
-                {["es", "pt", "fr", "ja", "fa", "ur", "he", "af", "hi", "vi", "tr", "uk"].map((lang) => (
-                  <Route key={lang} path={`/${lang}`} element={<LangLayout />}>
+              <Suspense fallback={<div className="min-h-screen bg-background" />}>
+                <Routes>
+                  {/* English (default, no prefix) */}
+                  <Route element={<LangLayout />}>
                     {AppRoutes()}
                   </Route>
-                ))}
-                <Route path="/de/*" element={<Navigate to="/" replace />} />
-                <Route path="/wp-*" element={<Navigate to="/" replace />} />
-                <Route path="/wordpress/*" element={<Navigate to="/" replace />} />
-                <Route path="*" element={<NotFound />} />
-              </Routes>
+                  {/* All non-English language prefixes */}
+                  {["es","pt","fr","ja","fa","ur","he","af","hi","vi","tr","uk"].map((lang) => (
+                    <Route key={lang} path={`/${lang}`} element={<LangLayout />}>
+                      {AppRoutes()}
+                    </Route>
+                  ))}
+                  {/* Redirect old WordPress URLs to home */}
+                  <Route path="/de/*" element={<Navigate to="/" replace />} />
+                  <Route path="/wp-*" element={<Navigate to="/" replace />} />
+                  <Route path="/wordpress/*" element={<Navigate to="/" replace />} />
+                  {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
+                  <Route path="*" element={<NotFound />} />
+                </Routes>
+              </Suspense>
             </div>
             <MobileBottomNav />
           </BrowserRouter>
