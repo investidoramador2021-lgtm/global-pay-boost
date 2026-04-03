@@ -23,7 +23,7 @@ const Index = () => {
     url: "https://mrcglobalpay.com",
     legalName: "MRC Global Pay",
     description:
-      "Registered Money Services Business (MSB) offering instant, non-custodial crypto-to-crypto swaps with no minimums. 500+ assets supported.",
+      "Registered Money Services Business (MSB) offering instant, non-custodial crypto-to-crypto swaps starting at $0.30. No registration required. 500+ assets supported.",
     image: "https://pub-bb2e103a32db4e198524a2e9ed8f35b4.r2.dev/22f69f45-cf65-4871-9af4-b68ab4027213/id-preview-243bf129--23f851ec-c820-43c7-bbe2-d2e830f7c268.lovable.app-1773521796493.png",
     logo: "https://pub-bb2e103a32db4e198524a2e9ed8f35b4.r2.dev/22f69f45-cf65-4871-9af4-b68ab4027213/id-preview-243bf129--23f851ec-c820-43c7-bbe2-d2e830f7c268.lovable.app-1773521796493.png",
     address: {
@@ -56,6 +56,28 @@ const Index = () => {
     },
   };
 
+  const productJsonLd = {
+    "@context": "https://schema.org",
+    "@type": "Product",
+    name: "MRC GlobalPay Crypto Swap Service",
+    description: "Instant non-custodial crypto-to-crypto swaps starting at $0.30. No registration required. 500+ assets, sub-60-second settlement.",
+    url: "https://mrcglobalpay.com",
+    brand: {
+      "@type": "Brand",
+      name: "MRC GlobalPay",
+    },
+    offers: {
+      "@type": "AggregateOffer",
+      lowPrice: "0.30",
+      highPrice: "1000000",
+      priceCurrency: "USD",
+      offerCount: "500",
+      availability: "https://schema.org/InStock",
+      url: "https://mrcglobalpay.com/#exchange",
+      description: "Crypto swaps starting at $0.30 minimum. No registration required. 500+ tokens.",
+    },
+  };
+
   const handleRefresh = useCallback(async () => {
     await new Promise((resolve) => setTimeout(resolve, 1000));
     window.dispatchEvent(new CustomEvent("pull-refresh"));
@@ -82,6 +104,7 @@ const Index = () => {
         <meta name="twitter:description" content="Instant, accountless crypto swaps with no minimums. Support for Fractal Bitcoin, Solana, and 500+ assets. Convert wallet dust under $1 securely." />
         <meta name="twitter:image" content="https://pub-bb2e103a32db4e198524a2e9ed8f35b4.r2.dev/22f69f45-cf65-4871-9af4-b68ab4027213/id-preview-243bf129--23f851ec-c820-43c7-bbe2-d2e830f7c268.lovable.app-1773521796493.png" />
         <script type="application/ld+json">{JSON.stringify(financialServiceJsonLd)}</script>
+        <script type="application/ld+json">{JSON.stringify(productJsonLd)}</script>
       </Helmet>
 
       <PullToRefresh onRefresh={handleRefresh}>
