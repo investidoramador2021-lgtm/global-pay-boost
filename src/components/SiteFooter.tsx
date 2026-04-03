@@ -110,9 +110,6 @@ const expertiseLinks = [
   { label: "Micro-Swap Comparison", href: "/dust-swap-comparison", title: "Compare micro-swap platforms and fees" },
 ];
 
-const complianceText =
-  "Registered Money Services Business (MSB) — Canada. Adhering to 2026 AML and FINTRAC standards. MRC GlobalPay provides a registration-free service for most users. To maintain safety and compliance with global AML standards, our automated risk-prevention system may occasionally request standard verification for transactions flagged as high-risk.";
-
 type FooterLink = { label: string; href: string; title: string };
 
 const FooterLinkList = ({ title, links }: { title: string; links: FooterLink[] }) => (
@@ -136,14 +133,23 @@ const FooterLinkList = ({ title, links }: { title: string; links: FooterLink[] }
   </div>
 );
 
+import { useTranslation } from "react-i18next";
+import { useLocation } from "react-router-dom";
+import { getLangFromPath, langPath } from "@/i18n";
+
 const SiteFooter = () => {
+  const { t } = useTranslation();
+  const { pathname } = useLocation();
+  const lang = getLangFromPath(pathname);
+  const lp = (path: string) => langPath(lang, path);
+
   return (
     <footer className="border-t border-border bg-muted py-10 sm:py-16">
       <div className="container mx-auto px-4">
         {/* Brand + main nav */}
         <div className="grid gap-8 sm:grid-cols-2 sm:gap-12 lg:grid-cols-4 xl:grid-cols-5">
           <div>
-            <a href="/" title="MRC GlobalPay — No Minimum Crypto Exchange" className="font-display text-lg font-bold tracking-tight text-foreground sm:text-xl">
+            <a href={lp("/")} title="MRC GlobalPay — Registration-Free Crypto Exchange" className="font-display text-lg font-bold tracking-tight text-foreground sm:text-xl">
               MRC<span className="text-primary">GlobalPay</span>
             </a>
             <p className="mt-3 font-body text-sm leading-relaxed text-muted-foreground sm:mt-4">
@@ -156,22 +162,22 @@ const SiteFooter = () => {
 
           <div>
             <h3 className="font-display text-xs font-semibold uppercase tracking-wider text-foreground/80 sm:text-sm">
-              Legal
+              {t("footer.legal")}
             </h3>
             <ul className="mt-3 space-y-2 sm:mt-4 sm:space-y-3">
               <li>
-                <a href="/privacy" title="MRC GlobalPay Privacy Policy" className="font-body text-sm text-muted-foreground transition-colors hover:text-foreground">
-                  Privacy Policy
+                <a href={lp("/privacy")} title="MRC GlobalPay Privacy Policy" className="font-body text-sm text-muted-foreground transition-colors hover:text-foreground">
+                  {t("footer.privacy")}
                 </a>
               </li>
               <li>
-                <a href="/terms" title="MRC GlobalPay Terms of Service" className="font-body text-sm text-muted-foreground transition-colors hover:text-foreground">
-                  Terms of Service
+                <a href={lp("/terms")} title="MRC GlobalPay Terms of Service" className="font-body text-sm font-semibold text-foreground transition-colors hover:text-primary">
+                  {t("footer.terms")}
                 </a>
               </li>
               <li>
-                <a href="/aml" title="MRC GlobalPay AML Policy" className="font-body text-sm text-muted-foreground transition-colors hover:text-foreground">
-                  AML Policy
+                <a href={lp("/aml")} title="MRC GlobalPay AML Policy" className="font-body text-sm text-muted-foreground transition-colors hover:text-foreground">
+                  {t("footer.aml")}
                 </a>
               </li>
             </ul>
@@ -224,8 +230,8 @@ const SiteFooter = () => {
               Compliance & Security
             </h3>
             <p className="font-body text-xs leading-relaxed text-muted-foreground">
-              {complianceText}{" "}
-              <a href="/transparency-security" title="View MRC GlobalPay transparency and security practices" className="text-primary hover:underline">
+              {t("footer.disclaimer")}{" "}
+              <a href={lp("/transparency-security")} title="View MRC GlobalPay transparency and security practices" className="text-primary hover:underline">
                 View our transparency &amp; security practices
               </a>
             </p>

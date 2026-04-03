@@ -4,6 +4,13 @@
     "description": "Échangez plus de 500 cryptomonnaies instantanément dès $0.30. Sans inscription, sans vérification. Règlement en moins de 60 secondes.",
     "ogTitle": "MRC GlobalPay | Échange Crypto Instantané dès $0.30"
   },
+  "footer": {
+    "legal": "Juridique",
+    "privacy": "Politique de confidentialité",
+    "terms": "Conditions d'utilisation",
+    "aml": "Politique AML",
+    "disclaimer": "MRC GlobalPay est un MSB canadien enregistré. Nous offrons un service sans inscription pour la plupart des utilisateurs. Pour maintenir la sécurité et la conformité avec les normes AML mondiales, notre système automatisé de prévention des risques peut occasionnellement demander une vérification standard pour les transactions signalées comme à haut risque."
+  },
   "nav": {
     "howItWorks": "Comment ça marche",
     "features": "Fonctionnalités",

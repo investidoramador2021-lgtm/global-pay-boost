@@ -4,6 +4,13 @@
     "description": "500'den fazla kripto para birimini $0.30'dan anında takas edin. Kayıt gerektirmez. 60 saniyede ödeme.",
     "ogTitle": "MRC GlobalPay | Anında Kripto Takası $0.30'dan"
   },
+  "footer": {
+    "legal": "Yasal",
+    "privacy": "Gizlilik Politikası",
+    "terms": "Hizmet Şartları",
+    "aml": "AML Politikası",
+    "disclaimer": "MRC GlobalPay kayıtlı bir Kanada MSB'sidir. Çoğu kullanıcı için kayıt gerektirmeyen bir hizmet sunuyoruz. Güvenliği ve küresel AML standartlarına uyumu sürdürmek için otomatik risk önleme sistemimiz, yüksek riskli olarak işaretlenen işlemler için zaman zaman standart doğrulama talep edebilir."
+  },
   "nav": {
     "howItWorks": "Nasıl Çalışır",
     "features": "Özellikler",

@@ -4,6 +4,13 @@
     "description": "Trao đổi hơn 500 loại tiền điện tử tức thì từ $0.30. Không đăng ký, không xác minh. Thanh toán trong 60 giây.",
     "ogTitle": "MRC GlobalPay | Trao Đổi Crypto Tức Thì từ $0.30"
   },
+  "footer": {
+    "legal": "Pháp lý",
+    "privacy": "Chính sách bảo mật",
+    "terms": "Điều khoản dịch vụ",
+    "aml": "Chính sách AML",
+    "disclaimer": "MRC GlobalPay là MSB đã đăng ký tại Canada. Chúng tôi cung cấp dịch vụ không cần đăng ký cho hầu hết người dùng. Để duy trì an toàn và tuân thủ các tiêu chuẩn AML toàn cầu, hệ thống phòng ngừa rủi ro tự động có thể yêu cầu xác minh tiêu chuẩn cho các giao dịch có rủi ro cao."
+  },
   "nav": {
     "howItWorks": "Cách thức hoạt động",
     "features": "Tính năng",

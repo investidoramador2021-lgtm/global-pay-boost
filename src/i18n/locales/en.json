@@ -4,6 +4,13 @@
     "description": "Swap 500+ cryptocurrencies instantly from $0.30. Registration-free, non-custodial. Sub-60-second settlement. Registered Canadian MSB.",
     "ogTitle": "MRC GlobalPay | No Minimum Crypto Exchange | Swap Dust from $0.30"
   },
+  "footer": {
+    "legal": "Legal",
+    "privacy": "Privacy Policy",
+    "terms": "Terms of Service",
+    "aml": "AML Policy",
+    "disclaimer": "MRC GlobalPay is a registered Canadian MSB. We provide a registration-free service for most users. To maintain safety and compliance with global AML standards, our automated risk-prevention system may occasionally request standard verification for transactions flagged as high-risk."
+  },
   "nav": {
     "howItWorks": "How It Works",
     "features": "Features",
