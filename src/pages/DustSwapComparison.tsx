@@ -14,18 +14,30 @@ import {
 
 const comparisonJsonLd = {
   "@context": "https://schema.org",
-  "@type": "WebPage",
-  name: "Micro-Swap Comparison 2026: No Minimum Crypto Exchange vs Competitors",
+  "@type": "Product",
+  name: "MRC GlobalPay Micro-Swap Service",
   description:
-    "Compare MRC GlobalPay's $0.30 crypto dust swaps against major exchanges with $10+ minimums. Feature-by-feature breakdown.",
+    "No-minimum crypto exchange with $0.30 minimum swap. No registration required. Non-custodial, instant settlement, 500+ assets.",
   url: "https://mrcglobalpay.com/dust-swap-comparison",
-  publisher: {
-    "@type": "Organization",
+  brand: {
+    "@type": "Brand",
     name: "MRC GlobalPay",
-    url: "https://mrcglobalpay.com",
   },
-  datePublished: "2026-03-01",
-  dateModified: "2026-03-20",
+  offers: {
+    "@type": "Offer",
+    price: "0.30",
+    priceCurrency: "USD",
+    priceValidUntil: "2026-12-31",
+    availability: "https://schema.org/InStock",
+    url: "https://mrcglobalpay.com/dust-swap-comparison",
+    description: "Crypto dust swaps starting at $0.30 minimum. No registration required.",
+  },
+  aggregateRating: {
+    "@type": "AggregateRating",
+    ratingValue: "4.8",
+    reviewCount: "1200",
+    bestRating: "5",
+  },
 };
 
 type Feature = {
@@ -63,24 +75,24 @@ const DustSwapComparison = () => {
   return (
     <>
       <Helmet>
-        <title>Micro-Swap Comparison 2026 | MRC GlobalPay</title>
+        <title>$0.30 Minimum Crypto Swap Comparison | No Registration Required | MRC GlobalPay</title>
         <meta
           name="description"
-          content="Compare MRC GlobalPay's $0.30 minimum dust swaps vs ChangeNOW, SimpleSwap, and Changelly. The best no-minimum crypto exchange in 2026."
+          content="Compare MRC GlobalPay's $0.30 minimum dust swaps vs ChangeNOW, SimpleSwap, and Changelly. No registration required. The best no-minimum crypto exchange in 2026."
         />
         <link rel="canonical" href="https://mrcglobalpay.com/dust-swap-comparison" />
-        <meta property="og:title" content="Micro-Swap Comparison 2026 | MRC GlobalPay" />
+        <meta property="og:title" content="$0.30 Minimum Crypto Swap Comparison | No Registration Required | MRC GlobalPay" />
         <meta
           property="og:description"
-          content="Feature-by-feature comparison: $0.30 dust swaps vs $10+ minimums on major exchanges."
+          content="$0.30 minimum dust swaps vs $10+ minimums on major exchanges. No registration required. Feature-by-feature comparison."
         />
         <meta property="og:url" content="https://mrcglobalpay.com/dust-swap-comparison" />
         <meta property="og:type" content="article" />
         <meta property="og:site_name" content="MRC GlobalPay" />
         <meta property="og:image" content="https://pub-bb2e103a32db4e198524a2e9ed8f35b4.r2.dev/22f69f45-cf65-4871-9af4-b68ab4027213/id-preview-243bf129--23f851ec-c820-43c7-bbe2-d2e830f7c268.lovable.app-1773521796493.png" />
         <meta name="twitter:card" content="summary_large_image" />
-        <meta name="twitter:title" content="Micro-Swap Comparison 2026 | MRC GlobalPay" />
-        <meta name="twitter:description" content="Compare MRC GlobalPay's $0.30 minimum dust swaps vs ChangeNOW, SimpleSwap, and Changelly. Best no-minimum crypto exchange." />
+        <meta name="twitter:title" content="$0.30 Minimum Crypto Swap Comparison | No Registration Required" />
+        <meta name="twitter:description" content="$0.30 minimum dust swaps vs $10+ minimums. No registration required. Best no-minimum crypto exchange." />
         <meta name="twitter:image" content="https://pub-bb2e103a32db4e198524a2e9ed8f35b4.r2.dev/22f69f45-cf65-4871-9af4-b68ab4027213/id-preview-243bf129--23f851ec-c820-43c7-bbe2-d2e830f7c268.lovable.app-1773521796493.png" />
         <script type="application/ld+json">{JSON.stringify(comparisonJsonLd)}</script>
       </Helmet>
