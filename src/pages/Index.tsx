@@ -23,7 +23,7 @@ const Index = () => {
     url: "https://mrcglobalpay.com",
     legalName: "MRC Global Pay",
     description:
-      "Registered Money Services Business (MSB) offering instant, non-custodial crypto-to-crypto swaps with no minimums. 500+ assets supported.",
+      "Registered Money Services Business (MSB) offering instant, non-custodial crypto-to-crypto swaps starting at $0.30. No registration required. 500+ assets supported.",
     image: "https://pub-bb2e103a32db4e198524a2e9ed8f35b4.r2.dev/22f69f45-cf65-4871-9af4-b68ab4027213/id-preview-243bf129--23f851ec-c820-43c7-bbe2-d2e830f7c268.lovable.app-1773521796493.png",
     logo: "https://pub-bb2e103a32db4e198524a2e9ed8f35b4.r2.dev/22f69f45-cf65-4871-9af4-b68ab4027213/id-preview-243bf129--23f851ec-c820-43c7-bbe2-d2e830f7c268.lovable.app-1773521796493.png",
     address: {
@@ -53,6 +53,28 @@ const Index = () => {
       target: "https://mrcglobalpay.com/#exchange",
       name: "Swap Cryptocurrency",
       description: "Instantly swap 500+ cryptocurrencies with no account required.",
+    },
+  };
+
+  const productJsonLd = {
+    "@context": "https://schema.org",
+    "@type": "Product",
+    name: "MRC GlobalPay Crypto Swap Service",
+    description: "Instant non-custodial crypto-to-crypto swaps starting at $0.30. No registration required. 500+ assets, sub-60-second settlement.",
+    url: "https://mrcglobalpay.com",
+    brand: {
+      "@type": "Brand",
+      name: "MRC GlobalPay",
+    },
+    offers: {
+      "@type": "AggregateOffer",
+      lowPrice: "0.30",
+      highPrice: "1000000",
+      priceCurrency: "USD",
+      offerCount: "500",
+      availability: "https://schema.org/InStock",
+      url: "https://mrcglobalpay.com/#exchange",
+      description: "Crypto swaps starting at $0.30 minimum. No registration required. 500+ tokens.",
     },
   };
 
