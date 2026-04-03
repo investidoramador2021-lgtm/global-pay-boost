@@ -34,7 +34,7 @@ export const seoKeywords = [
   { keyword: "coin exchange near me", intentType: "Commercial", targetUrl: "/local-crypto-exchange", primaryH1: "Best Digital Coin Exchange Near Me", benefitHook: "The global alternative to local kiosks." },
   { keyword: "is solana a good investment", intentType: "Informational", targetUrl: "/guides/is-solana-a-good-investment", primaryH1: "Is Solana a Good Investment in 2026?", benefitHook: "Market analysis plus instant SOL swap tool." },
   { keyword: "ltc transaction tracker", intentType: "Utility", targetUrl: "/tools/ltc-tracker", primaryH1: "Litecoin (LTC) Transaction Tracker", benefitHook: "Track and swap Litecoin in one dashboard." },
-  { keyword: "best way to buy monero no kyc", intentType: "Commercial", targetUrl: "/buy/monero-no-kyc", primaryH1: "Best Way to Buy Monero (No KYC)", benefitHook: "Secure and anonymous XMR swapping." },
+  { keyword: "best way to buy monero no kyc", intentType: "Commercial", targetUrl: "/buy/monero-no-kyc", primaryH1: "Best Way to Buy Monero (Registration-Free)", benefitHook: "Secure and private XMR swapping." },
   { keyword: "eth to sol", intentType: "Commercial", targetUrl: "/swap/eth-to-sol", primaryH1: "Swap ETH to SOL Bridge", benefitHook: "Instant Ethereum to Solana cross-chain bridge.", canonicalUrl: "/swap/eth-sol" },
   { keyword: "buy solana no kyc", intentType: "Commercial", targetUrl: "/buy/solana-no-kyc", primaryH1: "Buy Solana with No KYC", benefitHook: "Non-custodial SOL swaps starting at $0.30." },
   { keyword: "can i send wrapped bitcoin to a bitcoin wallet", intentType: "Informational", targetUrl: "/guides/wrapped-btc-to-bitcoin", primaryH1: "Can I Send Wrapped BTC to a BTC Wallet?", benefitHook: "Technical guide for cross-chain safety." },
