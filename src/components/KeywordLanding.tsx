@@ -235,8 +235,8 @@ const KeywordLanding = ({ data }: Props) => {
         {/* FAQ */}
         <section className="py-12 sm:py-20">
           <div className="container mx-auto max-w-3xl px-4">
-            <h2 id="frequently-asked-questions" className="mb-8 scroll-mt-24 font-display text-2xl font-bold text-foreground">
-              Frequently Asked Questions
+            <h2 id="what-are-the-most-common-questions" className="mb-8 scroll-mt-24 font-display text-2xl font-bold text-foreground">
+              What Are the Most Common Questions?
             </h2>
             <Accordion type="single" collapsible className="space-y-3">
               {faqs.map((faq, i) => (
