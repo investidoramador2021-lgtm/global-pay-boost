@@ -192,8 +192,8 @@ const DustSwapComparison = () => {
         {/* Why Dust Matters */}
         <section className="border-t border-border bg-muted/20 py-12 sm:py-20">
           <div className="container mx-auto max-w-3xl px-4">
-            <h2 className="mb-6 font-display text-2xl font-bold text-foreground sm:text-3xl">
-              Why Crypto Dust Conversion Matters in 2026
+            <h2 id="why-does-crypto-dust-conversion-matter-in-2026" className="scroll-mt-24 mb-6 font-display text-2xl font-bold text-foreground sm:text-3xl">
+              Why Does Crypto Dust Conversion Matter in 2026?
             </h2>
             <div className="space-y-4 font-body leading-relaxed text-muted-foreground">
               <p>
