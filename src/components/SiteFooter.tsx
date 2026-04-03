@@ -106,8 +106,8 @@ const expertiseLinks = [
   { label: "How UTXOs Work", href: "/resources/crypto-dust-guide#what-is-crypto-dust", title: "Understanding UTXO model and crypto dust" },
   { label: "Why $0.30 Is Our Minimum", href: "/dust-swap-comparison", title: "Why our minimum swap is only $0.30" },
   { label: "Non-Custodial Swaps", href: "/transparency-security", title: "How non-custodial crypto swaps work" },
-  { label: "Transparency & Security", href: "/transparency-security", title: "Our transparency and security practices" },
-  { label: "Micro-Swap Comparison", href: "/dust-swap-comparison", title: "Compare micro-swap platforms and fees" },
+  { label: "Micro-Swap FAQ", href: "/#faq", title: "Frequently asked questions about micro-swaps" },
+  { label: "AML Compliance", href: "/aml", title: "Our Anti-Money Laundering policy and compliance" },
 ];
 
 type FooterLink = { label: string; href: string; title: string };
