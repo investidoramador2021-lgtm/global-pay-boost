@@ -1,111 +1,151 @@
-const quickLinks = [
-  { label: "Buy Bitcoin", href: "/buy/bitcoin-no-kyc" },
-  { label: "Buy Ethereum", href: "/buy/ethereum" },
-  { label: "Buy Solana", href: "/buy/solana-no-kyc" },
-  { label: "Buy Solana No Verification", href: "/buy/solana-no-verification" },
-  { label: "Swap BNB to SOL", href: "/swap/bnb-to-sol" },
-  { label: "Bridge ETH to SOL", href: "/bridge/eth-to-sol" },
-  { label: "Buy Ether Instant", href: "/buy/ether-instant" },
-  { label: "Buy XDC", href: "/buy/xdc" },
-  { label: "Buy LTC PayPal", href: "/buy/ltc-paypal" },
+const stablecoinSwaps = [
+  { label: "USDT to TRX", href: "/swap/usdt-to-trx", title: "Swap USDT to TRX instantly" },
+  { label: "USDT to SOL", href: "/swap/usdt-to-sol", title: "Swap USDT to SOL instantly" },
+  { label: "USDT to Solana", href: "/swap/usdt-to-solana", title: "Swap USDT to Solana instantly" },
+  { label: "USDT to LTC", href: "/swap/usdt-to-ltc", title: "Swap USDT to Litecoin instantly" },
+  { label: "USDT TRX Instant", href: "/swap/usdt-trx-instant", title: "Instant USDT to TRX swap" },
+  { label: "USDC to SOL", href: "/swap/usdc-sol", title: "Swap USDC to SOL instantly" },
+  { label: "USDC Solana", href: "/swap/usdc-solana", title: "Swap USDC on Solana network" },
+  { label: "30 TRX to USDT", href: "/swap/30-trx-to-usdt", title: "Convert 30 TRX to USDT instantly" },
+  { label: "PYUSD to USDT", href: "/swap/pyusd-to-usdt", title: "Swap PayPal USD to USDT instantly" },
+  { label: "USD to XMR", href: "/swap/usd-to-xmr", title: "Convert USD to Monero privately" },
+  { label: "SOL to IDR", href: "/swap/solana-to-idr", title: "Convert Solana to Indonesian Rupiah" },
 ];
 
-const popularSwaps = [
-  { label: "USDT to TRX", href: "/swap/usdt-to-trx" },
-  { label: "USDC to SOL", href: "/swap/usdc-sol" },
-  { label: "USDC Solana", href: "/swap/usdc-solana" },
-  { label: "XMR to ETH", href: "/swap/xmr-to-eth" },
-  { label: "SHIB to USDT", href: "/swap/shiba-to-usdt" },
-  { label: "BTC to SOL", href: "/swap/btc-to-sol-instant" },
-  { label: "BNB Swap", href: "/swap/bnb" },
-  { label: "USDT to SOL", href: "/swap/usdt-to-sol" },
-  { label: "USDT to Solana", href: "/swap/usdt-to-solana" },
-  { label: "USDT to LTC", href: "/swap/usdt-to-ltc" },
-  { label: "ETH to SOL", href: "/swap/eth-to-sol" },
-  { label: "USDT TRX Instant", href: "/swap/usdt-trx-instant" },
-  { label: "SOL to IDR", href: "/swap/solana-to-idr" },
-  { label: "30 TRX to USDT", href: "/swap/30-trx-to-usdt" },
-  { label: "VINU Swap", href: "/swap/vinu" },
-  { label: "USD to XMR", href: "/swap/usd-to-xmr" },
+const majorPairs = [
+  { label: "ETH to SOL", href: "/swap/eth-to-sol", title: "Swap Ethereum to Solana instantly" },
+  { label: "BTC to SOL", href: "/swap/btc-to-sol-instant", title: "Swap Bitcoin to Solana instantly" },
+  { label: "XMR to ETH", href: "/swap/xmr-to-eth", title: "Swap Monero to Ethereum instantly" },
+  { label: "BNB Swap", href: "/swap/bnb", title: "Swap BNB to any cryptocurrency instantly" },
+  { label: "BTC to USDC", href: "/swap/btc-to-usdc", title: "Swap Bitcoin to USDC instantly" },
+  { label: "ETH to SOL Bridge", href: "/bridge/eth-to-sol", title: "Bridge Ethereum to Solana instantly" },
+  { label: "SOL to BNB Bridge", href: "/bridge/solana-to-bnb", title: "Bridge Solana to BNB Chain instantly" },
+  { label: "PulseChain Bridge", href: "/bridge/pulsechain", title: "Bridge assets to PulseChain instantly" },
 ];
 
-const moreLinks = [
-  { label: "PulseChain Bridge", href: "/bridge/pulsechain" },
-  { label: "Bridge SOL to BNB", href: "/bridge/solana-to-bnb" },
-  { label: "Tangem Wallet Review", href: "/reviews/tangem-wallet" },
-  { label: "Best XRP Wallet", href: "/reviews/best-xrp-wallet" },
-  { label: "Trade Trump/SOL", href: "/trade/trump-sol" },
-  { label: "SOL Wallet Tracker", href: "/tools/sol-wallet-tracker" },
-  { label: "Buy Celo", href: "/buy/celo" },
-  { label: "AdaSwap Alternative", href: "/alternatives/adaswap" },
-  { label: "Holo Exchange Alt", href: "/alternatives/holo-exchange" },
-  { label: "DAG Crypto", href: "/ecosystem/dag-crypto" },
-  { label: "Jambo Solana", href: "/ecosystem/jambo-solana" },
-  { label: "Xcoins Alternative", href: "/alternatives/xcoins" },
-  { label: "Topper Crypto Alt", href: "/alternatives/topper-crypto" },
-  { label: "Kraken Monero Alt", href: "/alternatives/kraken-monero" },
-  { label: "DAG Coins", href: "/ecosystem/dag-coins" },
-  { label: "DUSD Portal", href: "/ecosystem/dusd" },
-  { label: "Tether Pro", href: "/ecosystem/tether-pro" },
-  { label: "Shiba Inu Card", href: "/ecosystem/shiba-inu-card" },
-  { label: "ARK XRP", href: "/ecosystem/ark-xrp" },
-  { label: "Trade Alpaca", href: "/trade/alpaca" },
-  { label: "Best ERC20 Wallet", href: "/reviews/best-erc20-wallet" },
-  { label: "DGB Wallet", href: "/reviews/dgb-wallet" },
-  { label: "BSV Wallet", href: "/reviews/bsv-wallet" },
-  { label: "Best Ripple Wallet", href: "/reviews/best-ripple-wallet" },
+const memeAndAltcoins = [
+  { label: "SHIB to USDT", href: "/swap/shiba-to-usdt", title: "Swap Shiba Inu to USDT instantly" },
+  { label: "VINU Swap", href: "/swap/vinu", title: "Swap Vita Inu instantly" },
+  { label: "HYPE to USDT", href: "/swap/hype-to-usdt", title: "Swap HYPE to USDT instantly" },
+  { label: "BERA to USDT", href: "/swap/bera-to-usdt", title: "Swap Berachain to USDT instantly" },
+  { label: "Monad to USDT", href: "/swap/monad-to-usdt", title: "Swap Monad to USDT instantly" },
+  { label: "Trade Trump/SOL", href: "/trade/trump-sol", title: "Trade TRUMP token on Solana" },
+  { label: "Trade Alpaca", href: "/trade/alpaca", title: "Trade Alpaca Finance token instantly" },
+  { label: "BNB Meme Coins", href: "/trade/bnb-meme-coins", title: "Trade BNB meme coins instantly" },
+];
+
+const buyLinks = [
+  { label: "Buy Bitcoin", href: "/buy/bitcoin-no-kyc", title: "Buy Bitcoin without KYC verification" },
+  { label: "Buy Ethereum", href: "/buy/ethereum", title: "Buy Ethereum instantly with no account" },
+  { label: "Buy Solana", href: "/buy/solana-no-kyc", title: "Buy Solana without KYC verification" },
+  { label: "Buy Solana No Verification", href: "/buy/solana-no-verification", title: "Buy Solana with no identity verification" },
+  { label: "Buy Solana PayPal", href: "/buy/solana-paypal", title: "Buy Solana with PayPal instantly" },
+  { label: "Buy Ether Instant", href: "/buy/ether-instant", title: "Buy Ether instantly with no delays" },
+  { label: "Buy XDC", href: "/buy/xdc", title: "Buy XDC Network token instantly" },
+  { label: "Buy LTC PayPal", href: "/buy/ltc-paypal", title: "Buy Litecoin with PayPal" },
+  { label: "Buy Celo", href: "/buy/celo", title: "Buy Celo cryptocurrency instantly" },
+  { label: "Buy Monero No KYC", href: "/buy/monero-no-kyc", title: "Buy Monero without KYC privately" },
+  { label: "Bitcoin No Verification", href: "/buy/bitcoin-no-verification", title: "Buy Bitcoin with no identity verification" },
 ];
 
 const resourceLinks = [
-  { label: "How It Works", href: "/#how-it-works" },
-  { label: "Features", href: "/#features" },
-  { label: "Swap Pairs", href: "/#swap-pairs" },
-  { label: "Blog", href: "/blog" },
-  { label: "FAQ", href: "/#faq" },
-  { label: "How to Swap Dust", href: "/resources/crypto-dust-guide" },
-  { label: "Fractal BTC Bridge", href: "/resources/fractal-bitcoin-swap" },
-  { label: "Best Place to Buy Solana", href: "/guides/best-place-to-buy-solana" },
-  { label: "How to Buy Litecoin", href: "/guides/how-to-buy-litecoin" },
-  { label: "How to Mine Litecoin", href: "/guides/how-to-mine-litecoin" },
-  { label: "Litecoin Mining Guide", href: "/guides/litecoin-mining" },
-  { label: "Is Solana a Good Investment?", href: "/guides/is-solana-a-good-investment" },
-  { label: "Best Short-Term Crypto", href: "/guides/best-short-term-crypto" },
-  { label: "Trade Meme Coins", href: "/guides/how-to-trade-meme-coins" },
-  { label: "USDT ERC20 Meaning", href: "/guides/usdt-erc20-meaning" },
-  { label: "Wrapped BTC Guide", href: "/guides/wrapped-btc-to-bitcoin" },
-  { label: "Orange Fren XMR Alt", href: "/guides/buy-xmr-orange-fren-alternative" },
-  { label: "Swap Nodes in Pairs", href: "/guides/swap-nodes-in-pairs" },
-  { label: "LTC Tracker", href: "/tools/ltc-tracker" },
-  { label: "Litecoin Tracker", href: "/tools/litecoin-tracker" },
-  { label: "Rate of Change", href: "/tools/instant-rate-change" },
-  { label: "Swap Bot", href: "/tools/swap-bot" },
-  { label: "Coin Exchange Near Me", href: "/local-crypto-exchange" },
-  { label: "Exchange IU", href: "/exchange-iu" },
-  { label: "Harmony ONE Price", href: "/price/harmony-one" },
-  { label: "Buy Solana PayPal", href: "/buy/solana-paypal" },
-  { label: "Buy Monero No KYC", href: "/buy/monero-no-kyc" },
-  { label: "BNB Meme Coin Trading", href: "/trade/bnb-meme-coins" },
-  { label: "Bitcoin No Verification", href: "/buy/bitcoin-no-verification" },
+  { label: "How It Works", href: "/#how-it-works", title: "Learn how MRC GlobalPay crypto swaps work" },
+  { label: "Features", href: "/#features", title: "Explore MRC GlobalPay exchange features" },
+  { label: "Swap Pairs", href: "/#swap-pairs", title: "Browse all supported swap pairs" },
+  { label: "Blog", href: "/blog", title: "Read crypto guides and market analysis" },
+  { label: "FAQ", href: "/#faq", title: "Frequently asked questions about crypto swaps" },
+  { label: "How to Swap Dust", href: "/resources/crypto-dust-guide", title: "Guide to converting small crypto balances" },
+  { label: "Fractal BTC Bridge", href: "/resources/fractal-bitcoin-swap", title: "Bridge Fractal Bitcoin to other networks" },
+  { label: "Best Place to Buy Solana", href: "/guides/best-place-to-buy-solana", title: "Find the best place to buy Solana" },
+  { label: "How to Buy Litecoin", href: "/guides/how-to-buy-litecoin", title: "Step-by-step Litecoin buying guide" },
+  { label: "How to Mine Litecoin", href: "/guides/how-to-mine-litecoin", title: "Complete Litecoin mining tutorial" },
+  { label: "Is Solana a Good Investment?", href: "/guides/is-solana-a-good-investment", title: "Solana investment analysis and outlook" },
+  { label: "Best Short-Term Crypto", href: "/guides/best-short-term-crypto", title: "Top cryptocurrencies for short-term trading" },
+  { label: "Trade Meme Coins", href: "/guides/how-to-trade-meme-coins", title: "How to trade meme coins profitably" },
+  { label: "USDT ERC20 Meaning", href: "/guides/usdt-erc20-meaning", title: "What USDT ERC20 means and how it works" },
+  { label: "Wrapped BTC Guide", href: "/guides/wrapped-btc-to-bitcoin", title: "Convert Wrapped BTC back to Bitcoin" },
+  { label: "Swap Nodes in Pairs", href: "/guides/swap-nodes-in-pairs", title: "Guide to swapping nodes in pairs" },
+];
+
+const toolsAndAlternatives = [
+  { label: "LTC Tracker", href: "/tools/ltc-tracker", title: "Track Litecoin price and transactions" },
+  { label: "Litecoin Tracker", href: "/tools/litecoin-tracker", title: "Monitor Litecoin portfolio and prices" },
+  { label: "Rate of Change", href: "/tools/instant-rate-change", title: "Check instant crypto exchange rates" },
+  { label: "Swap Bot", href: "/tools/swap-bot", title: "Automated cryptocurrency swap bot" },
+  { label: "SOL Wallet Tracker", href: "/tools/sol-wallet-tracker", title: "Track Solana wallet activity" },
+  { label: "AdaSwap Alternative", href: "/alternatives/adaswap", title: "Best alternative to AdaSwap exchange" },
+  { label: "Holo Exchange Alt", href: "/alternatives/holo-exchange", title: "Best alternative to Holo Exchange" },
+  { label: "Xcoins Alternative", href: "/alternatives/xcoins", title: "Best alternative to Xcoins" },
+  { label: "Topper Crypto Alt", href: "/alternatives/topper-crypto", title: "Best alternative to Topper Crypto" },
+  { label: "Kraken Monero Alt", href: "/alternatives/kraken-monero", title: "Best Kraken alternative for Monero" },
+  { label: "Orange Fren XMR Alt", href: "/guides/buy-xmr-orange-fren-alternative", title: "Best Orange Fren alternative for Monero" },
+];
+
+const ecosystemLinks = [
+  { label: "DAG Crypto", href: "/ecosystem/dag-crypto", title: "Explore DAG cryptocurrency ecosystem" },
+  { label: "Jambo Solana", href: "/ecosystem/jambo-solana", title: "Jambo phone and Solana ecosystem" },
+  { label: "DAG Coins", href: "/ecosystem/dag-coins", title: "Explore DAG-based cryptocurrencies" },
+  { label: "DUSD Portal", href: "/ecosystem/dusd", title: "DUSD stablecoin portal and info" },
+  { label: "Tether Pro", href: "/ecosystem/tether-pro", title: "Tether Pro platform overview" },
+  { label: "Shiba Inu Card", href: "/ecosystem/shiba-inu-card", title: "Shiba Inu crypto debit card info" },
+  { label: "ARK XRP", href: "/ecosystem/ark-xrp", title: "ARK and XRP ecosystem overview" },
+  { label: "Harmony ONE Price", href: "/price/harmony-one", title: "Check Harmony ONE current price" },
+  { label: "Coin Exchange Near Me", href: "/local-crypto-exchange", title: "Find local crypto exchanges nearby" },
+  { label: "Exchange IU", href: "/exchange-iu", title: "Exchange IU crypto platform" },
+];
+
+const walletReviews = [
+  { label: "Tangem Wallet Review", href: "/reviews/tangem-wallet", title: "In-depth Tangem hardware wallet review" },
+  { label: "Best XRP Wallet", href: "/reviews/best-xrp-wallet", title: "Top wallets for storing XRP securely" },
+  { label: "Best ERC20 Wallet", href: "/reviews/best-erc20-wallet", title: "Best wallets for ERC20 tokens" },
+  { label: "DGB Wallet", href: "/reviews/dgb-wallet", title: "Best wallets for DigiByte" },
+  { label: "BSV Wallet", href: "/reviews/bsv-wallet", title: "Best wallets for Bitcoin SV" },
+  { label: "Best Ripple Wallet", href: "/reviews/best-ripple-wallet", title: "Top wallets for Ripple XRP" },
+  { label: "Litecoin Mining Guide", href: "/guides/litecoin-mining", title: "Complete guide to mining Litecoin" },
 ];
 
 const expertiseLinks = [
-  { label: "How UTXOs Work", href: "/resources/crypto-dust-guide#what-is-crypto-dust" },
-  { label: "Why $0.30 Is Our Minimum", href: "/dust-swap-comparison" },
-  { label: "Understanding Non-Custodial Swaps", href: "/transparency-security" },
-  { label: "Transparency & Security", href: "/transparency-security" },
-  { label: "Micro-Swap Comparison", href: "/dust-swap-comparison" },
+  { label: "How UTXOs Work", href: "/resources/crypto-dust-guide#what-is-crypto-dust", title: "Understanding UTXO model and crypto dust" },
+  { label: "Why $0.30 Is Our Minimum", href: "/dust-swap-comparison", title: "Why our minimum swap is only $0.30" },
+  { label: "Non-Custodial Swaps", href: "/transparency-security", title: "How non-custodial crypto swaps work" },
+  { label: "Transparency & Security", href: "/transparency-security", title: "Our transparency and security practices" },
+  { label: "Micro-Swap Comparison", href: "/dust-swap-comparison", title: "Compare micro-swap platforms and fees" },
 ];
 
 const complianceText =
   "Registered Money Services Business (MSB) — Canada. Adhering to 2026 AML and FINTRAC standards.";
 
+type FooterLink = { label: string; href: string; title: string };
+
+const FooterLinkList = ({ title, links }: { title: string; links: FooterLink[] }) => (
+  <div>
+    <h3 className="font-display text-xs font-semibold uppercase tracking-wider text-foreground/80 sm:text-sm">
+      {title}
+    </h3>
+    <ul className="mt-3 space-y-2 sm:mt-4 sm:space-y-3">
+      {links.map((link) => (
+        <li key={link.href}>
+          <a
+            href={link.href}
+            title={link.title}
+            className="font-body text-sm text-muted-foreground transition-colors hover:text-foreground"
+          >
+            {link.label}
+          </a>
+        </li>
+      ))}
+    </ul>
+  </div>
+);
+
 const SiteFooter = () => {
   return (
     <footer className="border-t border-border bg-muted py-10 sm:py-16">
       <div className="container mx-auto px-4">
-        <div className="grid gap-8 sm:grid-cols-2 sm:gap-12 lg:grid-cols-4 xl:grid-cols-7">
+        {/* Brand + main nav */}
+        <div className="grid gap-8 sm:grid-cols-2 sm:gap-12 lg:grid-cols-4 xl:grid-cols-5">
           <div>
-            <a href="/" className="font-display text-lg font-bold tracking-tight text-foreground sm:text-xl">
+            <a href="/" title="MRC GlobalPay — No Minimum Crypto Exchange" className="font-display text-lg font-bold tracking-tight text-foreground sm:text-xl">
               MRC<span className="text-primary">GlobalPay</span>
             </a>
             <p className="mt-3 font-body text-sm leading-relaxed text-muted-foreground sm:mt-4">
@@ -113,50 +153,8 @@ const SiteFooter = () => {
             </p>
           </div>
 
-          <div>
-            <h3 className="font-display text-xs font-semibold uppercase tracking-wider text-foreground/80 sm:text-sm">
-              Quick Links
-            </h3>
-            <ul className="mt-3 space-y-2 sm:mt-4 sm:space-y-3">
-              {quickLinks.map((link) => (
-                <li key={link.label}>
-                  <a href={link.href} className="font-body text-sm text-muted-foreground transition-colors hover:text-foreground">
-                    {link.label}
-                  </a>
-                </li>
-              ))}
-            </ul>
-          </div>
-
-          <div>
-            <h3 className="font-display text-xs font-semibold uppercase tracking-wider text-foreground/80 sm:text-sm">
-              Resources
-            </h3>
-            <ul className="mt-3 space-y-2 sm:mt-4 sm:space-y-3">
-              {resourceLinks.map((link) => (
-                <li key={link.label}>
-                  <a href={link.href} className="font-body text-sm text-muted-foreground transition-colors hover:text-foreground">
-                    {link.label}
-                  </a>
-                </li>
-              ))}
-            </ul>
-          </div>
-
-          <div>
-            <h3 className="font-display text-xs font-semibold uppercase tracking-wider text-foreground/80 sm:text-sm">
-              Expertise
-            </h3>
-            <ul className="mt-3 space-y-2 sm:mt-4 sm:space-y-3">
-              {expertiseLinks.map((link) => (
-                <li key={link.label}>
-                  <a href={link.href} className="font-body text-sm text-muted-foreground transition-colors hover:text-foreground">
-                    {link.label}
-                  </a>
-                </li>
-              ))}
-            </ul>
-          </div>
+          <FooterLinkList title="Resources & Guides" links={resourceLinks} />
+          <FooterLinkList title="Expertise" links={expertiseLinks} />
 
           <div>
             <h3 className="font-display text-xs font-semibold uppercase tracking-wider text-foreground/80 sm:text-sm">
@@ -164,51 +162,44 @@ const SiteFooter = () => {
             </h3>
             <ul className="mt-3 space-y-2 sm:mt-4 sm:space-y-3">
               <li>
-                <a href="/privacy" className="font-body text-sm text-muted-foreground transition-colors hover:text-foreground">
+                <a href="/privacy" title="MRC GlobalPay Privacy Policy" className="font-body text-sm text-muted-foreground transition-colors hover:text-foreground">
                   Privacy Policy
                 </a>
               </li>
               <li>
-                <a href="/terms" className="font-body text-sm text-muted-foreground transition-colors hover:text-foreground">
+                <a href="/terms" title="MRC GlobalPay Terms of Service" className="font-body text-sm text-muted-foreground transition-colors hover:text-foreground">
                   Terms of Service
                 </a>
               </li>
               <li>
-                <a href="/aml" className="font-body text-sm text-muted-foreground transition-colors hover:text-foreground">
+                <a href="/aml" title="MRC GlobalPay AML Policy" className="font-body text-sm text-muted-foreground transition-colors hover:text-foreground">
                   AML Policy
                 </a>
               </li>
             </ul>
           </div>
 
-          <div>
-            <h3 className="font-display text-xs font-semibold uppercase tracking-wider text-foreground/80 sm:text-sm">
-              Popular Swaps
-            </h3>
-            <ul className="mt-3 space-y-2 sm:mt-4 sm:space-y-3">
-              {popularSwaps.map((link) => (
-                <li key={link.label}>
-                  <a href={link.href} className="font-body text-sm text-muted-foreground transition-colors hover:text-foreground">
-                    {link.label}
-                  </a>
-                </li>
-              ))}
-            </ul>
-          </div>
+          <FooterLinkList title="Wallet Reviews" links={walletReviews} />
+        </div>
 
-          <div>
-            <h3 className="font-display text-xs font-semibold uppercase tracking-wider text-foreground/80 sm:text-sm">
-              More
-            </h3>
-            <ul className="mt-3 space-y-2 sm:mt-4 sm:space-y-3">
-              {moreLinks.map((link) => (
-                <li key={link.label}>
-                  <a href={link.href} className="font-body text-sm text-muted-foreground transition-colors hover:text-foreground">
-                    {link.label}
-                  </a>
-                </li>
-              ))}
-            </ul>
+        {/* Swap pairs categorized grid */}
+        <div className="mt-10 border-t border-border pt-8">
+          <h3 className="mb-6 text-center font-display text-sm font-semibold uppercase tracking-wider text-foreground/70 sm:text-left">
+            Swap Pairs Directory
+          </h3>
+          <div className="grid gap-8 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5">
+            <FooterLinkList title="Stablecoin Swaps" links={stablecoinSwaps} />
+            <FooterLinkList title="Major Pairs & Bridges" links={majorPairs} />
+            <FooterLinkList title="Meme & Altcoins" links={memeAndAltcoins} />
+            <FooterLinkList title="Buy Crypto" links={buyLinks} />
+            <FooterLinkList title="Tools & Alternatives" links={toolsAndAlternatives} />
+          </div>
+        </div>
+
+        {/* Ecosystem */}
+        <div className="mt-8 border-t border-border pt-8">
+          <div className="grid gap-8 sm:grid-cols-2 lg:grid-cols-3">
+            <FooterLinkList title="Ecosystem & Prices" links={ecosystemLinks} />
           </div>
         </div>
 
@@ -237,7 +228,7 @@ const SiteFooter = () => {
             </h3>
             <p className="font-body text-xs leading-relaxed text-muted-foreground">
               {complianceText}{" "}
-              <a href="/transparency-security" className="text-primary hover:underline">
+              <a href="/transparency-security" title="View MRC GlobalPay transparency and security practices" className="text-primary hover:underline">
                 View our transparency &amp; security practices
               </a>
             </p>
@@ -265,7 +256,7 @@ const SiteFooter = () => {
               data-style-width="100%"
               data-token="7bcf2cb1-257b-45b3-ba85-1bc33cf80fa7"
             >
-              <a href="https://www.trustpilot.com/review/mrcglobalpay.com" target="_blank" rel="noopener">Trustpilot</a>
+              <a href="https://www.trustpilot.com/review/mrcglobalpay.com" target="_blank" rel="noopener" title="MRC GlobalPay reviews on Trustpilot">Trustpilot</a>
             </div>
           </div>
           <div className="flex flex-col items-center justify-between gap-4 sm:flex-row">
