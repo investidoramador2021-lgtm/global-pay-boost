@@ -7,10 +7,13 @@ import SiteFooter from "@/components/SiteFooter";
 import BlogMarkdown from "@/components/blog/BlogMarkdown";
 import TableOfContents, { extractHeadings } from "@/components/blog/TableOfContents";
 import { fetchPostBySlug, fetchRelatedPosts, type BlogPost } from "@/lib/blog-data";
+import { getLangFromPath, langPath, supportedLanguages } from "@/i18n";
 
 const BlogPostPage = () => {
   const { slug } = useParams<{ slug: string }>();
   const location = useLocation();
+  const lang = getLangFromPath(location.pathname);
+  const lp = (path: string) => langPath(lang, path);
   const [post, setPost] = useState<BlogPost | null | undefined>(undefined);
   const [related, setRelated] = useState<BlogPost[]>([]);
   const [loading, setLoading] = useState(true);
@@ -22,7 +25,7 @@ const BlogPostPage = () => {
   useEffect(() => {
     if (!slug) return;
     setLoading(true);
-    Promise.all([fetchPostBySlug(slug), fetchRelatedPosts(slug)]).then(([p, r]) => {
+    Promise.all([fetchPostBySlug(slug, lang), fetchRelatedPosts(slug)]).then(([p, r]) => {
       setPost(p || null);
       setRelated(r);
       setLoading(false);
