@@ -106,9 +106,9 @@ const BlogPostPage = () => {
     "@context": "https://schema.org",
     "@type": "BreadcrumbList",
     itemListElement: [
-      { "@type": "ListItem", position: 1, name: "Home", item: "https://mrcglobalpay.com" },
-      { "@type": "ListItem", position: 2, name: "Blog", item: "https://mrcglobalpay.com/blog" },
-      { "@type": "ListItem", position: 3, name: post.title, item: `https://mrcglobalpay.com/blog/${post.slug}` },
+      { "@type": "ListItem", position: 1, name: "Home", item: `https://mrcglobalpay.com${lp("/")}` },
+      { "@type": "ListItem", position: 2, name: "Blog", item: `https://mrcglobalpay.com${lp("/blog")}` },
+      { "@type": "ListItem", position: 3, name: post.title, item: postUrl },
     ],
   };
 
