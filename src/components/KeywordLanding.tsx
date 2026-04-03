@@ -207,7 +207,7 @@ const KeywordLanding = ({ data }: Props) => {
         {/* Content Section */}
         <section className="border-t border-border bg-muted/20 py-12 sm:py-20">
           <div className="container mx-auto max-w-3xl px-4">
-            <h2 className="mb-6 font-display text-2xl font-bold text-foreground">
+            <h2 id={`why-choose-mrc-globalpay-for-${keyword.toLowerCase().replace(/\s+/g, "-")}`} className="mb-6 scroll-mt-24 font-display text-2xl font-bold text-foreground">
               Why Choose MRC GlobalPay for {keyword}?
             </h2>
             <div className="space-y-4 font-body leading-relaxed text-muted-foreground">
