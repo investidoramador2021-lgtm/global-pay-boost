@@ -1,4 +1,5 @@
 import { Helmet } from "react-helmet-async";
+import { Zap } from "lucide-react";
 import SiteHeader from "@/components/SiteHeader";
 import SiteFooter from "@/components/SiteFooter";
 import { Link } from "react-router-dom";
