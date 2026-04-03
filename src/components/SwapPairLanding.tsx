@@ -1,4 +1,6 @@
 import { type ReactNode } from "react";
+import { useLocation } from "react-router-dom";
+import { getLangFromPath, langPath } from "@/i18n";
 import { Zap, Timer, Shield, Activity, ArrowRight, Gauge, Clock, CheckCircle2 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import {
