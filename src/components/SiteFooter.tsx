@@ -230,8 +230,8 @@ const SiteFooter = () => {
               Compliance & Security
             </h3>
             <p className="font-body text-xs leading-relaxed text-muted-foreground">
-              {complianceText}{" "}
-              <a href="/transparency-security" title="View MRC GlobalPay transparency and security practices" className="text-primary hover:underline">
+              {t("footer.disclaimer")}{" "}
+              <a href={lp("/transparency-security")} title="View MRC GlobalPay transparency and security practices" className="text-primary hover:underline">
                 View our transparency &amp; security practices
               </a>
             </p>
