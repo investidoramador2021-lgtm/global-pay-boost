@@ -1,0 +1,37 @@
+{
+  "nav": {
+    "howItWorks": "Cách thức hoạt động",
+    "features": "Tính năng",
+    "swapPairs": "Cặp giao dịch",
+    "blog": "Blog",
+    "faq": "Câu hỏi thường gặp",
+    "startSwap": "Bắt đầu giao dịch"
+  },
+  "hero": {
+    "heading": "Trao đổi tài sản số an toàn.",
+    "headingAccent": "Không cần đăng ký. Tối thiểu $0.30.",
+    "subtitle": "Nhanh chóng, an toàn và riêng tư. Trao đổi trực tiếp ví-đến-ví từ $0.30. Không cần KYC.",
+    "trustNoAccount": "Không cần tài khoản",
+    "trustNonCustodial": "Phi lưu ký",
+    "trustSettlement": "Thanh toán trực tiếp",
+    "dustTitle": "🧹 Dọn sạch ví của bạn",
+    "dustDescription": "Chán ngấy với bụi crypto không thể chi tiêu? Hầu hết các nền tảng có mức tối thiểu cao. MRC GlobalPay hỗ trợ trao đổi siêu nhỏ từ $0.30. Chuyển đổi số dư còn lại từ hơn 500 token ngay lập tức."
+  },
+  "howItWorks": {
+    "heading": "Cách thức hoạt động",
+    "subtitle": "Ba bước đơn giản. Không chậm trễ, không ma sát.",
+    "step1": { "title": "Nhập chi tiết", "description": "Chọn cặp giao dịch và nhập địa chỉ ví người nhận. Không cần đăng ký. Giao dịch từ $0.30." },
+    "step2": { "title": "Gửi tiền nạp", "description": "Chuyển tiền của bạn đến địa chỉ nạp bảo mật được tạo tự động." },
+    "step3": { "title": "Thanh toán tự động", "description": "Khi khoản nạp của bạn được xác nhận, coin sẽ tự động được gửi đến ví của bạn." }
+  },
+  "features": {
+    "heading": "Xây dựng cho tốc độ. Thiết kế cho sự tin cậy.",
+    "subtitle": "Mọi thành phần được tối ưu hóa cho thực thi tức thì và không ma sát.",
+    "speed": { "title": "Thanh toán dưới 60 giây", "description": "Đường ray thanh khoản tự động thực hiện giao dịch trong dưới 60 giây." },
+    "fees": { "title": "Không phí ẩn", "description": "Tất cả chi phí đều minh bạch trong tỷ giá hiển thị." },
+    "noAccount": { "title": "Không cần tài khoản", "description": "Giao dịch không cần phép — bắt đầu trao đổi ngay. Không đăng ký, không dữ liệu cá nhân." },
+    "assets": { "title": "500+ tài sản crypto", "description": "Trao đổi Bitcoin, Ethereum, Solana, USDT và hàng trăm loại khác trên tất cả các blockchain chính." },
+    "global": { "title": "Toàn cầu, luôn hoạt động", "description": "Khả dụng trên toàn thế giới 24/7/365. Không giới hạn địa lý." },
+    "support": { "title": "Hỗ trợ 24/7", "description": "Hỗ trợ chuyên dụng suốt ngày đêm cho mọi câu hỏi liên quan đến giao dịch." }
+  }
+}

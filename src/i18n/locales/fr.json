@@ -1,0 +1,37 @@
+{
+  "nav": {
+    "howItWorks": "Comment ça marche",
+    "features": "Fonctionnalités",
+    "swapPairs": "Paires d'échange",
+    "blog": "Blog",
+    "faq": "FAQ",
+    "startSwap": "Commencer l'échange"
+  },
+  "hero": {
+    "heading": "Échanges de cryptos instantanés.",
+    "headingAccent": "Sans inscription. Dès $0.30.",
+    "subtitle": "Rapide, sécurisé et privé. Échanges directs de portefeuille à portefeuille dès $0.30.",
+    "trustNoAccount": "Sans Inscription",
+    "trustNonCustodial": "Non-Custodial",
+    "trustSettlement": "Règlement Direct",
+    "dustTitle": "🧹 Nettoyez Votre Portefeuille",
+    "dustDescription": "Fatigué de la poussière crypto ? La plupart des plateformes ont des minimums élevés. MRC GlobalPay permet des micro-échanges dès $0.30. Convertissez les soldes résiduels de plus de 500 tokens instantanément."
+  },
+  "howItWorks": {
+    "heading": "Comment ça marche",
+    "subtitle": "Trois étapes simples. Sans délai, sans friction.",
+    "step1": { "title": "Entrez les détails", "description": "Sélectionnez votre paire de trading et entrez l'adresse du portefeuille. Sans inscription. Échanges dès $0.30." },
+    "step2": { "title": "Envoyez le dépôt", "description": "Transférez vos fonds à l'adresse de dépôt sécurisée générée automatiquement." },
+    "step3": { "title": "Règlement automatique", "description": "Une fois votre dépôt confirmé, les pièces sont envoyées automatiquement à votre portefeuille." }
+  },
+  "features": {
+    "heading": "Conçu pour la vitesse. Construit pour la confiance.",
+    "subtitle": "Chaque composant est optimisé pour une exécution instantanée et zéro friction.",
+    "speed": { "title": "Règlement en moins de 60s", "description": "Des rails de liquidité automatisés exécutent les échanges en moins de 60 secondes." },
+    "fees": { "title": "Zéro frais cachés", "description": "Tous les coûts sont transparents dans le taux affiché." },
+    "noAccount": { "title": "Sans compte requis", "description": "Trading sans permission — commencez à échanger immédiatement. Sans inscriptions, sans données personnelles." },
+    "assets": { "title": "500+ Cryptoactifs", "description": "Échangez Bitcoin, Ethereum, Solana, USDT et des centaines d'autres sur toutes les principales blockchains." },
+    "global": { "title": "Global, toujours actif", "description": "Disponible dans le monde entier 24/7/365. Sans restrictions géographiques." },
+    "support": { "title": "Support 24/7", "description": "Support dédié 24 heures sur 24 pour toute question liée aux échanges." }
+  }
+}

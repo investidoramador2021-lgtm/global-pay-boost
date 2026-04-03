@@ -1,0 +1,37 @@
+{
+  "nav": {
+    "howItWorks": "仕組み",
+    "features": "機能",
+    "swapPairs": "交換ペア",
+    "blog": "ブログ",
+    "faq": "よくある質問",
+    "startSwap": "交換を開始"
+  },
+  "hero": {
+    "heading": "安全な非保持型クリプト交換。",
+    "headingAccent": "本人確認不要。最小$0.30から。",
+    "subtitle": "高速・安全・プライベート。本人確認不要で最小$0.30からウォレット間で直接交換。",
+    "trustNoAccount": "本人確認不要",
+    "trustNonCustodial": "安全な非保持型",
+    "trustSettlement": "直接決済",
+    "dustTitle": "🧹 ウォレットをクリーンに",
+    "dustDescription": "使えない少額残高にお困りですか？ほとんどの取引所は最低金額が高いです。MRC GlobalPayは$0.30からのマイクロスワップに対応。500以上のトークンの残高を即座に変換できます。"
+  },
+  "howItWorks": {
+    "heading": "仕組み",
+    "subtitle": "3つの簡単なステップ。遅延なし、手間なし。",
+    "step1": { "title": "詳細を入力", "description": "交換ペアを選択し、受取ウォレットアドレスを入力。登録不要。$0.30から交換可能。" },
+    "step2": { "title": "入金を送信", "description": "自動生成されたセキュアな一回限りの入金アドレスに資金を送信します。" },
+    "step3": { "title": "自動決済", "description": "入金が確認されると、コインは自動的にあなたのウォレットに送信されます。" }
+  },
+  "features": {
+    "heading": "スピードのために構築。信頼のために設計。",
+    "subtitle": "すべてのコンポーネントは即座の実行とゼロの摩擦のために最適化されています。",
+    "speed": { "title": "60秒以内の決済", "description": "自動化された流動性レールが60秒以内にスワップを実行します。" },
+    "fees": { "title": "隠れた手数料ゼロ", "description": "すべてのコストは表示レートに透明に含まれています。" },
+    "noAccount": { "title": "アカウント不要", "description": "許可不要の取引 — すぐにスワップを開始。登録なし、個人データなし。" },
+    "assets": { "title": "500以上の暗号資産", "description": "Bitcoin、Ethereum、Solana、USDTなど、すべての主要ブロックチェーンで数百の資産を交換。" },
+    "global": { "title": "グローバル、常時稼働", "description": "世界中で24時間365日利用可能。地理的制限なし。" },
+    "support": { "title": "24時間サポート", "description": "交換に関するあらゆる質問やお問い合わせに24時間対応。" }
+  }
+}
