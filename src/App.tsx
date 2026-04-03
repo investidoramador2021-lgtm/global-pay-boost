@@ -97,6 +97,8 @@ const App = () => (
                       {AppRoutes()}
                     </Route>
                   ))}
+                  {/* Standalone embed widget (no header/footer/nav) */}
+                  <Route path="/embed/widget" element={<EmbedWidget />} />
                   {/* Redirect old WordPress URLs to home */}
                   <Route path="/de/*" element={<Navigate to="/" replace />} />
                   <Route path="/wp-*" element={<Navigate to="/" replace />} />
