@@ -11,7 +11,7 @@ const SIZES = [
 ];
 
 const GetWidget = () => {
-  const [size, setSize] = useState(1);
+  const [size, setSize] = useState(0); // Default to Small on initial render
   const [copied, setCopied] = useState(false);
   const { w, h } = SIZES[size];
 
