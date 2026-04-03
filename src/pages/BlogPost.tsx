@@ -72,12 +72,14 @@ const BlogPostPage = () => {
 
   if (!post) return <Navigate to={lp("/blog")} replace />;
 
+  const postUrl = `https://mrcglobalpay.com${lp(`/blog/${post.slug}`)}`;
+
   const jsonLd = {
     "@context": "https://schema.org",
     "@type": "BlogPosting",
     headline: post.title,
     description: post.metaDescription,
-    url: `https://mrcglobalpay.com/blog/${post.slug}`,
+    url: postUrl,
     datePublished: post.publishedAt,
     dateModified: post.updatedAt,
     author: {
