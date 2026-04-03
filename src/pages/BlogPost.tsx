@@ -184,6 +184,7 @@ const BlogPostPage = () => {
                 </div>
               </header>
 
+              <TableOfContents markdown={post.content} />
               <BlogMarkdown content={post.content} />
 
               <div className="mt-10 flex flex-wrap gap-2 border-t border-border pt-6">

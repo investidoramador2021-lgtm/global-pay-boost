@@ -19,6 +19,7 @@ import SiteHeader from "@/components/SiteHeader";
 import SiteFooter from "@/components/SiteFooter";
 import type { SeoKeyword } from "@/lib/seo-keywords";
 import { getRelatedKeywords } from "@/lib/seo-keywords";
+import TableOfContents from "@/components/blog/TableOfContents";
 
 interface Props {
   data: SeoKeyword;
