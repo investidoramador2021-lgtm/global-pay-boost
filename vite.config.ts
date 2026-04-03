@@ -20,7 +20,7 @@ export default defineConfig(({ mode }) => ({
   plugins: [
     react(),
     mode === "development" && componentTagger(),
-    VitePWA({
+    mode !== "development" && VitePWA({
       registerType: "autoUpdate",
       includeAssets: ["favicon.png", "favicon-32x32.png", "favicon-192x192.png"],
       manifest: {
@@ -62,7 +62,7 @@ export default defineConfig(({ mode }) => ({
               cacheName: "changenow-api-cache",
               expiration: {
                 maxEntries: 50,
-                maxAgeSeconds: 60 * 5, // 5 minutes
+                maxAgeSeconds: 60 * 5,
               },
             },
           },
@@ -73,7 +73,7 @@ export default defineConfig(({ mode }) => ({
               cacheName: "image-cache",
               expiration: {
                 maxEntries: 100,
-                maxAgeSeconds: 60 * 60 * 24 * 30, // 30 days
+                maxAgeSeconds: 60 * 60 * 24 * 30,
               },
             },
           },
@@ -84,7 +84,7 @@ export default defineConfig(({ mode }) => ({
               cacheName: "static-assets",
               expiration: {
                 maxEntries: 50,
-                maxAgeSeconds: 60 * 60 * 24 * 7, // 7 days
+                maxAgeSeconds: 60 * 60 * 24 * 7,
               },
             },
           },
