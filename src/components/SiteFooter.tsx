@@ -134,7 +134,7 @@ const FooterLinkList = ({ title, links }: { title: string; links: FooterLink[] }
 );
 
 import { useTranslation } from "react-i18next";
-import { useLocation } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import { getLangFromPath, langPath } from "@/i18n";
 
 const SiteFooter = () => {
@@ -151,7 +151,7 @@ const SiteFooter = () => {
           <div>
             <a href={lp("/")} title="MRC GlobalPay — Registration-Free Crypto Exchange" className="font-display text-lg font-bold tracking-tight text-foreground sm:text-xl">
               MRC<span className="text-primary">GlobalPay</span>
-            </a>
+            </a>{/* footer brand - keep as <a> for full reload to home */}
             <p className="mt-3 font-body text-sm leading-relaxed text-muted-foreground sm:mt-4">
               Instant crypto-to-crypto swaps with zero delays. 500+ assets. No registration. Best market rates.
             </p>
@@ -178,7 +178,7 @@ const SiteFooter = () => {
               <li>
                 <a href={lp("/aml")} title="MRC GlobalPay AML Policy" className="font-body text-sm text-muted-foreground transition-colors hover:text-foreground">
                   {t("footer.aml")}
-                </a>
+                </a>{/* legal links - keep as <a> since they open in same context */}
               </li>
             </ul>
           </div>
@@ -232,8 +232,7 @@ const SiteFooter = () => {
             <p className="font-body text-xs leading-relaxed text-muted-foreground">
               {t("footer.disclaimer")}{" "}
               <a href={lp("/transparency-security")} title="View MRC GlobalPay transparency and security practices" className="text-primary hover:underline">
-                View our transparency &amp; security practices
-              </a>
+                View our transparency &amp; security practices</a>
             </p>
           </div>
 
