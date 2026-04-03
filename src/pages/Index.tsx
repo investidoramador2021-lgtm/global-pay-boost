@@ -123,6 +123,7 @@ const Index = () => {
           <SwapPairsQA />
           <FAQSection />
         </main>
+        <MsbTrustBar />
         <SiteFooter />
         <ShadowSeoFaq />
       </PullToRefresh>
