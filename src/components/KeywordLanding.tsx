@@ -1,5 +1,7 @@
 import { Helmet } from "react-helmet-async";
+import { useLocation } from "react-router-dom";
 import { Zap, CheckCircle, XCircle, ArrowRight } from "lucide-react";
+import { getLangFromPath, langPath } from "@/i18n";
 import { Button } from "@/components/ui/button";
 import {
   Accordion,
