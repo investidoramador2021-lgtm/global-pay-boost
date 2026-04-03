@@ -3,6 +3,9 @@ import { SEED_POSTS } from "@/lib/blog/seed-posts";
 import { TRANSLATED_BTC_ETH_POSTS } from "@/lib/blog/translated-btc-eth-posts";
 import { TRANSLATED_LIQUIDITY_POSTS } from "@/lib/blog/translated-liquidity-posts";
 import { TRANSLATED_SECURITY_POSTS } from "@/lib/blog/translated-security-posts";
+import { TRANSLATED_TRADING_PAIRS_POSTS } from "@/lib/blog/translated-trading-pairs-posts";
+import { TRANSLATED_MINING_POSTS } from "@/lib/blog/translated-mining-posts";
+import { TRANSLATED_BRIDGE_POSTS } from "@/lib/blog/translated-bridge-posts";
 import type { BlogPost, BlogAuthor } from "@/lib/blog/types";
 
 export type { BlogPost, BlogAuthor } from "@/lib/blog/types";
@@ -62,6 +65,18 @@ export async function fetchPostBySlug(slug: string, lang = "en"): Promise<BlogPo
     const translatedSecurity = TRANSLATED_SECURITY_POSTS[lang];
     if (translatedSecurity && translatedSecurity.slug === slug) {
       return translatedSecurity;
+    }
+    const translatedTradingPairs = TRANSLATED_TRADING_PAIRS_POSTS[lang];
+    if (translatedTradingPairs && translatedTradingPairs.slug === slug) {
+      return translatedTradingPairs;
+    }
+    const translatedMining = TRANSLATED_MINING_POSTS[lang];
+    if (translatedMining && translatedMining.slug === slug) {
+      return translatedMining;
+    }
+    const translatedBridge = TRANSLATED_BRIDGE_POSTS[lang];
+    if (translatedBridge && translatedBridge.slug === slug) {
+      return translatedBridge;
     }
   }
 
