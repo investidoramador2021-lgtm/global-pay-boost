@@ -130,7 +130,7 @@ const CryptoDustGuide = () => {
 
           {/* Section 1 */}
           <section className="mb-12">
-            <h2 className="font-display text-2xl font-bold text-foreground mb-4">
+            <h2 id="what-is-crypto-dust" className="scroll-mt-24 font-display text-2xl font-bold text-foreground mb-4">
               What Is Crypto Dust?
             </h2>
             <p className="text-muted-foreground leading-relaxed mb-4">
