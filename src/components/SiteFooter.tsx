@@ -151,7 +151,7 @@ const SiteFooter = () => {
             </p>
           </div>
 
-          <FooterLinkList title="Resources & Guides" links={resourceLinks} />
+          <FooterLinkList title="Crypto Guides" links={resourceLinks} />
           <FooterLinkList title="Expertise" links={expertiseLinks} />
 
           <div>
