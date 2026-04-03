@@ -147,8 +147,8 @@ const CryptoDustGuide = () => {
 
           {/* Section 2 */}
           <section className="mb-12">
-            <h2 className="font-display text-2xl font-bold text-foreground mb-4">
-              Why Most Exchanges Have $10+ Minimums
+            <h2 id="why-do-most-exchanges-have-10-minimums" className="scroll-mt-24 font-display text-2xl font-bold text-foreground mb-4">
+              Why Do Most Exchanges Have $10+ Minimums?
             </h2>
             <p className="text-muted-foreground leading-relaxed mb-4">
               Traditional crypto exchanges batch orders through centralized order books that require
