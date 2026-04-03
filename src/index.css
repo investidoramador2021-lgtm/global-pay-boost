@@ -178,4 +178,15 @@
   .safe-area-bottom {
     padding-bottom: env(safe-area-inset-bottom, 0px);
   }
+
+  /* RTL: flip directional icons (arrows, chevrons) */
+  html[dir='rtl'] .rtl-flip {
+    transform: scaleX(-1);
+  }
 }
+
+/* Language-specific font families */
+html[lang='he'] body { font-family: 'Heebo', 'Inter', sans-serif; }
+html[lang='ja'] body { font-family: 'Noto Sans JP', 'Inter', sans-serif; }
+html[lang='ur'] body { font-family: 'Noto Nastaliq Urdu', 'Inter', sans-serif; }
+html[lang='fa'] body { font-family: 'Vazirmatn', 'Inter', sans-serif; }
