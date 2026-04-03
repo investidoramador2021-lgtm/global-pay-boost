@@ -253,7 +253,7 @@ const KeywordLanding = ({ data }: Props) => {
         {related.length > 0 && (
           <section className="border-t border-border bg-muted/20 py-12 sm:py-16">
             <div className="container mx-auto max-w-4xl px-4">
-              <h2 className="mb-6 font-display text-xl font-bold text-foreground">
+              <h2 id="related-swaps" className="mb-6 scroll-mt-24 font-display text-xl font-bold text-foreground">
                 Related Swaps
               </h2>
               <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
