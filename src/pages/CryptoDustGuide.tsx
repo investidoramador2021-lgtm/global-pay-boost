@@ -181,8 +181,8 @@ const CryptoDustGuide = () => {
 
           {/* Section 3 */}
           <section className="mb-12">
-            <h2 className="font-display text-2xl font-bold text-foreground mb-4">
-              How MRC GlobalPay Processes Swaps from $0.30
+            <h2 id="how-does-mrc-globalpay-process-swaps-from-030" className="scroll-mt-24 font-display text-2xl font-bold text-foreground mb-4">
+              How Does MRC GlobalPay Process Swaps from $0.30?
             </h2>
             <p className="text-muted-foreground leading-relaxed mb-4">
               Our non-custodial engine connects directly to protocol-level liquidity pools —
