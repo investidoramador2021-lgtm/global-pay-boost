@@ -5,7 +5,7 @@ import SiteHeader from "@/components/SiteHeader";
 import SiteFooter from "@/components/SiteFooter";
 
 const SIZES = [
-  { label: "Small", w: 360, h: 420 },
+  { label: "Small", w: 320, h: 420 },
   { label: "Medium", w: 400, h: 440 },
   { label: "Large", w: 480, h: 460 },
 ];
