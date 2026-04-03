@@ -4,6 +4,7 @@ import SiteHeader from "@/components/SiteHeader";
 import SiteFooter from "@/components/SiteFooter";
 import ShadowSeoFaq from "@/components/ShadowSeoFaq";
 import { CheckCircle, XCircle } from "lucide-react";
+import { usePageUrl } from "@/hooks/use-page-url";
 import {
   Table,
   TableHeader,
