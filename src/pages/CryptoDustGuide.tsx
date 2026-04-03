@@ -214,8 +214,8 @@ const CryptoDustGuide = () => {
 
           {/* 2026 Network Dust Thresholds Table */}
           <section className="mb-12">
-            <h2 className="font-display text-2xl font-bold text-foreground mb-4">
-              2026 Network Dust Thresholds
+            <h2 id="what-are-the-2026-network-dust-thresholds" className="scroll-mt-24 font-display text-2xl font-bold text-foreground mb-4">
+              What Are the 2026 Network Dust Thresholds?
             </h2>
             <p className="text-muted-foreground leading-relaxed mb-6">
               Every blockchain has a practical minimum transaction size determined by network fees and UTXO/account model constraints. Here's how they compare to our $0.30 swap floor:
