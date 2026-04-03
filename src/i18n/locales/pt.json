@@ -7,12 +7,22 @@
     "faq": "Perguntas Frequentes",
     "startSwap": "Iniciar Troca"
   },
+  "hero": {
+    "heading": "Troca de Cripto sem KYC.",
+    "headingAccent": "Taxas Baixas. Desde $0.30.",
+    "subtitle": "Troca rápida, segura e privada. Limpar poeira de cripto a partir de $0.30. Sem cadastro necessário.",
+    "trustNoAccount": "Sem Cadastro",
+    "trustNonCustodial": "Não Custodial",
+    "trustSettlement": "Liquidação Direta",
+    "dustTitle": "🧹 Limpe Sua Carteira",
+    "dustDescription": "Cansado de poeira cripto? A maioria das plataformas tem mínimos altos. MRC GlobalPay permite micro-trocas a partir de $0.30. Converta saldos residuais de mais de 500 tokens instantaneamente."
+  },
   "howItWorks": {
     "heading": "Como Funciona",
     "subtitle": "Três passos simples. Sem atrasos, sem fricção.",
     "step1": {
       "title": "Insira os Detalhes",
-      "description": "Selecione o par de negociação e insira o endereço da carteira do destinatário. Sem necessidade de cadastro."
+      "description": "Selecione o par de negociação e insira o endereço da carteira. Sem cadastro. Trocas a partir de $0.30."
     },
     "step2": {
       "title": "Envie o Depósito",
@@ -28,7 +38,7 @@
     "subtitle": "Cada componente é otimizado para execução instantânea e zero fricção.",
     "speed": {
       "title": "Liquidação em menos de 60s",
-      "description": "Trilhos de liquidez automatizados executam trocas em menos de 60 segundos. Sem processamento manual, sem filas."
+      "description": "Trilhos de liquidez automatizados executam trocas em menos de 60 segundos."
     },
     "fees": {
       "title": "Zero Taxas Ocultas",
@@ -44,11 +54,11 @@
     },
     "global": {
       "title": "Global, Sempre Ativo",
-      "description": "Disponível mundialmente 24/7/365. Sem restrições geográficas, sem tempo de inatividade."
+      "description": "Disponível mundialmente 24/7/365. Sem restrições geográficas."
     },
     "support": {
       "title": "Suporte 24/7",
-      "description": "Suporte dedicado 24 horas para quaisquer dúvidas ou problemas relacionados a trocas."
+      "description": "Suporte dedicado 24 horas para quaisquer dúvidas relacionadas a trocas."
     }
   }
 }
