@@ -2,6 +2,7 @@ import { supabase } from "@/integrations/supabase/client";
 import { SEED_POSTS } from "@/lib/blog/seed-posts";
 import { TRANSLATED_BTC_ETH_POSTS } from "@/lib/blog/translated-btc-eth-posts";
 import { TRANSLATED_LIQUIDITY_POSTS } from "@/lib/blog/translated-liquidity-posts";
+import { TRANSLATED_SECURITY_POSTS } from "@/lib/blog/translated-security-posts";
 import type { BlogPost, BlogAuthor } from "@/lib/blog/types";
 
 export type { BlogPost, BlogAuthor } from "@/lib/blog/types";
@@ -57,6 +58,10 @@ export async function fetchPostBySlug(slug: string, lang = "en"): Promise<BlogPo
     const translatedLiquidity = TRANSLATED_LIQUIDITY_POSTS[lang];
     if (translatedLiquidity && translatedLiquidity.slug === slug) {
       return translatedLiquidity;
+    }
+    const translatedSecurity = TRANSLATED_SECURITY_POSTS[lang];
+    if (translatedSecurity && translatedSecurity.slug === slug) {
+      return translatedSecurity;
     }
   }
 
