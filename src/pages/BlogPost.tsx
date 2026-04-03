@@ -30,7 +30,7 @@ const BlogPostPage = () => {
       setRelated(r);
       setLoading(false);
     });
-  }, [slug]);
+  }, [slug, lang]);
 
   // Extract H2 headings as FAQ items for FAQPage schema (must be before early returns)
   const faqItems = useMemo(() => {
@@ -70,7 +70,7 @@ const BlogPostPage = () => {
     );
   }
 
-  if (!post) return <Navigate to="/blog" replace />;
+  if (!post) return <Navigate to={lp("/blog")} replace />;
 
   const jsonLd = {
     "@context": "https://schema.org",
@@ -155,11 +155,11 @@ const BlogPostPage = () => {
       <main className="min-h-screen bg-background">
         <nav className="border-b border-border bg-muted/30 py-3" aria-label="Breadcrumb">
           <div className="container mx-auto flex items-center gap-2 px-4 font-body text-xs text-muted-foreground sm:text-sm">
-            <Link to="/" className="hover:text-foreground">
+            <Link to={lp("/")} className="hover:text-foreground">
               Home
             </Link>
             <span>/</span>
-            <Link to="/blog" className="hover:text-foreground">
+            <Link to={lp("/blog")} className="hover:text-foreground">
               Blog
             </Link>
             <span>/</span>
@@ -171,7 +171,7 @@ const BlogPostPage = () => {
           <div className="container mx-auto px-4">
             <div className="mx-auto max-w-3xl">
               <header className="mb-8 sm:mb-12">
-                <Link to="/blog" className="mb-4 inline-flex items-center gap-1 font-body text-sm text-muted-foreground hover:text-foreground">
+                <Link to={lp("/blog")} className="mb-4 inline-flex items-center gap-1 font-body text-sm text-muted-foreground hover:text-foreground">
                   <ArrowLeft className="h-3.5 w-3.5" /> Back to Blog
                 </Link>
                 <div className="mt-4 flex flex-wrap items-center gap-3">
@@ -252,7 +252,7 @@ const BlogPostPage = () => {
                 {related.map((r) => (
                   <Link
                     key={r.slug}
-                    to={`/blog/${r.slug}`}
+                    to={lp(`/blog/${r.slug}`)}
                     className="group rounded-xl border border-border bg-card p-5 transition-all hover:border-primary/40 hover:shadow-md"
                   >
                     <span className="font-body text-xs text-primary">{r.category}</span>
