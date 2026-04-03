@@ -155,11 +155,11 @@ const BlogPostPage = () => {
       <main className="min-h-screen bg-background">
         <nav className="border-b border-border bg-muted/30 py-3" aria-label="Breadcrumb">
           <div className="container mx-auto flex items-center gap-2 px-4 font-body text-xs text-muted-foreground sm:text-sm">
-            <Link to="/" className="hover:text-foreground">
+            <Link to={lp("/")} className="hover:text-foreground">
               Home
             </Link>
             <span>/</span>
-            <Link to="/blog" className="hover:text-foreground">
+            <Link to={lp("/blog")} className="hover:text-foreground">
               Blog
             </Link>
             <span>/</span>
