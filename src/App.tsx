@@ -30,6 +30,8 @@ const FractalBitcoinSwap = lazy(() => import("./pages/FractalBitcoinSwap.tsx"));
 const TransparencySecurity = lazy(() => import("./pages/TransparencySecurity.tsx"));
 const DustSwapComparison = lazy(() => import("./pages/DustSwapComparison.tsx"));
 const KeywordPage = lazy(() => import("./pages/KeywordPage.tsx"));
+const GetWidget = lazy(() => import("./pages/GetWidget.tsx"));
+const EmbedWidget = lazy(() => import("./pages/EmbedWidget.tsx"));
 const NotFound = lazy(() => import("./pages/NotFound.tsx"));
 
 const queryClient = new QueryClient();
