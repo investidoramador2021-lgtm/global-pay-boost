@@ -4,6 +4,13 @@
     "description": "Troque mais de 500 criptomoedas instantaneamente desde $0.30. Trocas sem cadastro, sem verificação. Liquidação em menos de 60 segundos.",
     "ogTitle": "MRC GlobalPay | Troca de Cripto sem Mínimo desde $0.30"
   },
+  "footer": {
+    "legal": "Legal",
+    "privacy": "Política de Privacidade",
+    "terms": "Termos de Serviço",
+    "aml": "Política AML",
+    "disclaimer": "MRC GlobalPay é um MSB canadense registrado. Oferecemos um serviço sem cadastro para a maioria dos usuários. Para manter a segurança e conformidade com os padrões globais AML, nosso sistema automatizado de prevenção de riscos pode ocasionalmente solicitar verificação padrão para transações sinalizadas como de alto risco."
+  },
   "nav": {
     "howItWorks": "Como Funciona",
     "features": "Recursos",
