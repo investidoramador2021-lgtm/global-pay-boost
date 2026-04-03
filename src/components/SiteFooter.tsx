@@ -33,16 +33,16 @@ const popularCryptoSwaps = [
 
 
 const buyLinks = [
-  { label: "Buy Bitcoin", href: "/buy/bitcoin-no-kyc", title: "Buy Bitcoin without KYC verification" },
+  { label: "Buy Bitcoin", href: "/buy/bitcoin-no-kyc", title: "Buy Bitcoin with no registration required" },
   { label: "Buy Ethereum", href: "/buy/ethereum", title: "Buy Ethereum instantly with no account" },
-  { label: "Buy Solana", href: "/buy/solana-no-kyc", title: "Buy Solana without KYC verification" },
+  { label: "Buy Solana", href: "/buy/solana-no-kyc", title: "Buy Solana with no registration required" },
   { label: "Buy Solana No Verification", href: "/buy/solana-no-verification", title: "Buy Solana with no identity verification" },
   { label: "Buy Solana PayPal", href: "/buy/solana-paypal", title: "Buy Solana with PayPal instantly" },
   { label: "Buy Ether Instant", href: "/buy/ether-instant", title: "Buy Ether instantly with no delays" },
   { label: "Buy XDC", href: "/buy/xdc", title: "Buy XDC Network token instantly" },
   { label: "Buy LTC PayPal", href: "/buy/ltc-paypal", title: "Buy Litecoin with PayPal" },
   { label: "Buy Celo", href: "/buy/celo", title: "Buy Celo cryptocurrency instantly" },
-  { label: "Buy Monero No KYC", href: "/buy/monero-no-kyc", title: "Buy Monero without KYC privately" },
+  { label: "Buy Monero Private", href: "/buy/monero-no-kyc", title: "Buy Monero privately with no registration" },
   { label: "Bitcoin No Verification", href: "/buy/bitcoin-no-verification", title: "Buy Bitcoin with no identity verification" },
 ];
 
@@ -111,7 +111,7 @@ const expertiseLinks = [
 ];
 
 const complianceText =
-  "Registered Money Services Business (MSB) — Canada. Adhering to 2026 AML and FINTRAC standards.";
+  "Registered Money Services Business (MSB) — Canada. Adhering to 2026 AML and FINTRAC standards. MRC GlobalPay provides a registration-free service for most users. To maintain safety and compliance with global AML standards, our automated risk-prevention system may occasionally request standard verification for transactions flagged as high-risk.";
 
 type FooterLink = { label: string; href: string; title: string };
 

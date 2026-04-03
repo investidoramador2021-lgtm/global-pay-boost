@@ -29,8 +29,8 @@ const AMLPolicy = () => (
         <h2 className="text-xl font-semibold text-foreground">1. Purpose</h2>
         <p>MRC GlobalPay is committed to preventing money laundering, terrorist financing, and other financial crimes. This policy outlines our compliance measures.</p>
 
-        <h2 className="text-xl font-semibold text-foreground">2. KYC Procedures</h2>
-        <p>For transactions exceeding certain thresholds, we may require identity verification. This may include government-issued ID and proof of address.</p>
+        <h2 className="text-xl font-semibold text-foreground">2. Identity Verification Procedures</h2>
+        <p>For transactions exceeding certain thresholds or flagged by our automated risk-prevention system, we may request standard identity verification. This may include government-issued ID and proof of address.</p>
 
         <h2 className="text-xl font-semibold text-foreground">3. Transaction Monitoring</h2>
         <p>All transactions are monitored for suspicious activity using automated systems. Transactions flagged as suspicious may be delayed or cancelled.</p>

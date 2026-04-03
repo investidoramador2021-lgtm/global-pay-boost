@@ -69,7 +69,7 @@ const SwapPairLanding = ({
         name: `Do I need an account to swap ${assetA} to ${assetB}?`,
         acceptedAnswer: {
           "@type": "Answer",
-          text: `No. MRC GlobalPay requires zero registration or KYC. Enter your ${assetB} wallet address, send ${assetA}, and receive ${assetB} instantly.`,
+          text: `No. MRC GlobalPay requires zero registration. Enter your ${assetB} wallet address, send ${assetA}, and receive ${assetB} instantly.`,
         },
       },
       ...extraFaqs.map((faq) => ({
@@ -262,8 +262,8 @@ const SwapPairLanding = ({
                 </div>
                 <div className="rounded-xl border border-primary/20 bg-card p-4 text-center shadow-card sm:p-5">
                   <Shield className="mx-auto h-5 w-5 text-primary sm:h-6 sm:w-6" />
-                  <p className="mt-1.5 font-display text-xs font-bold text-foreground sm:mt-2 sm:text-sm">KYC</p>
-                  <p className="font-display text-base font-extrabold text-primary sm:text-lg">None</p>
+                  <p className="mt-1.5 font-display text-xs font-bold text-foreground sm:mt-2 sm:text-sm">Registration</p>
+                  <p className="font-display text-base font-extrabold text-primary sm:text-lg">None Required</p>
                 </div>
               </div>
             </div>

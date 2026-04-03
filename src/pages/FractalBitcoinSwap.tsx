@@ -137,7 +137,7 @@ const FractalBitcoinSwap = () => {
               Why Swap Fractal BTC Through a Non-Custodial Engine?
             </h2>
             <p className="text-muted-foreground leading-relaxed mb-4">
-              Custodial exchanges require account creation, KYC verification, and typically enforce
+              Custodial exchanges require account creation, identity verification, and typically enforce
               high minimum trade amounts. Our non-custodial swap engine eliminates all three barriers:
             </p>
             <ul className="list-disc list-inside space-y-2 text-muted-foreground leading-relaxed">
