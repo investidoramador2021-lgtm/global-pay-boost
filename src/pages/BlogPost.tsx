@@ -5,6 +5,7 @@ import { Calendar, Clock, ArrowLeft, ArrowRight } from "lucide-react";
 import SiteHeader from "@/components/SiteHeader";
 import SiteFooter from "@/components/SiteFooter";
 import BlogMarkdown from "@/components/blog/BlogMarkdown";
+import TableOfContents from "@/components/blog/TableOfContents";
 import { fetchPostBySlug, fetchRelatedPosts, type BlogPost } from "@/lib/blog-data";
 
 const BlogPostPage = () => {
