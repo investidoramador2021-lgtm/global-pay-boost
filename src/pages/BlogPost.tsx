@@ -252,7 +252,7 @@ const BlogPostPage = () => {
                 {related.map((r) => (
                   <Link
                     key={r.slug}
-                    to={`/blog/${r.slug}`}
+                    to={lp(`/blog/${r.slug}`)}
                     className="group rounded-xl border border-border bg-card p-5 transition-all hover:border-primary/40 hover:shadow-md"
                   >
                     <span className="font-body text-xs text-primary">{r.category}</span>
