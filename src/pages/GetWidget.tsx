@@ -69,7 +69,7 @@ const GetWidget = () => {
         </section>
 
         {/* Widget Preview + Code */}
-        <section className="container mx-auto px-4 pb-20 border-4 border-red-500">
+        <section className="container mx-auto px-4 py-12">
           <div className="mx-auto max-w-5xl">
             <h2 className="mb-8 text-center text-2xl font-bold text-foreground">Preview & Get Your Code</h2>
             <div className="grid gap-8 lg:grid-cols-2">
