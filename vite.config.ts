@@ -8,13 +8,9 @@ export default defineConfig(({ mode }) => ({
   server: {
     host: "::",
     port: 8080,
-    hmr: mode === "development"
-      ? {
-          protocol: "wss",
-          clientPort: 443,
-          overlay: false,
-        }
-      : undefined,
+    hmr: {
+      overlay: false,
+    },
   },
   plugins: [
     react(),
