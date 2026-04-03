@@ -1,21 +1,13 @@
-import { useLocation, useNavigate } from "react-router-dom";
+import { useLocation } from "react-router-dom";
 import { useEffect } from "react";
 import { Helmet } from "react-helmet-async";
 
 const NotFound = () => {
   const location = useLocation();
-  const navigate = useNavigate();
 
   useEffect(() => {
     console.error("404 Error: User attempted to access non-existent route:", location.pathname);
-    
-    // Redirect old WordPress/legacy paths to home
-    const legacyPrefixes = ["/pt/", "/fr/", "/es/", "/de/", "/wp-", "/wordpress/"];
-    if (legacyPrefixes.some(p => location.pathname.startsWith(p))) {
-      navigate("/", { replace: true });
-      return;
-    }
-  }, [location.pathname, navigate]);
+  }, [location.pathname]);
 
   return (
     <>
