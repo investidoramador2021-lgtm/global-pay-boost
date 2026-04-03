@@ -48,11 +48,14 @@ export async function fetchAllPosts(): Promise<BlogPost[]> {
 }
 
 export async function fetchPostBySlug(slug: string, lang = "en"): Promise<BlogPost | undefined> {
-  // For non-English languages, check translated posts first
+  // For non-English languages, check all translated post collections
   if (lang !== "en") {
-    const translated = TRANSLATED_BTC_ETH_POSTS[lang];
-    if (translated && translated.slug === slug) {
-      return translated;
+    const translatedCollections = [TRANSLATED_BTC_ETH_POSTS, TRANSLATED_DUST_POSTS];
+    for (const collection of translatedCollections) {
+      const translated = collection[lang];
+      if (translated && translated.slug === slug) {
+        return translated;
+      }
     }
   }
 
