@@ -56,7 +56,7 @@ export const seoKeywords = [
   { keyword: "dag crypto", intentType: "Informational", targetUrl: "/ecosystem/dag-crypto", primaryH1: "DAG Crypto Protocol Guide", benefitHook: "Information on Directed Acyclic Graph assets." },
   { keyword: "tangem wallet review", intentType: "Informational", targetUrl: "/reviews/tangem-wallet", primaryH1: "Tangem Wallet Review 2026", benefitHook: "Hardware security paired with instant swaps." },
   { keyword: "topper crypto", intentType: "Commercial", targetUrl: "/alternatives/topper-crypto", primaryH1: "Better Alternative to Topper Crypto", benefitHook: "Lower fees and higher privacy than Topper." },
-  { keyword: "buy bitcoin without kyc", intentType: "Commercial", targetUrl: "/buy/bitcoin-no-kyc", primaryH1: "Buy Bitcoin Without KYC", benefitHook: "Guaranteed privacy-first BTC swapping." },
+  { keyword: "buy bitcoin without kyc", intentType: "Commercial", targetUrl: "/buy/bitcoin-no-kyc", primaryH1: "Buy Bitcoin — Registration-Free", benefitHook: "Privacy-first BTC swapping." },
   { keyword: "harmony one price", intentType: "Informational", targetUrl: "/price/harmony-one", primaryH1: "Harmony (ONE) Price & Swap", benefitHook: "Live ONE tracking and instant exchange." },
   { keyword: "how to mine litecoin", intentType: "Informational", targetUrl: "/guides/how-to-mine-litecoin", primaryH1: "How to Mine Litecoin (Step-by-Step)", benefitHook: "Mining resources and profit-swap tools." },
   { keyword: "bnb swap", intentType: "Commercial", targetUrl: "/swap/bnb", primaryH1: "Instant BNB Swap Service", benefitHook: "No-account Binance Chain exchange." },
