@@ -578,6 +578,10 @@ const ExchangeWidget = () => {
             <Button className="mt-5 w-full min-h-[52px] bg-primary text-primary-foreground hover:bg-primary/90 hover:shadow-neon shadow-card text-base font-bold transition-shadow duration-300" size="lg" disabled={!estimatedAmount || estimatedAmount === "—" || belowMin} onClick={handleExchangeNow}>
               Exchange Now
             </Button>
+            <p className="mt-1.5 flex items-center justify-center gap-1.5 font-body text-[11px] text-muted-foreground">
+              <Shield className="h-3 w-3 text-primary" />
+              Secure Swap via Registered MSB
+            </p>
 
             {/* Trust signals row */}
             <div className="mt-2 grid grid-cols-3 gap-2">
