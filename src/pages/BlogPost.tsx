@@ -1,11 +1,11 @@
 import { useParams, Link, Navigate, useLocation } from "react-router-dom";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useMemo } from "react";
 import { Helmet } from "react-helmet-async";
-import { Calendar, Clock, ArrowLeft, ArrowRight } from "lucide-react";
+import { Calendar, Clock, ArrowLeft, ArrowRight, Zap } from "lucide-react";
 import SiteHeader from "@/components/SiteHeader";
 import SiteFooter from "@/components/SiteFooter";
 import BlogMarkdown from "@/components/blog/BlogMarkdown";
-import TableOfContents from "@/components/blog/TableOfContents";
+import TableOfContents, { extractHeadings } from "@/components/blog/TableOfContents";
 import { fetchPostBySlug, fetchRelatedPosts, type BlogPost } from "@/lib/blog-data";
 
 const BlogPostPage = () => {
