@@ -160,6 +160,18 @@ const KeywordLanding = ({ data }: Props) => {
                 Start Swap Now
               </a>
             </Button>
+
+            {/* Table of Contents */}
+            <div className="mx-auto mt-10 max-w-xl text-left">
+              <TableOfContents
+                items={[
+                  { id: "platform-comparison", text: "Platform Comparison", level: 2 },
+                  { id: `why-choose-mrc-globalpay-for-${keyword.toLowerCase().replace(/\s+/g, "-")}`, text: `Why Choose MRC GlobalPay for ${keyword}?`, level: 2 },
+                  { id: "frequently-asked-questions", text: "Frequently Asked Questions", level: 2 },
+                  ...(related.length > 0 ? [{ id: "related-swaps", text: "Related Swaps", level: 2 }] : []),
+                ]}
+              />
+            </div>
           </div>
         </section>
 
