@@ -7,12 +7,22 @@
     "faq": "Preguntas Frecuentes",
     "startSwap": "Iniciar Intercambio"
   },
+  "hero": {
+    "heading": "Cambio Instantáneo de Criptomonedas.",
+    "headingAccent": "Sin Registro. Desde $0.30.",
+    "subtitle": "Intercambios rápidos, seguros y privados. Sin registro ni verificación. Desde $0.30.",
+    "trustNoAccount": "Sin Registro",
+    "trustNonCustodial": "No Custodial",
+    "trustSettlement": "Liquidación Directa",
+    "dustTitle": "🧹 Limpia Tu Billetera",
+    "dustDescription": "¿Cansado del polvo cripto? La mayoría de plataformas tienen mínimos altos. MRC GlobalPay permite micro-intercambios desde $0.30. Convierte saldos residuales de más de 500 tokens al instante."
+  },
   "howItWorks": {
     "heading": "Cómo Funciona",
     "subtitle": "Tres pasos sencillos. Sin demoras, sin fricciones.",
     "step1": {
       "title": "Ingresa los Detalles",
-      "description": "Selecciona tu par de intercambio e ingresa la dirección de la billetera del destinatario. Sin necesidad de registro."
+      "description": "Selecciona tu par de intercambio e ingresa la dirección de billetera del destinatario. Sin registro. Intercambios desde $0.30."
     },
     "step2": {
       "title": "Envía el Depósito",
@@ -28,7 +38,7 @@
     "subtitle": "Cada componente está optimizado para ejecución instantánea y cero fricción.",
     "speed": {
       "title": "Liquidación en menos de 60s",
-      "description": "Los rieles de liquidez automatizados ejecutan intercambios en menos de 60 segundos. Sin procesamiento manual, sin colas."
+      "description": "Los rieles de liquidez automatizados ejecutan intercambios en menos de 60 segundos."
     },
     "fees": {
       "title": "Cero Comisiones Ocultas",
@@ -44,11 +54,11 @@
     },
     "global": {
       "title": "Global, Siempre Activo",
-      "description": "Disponible en todo el mundo 24/7/365. Sin restricciones geográficas, sin tiempo de inactividad."
+      "description": "Disponible en todo el mundo 24/7/365. Sin restricciones geográficas."
     },
     "support": {
       "title": "Soporte 24/7",
-      "description": "Soporte dedicado las 24 horas para cualquier pregunta o problema relacionado con intercambios."
+      "description": "Soporte dedicado las 24 horas para cualquier pregunta relacionada con intercambios."
     }
   }
 }

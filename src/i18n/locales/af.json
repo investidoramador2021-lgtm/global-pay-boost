@@ -1,54 +1,37 @@
 {
   "nav": {
-    "howItWorks": "How It Works",
-    "features": "Features",
-    "swapPairs": "Swap Pairs",
+    "howItWorks": "Hoe Dit Werk",
+    "features": "Kenmerke",
+    "swapPairs": "Ruilpare",
     "blog": "Blog",
-    "faq": "FAQ",
-    "startSwap": "Start Swap"
+    "faq": "Gereelde Vrae",
+    "startSwap": "Begin Ruil"
+  },
+  "hero": {
+    "heading": "Veilige Digitale Bate Ruil.",
+    "headingAccent": "Geen Registrasie. Minimum $0.30.",
+    "subtitle": "Vinnig, veilig en privaat. Direkte beursie-tot-beursie ruil vanaf $0.30. Geen KYC nodig nie.",
+    "trustNoAccount": "Geen Rekening Nodig",
+    "trustNonCustodial": "Nie-Bewarend",
+    "trustSettlement": "Direkte Verrekening",
+    "dustTitle": "🧹 Maak Jou Beursie Skoon",
+    "dustDescription": "Moeg vir onbruikbare stof? Die meeste platforms het hoë minimums. MRC GlobalPay ondersteun mikro-ruil vanaf $0.30. Omskep oorblywende balanse van 500+ tokens onmiddellik."
   },
   "howItWorks": {
-    "heading": "How It Works",
-    "subtitle": "Three simple steps. No delays, no friction.",
-    "step1": {
-      "title": "Input Details",
-      "description": "Select your trading pair and enter the recipient wallet address. No sign-up needed."
-    },
-    "step2": {
-      "title": "Send Deposit",
-      "description": "Transfer your funds to the secure, one-time generated deposit address."
-    },
-    "step3": {
-      "title": "Automatic Settlement",
-      "description": "Once your deposit is confirmed, coins are automatically sent to your wallet."
-    }
+    "heading": "Hoe Dit Werk",
+    "subtitle": "Drie eenvoudige stappe. Geen vertragings, geen wrywing.",
+    "step1": { "title": "Voer Besonderhede In", "description": "Kies jou ruilpaar en voer die ontvanger se beursie-adres in. Geen registrasie nodig. Ruil vanaf $0.30." },
+    "step2": { "title": "Stuur Deposito", "description": "Dra jou fondse oor na die outomaties gegenereerde veilige deposito-adres." },
+    "step3": { "title": "Outomatiese Verrekening", "description": "Sodra jou deposito bevestig is, word munte outomaties na jou beursie gestuur." }
   },
   "features": {
-    "heading": "Built for Speed. Engineered for Trust.",
-    "subtitle": "Every component is optimized for instant execution and zero friction.",
-    "speed": {
-      "title": "Sub-60s Settlement",
-      "description": "Automated liquidity rails execute swaps in under 60 seconds. No manual processing, no queues."
-    },
-    "fees": {
-      "title": "Zero Hidden Fees",
-      "description": "All costs are transparent in the displayed rate. What you see is what you get — guaranteed."
-    },
-    "noAccount": {
-      "title": "No Account Required",
-      "description": "Permissionless trading — start swapping immediately. No sign-ups, no personal data, no onboarding friction."
-    },
-    "assets": {
-      "title": "500+ Crypto Assets",
-      "description": "Swap Bitcoin, Ethereum, Solana, USDT, and hundreds more across all major blockchains."
-    },
-    "global": {
-      "title": "Global, Always-On",
-      "description": "Available worldwide 24/7/365. No geo-restrictions, no downtime, no maintenance windows."
-    },
-    "support": {
-      "title": "24/7 Support",
-      "description": "Dedicated support around the clock for any exchange-related questions or issues."
-    }
+    "heading": "Gebou vir Spoed. Ontwerp vir Vertroue.",
+    "subtitle": "Elke komponent is geoptimaliseer vir onmiddellike uitvoering en nul wrywing.",
+    "speed": { "title": "Verrekening in minder as 60s", "description": "Outomatiese likiditeitsrails voer ruil in minder as 60 sekondes uit." },
+    "fees": { "title": "Nul Versteekte Fooie", "description": "Alle koste is deursigtig in die vertoonde koers." },
+    "noAccount": { "title": "Geen Rekening Nodig", "description": "Toestemmingslose handel — begin dadelik ruil. Geen registrasies, geen persoonlike data." },
+    "assets": { "title": "500+ Kripto Bates", "description": "Ruil Bitcoin, Ethereum, Solana, USDT en honderde meer op alle groot blokkettings." },
+    "global": { "title": "Globaal, Altyd Aktief", "description": "Wêreldwyd beskikbaar 24/7/365. Geen geografiese beperkings nie." },
+    "support": { "title": "24/7 Ondersteuning", "description": "Toegewyde ondersteuning dag en nag vir enige ruil-verwante vrae." }
   }
 }

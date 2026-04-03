@@ -1,54 +1,37 @@
 {
   "nav": {
-    "howItWorks": "How It Works",
-    "features": "Features",
-    "swapPairs": "Swap Pairs",
+    "howItWorks": "Cách thức hoạt động",
+    "features": "Tính năng",
+    "swapPairs": "Cặp giao dịch",
     "blog": "Blog",
-    "faq": "FAQ",
-    "startSwap": "Start Swap"
+    "faq": "Câu hỏi thường gặp",
+    "startSwap": "Bắt đầu giao dịch"
+  },
+  "hero": {
+    "heading": "Trao đổi tài sản số an toàn.",
+    "headingAccent": "Không cần đăng ký. Tối thiểu $0.30.",
+    "subtitle": "Nhanh chóng, an toàn và riêng tư. Trao đổi trực tiếp ví-đến-ví từ $0.30. Không cần KYC.",
+    "trustNoAccount": "Không cần tài khoản",
+    "trustNonCustodial": "Phi lưu ký",
+    "trustSettlement": "Thanh toán trực tiếp",
+    "dustTitle": "🧹 Dọn sạch ví của bạn",
+    "dustDescription": "Chán ngấy với bụi crypto không thể chi tiêu? Hầu hết các nền tảng có mức tối thiểu cao. MRC GlobalPay hỗ trợ trao đổi siêu nhỏ từ $0.30. Chuyển đổi số dư còn lại từ hơn 500 token ngay lập tức."
   },
   "howItWorks": {
-    "heading": "How It Works",
-    "subtitle": "Three simple steps. No delays, no friction.",
-    "step1": {
-      "title": "Input Details",
-      "description": "Select your trading pair and enter the recipient wallet address. No sign-up needed."
-    },
-    "step2": {
-      "title": "Send Deposit",
-      "description": "Transfer your funds to the secure, one-time generated deposit address."
-    },
-    "step3": {
-      "title": "Automatic Settlement",
-      "description": "Once your deposit is confirmed, coins are automatically sent to your wallet."
-    }
+    "heading": "Cách thức hoạt động",
+    "subtitle": "Ba bước đơn giản. Không chậm trễ, không ma sát.",
+    "step1": { "title": "Nhập chi tiết", "description": "Chọn cặp giao dịch và nhập địa chỉ ví người nhận. Không cần đăng ký. Giao dịch từ $0.30." },
+    "step2": { "title": "Gửi tiền nạp", "description": "Chuyển tiền của bạn đến địa chỉ nạp bảo mật được tạo tự động." },
+    "step3": { "title": "Thanh toán tự động", "description": "Khi khoản nạp của bạn được xác nhận, coin sẽ tự động được gửi đến ví của bạn." }
   },
   "features": {
-    "heading": "Built for Speed. Engineered for Trust.",
-    "subtitle": "Every component is optimized for instant execution and zero friction.",
-    "speed": {
-      "title": "Sub-60s Settlement",
-      "description": "Automated liquidity rails execute swaps in under 60 seconds. No manual processing, no queues."
-    },
-    "fees": {
-      "title": "Zero Hidden Fees",
-      "description": "All costs are transparent in the displayed rate. What you see is what you get — guaranteed."
-    },
-    "noAccount": {
-      "title": "No Account Required",
-      "description": "Permissionless trading — start swapping immediately. No sign-ups, no personal data, no onboarding friction."
-    },
-    "assets": {
-      "title": "500+ Crypto Assets",
-      "description": "Swap Bitcoin, Ethereum, Solana, USDT, and hundreds more across all major blockchains."
-    },
-    "global": {
-      "title": "Global, Always-On",
-      "description": "Available worldwide 24/7/365. No geo-restrictions, no downtime, no maintenance windows."
-    },
-    "support": {
-      "title": "24/7 Support",
-      "description": "Dedicated support around the clock for any exchange-related questions or issues."
-    }
+    "heading": "Xây dựng cho tốc độ. Thiết kế cho sự tin cậy.",
+    "subtitle": "Mọi thành phần được tối ưu hóa cho thực thi tức thì và không ma sát.",
+    "speed": { "title": "Thanh toán dưới 60 giây", "description": "Đường ray thanh khoản tự động thực hiện giao dịch trong dưới 60 giây." },
+    "fees": { "title": "Không phí ẩn", "description": "Tất cả chi phí đều minh bạch trong tỷ giá hiển thị." },
+    "noAccount": { "title": "Không cần tài khoản", "description": "Giao dịch không cần phép — bắt đầu trao đổi ngay. Không đăng ký, không dữ liệu cá nhân." },
+    "assets": { "title": "500+ tài sản crypto", "description": "Trao đổi Bitcoin, Ethereum, Solana, USDT và hàng trăm loại khác trên tất cả các blockchain chính." },
+    "global": { "title": "Toàn cầu, luôn hoạt động", "description": "Khả dụng trên toàn thế giới 24/7/365. Không giới hạn địa lý." },
+    "support": { "title": "Hỗ trợ 24/7", "description": "Hỗ trợ chuyên dụng suốt ngày đêm cho mọi câu hỏi liên quan đến giao dịch." }
   }
 }

@@ -1,54 +1,37 @@
 {
   "nav": {
-    "howItWorks": "How It Works",
-    "features": "Features",
-    "swapPairs": "Swap Pairs",
-    "blog": "Blog",
-    "faq": "FAQ",
-    "startSwap": "Start Swap"
+    "howItWorks": "कैसे काम करता है",
+    "features": "विशेषताएं",
+    "swapPairs": "स्वैप जोड़े",
+    "blog": "ब्लॉग",
+    "faq": "अक्सर पूछे जाने वाले प्रश्न",
+    "startSwap": "स्वैप शुरू करें"
+  },
+  "hero": {
+    "heading": "सुरक्षित डिजिटल एसेट स्वैप।",
+    "headingAccent": "बिना पंजीकरण। न्यूनतम $0.30।",
+    "subtitle": "तेज़, सुरक्षित और निजी। बिना पंजीकरण, $0.30 से सीधे वॉलेट-टू-वॉलेट स्वैप।",
+    "trustNoAccount": "पंजीकरण की जरूरत नहीं",
+    "trustNonCustodial": "गैर-कस्टोडियल",
+    "trustSettlement": "प्रत्यक्ष निपटान",
+    "dustTitle": "🧹 अपना वॉलेट साफ करें",
+    "dustDescription": "खर्च न होने वाली धूल से परेशान हैं? अधिकांश प्लेटफार्मों की न्यूनतम सीमा ऊंची है। MRC GlobalPay $0.30 से माइक्रो-स्वैप का समर्थन करता है। 500+ टोकन के बचे हुए बैलेंस को तुरंत कनवर्ट करें।"
   },
   "howItWorks": {
-    "heading": "How It Works",
-    "subtitle": "Three simple steps. No delays, no friction.",
-    "step1": {
-      "title": "Input Details",
-      "description": "Select your trading pair and enter the recipient wallet address. No sign-up needed."
-    },
-    "step2": {
-      "title": "Send Deposit",
-      "description": "Transfer your funds to the secure, one-time generated deposit address."
-    },
-    "step3": {
-      "title": "Automatic Settlement",
-      "description": "Once your deposit is confirmed, coins are automatically sent to your wallet."
-    }
+    "heading": "कैसे काम करता है",
+    "subtitle": "तीन सरल चरण। कोई देरी नहीं, कोई बाधा नहीं।",
+    "step1": { "title": "विवरण दर्ज करें", "description": "अपना स्वैप जोड़ा चुनें और प्राप्तकर्ता का वॉलेट पता दर्ज करें। पंजीकरण की आवश्यकता नहीं। $0.30 से स्वैप।" },
+    "step2": { "title": "जमा भेजें", "description": "अपने फंड को स्वचालित रूप से उत्पन्न सुरक्षित जमा पते पर स्थानांतरित करें।" },
+    "step3": { "title": "स्वचालित निपटान", "description": "आपकी जमा राशि की पुष्टि होने के बाद, सिक्के स्वचालित रूप से आपके वॉलेट में भेज दिए जाते हैं।" }
   },
   "features": {
-    "heading": "Built for Speed. Engineered for Trust.",
-    "subtitle": "Every component is optimized for instant execution and zero friction.",
-    "speed": {
-      "title": "Sub-60s Settlement",
-      "description": "Automated liquidity rails execute swaps in under 60 seconds. No manual processing, no queues."
-    },
-    "fees": {
-      "title": "Zero Hidden Fees",
-      "description": "All costs are transparent in the displayed rate. What you see is what you get — guaranteed."
-    },
-    "noAccount": {
-      "title": "No Account Required",
-      "description": "Permissionless trading — start swapping immediately. No sign-ups, no personal data, no onboarding friction."
-    },
-    "assets": {
-      "title": "500+ Crypto Assets",
-      "description": "Swap Bitcoin, Ethereum, Solana, USDT, and hundreds more across all major blockchains."
-    },
-    "global": {
-      "title": "Global, Always-On",
-      "description": "Available worldwide 24/7/365. No geo-restrictions, no downtime, no maintenance windows."
-    },
-    "support": {
-      "title": "24/7 Support",
-      "description": "Dedicated support around the clock for any exchange-related questions or issues."
-    }
+    "heading": "गति के लिए निर्मित। विश्वास के लिए इंजीनियर्ड।",
+    "subtitle": "हर घटक तत्काल निष्पादन और शून्य बाधा के लिए अनुकूलित है।",
+    "speed": { "title": "60 सेकंड से कम में निपटान", "description": "स्वचालित तरलता रेल 60 सेकंड से कम में स्वैप निष्पादित करती हैं।" },
+    "fees": { "title": "शून्य छिपी फीस", "description": "सभी लागतें प्रदर्शित दर में पारदर्शी हैं।" },
+    "noAccount": { "title": "अकाउंट की जरूरत नहीं", "description": "बिना अनुमति ट्रेडिंग — तुरंत स्वैप शुरू करें। कोई पंजीकरण नहीं, कोई व्यक्तिगत डेटा नहीं।" },
+    "assets": { "title": "500+ क्रिप्टो एसेट्स", "description": "Bitcoin, Ethereum, Solana, USDT और सैकड़ों अन्य को सभी प्रमुख ब्लॉकचेन पर स्वैप करें।" },
+    "global": { "title": "वैश्विक, हमेशा सक्रिय", "description": "दुनिया भर में 24/7/365 उपलब्ध। कोई भौगोलिक प्रतिबंध नहीं।" },
+    "support": { "title": "24/7 सहायता", "description": "स्वैप से संबंधित किसी भी प्रश्न के लिए चौबीसों घंटे समर्पित सहायता।" }
   }
 }

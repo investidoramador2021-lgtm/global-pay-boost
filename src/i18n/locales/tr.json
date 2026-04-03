@@ -1,54 +1,37 @@
 {
   "nav": {
-    "howItWorks": "How It Works",
-    "features": "Features",
-    "swapPairs": "Swap Pairs",
+    "howItWorks": "Nasıl Çalışır",
+    "features": "Özellikler",
+    "swapPairs": "Takas Çiftleri",
     "blog": "Blog",
-    "faq": "FAQ",
-    "startSwap": "Start Swap"
+    "faq": "SSS",
+    "startSwap": "Takasa Başla"
+  },
+  "hero": {
+    "heading": "Güvenli Dijital Varlık Takası.",
+    "headingAccent": "Kayıt Gerektirmez. Minimum $0.30.",
+    "subtitle": "Hızlı, güvenli ve gizli. Cüzdandan cüzdana doğrudan takas $0.30'dan başlayan fiyatlarla.",
+    "trustNoAccount": "Hesap Gerekmez",
+    "trustNonCustodial": "Emanetsiz",
+    "trustSettlement": "Doğrudan Ödeme",
+    "dustTitle": "🧹 Cüzdanınızı Temizleyin",
+    "dustDescription": "Harcanamayan toz bakiyelerden bıktınız mı? Çoğu platformun minimumları yüksektir. MRC GlobalPay $0.30'dan başlayan mikro takasları destekler. 500'den fazla tokenin bakiyelerini anında dönüştürün."
   },
   "howItWorks": {
-    "heading": "How It Works",
-    "subtitle": "Three simple steps. No delays, no friction.",
-    "step1": {
-      "title": "Input Details",
-      "description": "Select your trading pair and enter the recipient wallet address. No sign-up needed."
-    },
-    "step2": {
-      "title": "Send Deposit",
-      "description": "Transfer your funds to the secure, one-time generated deposit address."
-    },
-    "step3": {
-      "title": "Automatic Settlement",
-      "description": "Once your deposit is confirmed, coins are automatically sent to your wallet."
-    }
+    "heading": "Nasıl Çalışır",
+    "subtitle": "Üç basit adım. Gecikme yok, sürtünme yok.",
+    "step1": { "title": "Detayları Girin", "description": "Takas çiftinizi seçin ve alıcı cüzdan adresini girin. Kayıt gerekmez. $0.30'dan takas." },
+    "step2": { "title": "Depozitoyu Gönderin", "description": "Fonlarınızı otomatik olarak oluşturulan güvenli depozito adresine aktarın." },
+    "step3": { "title": "Otomatik Ödeme", "description": "Depozitonuz onaylandıktan sonra coinler otomatik olarak cüzdanınıza gönderilir." }
   },
   "features": {
-    "heading": "Built for Speed. Engineered for Trust.",
-    "subtitle": "Every component is optimized for instant execution and zero friction.",
-    "speed": {
-      "title": "Sub-60s Settlement",
-      "description": "Automated liquidity rails execute swaps in under 60 seconds. No manual processing, no queues."
-    },
-    "fees": {
-      "title": "Zero Hidden Fees",
-      "description": "All costs are transparent in the displayed rate. What you see is what you get — guaranteed."
-    },
-    "noAccount": {
-      "title": "No Account Required",
-      "description": "Permissionless trading — start swapping immediately. No sign-ups, no personal data, no onboarding friction."
-    },
-    "assets": {
-      "title": "500+ Crypto Assets",
-      "description": "Swap Bitcoin, Ethereum, Solana, USDT, and hundreds more across all major blockchains."
-    },
-    "global": {
-      "title": "Global, Always-On",
-      "description": "Available worldwide 24/7/365. No geo-restrictions, no downtime, no maintenance windows."
-    },
-    "support": {
-      "title": "24/7 Support",
-      "description": "Dedicated support around the clock for any exchange-related questions or issues."
-    }
+    "heading": "Hız İçin İnşa Edildi. Güven İçin Tasarlandı.",
+    "subtitle": "Her bileşen anlık yürütme ve sıfır sürtünme için optimize edilmiştir.",
+    "speed": { "title": "60 Saniyeden Az Ödeme", "description": "Otomatik likidite rayları takasları 60 saniyeden kısa sürede gerçekleştirir." },
+    "fees": { "title": "Sıfır Gizli Ücret", "description": "Tüm maliyetler görüntülenen oranda şeffaftır." },
+    "noAccount": { "title": "Hesap Gerekmez", "description": "İzinsiz ticaret — hemen takas etmeye başlayın. Kayıt yok, kişisel veri yok." },
+    "assets": { "title": "500+ Kripto Varlık", "description": "Bitcoin, Ethereum, Solana, USDT ve yüzlerce daha fazlasını tüm büyük blokzincirlerde takas edin." },
+    "global": { "title": "Global, Her Zaman Aktif", "description": "Dünya çapında 7/24/365 kullanılabilir. Coğrafi kısıtlama yok." },
+    "support": { "title": "7/24 Destek", "description": "Takaslarla ilgili her türlü soru için 24 saat özel destek." }
   }
 }

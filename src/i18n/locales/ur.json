@@ -1,54 +1,37 @@
 {
   "nav": {
-    "howItWorks": "How It Works",
-    "features": "Features",
-    "swapPairs": "Swap Pairs",
-    "blog": "Blog",
-    "faq": "FAQ",
-    "startSwap": "Start Swap"
+    "howItWorks": "یہ کیسے کام کرتا ہے",
+    "features": "خصوصیات",
+    "swapPairs": "ایکسچینج جوڑے",
+    "blog": "بلاگ",
+    "faq": "عام سوالات",
+    "startSwap": "ایکسچینج شروع کریں"
+  },
+  "hero": {
+    "heading": "بغیر رجسٹریشن کرپٹو ایکسچینج۔",
+    "headingAccent": "کم سے کم ادائیگی $0.30۔",
+    "subtitle": "تیز، محفوظ اور نجی۔ بغیر رجسٹریشن براہ راست والیٹ سے والیٹ ایکسچینج $0.30 سے۔",
+    "trustNoAccount": "بغیر رجسٹریشن",
+    "trustNonCustodial": "غیر تحویلی",
+    "trustSettlement": "براہ راست تصفیہ",
+    "dustTitle": "🧹 اپنا والیٹ صاف کریں",
+    "dustDescription": "ناقابل خرچ بقایا سے تنگ آ گئے؟ زیادہ تر پلیٹ فارمز کم سے کم حد زیادہ رکھتے ہیں۔ MRC GlobalPay $0.30 سے مائیکرو ایکسچینج کی سہولت دیتا ہے۔ 500 سے زیادہ ٹوکنز کے بقایا فوری طور پر تبدیل کریں۔"
   },
   "howItWorks": {
-    "heading": "How It Works",
-    "subtitle": "Three simple steps. No delays, no friction.",
-    "step1": {
-      "title": "Input Details",
-      "description": "Select your trading pair and enter the recipient wallet address. No sign-up needed."
-    },
-    "step2": {
-      "title": "Send Deposit",
-      "description": "Transfer your funds to the secure, one-time generated deposit address."
-    },
-    "step3": {
-      "title": "Automatic Settlement",
-      "description": "Once your deposit is confirmed, coins are automatically sent to your wallet."
-    }
+    "heading": "یہ کیسے کام کرتا ہے",
+    "subtitle": "تین آسان مراحل۔ کوئی تاخیر نہیں، کوئی رکاوٹ نہیں۔",
+    "step1": { "title": "تفصیلات درج کریں", "description": "اپنا ایکسچینج جوڑا منتخب کریں اور وصول کنندہ کے والیٹ کا پتہ درج کریں۔ رجسٹریشن کی ضرورت نہیں۔ $0.30 سے ایکسچینج۔" },
+    "step2": { "title": "ڈپازٹ بھیجیں", "description": "اپنے فنڈز خود کار طریقے سے تیار کردہ محفوظ ڈپازٹ ایڈریس پر منتقل کریں۔" },
+    "step3": { "title": "خودکار تصفیہ", "description": "آپ کے ڈپازٹ کی تصدیق ہونے کے بعد، سکے خود بخود آپ کے والیٹ میں بھیج دیے جاتے ہیں۔" }
   },
   "features": {
-    "heading": "Built for Speed. Engineered for Trust.",
-    "subtitle": "Every component is optimized for instant execution and zero friction.",
-    "speed": {
-      "title": "Sub-60s Settlement",
-      "description": "Automated liquidity rails execute swaps in under 60 seconds. No manual processing, no queues."
-    },
-    "fees": {
-      "title": "Zero Hidden Fees",
-      "description": "All costs are transparent in the displayed rate. What you see is what you get — guaranteed."
-    },
-    "noAccount": {
-      "title": "No Account Required",
-      "description": "Permissionless trading — start swapping immediately. No sign-ups, no personal data, no onboarding friction."
-    },
-    "assets": {
-      "title": "500+ Crypto Assets",
-      "description": "Swap Bitcoin, Ethereum, Solana, USDT, and hundreds more across all major blockchains."
-    },
-    "global": {
-      "title": "Global, Always-On",
-      "description": "Available worldwide 24/7/365. No geo-restrictions, no downtime, no maintenance windows."
-    },
-    "support": {
-      "title": "24/7 Support",
-      "description": "Dedicated support around the clock for any exchange-related questions or issues."
-    }
+    "heading": "رفتار کے لیے بنایا گیا۔ اعتماد کے لیے ڈیزائن کیا گیا۔",
+    "subtitle": "ہر جزو فوری عملدرآمد اور صفر رکاوٹ کے لیے بہتر بنایا گیا ہے۔",
+    "speed": { "title": "60 سیکنڈ سے کم تصفیہ", "description": "خودکار لیکویڈیٹی ریلز 60 سیکنڈ سے کم میں ایکسچینج انجام دیتی ہیں۔" },
+    "fees": { "title": "صفر پوشیدہ فیس", "description": "تمام اخراجات ظاہر کردہ شرح میں شفاف ہیں۔ جو آپ دیکھتے ہیں وہی ملتا ہے۔" },
+    "noAccount": { "title": "اکاؤنٹ کی ضرورت نہیں", "description": "بغیر اجازت ٹریڈنگ — فوری طور پر ایکسچینج شروع کریں۔ کوئی رجسٹریشن نہیں، کوئی ذاتی ڈیٹا نہیں۔" },
+    "assets": { "title": "500+ کرپٹو اثاثے", "description": "Bitcoin, Ethereum, Solana, USDT اور سینکڑوں مزید تمام بڑے بلاکچینز پر ایکسچینج کریں۔" },
+    "global": { "title": "عالمی، ہمیشہ فعال", "description": "دنیا بھر میں 24/7/365 دستیاب۔ کوئی جغرافیائی پابندیاں نہیں۔" },
+    "support": { "title": "24/7 سپورٹ", "description": "ایکسچینج سے متعلق کسی بھی سوال کے لیے 24 گھنٹے وقف سپورٹ۔" }
   }
 }

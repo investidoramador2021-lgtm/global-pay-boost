@@ -1,54 +1,37 @@
 {
   "nav": {
-    "howItWorks": "How It Works",
-    "features": "Features",
-    "swapPairs": "Swap Pairs",
-    "blog": "Blog",
-    "faq": "FAQ",
-    "startSwap": "Start Swap"
+    "howItWorks": "نحوه کار",
+    "features": "ویژگی‌ها",
+    "swapPairs": "جفت‌های تبادل",
+    "blog": "بلاگ",
+    "faq": "سوالات متداول",
+    "startSwap": "شروع تبادل"
+  },
+  "hero": {
+    "heading": "تبادل رمزارز بدون احراز هویت.",
+    "headingAccent": "حداقل $0.30. سریع و امن.",
+    "subtitle": "سریع، امن و خصوصی. تبادل مستقیم کیف پول به کیف پول از $0.30. بدون نیاز به ثبت نام.",
+    "trustNoAccount": "بدون احراز هویت",
+    "trustNonCustodial": "غیر امانی",
+    "trustSettlement": "تسویه مستقیم",
+    "dustTitle": "🧹 کیف پول خود را تمیز کنید",
+    "dustDescription": "از گرد و غبار کریپتو خسته شده‌اید؟ اکثر پلتفرم‌ها حداقل بالایی دارند. MRC GlobalPay از میکرو تبادل از $0.30 پشتیبانی می‌کند. مانده‌های باقیمانده از بیش از 500 توکن را فوراً تبدیل کنید."
   },
   "howItWorks": {
-    "heading": "How It Works",
-    "subtitle": "Three simple steps. No delays, no friction.",
-    "step1": {
-      "title": "Input Details",
-      "description": "Select your trading pair and enter the recipient wallet address. No sign-up needed."
-    },
-    "step2": {
-      "title": "Send Deposit",
-      "description": "Transfer your funds to the secure, one-time generated deposit address."
-    },
-    "step3": {
-      "title": "Automatic Settlement",
-      "description": "Once your deposit is confirmed, coins are automatically sent to your wallet."
-    }
+    "heading": "نحوه کار",
+    "subtitle": "سه مرحله ساده. بدون تاخیر، بدون اصطکاک.",
+    "step1": { "title": "جزئیات را وارد کنید", "description": "جفت معاملاتی خود را انتخاب کنید و آدرس کیف پول گیرنده را وارد کنید. بدون ثبت نام. تبادل از $0.30." },
+    "step2": { "title": "واریز را ارسال کنید", "description": "وجوه خود را به آدرس واریز امن که به صورت خودکار ایجاد شده منتقل کنید." },
+    "step3": { "title": "تسویه خودکار", "description": "پس از تایید واریز شما، سکه‌ها به طور خودکار به کیف پول شما ارسال می‌شوند." }
   },
   "features": {
-    "heading": "Built for Speed. Engineered for Trust.",
-    "subtitle": "Every component is optimized for instant execution and zero friction.",
-    "speed": {
-      "title": "Sub-60s Settlement",
-      "description": "Automated liquidity rails execute swaps in under 60 seconds. No manual processing, no queues."
-    },
-    "fees": {
-      "title": "Zero Hidden Fees",
-      "description": "All costs are transparent in the displayed rate. What you see is what you get — guaranteed."
-    },
-    "noAccount": {
-      "title": "No Account Required",
-      "description": "Permissionless trading — start swapping immediately. No sign-ups, no personal data, no onboarding friction."
-    },
-    "assets": {
-      "title": "500+ Crypto Assets",
-      "description": "Swap Bitcoin, Ethereum, Solana, USDT, and hundreds more across all major blockchains."
-    },
-    "global": {
-      "title": "Global, Always-On",
-      "description": "Available worldwide 24/7/365. No geo-restrictions, no downtime, no maintenance windows."
-    },
-    "support": {
-      "title": "24/7 Support",
-      "description": "Dedicated support around the clock for any exchange-related questions or issues."
-    }
+    "heading": "ساخته شده برای سرعت. طراحی شده برای اعتماد.",
+    "subtitle": "هر مؤلفه برای اجرای فوری و اصطکاک صفر بهینه شده است.",
+    "speed": { "title": "تسویه کمتر از 60 ثانیه", "description": "ریل‌های نقدینگی خودکار تبادلات را در کمتر از 60 ثانیه اجرا می‌کنند." },
+    "fees": { "title": "صفر کارمزد پنهان", "description": "تمام هزینه‌ها در نرخ نمایش داده شده شفاف هستند." },
+    "noAccount": { "title": "بدون نیاز به حساب", "description": "معامله بدون مجوز — فوراً شروع به تبادل کنید. بدون ثبت نام، بدون اطلاعات شخصی." },
+    "assets": { "title": "500+ دارایی رمزارز", "description": "Bitcoin، Ethereum، Solana، USDT و صدها مورد دیگر را در تمام بلاکچین‌های اصلی تبادل کنید." },
+    "global": { "title": "جهانی، همیشه فعال", "description": "در سراسر جهان 24/7/365 در دسترس. بدون محدودیت جغرافیایی." },
+    "support": { "title": "پشتیبانی 24/7", "description": "پشتیبانی اختصاصی شبانه‌روزی برای هر سوالی در مورد تبادلات." }
   }
 }
