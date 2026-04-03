@@ -1,4 +1,4 @@
-const stablecoinSwaps = [
+const stablecoinBridges = [
   { label: "USDT to TRX", href: "/swap/usdt-to-trx", title: "Swap USDT to TRX instantly" },
   { label: "USDT to SOL", href: "/swap/usdt-to-sol", title: "Swap USDT to SOL instantly" },
   { label: "USDT to Solana", href: "/swap/usdt-to-solana", title: "Swap USDT to Solana instantly" },
@@ -10,20 +10,17 @@ const stablecoinSwaps = [
   { label: "PYUSD to USDT", href: "/swap/pyusd-to-usdt", title: "Swap PayPal USD to USDT instantly" },
   { label: "USD to XMR", href: "/swap/usd-to-xmr", title: "Convert USD to Monero privately" },
   { label: "SOL to IDR", href: "/swap/solana-to-idr", title: "Convert Solana to Indonesian Rupiah" },
-];
-
-const majorPairs = [
-  { label: "ETH to SOL", href: "/swap/eth-to-sol", title: "Swap Ethereum to Solana instantly" },
-  { label: "BTC to SOL", href: "/swap/btc-to-sol-instant", title: "Swap Bitcoin to Solana instantly" },
-  { label: "XMR to ETH", href: "/swap/xmr-to-eth", title: "Swap Monero to Ethereum instantly" },
-  { label: "BNB Swap", href: "/swap/bnb", title: "Swap BNB to any cryptocurrency instantly" },
-  { label: "BTC to USDC", href: "/swap/btc-to-usdc", title: "Swap Bitcoin to USDC instantly" },
   { label: "ETH to SOL Bridge", href: "/bridge/eth-to-sol", title: "Bridge Ethereum to Solana instantly" },
   { label: "SOL to BNB Bridge", href: "/bridge/solana-to-bnb", title: "Bridge Solana to BNB Chain instantly" },
   { label: "PulseChain Bridge", href: "/bridge/pulsechain", title: "Bridge assets to PulseChain instantly" },
 ];
 
-const memeAndAltcoins = [
+const popularCryptoSwaps = [
+  { label: "ETH to SOL", href: "/swap/eth-to-sol", title: "Swap Ethereum to Solana instantly" },
+  { label: "BTC to SOL", href: "/swap/btc-to-sol-instant", title: "Swap Bitcoin to Solana instantly" },
+  { label: "XMR to ETH", href: "/swap/xmr-to-eth", title: "Swap Monero to Ethereum instantly" },
+  { label: "BNB Swap", href: "/swap/bnb", title: "Swap BNB to any cryptocurrency instantly" },
+  { label: "BTC to USDC", href: "/swap/btc-to-usdc", title: "Swap Bitcoin to USDC instantly" },
   { label: "SHIB to USDT", href: "/swap/shiba-to-usdt", title: "Swap Shiba Inu to USDT instantly" },
   { label: "VINU Swap", href: "/swap/vinu", title: "Swap Vita Inu instantly" },
   { label: "HYPE to USDT", href: "/swap/hype-to-usdt", title: "Swap HYPE to USDT instantly" },
@@ -33,6 +30,7 @@ const memeAndAltcoins = [
   { label: "Trade Alpaca", href: "/trade/alpaca", title: "Trade Alpaca Finance token instantly" },
   { label: "BNB Meme Coins", href: "/trade/bnb-meme-coins", title: "Trade BNB meme coins instantly" },
 ];
+
 
 const buyLinks = [
   { label: "Buy Bitcoin", href: "/buy/bitcoin-no-kyc", title: "Buy Bitcoin without KYC verification" },
@@ -153,7 +151,7 @@ const SiteFooter = () => {
             </p>
           </div>
 
-          <FooterLinkList title="Resources & Guides" links={resourceLinks} />
+          <FooterLinkList title="Crypto Guides" links={resourceLinks} />
           <FooterLinkList title="Expertise" links={expertiseLinks} />
 
           <div>
@@ -187,10 +185,9 @@ const SiteFooter = () => {
           <h3 className="mb-6 text-center font-display text-sm font-semibold uppercase tracking-wider text-foreground/70 sm:text-left">
             Swap Pairs Directory
           </h3>
-          <div className="grid gap-8 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5">
-            <FooterLinkList title="Stablecoin Swaps" links={stablecoinSwaps} />
-            <FooterLinkList title="Major Pairs & Bridges" links={majorPairs} />
-            <FooterLinkList title="Meme & Altcoins" links={memeAndAltcoins} />
+          <div className="grid gap-8 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
+            <FooterLinkList title="Popular Crypto Swaps" links={popularCryptoSwaps} />
+            <FooterLinkList title="Stablecoin Bridges" links={stablecoinBridges} />
             <FooterLinkList title="Buy Crypto" links={buyLinks} />
             <FooterLinkList title="Tools & Alternatives" links={toolsAndAlternatives} />
           </div>
