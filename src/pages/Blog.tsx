@@ -72,7 +72,7 @@ const Blog = () => {
                 A meta aggregator scans dozens of decentralized exchanges (DEXs), centralized platforms, and liquidity pools simultaneously to find you the best available rate for any token pair. Unlike a single DEX aggregator that only routes through one protocol, a crypto meta aggregator like MRC GlobalPay compares quotes from multiple DEX aggregators and instant-swap services at once — ensuring you always get the lowest slippage and tightest spread.
               </p>
               <p className="font-body text-sm leading-relaxed text-muted-foreground sm:text-base">
-                Whether you're converting dust-sized balances starting at $0.30 or executing larger swaps across 500+ cryptocurrencies, our meta aggregator engine handles the complexity so you don't have to. No registration, no KYC, no minimum limits — just the best rate delivered in under 60 seconds. Browse our guides below to learn advanced swap strategies, security tips, and how to maximize value with a DEX aggregator workflow.
+                Whether you're converting dust-sized balances starting at $0.30 or executing larger swaps across 500+ cryptocurrencies, our meta aggregator engine handles the complexity so you don't have to. No registration, no minimum limits — just the best rate delivered in under 60 seconds. Browse our guides below to learn advanced swap strategies, security tips, and how to maximize value with a DEX aggregator workflow.
               </p>
             </div>
           </div>

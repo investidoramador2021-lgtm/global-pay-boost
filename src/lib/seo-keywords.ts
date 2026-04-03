@@ -93,7 +93,7 @@ export const seoKeywords = [
   { keyword: "buy celo coin", intentType: "Commercial", targetUrl: "/buy/celo", primaryH1: "Buy CELO Coin Instantly", benefitHook: "Fast entry into the Celo network." },
   { keyword: "bridge solana to bnb", intentType: "Commercial", targetUrl: "/bridge/solana-to-bnb", primaryH1: "Bridge Solana (SOL) to BNB Chain", benefitHook: "Cross-chain liquidity between SOL and BSC." },
   { keyword: "best erc20 wallet", intentType: "Informational", targetUrl: "/reviews/best-erc20-wallet", primaryH1: "Best ERC20 Wallets for 2026", benefitHook: "Manage all Ethereum-based assets easily." },
-  { keyword: "best place to buy solana", intentType: "Commercial", targetUrl: "/guides/best-place-to-buy-solana", primaryH1: "Best Place to Buy Solana (SOL)", benefitHook: "Why our no-KYC platform ranks #1." },
+  { keyword: "best place to buy solana", intentType: "Commercial", targetUrl: "/guides/best-place-to-buy-solana", primaryH1: "Best Place to Buy Solana (SOL)", benefitHook: "Why our registration-free platform ranks #1." },
   { keyword: "alpaca crypto", intentType: "Commercial", targetUrl: "/trade/alpaca", primaryH1: "Alpaca Crypto Swap & Finance", benefitHook: "Trade Alpaca assets with instant speed." },
   { keyword: "adaswap dex", intentType: "Commercial", targetUrl: "/alternatives/adaswap", primaryH1: "Alternative to AdaSwap DEX", benefitHook: "Faster Cardano-based ecosystem swaps." },
   { keyword: "30 trx to usdt", intentType: "Commercial", targetUrl: "/swap/30-trx-to-usdt", primaryH1: "Convert 30 TRX to USDT", benefitHook: "Micro-swaps starting at just $0.30." },

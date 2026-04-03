@@ -93,7 +93,7 @@ const PrivacyPolicy = () => (
                 <li><strong className="text-foreground">IP address</strong> — Collected for fraud prevention and compliance purposes. Not linked to wallet addresses or personal identity.</li>
               </ul>
               <p>
-                We do <strong className="text-foreground">not</strong> require registration, email addresses, phone numbers, or any form of personal identification (KYC) to use the Service.
+                We do <strong className="text-foreground">not</strong> require registration, email addresses, phone numbers, or any form of personal identification to use the Service.
               </p>
             </div>
           </section>

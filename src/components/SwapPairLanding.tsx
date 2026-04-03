@@ -262,8 +262,8 @@ const SwapPairLanding = ({
                 </div>
                 <div className="rounded-xl border border-primary/20 bg-card p-4 text-center shadow-card sm:p-5">
                   <Shield className="mx-auto h-5 w-5 text-primary sm:h-6 sm:w-6" />
-                  <p className="mt-1.5 font-display text-xs font-bold text-foreground sm:mt-2 sm:text-sm">KYC</p>
-                  <p className="font-display text-base font-extrabold text-primary sm:text-lg">None</p>
+                  <p className="mt-1.5 font-display text-xs font-bold text-foreground sm:mt-2 sm:text-sm">Registration</p>
+                  <p className="font-display text-base font-extrabold text-primary sm:text-lg">None Required</p>
                 </div>
               </div>
             </div>

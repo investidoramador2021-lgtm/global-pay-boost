@@ -111,7 +111,7 @@ const expertiseLinks = [
 ];
 
 const complianceText =
-  "Registered Money Services Business (MSB) — Canada. Adhering to 2026 AML and FINTRAC standards.";
+  "Registered Money Services Business (MSB) — Canada. Adhering to 2026 AML and FINTRAC standards. MRC GlobalPay provides a registration-free service for most users. To maintain safety and compliance with global AML standards, our automated risk-prevention system may occasionally request standard verification for transactions flagged as high-risk.";
 
 type FooterLink = { label: string; href: string; title: string };
 
