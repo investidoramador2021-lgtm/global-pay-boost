@@ -90,14 +90,15 @@ const GetWidget = () => {
                     </button>
                   ))}
                 </div>
-                <div className="rounded-2xl border border-border bg-muted/30 p-4" style={{ width: w + 32 }}>
+                <div className="w-full max-w-full overflow-hidden rounded-2xl border border-border bg-muted/30 p-2 sm:p-4" style={{ maxWidth: w + 32 }}>
                   <iframe
                     src="/embed/widget"
-                    width={w}
+                    width="100%"
                     height={h}
-                    style={{ border: "none", borderRadius: 16, overflow: "hidden" }}
+                    style={{ border: "none", borderRadius: 16, overflow: "hidden", maxWidth: w }}
                     title="Widget Preview"
                     loading="lazy"
+                    className="mx-auto block"
                   />
                 </div>
               </div>
