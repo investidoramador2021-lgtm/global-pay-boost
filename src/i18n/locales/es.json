@@ -1,0 +1,54 @@
+{
+  "nav": {
+    "howItWorks": "Cómo Funciona",
+    "features": "Características",
+    "swapPairs": "Pares de Intercambio",
+    "blog": "Blog",
+    "faq": "Preguntas Frecuentes",
+    "startSwap": "Iniciar Intercambio"
+  },
+  "howItWorks": {
+    "heading": "Cómo Funciona",
+    "subtitle": "Tres pasos sencillos. Sin demoras, sin fricciones.",
+    "step1": {
+      "title": "Ingresa los Detalles",
+      "description": "Selecciona tu par de intercambio e ingresa la dirección de la billetera del destinatario. Sin necesidad de registro."
+    },
+    "step2": {
+      "title": "Envía el Depósito",
+      "description": "Transfiere tus fondos a la dirección de depósito segura generada automáticamente."
+    },
+    "step3": {
+      "title": "Liquidación Automática",
+      "description": "Una vez confirmado tu depósito, las monedas se envían automáticamente a tu billetera."
+    }
+  },
+  "features": {
+    "heading": "Diseñado para la Velocidad. Construido para la Confianza.",
+    "subtitle": "Cada componente está optimizado para ejecución instantánea y cero fricción.",
+    "speed": {
+      "title": "Liquidación en menos de 60s",
+      "description": "Los rieles de liquidez automatizados ejecutan intercambios en menos de 60 segundos. Sin procesamiento manual, sin colas."
+    },
+    "fees": {
+      "title": "Cero Comisiones Ocultas",
+      "description": "Todos los costos son transparentes en la tasa mostrada. Lo que ves es lo que obtienes — garantizado."
+    },
+    "noAccount": {
+      "title": "Sin Cuenta Necesaria",
+      "description": "Trading sin permisos — comienza a intercambiar de inmediato. Sin registros, sin datos personales."
+    },
+    "assets": {
+      "title": "500+ Criptoactivos",
+      "description": "Intercambia Bitcoin, Ethereum, Solana, USDT y cientos más en todas las principales blockchains."
+    },
+    "global": {
+      "title": "Global, Siempre Activo",
+      "description": "Disponible en todo el mundo 24/7/365. Sin restricciones geográficas, sin tiempo de inactividad."
+    },
+    "support": {
+      "title": "Soporte 24/7",
+      "description": "Soporte dedicado las 24 horas para cualquier pregunta o problema relacionado con intercambios."
+    }
+  }
+}

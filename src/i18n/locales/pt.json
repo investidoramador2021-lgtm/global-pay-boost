@@ -1,0 +1,54 @@
+{
+  "nav": {
+    "howItWorks": "Como Funciona",
+    "features": "Recursos",
+    "swapPairs": "Pares de Troca",
+    "blog": "Blog",
+    "faq": "Perguntas Frequentes",
+    "startSwap": "Iniciar Troca"
+  },
+  "howItWorks": {
+    "heading": "Como Funciona",
+    "subtitle": "Três passos simples. Sem atrasos, sem fricção.",
+    "step1": {
+      "title": "Insira os Detalhes",
+      "description": "Selecione o par de negociação e insira o endereço da carteira do destinatário. Sem necessidade de cadastro."
+    },
+    "step2": {
+      "title": "Envie o Depósito",
+      "description": "Transfira seus fundos para o endereço de depósito seguro gerado automaticamente."
+    },
+    "step3": {
+      "title": "Liquidação Automática",
+      "description": "Assim que seu depósito for confirmado, as moedas são enviadas automaticamente para sua carteira."
+    }
+  },
+  "features": {
+    "heading": "Construído para Velocidade. Projetado para Confiança.",
+    "subtitle": "Cada componente é otimizado para execução instantânea e zero fricção.",
+    "speed": {
+      "title": "Liquidação em menos de 60s",
+      "description": "Trilhos de liquidez automatizados executam trocas em menos de 60 segundos. Sem processamento manual, sem filas."
+    },
+    "fees": {
+      "title": "Zero Taxas Ocultas",
+      "description": "Todos os custos são transparentes na taxa exibida. O que você vê é o que você recebe — garantido."
+    },
+    "noAccount": {
+      "title": "Sem Necessidade de Conta",
+      "description": "Negociação sem permissão — comece a trocar imediatamente. Sem cadastros, sem dados pessoais."
+    },
+    "assets": {
+      "title": "500+ Criptoativos",
+      "description": "Troque Bitcoin, Ethereum, Solana, USDT e centenas mais em todas as principais blockchains."
+    },
+    "global": {
+      "title": "Global, Sempre Ativo",
+      "description": "Disponível mundialmente 24/7/365. Sem restrições geográficas, sem tempo de inatividade."
+    },
+    "support": {
+      "title": "Suporte 24/7",
+      "description": "Suporte dedicado 24 horas para quaisquer dúvidas ou problemas relacionados a trocas."
+    }
+  }
+}
