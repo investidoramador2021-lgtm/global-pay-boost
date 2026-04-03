@@ -70,7 +70,7 @@ const BlogPostPage = () => {
     );
   }
 
-  if (!post) return <Navigate to="/blog" replace />;
+  if (!post) return <Navigate to={lp("/blog")} replace />;
 
   const jsonLd = {
     "@context": "https://schema.org",
