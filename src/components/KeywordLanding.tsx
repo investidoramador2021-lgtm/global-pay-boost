@@ -55,8 +55,8 @@ const KeywordLanding = ({ data }: Props) => {
   const related = getRelatedKeywords(data);
   const canonicalPath = canonicalUrl || targetUrl;
   const canonical = `https://mrcglobalpay.com${lp(canonicalPath)}`;
-  const truncatedKw = keyword.length > 35 ? keyword.slice(0, 35).trim() : keyword;
-  const title = `${truncatedKw} | $0.30 Min | MRC GlobalPay`;
+  const truncatedKw = keyword.length > 30 ? keyword.slice(0, 30).trim() : keyword;
+  const title = `${truncatedKw} | MRC GlobalPay`;
   const description = `${benefitHook} Swap from $0.30 with no account. 500+ tokens on MRC GlobalPay.`;
 
   const faqs = [
