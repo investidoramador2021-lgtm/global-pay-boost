@@ -2,18 +2,21 @@ import { useState } from "react";
 import { Menu, X, Zap, Sun, Moon } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { useTheme } from "@/hooks/use-theme";
-
-const navLinks = [
-  { label: "How It Works", href: "/#how-it-works" },
-  { label: "Features", href: "/#features" },
-  { label: "Swap Pairs", href: "/#swap-pairs" },
-  { label: "Blog", href: "/blog" },
-  { label: "FAQ", href: "/#faq" },
-];
+import { useTranslation } from "react-i18next";
+import LanguageSwitcher from "@/components/LanguageSwitcher";
 
 const SiteHeader = () => {
   const [mobileOpen, setMobileOpen] = useState(false);
   const { theme, toggleTheme } = useTheme();
+  const { t } = useTranslation();
+
+  const navLinks = [
+    { label: t("nav.howItWorks"), href: "/#how-it-works" },
+    { label: t("nav.features"), href: "/#features" },
+    { label: t("nav.swapPairs"), href: "/#swap-pairs" },
+    { label: t("nav.blog"), href: "/blog" },
+    { label: t("nav.faq"), href: "/#faq" },
+  ];
 
   return (
     <header className="sticky top-0 z-50 border-b border-border bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/80">
@@ -35,6 +38,8 @@ const SiteHeader = () => {
         </nav>
 
         <div className="flex items-center gap-2">
+          <LanguageSwitcher />
+
           <button
             onClick={toggleTheme}
             className="flex h-9 w-9 items-center justify-center rounded-lg border border-border text-muted-foreground transition-colors hover:bg-accent hover:text-foreground"
@@ -47,7 +52,7 @@ const SiteHeader = () => {
             <Button className="shadow-neon" size="sm" asChild>
               <a href="/#exchange">
                 <Zap className="mr-1 h-4 w-4" />
-                Start Swap
+                {t("nav.startSwap")}
               </a>
             </Button>
           </div>
@@ -77,7 +82,7 @@ const SiteHeader = () => {
           <Button className="mt-2 w-full shadow-neon" size="sm" asChild>
             <a href="/#exchange" onClick={() => setMobileOpen(false)}>
               <Zap className="mr-1 h-4 w-4" />
-              Start Swap
+              {t("nav.startSwap")}
             </a>
           </Button>
         </div>
