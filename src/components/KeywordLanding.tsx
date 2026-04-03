@@ -19,6 +19,7 @@ import SiteHeader from "@/components/SiteHeader";
 import SiteFooter from "@/components/SiteFooter";
 import type { SeoKeyword } from "@/lib/seo-keywords";
 import { getRelatedKeywords } from "@/lib/seo-keywords";
+import TableOfContents from "@/components/blog/TableOfContents";
 
 interface Props {
   data: SeoKeyword;
@@ -159,13 +160,25 @@ const KeywordLanding = ({ data }: Props) => {
                 Start Swap Now
               </a>
             </Button>
+
+            {/* Table of Contents */}
+            <div className="mx-auto mt-10 max-w-xl text-left">
+              <TableOfContents
+                items={[
+                  { id: "platform-comparison", text: "Platform Comparison", level: 2 },
+                  { id: `why-choose-mrc-globalpay-for-${keyword.toLowerCase().replace(/\s+/g, "-")}`, text: `Why Choose MRC GlobalPay for ${keyword}?`, level: 2 },
+                  { id: "frequently-asked-questions", text: "Frequently Asked Questions", level: 2 },
+                  ...(related.length > 0 ? [{ id: "related-swaps", text: "Related Swaps", level: 2 }] : []),
+                ]}
+              />
+            </div>
           </div>
         </section>
 
         {/* Platform Comparison */}
         <section className="py-12 sm:py-20">
           <div className="container mx-auto max-w-4xl px-4">
-            <h2 className="mb-8 text-center font-display text-2xl font-bold text-foreground">
+            <h2 id="platform-comparison" className="mb-8 scroll-mt-24 text-center font-display text-2xl font-bold text-foreground">
               Platform Comparison
             </h2>
             <div className="overflow-hidden rounded-xl border border-border">
@@ -194,7 +207,7 @@ const KeywordLanding = ({ data }: Props) => {
         {/* Content Section */}
         <section className="border-t border-border bg-muted/20 py-12 sm:py-20">
           <div className="container mx-auto max-w-3xl px-4">
-            <h2 className="mb-6 font-display text-2xl font-bold text-foreground">
+            <h2 id={`why-choose-mrc-globalpay-for-${keyword.toLowerCase().replace(/\s+/g, "-")}`} className="mb-6 scroll-mt-24 font-display text-2xl font-bold text-foreground">
               Why Choose MRC GlobalPay for {keyword}?
             </h2>
             <div className="space-y-4 font-body leading-relaxed text-muted-foreground">
@@ -214,7 +227,7 @@ const KeywordLanding = ({ data }: Props) => {
         {/* FAQ */}
         <section className="py-12 sm:py-20">
           <div className="container mx-auto max-w-3xl px-4">
-            <h2 className="mb-8 font-display text-2xl font-bold text-foreground">
+            <h2 id="frequently-asked-questions" className="mb-8 scroll-mt-24 font-display text-2xl font-bold text-foreground">
               Frequently Asked Questions
             </h2>
             <Accordion type="single" collapsible className="space-y-3">
@@ -240,7 +253,7 @@ const KeywordLanding = ({ data }: Props) => {
         {related.length > 0 && (
           <section className="border-t border-border bg-muted/20 py-12 sm:py-16">
             <div className="container mx-auto max-w-4xl px-4">
-              <h2 className="mb-6 font-display text-xl font-bold text-foreground">
+              <h2 id="related-swaps" className="mb-6 scroll-mt-24 font-display text-xl font-bold text-foreground">
                 Related Swaps
               </h2>
               <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-3">

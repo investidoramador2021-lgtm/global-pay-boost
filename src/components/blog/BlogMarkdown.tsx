@@ -1,5 +1,6 @@
 import { Link } from "react-router-dom";
 import ReactMarkdown from "react-markdown";
+import { slugify } from "./TableOfContents";
 
 interface BlogMarkdownProps {
   content: string;
@@ -37,12 +38,24 @@ const BlogMarkdown = ({ content }: BlogMarkdownProps) => {
               </a>
             );
           },
-          h2: ({ children }) => (
-            <h2 className="mb-4 mt-12 font-display text-2xl font-bold leading-tight text-foreground sm:text-3xl">{children}</h2>
-          ),
-          h3: ({ children }) => (
-            <h3 className="mb-3 mt-8 font-display text-xl font-semibold leading-tight text-foreground sm:text-2xl">{children}</h3>
-          ),
+          h2: ({ children }) => {
+            const text = typeof children === "string" ? children : extractText(children);
+            const id = slugify(text);
+            return (
+              <h2 id={id} className="mb-4 mt-12 scroll-mt-24 font-display text-2xl font-bold leading-tight text-foreground sm:text-3xl">
+                {children}
+              </h2>
+            );
+          },
+          h3: ({ children }) => {
+            const text = typeof children === "string" ? children : extractText(children);
+            const id = slugify(text);
+            return (
+              <h3 id={id} className="mb-3 mt-8 scroll-mt-24 font-display text-xl font-semibold leading-tight text-foreground sm:text-2xl">
+                {children}
+              </h3>
+            );
+          },
           p: ({ children }) => <p className="text-base leading-8 text-muted-foreground">{children}</p>,
           ul: ({ children }) => <ul className="ml-6 list-disc space-y-3 text-muted-foreground">{children}</ul>,
           ol: ({ children }) => <ol className="ml-6 list-decimal space-y-3 text-muted-foreground">{children}</ol>,
@@ -65,5 +78,13 @@ const BlogMarkdown = ({ content }: BlogMarkdownProps) => {
     </div>
   );
 };
+
+/** Recursively extract text from React children */
+function extractText(children: any): string {
+  if (typeof children === "string") return children;
+  if (Array.isArray(children)) return children.map(extractText).join("");
+  if (children?.props?.children) return extractText(children.props.children);
+  return "";
+}
 
 export default BlogMarkdown;
