@@ -12,15 +12,20 @@ const stablecoinSwaps = [
   { label: "SOL to IDR", href: "/swap/solana-to-idr", title: "Convert Solana to Indonesian Rupiah" },
 ];
 
-const majorPairs = [
+const popularCryptoSwaps = [
   { label: "ETH to SOL", href: "/swap/eth-to-sol", title: "Swap Ethereum to Solana instantly" },
   { label: "BTC to SOL", href: "/swap/btc-to-sol-instant", title: "Swap Bitcoin to Solana instantly" },
   { label: "XMR to ETH", href: "/swap/xmr-to-eth", title: "Swap Monero to Ethereum instantly" },
   { label: "BNB Swap", href: "/swap/bnb", title: "Swap BNB to any cryptocurrency instantly" },
   { label: "BTC to USDC", href: "/swap/btc-to-usdc", title: "Swap Bitcoin to USDC instantly" },
-  { label: "ETH to SOL Bridge", href: "/bridge/eth-to-sol", title: "Bridge Ethereum to Solana instantly" },
-  { label: "SOL to BNB Bridge", href: "/bridge/solana-to-bnb", title: "Bridge Solana to BNB Chain instantly" },
-  { label: "PulseChain Bridge", href: "/bridge/pulsechain", title: "Bridge assets to PulseChain instantly" },
+  { label: "SHIB to USDT", href: "/swap/shiba-to-usdt", title: "Swap Shiba Inu to USDT instantly" },
+  { label: "VINU Swap", href: "/swap/vinu", title: "Swap Vita Inu instantly" },
+  { label: "HYPE to USDT", href: "/swap/hype-to-usdt", title: "Swap HYPE to USDT instantly" },
+  { label: "BERA to USDT", href: "/swap/bera-to-usdt", title: "Swap Berachain to USDT instantly" },
+  { label: "Monad to USDT", href: "/swap/monad-to-usdt", title: "Swap Monad to USDT instantly" },
+  { label: "Trade Trump/SOL", href: "/trade/trump-sol", title: "Trade TRUMP token on Solana" },
+  { label: "Trade Alpaca", href: "/trade/alpaca", title: "Trade Alpaca Finance token instantly" },
+  { label: "BNB Meme Coins", href: "/trade/bnb-meme-coins", title: "Trade BNB meme coins instantly" },
 ];
 
 const memeAndAltcoins = [
