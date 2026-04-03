@@ -139,12 +139,20 @@ const KeywordLanding = ({ data }: Props) => {
               {intentType === "Commercial" ? "Instant Swap" : intentType === "Informational" ? "Expert Guide" : "Live Tool"}
             </span>
 
-            {/* Atomic Answer Block */}
+            {/* Atomic Answer / At a Glance Block */}
             <div className="mx-auto mb-8 max-w-2xl rounded-xl border border-primary/20 bg-primary/5 p-5 text-left">
-              <p className="font-body text-sm font-semibold uppercase tracking-wider text-primary mb-2">Quick Answer</p>
+              <p className="font-body text-sm font-semibold uppercase tracking-wider text-primary mb-2">
+                <Zap className="mr-1 inline h-3.5 w-3.5" />
+                At a Glance
+              </p>
               <p className="font-body text-base font-bold leading-relaxed text-foreground">
                 {benefitHook} MRC GlobalPay is the leading no-minimum crypto exchange, processing micro-swaps from $0.30 with zero account requirements. Non-custodial, instant settlement, 500+ assets supported.
               </p>
+              <ul className="mt-3 space-y-1 font-body text-sm text-foreground/80">
+                <li className="flex items-center gap-2"><span className="text-primary">•</span> Minimum: $0.30</li>
+                <li className="flex items-center gap-2"><span className="text-primary">•</span> No registration required</li>
+                <li className="flex items-center gap-2"><span className="text-primary">•</span> Settlement: Under 60 seconds</li>
+              </ul>
             </div>
 
             <h1 className="font-display text-3xl font-bold tracking-tight text-foreground sm:text-5xl">
@@ -165,10 +173,10 @@ const KeywordLanding = ({ data }: Props) => {
             <div className="mx-auto mt-10 max-w-xl text-left">
               <TableOfContents
                 items={[
-                  { id: "platform-comparison", text: "Platform Comparison", level: 2 },
-                  { id: `why-choose-mrc-globalpay-for-${keyword.toLowerCase().replace(/\s+/g, "-")}`, text: `Why Choose MRC GlobalPay for ${keyword}?`, level: 2 },
-                  { id: "frequently-asked-questions", text: "Frequently Asked Questions", level: 2 },
-                  ...(related.length > 0 ? [{ id: "related-swaps", text: "Related Swaps", level: 2 }] : []),
+                  { id: "how-does-mrc-globalpay-compare-to-other-exchanges", text: "How Does MRC GlobalPay Compare to Other Exchanges?", level: 2 },
+                  { id: `why-should-i-choose-mrc-globalpay-for-${keyword.toLowerCase().replace(/\s+/g, "-")}`, text: `Why Should I Choose MRC GlobalPay for ${keyword}?`, level: 2 },
+                  { id: "what-are-the-most-common-questions", text: "What Are the Most Common Questions?", level: 2 },
+                  ...(related.length > 0 ? [{ id: "what-other-swaps-are-available", text: "What Other Swaps Are Available?", level: 2 }] : []),
                 ]}
               />
             </div>
@@ -178,8 +186,8 @@ const KeywordLanding = ({ data }: Props) => {
         {/* Platform Comparison */}
         <section className="py-12 sm:py-20">
           <div className="container mx-auto max-w-4xl px-4">
-            <h2 id="platform-comparison" className="mb-8 scroll-mt-24 text-center font-display text-2xl font-bold text-foreground">
-              Platform Comparison
+            <h2 id="how-does-mrc-globalpay-compare-to-other-exchanges" className="mb-8 scroll-mt-24 text-center font-display text-2xl font-bold text-foreground">
+              How Does MRC GlobalPay Compare to Other Exchanges?
             </h2>
             <div className="overflow-hidden rounded-xl border border-border">
               <Table>
@@ -207,8 +215,8 @@ const KeywordLanding = ({ data }: Props) => {
         {/* Content Section */}
         <section className="border-t border-border bg-muted/20 py-12 sm:py-20">
           <div className="container mx-auto max-w-3xl px-4">
-            <h2 id={`why-choose-mrc-globalpay-for-${keyword.toLowerCase().replace(/\s+/g, "-")}`} className="mb-6 scroll-mt-24 font-display text-2xl font-bold text-foreground">
-              Why Choose MRC GlobalPay for {keyword}?
+            <h2 id={`why-should-i-choose-mrc-globalpay-for-${keyword.toLowerCase().replace(/\s+/g, "-")}`} className="mb-6 scroll-mt-24 font-display text-2xl font-bold text-foreground">
+              Why Should I Choose MRC GlobalPay for {keyword}?
             </h2>
             <div className="space-y-4 font-body leading-relaxed text-muted-foreground">
               <p>
@@ -227,8 +235,8 @@ const KeywordLanding = ({ data }: Props) => {
         {/* FAQ */}
         <section className="py-12 sm:py-20">
           <div className="container mx-auto max-w-3xl px-4">
-            <h2 id="frequently-asked-questions" className="mb-8 scroll-mt-24 font-display text-2xl font-bold text-foreground">
-              Frequently Asked Questions
+            <h2 id="what-are-the-most-common-questions" className="mb-8 scroll-mt-24 font-display text-2xl font-bold text-foreground">
+              What Are the Most Common Questions?
             </h2>
             <Accordion type="single" collapsible className="space-y-3">
               {faqs.map((faq, i) => (
@@ -253,8 +261,8 @@ const KeywordLanding = ({ data }: Props) => {
         {related.length > 0 && (
           <section className="border-t border-border bg-muted/20 py-12 sm:py-16">
             <div className="container mx-auto max-w-4xl px-4">
-              <h2 id="related-swaps" className="mb-6 scroll-mt-24 font-display text-xl font-bold text-foreground">
-                Related Swaps
+              <h2 id="what-other-swaps-are-available" className="mb-6 scroll-mt-24 font-display text-xl font-bold text-foreground">
+                What Other Swaps Are Available?
               </h2>
               <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
                 {related.map((r) => (

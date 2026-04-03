@@ -1,11 +1,11 @@
 import { useParams, Link, Navigate, useLocation } from "react-router-dom";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useMemo } from "react";
 import { Helmet } from "react-helmet-async";
-import { Calendar, Clock, ArrowLeft, ArrowRight } from "lucide-react";
+import { Calendar, Clock, ArrowLeft, ArrowRight, Zap } from "lucide-react";
 import SiteHeader from "@/components/SiteHeader";
 import SiteFooter from "@/components/SiteFooter";
 import BlogMarkdown from "@/components/blog/BlogMarkdown";
-import TableOfContents from "@/components/blog/TableOfContents";
+import TableOfContents, { extractHeadings } from "@/components/blog/TableOfContents";
 import { fetchPostBySlug, fetchRelatedPosts, type BlogPost } from "@/lib/blog-data";
 
 const BlogPostPage = () => {
@@ -28,6 +28,22 @@ const BlogPostPage = () => {
       setLoading(false);
     });
   }, [slug]);
+
+  // Extract H2 headings as FAQ items for FAQPage schema (must be before early returns)
+  const faqItems = useMemo(() => {
+    if (!post) return [];
+    const headings = extractHeadings(post.content);
+    return headings
+      .filter((h) => h.level === 2 && h.text.includes("?"))
+      .map((h) => {
+        const regex = new RegExp(`## ${h.text.replace(/[.*+?^${}()|[\]\\]/g, "\\$&")}\\n+([\\s\\S]*?)(?=\\n## |$)`);
+        const match = post.content.match(regex);
+        const answer = match
+          ? match[1].replace(/###.*/g, "").replace(/\n+/g, " ").replace(/\[([^\]]+)\]\([^)]+\)/g, "$1").replace(/\*\*/g, "").trim().slice(0, 300)
+          : post.metaDescription;
+        return { question: h.text, answer };
+      });
+  }, [post]);
 
   if (loading) {
     return (
@@ -91,6 +107,18 @@ const BlogPostPage = () => {
     ],
   };
 
+  const faqJsonLd = faqItems.length > 0
+    ? {
+        "@context": "https://schema.org",
+        "@type": "FAQPage",
+        mainEntity: faqItems.map((f) => ({
+          "@type": "Question",
+          name: f.question,
+          acceptedAnswer: { "@type": "Answer", text: f.answer },
+        })),
+      }
+    : null;
+
   return (
     <>
       <Helmet>
@@ -117,6 +145,7 @@ const BlogPostPage = () => {
         <link rel="alternate" type="application/rss+xml" title="MRC GlobalPay Blog RSS" href="https://mrcglobalpay.com/rss.xml" />
         <script type="application/ld+json">{JSON.stringify(jsonLd)}</script>
         <script type="application/ld+json">{JSON.stringify(breadcrumbJsonLd)}</script>
+        {faqJsonLd && <script type="application/ld+json">{JSON.stringify(faqJsonLd)}</script>}
       </Helmet>
 
       <SiteHeader />
@@ -183,6 +212,20 @@ const BlogPostPage = () => {
                   <p className="mt-2 font-body text-xs leading-relaxed text-muted-foreground">{post.author.bio}</p>
                 </div>
               </header>
+
+              {/* At a Glance summary */}
+              <div className="mb-8 rounded-xl border border-primary/20 bg-primary/5 p-5 sm:p-6">
+                <p className="mb-2 flex items-center gap-2 font-display text-sm font-semibold text-primary">
+                  <Zap className="h-4 w-4" />
+                  At a Glance
+                </p>
+                <p className="font-body text-sm leading-relaxed text-foreground">{post.excerpt}</p>
+                <ul className="mt-3 space-y-1.5 font-body text-sm text-muted-foreground">
+                  <li className="flex items-center gap-2"><span className="text-primary">•</span> {post.readTime} read</li>
+                  <li className="flex items-center gap-2"><span className="text-primary">•</span> Category: {post.category}</li>
+                  <li className="flex items-center gap-2"><span className="text-primary">•</span> By {post.author.name}, {post.author.role}</li>
+                </ul>
+              </div>
 
               <TableOfContents markdown={post.content} />
               <BlogMarkdown content={post.content} />

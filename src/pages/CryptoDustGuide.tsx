@@ -1,4 +1,5 @@
 import { Helmet } from "react-helmet-async";
+import { Zap } from "lucide-react";
 import SiteHeader from "@/components/SiteHeader";
 import SiteFooter from "@/components/SiteFooter";
 import { Link } from "react-router-dom";
@@ -64,6 +65,53 @@ const howToJsonLd = {
   totalTime: "PT2M",
 };
 
+const dustFaqJsonLd = {
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  mainEntity: [
+    {
+      "@type": "Question",
+      name: "What Is Crypto Dust?",
+      acceptedAnswer: {
+        "@type": "Answer",
+        text: "Crypto dust refers to tiny amounts of cryptocurrency left in your wallet after trades or transfers — often worth less than $1. These unspendable wallet balances sit idle because most exchanges enforce minimum swap thresholds of $10 or more.",
+      },
+    },
+    {
+      "@type": "Question",
+      name: "Why Do Most Exchanges Have $10+ Minimums?",
+      acceptedAnswer: {
+        "@type": "Answer",
+        text: "Traditional crypto exchanges batch orders through centralized order books that require minimum trade sizes to remain profitable. The overhead of matching, settling, and recording a $0.50 trade is the same as a $5,000 trade — making micro-swaps economically unviable for their model.",
+      },
+    },
+    {
+      "@type": "Question",
+      name: "How Does MRC GlobalPay Process Swaps from $0.30?",
+      acceptedAnswer: {
+        "@type": "Answer",
+        text: "Our non-custodial engine connects directly to protocol-level liquidity pools — bypassing the order-book overhead that forces other platforms to set high minimums. This architecture enables genuine crypto dust swaps starting at $0.30.",
+      },
+    },
+    {
+      "@type": "Question",
+      name: "Is there a minimum for crypto swaps on MRC GlobalPay?",
+      acceptedAnswer: {
+        "@type": "Answer",
+        text: "No. MRC GlobalPay is a no minimum crypto exchange that processes swaps as low as $0.30, depending on the coin pair.",
+      },
+    },
+    {
+      "@type": "Question",
+      name: "Can I fix my Metamask dust without high gas fees?",
+      acceptedAnswer: {
+        "@type": "Answer",
+        text: "Yes. Our Metamask dust fix approach routes swaps through aggregated liquidity — not on-chain DEX contracts — avoiding the gas overhead that makes small swaps impractical on Uniswap or PancakeSwap.",
+      },
+    },
+  ],
+};
+
 const CryptoDustGuide = () => {
   return (
     <>
@@ -89,6 +137,7 @@ const CryptoDustGuide = () => {
         <meta name="twitter:image" content="https://pub-bb2e103a32db4e198524a2e9ed8f35b4.r2.dev/22f69f45-cf65-4871-9af4-b68ab4027213/id-preview-243bf129--23f851ec-c820-43c7-bbe2-d2e830f7c268.lovable.app-1773521796493.png" />
         <script type="application/ld+json">{JSON.stringify(guideJsonLd)}</script>
         <script type="application/ld+json">{JSON.stringify(howToJsonLd)}</script>
+        <script type="application/ld+json">{JSON.stringify(dustFaqJsonLd)}</script>
       </Helmet>
 
       <SiteHeader />
@@ -100,12 +149,20 @@ const CryptoDustGuide = () => {
             <span className="text-foreground">Crypto Dust Guide</span>
           </nav>
 
-          {/* Atomic Answer Block */}
+          {/* At a Glance Block */}
           <div className="mb-8 rounded-xl border border-primary/20 bg-primary/5 p-5">
-            <p className="font-body text-sm font-semibold uppercase tracking-wider text-primary mb-2">Quick Answer</p>
+            <p className="font-body text-sm font-semibold uppercase tracking-wider text-primary mb-2">
+              <Zap className="mr-1 inline h-3.5 w-3.5" />
+              At a Glance
+            </p>
             <p className="font-body text-base leading-relaxed text-foreground">
               The most efficient way to swap crypto dust is using a non-custodial aggregator like MRC GlobalPay that supports transactions as low as $0.30 — no account, no minimums, and 500+ tokens supported.
             </p>
+            <ul className="mt-3 space-y-1 font-body text-sm text-foreground/80">
+              <li className="flex items-center gap-2"><span className="text-primary">•</span> Minimum swap: $0.30</li>
+              <li className="flex items-center gap-2"><span className="text-primary">•</span> No registration required</li>
+              <li className="flex items-center gap-2"><span className="text-primary">•</span> 500+ tokens across 6+ chains</li>
+            </ul>
           </div>
 
           <h1 className="font-display text-3xl font-bold tracking-tight text-foreground sm:text-4xl lg:text-5xl leading-tight">
@@ -121,7 +178,7 @@ const CryptoDustGuide = () => {
 
           {/* Section 1 */}
           <section className="mb-12">
-            <h2 className="font-display text-2xl font-bold text-foreground mb-4">
+            <h2 id="what-is-crypto-dust" className="scroll-mt-24 font-display text-2xl font-bold text-foreground mb-4">
               What Is Crypto Dust?
             </h2>
             <p className="text-muted-foreground leading-relaxed mb-4">
@@ -138,8 +195,8 @@ const CryptoDustGuide = () => {
 
           {/* Section 2 */}
           <section className="mb-12">
-            <h2 className="font-display text-2xl font-bold text-foreground mb-4">
-              Why Most Exchanges Have $10+ Minimums
+            <h2 id="why-do-most-exchanges-have-10-minimums" className="scroll-mt-24 font-display text-2xl font-bold text-foreground mb-4">
+              Why Do Most Exchanges Have $10+ Minimums?
             </h2>
             <p className="text-muted-foreground leading-relaxed mb-4">
               Traditional crypto exchanges batch orders through centralized order books that require
@@ -172,8 +229,8 @@ const CryptoDustGuide = () => {
 
           {/* Section 3 */}
           <section className="mb-12">
-            <h2 className="font-display text-2xl font-bold text-foreground mb-4">
-              How MRC GlobalPay Processes Swaps from $0.30
+            <h2 id="how-does-mrc-globalpay-process-swaps-from-030" className="scroll-mt-24 font-display text-2xl font-bold text-foreground mb-4">
+              How Does MRC GlobalPay Process Swaps from $0.30?
             </h2>
             <p className="text-muted-foreground leading-relaxed mb-4">
               Our non-custodial engine connects directly to protocol-level liquidity pools —
@@ -205,8 +262,8 @@ const CryptoDustGuide = () => {
 
           {/* 2026 Network Dust Thresholds Table */}
           <section className="mb-12">
-            <h2 className="font-display text-2xl font-bold text-foreground mb-4">
-              2026 Network Dust Thresholds
+            <h2 id="what-are-the-2026-network-dust-thresholds" className="scroll-mt-24 font-display text-2xl font-bold text-foreground mb-4">
+              What Are the 2026 Network Dust Thresholds?
             </h2>
             <p className="text-muted-foreground leading-relaxed mb-6">
               Every blockchain has a practical minimum transaction size determined by network fees and UTXO/account model constraints. Here's how they compare to our $0.30 swap floor:
@@ -245,8 +302,8 @@ const CryptoDustGuide = () => {
 
           {/* Section 4 - Supported Chains */}
           <section className="mb-12">
-            <h2 className="font-display text-2xl font-bold text-foreground mb-4">
-              Supported Chains &amp; Tokens for Dust Swaps
+            <h2 id="which-chains-and-tokens-support-dust-swaps" className="scroll-mt-24 font-display text-2xl font-bold text-foreground mb-4">
+              Which Chains &amp; Tokens Support Dust Swaps?
             </h2>
             <p className="text-muted-foreground leading-relaxed mb-4">
               MRC GlobalPay supports over 500 assets across all major chains — including Ethereum,
@@ -274,8 +331,8 @@ const CryptoDustGuide = () => {
 
           {/* Section 5 */}
           <section className="mb-12">
-            <h2 className="font-display text-2xl font-bold text-foreground mb-4">
-              Frequently Asked Questions About Crypto Dust
+            <h2 id="what-are-the-most-common-questions-about-crypto-dust" className="scroll-mt-24 font-display text-2xl font-bold text-foreground mb-4">
+              What Are the Most Common Questions About Crypto Dust?
             </h2>
 
             <div className="space-y-6">

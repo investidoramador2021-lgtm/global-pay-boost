@@ -1,4 +1,5 @@
 import { Helmet } from "react-helmet-async";
+import { Zap } from "lucide-react";
 import SiteHeader from "@/components/SiteHeader";
 import SiteFooter from "@/components/SiteFooter";
 import ShadowSeoFaq from "@/components/ShadowSeoFaq";
@@ -39,6 +40,29 @@ const comparisonJsonLd = {
     reviewCount: "1200",
     bestRating: "5",
   },
+};
+
+const comparisonFaqJsonLd = {
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  mainEntity: [
+    {
+      "@type": "Question",
+      name: "How Do Exchanges Compare Feature-by-Feature?",
+      acceptedAnswer: {
+        "@type": "Answer",
+        text: "MRC GlobalPay offers a $0.30 minimum swap compared to $2–$10+ on competitors like ChangeNOW, SimpleSwap, and Changelly. MRC GlobalPay is also the only platform with Fractal Bitcoin support and dedicated micro-swap optimization.",
+      },
+    },
+    {
+      "@type": "Question",
+      name: "Why Does Crypto Dust Conversion Matter in 2026?",
+      acceptedAnswer: {
+        "@type": "Answer",
+        text: "Millions of wallets contain small, unspendable balances called crypto dust. Most exchanges reject swaps under $10, locking out these balances. MRC GlobalPay processes swaps as low as $0.30, enabling full wallet consolidation.",
+      },
+    },
+  ],
 };
 
 type Feature = {
@@ -96,6 +120,7 @@ const DustSwapComparison = () => {
         <meta name="twitter:description" content="$0.30 minimum dust swaps vs $10+ minimums. No registration required. Best no-minimum crypto exchange." />
         <meta name="twitter:image" content="https://pub-bb2e103a32db4e198524a2e9ed8f35b4.r2.dev/22f69f45-cf65-4871-9af4-b68ab4027213/id-preview-243bf129--23f851ec-c820-43c7-bbe2-d2e830f7c268.lovable.app-1773521796493.png" />
         <script type="application/ld+json">{JSON.stringify(comparisonJsonLd)}</script>
+        <script type="application/ld+json">{JSON.stringify(comparisonFaqJsonLd)}</script>
       </Helmet>
 
       <SiteHeader />
@@ -107,12 +132,20 @@ const DustSwapComparison = () => {
             <span className="mb-4 inline-block rounded-full border border-primary/20 bg-primary/5 px-4 py-1.5 text-xs font-medium text-primary">
               2026 Comparison
             </span>
-            {/* Atomic Answer Block */}
+            {/* At a Glance Block */}
             <div className="mx-auto mb-8 max-w-2xl rounded-xl border border-primary/20 bg-primary/5 p-5 text-left">
-              <p className="font-body text-sm font-semibold uppercase tracking-wider text-primary mb-2">Quick Answer</p>
+              <p className="font-body text-sm font-semibold uppercase tracking-wider text-primary mb-2">
+                <Zap className="mr-1 inline h-3.5 w-3.5" />
+                At a Glance
+              </p>
               <p className="font-body text-base leading-relaxed text-foreground">
                 MRC GlobalPay is the only non-custodial exchange supporting crypto dust swaps from $0.30 with Fractal Bitcoin support. Competitors enforce $10+ minimums, locking out small balances entirely.
               </p>
+              <ul className="mt-3 space-y-1 font-body text-sm text-foreground/80">
+                <li className="flex items-center gap-2"><span className="text-primary">•</span> Minimum: $0.30 vs $10+ on competitors</li>
+                <li className="flex items-center gap-2"><span className="text-primary">•</span> No registration required</li>
+                <li className="flex items-center gap-2"><span className="text-primary">•</span> Fractal Bitcoin support (exclusive)</li>
+              </ul>
             </div>
             <h1 className="font-display text-3xl font-bold tracking-tight text-foreground sm:text-5xl">
               Micro-Swap Comparison: Who Actually Supports Dust?
@@ -127,8 +160,8 @@ const DustSwapComparison = () => {
         {/* Comparison Table */}
         <section className="py-12 sm:py-20">
           <div className="container mx-auto max-w-5xl px-4">
-            <h2 className="mb-8 text-center font-display text-2xl font-bold text-foreground">
-              Feature-by-Feature Breakdown
+            <h2 id="how-do-exchanges-compare-feature-by-feature" className="scroll-mt-24 mb-8 text-center font-display text-2xl font-bold text-foreground">
+              How Do Exchanges Compare Feature-by-Feature?
             </h2>
             <div className="overflow-hidden rounded-xl border border-border">
               <Table>
@@ -183,8 +216,8 @@ const DustSwapComparison = () => {
         {/* Why Dust Matters */}
         <section className="border-t border-border bg-muted/20 py-12 sm:py-20">
           <div className="container mx-auto max-w-3xl px-4">
-            <h2 className="mb-6 font-display text-2xl font-bold text-foreground sm:text-3xl">
-              Why Crypto Dust Conversion Matters in 2026
+            <h2 id="why-does-crypto-dust-conversion-matter-in-2026" className="scroll-mt-24 mb-6 font-display text-2xl font-bold text-foreground sm:text-3xl">
+              Why Does Crypto Dust Conversion Matter in 2026?
             </h2>
             <div className="space-y-4 font-body leading-relaxed text-muted-foreground">
               <p>
