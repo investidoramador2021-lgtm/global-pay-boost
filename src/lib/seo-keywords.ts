@@ -73,7 +73,7 @@ export const seoKeywords = [
   { keyword: "kraken monero", intentType: "Commercial", targetUrl: "/alternatives/kraken-monero", primaryH1: "Kraken Monero Alternative", benefitHook: "The non-custodial way to swap XMR." },
   { keyword: "usdt erc20 meaning", intentType: "Informational", targetUrl: "/guides/usdt-erc20-meaning", primaryH1: "What is USDT ERC20?", benefitHook: "Educational breakdown of Ethereum USDT." },
   { keyword: "usdt swap trx", intentType: "Commercial", targetUrl: "/swap/usdt-trx-instant", primaryH1: "Instant USDT to TRX Swap", benefitHook: "Fastest Tron network liquidity.", canonicalUrl: "/swap/usdt-to-trx" },
-  { keyword: "where can i buy ether", intentType: "Commercial", targetUrl: "/buy/ether-instant", primaryH1: "Where to Buy Ether Instantly", benefitHook: "Top-rated no-KYC ETH platforms." },
+  { keyword: "where can i buy ether", intentType: "Commercial", targetUrl: "/buy/ether-instant", primaryH1: "Where to Buy Ether Instantly", benefitHook: "Top-rated registration-free ETH platforms." },
   { keyword: "where can i buy xdc", intentType: "Commercial", targetUrl: "/buy/xdc", primaryH1: "Where to Buy XDC Network", benefitHook: "Instant exchange for XDC assets." },
   { keyword: "binance vinu", intentType: "Commercial", targetUrl: "/swap/vinu", primaryH1: "Binance Vita Inu (VINU) Swap", benefitHook: "Trade VINU with zero account required." },
   { keyword: "bridge eth to solana", intentType: "Commercial", targetUrl: "/bridge/eth-to-sol", primaryH1: "Bridge ETH to Solana (SOL)", benefitHook: "Native cross-chain Ethereum bridging." },
