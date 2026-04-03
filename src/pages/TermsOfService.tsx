@@ -54,5 +54,6 @@ const TermsOfService = () => {
     <SiteFooter />
   </>
 );
+};
 
 export default TermsOfService;

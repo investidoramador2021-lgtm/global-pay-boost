@@ -51,5 +51,6 @@ const AMLPolicy = () => {
     <SiteFooter />
   </>
 );
+};
 
 export default AMLPolicy;

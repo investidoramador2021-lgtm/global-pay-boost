@@ -272,5 +272,6 @@ const PrivacyPolicy = () => {
     <SiteFooter />
   </>
 );
+};
 
 export default PrivacyPolicy;
