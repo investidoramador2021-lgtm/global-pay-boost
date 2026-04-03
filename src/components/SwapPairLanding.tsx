@@ -1,4 +1,6 @@
 import { type ReactNode } from "react";
+import { useLocation } from "react-router-dom";
+import { getLangFromPath, langPath } from "@/i18n";
 import { Zap, Timer, Shield, Activity, ArrowRight, Gauge, Clock, CheckCircle2 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import {
@@ -38,9 +40,12 @@ const SwapPairLanding = ({
   isFeatured = false,
   extraFaqs = [],
 }: SwapPairPageProps) => {
+  const { pathname } = useLocation();
+  const lang = getLangFromPath(pathname);
+  const lp = (path: string) => langPath(lang, path);
   const title = `Swap ${assetA} to ${assetB} Instantly | MRC GlobalPay`;
   const description = `Instant ${assetAName} to ${assetBName} swaps in under 60 seconds. No registration, zero delays. Best rates March 2026.`;
-  const url = `https://mrcglobalpay.com/swap/${slug}`;
+  const url = `https://mrcglobalpay.com${lp(`/swap/${slug}`)}`;
 
   const aeoFaq = {
     q: `What is the fastest way to swap ${assetA} for ${assetB} in March 2026?`,

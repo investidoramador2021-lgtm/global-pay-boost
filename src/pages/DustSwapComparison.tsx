@@ -4,6 +4,7 @@ import SiteHeader from "@/components/SiteHeader";
 import SiteFooter from "@/components/SiteFooter";
 import ShadowSeoFaq from "@/components/ShadowSeoFaq";
 import { CheckCircle, XCircle } from "lucide-react";
+import { usePageUrl } from "@/hooks/use-page-url";
 import {
   Table,
   TableHeader,
@@ -97,6 +98,7 @@ const Cell = ({ value }: { value: boolean | string }) => {
 };
 
 const DustSwapComparison = () => {
+  const pageUrl = usePageUrl("/dust-swap-comparison");
   return (
     <>
       <Helmet>
@@ -105,13 +107,14 @@ const DustSwapComparison = () => {
           name="description"
           content="Compare MRC GlobalPay's $0.30 minimum dust swaps vs ChangeNOW, SimpleSwap, and Changelly. No registration required. The best no-minimum crypto exchange in 2026."
         />
-        <link rel="canonical" href="https://mrcglobalpay.com/dust-swap-comparison" />
+        <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1" />
+        <link rel="canonical" href={pageUrl} />
         <meta property="og:title" content="$0.30 Minimum Crypto Swap Comparison | No Registration Required | MRC GlobalPay" />
         <meta
           property="og:description"
           content="$0.30 minimum dust swaps vs $10+ minimums on major exchanges. No registration required. Feature-by-feature comparison."
         />
-        <meta property="og:url" content="https://mrcglobalpay.com/dust-swap-comparison" />
+        <meta property="og:url" content={pageUrl} />
         <meta property="og:type" content="article" />
         <meta property="og:site_name" content="MRC GlobalPay" />
         <meta property="og:image" content="https://pub-bb2e103a32db4e198524a2e9ed8f35b4.r2.dev/22f69f45-cf65-4871-9af4-b68ab4027213/id-preview-243bf129--23f851ec-c820-43c7-bbe2-d2e830f7c268.lovable.app-1773521796493.png" />
