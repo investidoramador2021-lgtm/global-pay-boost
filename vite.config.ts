@@ -9,9 +9,13 @@ export default defineConfig(({ mode }) => ({
   server: {
     host: "::",
     port: 8080,
-    hmr: {
-      overlay: false,
-    },
+    hmr: mode === "development"
+      ? {
+          protocol: "wss",
+          clientPort: 443,
+          overlay: false,
+        }
+      : undefined,
   },
   plugins: [
     react(),
