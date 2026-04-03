@@ -31,16 +31,6 @@ const popularCryptoSwaps = [
   { label: "BNB Meme Coins", href: "/trade/bnb-meme-coins", title: "Trade BNB meme coins instantly" },
 ];
 
-const memeAndAltcoins = [
-  { label: "SHIB to USDT", href: "/swap/shiba-to-usdt", title: "Swap Shiba Inu to USDT instantly" },
-  { label: "VINU Swap", href: "/swap/vinu", title: "Swap Vita Inu instantly" },
-  { label: "HYPE to USDT", href: "/swap/hype-to-usdt", title: "Swap HYPE to USDT instantly" },
-  { label: "BERA to USDT", href: "/swap/bera-to-usdt", title: "Swap Berachain to USDT instantly" },
-  { label: "Monad to USDT", href: "/swap/monad-to-usdt", title: "Swap Monad to USDT instantly" },
-  { label: "Trade Trump/SOL", href: "/trade/trump-sol", title: "Trade TRUMP token on Solana" },
-  { label: "Trade Alpaca", href: "/trade/alpaca", title: "Trade Alpaca Finance token instantly" },
-  { label: "BNB Meme Coins", href: "/trade/bnb-meme-coins", title: "Trade BNB meme coins instantly" },
-];
 
 const buyLinks = [
   { label: "Buy Bitcoin", href: "/buy/bitcoin-no-kyc", title: "Buy Bitcoin without KYC verification" },
