@@ -14,18 +14,30 @@ import {
 
 const comparisonJsonLd = {
   "@context": "https://schema.org",
-  "@type": "WebPage",
-  name: "Micro-Swap Comparison 2026: No Minimum Crypto Exchange vs Competitors",
+  "@type": "Product",
+  name: "MRC GlobalPay Micro-Swap Service",
   description:
-    "Compare MRC GlobalPay's $0.30 crypto dust swaps against major exchanges with $10+ minimums. Feature-by-feature breakdown.",
+    "No-minimum crypto exchange with $0.30 minimum swap. No registration required. Non-custodial, instant settlement, 500+ assets.",
   url: "https://mrcglobalpay.com/dust-swap-comparison",
-  publisher: {
-    "@type": "Organization",
+  brand: {
+    "@type": "Brand",
     name: "MRC GlobalPay",
-    url: "https://mrcglobalpay.com",
   },
-  datePublished: "2026-03-01",
-  dateModified: "2026-03-20",
+  offers: {
+    "@type": "Offer",
+    price: "0.30",
+    priceCurrency: "USD",
+    priceValidUntil: "2026-12-31",
+    availability: "https://schema.org/InStock",
+    url: "https://mrcglobalpay.com/dust-swap-comparison",
+    description: "Crypto dust swaps starting at $0.30 minimum. No registration required.",
+  },
+  aggregateRating: {
+    "@type": "AggregateRating",
+    ratingValue: "4.8",
+    reviewCount: "1200",
+    bestRating: "5",
+  },
 };
 
 type Feature = {
