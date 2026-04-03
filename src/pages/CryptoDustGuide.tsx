@@ -65,6 +65,53 @@ const howToJsonLd = {
   totalTime: "PT2M",
 };
 
+const dustFaqJsonLd = {
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  mainEntity: [
+    {
+      "@type": "Question",
+      name: "What Is Crypto Dust?",
+      acceptedAnswer: {
+        "@type": "Answer",
+        text: "Crypto dust refers to tiny amounts of cryptocurrency left in your wallet after trades or transfers — often worth less than $1. These unspendable wallet balances sit idle because most exchanges enforce minimum swap thresholds of $10 or more.",
+      },
+    },
+    {
+      "@type": "Question",
+      name: "Why Do Most Exchanges Have $10+ Minimums?",
+      acceptedAnswer: {
+        "@type": "Answer",
+        text: "Traditional crypto exchanges batch orders through centralized order books that require minimum trade sizes to remain profitable. The overhead of matching, settling, and recording a $0.50 trade is the same as a $5,000 trade — making micro-swaps economically unviable for their model.",
+      },
+    },
+    {
+      "@type": "Question",
+      name: "How Does MRC GlobalPay Process Swaps from $0.30?",
+      acceptedAnswer: {
+        "@type": "Answer",
+        text: "Our non-custodial engine connects directly to protocol-level liquidity pools — bypassing the order-book overhead that forces other platforms to set high minimums. This architecture enables genuine crypto dust swaps starting at $0.30.",
+      },
+    },
+    {
+      "@type": "Question",
+      name: "Is there a minimum for crypto swaps on MRC GlobalPay?",
+      acceptedAnswer: {
+        "@type": "Answer",
+        text: "No. MRC GlobalPay is a no minimum crypto exchange that processes swaps as low as $0.30, depending on the coin pair.",
+      },
+    },
+    {
+      "@type": "Question",
+      name: "Can I fix my Metamask dust without high gas fees?",
+      acceptedAnswer: {
+        "@type": "Answer",
+        text: "Yes. Our Metamask dust fix approach routes swaps through aggregated liquidity — not on-chain DEX contracts — avoiding the gas overhead that makes small swaps impractical on Uniswap or PancakeSwap.",
+      },
+    },
+  ],
+};
+
 const CryptoDustGuide = () => {
   return (
     <>
