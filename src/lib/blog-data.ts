@@ -46,7 +46,15 @@ export async function fetchAllPosts(): Promise<BlogPost[]> {
   return [...dbPosts, ...uniqueSeedPosts];
 }
 
-export async function fetchPostBySlug(slug: string): Promise<BlogPost | undefined> {
+export async function fetchPostBySlug(slug: string, lang = "en"): Promise<BlogPost | undefined> {
+  // For non-English languages, check translated posts first
+  if (lang !== "en") {
+    const translated = TRANSLATED_BTC_ETH_POSTS[lang];
+    if (translated && translated.slug === slug) {
+      return translated;
+    }
+  }
+
   const { data } = await supabase
     .from("blog_posts")
     .select("*")

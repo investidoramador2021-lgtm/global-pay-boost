@@ -7,6 +7,7 @@ import SiteFooter from "@/components/SiteFooter";
 import BlogMarkdown from "@/components/blog/BlogMarkdown";
 import TableOfContents, { extractHeadings } from "@/components/blog/TableOfContents";
 import { fetchPostBySlug, fetchRelatedPosts, type BlogPost } from "@/lib/blog-data";
+import { getLangFromPath, langPath, supportedLanguages } from "@/i18n";
 
 const BlogPostPage = () => {
   const { slug } = useParams<{ slug: string }>();
