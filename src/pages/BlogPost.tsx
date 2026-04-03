@@ -95,7 +95,7 @@ const BlogPostPage = () => {
     },
     mainEntityOfPage: {
       "@type": "WebPage",
-      "@id": `https://mrcglobalpay.com/blog/${post.slug}`,
+      "@id": postUrl,
     },
     wordCount: post.content.split(/\s+/).length,
     articleSection: post.category,
