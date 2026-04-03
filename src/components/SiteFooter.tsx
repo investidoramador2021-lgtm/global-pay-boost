@@ -105,8 +105,8 @@ const walletReviews = [
 const expertiseLinks = [
   { label: "How UTXOs Work", href: "/resources/crypto-dust-guide#what-is-crypto-dust", title: "Understanding UTXO model and crypto dust" },
   { label: "Why $0.30 Is Our Minimum", href: "/dust-swap-comparison", title: "Why our minimum swap is only $0.30" },
-  { label: "Non-Custodial Swaps", href: "/transparency-security", title: "How non-custodial crypto swaps work" },
-  { label: "Transparency & Security", href: "/transparency-security", title: "Our transparency and security practices" },
+  { label: "Non-Custodial Swaps", href: "/transparency-security#non-custodial", title: "How non-custodial crypto swaps work" },
+  { label: "Transparency & Security", href: "/transparency-security#overview", title: "Our transparency and security practices" },
   { label: "Micro-Swap Comparison", href: "/dust-swap-comparison", title: "Compare micro-swap platforms and fees" },
 ];
 
@@ -119,7 +119,7 @@ const FooterLinkList = ({ title, links }: { title: string; links: FooterLink[] }
     </h3>
     <ul className="mt-3 space-y-2 sm:mt-4 sm:space-y-3">
       {links.map((link) => (
-        <li key={link.href}>
+        <li key={link.label}>
           <a
             href={link.href}
             title={link.title}
