@@ -112,7 +112,7 @@ const GetWidget = () => {
                   Paste this into your HTML. That's it — no API keys, no sign-up required.
                 </p>
                 <div className="relative rounded-xl border border-border bg-card">
-                  <pre className="overflow-x-auto p-4 text-xs text-foreground/80 leading-relaxed">
+                  <pre className="overflow-x-auto p-4 pr-20 text-xs text-foreground/80 leading-relaxed whitespace-pre-wrap break-all">
                     <code>{embedCode}</code>
                   </pre>
                   <button
