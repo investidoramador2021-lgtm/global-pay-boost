@@ -1,6 +1,7 @@
 import { supabase } from "@/integrations/supabase/client";
 import { SEED_POSTS } from "@/lib/blog/seed-posts";
 import { TRANSLATED_BTC_ETH_POSTS } from "@/lib/blog/translated-btc-eth-posts";
+import { TRANSLATED_DUST_POSTS } from "@/lib/blog/translated-dust-posts";
 import type { BlogPost, BlogAuthor } from "@/lib/blog/types";
 
 export type { BlogPost, BlogAuthor } from "@/lib/blog/types";
@@ -47,11 +48,14 @@ export async function fetchAllPosts(): Promise<BlogPost[]> {
 }
 
 export async function fetchPostBySlug(slug: string, lang = "en"): Promise<BlogPost | undefined> {
-  // For non-English languages, check translated posts first
+  // For non-English languages, check all translated post collections
   if (lang !== "en") {
-    const translated = TRANSLATED_BTC_ETH_POSTS[lang];
-    if (translated && translated.slug === slug) {
-      return translated;
+    const translatedCollections = [TRANSLATED_BTC_ETH_POSTS, TRANSLATED_DUST_POSTS];
+    for (const collection of translatedCollections) {
+      const translated = collection[lang];
+      if (translated && translated.slug === slug) {
+        return translated;
+      }
     }
   }
 
