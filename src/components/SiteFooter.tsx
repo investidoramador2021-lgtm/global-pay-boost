@@ -33,7 +33,7 @@ const popularCryptoSwaps = [
 
 
 const buyLinks = [
-  { label: "Buy Bitcoin", href: "/buy/bitcoin-no-kyc", title: "Buy Bitcoin without KYC verification" },
+  { label: "Buy Bitcoin", href: "/buy/bitcoin-no-kyc", title: "Buy Bitcoin with no registration required" },
   { label: "Buy Ethereum", href: "/buy/ethereum", title: "Buy Ethereum instantly with no account" },
   { label: "Buy Solana", href: "/buy/solana-no-kyc", title: "Buy Solana without KYC verification" },
   { label: "Buy Solana No Verification", href: "/buy/solana-no-verification", title: "Buy Solana with no identity verification" },
