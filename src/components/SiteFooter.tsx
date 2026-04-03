@@ -105,8 +105,8 @@ const walletReviews = [
 const expertiseLinks = [
   { label: "How UTXOs Work", href: "/resources/crypto-dust-guide#what-is-crypto-dust", title: "Understanding UTXO model and crypto dust" },
   { label: "Why $0.30 Is Our Minimum", href: "/dust-swap-comparison", title: "Why our minimum swap is only $0.30" },
-  { label: "Non-Custodial Swaps", href: "/transparency-security", title: "How non-custodial crypto swaps work" },
-  { label: "Transparency & Security", href: "/transparency-security", title: "Our transparency and security practices" },
+  { label: "Non-Custodial Swaps", href: "/transparency-security#non-custodial", title: "How non-custodial crypto swaps work" },
+  { label: "Transparency & Security", href: "/transparency-security#overview", title: "Our transparency and security practices" },
   { label: "Micro-Swap Comparison", href: "/dust-swap-comparison", title: "Compare micro-swap platforms and fees" },
 ];
 
@@ -119,7 +119,7 @@ const FooterLinkList = ({ title, links }: { title: string; links: FooterLink[] }
     </h3>
     <ul className="mt-3 space-y-2 sm:mt-4 sm:space-y-3">
       {links.map((link) => (
-        <li key={link.href}>
+        <li key={link.label}>
           <a
             href={link.href}
             title={link.title}
@@ -134,7 +134,7 @@ const FooterLinkList = ({ title, links }: { title: string; links: FooterLink[] }
 );
 
 import { useTranslation } from "react-i18next";
-import { useLocation } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import { getLangFromPath, langPath } from "@/i18n";
 
 const SiteFooter = () => {
@@ -151,7 +151,7 @@ const SiteFooter = () => {
           <div>
             <a href={lp("/")} title="MRC GlobalPay — Registration-Free Crypto Exchange" className="font-display text-lg font-bold tracking-tight text-foreground sm:text-xl">
               MRC<span className="text-primary">GlobalPay</span>
-            </a>
+            </a>{/* footer brand - keep as <a> for full reload to home */}
             <p className="mt-3 font-body text-sm leading-relaxed text-muted-foreground sm:mt-4">
               Instant crypto-to-crypto swaps with zero delays. 500+ assets. No registration. Best market rates.
             </p>
@@ -178,7 +178,7 @@ const SiteFooter = () => {
               <li>
                 <a href={lp("/aml")} title="MRC GlobalPay AML Policy" className="font-body text-sm text-muted-foreground transition-colors hover:text-foreground">
                   {t("footer.aml")}
-                </a>
+                </a>{/* legal links - keep as <a> since they open in same context */}
               </li>
             </ul>
           </div>
@@ -232,8 +232,7 @@ const SiteFooter = () => {
             <p className="font-body text-xs leading-relaxed text-muted-foreground">
               {t("footer.disclaimer")}{" "}
               <a href={lp("/transparency-security")} title="View MRC GlobalPay transparency and security practices" className="text-primary hover:underline">
-                View our transparency &amp; security practices
-              </a>
+                View our transparency &amp; security practices</a>
             </p>
           </div>
 
