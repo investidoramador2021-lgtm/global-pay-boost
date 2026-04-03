@@ -178,7 +178,7 @@ const KeywordLanding = ({ data }: Props) => {
         {/* Platform Comparison */}
         <section className="py-12 sm:py-20">
           <div className="container mx-auto max-w-4xl px-4">
-            <h2 className="mb-8 text-center font-display text-2xl font-bold text-foreground">
+            <h2 id="platform-comparison" className="mb-8 scroll-mt-24 text-center font-display text-2xl font-bold text-foreground">
               Platform Comparison
             </h2>
             <div className="overflow-hidden rounded-xl border border-border">
