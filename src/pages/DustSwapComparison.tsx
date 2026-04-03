@@ -107,6 +107,7 @@ const DustSwapComparison = () => {
           name="description"
           content="Compare MRC GlobalPay's $0.30 minimum dust swaps vs ChangeNOW, SimpleSwap, and Changelly. No registration required. The best no-minimum crypto exchange in 2026."
         />
+        <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1" />
         <link rel="canonical" href={pageUrl} />
         <meta property="og:title" content="$0.30 Minimum Crypto Swap Comparison | No Registration Required | MRC GlobalPay" />
         <meta

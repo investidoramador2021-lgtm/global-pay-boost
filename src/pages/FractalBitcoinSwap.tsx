@@ -69,6 +69,7 @@ const FractalBitcoinSwap = () => {
           name="description"
           content="Swap Fractal Bitcoin to Solana, Ethereum, and 500+ tokens instantly. No account, no minimums. Non-custodial cross-chain swaps."
         />
+        <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1" />
         <link rel="canonical" href={pageUrl} />
         <meta property="og:title" content="Fractal Bitcoin Swap | Instant FB to SOL & ETH" />
         <meta

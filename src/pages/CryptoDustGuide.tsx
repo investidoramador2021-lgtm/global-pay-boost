@@ -123,6 +123,7 @@ const CryptoDustGuide = () => {
           name="description"
           content="The complete 2026 guide to swapping crypto dust. $0.30 minimum, no registration required. Convert unspendable wallet balances with 500+ tokens supported."
         />
+        <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1" />
         <link rel="canonical" href={pageUrl} />
         <meta property="og:title" content="Crypto Dust Swap Guide — $0.30 Minimum, No Registration Required | MRC GlobalPay" />
         <meta

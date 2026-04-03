@@ -46,6 +46,7 @@ const TransparencySecurity = () => {
           name="description"
           content="MRC GlobalPay operates as a Canadian MSB-compliant, non-custodial crypto exchange. Learn about our security audits, liquidity partners, and data practices."
         />
+        <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1" />
         <link rel="canonical" href={pageUrl} />
         <meta property="og:title" content="Transparency & Security | MRC GlobalPay" />
         <meta
