@@ -357,10 +357,10 @@ const ExchangeWidget = () => {
             {c.image && <img src={c.image} alt={c.name} className="h-6 w-6 rounded-full" loading="lazy" />}
             <div>
               <span className="font-display text-sm font-semibold uppercase text-foreground">{c.ticker}</span>
-              <span className="ml-2 font-body text-xs text-muted-foreground">{c.name}</span>
+              <span className="ms-2 font-body text-xs text-muted-foreground">{c.name}</span>
             </div>
             {c.network && c.network !== c.ticker && (
-              <span className="ml-auto rounded bg-accent px-1.5 py-0.5 font-body text-[10px] uppercase text-muted-foreground">
+              <span className="ms-auto rounded bg-accent px-1.5 py-0.5 font-body text-[10px] uppercase text-muted-foreground">
                 {c.network}
               </span>
             )}
@@ -479,7 +479,7 @@ const ExchangeWidget = () => {
                 }`}
               >
                 <Lock className="mr-1 inline h-3 w-3" /> Fixed Rate
-                <span className="ml-1.5 inline-flex rounded bg-primary/20 px-1.5 py-0.5 font-body text-[9px] font-bold uppercase tracking-wider text-primary">
+                <span className="ms-1.5 inline-flex rounded bg-primary/20 px-1.5 py-0.5 font-body text-[9px] font-bold uppercase tracking-wider text-primary">
                   Recommended
                 </span>
               </button>
