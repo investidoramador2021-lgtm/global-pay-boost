@@ -16,6 +16,7 @@ const SiteHeader = () => {
     { label: t("nav.swapPairs"), href: "/#swap-pairs" },
     { label: t("nav.blog"), href: "/blog" },
     { label: t("nav.faq"), href: "/#faq" },
+    { label: "Get Widget", href: "/get-widget" },
   ];
 
   return (
