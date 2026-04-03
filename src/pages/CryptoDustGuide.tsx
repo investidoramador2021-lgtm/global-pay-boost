@@ -283,8 +283,8 @@ const CryptoDustGuide = () => {
 
           {/* Section 5 */}
           <section className="mb-12">
-            <h2 className="font-display text-2xl font-bold text-foreground mb-4">
-              Frequently Asked Questions About Crypto Dust
+            <h2 id="what-are-the-most-common-questions-about-crypto-dust" className="scroll-mt-24 font-display text-2xl font-bold text-foreground mb-4">
+              What Are the Most Common Questions About Crypto Dust?
             </h2>
 
             <div className="space-y-6">
