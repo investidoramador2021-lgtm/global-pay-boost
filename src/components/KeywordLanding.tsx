@@ -173,10 +173,10 @@ const KeywordLanding = ({ data }: Props) => {
             <div className="mx-auto mt-10 max-w-xl text-left">
               <TableOfContents
                 items={[
-                  { id: "platform-comparison", text: "Platform Comparison", level: 2 },
-                  { id: `why-choose-mrc-globalpay-for-${keyword.toLowerCase().replace(/\s+/g, "-")}`, text: `Why Choose MRC GlobalPay for ${keyword}?`, level: 2 },
-                  { id: "frequently-asked-questions", text: "Frequently Asked Questions", level: 2 },
-                  ...(related.length > 0 ? [{ id: "related-swaps", text: "Related Swaps", level: 2 }] : []),
+                  { id: "how-does-mrc-globalpay-compare-to-other-exchanges", text: "How Does MRC GlobalPay Compare to Other Exchanges?", level: 2 },
+                  { id: `why-should-i-choose-mrc-globalpay-for-${keyword.toLowerCase().replace(/\s+/g, "-")}`, text: `Why Should I Choose MRC GlobalPay for ${keyword}?`, level: 2 },
+                  { id: "what-are-the-most-common-questions", text: "What Are the Most Common Questions?", level: 2 },
+                  ...(related.length > 0 ? [{ id: "what-other-swaps-are-available", text: "What Other Swaps Are Available?", level: 2 }] : []),
                 ]}
               />
             </div>
