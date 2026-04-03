@@ -72,6 +72,7 @@ const AppRoutes = () => (
     <Route path="price/*" element={<KeywordPage />} />
     <Route path="local-crypto-exchange" element={<KeywordPage />} />
     <Route path="exchange-iu" element={<KeywordPage />} />
+    <Route path="get-widget" element={<GetWidget />} />
   </>
 );
 
