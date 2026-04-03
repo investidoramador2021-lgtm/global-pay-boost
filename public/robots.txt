@@ -69,6 +69,13 @@ Allow: /
 
 User-agent: *
 Allow: /
+Allow: /blog
+Allow: /blog/
+Allow: /swap/
+Allow: /guides/
+Allow: /buy/
+Allow: /bridge/
+Allow: /resources/
 
 # Priority sections for AI indexing
 # Blog: https://mrcglobalpay.com/blog
