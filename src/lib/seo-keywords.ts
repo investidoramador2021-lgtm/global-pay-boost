@@ -69,7 +69,7 @@ export const seoKeywords = [
   { keyword: "tether pro", intentType: "Commercial", targetUrl: "/ecosystem/tether-pro", primaryH1: "Tether Pro Advanced Swaps", benefitHook: "High-volume USDT liquidity for pros." },
   { keyword: "where can i purchase ether", intentType: "Commercial", targetUrl: "/buy/ethereum", primaryH1: "Where to Purchase Ether (ETH)", benefitHook: "Direct and fast Ethereum entry points." },
   { keyword: "24. swap nodes in pairs", intentType: "Informational", targetUrl: "/guides/swap-nodes-in-pairs", primaryH1: "24. Swap Nodes in Pairs Explained", benefitHook: "Technical guide for blockchain developers." },
-  { keyword: "buy solana without kyc", intentType: "Commercial", targetUrl: "/buy/solana-no-verification", primaryH1: "Buy Solana Without KYC", benefitHook: "Immediate and private SOL access.", canonicalUrl: "/buy/solana-no-kyc" },
+  { keyword: "buy solana without kyc", intentType: "Commercial", targetUrl: "/buy/solana-no-verification", primaryH1: "Buy Solana — No Verification Needed", benefitHook: "Immediate and private SOL access.", canonicalUrl: "/buy/solana-no-kyc" },
   { keyword: "kraken monero", intentType: "Commercial", targetUrl: "/alternatives/kraken-monero", primaryH1: "Kraken Monero Alternative", benefitHook: "The non-custodial way to swap XMR." },
   { keyword: "usdt erc20 meaning", intentType: "Informational", targetUrl: "/guides/usdt-erc20-meaning", primaryH1: "What is USDT ERC20?", benefitHook: "Educational breakdown of Ethereum USDT." },
   { keyword: "usdt swap trx", intentType: "Commercial", targetUrl: "/swap/usdt-trx-instant", primaryH1: "Instant USDT to TRX Swap", benefitHook: "Fastest Tron network liquidity.", canonicalUrl: "/swap/usdt-to-trx" },
