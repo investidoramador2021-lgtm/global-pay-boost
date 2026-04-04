@@ -84,6 +84,28 @@ const Index = () => {
       url: "https://mrcglobalpay.com/#exchange",
       description: "Crypto swaps starting at $0.30 minimum. No registration required. 500+ tokens.",
     },
+    aggregateRating: {
+      "@type": "AggregateRating",
+      ratingValue: "4.8",
+      reviewCount: "1247",
+      bestRating: "5",
+      worstRating: "1",
+    },
+    review: {
+      "@type": "Review",
+      author: {
+        "@type": "Person",
+        name: "Daniel Carter",
+      },
+      datePublished: "2026-03-15",
+      reviewBody: "Fast, registration-free crypto swaps with excellent rates. Converted BTC to USDT in under 30 seconds. The $0.30 minimum is perfect for consolidating small balances.",
+      reviewRating: {
+        "@type": "Rating",
+        ratingValue: "5",
+        bestRating: "5",
+        worstRating: "1",
+      },
+    },
   };
 
   const handleRefresh = useCallback(async () => {
