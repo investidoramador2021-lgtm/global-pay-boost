@@ -27561,4 +27561,19 @@
     <xhtml:link rel="alternate" hreflang="uk" href="https://mrcglobalpay.com/uk/blog/how-to-swap-crypto-dust-for-stablecoins-2026" />
     <xhtml:link rel="alternate" hreflang="x-default" href="https://mrcglobalpay.com/blog/how-to-swap-crypto-dust-for-stablecoins-2026" />
   </url>
+  <url>
+    <loc>https://mrcglobalpay.com/get-widget</loc>
+    <lastmod>2026-04-04</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://mrcglobalpay.com/get-widget" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://mrcglobalpay.com/get-widget" />
+  </url>
+  <url>
+    <loc>https://mrcglobalpay.com/embed/widget</loc>
+    <lastmod>2026-04-04</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.5</priority>
+  </url>
+
 </urlset>
