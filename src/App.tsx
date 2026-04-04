@@ -32,6 +32,8 @@ const DustSwapComparison = lazy(() => import("./pages/DustSwapComparison.tsx"));
 const KeywordPage = lazy(() => import("./pages/KeywordPage.tsx"));
 const GetWidget = lazy(() => import("./pages/GetWidget.tsx"));
 const EmbedWidget = lazy(() => import("./pages/EmbedWidget.tsx"));
+const CompareDirectory = lazy(() => import("./pages/CompareDirectory.tsx"));
+const ComparePage = lazy(() => import("./pages/ComparePage.tsx"));
 const NotFound = lazy(() => import("./pages/NotFound.tsx"));
 
 const queryClient = new QueryClient();
