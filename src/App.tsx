@@ -75,6 +75,8 @@ const AppRoutes = () => (
     <Route path="local-crypto-exchange" element={<KeywordPage />} />
     <Route path="exchange-iu" element={<KeywordPage />} />
     <Route path="get-widget" element={<GetWidget />} />
+    <Route path="compare" element={<CompareDirectory />} />
+    <Route path="compare/:slug" element={<ComparePage />} />
   </>
 );
 
