@@ -1,40 +1,22 @@
 import { useEffect, useMemo, useState } from "react";
 import { useSearchParams } from "react-router-dom";
-import { ChevronDown, X } from "lucide-react";
+import { ChevronDown, Loader2, X } from "lucide-react";
+import {
+  getCurrencies,
+  getEstimate,
+  getMinAmount,
+  type Currency,
+} from "@/lib/changenow";
 
-const POPULAR_TOKENS = [
-  { ticker: "BTC", name: "Bitcoin", icon: "₿" },
-  { ticker: "ETH", name: "Ethereum", icon: "Ξ" },
-  { ticker: "SOL", name: "Solana", icon: "◎" },
-  { ticker: "USDT", name: "Tether", icon: "₮" },
-  { ticker: "USDC", name: "USD Coin", icon: "$" },
-  { ticker: "XRP", name: "Ripple", icon: "✕" },
-  { ticker: "BNB", name: "BNB", icon: "◆" },
-  { ticker: "DOGE", name: "Dogecoin", icon: "Ð" },
-  { ticker: "ADA", name: "Cardano", icon: "₳" },
-  { ticker: "DOT", name: "Polkadot", icon: "●" },
-] as const;
-
-const TOKEN_USD_PRICES: Record<string, number> = {
-  BTC: 83000,
-  ETH: 3200,
-  SOL: 185,
-  USDT: 1,
-  USDC: 1,
-  XRP: 0.62,
-  BNB: 610,
-  DOGE: 0.18,
-  ADA: 0.72,
-  DOT: 8.5,
-};
+const DEFAULT_FROM = "btc";
+const DEFAULT_TO = "usdt";
+const QUICK_TICKERS = ["btc", "eth", "sol", "usdt", "usdc", "xrp", "bnb", "doge", "ada", "dot"];
 
 const sanitizeAmountInput = (value: string) => {
   const normalized = value.replace(/,/g, ".").replace(/[^\d.]/g, "");
   const [whole = "", ...rest] = normalized.split(".");
 
-  if (rest.length === 0) {
-    return whole;
-  }
+  if (rest.length === 0) return whole;
 
   return `${whole}.${rest.join("")}`;
 };
@@ -43,25 +25,36 @@ const formatEnteredAmount = (value: string) => {
   if (!value) return "";
 
   const [whole, decimal] = value.split(".");
-  const formattedWhole = whole ? new Intl.NumberFormat("en-US").format(Number(whole)) : "0";
+  const wholeNumber = whole ? Number(whole) : 0;
+  const formattedWhole = new Intl.NumberFormat("en-US").format(wholeNumber);
 
   return decimal !== undefined ? `${formattedWhole}.${decimal}` : formattedWhole;
 };
 
-const formatQuoteAmount = (value: number) =>
-  new Intl.NumberFormat("en-US", {
-    minimumFractionDigits: value >= 1 ? 2 : 4,
-    maximumFractionDigits: value >= 1 ? 4 : 8,
-  }).format(value);
+const formatQuoteAmount = (value: string) => {
+  const numeric = Number(value);
+
+  if (!Number.isFinite(numeric)) return value;
+
+  return new Intl.NumberFormat("en-US", {
+    minimumFractionDigits: numeric >= 1 ? 2 : 4,
+    maximumFractionDigits: numeric >= 1 ? 6 : 8,
+  }).format(numeric);
+};
 
 const EmbedWidget = () => {
   const [searchParams] = useSearchParams();
   const refId = searchParams.get("ref") || "";
-  const [fromToken, setFromToken] = useState("BTC");
-  const [toToken, setToToken] = useState("USDT");
-  const [amount, setAmount] = useState("");
+  const [currencies, setCurrencies] = useState<Currency[]>([]);
+  const [fromCurrency, setFromCurrency] = useState<Currency | null>(null);
+  const [toCurrency, setToCurrency] = useState<Currency | null>(null);
+  const [amount, setAmount] = useState("1");
   const [isAmountFocused, setIsAmountFocused] = useState(false);
   const [activeSelector, setActiveSelector] = useState<"from" | "to" | null>(null);
+  const [loadingCurrencies, setLoadingCurrencies] = useState(true);
+  const [estimating, setEstimating] = useState(false);
+  const [estimatedAmount, setEstimatedAmount] = useState<string>("");
+  const [minAmount, setMinAmount] = useState<number>(0);
 
   useEffect(() => {
     document.documentElement.classList.add("dark");
@@ -69,56 +62,136 @@ const EmbedWidget = () => {
     document.body.style.background = "transparent";
   }, []);
 
-  const parsedAmount = useMemo(() => {
-    const parsed = Number.parseFloat(amount);
-    return Number.isFinite(parsed) ? parsed : 0;
-  }, [amount]);
+  useEffect(() => {
+    let cancelled = false;
 
-  const estimatedOutput = useMemo(() => {
-    const fromPrice = TOKEN_USD_PRICES[fromToken];
-    const toPrice = TOKEN_USD_PRICES[toToken];
+    const loadCurrencies = async () => {
+      try {
+        const data = await getCurrencies();
+        if (!Array.isArray(data) || cancelled) return;
 
-    if (!parsedAmount || !fromPrice || !toPrice) {
-      return null;
-    }
+        const filtered = data.filter((currency) => QUICK_TICKERS.includes(currency.ticker));
+        const from = filtered.find((currency) => currency.ticker === DEFAULT_FROM) || filtered[0] || null;
+        const to = filtered.find((currency) => currency.ticker === DEFAULT_TO) || filtered[1] || null;
 
-    return (parsedAmount * fromPrice) / toPrice;
-  }, [fromToken, parsedAmount, toToken]);
+        setCurrencies(filtered);
+        setFromCurrency(from);
+        setToCurrency(to && to.ticker !== from?.ticker ? to : filtered.find((currency) => currency.ticker !== from?.ticker) || null);
+      } finally {
+        if (!cancelled) setLoadingCurrencies(false);
+      }
+    };
+
+    loadCurrencies();
+
+    return () => {
+      cancelled = true;
+    };
+  }, []);
+
+  useEffect(() => {
+    let cancelled = false;
+
+    const fetchQuote = async () => {
+      if (!fromCurrency || !toCurrency || !amount || Number.parseFloat(amount) <= 0) {
+        setEstimatedAmount("");
+        return;
+      }
+
+      setEstimating(true);
+
+      try {
+        const [estimate, min] = await Promise.all([
+          getEstimate(fromCurrency.ticker, toCurrency.ticker, amount, true),
+          getMinAmount(fromCurrency.ticker, toCurrency.ticker, true),
+        ]);
+
+        if (cancelled) return;
+
+        setEstimatedAmount(estimate.estimatedAmount?.toString() || "");
+        setMinAmount(min.minAmount || 0);
+      } catch {
+        if (!cancelled) {
+          setEstimatedAmount("");
+          setMinAmount(0);
+        }
+      } finally {
+        if (!cancelled) setEstimating(false);
+      }
+    };
+
+    const timeout = window.setTimeout(fetchQuote, 350);
+
+    return () => {
+      cancelled = true;
+      window.clearTimeout(timeout);
+    };
+  }, [amount, fromCurrency, toCurrency]);
 
   const amountDisplayValue = isAmountFocused ? amount : formatEnteredAmount(amount);
+  const belowMin = useMemo(() => {
+    const parsed = Number.parseFloat(amount);
+    return Number.isFinite(parsed) && parsed > 0 && minAmount > 0 && parsed < minAmount;
+  }, [amount, minAmount]);
 
   const handleSwap = () => {
+    if (!fromCurrency || !toCurrency || !amount) return;
+
     const base = "https://mrcglobalpay.com";
-    const url = `${base}/?from=${fromToken.toLowerCase()}&to=${toToken.toLowerCase()}&amount=${amount}`;
+    const url = `${base}/?from=${fromCurrency.ticker}&to=${toCurrency.ticker}&amount=${amount}`;
     window.open(url, "_blank", "noopener");
   };
 
-  const handleTokenSelect = (ticker: string) => {
+  const handleTokenSelect = (currency: Currency) => {
     if (activeSelector === "from") {
-      setFromToken(ticker);
+      setFromCurrency(currency);
+      if (toCurrency?.ticker === currency.ticker) {
+        setToCurrency(currencies.find((item) => item.ticker !== currency.ticker) || null);
+      }
     }
 
     if (activeSelector === "to") {
-      setToToken(ticker);
+      setToCurrency(currency);
+      if (fromCurrency?.ticker === currency.ticker) {
+        setFromCurrency(currencies.find((item) => item.ticker !== currency.ticker) || null);
+      }
     }
 
     setActiveSelector(null);
   };
 
-  const selectorTokens = POPULAR_TOKENS.filter((token) => {
-    if (activeSelector === "from") {
-      return token.ticker !== toToken;
-    }
-
-    if (activeSelector === "to") {
-      return token.ticker !== fromToken;
-    }
-
+  const selectorCurrencies = currencies.filter((currency) => {
+    if (activeSelector === "from") return currency.ticker !== toCurrency?.ticker;
+    if (activeSelector === "to") return currency.ticker !== fromCurrency?.ticker;
     return true;
   });
 
-  const fromSelected = POPULAR_TOKENS.find((token) => token.ticker === fromToken);
-  const toSelected = POPULAR_TOKENS.find((token) => token.ticker === toToken);
+  if (loadingCurrencies) {
+    return (
+      <div
+        style={{
+          minHeight: "100vh",
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "center",
+          padding: "16px",
+          background: "transparent",
+          fontFamily: "'Inter', system-ui, sans-serif",
+        }}
+      >
+        <div
+          className="flex w-full max-w-[360px] items-center justify-center rounded-2xl border border-white/[0.12] p-12"
+          style={{
+            background: "linear-gradient(135deg, rgba(20,22,36,0.92) 0%, rgba(14,16,28,0.96) 100%)",
+            backdropFilter: "blur(24px)",
+            boxShadow: "0 8px 32px rgba(0,0,0,0.4), inset 0 1px 0 rgba(255,255,255,0.05)",
+          }}
+        >
+          <Loader2 className="h-6 w-6 animate-spin text-white/70" />
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div
@@ -154,11 +227,13 @@ const EmbedWidget = () => {
             <button
               type="button"
               onClick={() => setActiveSelector("from")}
-              className="flex shrink-0 items-center gap-2 rounded-lg border border-white/[0.08] bg-white/[0.06] px-3 py-2 text-sm font-medium text-white/90 transition-colors hover:bg-white/[0.1]"
+              className="flex min-w-[108px] shrink-0 items-center gap-2 rounded-lg border border-white/[0.08] bg-white/[0.06] px-3 py-2 text-sm font-medium text-white/90 transition-colors hover:bg-white/[0.1]"
             >
-              <span className="text-base">{fromSelected?.icon}</span>
-              <span>{fromToken}</span>
-              <ChevronDown className="h-3.5 w-3.5 opacity-60" />
+              {fromCurrency?.image ? (
+                <img src={fromCurrency.image} alt={fromCurrency.name} className="h-4 w-4 rounded-full" loading="lazy" />
+              ) : null}
+              <span className="truncate uppercase">{fromCurrency?.ticker || "---"}</span>
+              <ChevronDown className="h-3.5 w-3.5 shrink-0 opacity-60" />
             </button>
 
             <input
@@ -178,8 +253,8 @@ const EmbedWidget = () => {
           <button
             type="button"
             onClick={() => {
-              setFromToken(toToken);
-              setToToken(fromToken);
+              setFromCurrency(toCurrency);
+              setToCurrency(fromCurrency);
             }}
             className="rounded-full border border-white/[0.1] bg-white/[0.06] p-1.5 transition-colors hover:bg-white/[0.1]"
           >
@@ -189,33 +264,49 @@ const EmbedWidget = () => {
           </button>
         </div>
 
-        <div className="mt-2 mb-4 rounded-xl border border-white/[0.06] bg-white/[0.04] p-3">
+        <div className="mt-2 mb-2 rounded-xl border border-white/[0.06] bg-white/[0.04] p-3">
           <label className="mb-1.5 block text-[10px] uppercase tracking-wider text-white/40">You Get</label>
           <div className="flex items-center gap-3">
             <button
               type="button"
               onClick={() => setActiveSelector("to")}
-              className="flex shrink-0 items-center gap-2 rounded-lg border border-white/[0.08] bg-white/[0.06] px-3 py-2 text-sm font-medium text-white/90 transition-colors hover:bg-white/[0.1]"
+              className="flex min-w-[108px] shrink-0 items-center gap-2 rounded-lg border border-white/[0.08] bg-white/[0.06] px-3 py-2 text-sm font-medium text-white/90 transition-colors hover:bg-white/[0.1]"
             >
-              <span className="text-base">{toSelected?.icon}</span>
-              <span>{toToken}</span>
-              <ChevronDown className="h-3.5 w-3.5 opacity-60" />
+              {toCurrency?.image ? (
+                <img src={toCurrency.image} alt={toCurrency.name} className="h-4 w-4 rounded-full" loading="lazy" />
+              ) : null}
+              <span className="truncate uppercase">{toCurrency?.ticker || "---"}</span>
+              <ChevronDown className="h-3.5 w-3.5 shrink-0 opacity-60" />
             </button>
 
             <div className="min-w-0 flex-1 text-right">
               <div className="truncate text-xl font-semibold text-white/90">
-                {estimatedOutput ? formatQuoteAmount(estimatedOutput) : "—"}
+                {estimating ? "Loading..." : estimatedAmount ? formatQuoteAmount(estimatedAmount) : "—"}
               </div>
               <div className="text-[10px] uppercase tracking-wider text-white/35">
-                {estimatedOutput ? `Estimated ${toToken}` : "Enter an amount"}
+                {belowMin
+                  ? `Min ${formatQuoteAmount(String(minAmount))} ${fromCurrency?.ticker?.toUpperCase()}`
+                  : estimatedAmount
+                    ? `Estimated ${toCurrency?.ticker?.toUpperCase()}`
+                    : "Enter an amount"}
               </div>
             </div>
           </div>
         </div>
 
+        {belowMin ? (
+          <div className="mb-4 rounded-lg border border-amber-400/20 bg-amber-400/10 px-3 py-2 text-[11px] text-amber-100">
+            Minimum amount: {formatQuoteAmount(String(minAmount))} {fromCurrency?.ticker?.toUpperCase()}
+          </div>
+        ) : (
+          <div className="mb-4 text-right text-[10px] uppercase tracking-wider text-white/30">
+            Live fixed-rate pricing
+          </div>
+        )}
+
         <button
           onClick={handleSwap}
-          disabled={!parsedAmount || parsedAmount <= 0}
+          disabled={!amount || Number.parseFloat(amount) <= 0 || belowMin}
           className="w-full rounded-xl py-3 text-sm font-bold uppercase tracking-wider transition-all disabled:cursor-not-allowed disabled:opacity-40"
           style={{
             background: "linear-gradient(135deg, hsl(160 100% 45%) 0%, hsl(200 100% 45%) 100%)",
@@ -256,17 +347,19 @@ const EmbedWidget = () => {
             </div>
 
             <div className="grid max-h-[280px] gap-2 overflow-y-auto pr-1">
-              {selectorTokens.map((token) => (
+              {selectorCurrencies.map((currency) => (
                 <button
-                  key={token.ticker}
+                  key={`${currency.ticker}-${currency.network}`}
                   type="button"
-                  onClick={() => handleTokenSelect(token.ticker)}
+                  onClick={() => handleTokenSelect(currency)}
                   className="flex items-center gap-3 rounded-xl border border-white/[0.08] bg-white/[0.04] px-3 py-3 text-left transition-colors hover:bg-white/[0.08]"
                 >
-                  <span className="text-lg text-white/90">{token.icon}</span>
+                  {currency.image ? (
+                    <img src={currency.image} alt={currency.name} className="h-5 w-5 rounded-full" loading="lazy" />
+                  ) : null}
                   <div className="min-w-0 flex-1">
-                    <div className="font-medium text-white">{token.ticker}</div>
-                    <div className="truncate text-xs text-white/45">{token.name}</div>
+                    <div className="font-medium uppercase text-white">{currency.ticker}</div>
+                    <div className="truncate text-xs text-white/45">{currency.name}</div>
                   </div>
                 </button>
               ))}
