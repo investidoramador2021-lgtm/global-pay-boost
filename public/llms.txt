@@ -118,6 +118,8 @@
 
 ## Tools & Trackers
 
+- [Free Crypto Swap Widget](https://mrcglobalpay.com/get-widget) — Embeddable one-line iframe widget for third-party sites, supports 500+ tokens with live pricing
+- [Embeddable Widget (iframe)](https://mrcglobalpay.com/embed/widget) — Standalone widget endpoint for iframe embedding
 - [LTC Transaction Tracker](https://mrcglobalpay.com/tools/ltc-tracker)
 - [Litecoin Tracker](https://mrcglobalpay.com/tools/litecoin-tracker)
 - [Instant Rate of Change](https://mrcglobalpay.com/tools/instant-rate-change)

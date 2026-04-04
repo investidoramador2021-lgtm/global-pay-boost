@@ -100,6 +100,10 @@ Allow: /vi/
 Allow: /tr/
 Allow: /uk/
 
+# Widget pages
+Allow: /get-widget
+Allow: /embed/widget
+
 # Ping search engines after deployment:
 # Google: https://www.google.com/ping?sitemap=https://mrcglobalpay.com/sitemap.xml
 # Bing (IndexNow): POST https://api.indexnow.org/indexnow with key=5b41e59fca3649f389b22450cd5cb8dc

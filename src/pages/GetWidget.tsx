@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { Helmet } from "react-helmet-async";
-import { Copy, Check, Code2, Zap, Palette, Link2 } from "lucide-react";
+import { Copy, Check, Code2, Zap, Palette, Link2, ArrowRight, Shield } from "lucide-react";
+import { Link } from "react-router-dom";
 import SiteHeader from "@/components/SiteHeader";
 import SiteFooter from "@/components/SiteFooter";
 
@@ -10,8 +11,60 @@ const SIZES = [
   { label: "Large", w: 480, h: 460 },
 ];
 
+const jsonLd = {
+  "@context": "https://schema.org",
+  "@type": "SoftwareApplication",
+  name: "MRC GlobalPay Crypto Swap Widget",
+  applicationCategory: "FinanceApplication",
+  operatingSystem: "Web",
+  offers: {
+    "@type": "Offer",
+    price: "0",
+    priceCurrency: "USD",
+  },
+  description:
+    "Free embeddable crypto swap widget supporting 500+ tokens with live pricing. One-line iframe installation, glassmorphism dark UI, dust-friendly swaps from $0.30.",
+  url: "https://mrcglobalpay.com/get-widget",
+  provider: {
+    "@type": "Organization",
+    name: "MRC GlobalPay",
+    url: "https://mrcglobalpay.com",
+  },
+};
+
+const faqJsonLd = {
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  mainEntity: [
+    {
+      "@type": "Question",
+      name: "How do I add the MRC GlobalPay swap widget to my website?",
+      acceptedAnswer: {
+        "@type": "Answer",
+        text: "Copy the one-line iframe code from the Get Widget page and paste it into your HTML. No API keys, no sign-up, and no backend required.",
+      },
+    },
+    {
+      "@type": "Question",
+      name: "Is the crypto swap widget free to use?",
+      acceptedAnswer: {
+        "@type": "Answer",
+        text: "Yes, the widget is completely free. It includes a small 'Powered by MRC GlobalPay' link at the bottom.",
+      },
+    },
+    {
+      "@type": "Question",
+      name: "What is the minimum swap amount supported by the widget?",
+      acceptedAnswer: {
+        "@type": "Answer",
+        text: "The widget supports swaps starting from $0.30, making it ideal for converting small crypto dust balances.",
+      },
+    },
+  ],
+};
+
 const GetWidget = () => {
-  const [size, setSize] = useState(0); // Default to Small on initial render
+  const [size, setSize] = useState(0);
   const [copied, setCopied] = useState(false);
   const { w, h } = SIZES[size];
 
@@ -27,8 +80,28 @@ const GetWidget = () => {
     <>
       <Helmet>
         <title>Free Crypto Swap Widget | Embed on Your Site | MRC GlobalPay</title>
-        <meta name="description" content="Add a free crypto swap widget to your website. One-line embed code, glassmorphism dark UI, supports 500+ tokens. Dust-friendly swaps from $0.30." />
+        <meta
+          name="description"
+          content="Add a free crypto swap widget to your website. One-line embed code, glassmorphism dark UI, supports 500+ tokens. Dust-friendly swaps from $0.30."
+        />
         <link rel="canonical" href="https://mrcglobalpay.com/get-widget" />
+        <meta property="og:title" content="Free Crypto Swap Widget — Embed on Your Website" />
+        <meta
+          property="og:description"
+          content="One-line iframe embed supporting 500+ tokens with live pricing. Glassmorphism dark UI, dust-friendly from $0.30."
+        />
+        <meta property="og:url" content="https://mrcglobalpay.com/get-widget" />
+        <meta property="og:type" content="website" />
+        <meta property="og:locale" content="en_US" />
+        <meta property="og:site_name" content="MRC GlobalPay" />
+        <meta name="twitter:card" content="summary" />
+        <meta name="twitter:title" content="Free Crypto Swap Widget | MRC GlobalPay" />
+        <meta
+          name="twitter:description"
+          content="Embed a free crypto swap widget on your site. 500+ tokens, live pricing, one line of code."
+        />
+        <script type="application/ld+json">{JSON.stringify(jsonLd)}</script>
+        <script type="application/ld+json">{JSON.stringify(faqJsonLd)}</script>
       </Helmet>
       <SiteHeader />
       <main className="min-h-screen bg-background">
@@ -41,21 +114,37 @@ const GetWidget = () => {
               Free Embeddable Widget
             </div>
             <h1 className="mx-auto max-w-3xl text-3xl font-extrabold tracking-tight text-foreground sm:text-5xl">
-              Add Crypto Swaps to <span className="text-primary">Your Website</span>
+              Free Crypto Swap Widget for <span className="text-primary">Your Website</span>
             </h1>
             <p className="mx-auto mt-4 max-w-xl text-muted-foreground">
-              Embed a professional crypto swap widget in seconds. One line of code, zero backend, supports 500+ tokens with swaps from $0.30.
+              Embed a professional crypto swap widget in seconds. One line of code, zero backend, supports 500+ tokens with
+              dust-friendly swaps from <strong>$0.30</strong>.
             </p>
           </div>
         </section>
 
         {/* Features */}
         <section className="container mx-auto px-4 py-12">
+          <h2 className="mb-8 text-center text-2xl font-bold text-foreground">
+            Why Embed the MRC GlobalPay Swap Widget?
+          </h2>
           <div className="mx-auto grid max-w-4xl gap-6 sm:grid-cols-3">
             {[
-              { icon: Code2, title: "One-Line Install", desc: "Copy a single iframe tag. No npm, no build step, no dependencies." },
-              { icon: Palette, title: "Glassmorphism UI", desc: "Dark-mode widget with frosted glass effects. Looks premium on any site." },
-              { icon: Link2, title: "Backlink Included", desc: "A subtle 'Powered by MRC GlobalPay' link boosts your SEO authority." },
+              {
+                icon: Code2,
+                title: "One-Line Install",
+                desc: "Copy a single iframe tag. No npm, no build step, no dependencies.",
+              },
+              {
+                icon: Palette,
+                title: "Glassmorphism UI",
+                desc: "Dark-mode widget with frosted glass effects. Looks premium on any site.",
+              },
+              {
+                icon: Link2,
+                title: "Backlink Included",
+                desc: "A subtle 'Powered by MRC GlobalPay' link boosts your SEO authority.",
+              },
             ].map(({ icon: Icon, title, desc }) => (
               <div key={title} className="rounded-xl border border-border bg-card p-6 text-center">
                 <div className="mx-auto mb-3 flex h-10 w-10 items-center justify-center rounded-lg bg-primary/10">
@@ -71,7 +160,9 @@ const GetWidget = () => {
         {/* Widget Preview + Code */}
         <section className="container mx-auto px-4 py-12">
           <div className="mx-auto max-w-5xl">
-            <h2 className="mb-8 text-center text-2xl font-bold text-foreground">Preview & Get Your Code</h2>
+            <h2 className="mb-8 text-center text-2xl font-bold text-foreground">
+              How Do I Get the Embed Code?
+            </h2>
             <div className="grid gap-8 lg:grid-cols-2">
               {/* Live Widget Preview */}
               <div className="flex flex-col items-center">
@@ -95,7 +186,12 @@ const GetWidget = () => {
                     src="/embed/widget"
                     width={w}
                     height={h}
-                    style={{ border: "none", borderRadius: 16, overflow: "hidden", maxWidth: "100%" }}
+                    style={{
+                      border: "none",
+                      borderRadius: 16,
+                      overflow: "hidden",
+                      maxWidth: "100%",
+                    }}
                     allow="clipboard-write"
                     title="MRC GlobalPay Crypto Swap Widget Preview"
                   />
@@ -126,10 +222,81 @@ const GetWidget = () => {
                 <div className="mt-6 rounded-xl border border-primary/20 bg-primary/5 p-4">
                   <h4 className="text-sm font-semibold text-foreground mb-1">💡 Customize Size</h4>
                   <p className="text-xs text-muted-foreground">
-                    Adjust the <code className="rounded bg-muted px-1 py-0.5 text-foreground/80">width</code> and <code className="rounded bg-muted px-1 py-0.5 text-foreground/80">height</code> attributes to fit your layout. The widget is fully responsive within its container.
+                    Adjust the{" "}
+                    <code className="rounded bg-muted px-1 py-0.5 text-foreground/80">width</code> and{" "}
+                    <code className="rounded bg-muted px-1 py-0.5 text-foreground/80">height</code> attributes to fit your
+                    layout. The widget is fully responsive within its container.
                   </p>
                 </div>
               </div>
+            </div>
+          </div>
+        </section>
+
+        {/* FAQ */}
+        <section className="container mx-auto px-4 py-12">
+          <div className="mx-auto max-w-3xl">
+            <h2 className="mb-8 text-center text-2xl font-bold text-foreground">
+              Frequently Asked Questions About the Widget
+            </h2>
+            <div className="space-y-6">
+              {faqJsonLd.mainEntity.map((faq) => (
+                <div key={faq.name} className="rounded-xl border border-border bg-card p-5">
+                  <h3 className="font-semibold text-foreground">{faq.name}</h3>
+                  <p className="mt-2 text-sm text-muted-foreground">{faq.acceptedAnswer.text}</p>
+                </div>
+              ))}
+            </div>
+          </div>
+        </section>
+
+        {/* Internal Links / CTA */}
+        <section className="container mx-auto px-4 py-12">
+          <div className="mx-auto max-w-3xl">
+            <h2 className="mb-6 text-center text-2xl font-bold text-foreground">
+              Explore More MRC GlobalPay Tools
+            </h2>
+            <div className="grid gap-4 sm:grid-cols-2">
+              {[
+                {
+                  to: "/",
+                  icon: ArrowRight,
+                  label: "Instant Crypto Swaps",
+                  desc: "500+ tokens, live rates, from $0.30",
+                },
+                {
+                  to: "/dust-swap-comparison",
+                  icon: Zap,
+                  label: "Dust Swap Comparison",
+                  desc: "See how our minimums beat the competition",
+                },
+                {
+                  to: "/transparency-security",
+                  icon: Shield,
+                  label: "Transparency & Security",
+                  desc: "Canadian MSB registration & compliance",
+                },
+                {
+                  to: "/blog",
+                  icon: Code2,
+                  label: "Blog & Guides",
+                  desc: "Expert crypto swap guides & market analysis",
+                },
+              ].map(({ to, icon: Icon, label, desc }) => (
+                <Link
+                  key={to}
+                  to={to}
+                  className="flex items-start gap-3 rounded-xl border border-border bg-card p-4 transition-colors hover:border-primary/30 hover:bg-accent/50"
+                >
+                  <div className="mt-0.5 flex h-8 w-8 shrink-0 items-center justify-center rounded-lg bg-primary/10">
+                    <Icon className="h-4 w-4 text-primary" />
+                  </div>
+                  <div>
+                    <div className="font-semibold text-foreground">{label}</div>
+                    <div className="text-xs text-muted-foreground">{desc}</div>
+                  </div>
+                </Link>
+              ))}
             </div>
           </div>
         </section>
