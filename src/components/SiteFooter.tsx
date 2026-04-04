@@ -109,6 +109,7 @@ const expertiseLinks = [
   { label: "Non-Custodial Swaps", href: "/transparency-security", title: "How non-custodial crypto swaps work" },
   { label: "Micro-Swap FAQ", href: "/#faq", title: "Frequently asked questions about micro-swaps" },
   { label: "AML Compliance", href: "/aml", title: "Our Anti-Money Laundering policy and compliance" },
+  { label: "Compare Exchanges", href: "/compare", title: "Compare MRC GlobalPay vs 50+ crypto exchanges" },
 ];
 
 type FooterLink = { label: string; href: string; title: string };
@@ -200,9 +201,20 @@ const SiteFooter = () => {
           </div>
         </div>
 
-        {/* Ecosystem */}
+        {/* Popular Comparisons */}
         <div className="mt-8 border-t border-border pt-8">
-          <div className="grid gap-8 sm:grid-cols-2 lg:grid-cols-3">
+          <div className="grid gap-8 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
+            <FooterLinkList title="Popular Comparisons" links={[
+              { label: "MRC vs Binance", href: "/compare/mrc-vs-binance", title: "Compare MRC GlobalPay vs Binance" },
+              { label: "MRC vs Coinbase", href: "/compare/mrc-vs-coinbase", title: "Compare MRC GlobalPay vs Coinbase" },
+              { label: "MRC vs ChangeNOW", href: "/compare/mrc-vs-changenow", title: "Compare MRC GlobalPay vs ChangeNOW" },
+              { label: "MRC vs Changelly", href: "/compare/mrc-vs-changelly", title: "Compare MRC GlobalPay vs Changelly" },
+              { label: "MRC vs SimpleSwap", href: "/compare/mrc-vs-simpleswap", title: "Compare MRC GlobalPay vs SimpleSwap" },
+              { label: "MRC vs Uniswap", href: "/compare/mrc-vs-uniswap", title: "Compare MRC GlobalPay vs Uniswap" },
+              { label: "MRC vs Kraken", href: "/compare/mrc-vs-kraken", title: "Compare MRC GlobalPay vs Kraken" },
+              { label: "MRC vs THORChain", href: "/compare/mrc-vs-thorchain", title: "Compare MRC GlobalPay vs THORChain" },
+              { label: "All Comparisons →", href: "/compare", title: "View all 50+ exchange comparisons" },
+            ]} />
             <FooterLinkList title="Ecosystem & Prices" links={ecosystemLinks} />
           </div>
         </div>

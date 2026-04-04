@@ -77,6 +77,48 @@ export type Database = {
         }
         Relationships: []
       }
+      competitors: {
+        Row: {
+          avg_speed: string
+          created_at: string
+          fees: string
+          id: string
+          kyc_policy: string
+          min_swap_usd: string
+          mrc_advantage: string
+          name: string
+          primary_weakness: string
+          slug: string
+          updated_at: string
+        }
+        Insert: {
+          avg_speed?: string
+          created_at?: string
+          fees?: string
+          id?: string
+          kyc_policy?: string
+          min_swap_usd?: string
+          mrc_advantage?: string
+          name: string
+          primary_weakness?: string
+          slug: string
+          updated_at?: string
+        }
+        Update: {
+          avg_speed?: string
+          created_at?: string
+          fees?: string
+          id?: string
+          kyc_policy?: string
+          min_swap_usd?: string
+          mrc_advantage?: string
+          name?: string
+          primary_weakness?: string
+          slug?: string
+          updated_at?: string
+        }
+        Relationships: []
+      }
       transfer_email_subscriptions: {
         Row: {
           created_at: string
