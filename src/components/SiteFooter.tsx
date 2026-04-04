@@ -109,6 +109,7 @@ const expertiseLinks = [
   { label: "Non-Custodial Swaps", href: "/transparency-security", title: "How non-custodial crypto swaps work" },
   { label: "Micro-Swap FAQ", href: "/#faq", title: "Frequently asked questions about micro-swaps" },
   { label: "AML Compliance", href: "/aml", title: "Our Anti-Money Laundering policy and compliance" },
+  { label: "Compare Exchanges", href: "/compare", title: "Compare MRC GlobalPay vs 50+ crypto exchanges" },
 ];
 
 type FooterLink = { label: string; href: string; title: string };
