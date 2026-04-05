@@ -110,6 +110,7 @@ const expertiseLinks = [
   { label: "Micro-Swap FAQ", href: "/#faq", title: "Frequently asked questions about micro-swaps" },
   { label: "AML Compliance", href: "/aml", title: "Our Anti-Money Laundering policy and compliance" },
   { label: "Compare Exchanges", href: "/compare", title: "Compare MRC GlobalPay vs 50+ crypto exchanges" },
+  { label: "Swap Solutions", href: "/solutions", title: "Browse all micro-swap solution guides" },
 ];
 
 type FooterLink = { label: string; href: string; title: string };
