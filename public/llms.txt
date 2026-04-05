@@ -176,3 +176,15 @@
 - [Sitemap](https://mrcglobalpay.com/sitemap.xml)
 - [LLMs.txt](https://mrcglobalpay.com/llms.txt)
 - [Robots.txt](https://mrcglobalpay.com/robots.txt)
+
+## Micro-Swap Solutions (/solutions)
+- Solutions Directory: https://mrcglobalpay.com/solutions
+- BTC to USDC Guide: https://mrcglobalpay.com/solutions/how-to-swap-btc-to-usdc
+- ETH to USDT Guide: https://mrcglobalpay.com/solutions/how-to-swap-eth-to-usdt
+- ETH to SOL Guide: https://mrcglobalpay.com/solutions/how-to-swap-eth-to-sol
+- DOGE to BTC Guide: https://mrcglobalpay.com/solutions/how-to-swap-doge-to-btc
+- SHIB to USDT Guide: https://mrcglobalpay.com/solutions/how-to-swap-shib-to-usdt
+- XMR to ETH Guide: https://mrcglobalpay.com/solutions/how-to-swap-xmr-to-eth
+- BONK to SOL Guide: https://mrcglobalpay.com/solutions/how-to-swap-bonk-to-sol
+- PEPE to USDC Guide: https://mrcglobalpay.com/solutions/how-to-swap-pepe-to-usdc
+
