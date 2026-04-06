@@ -19,6 +19,12 @@
 - [Blog](https://mrcglobalpay.com/blog)
 - [Transparency & Security](https://mrcglobalpay.com/transparency-security)
 - [Micro-Swap Comparison](https://mrcglobalpay.com/dust-swap-comparison)
+- [Trust & Transparency Hub](https://mrcglobalpay.com/learn)
+- [Non-Custodial Exchange](https://mrcglobalpay.com/learn/why-non-custodial-is-safer)
+- [FINTRAC MSB Registration](https://mrcglobalpay.com/learn/canadian-fintrac-msb)
+- [Our Liquidity Partners](https://mrcglobalpay.com/learn/our-liquidity-partners)
+- [Swap Without Registration](https://mrcglobalpay.com/learn/swap-without-registration)
+- [Track Your Micro-Swap](https://mrcglobalpay.com/learn/tracking-your-micro-swap)
 
 ## Featured Swap Pairs
 

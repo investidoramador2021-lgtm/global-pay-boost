@@ -109,6 +109,8 @@ Allow: /compare
 Allow: /compare/
 Allow: /solutions
 Allow: /solutions/
+Allow: /learn
+Allow: /learn/
 
 # Ping search engines after deployment:
 # Google: https://www.google.com/ping?sitemap=https://mrcglobalpay.com/sitemap.xml
