@@ -16,6 +16,7 @@ import MsbTrustBar from "@/components/MsbTrustBar";
 import SiteFooter from "@/components/SiteFooter";
 import PullToRefresh from "@/components/PullToRefresh";
 import ShadowSeoFaq from "@/components/ShadowSeoFaq";
+import TrendingEcosystems from "@/components/TrendingEcosystems";
 import { Helmet } from "react-helmet-async";
 
 const Index = () => {
