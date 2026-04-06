@@ -170,7 +170,7 @@ const SiteFooter = () => {
           </div>
 
           <FooterLinkList title="Crypto Guides" links={resourceLinks} />
-          <FooterLinkList title="Expertise" links={expertiseLinks} />
+          <FooterLinkList title="Security & Legal" links={securityLegalLinks} />
 
           <div>
             <h3 className="font-display text-xs font-semibold uppercase tracking-wider text-foreground/80 sm:text-sm">
