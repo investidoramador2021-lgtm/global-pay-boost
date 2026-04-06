@@ -142,6 +142,13 @@ const ExchangeWidget = () => {
         pyth: "pyth",
         hnt: "hnt",
         render: "render",
+        aixbt: "aixbtsol",
+        akt: "aktsol",
+        bad: "badsol",
+        banana: "bananasol",
+        bpsol: "bpsol",
+        babydoge: "babydoge",
+        bera: "bera",
       };
 
       // Tokens pending liquidity — default to USDC (Solana) with warning

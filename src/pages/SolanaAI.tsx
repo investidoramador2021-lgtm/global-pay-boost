@@ -11,11 +11,14 @@ import { Button } from "@/components/ui/button";
 /* ── Active Solana AI & DePIN Pairs — April 2026 ── */
 const aiPairs = [
   { from: "SOL", to: "GOAT", niche: "AI-Agent Memes", why: "The first AI-agent endorsed memecoin with massive viral reach and high-frequency micro-swaps.", color: "#14F195" },
-  { from: "USDC", to: "JUP", niche: "DEX Aggregator", why: "Jupiter is Solana's leading DEX aggregator. Convert stablecoins into JUP governance tokens instantly.", color: "#00D2FF" },
-  { from: "SOL", to: "PYTH", niche: "Oracle Network", why: "Pyth delivers institutional-grade price feeds to DeFi. Swap SOL into the oracle economy from $0.30.", color: "#7B61FF" },
+  { from: "SOL", to: "AIXBT", niche: "Top Tier AI Agent", why: "Leading AI intelligence agent on Solana — autonomous market analysis and on-chain execution.", color: "#00D2FF" },
+  { from: "SOL", to: "BAD", niche: "AI Community Classic", why: "Community-driven AI agent token with strong holder base and consistent trading volume.", color: "#FFD93D" },
+  { from: "USDC", to: "JUP", niche: "DEX Aggregator", why: "Jupiter is Solana's leading DEX aggregator. Convert stablecoins into JUP governance tokens instantly.", color: "#7B61FF" },
+  { from: "SOL", to: "PYTH", niche: "Oracle Network", why: "Pyth delivers institutional-grade price feeds to DeFi. Swap SOL into the oracle economy from $0.30.", color: "#9945FF" },
   { from: "SOL", to: "HNT", niche: "DePIN — Helium", why: "Helium's decentralized wireless network rewards hotspot operators in HNT. Swap your earned rewards into SOL or USDC instantly.", color: "#474DFF" },
   { from: "SOL", to: "RENDER", niche: "DePIN — Render", why: "The GPU rendering network for AI and 3D workloads. Convert your Render node rewards into liquid assets from $0.30.", color: "#E34234" },
-  { from: "USDC", to: "GOAT", niche: "Stablecoin Entry", why: "Enter the AI agent economy directly from USDC — no SOL required. Swap stablecoins for GOAT with zero registration.", color: "#FFD93D" },
+  { from: "SOL", to: "AKT", niche: "Cloud Compute", why: "Akash Network provides decentralized cloud computing. Swap SOL into the permissionless compute economy.", color: "#FF6B6B" },
+  { from: "SOL", to: "BPSOL", niche: "Ecosystem Staking", why: "Backpack's liquid staking token — earn staking rewards while maintaining full liquidity on Solana.", color: "#00C2A8" },
 ];
 
 const quickFacts = [
