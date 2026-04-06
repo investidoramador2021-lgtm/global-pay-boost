@@ -151,10 +151,15 @@ const SolanaAI = () => (
 
           {/* ── Trending AI Index Grid ── */}
           <section>
-            <h2 className="mb-2 text-2xl font-bold text-foreground">Trending Solana AI Index — April 2026</h2>
-            <p className="mb-6 text-muted-foreground">
+            <h2 className="mb-2 text-2xl font-bold text-foreground">Trending Solana AI &amp; DePIN Index — April 2026</h2>
+            <p className="mb-4 text-muted-foreground">
               Each card links directly to a pre-filled swap. Click <strong>"Swap Now"</strong> to execute instantly.
             </p>
+            {/* DePIN Dust Banner */}
+            <div className="mb-6 rounded-lg border border-primary/30 bg-primary/5 p-4 text-sm text-muted-foreground">
+              <strong className="text-foreground">🛰️ Earned rewards from Helium or Render?</strong>{" "}
+              Swap your DePIN dust for SOL or USDC instantly from $0.30 — no account required.
+            </div>
             <div className="grid gap-4 sm:grid-cols-2">
               {aiPairs.map((p) => (
                 <Card key={`${p.from}-${p.to}`} className="group relative overflow-hidden transition-shadow hover:shadow-lg">
