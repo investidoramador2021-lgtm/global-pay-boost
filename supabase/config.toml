@@ -11,3 +11,6 @@ verify_jwt = false
 
 [functions.ping-search-engines]
 verify_jwt = false
+
+[functions.coingecko-prices]
+verify_jwt = false
