@@ -19,7 +19,7 @@ export const AUTHORITY_ARTICLES: AuthorityArticle[] = [
     slug: "canadian-fintrac-msb",
     category: "Legal",
     key_fact: "Registered with FINTRAC Canada",
-    trust_signal: "Full AML/KYC compliance under Canadian law",
+    trust_signal: "Full AML compliance under Canadian law",
   },
   {
     topic: "Partner Security",

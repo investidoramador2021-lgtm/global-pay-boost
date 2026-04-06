@@ -33,16 +33,16 @@ const popularCryptoSwaps = [
 
 
 const buyLinks = [
-  { label: "Buy Bitcoin", href: "/buy/bitcoin-no-kyc", title: "Buy Bitcoin with no registration required" },
+  { label: "Buy Bitcoin", href: "/buy/bitcoin-no-kyc", title: "Buy Bitcoin registration-free, no account required" },
   { label: "Buy Ethereum", href: "/buy/ethereum", title: "Buy Ethereum instantly with no account" },
-  { label: "Buy Solana", href: "/buy/solana-no-kyc", title: "Buy Solana with no registration required" },
+  { label: "Buy Solana", href: "/buy/solana-no-kyc", title: "Buy Solana registration-free, no account required" },
   { label: "Buy Solana No Verification", href: "/buy/solana-no-verification", title: "Buy Solana with no identity verification" },
   { label: "Buy Solana PayPal", href: "/buy/solana-paypal", title: "Buy Solana with PayPal instantly" },
   { label: "Buy Ether Instant", href: "/buy/ether-instant", title: "Buy Ether instantly with no delays" },
   { label: "Buy XDC", href: "/buy/xdc", title: "Buy XDC Network token instantly" },
   { label: "Buy LTC PayPal", href: "/buy/ltc-paypal", title: "Buy Litecoin with PayPal" },
   { label: "Buy Celo", href: "/buy/celo", title: "Buy Celo cryptocurrency instantly" },
-  { label: "Buy Monero Private", href: "/buy/monero-no-kyc", title: "Buy Monero privately with no registration" },
+  { label: "Buy Monero Private", href: "/buy/monero-no-kyc", title: "Buy Monero privately, registration-free" },
   { label: "Bitcoin No Verification", href: "/buy/bitcoin-no-verification", title: "Buy Bitcoin with no identity verification" },
 ];
 
