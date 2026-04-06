@@ -40,6 +40,7 @@ const LearnDirectory = lazy(() => import("./pages/LearnDirectory.tsx"));
 const LearnArticle = lazy(() => import("./pages/LearnArticle.tsx"));
 const DeveloperHub = lazy(() => import("./pages/DeveloperHub.tsx"));
 const CryptoDustCalculatorPage = lazy(() => import("./pages/CryptoDustCalculator.tsx"));
+const SolanaAI = lazy(() => import("./pages/SolanaAI.tsx"));
 const SolanaEcosystem = lazy(() => import("./pages/SolanaEcosystem.tsx"));
 const NotFound = lazy(() => import("./pages/NotFound.tsx"));
 
@@ -91,6 +92,7 @@ const AppRoutes = () => (
     <Route path="developer" element={<DeveloperHub />} />
     <Route path="tools/crypto-dust-calculator" element={<CryptoDustCalculatorPage />} />
     <Route path="ecosystem/solana" element={<SolanaEcosystem />} />
+    <Route path="ecosystem/solana-ai" element={<SolanaAI />} />
   </>
 );
 
