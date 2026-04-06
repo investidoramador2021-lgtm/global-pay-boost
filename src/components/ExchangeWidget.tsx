@@ -135,24 +135,38 @@ const ExchangeWidget = () => {
       const rawTo = params.get("to")?.toLowerCase();
       const paramAmount = params.get("amount");
 
-      // Solana AI & DePIN ticker mapping — map friendly names to widget-specific tickers
+      // Solana AI & DePIN ticker mapping — "clean URL" to "widget ticker" auto-correct
       const TICKER_MAP: Record<string, string> = {
         goat: "goatsol",
         zerebro: "zerebrosol",
         ai16z: "ai16zsol",
         pippin: "pippinsol",
-        hnt: "hnt",
+        virtual: "virtualsol",
+        eliza: "elizasol",
+        hnt: "hntsol",
         jup: "jup",
         render: "render",
       };
       const paramTo = rawTo ? (TICKER_MAP[rawTo] || rawTo) : undefined;
+      const paramFromMapped = paramFrom ? (TICKER_MAP[paramFrom] || paramFrom) : undefined;
 
       getCurrencies()
         .then((data) => {
           if (Array.isArray(data)) {
             setCurrencies(data);
-            const fromMatch = paramFrom ? data.find((c) => c.ticker === paramFrom) : null;
-            const toMatch = paramTo ? data.find((c) => c.ticker === paramTo) : null;
+
+            // Helper: find currency by mapped ticker, fallback to raw param
+            const findCurrency = (mapped: string | undefined, raw: string | undefined) => {
+              if (!mapped) return null;
+              const exact = data.find((c) => c.ticker === mapped);
+              if (exact) return exact;
+              // If mapped ticker not found, try raw as last resort
+              if (raw && raw !== mapped) return data.find((c) => c.ticker === raw) || null;
+              return null;
+            };
+
+            const fromMatch = findCurrency(paramFromMapped, paramFrom);
+            const toMatch = findCurrency(paramTo, rawTo);
             setFromCurrency(fromMatch || data.find((c) => c.ticker === "btc") || data[0]);
             setToCurrency(toMatch || data.find((c) => c.ticker === "eth") || data[1]);
             if (paramAmount && parseFloat(paramAmount) > 0) {
