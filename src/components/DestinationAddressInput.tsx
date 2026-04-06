@@ -118,6 +118,8 @@ interface DestinationAddressInputProps {
   /** Expected address network type for cross-validation */
   expectedNetworkType?: AddressNetworkType;
   className?: string;
+  /** Lock the input as read-only (ref-link hydration) */
+  disabled?: boolean;
 }
 
 const DestinationAddressInput = ({
