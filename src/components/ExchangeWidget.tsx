@@ -453,10 +453,11 @@ const ExchangeWidget = () => {
     );
   };
 
-  if (loading) {
+  if (loading || retrying) {
     return (
-      <div className="flex h-80 items-center justify-center rounded-2xl border border-border bg-card shadow-elevated">
+      <div className="flex h-80 flex-col items-center justify-center gap-3 rounded-2xl border border-border bg-card shadow-elevated">
         <Loader2 className="h-8 w-8 animate-spin text-primary" />
+        {retrying && <p className="text-sm text-muted-foreground animate-pulse">Reloading currencies…</p>}
       </div>
     );
   }
