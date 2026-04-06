@@ -244,7 +244,11 @@ export default function CryptoDustCalculator() {
               )}
 
               {/* Results grid */}
-              <h2 className="mb-4 text-lg font-bold text-foreground">Your Purchasing Power</h2>
+              <h2 className="mb-2 text-lg font-bold text-foreground">Your Purchasing Power</h2>
+              <p className="mb-4 text-xs text-muted-foreground">
+                * Estimates exclude network and swap fees. Final amounts may vary. Prices provided by{" "}
+                <a href="https://www.coingecko.com" target="_blank" rel="noopener noreferrer" className="underline hover:text-primary">CoinGecko</a>.
+              </p>
               {loading && !prices ? (
                 <div className="grid gap-4 sm:grid-cols-3">
                   {[1, 2, 3].map((i) => (
