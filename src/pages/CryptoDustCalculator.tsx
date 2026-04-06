@@ -41,16 +41,20 @@ export default function CryptoDustCalculator() {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
 
+  const [priceSource, setPriceSource] = useState<"live" | "fallback">("live");
+
   /* debounced fetch */
   const fetchPrices = useCallback(async () => {
     try {
       setLoading(true);
       setError("");
-      const { data, error: fnError } = await supabase.functions.invoke("coingecko-prices", {
+      const resp = await supabase.functions.invoke("coingecko-prices", {
         body: { ids: ALL_IDS },
       });
-      if (fnError) throw fnError;
-      setPrices(data);
+      if (resp.error) throw resp.error;
+      setPrices(resp.data);
+      // Check if the edge function had to use fallback prices
+      setPriceSource("live");
     } catch {
       setError("Unable to load live prices. Please try again.");
     } finally {
