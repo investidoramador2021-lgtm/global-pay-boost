@@ -27849,4 +27849,24 @@
     <xhtml:link rel="alternate" hreflang="uk" href="https://mrcglobalpay.com/uk/ecosystem/solana-ai" />
     <xhtml:link rel="alternate" hreflang="x-default" href="https://mrcglobalpay.com/ecosystem/solana-ai" />
   </url>
+  <url>
+    <loc>https://mrcglobalpay.com/developers</loc>
+    <lastmod>2026-04-06</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://mrcglobalpay.com/developers" />
+    <xhtml:link rel="alternate" hreflang="es" href="https://mrcglobalpay.com/es/developers" />
+    <xhtml:link rel="alternate" hreflang="pt" href="https://mrcglobalpay.com/pt/developers" />
+    <xhtml:link rel="alternate" hreflang="fr" href="https://mrcglobalpay.com/fr/developers" />
+    <xhtml:link rel="alternate" hreflang="ja" href="https://mrcglobalpay.com/ja/developers" />
+    <xhtml:link rel="alternate" hreflang="fa" href="https://mrcglobalpay.com/fa/developers" />
+    <xhtml:link rel="alternate" hreflang="ur" href="https://mrcglobalpay.com/ur/developers" />
+    <xhtml:link rel="alternate" hreflang="he" href="https://mrcglobalpay.com/he/developers" />
+    <xhtml:link rel="alternate" hreflang="af" href="https://mrcglobalpay.com/af/developers" />
+    <xhtml:link rel="alternate" hreflang="hi" href="https://mrcglobalpay.com/hi/developers" />
+    <xhtml:link rel="alternate" hreflang="vi" href="https://mrcglobalpay.com/vi/developers" />
+    <xhtml:link rel="alternate" hreflang="tr" href="https://mrcglobalpay.com/tr/developers" />
+    <xhtml:link rel="alternate" hreflang="uk" href="https://mrcglobalpay.com/uk/developers" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://mrcglobalpay.com/developers" />
+  </url>
 </urlset>

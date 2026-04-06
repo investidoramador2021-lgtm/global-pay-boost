@@ -129,6 +129,7 @@
 ## Developer Hub
 
 - [Developer Hub](https://mrcglobalpay.com/developer) — Widget integration docs, URL deep-linking parameters, and supported blockchain network table
+- [Solana API Documentation](https://mrcglobalpay.com/developers) — Programmatic non-custodial Solana swap API. 50+ token registry with contract addresses, ticker auto-correct layer, DOM identifiers for bot integration, and downloadable JSON token list. $0.30 minimum, no API keys.
 - [Free Crypto Swap Widget](https://mrcglobalpay.com/get-widget) — Embeddable one-line iframe widget for third-party sites, supports 500+ tokens with live pricing
 - [Embeddable Widget (iframe)](https://mrcglobalpay.com/embed/widget) — Standalone widget endpoint for iframe embedding
 
