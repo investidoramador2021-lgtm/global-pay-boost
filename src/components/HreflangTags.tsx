@@ -35,7 +35,9 @@ const HreflangTags = () => {
   const { pathname } = useLocation();
   const currentLang = getLangFromPath(pathname);
   const barePath = stripLangPrefix(pathname);
-  const canonicalUrl = `${BASE_URL}${langPath(currentLang, barePath)}`;
+  // Canonical ALWAYS points to English version to prevent Google
+  // "Duplicate, Google chose different canonical" for untranslated content
+  const canonicalUrl = `${BASE_URL}${barePath.startsWith("/") ? barePath : `/${barePath}`}`;
 
   return (
     <Helmet>
