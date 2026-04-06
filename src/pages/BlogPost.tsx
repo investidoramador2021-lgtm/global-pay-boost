@@ -72,7 +72,8 @@ const BlogPostPage = () => {
 
   if (!post) return <Navigate to={lp("/blog")} replace />;
 
-  const postUrl = `https://mrcglobalpay.com${lp(`/blog/${post.slug}`)}`;
+  // Canonical always points to English URL to avoid "duplicate canonical" in GSC
+  const postUrl = `https://mrcglobalpay.com/blog/${post.slug}`;
 
   const jsonLd = {
     "@context": "https://schema.org",

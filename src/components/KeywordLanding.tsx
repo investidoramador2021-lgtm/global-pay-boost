@@ -54,7 +54,8 @@ const KeywordLanding = ({ data }: Props) => {
   const { keyword, primaryH1, benefitHook, targetUrl, intentType, canonicalUrl } = data;
   const related = getRelatedKeywords(data);
   const canonicalPath = canonicalUrl || targetUrl;
-  const canonical = `https://mrcglobalpay.com${lp(canonicalPath)}`;
+  // Canonical always points to English URL to avoid GSC duplicate canonical issues
+  const canonical = `https://mrcglobalpay.com${canonicalPath}`;
   const truncatedKw = keyword.length > 30 ? keyword.slice(0, 30).trim() : keyword;
   const title = `${truncatedKw} | MRC GlobalPay`;
   const description = `${benefitHook} Swap from $0.30 with no account. 500+ tokens on MRC GlobalPay.`;
