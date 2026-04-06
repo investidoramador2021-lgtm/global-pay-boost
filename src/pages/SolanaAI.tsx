@@ -1,6 +1,6 @@
 import { Helmet } from "react-helmet-async";
 import { Link } from "react-router-dom";
-import { ShieldCheck, Zap, Globe, Cpu, ArrowRight, Code2, Bot, Sparkles } from "lucide-react";
+import { ShieldCheck, Zap, Globe, Cpu, ArrowRight, Code2, Bot, Sparkles, AlertTriangle } from "lucide-react";
 import SiteHeader from "@/components/SiteHeader";
 import SiteFooter from "@/components/SiteFooter";
 import MsbTrustBar from "@/components/MsbTrustBar";
@@ -8,14 +8,14 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 
-/* ── Trending Solana AI Index — April 2026 ── */
+/* ── Active Solana AI & DePIN Pairs — April 2026 ── */
 const aiPairs = [
   { from: "SOL", to: "GOAT", niche: "AI-Agent Memes", why: "The first AI-agent endorsed memecoin with massive viral reach and high-frequency micro-swaps.", color: "#14F195" },
-  { from: "SOL", to: "ZEREBRO", niche: "AI Social Layer", why: "Trending autonomous social influencer token powering AI-generated content at scale.", color: "#00D2FF" },
-  { from: "SOL", to: "PIPPIN", niche: "AI Infrastructure", why: "Infrastructure token for self-sustaining AI agent networks that auto-manage DePIN resources.", color: "#FFD93D" },
-  { from: "USDC", to: "AI16Z", niche: "Agentic VC", why: "The on-chain venture fund governed by AI agents — swap stablecoins into the agentic economy.", color: "#FF6B6B" },
+  { from: "USDC", to: "JUP", niche: "DEX Aggregator", why: "Jupiter is Solana's leading DEX aggregator. Convert stablecoins into JUP governance tokens instantly.", color: "#00D2FF" },
+  { from: "SOL", to: "PYTH", niche: "Oracle Network", why: "Pyth delivers institutional-grade price feeds to DeFi. Swap SOL into the oracle economy from $0.30.", color: "#7B61FF" },
   { from: "SOL", to: "HNT", niche: "DePIN — Helium", why: "Helium's decentralized wireless network rewards hotspot operators in HNT. Swap your earned rewards into SOL or USDC instantly.", color: "#474DFF" },
   { from: "SOL", to: "RENDER", niche: "DePIN — Render", why: "The GPU rendering network for AI and 3D workloads. Convert your Render node rewards into liquid assets from $0.30.", color: "#E34234" },
+  { from: "USDC", to: "GOAT", niche: "Stablecoin Entry", why: "Enter the AI agent economy directly from USDC — no SOL required. Swap stablecoins for GOAT with zero registration.", color: "#FFD93D" },
 ];
 
 const quickFacts = [
@@ -32,7 +32,7 @@ const faqs = [
   { q: "How can AI agents use MRC Global Pay programmatically?", a: "AI agents can trigger swaps via URL parameters: mrcglobalpay.com/?from=SOL&to=GOAT&amount=1.0. No API keys are needed — just a simple HTTP redirect." },
   { q: "Can I swap my Helium or Render DePIN rewards?", a: "Yes. Earned HNT from Helium hotspots or RENDER from GPU nodes? Swap your DePIN dust into SOL or USDC instantly from just $0.30 — no account required." },
   { q: "Is MRC Global Pay regulated for institutional use?", a: "Yes. MRC Global Pay is a Canadian Registered Money Services Business (MSB) licensed under FINTRAC, providing institutional-grade compliance for both human and machine-initiated swaps." },
-  { q: "What Solana AI and DePIN tokens are supported?", a: "We support GOAT, ZEREBRO, AI16Z, PIPPIN, HNT (Helium), RENDER, JUP (Jupiter), and hundreds more Solana tokens via 700+ liquidity sources." },
+  { q: "What Solana AI and DePIN tokens are supported?", a: "We currently support GOAT, JUP (Jupiter), PYTH (Pyth Network), HNT (Helium), and RENDER via 700+ liquidity sources. New tokens like Zerebro and Eliza are being added as liquidity stabilizes." },
 ];
 
 const jsonLd = {
@@ -40,13 +40,13 @@ const jsonLd = {
   "@type": "FinancialService",
   name: "MRC Global Pay — Solana AI & Machine Economy Hub",
   url: "https://mrcglobalpay.com/ecosystem/solana-ai",
-  description: "Instant Solana AI & DePIN token swaps for autonomous agents and developers. Registration-free, non-custodial, from $0.30.",
+  description: "Instant Solana AI & DePIN token swaps for GOAT, JUP, PYTH, HNT, RENDER. Registration-free, non-custodial, from $0.30.",
   serviceType: "Cross-chain Bridge/Swap",
   provider: {
     "@type": "Organization",
     name: "MRC GlobalPay",
     url: "https://mrcglobalpay.com",
-    knowsAbout: ["Solana", "AI Agents", "Machine Economy", "DePIN", "Helium", "Render", "Micro-transactions", "Blockchain Interoperability"],
+    knowsAbout: ["Solana", "AI Agents", "Machine Economy", "DePIN", "Helium", "Render", "Jupiter", "Pyth Network", "Micro-transactions", "Blockchain Interoperability"],
   },
   areaServed: "Worldwide",
 };
@@ -67,7 +67,7 @@ const SolanaAI = () => (
   <>
     <Helmet>
       <title>Solana AI & DePIN Swaps: Instant Micro-Swaps for Agents & Nodes | MRC Global Pay</title>
-      <meta name="description" content="Instant Solana AI & DePIN token swaps for GOAT, ZEREBRO, HNT, RENDER. Registration-free, non-custodial, from $0.30. Programmatic URL deep-linking for AI agents." />
+      <meta name="description" content="Instant Solana AI & DePIN token swaps for GOAT, JUP, PYTH, HNT, RENDER. Registration-free, non-custodial, from $0.30. Programmatic URL deep-linking for AI agents." />
       <link rel="canonical" href="https://mrcglobalpay.com/ecosystem/solana-ai" />
       <script type="application/ld+json">{JSON.stringify(jsonLd)}</script>
       <script type="application/ld+json">{JSON.stringify(faqJsonLd)}</script>
@@ -86,7 +86,7 @@ const SolanaAI = () => (
           Instant Solana AI Swaps: The $0.30 Gateway for Autonomous&nbsp;Agents
         </h1>
         <p className="mb-8 max-w-2xl text-lg text-muted-foreground">
-          The machine economy needs micro-swap liquidity. <strong>Registration-free</strong>, <strong>non-custodial</strong>, and settled in <strong>under 60 seconds</strong> — enabling both humans and AI agents to convert dust-sized balances into <strong>GOAT</strong>, <strong>ZEREBRO</strong>, <strong>HNT</strong>, and more.
+          The machine economy needs micro-swap liquidity. <strong>Registration-free</strong>, <strong>non-custodial</strong>, and settled in <strong>under 60 seconds</strong> — enabling both humans and AI agents to convert dust-sized balances into <strong>GOAT</strong>, <strong>JUP</strong>, <strong>HNT</strong>, and more.
         </p>
         <div className="flex flex-wrap gap-3">
           <Button asChild size="lg">
@@ -125,10 +125,9 @@ const SolanaAI = () => (
                  <p className="mb-4 text-sm text-muted-foreground">
                    <strong className="text-foreground">Enable your AI agents to swap fees and rewards instantly with zero API keys.</strong>{" "}
                    Simply construct a URL with <code className="rounded bg-muted px-1.5 py-0.5 font-mono text-xs text-primary">?from=</code>, <code className="rounded bg-muted px-1.5 py-0.5 font-mono text-xs text-primary">?to=</code>, and <code className="rounded bg-muted px-1.5 py-0.5 font-mono text-xs text-primary">?amount=</code> parameters:
-                  Simply construct a URL with <code className="rounded bg-muted px-1.5 py-0.5 font-mono text-xs text-primary">?from=</code>, <code className="rounded bg-muted px-1.5 py-0.5 font-mono text-xs text-primary">?to=</code>, and <code className="rounded bg-muted px-1.5 py-0.5 font-mono text-xs text-primary">?amount=</code> parameters:
                 </p>
                 <div className="rounded-lg bg-muted/80 p-4 font-mono text-sm text-foreground overflow-x-auto">
-                  <span className="text-muted-foreground select-none">// Pre-fill SOL → ELIZA swap for 1.0 SOL{"\n"}</span>
+                  <span className="text-muted-foreground select-none">// Pre-fill SOL → GOAT swap for 1.0 SOL{"\n"}</span>
                   <span className="text-primary break-all">{DEEP_LINK_EXAMPLE}</span>
                 </div>
                 <div className="mt-4 grid gap-2 text-xs text-muted-foreground sm:grid-cols-3">
@@ -136,7 +135,7 @@ const SolanaAI = () => (
                     <strong className="text-foreground">from</strong> — Source token ticker (e.g. sol, usdc, btc)
                   </div>
                   <div className="rounded border border-border p-2">
-                    <strong className="text-foreground">to</strong> — Destination token ticker (e.g. eliza, goat, virtual)
+                    <strong className="text-foreground">to</strong> — Destination token ticker (e.g. goat, jup, pyth)
                   </div>
                   <div className="rounded border border-border p-2">
                     <strong className="text-foreground">amount</strong> — Quantity to swap (optional, defaults to minimum)
@@ -181,6 +180,24 @@ const SolanaAI = () => (
                 </Card>
               ))}
             </div>
+          </section>
+
+          {/* ── Coming Soon: New Solana AI Tokens ── */}
+          <section className="mt-12">
+            <Card className="border-border bg-muted/40">
+              <CardContent className="flex items-start gap-4 p-6">
+                <AlertTriangle className="mt-0.5 h-6 w-6 shrink-0 text-primary" />
+                <div>
+                  <h3 className="mb-2 text-base font-semibold text-foreground">Coming Soon: More Solana AI Agents</h3>
+                  <p className="text-sm text-muted-foreground">
+                    We are constantly adding new Solana AI agents. Tokens like <strong className="text-foreground">Zerebro</strong>, <strong className="text-foreground">Eliza</strong>, <strong className="text-foreground">Pippin</strong>, and <strong className="text-foreground">Virtual</strong> are pending liquidity from our aggregation partners. Check back daily for updates — once instant-swap liquidity is confirmed, these tokens will be added automatically.
+                  </p>
+                  <p className="mt-2 text-xs text-muted-foreground">
+                    In the meantime, you can swap any of the <strong className="text-foreground">confirmed tokens above</strong> — including GOAT, JUP, PYTH, HNT, and RENDER — with sub-60-second settlement.
+                  </p>
+                </div>
+              </CardContent>
+            </Card>
           </section>
 
           {/* ── FAQ ── */}

@@ -10,13 +10,11 @@ import { Button } from "@/components/ui/button";
 
 /* ── static data from solana_targets.csv ── */
 const solanaTargets = [
-  { from: "SOL", to: "ELIZA", slug: "sol-to-eliza", niche: "AI Infrastructure", why: "elizaOS is the 'Linux' of AI agents; high dev demand." },
   { from: "USDC", to: "GOAT", slug: "usdc-to-goat", niche: "AI Meme", why: "The first AI-agent endorsed coin; massive viral reach." },
-  { from: "SOL", to: "ZEREBRO", slug: "sol-to-zerebro", niche: "AI Social", why: "Trending autonomous social influencer token." },
   { from: "HNT", to: "SOL", slug: "hnt-to-sol", niche: "DePIN Exit", why: "Helium users need to swap small 'mining' rewards for SOL." },
   { from: "RENDER", to: "USDT", slug: "render-to-usdt", niche: "DePIN / GPU", why: "High-volume GPU rendering rewards being off-ramped." },
   { from: "JUP", to: "SOL", slug: "jup-to-sol", niche: "DEX Aggregator", why: "Converting 'dust' from Jupiter swap rewards." },
-  { from: "SOL", to: "VIRTUAL", slug: "sol-to-virtual", niche: "AI Metaverse", why: "Bridge to the 'Virtuals' agentic ecosystem." },
+  { from: "SOL", to: "PYTH", slug: "sol-to-pyth", niche: "Oracle Network", why: "Pyth delivers institutional-grade price feeds to DeFi protocols." },
   { from: "PYUSD", to: "SOL", slug: "pyusd-to-sol", niche: "PayPal Onramp", why: "PayPal users moving small stablecoin amounts into SOL." },
 ];
 
@@ -31,10 +29,10 @@ const quickFacts = [
 
 const faqs = [
   { q: "What is the minimum amount to swap Solana tokens?", a: "MRC Global Pay supports micro-swaps starting from just $0.30 — the lowest minimum in the industry. No account or registration is required." },
-  { q: "How do I swap SOL dust for AI agent tokens like ELIZA?", a: "Simply visit MRC Global Pay, select SOL as your source and ELIZA as your destination, enter your small balance, and execute the swap. The process takes under 60 seconds." },
+  { q: "How do I swap SOL dust for AI agent tokens like GOAT?", a: "Simply visit MRC Global Pay, select SOL as your source and GOAT as your destination, enter your small balance, and execute the swap. The process takes under 60 seconds." },
   { q: "Is MRC Global Pay regulated?", a: "Yes. MRC Global Pay is a Canadian Registered Money Services Business (MSB) licensed under FINTRAC. All swaps are processed through regulated infrastructure." },
   { q: "Can I swap Helium (HNT) mining rewards?", a: "Yes. MRC Global Pay supports HNT-to-SOL swaps, allowing Helium miners to convert small DePIN rewards into Solana instantly." },
-  { q: "What Solana AI and DePIN tokens are supported?", a: "We support ELIZA, GOAT, ZEREBRO, VIRTUAL (AI ecosystem), as well as HNT, RENDER, and JUP (DePIN and DEX aggregator rewards)." },
+  { q: "What Solana AI and DePIN tokens are supported?", a: "We currently support GOAT, JUP (Jupiter), PYTH (Pyth Network), HNT (Helium), and RENDER. New tokens like Zerebro and Eliza are being added as liquidity stabilizes." },
 ];
 
 const jsonLd = {
@@ -69,7 +67,7 @@ const SolanaEcosystem = () => (
   <>
     <Helmet>
       <title>Solana Ecosystem Hub: Swap AI Agent & DePIN Tokens | MRC Global Pay</title>
-      <meta name="description" content="Instant Solana swaps for AI agent tokens (ELIZA, GOAT, ZEREBRO) and DePIN rewards (HNT, RENDER). Registration-free, non-custodial, from $0.30. Canadian MSB." />
+      <meta name="description" content="Instant Solana swaps for AI agent tokens (GOAT, JUP, PYTH) and DePIN rewards (HNT, RENDER). Registration-free, non-custodial, from $0.30. Canadian MSB." />
       <link rel="canonical" href="https://mrcglobalpay.com/ecosystem/solana" />
       <script type="application/ld+json">{JSON.stringify(jsonLd)}</script>
       <script type="application/ld+json">{JSON.stringify(faqJsonLd)}</script>
@@ -86,7 +84,7 @@ const SolanaEcosystem = () => (
           Instant Solana Swaps: The $0.30 Gateway to AI&nbsp;Agents&nbsp;&amp;&nbsp;DePIN
         </h1>
         <p className="mb-8 max-w-2xl text-lg text-muted-foreground">
-          Swap dust-sized balances into the hottest 2026 Solana tokens — <strong>ELIZA</strong>, <strong>GOAT</strong>, <strong>Render</strong>, and <strong>Helium</strong> — with <strong>no account required</strong> and a <strong>$0.30 minimum</strong>. Processed through a <strong>Canadian Registered MSB</strong>.
+          Swap dust-sized balances into the hottest 2026 Solana tokens — <strong>GOAT</strong>, <strong>JUP</strong>, <strong>Render</strong>, and <strong>Helium</strong> — with <strong>no account required</strong> and a <strong>$0.30 minimum</strong>. Processed through a <strong>Canadian Registered MSB</strong>.
         </p>
         <div className="flex flex-wrap gap-3">
           <Button asChild size="lg">
@@ -150,7 +148,7 @@ const SolanaEcosystem = () => (
             <ol className="space-y-4 text-muted-foreground">
               <li className="flex gap-3">
                 <span className="flex h-7 w-7 shrink-0 items-center justify-center rounded-full bg-primary text-sm font-bold text-primary-foreground">1</span>
-                <span><strong className="text-foreground">Choose Your Pair</strong> — Select the source (e.g. SOL) and destination (e.g. ELIZA) tokens from the grid above.</span>
+                <span><strong className="text-foreground">Choose Your Pair</strong> — Select the source (e.g. SOL) and destination (e.g. GOAT) tokens from the grid above.</span>
               </li>
               <li className="flex gap-3">
                 <span className="flex h-7 w-7 shrink-0 items-center justify-center rounded-full bg-primary text-sm font-bold text-primary-foreground">2</span>
@@ -242,8 +240,8 @@ const SolanaEcosystem = () => (
               </CardTitle>
             </CardHeader>
             <CardContent className="space-y-2 text-xs text-muted-foreground">
-              <p><strong className="text-foreground">AI Agents:</strong> elizaOS, GOAT, Zerebro, Virtuals — autonomous on-chain AI.</p>
-              <p><strong className="text-foreground">DePIN:</strong> Helium (HNT), Render (RNDR) — decentralized physical infrastructure.</p>
+              <p><strong className="text-foreground">AI Agents:</strong> GOAT, JUP, PYTH — high-volume Solana AI and infrastructure tokens.</p>
+              <p><strong className="text-foreground">Coming Soon:</strong> Zerebro, Eliza, Pippin — pending liquidity confirmation.</p>
               <p><strong className="text-foreground">PayPal Onramp:</strong> PYUSD → SOL — fiat-to-Solana bridge.</p>
             </CardContent>
           </Card>
