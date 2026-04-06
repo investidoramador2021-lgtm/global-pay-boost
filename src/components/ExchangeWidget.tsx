@@ -122,30 +122,48 @@ const ExchangeWidget = () => {
     }
   };
 
-  useEffect(() => {
-    setLoading(true);
-    const params = new URLSearchParams(window.location.search);
-    const paramFrom = params.get("from")?.toLowerCase();
-    const paramTo = params.get("to")?.toLowerCase();
-    const paramAmount = params.get("amount");
+  const [retrying, setRetrying] = useState(false);
 
-    getCurrencies()
-      .then((data) => {
-        if (Array.isArray(data)) {
-          setCurrencies(data);
-          const fromMatch = paramFrom ? data.find((c) => c.ticker === paramFrom) : null;
-          const toMatch = paramTo ? data.find((c) => c.ticker === paramTo) : null;
-          setFromCurrency(fromMatch || data.find((c) => c.ticker === "btc") || data[0]);
-          setToCurrency(toMatch || data.find((c) => c.ticker === "eth") || data[1]);
-          if (paramAmount && parseFloat(paramAmount) > 0) {
-            setSendAmount(paramAmount);
+  useEffect(() => {
+    let retryCount = 0;
+    const maxRetries = 3;
+
+    const loadCurrencies = () => {
+      setLoading(true);
+      const params = new URLSearchParams(window.location.search);
+      const paramFrom = params.get("from")?.toLowerCase();
+      const paramTo = params.get("to")?.toLowerCase();
+      const paramAmount = params.get("amount");
+
+      getCurrencies()
+        .then((data) => {
+          if (Array.isArray(data)) {
+            setCurrencies(data);
+            const fromMatch = paramFrom ? data.find((c) => c.ticker === paramFrom) : null;
+            const toMatch = paramTo ? data.find((c) => c.ticker === paramTo) : null;
+            setFromCurrency(fromMatch || data.find((c) => c.ticker === "btc") || data[0]);
+            setToCurrency(toMatch || data.find((c) => c.ticker === "eth") || data[1]);
+            if (paramAmount && parseFloat(paramAmount) > 0) {
+              setSendAmount(paramAmount);
+            }
+            retryCount = 0;
+            setRetrying(false);
           }
-        }
-      })
-      .catch((err) => {
-        toast({ title: "Error loading currencies", description: err.message, variant: "destructive" });
-      })
-      .finally(() => setLoading(false));
+        })
+        .catch(() => {
+          if (retryCount < maxRetries) {
+            retryCount++;
+            setRetrying(true);
+            setTimeout(loadCurrencies, 3000 * retryCount);
+          } else {
+            setRetrying(false);
+            toast({ title: "Connection issue", description: "Could not load currencies. Please refresh the page.", variant: "destructive" });
+          }
+        })
+        .finally(() => setLoading(false));
+    };
+
+    loadCurrencies();
   }, []);
 
   const fetchEstimate = useCallback(async () => {
