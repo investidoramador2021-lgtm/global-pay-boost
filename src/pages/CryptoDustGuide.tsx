@@ -91,7 +91,7 @@ const dustFaqJsonLd = {
       name: "How Does MRC GlobalPay Process Swaps from $0.30?",
       acceptedAnswer: {
         "@type": "Answer",
-        text: "Our non-custodial engine connects directly to protocol-level liquidity pools — bypassing the order-book overhead that forces other platforms to set high minimums. This architecture enables genuine crypto dust swaps starting at $0.30.",
+        text: "Our non-custodial engine connects directly to protocol-level liquidity pools — eliminating the order-book overhead that forces other platforms to set high minimums. This architecture enables genuine crypto dust swaps starting at $0.30.",
       },
     },
     {
@@ -237,7 +237,7 @@ const CryptoDustGuide = () => {
             </h2>
             <p className="text-muted-foreground leading-relaxed mb-4">
               Our non-custodial engine connects directly to protocol-level liquidity pools —
-              bypassing the order-book overhead that forces other platforms to set high minimums.
+              eliminating the order-book overhead that forces other platforms to set high minimums.
               This architecture enables genuine <strong>crypto dust swaps</strong> starting at $0.30.
             </p>
 

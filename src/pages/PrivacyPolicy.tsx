@@ -158,7 +158,7 @@ const PrivacyPolicy = () => {
               <ul className="ml-4 list-disc space-y-2">
                 <li><strong className="text-foreground">Local Storage</strong> — Used to store your theme preference (light/dark mode) and recent swap history for your convenience. This data remains on your device and is never transmitted to our servers.</li>
                 <li><strong className="text-foreground">Service Worker Cache</strong> — Core application assets are cached locally for faster loading and offline access. No personal data is stored in the cache.</li>
-                <li><strong className="text-foreground">Performance Analytics</strong> — We collect anonymous, aggregated usage data (page views, session duration, device type) to improve the Service. This data cannot identify individual users.</li>
+                <li><strong className="text-foreground">Performance Analytics</strong> — We collect aggregated, non-identifiable usage data (page views, session duration, device type) to improve the Service. This data cannot identify individual users.</li>
               </ul>
               <p>
                 We do <strong className="text-foreground">not</strong> use tracking cookies, advertising cookies, or cross-site tracking of any kind.
