@@ -65,8 +65,6 @@ const resourceLinks = [
   { label: "USDT ERC20 Meaning", href: "/guides/usdt-erc20-meaning", title: "What USDT ERC20 means and how it works" },
   { label: "Wrapped BTC Guide", href: "/guides/wrapped-btc-to-bitcoin", title: "Convert Wrapped BTC back to Bitcoin" },
   { label: "Swap Nodes in Pairs", href: "/guides/swap-nodes-in-pairs", title: "Guide to swapping nodes in pairs" },
-];
-
   { label: "Dust Calculator", href: "/tools/crypto-dust-calculator", title: "Calculate the purchasing power of your crypto dust" },
 ];
 
