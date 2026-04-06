@@ -40,13 +40,13 @@ const jsonLd = {
   "@type": "FinancialService",
   name: "MRC Global Pay — Solana AI & Machine Economy Hub",
   url: "https://mrcglobalpay.com/ecosystem/solana-ai",
-  description: "Instant Solana AI token swaps for autonomous agents and developers. Registration-free, non-custodial, from $0.30.",
+  description: "Instant Solana AI & DePIN token swaps for autonomous agents and developers. Registration-free, non-custodial, from $0.30.",
   serviceType: "Cross-chain Bridge/Swap",
   provider: {
     "@type": "Organization",
     name: "MRC GlobalPay",
     url: "https://mrcglobalpay.com",
-    knowsAbout: ["Solana", "AI Agents", "Machine Economy", "elizaOS", "Micro-transactions", "Blockchain Interoperability"],
+    knowsAbout: ["Solana", "AI Agents", "Machine Economy", "DePIN", "Helium", "Render", "Micro-transactions", "Blockchain Interoperability"],
   },
   areaServed: "Worldwide",
 };
@@ -66,8 +66,8 @@ const DEEP_LINK_EXAMPLE = `https://mrcglobalpay.com/?from=SOL&to=GOAT&amount=1.0
 const SolanaAI = () => (
   <>
     <Helmet>
-      <title>Solana AI Swaps: Instant Micro-Swaps for Autonomous Agents | MRC Global Pay</title>
-      <meta name="description" content="Instant Solana AI token swaps for ELIZA, GOAT, VIRTUAL, AI16Z. Registration-free, non-custodial, from $0.30. Programmatic URL deep-linking for AI agents." />
+      <title>Solana AI & DePIN Swaps: Instant Micro-Swaps for Agents & Nodes | MRC Global Pay</title>
+      <meta name="description" content="Instant Solana AI & DePIN token swaps for GOAT, ZEREBRO, HNT, RENDER. Registration-free, non-custodial, from $0.30. Programmatic URL deep-linking for AI agents." />
       <link rel="canonical" href="https://mrcglobalpay.com/ecosystem/solana-ai" />
       <script type="application/ld+json">{JSON.stringify(jsonLd)}</script>
       <script type="application/ld+json">{JSON.stringify(faqJsonLd)}</script>
