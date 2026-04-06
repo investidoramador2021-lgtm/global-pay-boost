@@ -124,14 +124,22 @@ const ExchangeWidget = () => {
 
   useEffect(() => {
     setLoading(true);
+    const params = new URLSearchParams(window.location.search);
+    const paramFrom = params.get("from")?.toLowerCase();
+    const paramTo = params.get("to")?.toLowerCase();
+    const paramAmount = params.get("amount");
+
     getCurrencies()
       .then((data) => {
         if (Array.isArray(data)) {
           setCurrencies(data);
-          const btc = data.find((c) => c.ticker === "btc");
-          const eth = data.find((c) => c.ticker === "eth");
-          setFromCurrency(btc || data[0]);
-          setToCurrency(eth || data[1]);
+          const fromMatch = paramFrom ? data.find((c) => c.ticker === paramFrom) : null;
+          const toMatch = paramTo ? data.find((c) => c.ticker === paramTo) : null;
+          setFromCurrency(fromMatch || data.find((c) => c.ticker === "btc") || data[0]);
+          setToCurrency(toMatch || data.find((c) => c.ticker === "eth") || data[1]);
+          if (paramAmount && parseFloat(paramAmount) > 0) {
+            setSendAmount(paramAmount);
+          }
         }
       })
       .catch((err) => {
