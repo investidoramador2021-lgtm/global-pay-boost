@@ -17,6 +17,7 @@ const SiteHeader = () => {
     { label: t("nav.blog"), href: "/blog" },
     { label: t("nav.faq"), href: "/#faq" },
     { label: "Get Widget", href: "/get-widget" },
+    { label: "Dust Calculator", href: "/tools/crypto-dust-calculator" },
     { label: "Developers", href: "/developer" },
   ];
 
