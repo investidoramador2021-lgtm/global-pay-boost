@@ -14,3 +14,6 @@ verify_jwt = false
 
 [functions.coingecko-prices]
 verify_jwt = false
+
+[functions.x-sales-agent]
+verify_jwt = false
