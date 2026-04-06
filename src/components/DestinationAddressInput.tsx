@@ -129,6 +129,7 @@ const DestinationAddressInput = ({
   currencyTicker,
   expectedNetworkType,
   className,
+  disabled,
 }: DestinationAddressInputProps) => {
   const [focused, setFocused] = useState(false);
   const [pasting, setPasting] = useState(false);
@@ -204,7 +205,8 @@ const DestinationAddressInput = ({
           onChange={handleChange}
           onFocus={() => setFocused(true)}
           onBlur={() => setFocused(false)}
-          className="flex-1 bg-transparent font-body text-sm text-foreground outline-none placeholder:text-muted-foreground sm:text-base"
+          readOnly={disabled}
+          className={`flex-1 bg-transparent font-body text-sm text-foreground outline-none placeholder:text-muted-foreground sm:text-base ${disabled ? "opacity-70 cursor-not-allowed" : ""}`}
           maxLength={128}
         />
 
