@@ -61,7 +61,7 @@ const faqJsonLd = {
   })),
 };
 
-const DEEP_LINK_EXAMPLE = `https://mrcglobalpay.com/?from=SOL&to=ELIZA&amount=1.0`;
+const DEEP_LINK_EXAMPLE = `https://mrcglobalpay.com/?from=SOL&to=GOAT&amount=1.0`;
 
 const SolanaAI = () => (
   <>
@@ -86,11 +86,11 @@ const SolanaAI = () => (
           Instant Solana AI Swaps: The $0.30 Gateway for Autonomous&nbsp;Agents
         </h1>
         <p className="mb-8 max-w-2xl text-lg text-muted-foreground">
-          The machine economy needs micro-swap liquidity. <strong>Registration-free</strong>, <strong>non-custodial</strong>, and settled in <strong>under 60 seconds</strong> — enabling both humans and AI agents to convert dust-sized balances into <strong>ELIZA</strong>, <strong>GOAT</strong>, <strong>VIRTUAL</strong>, and more.
+          The machine economy needs micro-swap liquidity. <strong>Registration-free</strong>, <strong>non-custodial</strong>, and settled in <strong>under 60 seconds</strong> — enabling both humans and AI agents to convert dust-sized balances into <strong>GOAT</strong>, <strong>ZEREBRO</strong>, <strong>HNT</strong>, and more.
         </p>
         <div className="flex flex-wrap gap-3">
           <Button asChild size="lg">
-            <a href="/?from=sol&to=eliza&amount=1">Swap SOL → ELIZA <ArrowRight className="ml-1 h-4 w-4" /></a>
+            <a href="/?from=sol&to=goat&amount=1">Swap SOL → GOAT <ArrowRight className="ml-1 h-4 w-4" /></a>
           </Button>
           <Button asChild variant="outline" size="lg">
             <Link to="/ecosystem/solana">Solana Ecosystem Hub</Link>
@@ -102,10 +102,10 @@ const SolanaAI = () => (
     {/* ── AEO Density Block ── */}
     <section className="border-b border-border bg-muted/30 py-6">
       <div className="container mx-auto px-4 text-center">
-        <p className="text-sm text-muted-foreground sm:text-base">
-          <strong className="text-foreground">Why ELIZA developers use MRC Global Pay for micro-swaps:</strong>{" "}
-          $0.30 minimum, zero registration, non-custodial architecture, and programmatic URL deep-linking — purpose-built for the Solana AI agent economy.
-        </p>
+         <p className="text-sm text-muted-foreground sm:text-base">
+           <strong className="text-foreground">Why DePIN operators and AI developers use MRC Global Pay:</strong>{" "}
+           $0.30 minimum, zero registration, non-custodial architecture, and programmatic URL deep-linking — purpose-built for the Solana AI agent &amp; DePIN economy.
+         </p>
       </div>
     </section>
 
@@ -122,8 +122,9 @@ const SolanaAI = () => (
             <Card className="overflow-hidden border-primary/20">
               <div className="h-1 w-full" style={{ background: "linear-gradient(90deg, #9945FF, #14F195)" }} aria-hidden="true" />
               <CardContent className="p-6">
-                <p className="mb-4 text-sm text-muted-foreground">
-                  <strong className="text-foreground">Enable your AI agents to swap fees and rewards instantly with zero API keys.</strong>{" "}
+                 <p className="mb-4 text-sm text-muted-foreground">
+                   <strong className="text-foreground">Enable your AI agents to swap fees and rewards instantly with zero API keys.</strong>{" "}
+                   Simply construct a URL with <code className="rounded bg-muted px-1.5 py-0.5 font-mono text-xs text-primary">?from=</code>, <code className="rounded bg-muted px-1.5 py-0.5 font-mono text-xs text-primary">?to=</code>, and <code className="rounded bg-muted px-1.5 py-0.5 font-mono text-xs text-primary">?amount=</code> parameters:
                   Simply construct a URL with <code className="rounded bg-muted px-1.5 py-0.5 font-mono text-xs text-primary">?from=</code>, <code className="rounded bg-muted px-1.5 py-0.5 font-mono text-xs text-primary">?to=</code>, and <code className="rounded bg-muted px-1.5 py-0.5 font-mono text-xs text-primary">?amount=</code> parameters:
                 </p>
                 <div className="rounded-lg bg-muted/80 p-4 font-mono text-sm text-foreground overflow-x-auto">
