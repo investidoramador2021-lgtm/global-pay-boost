@@ -41,7 +41,7 @@ const CompareDirectory = () => {
     <>
       <Helmet>
         <title>MRC GlobalPay vs 50+ Exchanges | 2026 Comparison</title>
-        <meta name="description" content="Compare MRC GlobalPay against 50+ crypto exchanges. Side-by-side feature comparisons covering fees, minimums, KYC, speed, and more." />
+        <meta name="description" content="Compare MRC GlobalPay against 50+ crypto exchanges. Side-by-side feature comparisons covering fees, minimums, verification policies, speed, and more." />
         <link rel="canonical" href={pageUrl} />
         <meta property="og:title" content="MRC GlobalPay vs 50+ Exchanges | 2026 Comparison" />
         <meta property="og:description" content="Side-by-side comparisons against ChangeNOW, Binance, Coinbase, and 47 more exchanges." />
