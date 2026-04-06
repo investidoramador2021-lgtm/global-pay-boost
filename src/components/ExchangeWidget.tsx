@@ -135,14 +135,15 @@ const ExchangeWidget = () => {
       const rawTo = params.get("to")?.toLowerCase();
       const paramAmount = params.get("amount");
 
-      // Solana AI ticker mapping — map friendly names to widget-specific tickers
+      // Solana AI & DePIN ticker mapping — map friendly names to widget-specific tickers
       const TICKER_MAP: Record<string, string> = {
-        eliza: "elizasol",
         goat: "goatsol",
-        virtual: "virtualsol",
         zerebro: "zerebrosol",
         ai16z: "ai16zsol",
         pippin: "pippinsol",
+        hnt: "hnt",
+        jup: "jup",
+        render: "render",
       };
       const paramTo = rawTo ? (TICKER_MAP[rawTo] || rawTo) : undefined;
 

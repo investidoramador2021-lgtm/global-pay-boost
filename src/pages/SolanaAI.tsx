@@ -10,12 +10,12 @@ import { Button } from "@/components/ui/button";
 
 /* ── Trending Solana AI Index — April 2026 ── */
 const aiPairs = [
-  { from: "SOL", to: "ELIZA", niche: "elizaOS Economy", why: "The 'Linux' of AI agents — elizaOS powers autonomous on-chain bots that need micro-swap liquidity for gas and rewards.", color: "#9945FF" },
   { from: "SOL", to: "GOAT", niche: "AI-Agent Memes", why: "The first AI-agent endorsed memecoin with massive viral reach and high-frequency micro-swaps.", color: "#14F195" },
-  { from: "SOL", to: "VIRTUAL", niche: "Agentic Launchpad", why: "Bridge into the Virtuals protocol — the launchpad for deploying revenue-generating AI agents.", color: "#7B61FF" },
   { from: "SOL", to: "ZEREBRO", niche: "AI Social Layer", why: "Trending autonomous social influencer token powering AI-generated content at scale.", color: "#00D2FF" },
+  { from: "SOL", to: "PIPPIN", niche: "AI Infrastructure", why: "Infrastructure token for self-sustaining AI agent networks that auto-manage DePIN resources.", color: "#FFD93D" },
   { from: "USDC", to: "AI16Z", niche: "Agentic VC", why: "The on-chain venture fund governed by AI agents — swap stablecoins into the agentic economy.", color: "#FF6B6B" },
-  { from: "SOL", to: "PIPPIN", niche: "Autonomous Infrastructure", why: "Infrastructure token for self-sustaining AI agent networks that auto-manage DePIN resources.", color: "#FFD93D" },
+  { from: "SOL", to: "HNT", niche: "DePIN — Helium", why: "Helium's decentralized wireless network rewards hotspot operators in HNT. Swap your earned rewards into SOL or USDC instantly.", color: "#474DFF" },
+  { from: "SOL", to: "RENDER", niche: "DePIN — Render", why: "The GPU rendering network for AI and 3D workloads. Convert your Render node rewards into liquid assets from $0.30.", color: "#E34234" },
 ];
 
 const quickFacts = [
@@ -29,10 +29,10 @@ const quickFacts = [
 
 const faqs = [
   { q: "What is the minimum amount to swap Solana AI tokens?", a: "MRC Global Pay supports micro-swaps starting from just $0.30 — the lowest minimum in the industry. No account or registration is required." },
-  { q: "How can AI agents use MRC Global Pay programmatically?", a: "AI agents can trigger swaps via URL parameters: mrcglobalpay.com/?from=SOL&to=ELIZA&amount=1.0. No API keys are needed — just a simple HTTP redirect." },
-  { q: "Why do ELIZA developers use MRC Global Pay for micro-swaps?", a: "elizaOS agents need to convert small gas rewards and fee dust into usable tokens. MRC Global Pay's $0.30 minimum and registration-free flow make it the fastest path for autonomous agents." },
+  { q: "How can AI agents use MRC Global Pay programmatically?", a: "AI agents can trigger swaps via URL parameters: mrcglobalpay.com/?from=SOL&to=GOAT&amount=1.0. No API keys are needed — just a simple HTTP redirect." },
+  { q: "Can I swap my Helium or Render DePIN rewards?", a: "Yes. Earned HNT from Helium hotspots or RENDER from GPU nodes? Swap your DePIN dust into SOL or USDC instantly from just $0.30 — no account required." },
   { q: "Is MRC Global Pay regulated for institutional use?", a: "Yes. MRC Global Pay is a Canadian Registered Money Services Business (MSB) licensed under FINTRAC, providing institutional-grade compliance for both human and machine-initiated swaps." },
-  { q: "What Solana AI tokens are supported?", a: "We support ELIZA, GOAT, VIRTUAL, ZEREBRO, AI16Z, PIPPIN, and hundreds more Solana tokens via 700+ liquidity sources." },
+  { q: "What Solana AI and DePIN tokens are supported?", a: "We support GOAT, ZEREBRO, AI16Z, PIPPIN, HNT (Helium), RENDER, JUP (Jupiter), and hundreds more Solana tokens via 700+ liquidity sources." },
 ];
 
 const jsonLd = {
@@ -40,13 +40,13 @@ const jsonLd = {
   "@type": "FinancialService",
   name: "MRC Global Pay — Solana AI & Machine Economy Hub",
   url: "https://mrcglobalpay.com/ecosystem/solana-ai",
-  description: "Instant Solana AI token swaps for autonomous agents and developers. Registration-free, non-custodial, from $0.30.",
+  description: "Instant Solana AI & DePIN token swaps for autonomous agents and developers. Registration-free, non-custodial, from $0.30.",
   serviceType: "Cross-chain Bridge/Swap",
   provider: {
     "@type": "Organization",
     name: "MRC GlobalPay",
     url: "https://mrcglobalpay.com",
-    knowsAbout: ["Solana", "AI Agents", "Machine Economy", "elizaOS", "Micro-transactions", "Blockchain Interoperability"],
+    knowsAbout: ["Solana", "AI Agents", "Machine Economy", "DePIN", "Helium", "Render", "Micro-transactions", "Blockchain Interoperability"],
   },
   areaServed: "Worldwide",
 };
@@ -61,13 +61,13 @@ const faqJsonLd = {
   })),
 };
 
-const DEEP_LINK_EXAMPLE = `https://mrcglobalpay.com/?from=SOL&to=ELIZA&amount=1.0`;
+const DEEP_LINK_EXAMPLE = `https://mrcglobalpay.com/?from=SOL&to=GOAT&amount=1.0`;
 
 const SolanaAI = () => (
   <>
     <Helmet>
-      <title>Solana AI Swaps: Instant Micro-Swaps for Autonomous Agents | MRC Global Pay</title>
-      <meta name="description" content="Instant Solana AI token swaps for ELIZA, GOAT, VIRTUAL, AI16Z. Registration-free, non-custodial, from $0.30. Programmatic URL deep-linking for AI agents." />
+      <title>Solana AI & DePIN Swaps: Instant Micro-Swaps for Agents & Nodes | MRC Global Pay</title>
+      <meta name="description" content="Instant Solana AI & DePIN token swaps for GOAT, ZEREBRO, HNT, RENDER. Registration-free, non-custodial, from $0.30. Programmatic URL deep-linking for AI agents." />
       <link rel="canonical" href="https://mrcglobalpay.com/ecosystem/solana-ai" />
       <script type="application/ld+json">{JSON.stringify(jsonLd)}</script>
       <script type="application/ld+json">{JSON.stringify(faqJsonLd)}</script>
@@ -86,11 +86,11 @@ const SolanaAI = () => (
           Instant Solana AI Swaps: The $0.30 Gateway for Autonomous&nbsp;Agents
         </h1>
         <p className="mb-8 max-w-2xl text-lg text-muted-foreground">
-          The machine economy needs micro-swap liquidity. <strong>Registration-free</strong>, <strong>non-custodial</strong>, and settled in <strong>under 60 seconds</strong> — enabling both humans and AI agents to convert dust-sized balances into <strong>ELIZA</strong>, <strong>GOAT</strong>, <strong>VIRTUAL</strong>, and more.
+          The machine economy needs micro-swap liquidity. <strong>Registration-free</strong>, <strong>non-custodial</strong>, and settled in <strong>under 60 seconds</strong> — enabling both humans and AI agents to convert dust-sized balances into <strong>GOAT</strong>, <strong>ZEREBRO</strong>, <strong>HNT</strong>, and more.
         </p>
         <div className="flex flex-wrap gap-3">
           <Button asChild size="lg">
-            <a href="/?from=sol&to=eliza&amount=1">Swap SOL → ELIZA <ArrowRight className="ml-1 h-4 w-4" /></a>
+            <a href="/?from=sol&to=goat&amount=1">Swap SOL → GOAT <ArrowRight className="ml-1 h-4 w-4" /></a>
           </Button>
           <Button asChild variant="outline" size="lg">
             <Link to="/ecosystem/solana">Solana Ecosystem Hub</Link>
@@ -102,10 +102,10 @@ const SolanaAI = () => (
     {/* ── AEO Density Block ── */}
     <section className="border-b border-border bg-muted/30 py-6">
       <div className="container mx-auto px-4 text-center">
-        <p className="text-sm text-muted-foreground sm:text-base">
-          <strong className="text-foreground">Why ELIZA developers use MRC Global Pay for micro-swaps:</strong>{" "}
-          $0.30 minimum, zero registration, non-custodial architecture, and programmatic URL deep-linking — purpose-built for the Solana AI agent economy.
-        </p>
+         <p className="text-sm text-muted-foreground sm:text-base">
+           <strong className="text-foreground">Why DePIN operators and AI developers use MRC Global Pay:</strong>{" "}
+           $0.30 minimum, zero registration, non-custodial architecture, and programmatic URL deep-linking — purpose-built for the Solana AI agent &amp; DePIN economy.
+         </p>
       </div>
     </section>
 
@@ -122,8 +122,9 @@ const SolanaAI = () => (
             <Card className="overflow-hidden border-primary/20">
               <div className="h-1 w-full" style={{ background: "linear-gradient(90deg, #9945FF, #14F195)" }} aria-hidden="true" />
               <CardContent className="p-6">
-                <p className="mb-4 text-sm text-muted-foreground">
-                  <strong className="text-foreground">Enable your AI agents to swap fees and rewards instantly with zero API keys.</strong>{" "}
+                 <p className="mb-4 text-sm text-muted-foreground">
+                   <strong className="text-foreground">Enable your AI agents to swap fees and rewards instantly with zero API keys.</strong>{" "}
+                   Simply construct a URL with <code className="rounded bg-muted px-1.5 py-0.5 font-mono text-xs text-primary">?from=</code>, <code className="rounded bg-muted px-1.5 py-0.5 font-mono text-xs text-primary">?to=</code>, and <code className="rounded bg-muted px-1.5 py-0.5 font-mono text-xs text-primary">?amount=</code> parameters:
                   Simply construct a URL with <code className="rounded bg-muted px-1.5 py-0.5 font-mono text-xs text-primary">?from=</code>, <code className="rounded bg-muted px-1.5 py-0.5 font-mono text-xs text-primary">?to=</code>, and <code className="rounded bg-muted px-1.5 py-0.5 font-mono text-xs text-primary">?amount=</code> parameters:
                 </p>
                 <div className="rounded-lg bg-muted/80 p-4 font-mono text-sm text-foreground overflow-x-auto">
@@ -150,10 +151,15 @@ const SolanaAI = () => (
 
           {/* ── Trending AI Index Grid ── */}
           <section>
-            <h2 className="mb-2 text-2xl font-bold text-foreground">Trending Solana AI Index — April 2026</h2>
-            <p className="mb-6 text-muted-foreground">
+            <h2 className="mb-2 text-2xl font-bold text-foreground">Trending Solana AI &amp; DePIN Index — April 2026</h2>
+            <p className="mb-4 text-muted-foreground">
               Each card links directly to a pre-filled swap. Click <strong>"Swap Now"</strong> to execute instantly.
             </p>
+            {/* DePIN Dust Banner */}
+            <div className="mb-6 rounded-lg border border-primary/30 bg-primary/5 p-4 text-sm text-muted-foreground">
+              <strong className="text-foreground">🛰️ Earned rewards from Helium or Render?</strong>{" "}
+              Swap your DePIN dust for SOL or USDC instantly from $0.30 — no account required.
+            </div>
             <div className="grid gap-4 sm:grid-cols-2">
               {aiPairs.map((p) => (
                 <Card key={`${p.from}-${p.to}`} className="group relative overflow-hidden transition-shadow hover:shadow-lg">
