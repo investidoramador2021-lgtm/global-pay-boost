@@ -113,6 +113,15 @@ const expertiseLinks = [
   { label: "Swap Solutions", href: "/solutions", title: "Browse all micro-swap solution guides" },
 ];
 
+const securityLegalLinks = [
+  { label: "Trust & Transparency Hub", href: "/learn", title: "Learn how MRC GlobalPay protects your assets" },
+  { label: "Non-Custodial Exchange", href: "/learn/why-non-custodial-is-safer", title: "Why non-custodial is safer for your crypto" },
+  { label: "FINTRAC MSB Registration", href: "/learn/canadian-fintrac-msb", title: "Our Canadian MSB registration details" },
+  { label: "Our Liquidity Partners", href: "/learn/our-liquidity-partners", title: "ChangeNOW & Fireblocks partner security" },
+  { label: "Swap Without Registration", href: "/learn/swap-without-registration", title: "How to swap crypto with no account" },
+  { label: "Track Your Micro-Swap", href: "/learn/tracking-your-micro-swap", title: "On-chain verification for every swap" },
+];
+
 type FooterLink = { label: string; href: string; title: string };
 
 const FooterLinkList = ({ title, links }: { title: string; links: FooterLink[] }) => (
