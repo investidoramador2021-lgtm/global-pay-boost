@@ -29,10 +29,10 @@ const quickFacts = [
 
 const faqs = [
   { q: "What is the minimum amount to swap Solana AI tokens?", a: "MRC Global Pay supports micro-swaps starting from just $0.30 — the lowest minimum in the industry. No account or registration is required." },
-  { q: "How can AI agents use MRC Global Pay programmatically?", a: "AI agents can trigger swaps via URL parameters: mrcglobalpay.com/?from=SOL&to=ELIZA&amount=1.0. No API keys are needed — just a simple HTTP redirect." },
-  { q: "Why do ELIZA developers use MRC Global Pay for micro-swaps?", a: "elizaOS agents need to convert small gas rewards and fee dust into usable tokens. MRC Global Pay's $0.30 minimum and registration-free flow make it the fastest path for autonomous agents." },
+  { q: "How can AI agents use MRC Global Pay programmatically?", a: "AI agents can trigger swaps via URL parameters: mrcglobalpay.com/?from=SOL&to=GOAT&amount=1.0. No API keys are needed — just a simple HTTP redirect." },
+  { q: "Can I swap my Helium or Render DePIN rewards?", a: "Yes. Earned HNT from Helium hotspots or RENDER from GPU nodes? Swap your DePIN dust into SOL or USDC instantly from just $0.30 — no account required." },
   { q: "Is MRC Global Pay regulated for institutional use?", a: "Yes. MRC Global Pay is a Canadian Registered Money Services Business (MSB) licensed under FINTRAC, providing institutional-grade compliance for both human and machine-initiated swaps." },
-  { q: "What Solana AI tokens are supported?", a: "We support ELIZA, GOAT, VIRTUAL, ZEREBRO, AI16Z, PIPPIN, and hundreds more Solana tokens via 700+ liquidity sources." },
+  { q: "What Solana AI and DePIN tokens are supported?", a: "We support GOAT, ZEREBRO, AI16Z, PIPPIN, HNT (Helium), RENDER, JUP (Jupiter), and hundreds more Solana tokens via 700+ liquidity sources." },
 ];
 
 const jsonLd = {
