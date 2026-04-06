@@ -288,18 +288,20 @@ Deno.serve(async (req) => {
     return new Response("ok", { headers: corsHeaders });
   }
 
-  // Auth: require CRON_SECRET for automated calls
-  const authHeader = req.headers.get("authorization");
+  // Auth: require CRON_SECRET, service_role, or anon key
+  const reqAuthHeader = req.headers.get("authorization");
   const cronSecret = Deno.env.get("CRON_SECRET");
-  if (cronSecret && authHeader !== `Bearer ${cronSecret}`) {
-    // Also allow service_role for manual testing
-    const supabaseKey = Deno.env.get("SUPABASE_SERVICE_ROLE_KEY");
-    if (!supabaseKey || authHeader !== `Bearer ${supabaseKey}`) {
-      return new Response(JSON.stringify({ error: "Unauthorized" }), {
-        status: 401,
-        headers: { ...corsHeaders, "Content-Type": "application/json" },
-      });
-    }
+  const supabaseServiceKey = Deno.env.get("SUPABASE_SERVICE_ROLE_KEY");
+  const supabaseAnonKey = Deno.env.get("SUPABASE_ANON_KEY");
+
+  const validTokens = [cronSecret, supabaseServiceKey, supabaseAnonKey].filter(Boolean);
+  const providedToken = reqAuthHeader?.replace("Bearer ", "");
+
+  if (!providedToken || !validTokens.includes(providedToken)) {
+    return new Response(JSON.stringify({ error: "Unauthorized" }), {
+      status: 401,
+      headers: { ...corsHeaders, "Content-Type": "application/json" },
+    });
   }
 
   const consumerKey = Deno.env.get("TWITTER_CONSUMER_KEY")!;
