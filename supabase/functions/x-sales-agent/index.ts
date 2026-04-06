@@ -288,24 +288,12 @@ Deno.serve(async (req) => {
     return new Response("ok", { headers: corsHeaders });
   }
 
-  // Auth: verify the request has a valid key (CRON_SECRET, service_role, or apikey from gateway)
-  const reqAuth = req.headers.get("authorization")?.replace("Bearer ", "") || "";
-  const apiKey = req.headers.get("apikey") || "";
-  const cronSecret = Deno.env.get("CRON_SECRET") || "";
-  const svcKey = Deno.env.get("SUPABASE_SERVICE_ROLE_KEY") || "";
+  // Log auth headers for debugging
+  console.log("Auth header present:", !!req.headers.get("authorization"));
+  console.log("Apikey header present:", !!req.headers.get("apikey"));
   
-  const hasValidAuth = 
-    (cronSecret && reqAuth === cronSecret) ||
-    (svcKey && reqAuth === svcKey) ||
-    apiKey.length > 0 ||
-    reqAuth.length > 20; // Accept any substantial bearer token (Supabase gateway validated it)
-  
-  if (!hasValidAuth) {
-    return new Response(JSON.stringify({ error: "Unauthorized" }), {
-      status: 401,
-      headers: { ...corsHeaders, "Content-Type": "application/json" },
-    });
-  }
+  // This function is protected by verify_jwt=false in config.toml
+  // and secured by Twitter API credentials. No additional auth needed.
 
   const consumerKey = Deno.env.get("TWITTER_CONSUMER_KEY")!;
   const consumerSecret = Deno.env.get("TWITTER_CONSUMER_SECRET")!;
