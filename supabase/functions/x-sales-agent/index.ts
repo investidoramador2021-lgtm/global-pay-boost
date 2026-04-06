@@ -288,12 +288,7 @@ Deno.serve(async (req) => {
     return new Response("ok", { headers: corsHeaders });
   }
 
-  // Log auth headers for debugging
-  console.log("Auth header present:", !!req.headers.get("authorization"));
-  console.log("Apikey header present:", !!req.headers.get("apikey"));
-  
-  // This function is protected by verify_jwt=false in config.toml
-  // and secured by Twitter API credentials. No additional auth needed.
+  // Protected by verify_jwt=false in config.toml; secured by Twitter credentials.
 
   const consumerKey = Deno.env.get("TWITTER_CONSUMER_KEY")!;
   const consumerSecret = Deno.env.get("TWITTER_CONSUMER_SECRET")!;
