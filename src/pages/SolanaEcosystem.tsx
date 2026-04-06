@@ -67,7 +67,7 @@ const SolanaEcosystem = () => (
   <>
     <Helmet>
       <title>Solana Ecosystem Hub: Swap AI Agent & DePIN Tokens | MRC Global Pay</title>
-      <meta name="description" content="Instant Solana swaps for AI agent tokens (ELIZA, GOAT, ZEREBRO) and DePIN rewards (HNT, RENDER). Registration-free, non-custodial, from $0.30. Canadian MSB." />
+      <meta name="description" content="Instant Solana swaps for AI agent tokens (GOAT, JUP, PYTH) and DePIN rewards (HNT, RENDER). Registration-free, non-custodial, from $0.30. Canadian MSB." />
       <link rel="canonical" href="https://mrcglobalpay.com/ecosystem/solana" />
       <script type="application/ld+json">{JSON.stringify(jsonLd)}</script>
       <script type="application/ld+json">{JSON.stringify(faqJsonLd)}</script>
@@ -84,7 +84,7 @@ const SolanaEcosystem = () => (
           Instant Solana Swaps: The $0.30 Gateway to AI&nbsp;Agents&nbsp;&amp;&nbsp;DePIN
         </h1>
         <p className="mb-8 max-w-2xl text-lg text-muted-foreground">
-          Swap dust-sized balances into the hottest 2026 Solana tokens — <strong>ELIZA</strong>, <strong>GOAT</strong>, <strong>Render</strong>, and <strong>Helium</strong> — with <strong>no account required</strong> and a <strong>$0.30 minimum</strong>. Processed through a <strong>Canadian Registered MSB</strong>.
+          Swap dust-sized balances into the hottest 2026 Solana tokens — <strong>GOAT</strong>, <strong>JUP</strong>, <strong>Render</strong>, and <strong>Helium</strong> — with <strong>no account required</strong> and a <strong>$0.30 minimum</strong>. Processed through a <strong>Canadian Registered MSB</strong>.
         </p>
         <div className="flex flex-wrap gap-3">
           <Button asChild size="lg">
@@ -148,7 +148,7 @@ const SolanaEcosystem = () => (
             <ol className="space-y-4 text-muted-foreground">
               <li className="flex gap-3">
                 <span className="flex h-7 w-7 shrink-0 items-center justify-center rounded-full bg-primary text-sm font-bold text-primary-foreground">1</span>
-                <span><strong className="text-foreground">Choose Your Pair</strong> — Select the source (e.g. SOL) and destination (e.g. ELIZA) tokens from the grid above.</span>
+                <span><strong className="text-foreground">Choose Your Pair</strong> — Select the source (e.g. SOL) and destination (e.g. GOAT) tokens from the grid above.</span>
               </li>
               <li className="flex gap-3">
                 <span className="flex h-7 w-7 shrink-0 items-center justify-center rounded-full bg-primary text-sm font-bold text-primary-foreground">2</span>
@@ -240,8 +240,8 @@ const SolanaEcosystem = () => (
               </CardTitle>
             </CardHeader>
             <CardContent className="space-y-2 text-xs text-muted-foreground">
-              <p><strong className="text-foreground">AI Agents:</strong> elizaOS, GOAT, Zerebro, Virtuals — autonomous on-chain AI.</p>
-              <p><strong className="text-foreground">DePIN:</strong> Helium (HNT), Render (RNDR) — decentralized physical infrastructure.</p>
+              <p><strong className="text-foreground">AI Agents:</strong> GOAT, JUP, PYTH — high-volume Solana AI and infrastructure tokens.</p>
+              <p><strong className="text-foreground">Coming Soon:</strong> Zerebro, Eliza, Pippin — pending liquidity confirmation.</p>
               <p><strong className="text-foreground">PayPal Onramp:</strong> PYUSD → SOL — fiat-to-Solana bridge.</p>
             </CardContent>
           </Card>
