@@ -45,15 +45,15 @@ const articleContent: Record<
     partnerEcosystem:
       "Our compliance framework is reinforced by our technology partners. ChangeNOW provides AML screening on every transaction using industry-standard blockchain analytics. Fireblocks adds an additional security layer with SOC 2 Type II certified infrastructure. Together, this partner ecosystem ensures that every swap processed through MRC GlobalPay meets or exceeds regulatory requirements — without requiring users to surrender personal data for standard transactions.",
     whyNonCustodial:
-      "Traditional custodial exchanges require KYC because they hold user funds — creating a honeypot of personal data and assets. MRC GlobalPay's non-custodial model means we process swaps without ever holding assets, reducing the regulatory burden while maintaining full FINTRAC compliance. This is the future of compliant crypto: regulatory accountability without invasive data collection. Our automated risk-prevention system only flags transactions that meet specific high-risk thresholds, keeping the experience frictionless for 99%+ of users.",
+      "Traditional custodial exchanges require mandatory identity verification because they hold user funds — creating a honeypot of personal data and assets. MRC GlobalPay's non-custodial model means we process swaps without ever holding assets, reducing the regulatory burden while maintaining full FINTRAC compliance. This is the future of compliant crypto: regulatory accountability without invasive data collection. Our automated risk-prevention system only flags transactions that meet specific high-risk thresholds, keeping the experience frictionless for 99%+ of users.",
     faqItems: [
       {
         q: "What is an MSB registration?",
         a: "A Money Services Business (MSB) registration with FINTRAC is a Canadian federal license for businesses that deal in virtual currencies. It requires ongoing AML compliance, transaction reporting, and regular audits.",
       },
       {
-        q: "Does MSB registration mean MRC GlobalPay requires KYC?",
-        a: "No. MRC GlobalPay is registration-free for most users. Our non-custodial architecture and automated risk-prevention system ensure compliance without blanket KYC. Only transactions flagged as high-risk may require standard verification.",
+        q: "Does MRC GlobalPay require account registration?",
+        a: "No. MRC GlobalPay is registration-free for most users. Our non-custodial architecture and automated risk-prevention system ensure compliance without blanket identity verification. Only transactions flagged as high-risk may require standard verification.",
       },
       {
         q: "How does this protect me as a user?",
@@ -89,11 +89,11 @@ const articleContent: Record<
     partnerEcosystem:
       "ChangeNOW's infrastructure processes your swap without creating any user accounts on their end either. The transaction is identified solely by a unique swap ID — not by your name, email, or IP address. Fireblocks secures the transaction signing process using MPC technology that doesn't require user identity. Combined with MRC GlobalPay's Canadian MSB registration, this creates a fully compliant, fully private swap experience.",
     whyNonCustodial:
-      "Custodial exchanges require KYC because they hold your money — legally, they must know who you are. Non-custodial platforms like MRC GlobalPay process instant swaps without ever holding assets, which means the regulatory framework is fundamentally different. We maintain full FINTRAC compliance through automated risk monitoring, not through collecting your personal data. This is the privacy-preserving model that regulators are increasingly endorsing as the standard for 2026 and beyond.",
+      "Custodial exchanges require mandatory identity verification because they hold your money — legally, they must know who you are. Non-custodial platforms like MRC GlobalPay process instant swaps without ever holding assets, which means the regulatory framework is fundamentally different. We maintain full FINTRAC compliance through automated risk monitoring, not through collecting your personal data. This is the privacy-preserving model that regulators are increasingly endorsing as the standard for 2026 and beyond.",
     faqItems: [
       {
         q: "Why doesn't MRC GlobalPay require registration?",
-        a: "Because we're non-custodial — we never hold your funds. Regulatory KYC requirements exist primarily for custodial services that hold user assets. Our automated risk-prevention system ensures AML compliance without blanket identity collection.",
+        a: "Because we're non-custodial — we never hold your funds. Mandatory verification requirements exist primarily for custodial services that hold user assets. Our automated risk-prevention system ensures AML compliance without blanket identity collection.",
       },
       {
         q: "Is it legal to swap crypto without an account?",

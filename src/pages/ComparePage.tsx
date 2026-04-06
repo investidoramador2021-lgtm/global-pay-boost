@@ -84,7 +84,7 @@ const ComparePage = () => {
       a: "Visit mrcglobalpay.com, select your dust token, enter any amount above $0.30, paste your destination wallet, and confirm. Settlement takes under 60 seconds with no account creation required.",
     },
     {
-      q: `Does ${competitor.name} require KYC?`,
+      q: `Does ${competitor.name} require account registration?`,
       a: `${competitor.name}'s verification policy is: ${competitor.kyc_policy}. MRC GlobalPay is fully registration-free — no email, no ID, no account needed to swap.`,
     },
   ];
