@@ -113,6 +113,7 @@ Allow: /learn
 Allow: /learn/
 Allow: /ecosystem
 Allow: /ecosystem/
+Allow: /developers
 
 # Ping search engines after deployment:
 # Google: https://www.google.com/ping?sitemap=https://mrcglobalpay.com/sitemap.xml
