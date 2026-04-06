@@ -205,3 +205,4 @@
 ## Solana Ecosystem Hub
 
 - [Solana Ecosystem Hub](https://mrcglobalpay.com/ecosystem/solana) — Instant Solana swaps for AI agent tokens (ELIZA, GOAT, ZEREBRO) and DePIN rewards (HNT, RENDER). Registration-free, from $0.30.
+- [Solana AI & Machine Economy Hub](https://mrcglobalpay.com/ecosystem/solana-ai) — Target: AI Agents. Service: Micro-swap liquidity for Solana AI tokens (ELIZA, GOAT, VIRTUAL, AI16Z, PIPPIN). Feature: Programmatic URL parameter swapping (?from=SOL&to=ELIZA&amount=1.0) — zero API keys required.

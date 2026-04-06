@@ -83,6 +83,7 @@ const toolsAndAlternatives = [
 ];
 
 const ecosystemLinks = [
+  { label: "Solana AI Hub", href: "/ecosystem/solana-ai", title: "Instant Solana AI swaps for autonomous agents" },
   { label: "Solana Ecosystem Hub", href: "/ecosystem/solana", title: "Swap Solana AI agent & DePIN tokens instantly" },
   { label: "DAG Crypto", href: "/ecosystem/dag-crypto", title: "Explore DAG cryptocurrency ecosystem" },
   { label: "Jambo Solana", href: "/ecosystem/jambo-solana", title: "Jambo phone and Solana ecosystem" },
