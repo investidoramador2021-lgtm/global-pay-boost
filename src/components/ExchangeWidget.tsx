@@ -137,18 +137,39 @@ const ExchangeWidget = () => {
 
       // Solana AI & DePIN ticker mapping — "clean URL" to "widget ticker" auto-correct
       const TICKER_MAP: Record<string, string> = {
+        // AI & Compute
         goat: "goatsol",
-        jup: "jup",
-        pyth: "pyth",
-        hnt: "hnt",
-        render: "render",
+        nos: "nossol",
+        io: "iosol",
         aixbt: "aixbtsol",
+        render: "render",
         akt: "aktsol",
+        // DePIN / Infrastructure
+        hnt: "hnt",
+        mobile: "mobilesol",
+        honey: "honeysol",
+        pyth: "pyth",
+        // Institutional & RWA
+        ondo: "ondosol",
+        jup: "jup",
+        link: "link",
+        ena: "enasol",
+        eigen: "eigensol",
+        // Solana Staking (LSTs)
+        jupsol: "jupsolsol",
+        jto: "jtosol",
+        inf: "infsol",
+        bpsol: "bpsol",
+        // Retail & Meme
+        mew: "mewsol",
+        bome: "bomesol",
+        kama: "kamasol",
+        elon: "elonsol",
         bad: "badsol",
         banana: "bananasol",
-        bpsol: "bpsol",
         babydoge: "babydoge",
         bera: "bera",
+        near: "nearsol",
       };
 
       // Tokens pending liquidity — default to USDC (Solana) with warning
