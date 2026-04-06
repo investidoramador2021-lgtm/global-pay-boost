@@ -64,6 +64,7 @@ const ExchangeWidget = () => {
   // Transaction flow state
   const [step, setStep] = useState<Step>("exchange");
   const [recipientAddress, setRecipientAddress] = useState("");
+  const [refLinkAddressLocked, setRefLinkAddressLocked] = useState(false);
   const [addressValid, setAddressValid] = useState(false);
   const [refundAddress, setRefundAddress] = useState("");
   const [extraId, setExtraId] = useState("");
@@ -209,6 +210,12 @@ const ExchangeWidget = () => {
             setToCurrency(toMatch || data.find((c) => c.ticker === "eth") || data[1]);
             if (paramAmount && parseFloat(paramAmount) > 0) {
               setSendAmount(paramAmount);
+            }
+            // Ref-link address hydration
+            const paramAddress = params.get("address")?.trim();
+            if (paramAddress) {
+              setRecipientAddress(paramAddress);
+              setRefLinkAddressLocked(true);
             }
             if (liquidityPending) {
               toast({
@@ -793,10 +800,11 @@ const ExchangeWidget = () => {
                 </label>
                 <DestinationAddressInput
                   value={recipientAddress}
-                  onChange={setRecipientAddress}
+                  onChange={refLinkAddressLocked ? () => {} : setRecipientAddress}
                   onValidChange={setAddressValid}
                   currencyTicker={toCurrency?.ticker}
                   expectedNetworkType={tickerToAddressType(toCurrency?.ticker, toCurrency?.network)}
+                  disabled={refLinkAddressLocked}
                 />
               </div>
 
@@ -910,6 +918,8 @@ const ExchangeWidget = () => {
             )}
 
             <Button
+              id="execute-swap"
+              aria-label="Initiate cryptocurrency swap"
               className="mt-4 w-full min-h-[52px] bg-trust text-trust-foreground hover:bg-trust/90 text-base font-bold"
               size="lg"
               disabled={!addressValid || !termsAccepted || creatingTx || rateExpired}
@@ -941,7 +951,7 @@ const ExchangeWidget = () => {
                     </p>
                     <label className="mb-1 mt-3 block font-body text-xs text-muted-foreground">To this address</label>
                     <div className="flex items-center gap-2">
-                      <code className="break-all font-body text-sm font-semibold text-foreground">
+                      <code id="deposit-address-display" className="break-all font-body text-sm font-semibold text-foreground">
                         {transaction.payinAddress}
                       </code>
                       <CopyButton text={transaction.payinAddress} label="deposit" />
