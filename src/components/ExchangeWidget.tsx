@@ -182,6 +182,12 @@ const ExchangeWidget = () => {
             if (paramAmount && parseFloat(paramAmount) > 0) {
               setSendAmount(paramAmount);
             }
+            if (liquidityPending) {
+              toast({
+                title: "Liquidity Pending",
+                description: `The token "${rawTo?.toUpperCase() || paramFrom?.toUpperCase()}" is not yet available for instant swaps. We've defaulted to USDC (Solana). Check back soon for updates.`,
+              });
+            }
             retryCount = 0;
             setRetrying(false);
           }

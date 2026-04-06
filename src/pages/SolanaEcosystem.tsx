@@ -29,10 +29,10 @@ const quickFacts = [
 
 const faqs = [
   { q: "What is the minimum amount to swap Solana tokens?", a: "MRC Global Pay supports micro-swaps starting from just $0.30 — the lowest minimum in the industry. No account or registration is required." },
-  { q: "How do I swap SOL dust for AI agent tokens like ELIZA?", a: "Simply visit MRC Global Pay, select SOL as your source and ELIZA as your destination, enter your small balance, and execute the swap. The process takes under 60 seconds." },
+  { q: "How do I swap SOL dust for AI agent tokens like GOAT?", a: "Simply visit MRC Global Pay, select SOL as your source and GOAT as your destination, enter your small balance, and execute the swap. The process takes under 60 seconds." },
   { q: "Is MRC Global Pay regulated?", a: "Yes. MRC Global Pay is a Canadian Registered Money Services Business (MSB) licensed under FINTRAC. All swaps are processed through regulated infrastructure." },
   { q: "Can I swap Helium (HNT) mining rewards?", a: "Yes. MRC Global Pay supports HNT-to-SOL swaps, allowing Helium miners to convert small DePIN rewards into Solana instantly." },
-  { q: "What Solana AI and DePIN tokens are supported?", a: "We support ELIZA, GOAT, ZEREBRO, VIRTUAL (AI ecosystem), as well as HNT, RENDER, and JUP (DePIN and DEX aggregator rewards)." },
+  { q: "What Solana AI and DePIN tokens are supported?", a: "We currently support GOAT, JUP (Jupiter), PYTH (Pyth Network), HNT (Helium), and RENDER. New tokens like Zerebro and Eliza are being added as liquidity stabilizes." },
 ];
 
 const jsonLd = {
