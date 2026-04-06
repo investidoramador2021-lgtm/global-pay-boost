@@ -148,6 +148,7 @@ const Index = () => {
           <HowItWorksSection />
           <PopularPairsSection />
           <SwapPairsQA />
+          <TrendingEcosystems />
           <FAQSection />
         </main>
         <MsbTrustBar />
