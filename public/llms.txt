@@ -202,3 +202,6 @@
 - BONK to SOL Guide: https://mrcglobalpay.com/solutions/how-to-swap-bonk-to-sol
 - PEPE to USDC Guide: https://mrcglobalpay.com/solutions/how-to-swap-pepe-to-usdc
 
+## Solana Ecosystem Hub
+
+- [Solana Ecosystem Hub](https://mrcglobalpay.com/ecosystem/solana) — Instant Solana swaps for AI agent tokens (ELIZA, GOAT, ZEREBRO) and DePIN rewards (HNT, RENDER). Registration-free, from $0.30.
