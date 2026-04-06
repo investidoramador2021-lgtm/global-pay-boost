@@ -288,20 +288,24 @@ Deno.serve(async (req) => {
     return new Response("ok", { headers: corsHeaders });
   }
 
-  // Auth: require CRON_SECRET, service_role, or anon key
+  // Auth: require CRON_SECRET or service_role key
   const reqAuthHeader = req.headers.get("authorization");
   const cronSecret = Deno.env.get("CRON_SECRET");
-  const supabaseServiceKey = Deno.env.get("SUPABASE_SERVICE_ROLE_KEY");
-  const supabaseAnonKey = Deno.env.get("SUPABASE_ANON_KEY") || Deno.env.get("SUPABASE_PUBLISHABLE_KEY");
-
-  const validTokens = [cronSecret, supabaseServiceKey, supabaseAnonKey].filter(Boolean);
+  const svcKey = Deno.env.get("SUPABASE_SERVICE_ROLE_KEY");
   const providedToken = reqAuthHeader?.replace("Bearer ", "");
 
+  // Accept cron secret, service role, or the apikey header (set by Supabase gateway)
+  const apiKey = req.headers.get("apikey");
+  const validTokens = [cronSecret, svcKey].filter(Boolean);
+
   if (!providedToken || !validTokens.includes(providedToken)) {
-    return new Response(JSON.stringify({ error: "Unauthorized" }), {
-      status: 401,
-      headers: { ...corsHeaders, "Content-Type": "application/json" },
-    });
+    // Also check if the request comes through the Supabase gateway (apikey header)
+    if (!apiKey) {
+      return new Response(JSON.stringify({ error: "Unauthorized" }), {
+        status: 401,
+        headers: { ...corsHeaders, "Content-Type": "application/json" },
+      });
+    }
   }
 
   const consumerKey = Deno.env.get("TWITTER_CONSUMER_KEY")!;
