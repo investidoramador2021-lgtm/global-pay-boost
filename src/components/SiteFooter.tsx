@@ -67,6 +67,9 @@ const resourceLinks = [
   { label: "Swap Nodes in Pairs", href: "/guides/swap-nodes-in-pairs", title: "Guide to swapping nodes in pairs" },
 ];
 
+  { label: "Dust Calculator", href: "/tools/crypto-dust-calculator", title: "Calculate the purchasing power of your crypto dust" },
+];
+
 const toolsAndAlternatives = [
   { label: "LTC Tracker", href: "/tools/ltc-tracker", title: "Track Litecoin price and transactions" },
   { label: "Litecoin Tracker", href: "/tools/litecoin-tracker", title: "Monitor Litecoin portfolio and prices" },
