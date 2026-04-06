@@ -24,6 +24,9 @@ export const SWAP_SOLUTIONS: SwapSolution[] = [
   { from_token: "PEPE", to_token: "USDC", slug: "pepe-to-usdc", use_case: "De-risking Dust", min_amount_usd: "0.30", network_advantage: "Secure small meme gains instantly" },
   { from_token: "XMR", to_token: "ETH", slug: "xmr-to-eth", use_case: "Privacy Bridge", min_amount_usd: "0.30", network_advantage: "Non-custodial privacy-to-utility swaps" },
   { from_token: "SHIB", to_token: "USDT", slug: "shib-to-usdt", use_case: "Community Swap", min_amount_usd: "0.30", network_advantage: "High-speed SHIB micro-settlements" },
+  { from_token: "SOL", to_token: "ONDO", slug: "sol-to-ondo", use_case: "RWA Yield Access", min_amount_usd: "0.30", network_advantage: "Instant access to tokenized US Treasury yields on Solana" },
+  { from_token: "SOL", to_token: "NOS", slug: "sol-to-nos", use_case: "AI GPU Compute", min_amount_usd: "0.30", network_advantage: "Swap into decentralized GPU inference on Solana from $0.30" },
+  { from_token: "SOL", to_token: "JUPSOL", slug: "sol-to-jupsol", use_case: "Liquid Staking", min_amount_usd: "0.30", network_advantage: "Earn staking yield with full liquidity via Jupiter LST" },
 ];
 
 export function getSolutionBySlug(slug: string): SwapSolution | undefined {
