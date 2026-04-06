@@ -140,6 +140,36 @@ export type Database = {
         }
         Relationships: []
       }
+      x_bot_logs: {
+        Row: {
+          author_username: string
+          created_at: string
+          id: string
+          match_type: string
+          matched_token: string
+          reply_tweet_id: string | null
+          tweet_id: string
+        }
+        Insert: {
+          author_username: string
+          created_at?: string
+          id?: string
+          match_type?: string
+          matched_token: string
+          reply_tweet_id?: string | null
+          tweet_id: string
+        }
+        Update: {
+          author_username?: string
+          created_at?: string
+          id?: string
+          match_type?: string
+          matched_token?: string
+          reply_tweet_id?: string | null
+          tweet_id?: string
+        }
+        Relationships: []
+      }
     }
     Views: {
       [_ in never]: never
