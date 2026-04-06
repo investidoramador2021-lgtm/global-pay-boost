@@ -292,7 +292,7 @@ Deno.serve(async (req) => {
   const reqAuthHeader = req.headers.get("authorization");
   const cronSecret = Deno.env.get("CRON_SECRET");
   const supabaseServiceKey = Deno.env.get("SUPABASE_SERVICE_ROLE_KEY");
-  const supabaseAnonKey = Deno.env.get("SUPABASE_ANON_KEY");
+  const supabaseAnonKey = Deno.env.get("SUPABASE_ANON_KEY") || Deno.env.get("SUPABASE_PUBLISHABLE_KEY");
 
   const validTokens = [cronSecret, supabaseServiceKey, supabaseAnonKey].filter(Boolean);
   const providedToken = reqAuthHeader?.replace("Bearer ", "");
