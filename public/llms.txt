@@ -26,6 +26,10 @@
 - [Swap Without Registration](https://mrcglobalpay.com/learn/swap-without-registration)
 - [Track Your Micro-Swap](https://mrcglobalpay.com/learn/tracking-your-micro-swap)
 
+## Tools
+
+- [Crypto Dust Calculator](https://mrcglobalpay.com/tools/crypto-dust-calculator) — Live-data calculator showing the purchasing power of small crypto balances. Uses CoinGecko prices. Swap dust from $0.30.
+
 ## Featured Swap Pairs
 
 - [Swap SOL to USDT](https://mrcglobalpay.com/swap/sol-usdt) — Highest-volume retail swap pair in 2026
