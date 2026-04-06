@@ -59,14 +59,14 @@
 - [USDT to Solana](https://mrcglobalpay.com/swap/usdt-to-solana)
 - [USDT TRX Instant](https://mrcglobalpay.com/swap/usdt-trx-instant)
 
-## Buy Crypto (No KYC)
+## Buy Crypto (Registration-Free)
 
 - [Buy Bitcoin No Verification](https://mrcglobalpay.com/buy/bitcoin-no-verification)
-- [Buy Bitcoin No KYC](https://mrcglobalpay.com/buy/bitcoin-no-kyc)
-- [Buy Solana No KYC](https://mrcglobalpay.com/buy/solana-no-kyc)
+- [Buy Bitcoin Registration-Free](https://mrcglobalpay.com/buy/bitcoin-no-kyc)
+- [Buy Solana Registration-Free](https://mrcglobalpay.com/buy/solana-no-kyc)
 - [Buy Solana No Verification](https://mrcglobalpay.com/buy/solana-no-verification)
 - [Buy Solana PayPal](https://mrcglobalpay.com/buy/solana-paypal)
-- [Buy Monero No KYC](https://mrcglobalpay.com/buy/monero-no-kyc)
+- [Buy Monero Registration-Free](https://mrcglobalpay.com/buy/monero-no-kyc)
 - [Buy Ethereum](https://mrcglobalpay.com/buy/ethereum)
 - [Buy Ether Instant](https://mrcglobalpay.com/buy/ether-instant)
 - [Buy XDC](https://mrcglobalpay.com/buy/xdc)
