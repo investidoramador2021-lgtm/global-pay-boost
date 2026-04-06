@@ -126,5 +126,32 @@
       <pubDate>Fri, 04 Apr 2026 12:00:00 GMT</pubDate>
       <guid>https://mrcglobalpay.com/compare/mrc-vs-thorchain</guid>
     </item>
+    <item>
+      <title>Solana Swap API Documentation — 50+ Tokens, Contract Addresses &amp; Deep Links</title>
+      <link>https://mrcglobalpay.com/developers</link>
+      <guid isPermaLink="true">https://mrcglobalpay.com/developers</guid>
+      <description>Programmatic non-custodial Solana swap API. 50+ token registry with contract addresses, ticker auto-correct layer, DOM identifiers for bot integration, and downloadable JSON token list. $0.30 minimum, no API keys.</description>
+      <dc:creator>MRC GlobalPay Team</dc:creator>
+      <pubDate>Sun, 06 Apr 2026 00:00:00 GMT</pubDate>
+      <category>Developer</category>
+    </item>
+    <item>
+      <title>Solana Ecosystem Hub — AI Agent &amp; DePIN Token Swaps</title>
+      <link>https://mrcglobalpay.com/ecosystem/solana</link>
+      <guid isPermaLink="true">https://mrcglobalpay.com/ecosystem/solana</guid>
+      <description>Instant Solana swaps for AI agent tokens (GOAT, JUP, PYTH) and DePIN rewards (HNT, RENDER). Registration-free, non-custodial, from $0.30. Canadian MSB.</description>
+      <dc:creator>MRC GlobalPay Team</dc:creator>
+      <pubDate>Sun, 06 Apr 2026 00:00:00 GMT</pubDate>
+      <category>Ecosystem</category>
+    </item>
+    <item>
+      <title>Solana AI &amp; DePIN Swaps — Instant Micro-Swaps for Agents &amp; Nodes</title>
+      <link>https://mrcglobalpay.com/ecosystem/solana-ai</link>
+      <guid isPermaLink="true">https://mrcglobalpay.com/ecosystem/solana-ai</guid>
+      <description>Instant Solana AI &amp; DePIN token swaps for GOAT, JUP, PYTH, HNT, RENDER. Registration-free, non-custodial, from $0.30. Programmatic URL deep-linking for AI agents.</description>
+      <dc:creator>MRC GlobalPay Team</dc:creator>
+      <pubDate>Sun, 06 Apr 2026 00:00:00 GMT</pubDate>
+      <category>Ecosystem</category>
+    </item>
   </channel>
 </rss>
