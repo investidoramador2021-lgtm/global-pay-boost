@@ -83,6 +83,8 @@ const AppRoutes = () => (
     <Route path="compare/:slug" element={<ComparePage />} />
     <Route path="solutions" element={<SolutionsDirectory />} />
     <Route path="solutions/:slug" element={<SolutionPage />} />
+    <Route path="learn" element={<LearnDirectory />} />
+    <Route path="learn/:slug" element={<LearnArticle />} />
   </>
 );
 
