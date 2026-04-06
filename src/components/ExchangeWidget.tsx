@@ -138,17 +138,27 @@ const ExchangeWidget = () => {
       // Solana AI & DePIN ticker mapping — "clean URL" to "widget ticker" auto-correct
       const TICKER_MAP: Record<string, string> = {
         goat: "goatsol",
-        zerebro: "zerebrosol",
-        ai16z: "ai16zsol",
-        pippin: "pippinsol",
-        virtual: "virtualsol",
-        eliza: "elizasol",
-        hnt: "hntsol",
         jup: "jup",
+        pyth: "pyth",
+        hnt: "hnt",
         render: "render",
       };
-      const paramTo = rawTo ? (TICKER_MAP[rawTo] || rawTo) : undefined;
+
+      // Tokens pending liquidity — default to USDC (Solana) with warning
+      const PENDING_TOKENS = new Set(["eliza", "elizasol", "virtual", "virtualsol", "zerebro", "zerebrosol", "pippin", "pippinsol", "ai16z", "ai16zsol"]);
+
+      let paramTo = rawTo ? (TICKER_MAP[rawTo] || rawTo) : undefined;
       const paramFromMapped = paramFrom ? (TICKER_MAP[paramFrom] || paramFrom) : undefined;
+
+      // If user requests a pending token, show professional notice and default to USDC
+      let liquidityPending = false;
+      if (rawTo && PENDING_TOKENS.has(rawTo)) {
+        paramTo = "usdcsol";
+        liquidityPending = true;
+      }
+      if (paramFrom && PENDING_TOKENS.has(paramFrom)) {
+        liquidityPending = true;
+      }
 
       getCurrencies()
         .then((data) => {

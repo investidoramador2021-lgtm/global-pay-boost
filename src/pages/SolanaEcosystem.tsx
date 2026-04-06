@@ -10,13 +10,11 @@ import { Button } from "@/components/ui/button";
 
 /* ── static data from solana_targets.csv ── */
 const solanaTargets = [
-  { from: "SOL", to: "ELIZA", slug: "sol-to-eliza", niche: "AI Infrastructure", why: "elizaOS is the 'Linux' of AI agents; high dev demand." },
   { from: "USDC", to: "GOAT", slug: "usdc-to-goat", niche: "AI Meme", why: "The first AI-agent endorsed coin; massive viral reach." },
-  { from: "SOL", to: "ZEREBRO", slug: "sol-to-zerebro", niche: "AI Social", why: "Trending autonomous social influencer token." },
   { from: "HNT", to: "SOL", slug: "hnt-to-sol", niche: "DePIN Exit", why: "Helium users need to swap small 'mining' rewards for SOL." },
   { from: "RENDER", to: "USDT", slug: "render-to-usdt", niche: "DePIN / GPU", why: "High-volume GPU rendering rewards being off-ramped." },
   { from: "JUP", to: "SOL", slug: "jup-to-sol", niche: "DEX Aggregator", why: "Converting 'dust' from Jupiter swap rewards." },
-  { from: "SOL", to: "VIRTUAL", slug: "sol-to-virtual", niche: "AI Metaverse", why: "Bridge to the 'Virtuals' agentic ecosystem." },
+  { from: "SOL", to: "PYTH", slug: "sol-to-pyth", niche: "Oracle Network", why: "Pyth delivers institutional-grade price feeds to DeFi protocols." },
   { from: "PYUSD", to: "SOL", slug: "pyusd-to-sol", niche: "PayPal Onramp", why: "PayPal users moving small stablecoin amounts into SOL." },
 ];
 
