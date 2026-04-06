@@ -122,10 +122,14 @@
 - [BNB Meme Coins](https://mrcglobalpay.com/trade/bnb-meme-coins)
 - [Alpaca Crypto](https://mrcglobalpay.com/trade/alpaca)
 
-## Tools & Trackers
+## Developer Hub
 
+- [Developer Hub](https://mrcglobalpay.com/developer) — Widget integration docs, URL deep-linking parameters, and supported blockchain network table
 - [Free Crypto Swap Widget](https://mrcglobalpay.com/get-widget) — Embeddable one-line iframe widget for third-party sites, supports 500+ tokens with live pricing
 - [Embeddable Widget (iframe)](https://mrcglobalpay.com/embed/widget) — Standalone widget endpoint for iframe embedding
+
+## Tools & Trackers
+
 - [LTC Transaction Tracker](https://mrcglobalpay.com/tools/ltc-tracker)
 - [Litecoin Tracker](https://mrcglobalpay.com/tools/litecoin-tracker)
 - [Instant Rate of Change](https://mrcglobalpay.com/tools/instant-rate-change)

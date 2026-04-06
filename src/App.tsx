@@ -38,6 +38,7 @@ const SolutionsDirectory = lazy(() => import("./pages/SolutionsDirectory.tsx"));
 const SolutionPage = lazy(() => import("./pages/SolutionPage.tsx"));
 const LearnDirectory = lazy(() => import("./pages/LearnDirectory.tsx"));
 const LearnArticle = lazy(() => import("./pages/LearnArticle.tsx"));
+const DeveloperHub = lazy(() => import("./pages/DeveloperHub.tsx"));
 const NotFound = lazy(() => import("./pages/NotFound.tsx"));
 
 const queryClient = new QueryClient();
@@ -85,6 +86,7 @@ const AppRoutes = () => (
     <Route path="solutions/:slug" element={<SolutionPage />} />
     <Route path="learn" element={<LearnDirectory />} />
     <Route path="learn/:slug" element={<LearnArticle />} />
+    <Route path="developer" element={<DeveloperHub />} />
   </>
 );
 
