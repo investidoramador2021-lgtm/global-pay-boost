@@ -27809,4 +27809,44 @@
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
   </url>
+  <url>
+    <loc>https://mrcglobalpay.com/ecosystem/solana</loc>
+    <lastmod>2026-04-06</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://mrcglobalpay.com/ecosystem/solana" />
+    <xhtml:link rel="alternate" hreflang="es" href="https://mrcglobalpay.com/es/ecosystem/solana" />
+    <xhtml:link rel="alternate" hreflang="pt" href="https://mrcglobalpay.com/pt/ecosystem/solana" />
+    <xhtml:link rel="alternate" hreflang="fr" href="https://mrcglobalpay.com/fr/ecosystem/solana" />
+    <xhtml:link rel="alternate" hreflang="ja" href="https://mrcglobalpay.com/ja/ecosystem/solana" />
+    <xhtml:link rel="alternate" hreflang="fa" href="https://mrcglobalpay.com/fa/ecosystem/solana" />
+    <xhtml:link rel="alternate" hreflang="ur" href="https://mrcglobalpay.com/ur/ecosystem/solana" />
+    <xhtml:link rel="alternate" hreflang="he" href="https://mrcglobalpay.com/he/ecosystem/solana" />
+    <xhtml:link rel="alternate" hreflang="af" href="https://mrcglobalpay.com/af/ecosystem/solana" />
+    <xhtml:link rel="alternate" hreflang="hi" href="https://mrcglobalpay.com/hi/ecosystem/solana" />
+    <xhtml:link rel="alternate" hreflang="vi" href="https://mrcglobalpay.com/vi/ecosystem/solana" />
+    <xhtml:link rel="alternate" hreflang="tr" href="https://mrcglobalpay.com/tr/ecosystem/solana" />
+    <xhtml:link rel="alternate" hreflang="uk" href="https://mrcglobalpay.com/uk/ecosystem/solana" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://mrcglobalpay.com/ecosystem/solana" />
+  </url>
+  <url>
+    <loc>https://mrcglobalpay.com/ecosystem/solana-ai</loc>
+    <lastmod>2026-04-06</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://mrcglobalpay.com/ecosystem/solana-ai" />
+    <xhtml:link rel="alternate" hreflang="es" href="https://mrcglobalpay.com/es/ecosystem/solana-ai" />
+    <xhtml:link rel="alternate" hreflang="pt" href="https://mrcglobalpay.com/pt/ecosystem/solana-ai" />
+    <xhtml:link rel="alternate" hreflang="fr" href="https://mrcglobalpay.com/fr/ecosystem/solana-ai" />
+    <xhtml:link rel="alternate" hreflang="ja" href="https://mrcglobalpay.com/ja/ecosystem/solana-ai" />
+    <xhtml:link rel="alternate" hreflang="fa" href="https://mrcglobalpay.com/fa/ecosystem/solana-ai" />
+    <xhtml:link rel="alternate" hreflang="ur" href="https://mrcglobalpay.com/ur/ecosystem/solana-ai" />
+    <xhtml:link rel="alternate" hreflang="he" href="https://mrcglobalpay.com/he/ecosystem/solana-ai" />
+    <xhtml:link rel="alternate" hreflang="af" href="https://mrcglobalpay.com/af/ecosystem/solana-ai" />
+    <xhtml:link rel="alternate" hreflang="hi" href="https://mrcglobalpay.com/hi/ecosystem/solana-ai" />
+    <xhtml:link rel="alternate" hreflang="vi" href="https://mrcglobalpay.com/vi/ecosystem/solana-ai" />
+    <xhtml:link rel="alternate" hreflang="tr" href="https://mrcglobalpay.com/tr/ecosystem/solana-ai" />
+    <xhtml:link rel="alternate" hreflang="uk" href="https://mrcglobalpay.com/uk/ecosystem/solana-ai" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://mrcglobalpay.com/ecosystem/solana-ai" />
+  </url>
 </urlset>
