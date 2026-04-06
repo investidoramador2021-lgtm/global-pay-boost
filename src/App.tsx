@@ -36,6 +36,8 @@ const CompareDirectory = lazy(() => import("./pages/CompareDirectory.tsx"));
 const ComparePage = lazy(() => import("./pages/ComparePage.tsx"));
 const SolutionsDirectory = lazy(() => import("./pages/SolutionsDirectory.tsx"));
 const SolutionPage = lazy(() => import("./pages/SolutionPage.tsx"));
+const LearnDirectory = lazy(() => import("./pages/LearnDirectory.tsx"));
+const LearnArticle = lazy(() => import("./pages/LearnArticle.tsx"));
 const NotFound = lazy(() => import("./pages/NotFound.tsx"));
 
 const queryClient = new QueryClient();
