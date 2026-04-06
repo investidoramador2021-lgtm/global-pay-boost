@@ -71,6 +71,7 @@ const SolanaAI = () => (
     <Helmet>
       <title>Solana AI & DePIN Swaps: Instant Micro-Swaps for Agents & Nodes | MRC Global Pay</title>
       <meta name="description" content="Instant Solana AI & DePIN token swaps for GOAT, JUP, PYTH, HNT, RENDER. Registration-free, non-custodial, from $0.30. Programmatic URL deep-linking for AI agents." />
+      <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1" />
       <link rel="canonical" href="https://mrcglobalpay.com/ecosystem/solana-ai" />
       <script type="application/ld+json">{JSON.stringify(jsonLd)}</script>
       <script type="application/ld+json">{JSON.stringify(faqJsonLd)}</script>
