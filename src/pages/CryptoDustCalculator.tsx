@@ -224,9 +224,9 @@ export default function CryptoDustCalculator() {
 
               {/* Dust warning */}
               {belowMinimum && (
-                <div className="mb-6 flex items-start gap-3 rounded-xl border border-yellow-500/30 bg-yellow-500/10 p-4">
-                  <AlertTriangle className="mt-0.5 h-5 w-5 shrink-0 text-yellow-500" />
-                  <p className="text-sm text-yellow-200">
+                <div className="mb-6 flex items-start gap-3 rounded-xl border border-destructive/30 bg-destructive/10 p-4">
+                  <AlertTriangle className="mt-0.5 h-5 w-5 shrink-0 text-destructive" />
+                  <p className="text-sm text-destructive">
                     <strong>Below minimum.</strong> Value is under our $0.30 registration-free minimum. Add more dust to swap.
                   </p>
                 </div>
