@@ -26,7 +26,10 @@ const ogLocaleMap: Record<SupportedLanguage, string> = {
  * - <html lang="...">
  * - hreflang <link> tags for all languages + x-default
  * - Self-referencing canonical <link>
+ * - og:url matching canonical (prevents OG/canonical mismatch)
  * - og:locale + og:locale:alternate meta tags
+ * - og:site_name
+ * - robots directive
  */
 const HreflangTags = () => {
   const { pathname } = useLocation();
@@ -40,6 +43,13 @@ const HreflangTags = () => {
 
       {/* Self-referencing canonical */}
       <link rel="canonical" href={canonicalUrl} />
+
+      {/* OG URL must always match canonical */}
+      <meta property="og:url" content={canonicalUrl} />
+      <meta property="og:site_name" content="MRC GlobalPay" />
+
+      {/* Default robots */}
+      <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1" />
 
       {/* Hreflang alternates */}
       {supportedLanguages.map((lang) => (
