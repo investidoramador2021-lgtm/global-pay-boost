@@ -10,12 +10,12 @@ import { Button } from "@/components/ui/button";
 
 /* ── Trending Solana AI Index — April 2026 ── */
 const aiPairs = [
-  { from: "SOL", to: "ELIZA", niche: "elizaOS Economy", why: "The 'Linux' of AI agents — elizaOS powers autonomous on-chain bots that need micro-swap liquidity for gas and rewards.", color: "#9945FF" },
   { from: "SOL", to: "GOAT", niche: "AI-Agent Memes", why: "The first AI-agent endorsed memecoin with massive viral reach and high-frequency micro-swaps.", color: "#14F195" },
-  { from: "SOL", to: "VIRTUAL", niche: "Agentic Launchpad", why: "Bridge into the Virtuals protocol — the launchpad for deploying revenue-generating AI agents.", color: "#7B61FF" },
   { from: "SOL", to: "ZEREBRO", niche: "AI Social Layer", why: "Trending autonomous social influencer token powering AI-generated content at scale.", color: "#00D2FF" },
+  { from: "SOL", to: "PIPPIN", niche: "AI Infrastructure", why: "Infrastructure token for self-sustaining AI agent networks that auto-manage DePIN resources.", color: "#FFD93D" },
   { from: "USDC", to: "AI16Z", niche: "Agentic VC", why: "The on-chain venture fund governed by AI agents — swap stablecoins into the agentic economy.", color: "#FF6B6B" },
-  { from: "SOL", to: "PIPPIN", niche: "Autonomous Infrastructure", why: "Infrastructure token for self-sustaining AI agent networks that auto-manage DePIN resources.", color: "#FFD93D" },
+  { from: "SOL", to: "HNT", niche: "DePIN — Helium", why: "Helium's decentralized wireless network rewards hotspot operators in HNT. Swap your earned rewards into SOL or USDC instantly.", color: "#474DFF" },
+  { from: "SOL", to: "RENDER", niche: "DePIN — Render", why: "The GPU rendering network for AI and 3D workloads. Convert your Render node rewards into liquid assets from $0.30.", color: "#E34234" },
 ];
 
 const quickFacts = [
