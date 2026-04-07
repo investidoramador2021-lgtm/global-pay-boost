@@ -107,21 +107,30 @@ const jsonLd = {
   "@context": "https://schema.org",
   "@type": "WebPage",
   name: "Solana Swap API Documentation — MRC Global Pay",
-  description: "Programmatic non-custodial Solana swap API. $0.30 minimum, no-registration liquidity for NOS, ONDO, and 50+ assets. Optimized for arbitrage and trading bots.",
+  description: "Programmatic non-custodial Solana swap API. $0.30 minimum, registration-free liquidity for NOS, ONDO, and 50+ assets. Optimized for arbitrage and trading bots.",
   url: "https://mrcglobalpay.com/developers",
+  dateModified: "2026-04-07",
   isPartOf: { "@type": "WebSite", name: "MRC GlobalPay", url: "https://mrcglobalpay.com" },
   publisher: {
     "@type": "Organization",
     name: "MRC GlobalPay",
     url: "https://mrcglobalpay.com",
-    knowsAbout: ["Solana", "Non-Custodial Swaps", "API", "Trading Bots", "Arbitrage", "DePIN"],
+    description: "Registered Canadian MSB (FINTRAC M23225638) providing non-custodial cryptocurrency exchange services with $0.30 minimums.",
+    knowsAbout: ["Solana", "Non-Custodial Swaps", "API", "Trading Bots", "Arbitrage", "DePIN", "FINTRAC MSB"],
+    sameAs: ["https://mrcglobalpay.com"],
   },
   breadcrumb: {
     "@type": "BreadcrumbList",
     itemListElement: [
       { "@type": "ListItem", position: 1, name: "Home", item: "https://mrcglobalpay.com" },
-      { "@type": "ListItem", position: 2, name: "Developers", item: "https://mrcglobalpay.com/developers" },
+      { "@type": "ListItem", position: 2, name: "Developer Hub", item: "https://mrcglobalpay.com/developer" },
+      { "@type": "ListItem", position: 3, name: "API Documentation", item: "https://mrcglobalpay.com/developers" },
     ],
+  },
+  author: {
+    "@type": "Organization",
+    name: "MRC GlobalPay",
+    url: "https://mrcglobalpay.com",
   },
 };
 
@@ -186,14 +195,17 @@ const DevelopersApi = () => {
     <>
       <Helmet>
         <title>Solana Swap API Docs — 50+ Tokens | MRC Global Pay</title>
-        <meta name="description" content="Programmatic non-custodial Solana swap API. $0.30 minimum, no-registration liquidity for NOS, ONDO, and 50+ assets. Optimized for arbitrage and trading bots." />
+        <meta name="description" content="Programmatic non-custodial Solana swap API. $0.30 minimum, registration-free liquidity for NOS, ONDO, and 50+ assets. FINTRAC MSB licensed. Optimized for arbitrage bots and AI agents." />
         <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1" />
         <link rel="canonical" href="https://mrcglobalpay.com/developers" />
         <meta property="og:title" content="Solana Swap API Documentation — MRC Global Pay" />
-        <meta property="og:description" content="50+ Solana tokens with contract addresses, URL deep-linking docs, and downloadable JSON token list. $0.30 minimum, no API keys." />
+        <meta property="og:description" content="50+ Solana tokens with contract addresses, URL deep-linking docs, and downloadable JSON token list. $0.30 minimum, registration-free." />
         <meta property="og:url" content="https://mrcglobalpay.com/developers" />
         <meta property="og:type" content="website" />
         <meta property="og:site_name" content="MRC GlobalPay" />
+        <meta name="twitter:card" content="summary" />
+        <meta name="twitter:title" content="Solana Swap API Docs — MRC Global Pay" />
+        <meta name="twitter:description" content="Non-custodial Solana swap API with 50+ tokens. $0.30 minimum, FINTRAC MSB registered." />
         <script type="application/ld+json">{JSON.stringify(jsonLd)}</script>
         <script type="application/ld+json">{JSON.stringify(faqJsonLd)}</script>
       </Helmet>
@@ -538,13 +550,13 @@ console.log('Send funds to:', depositAddr);`} lang="javascript" />
           <nav className="rounded-xl border border-border bg-muted/30 p-5">
             <h3 className="text-sm font-semibold text-foreground mb-3">Related Resources</h3>
             <ul className="grid gap-2 text-sm sm:grid-cols-2">
+              <li><Link to="/status" className="text-primary hover:underline">Network Status (Live) →</Link></li>
               <li><Link to="/developer" className="text-primary hover:underline">Developer Hub (Widget Embed) →</Link></li>
               <li><Link to="/get-widget" className="text-primary hover:underline">Widget Generator →</Link></li>
               <li><Link to="/ecosystem/solana-ai" className="text-primary hover:underline">Solana AI & DePIN Hub →</Link></li>
               <li><Link to="/ecosystem/solana" className="text-primary hover:underline">Solana Ecosystem Hub →</Link></li>
               <li><Link to="/solutions" className="text-primary hover:underline">Micro-Swap Solutions →</Link></li>
               <li><Link to="/compare" className="text-primary hover:underline">Compare 50+ Exchanges →</Link></li>
-              <li><Link to="/tools/crypto-dust-calculator" className="text-primary hover:underline">Dust Calculator →</Link></li>
               <li><Link to="/transparency-security" className="text-primary hover:underline">Trust & Transparency →</Link></li>
             </ul>
           </nav>
