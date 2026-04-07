@@ -115,6 +115,9 @@ const expertiseLinks = [
   { label: "AML Compliance", href: "/aml", title: "Our Anti-Money Laundering policy and compliance" },
   { label: "Compare Exchanges", href: "/compare", title: "Compare MRC GlobalPay vs 50+ crypto exchanges" },
   { label: "Swap Solutions", href: "/solutions", title: "Browse all micro-swap solution guides" },
+  { label: "MSB Compliance / About", href: "/about", title: "Canadian MSB registration and compliance information" },
+  { label: "Referral Program", href: "/referral", title: "Earn 15% referral commission on every swap" },
+  { label: "Rates Export (XML)", href: "/export/rates.xml", title: "Live exchange rates in BestChange XML format" },
 ];
 
 const securityLegalLinks = [
