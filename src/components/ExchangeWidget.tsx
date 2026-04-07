@@ -1037,7 +1037,7 @@ const ExchangeWidget = () => {
                     const isNative = ["eth", "bnb", "matic", "avax"].includes(ticker);
                     if (isNative) {
                       const weiValue = "0x" + (BigInt(Math.floor(parseFloat(sendAmount) * 1e18))).toString(16);
-                      await ethereum.request({
+                      await provider.request({
                         method: "eth_sendTransaction",
                         params: [{
                           from: accounts[0],
