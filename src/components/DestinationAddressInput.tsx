@@ -180,7 +180,7 @@ const DestinationAddressInput = ({
           ? "border-destructive ring-destructive/30"
           : focused
             ? "border-primary ring-primary/20"
-            : "border-border";
+            : "border-muted-foreground/40";
 
   const ringClass = focused || isValid || isInvalid || isMismatch ? "ring-2" : "";
 

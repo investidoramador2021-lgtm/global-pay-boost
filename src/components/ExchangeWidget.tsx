@@ -89,12 +89,22 @@ const ExchangeWidget = () => {
 
   // Wallet connection handlers
   const connectMetaMask = async () => {
-    if (typeof window === "undefined" || !(window as any).ethereum) {
+    if (typeof window === "undefined") {
       toast({ title: "MetaMask not found", description: "Please install MetaMask browser extension.", variant: "destructive" });
       return;
     }
+    // Prefer MetaMask's own provider to avoid Trust Wallet / other wallet hijacking
+    const eth = (window as any).ethereum;
+    let provider = eth;
+    if (eth?.providers?.length) {
+      provider = eth.providers.find((p: any) => p.isMetaMask && !p.isTrust) || eth.providers.find((p: any) => p.isMetaMask);
+    }
+    if (!provider || !provider.isMetaMask) {
+      toast({ title: "MetaMask not found", description: "Please install MetaMask browser extension. If you have multiple wallets, ensure MetaMask is enabled.", variant: "destructive" });
+      return;
+    }
     try {
-      const accounts = await (window as any).ethereum.request({ method: "eth_requestAccounts" });
+      const accounts = await provider.request({ method: "eth_requestAccounts" });
       if (accounts?.[0]) {
         setRecipientAddress(accounts[0]);
         setConnectedWallet({ address: accounts[0], type: "evm" });
@@ -1010,20 +1020,24 @@ const ExchangeWidget = () => {
                 if (!isEvm) return null;
 
                 const handleMetaMask = async () => {
-                  if (typeof window === "undefined" || !(window as any).ethereum) {
+                  const eth = typeof window !== "undefined" ? (window as any).ethereum : null;
+                  let provider = eth;
+                  if (eth?.providers?.length) {
+                    provider = eth.providers.find((p: any) => p.isMetaMask && !p.isTrust) || eth.providers.find((p: any) => p.isMetaMask);
+                  }
+                  if (!provider || !provider.isMetaMask) {
                     toast({ title: "MetaMask not found", description: "Please install MetaMask browser extension to use this feature.", variant: "destructive" });
                     return;
                   }
                   try {
-                    const ethereum = (window as any).ethereum;
-                    const accounts = await ethereum.request({ method: "eth_requestAccounts" });
+                    const accounts = await provider.request({ method: "eth_requestAccounts" });
                     if (!accounts?.[0]) throw new Error("No account found");
                     
                     // For native ETH/BNB transfers
                     const isNative = ["eth", "bnb", "matic", "avax"].includes(ticker);
                     if (isNative) {
                       const weiValue = "0x" + (BigInt(Math.floor(parseFloat(sendAmount) * 1e18))).toString(16);
-                      await ethereum.request({
+                      await provider.request({
                         method: "eth_sendTransaction",
                         params: [{
                           from: accounts[0],
