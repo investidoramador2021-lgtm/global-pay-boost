@@ -153,5 +153,13 @@
       <pubDate>Sun, 06 Apr 2026 00:00:00 GMT</pubDate>
       <category>Ecosystem</category>
     </item>
+    <item>
+      <title>Network Status — Live Uptime Monitor for BTC, ETH &amp; SOL</title>
+      <link>https://mrcglobalpay.com/status</link>
+      <description>Real-time operational status of Bitcoin, Ethereum, and Solana swap networks. Live latency monitoring with auto-refresh.</description>
+      <guid isPermaLink="true">https://mrcglobalpay.com/status</guid>
+      <pubDate>Mon, 07 Apr 2026 00:00:00 GMT</pubDate>
+      <category>Infrastructure</category>
+    </item>
   </channel>
 </rss>
