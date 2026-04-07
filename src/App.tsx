@@ -43,6 +43,7 @@ const CryptoDustCalculatorPage = lazy(() => import("./pages/CryptoDustCalculator
 const SolanaAI = lazy(() => import("./pages/SolanaAI.tsx"));
 const SolanaEcosystem = lazy(() => import("./pages/SolanaEcosystem.tsx"));
 const DevelopersApi = lazy(() => import("./pages/DevelopersApi.tsx"));
+const NetworkStatus = lazy(() => import("./pages/NetworkStatus.tsx"));
 const NotFound = lazy(() => import("./pages/NotFound.tsx"));
 
 const queryClient = new QueryClient();
@@ -95,6 +96,7 @@ const AppRoutes = () => (
     <Route path="ecosystem/solana" element={<SolanaEcosystem />} />
     <Route path="ecosystem/solana-ai" element={<SolanaAI />} />
     <Route path="developers" element={<DevelopersApi />} />
+    <Route path="status" element={<NetworkStatus />} />
   </>
 );
 

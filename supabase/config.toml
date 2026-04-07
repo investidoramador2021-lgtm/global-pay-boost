@@ -17,3 +17,6 @@ verify_jwt = false
 
 [functions.x-sales-agent]
 verify_jwt = false
+
+[functions.live-rates]
+verify_jwt = false
