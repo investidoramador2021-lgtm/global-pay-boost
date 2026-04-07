@@ -107,21 +107,30 @@ const jsonLd = {
   "@context": "https://schema.org",
   "@type": "WebPage",
   name: "Solana Swap API Documentation — MRC Global Pay",
-  description: "Programmatic non-custodial Solana swap API. $0.30 minimum, no-registration liquidity for NOS, ONDO, and 50+ assets. Optimized for arbitrage and trading bots.",
+  description: "Programmatic non-custodial Solana swap API. $0.30 minimum, registration-free liquidity for NOS, ONDO, and 50+ assets. Optimized for arbitrage and trading bots.",
   url: "https://mrcglobalpay.com/developers",
+  dateModified: "2026-04-07",
   isPartOf: { "@type": "WebSite", name: "MRC GlobalPay", url: "https://mrcglobalpay.com" },
   publisher: {
     "@type": "Organization",
     name: "MRC GlobalPay",
     url: "https://mrcglobalpay.com",
-    knowsAbout: ["Solana", "Non-Custodial Swaps", "API", "Trading Bots", "Arbitrage", "DePIN"],
+    description: "Registered Canadian MSB (FINTRAC M23225638) providing non-custodial cryptocurrency exchange services with $0.30 minimums.",
+    knowsAbout: ["Solana", "Non-Custodial Swaps", "API", "Trading Bots", "Arbitrage", "DePIN", "FINTRAC MSB"],
+    sameAs: ["https://mrcglobalpay.com"],
   },
   breadcrumb: {
     "@type": "BreadcrumbList",
     itemListElement: [
       { "@type": "ListItem", position: 1, name: "Home", item: "https://mrcglobalpay.com" },
-      { "@type": "ListItem", position: 2, name: "Developers", item: "https://mrcglobalpay.com/developers" },
+      { "@type": "ListItem", position: 2, name: "Developer Hub", item: "https://mrcglobalpay.com/developer" },
+      { "@type": "ListItem", position: 3, name: "API Documentation", item: "https://mrcglobalpay.com/developers" },
     ],
+  },
+  author: {
+    "@type": "Organization",
+    name: "MRC GlobalPay",
+    url: "https://mrcglobalpay.com",
   },
 };
 
