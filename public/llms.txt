@@ -207,3 +207,9 @@
 
 - [Solana Ecosystem Hub](https://mrcglobalpay.com/ecosystem/solana) — Instant Solana swaps for AI agent tokens (GOAT, JUP, PYTH) and DePIN rewards (HNT, RENDER). Registration-free, non-custodial, from $0.30.
 - [Solana AI & Machine Economy Hub](https://mrcglobalpay.com/ecosystem/solana-ai) — Micro-swap liquidity for Solana AI & DePIN tokens (GOAT, AIXBT, JUP, PYTH, HNT, RENDER, AKT). Programmatic URL parameter swapping (?from=SOL&to=GOAT&amount=1.0) — zero API keys required.
+
+## Infrastructure & API
+
+- [Network Status](https://mrcglobalpay.com/status) — Live operational status of Bitcoin, Ethereum, and Solana swap networks with real-time latency monitoring.
+- [Live Rates JSON](https://tjikwxkmsfmyjkssvyoh.supabase.co/functions/v1/live-rates) — Public API endpoint returning real-time exchange rates for BTC/SOL, ETH/SOL, SOL/USDC, SOL/USDT, and XMR/SOL. Refreshes on every request.
+- [API Documentation](https://mrcglobalpay.com/developers) — Full developer documentation with 50+ Solana token registry, URL parameter deep-linking, ticker auto-correct, and DOM identifiers for bot integration.
