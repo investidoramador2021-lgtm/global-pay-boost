@@ -27877,4 +27877,20 @@
     <xhtml:link rel="alternate" hreflang="en" href="https://mrcglobalpay.com/status" />
     <xhtml:link rel="alternate" hreflang="x-default" href="https://mrcglobalpay.com/status" />
   </url>
+  <url>
+    <loc>https://mrcglobalpay.com/referral</loc>
+    <lastmod>2026-04-07</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://mrcglobalpay.com/referral" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://mrcglobalpay.com/referral" />
+  </url>
+  <url>
+    <loc>https://mrcglobalpay.com/about</loc>
+    <lastmod>2026-04-07</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://mrcglobalpay.com/about" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://mrcglobalpay.com/about" />
+  </url>
 </urlset>
