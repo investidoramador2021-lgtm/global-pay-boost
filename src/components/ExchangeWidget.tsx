@@ -1020,13 +1020,17 @@ const ExchangeWidget = () => {
                 if (!isEvm) return null;
 
                 const handleMetaMask = async () => {
-                  if (typeof window === "undefined" || !(window as any).ethereum) {
+                  const eth = typeof window !== "undefined" ? (window as any).ethereum : null;
+                  let provider = eth;
+                  if (eth?.providers?.length) {
+                    provider = eth.providers.find((p: any) => p.isMetaMask && !p.isTrust) || eth.providers.find((p: any) => p.isMetaMask);
+                  }
+                  if (!provider || !provider.isMetaMask) {
                     toast({ title: "MetaMask not found", description: "Please install MetaMask browser extension to use this feature.", variant: "destructive" });
                     return;
                   }
                   try {
-                    const ethereum = (window as any).ethereum;
-                    const accounts = await ethereum.request({ method: "eth_requestAccounts" });
+                    const accounts = await provider.request({ method: "eth_requestAccounts" });
                     if (!accounts?.[0]) throw new Error("No account found");
                     
                     // For native ETH/BNB transfers
