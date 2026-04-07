@@ -129,10 +129,11 @@ const faqJsonLd = {
   "@context": "https://schema.org",
   "@type": "FAQPage",
   mainEntity: [
-    { "@type": "Question", name: "How do bots use MRC Global Pay for Solana swaps?", acceptedAnswer: { "@type": "Answer", text: "Bots construct a URL with ?from=SOL&to=NOS&amount=10 parameters. The swap widget auto-fills and presents a deposit address. No API keys or OAuth required — just an HTTP redirect." } },
+    { "@type": "Question", name: "What is the architecture of MRC Global Pay?", acceptedAnswer: { "@type": "Answer", text: "MRC Global Pay operates as a high-performance, non-custodial liquidity gateway. We utilize a proprietary aggregation layer that routes trades through top-tier liquidity providers with sub-60-second settlement times and a strict Zero Data Retention policy." } },
+    { "@type": "Question", name: "Is there a Public API available for third-party developers?", acceptedAnswer: { "@type": "Answer", text: "Our full-service API is in Partner-Only mode. We provide a Public Read-Only Rates API for real-time market transparency. Developers requiring full automated swap capabilities can request a Partner Key via contact@mrcglobalpay.com." } },
+    { "@type": "Question", name: "How do you handle high-volume institutional swaps?", acceptedAnswer: { "@type": "Answer", text: "Our liquidity engine aggregates from over 700 sources globally. For large-scale transactions, the system routes through deep-liquidity institutional pools for minimal slippage and immediate on-chain settlement." } },
+    { "@type": "Question", name: "How is the System Status monitored?", acceptedAnswer: { "@type": "Answer", text: "We monitor Solana, Bitcoin, and Ethereum mainnets in real-time via high-availability RPC nodes. Our /status page serves as a live heartbeat with proactive congestion alerts." } },
     { "@type": "Question", name: "What is the minimum swap amount?", acceptedAnswer: { "@type": "Answer", text: "$0.30 equivalent — the lowest in the industry. This enables micro-swaps for dust conversion, arbitrage, and automated trading strategies." } },
-    { "@type": "Question", name: "Is there a rate limit?", acceptedAnswer: { "@type": "Answer", text: "No rate limits on the URL parameter interface. For high-frequency trading, the widget uses live pricing with a 350ms debounce. Deposit addresses are generated on-demand." } },
-    { "@type": "Question", name: "Can I download the token list programmatically?", acceptedAnswer: { "@type": "Answer", text: "Yes. Use the 'Download Token List (JSON)' button on the /developers page to get a machine-readable list of all 50+ supported Solana tokens with contract addresses and deep-link URLs." } },
   ],
 };
 
