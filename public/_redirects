@@ -1,0 +1,2 @@
+/api/rates.json https://tjikwxkmsfmyjkssvyoh.supabase.co/functions/v1/live-rates 200
+/export/rates.xml https://tjikwxkmsfmyjkssvyoh.supabase.co/functions/v1/rates-xml 200
