@@ -424,6 +424,56 @@ const depositAddr = document.querySelector('#deposit-address-display')?.textCont
 console.log('Send funds to:', depositAddr);`} lang="javascript" />
           </section>
 
+          {/* ── Section 5: Public API & Live Rates ── */}
+          <section className="mb-16">
+            <h2 className="text-2xl font-bold text-foreground mb-2 flex items-center gap-2">
+              <Globe className="h-6 w-6 text-primary" />
+              Public API &amp; Live Rates
+            </h2>
+            <p className="text-muted-foreground mb-4">
+              MRC Global Pay is a <strong className="text-foreground">non-custodial widget integration</strong> — swaps execute directly between the user's wallet and our liquidity provider with no intermediary custody.
+            </p>
+            <div className="rounded-xl border border-primary/20 bg-primary/5 p-5 mb-6">
+              <h3 className="text-sm font-semibold text-primary mb-2">Full Public API — Partner-Only Access</h3>
+              <p className="text-sm text-muted-foreground mb-3">
+                Our full programmatic swap API (create transactions, poll status, manage refund addresses) is available in <strong className="text-foreground">Partner-Only</strong> mode. Contact us to request access for institutional or high-volume integrations.
+              </p>
+              <h3 className="text-sm font-semibold text-primary mb-2">Live Rates JSON (Public)</h3>
+              <p className="text-sm text-muted-foreground mb-3">
+                For transparency, we expose a public endpoint with real-time exchange rates fetched directly from our liquidity provider. Rates refresh on every request.
+              </p>
+              <CodeBlock code={`GET ${import.meta.env.VITE_SUPABASE_URL || 'https://tjikwxkmsfmyjkssvyoh.supabase.co'}/functions/v1/live-rates
+
+// Response
+{
+  "provider": "MRC Global Pay",
+  "license": "FINTRAC MSB M23225638",
+  "generated_at": "2026-04-07T12:00:00.000Z",
+  "rates": [
+    { "pair": "BTC/SOL", "from": "BTC", "to": "SOL", "rate": 452.31, "amount_sent": 1 },
+    { "pair": "ETH/SOL", "from": "ETH", "to": "SOL", "rate": 13.87, "amount_sent": 1 },
+    ...
+  ]
+}`} />
+              <div className="mt-3 flex flex-wrap gap-2">
+                <a
+                  href={`${import.meta.env.VITE_SUPABASE_URL || 'https://tjikwxkmsfmyjkssvyoh.supabase.co'}/functions/v1/live-rates`}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-flex items-center gap-1 rounded-md bg-primary px-3 py-1.5 text-xs font-semibold text-primary-foreground hover:bg-primary/90 transition-colors"
+                >
+                  View Live Rates JSON <ArrowRight className="h-3 w-3" />
+                </a>
+                <Link
+                  to="/status"
+                  className="inline-flex items-center gap-1 rounded-md border border-border px-3 py-1.5 text-xs font-semibold text-foreground hover:bg-muted transition-colors"
+                >
+                  <Clock className="h-3 w-3" /> Network Status
+                </Link>
+              </div>
+            </div>
+          </section>
+
           {/* ── FAQ ── */}
           <section className="mb-16">
             <h2 className="text-2xl font-bold text-foreground mb-6">Developer FAQ</h2>
@@ -434,6 +484,7 @@ console.log('Send funds to:', depositAddr);`} lang="javascript" />
                 { q: "Is there a rate limit?", a: "No rate limits on the URL parameter interface. For high-frequency trading, the widget uses live pricing with a 350ms debounce. Deposit addresses are generated on-demand." },
                 { q: "Can I download the token list programmatically?", a: "Yes. Click the 'Download Token List (JSON)' button above to get a machine-readable file of all 50+ supported Solana tokens with contract addresses and deep-link URLs." },
                 { q: "What happens if a token isn't supported?", a: "The widget displays a 'Liquidity Pending' notification and defaults the destination to USDC (Solana). This keeps users in the Solana ecosystem without breaking the experience." },
+                { q: "Where can I find live exchange rates?", a: "We provide a public Live Rates JSON endpoint that returns real-time BTC/SOL, ETH/SOL, SOL/USDC, SOL/USDT, and XMR/SOL rates. The rates refresh on every request to reflect true market volatility." },
               ].map((f) => (
                 <details key={f.q} className="rounded-lg border border-border bg-card">
                   <summary className="cursor-pointer px-4 py-3 text-sm font-semibold text-foreground">{f.q}</summary>
