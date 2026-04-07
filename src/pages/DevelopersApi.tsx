@@ -424,23 +424,71 @@ const depositAddr = document.querySelector('#deposit-address-display')?.textCont
 console.log('Send funds to:', depositAddr);`} lang="javascript" />
           </section>
 
-          {/* ── Section 5: Public API & Live Rates ── */}
+          {/* ── Section 5: Technical FAQ ── */}
+          <section className="mb-16">
+            <h2 className="text-2xl font-bold text-foreground mb-6 flex items-center gap-2">
+              <Shield className="h-6 w-6 text-primary" />
+              Technical FAQ
+            </h2>
+            <div className="space-y-4">
+              {[
+                { q: "What is the architecture of MRC Global Pay?", a: "MRC Global Pay operates as a high-performance, non-custodial liquidity gateway. We utilize a proprietary aggregation layer that routes trades through top-tier liquidity providers. Our headless interface ensures sub-60-second settlement times while maintaining a strict 'Zero Data Retention' policy for maximum user security." },
+                { q: "Is there a Public API available for third-party developers?", a: "Our full-service API is currently in 'Partner-Only' mode to maintain network integrity and dedicated throughput. However, we provide a Public Read-Only Rates API for real-time market transparency. Developers requiring full automated swap capabilities can request a Partner Key via contact@mrcglobalpay.com." },
+                { q: "How do you handle high-volume institutional swaps?", a: "Our liquidity engine aggregates from over 700 sources globally. For large-scale transactions, the system automatically routes through deep-liquidity institutional pools to ensure minimal slippage and immediate on-chain settlement." },
+                { q: "How is the 'System Status' monitored?", a: "We monitor the Solana, Bitcoin, and Ethereum mainnets in real-time via high-availability RPC nodes. Our /status page serves as a live heartbeat; if an underlying blockchain experiences congestion, our gateway proactively alerts users to ensure transaction safety." },
+                { q: "What is the minimum swap amount?", a: "$0.30 equivalent — the lowest in the industry. This enables micro-swaps for dust conversion, arbitrage, and automated trading strategies." },
+                { q: "Where can I find live exchange rates?", a: "We provide a public Live Rates JSON endpoint that returns real-time BTC/SOL, ETH/SOL, SOL/USDC, SOL/USDT, and XMR/SOL rates. Rates refresh on every request to reflect true market volatility." },
+              ].map((f) => (
+                <details key={f.q} className="rounded-lg border border-border bg-card">
+                  <summary className="cursor-pointer px-4 py-3 text-sm font-semibold text-foreground">{f.q}</summary>
+                  <p className="px-4 pb-4 text-sm text-muted-foreground">{f.a}</p>
+                </details>
+              ))}
+            </div>
+          </section>
+
+          {/* ── Section 6: Developer Integration Guide ── */}
           <section className="mb-16">
             <h2 className="text-2xl font-bold text-foreground mb-2 flex items-center gap-2">
-              <Globe className="h-6 w-6 text-primary" />
-              Public API &amp; Live Rates
+              <Zap className="h-6 w-6 text-primary" />
+              Developer Integration Guide
             </h2>
-            <p className="text-muted-foreground mb-4">
-              MRC Global Pay is a <strong className="text-foreground">non-custodial widget integration</strong> — swaps execute directly between the user's wallet and our liquidity provider with no intermediary custody.
+            <p className="text-muted-foreground mb-6">
+              The fastest way to offer <strong className="text-foreground">$NOS</strong>, <strong className="text-foreground">$ONDO</strong>, and <strong className="text-foreground">$SOL</strong> swaps on your platform is via our non-custodial widget.
             </p>
+
+            <div className="grid gap-4 sm:grid-cols-3 mb-8">
+              <Card className="border-primary/20">
+                <CardContent className="pt-5">
+                  <Clock className="h-6 w-6 text-primary mb-2" />
+                  <h3 className="font-semibold text-foreground text-sm mb-1">5-Minute Integration</h3>
+                  <p className="text-xs text-muted-foreground">Inject our secure script into any div container. Production-ready in minutes.</p>
+                </CardContent>
+              </Card>
+              <Card className="border-primary/20">
+                <CardContent className="pt-5">
+                  <Shield className="h-6 w-6 text-primary mb-2" />
+                  <h3 className="font-semibold text-foreground text-sm mb-1">Non-Custodial Security</h3>
+                  <p className="text-xs text-muted-foreground">Users maintain full control of their assets. Privacy-first, registration-free architecture.</p>
+                </CardContent>
+              </Card>
+              <Card className="border-primary/20">
+                <CardContent className="pt-5">
+                  <Globe className="h-6 w-6 text-primary mb-2" />
+                  <h3 className="font-semibold text-foreground text-sm mb-1">Brand-Adaptable</h3>
+                  <p className="text-xs text-muted-foreground">Fully responsive and customizable for any Web3 interface.</p>
+                </CardContent>
+              </Card>
+            </div>
+
             <div className="rounded-xl border border-primary/20 bg-primary/5 p-5 mb-6">
-              <h3 className="text-sm font-semibold text-primary mb-2">Full Public API — Partner-Only Access</h3>
+              <h3 className="text-sm font-semibold text-primary mb-2">Partner-Only Full API</h3>
               <p className="text-sm text-muted-foreground mb-3">
-                Our full programmatic swap API (create transactions, poll status, manage refund addresses) is available in <strong className="text-foreground">Partner-Only</strong> mode. Contact us to request access for institutional or high-volume integrations.
+                Our full-service API is in <strong className="text-foreground">Partner-Only</strong> mode to maintain network integrity and dedicated throughput. For implementation keys and affiliate tracking, contact our technical team at <strong className="text-foreground">contact@mrcglobalpay.com</strong>.
               </p>
-              <h3 className="text-sm font-semibold text-primary mb-2">Live Rates JSON (Public)</h3>
+              <h3 className="text-sm font-semibold text-primary mb-2">Public Read-Only Rates API</h3>
               <p className="text-sm text-muted-foreground mb-3">
-                For transparency, we expose a public endpoint with real-time exchange rates fetched directly from our liquidity provider. Rates refresh on every request.
+                For real-time market transparency, we expose a public endpoint with live exchange rates fetched directly from our liquidity provider. Rates refresh on every request.
               </p>
               <CodeBlock code={`GET ${import.meta.env.VITE_SUPABASE_URL || 'https://tjikwxkmsfmyjkssvyoh.supabase.co'}/functions/v1/live-rates
 
@@ -472,25 +520,16 @@ console.log('Send funds to:', depositAddr);`} lang="javascript" />
                 </Link>
               </div>
             </div>
-          </section>
 
-          {/* ── FAQ ── */}
-          <section className="mb-16">
-            <h2 className="text-2xl font-bold text-foreground mb-6">Developer FAQ</h2>
-            <div className="space-y-4">
-              {[
-                { q: "How do bots use MRC Global Pay for Solana swaps?", a: "Bots construct a URL with ?from=SOL&to=NOS&amount=10 parameters. The swap widget auto-fills and presents a deposit address. No API keys or OAuth required — just an HTTP redirect." },
-                { q: "What is the minimum swap amount?", a: "$0.30 equivalent — the lowest in the industry. This enables micro-swaps for dust conversion, arbitrage, and automated trading strategies." },
-                { q: "Is there a rate limit?", a: "No rate limits on the URL parameter interface. For high-frequency trading, the widget uses live pricing with a 350ms debounce. Deposit addresses are generated on-demand." },
-                { q: "Can I download the token list programmatically?", a: "Yes. Click the 'Download Token List (JSON)' button above to get a machine-readable file of all 50+ supported Solana tokens with contract addresses and deep-link URLs." },
-                { q: "What happens if a token isn't supported?", a: "The widget displays a 'Liquidity Pending' notification and defaults the destination to USDC (Solana). This keeps users in the Solana ecosystem without breaking the experience." },
-                { q: "Where can I find live exchange rates?", a: "We provide a public Live Rates JSON endpoint that returns real-time BTC/SOL, ETH/SOL, SOL/USDC, SOL/USDT, and XMR/SOL rates. The rates refresh on every request to reflect true market volatility." },
-              ].map((f) => (
-                <details key={f.q} className="rounded-lg border border-border bg-card">
-                  <summary className="cursor-pointer px-4 py-3 text-sm font-semibold text-foreground">{f.q}</summary>
-                  <p className="px-4 pb-4 text-sm text-muted-foreground">{f.a}</p>
-                </details>
-              ))}
+            {/* FINTRAC Trust Badge */}
+            <div className="rounded-lg border border-border bg-muted/30 p-4 flex items-start gap-3">
+              <Shield className="h-5 w-5 text-primary mt-0.5 shrink-0" />
+              <div>
+                <p className="text-sm font-semibold text-foreground">FINTRAC Registered MSB — M23225638</p>
+                <p className="text-xs text-muted-foreground mt-1">
+                  MRC Global Pay is a registered Canadian Money Services Business. Our frictionless, registration-free architecture is designed for high-speed settlement while maintaining full regulatory compliance.
+                </p>
+              </div>
             </div>
           </section>
 
