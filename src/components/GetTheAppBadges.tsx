@@ -12,7 +12,6 @@ const trackBadgeClick = (badge: "google_play" | "app_store") => {
 };
 
 interface GetTheAppBadgesProps {
-  /** "section" renders a titled block; "inline" renders just the badges */
   variant?: "section" | "inline";
 }
 
@@ -22,15 +21,10 @@ const GetTheAppBadges = ({ variant = "section" }: GetTheAppBadgesProps) => {
 
   const handleGooglePlay = () => {
     trackBadgeClick("google_play");
-    if (pwa.isAndroid) {
+    if (pwa.isAndroid || pwa.canInstall) {
       pwa.triggerInstall();
     } else {
-      // Desktop — trigger PWA install if available, otherwise show message
-      if (pwa.canInstall) {
-        pwa.triggerInstall();
-      } else {
-        alert("Visit mrcglobalpay.com on your Android device to install the app.");
-      }
+      alert("Visit mrcglobalpay.com on your Android device to install the app.");
     }
   };
 
@@ -43,32 +37,37 @@ const GetTheAppBadges = ({ variant = "section" }: GetTheAppBadgesProps) => {
     }
   };
 
+  const closeSheet = () => {
+    pwa.setIosSheetOpen(false);
+    setIosSheetOpen(false);
+  };
+
   const badges = (
-    <div className="flex flex-wrap items-center justify-center gap-3 sm:justify-start">
+    <div className="flex items-center gap-3">
       <button
         onClick={handleGooglePlay}
-        className="transition-transform hover:scale-105 active:scale-95 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary rounded-lg"
+        className="group relative overflow-hidden rounded-xl border border-border/60 bg-background/80 backdrop-blur transition-all duration-200 hover:border-primary/40 hover:shadow-[0_0_20px_hsl(var(--primary)/0.15)] active:scale-[0.97]"
         aria-label="Get it on Google Play"
       >
         <img
           src={badgeGooglePlay}
           alt="Get it on Google Play"
           loading="lazy"
-          className="h-10 w-auto sm:h-11"
+          className="h-[44px] w-auto sm:h-[48px]"
           width={646}
           height={512}
         />
       </button>
       <button
         onClick={handleAppStore}
-        className="transition-transform hover:scale-105 active:scale-95 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary rounded-lg"
+        className="group relative overflow-hidden rounded-xl border border-border/60 bg-background/80 backdrop-blur transition-all duration-200 hover:border-primary/40 hover:shadow-[0_0_20px_hsl(var(--primary)/0.15)] active:scale-[0.97]"
         aria-label="Download on the App Store"
       >
         <img
           src={badgeAppStore}
           alt="Download on the App Store"
           loading="lazy"
-          className="h-10 w-auto sm:h-11"
+          className="h-[44px] w-auto sm:h-[48px]"
           width={646}
           height={512}
         />
@@ -80,28 +79,42 @@ const GetTheAppBadges = ({ variant = "section" }: GetTheAppBadgesProps) => {
     return (
       <>
         {badges}
-        <IOSInstallSheet open={pwa.iosSheetOpen || iosSheetOpen} onClose={() => { pwa.setIosSheetOpen(false); setIosSheetOpen(false); }} />
+        <IOSInstallSheet open={pwa.iosSheetOpen || iosSheetOpen} onClose={closeSheet} />
       </>
     );
   }
 
   return (
     <>
-      <div className="rounded-2xl border border-border bg-muted/30 p-5 sm:p-6">
-        <div className="flex items-center gap-3 mb-4">
-          <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-primary/15 text-primary">
-            <Smartphone className="h-5 w-5" />
+      <div className="relative overflow-hidden rounded-2xl border border-primary/20 bg-gradient-to-br from-primary/[0.08] via-background to-primary/[0.04]">
+        {/* Decorative glow */}
+        <div className="pointer-events-none absolute -right-20 -top-20 h-60 w-60 rounded-full bg-primary/10 blur-3xl" />
+        <div className="pointer-events-none absolute -bottom-10 -left-10 h-40 w-40 rounded-full bg-primary/5 blur-2xl" />
+
+        <div className="relative flex flex-col items-center gap-5 p-6 sm:flex-row sm:items-center sm:gap-6 sm:p-8">
+          {/* Icon + text */}
+          <div className="flex items-center gap-4 text-center sm:text-left">
+            <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-2xl bg-primary/15 text-primary shadow-[0_0_24px_hsl(var(--primary)/0.2)]">
+              <Smartphone className="h-6 w-6" />
+            </div>
+            <div className="min-w-0">
+              <h3 className="font-display text-base font-bold text-foreground sm:text-lg">
+                Get the App
+              </h3>
+              <p className="font-body text-sm text-muted-foreground">
+                Instant access on any device — fast, secure & offline-ready
+              </p>
+            </div>
           </div>
-          <div>
-            <h3 className="font-display text-sm font-semibold text-foreground">Get the App</h3>
-            <p className="font-body text-xs text-muted-foreground">
-              Install MRC GlobalPay for instant access on any device
-            </p>
+
+          {/* Badges */}
+          <div className="shrink-0 sm:ml-auto">
+            {badges}
           </div>
         </div>
-        {badges}
       </div>
-      <IOSInstallSheet open={pwa.iosSheetOpen || iosSheetOpen} onClose={() => { pwa.setIosSheetOpen(false); setIosSheetOpen(false); }} />
+
+      <IOSInstallSheet open={pwa.iosSheetOpen || iosSheetOpen} onClose={closeSheet} />
     </>
   );
 };
