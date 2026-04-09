@@ -1,14 +1,17 @@
 import { useState } from "react";
-import { Menu, X, Zap, Sun, Moon } from "lucide-react";
+import { Menu, X, Zap, Sun, Moon, Download } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { useTheme } from "@/hooks/use-theme";
 import { useTranslation } from "react-i18next";
 import LanguageSwitcher from "@/components/LanguageSwitcher";
+import { usePWAInstall } from "@/hooks/use-pwa-install";
+import IOSInstallSheet from "@/components/IOSInstallSheet";
 
 const SiteHeader = () => {
   const [mobileOpen, setMobileOpen] = useState(false);
   const { theme, toggleTheme } = useTheme();
   const { t } = useTranslation();
+  const pwa = usePWAInstall();
 
   const navLinks = [
     { label: t("nav.howItWorks"), href: "/#how-it-works" },
@@ -82,6 +85,15 @@ const SiteHeader = () => {
               {link.label}
             </a>
           ))}
+          {pwa.canInstall && (
+            <button
+              onClick={() => { pwa.triggerInstall(); setMobileOpen(false); }}
+              className="flex items-center gap-2 py-3 font-body text-sm font-medium text-primary active:text-primary/80"
+            >
+              <Download className="h-4 w-4" />
+              Install App
+            </button>
+          )}
           <Button className="mt-2 w-full shadow-neon" size="sm" asChild>
             <a href="/#exchange" onClick={() => setMobileOpen(false)}>
               <Zap className="me-1 h-4 w-4" />
@@ -90,6 +102,8 @@ const SiteHeader = () => {
           </Button>
         </div>
       )}
+
+      {pwa.isIOS && <IOSInstallSheet open={pwa.iosSheetOpen} onClose={() => pwa.setIosSheetOpen(false)} />}
     </header>
   );
 };

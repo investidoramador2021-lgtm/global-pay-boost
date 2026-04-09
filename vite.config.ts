@@ -20,15 +20,15 @@ export default defineConfig(({ mode }) => ({
       registerType: "autoUpdate",
       includeAssets: ["favicon.png", "favicon-32x32.png", "favicon-192x192.png"],
       manifest: {
-        name: "MRC GlobalPay — Instant Crypto Swaps",
-        short_name: "MRC GlobalPay",
+        name: "MRC Global Pay",
+        short_name: "MRC Pay",
         description: "Swap 500+ cryptocurrencies instantly with zero confirmation delays. No registration required.",
         theme_color: "#00FFA3",
         background_color: "#000000",
         display: "standalone",
         orientation: "portrait",
         scope: "/",
-        start_url: "/",
+        start_url: "/?utm_source=pwa&utm_medium=install",
         icons: [
           {
             src: "/favicon-192x192.png",

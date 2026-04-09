@@ -17,6 +17,7 @@ import SiteFooter from "@/components/SiteFooter";
 import PullToRefresh from "@/components/PullToRefresh";
 import ShadowSeoFaq from "@/components/ShadowSeoFaq";
 import TrendingEcosystems from "@/components/TrendingEcosystems";
+import PWAInstallCard from "@/components/PWAInstallCard";
 import { Helmet } from "react-helmet-async";
 
 const Index = () => {
@@ -146,6 +147,9 @@ const Index = () => {
           <FeaturesSection />
           <NoLimitsSection />
           <HowItWorksSection />
+          <div className="container mx-auto px-4 py-4">
+            <PWAInstallCard />
+          </div>
           <PopularPairsSection />
           <SwapPairsQA />
           <TrendingEcosystems />
