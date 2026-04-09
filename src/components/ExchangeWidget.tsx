@@ -543,7 +543,7 @@ const ExchangeWidget = () => {
         ...(refundAddress && { refundAddress: refundAddress.trim() }),
       });
       setTransaction(result);
-      saveTransaction(result);
+      saveTransaction(result, recipientAddress);
       setStep("deposit");
     } catch (err: unknown) {
       const msg = err instanceof Error ? err.message : "Transaction creation failed";
@@ -911,32 +911,59 @@ const ExchangeWidget = () => {
                 <div className="mt-3 space-y-3">
                   <div className="flex gap-2">
                     <Input
-                      placeholder="Enter your Transaction ID"
-                      value={trackId}
-                      onChange={(e) => setTrackId(e.target.value)}
+                      placeholder="Transaction ID or Wallet Address"
+                      value={trackInput}
+                      onChange={(e) => setTrackInput(e.target.value)}
                       className="flex-1 font-body text-sm"
                       onKeyDown={(e) => e.key === "Enter" && handleTrackTransaction()}
                     />
                     <Button
                       onClick={handleTrackTransaction}
-                      disabled={!trackId.trim() || trackLoading}
+                      disabled={!trackInput.trim() || trackLoading}
                       className="shrink-0 bg-primary text-primary-foreground hover:bg-primary/90"
                     >
                       {trackLoading ? <Loader2 className="h-4 w-4 animate-spin" /> : "Track"}
                     </Button>
                   </div>
-                  {/* Recent transactions */}
+                  {/* Wallet lookup results */}
+                  {walletResults.length > 0 && (
+                    <div>
+                      <p className="mb-1.5 font-body text-xs font-medium text-muted-foreground">Transfers for this wallet</p>
+                      <div className="space-y-1.5 max-h-40 overflow-y-auto">
+                        {walletResults.map((tx) => (
+                          <button
+                            key={tx.transaction_id}
+                            onClick={() => handleSelectWalletTx(tx.transaction_id)}
+                            className="flex w-full items-center justify-between gap-2 rounded-lg border border-border bg-accent px-3 py-2 text-left transition-colors hover:bg-accent/80"
+                          >
+                            <div className="min-w-0">
+                              <span className="font-body text-xs font-semibold text-foreground">
+                                {Number(tx.amount)} {tx.from_currency?.toUpperCase()} → {tx.to_currency?.toUpperCase()}
+                              </span>
+                              <span className="ms-2 font-body text-[10px] text-muted-foreground">
+                                {new Date(tx.created_at).toLocaleDateString()}
+                              </span>
+                            </div>
+                            <code className="shrink-0 font-body text-[10px] text-muted-foreground">
+                              {tx.transaction_id.slice(0, 8)}…
+                            </code>
+                          </button>
+                        ))}
+                      </div>
+                    </div>
+                  )}
+                  {/* Recent transactions from localStorage */}
                   {(() => {
                     const recent = getRecentTxs();
                     if (recent.length === 0) return null;
                     return (
                       <div>
-                        <p className="mb-1.5 font-body text-xs font-medium text-muted-foreground">Recent transfers</p>
+                        <p className="mb-1.5 font-body text-xs font-medium text-muted-foreground">Recent transfers (this device)</p>
                         <div className="space-y-1.5 max-h-32 overflow-y-auto">
                           {recent.map((tx) => (
                             <button
                               key={tx.id}
-                              onClick={() => { setTrackId(tx.id); }}
+                              onClick={() => { setTrackInput(tx.id); }}
                               className="flex w-full items-center justify-between gap-2 rounded-lg border border-border bg-accent px-3 py-2 text-left transition-colors hover:bg-accent/80"
                             >
                               <div className="min-w-0">
