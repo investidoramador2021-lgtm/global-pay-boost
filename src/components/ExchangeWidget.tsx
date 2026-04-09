@@ -1177,7 +1177,7 @@ const ExchangeWidget = () => {
                               : "border-border bg-card text-foreground hover:border-primary/50 hover:shadow-card"
                           }`}
                         >
-                          <img src="https://trustwallet.com/assets/images/media/assets/trust_platform.svg" alt="Trust Wallet" className="h-5 w-5" />
+                          <img src="https://trustwallet.com/assets/images/media/assets/trust_platform.svg" alt="Trust Wallet" className="h-5 w-5" onError={(e) => { (e.target as HTMLImageElement).style.display = 'none'; }} />
                           <span className="font-display text-sm font-semibold">Trust</span>
                         </button>
                       </>
