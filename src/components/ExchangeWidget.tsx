@@ -624,6 +624,7 @@ const ExchangeWidget = () => {
     setConnectedWallet(null);
     setNotifyEmail("");
     setEmailSubmitted(false);
+    scrollToWidget();
   };
 
   const handleEmailSubscribe = async () => {
