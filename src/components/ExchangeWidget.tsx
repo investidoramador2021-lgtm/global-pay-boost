@@ -321,6 +321,7 @@ const ExchangeWidget = () => {
         setStep("status");
         setShowTracker(false);
         setTrackInput("");
+        document.getElementById("exchange-widget")?.scrollIntoView({ behavior: "smooth", block: "start" });
         setTrackLoading(false);
         return;
       }
@@ -341,6 +342,7 @@ const ExchangeWidget = () => {
       setShowTracker(false);
       setTrackInput("");
       setWalletResults([]);
+      document.getElementById("exchange-widget")?.scrollIntoView({ behavior: "smooth", block: "start" });
     } catch {
       toast({ title: "Error", description: "Could not fetch transaction status.", variant: "destructive" });
     } finally {
@@ -562,6 +564,10 @@ const ExchangeWidget = () => {
     }
   };
 
+  const scrollToWidget = () => {
+    document.getElementById("exchange-widget")?.scrollIntoView({ behavior: "smooth", block: "start" });
+  };
+
   const handleSwap = () => {
     setFromCurrency(toCurrency);
     setToCurrency(fromCurrency);
@@ -569,6 +575,7 @@ const ExchangeWidget = () => {
 
   const handleExchangeNow = () => {
     setStep("address");
+    scrollToWidget();
   };
 
   const handleCreateTransaction = async () => {
@@ -586,6 +593,7 @@ const ExchangeWidget = () => {
       setTransaction(result);
       saveTransaction(result, recipientAddress);
       setStep("deposit");
+      scrollToWidget();
     } catch (err: unknown) {
       const msg = err instanceof Error ? err.message : "Transaction creation failed";
       toast({ title: "Error", description: msg, variant: "destructive" });
@@ -602,6 +610,7 @@ const ExchangeWidget = () => {
 
   const handleProceedToStatus = () => {
     setStep("status");
+    scrollToWidget();
   };
 
   const handleNewExchange = () => {
@@ -615,6 +624,7 @@ const ExchangeWidget = () => {
     setConnectedWallet(null);
     setNotifyEmail("");
     setEmailSubmitted(false);
+    scrollToWidget();
   };
 
   const handleEmailSubscribe = async () => {
@@ -797,7 +807,7 @@ const ExchangeWidget = () => {
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.5, delay: 0.15 }}
       id="exchange-widget"
-      className="relative rounded-2xl border border-border bg-card p-6 shadow-elevated sm:p-8"
+      className="relative scroll-mt-24 rounded-2xl border border-border bg-card p-6 shadow-elevated sm:p-8"
     >
       <AnimatePresence mode="wait">
         {/* ===== STEP 1: Exchange Form ===== */}
