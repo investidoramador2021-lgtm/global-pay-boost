@@ -562,6 +562,10 @@ const ExchangeWidget = () => {
     }
   };
 
+  const scrollToWidget = () => {
+    document.getElementById("exchange-widget")?.scrollIntoView({ behavior: "smooth", block: "start" });
+  };
+
   const handleSwap = () => {
     setFromCurrency(toCurrency);
     setToCurrency(fromCurrency);
@@ -569,6 +573,7 @@ const ExchangeWidget = () => {
 
   const handleExchangeNow = () => {
     setStep("address");
+    scrollToWidget();
   };
 
   const handleCreateTransaction = async () => {
