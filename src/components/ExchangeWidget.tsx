@@ -214,6 +214,42 @@ const ExchangeWidget = () => {
   };
 
   const [retrying, setRetrying] = useState(false);
+  const [showTracker, setShowTracker] = useState(false);
+  const [trackId, setTrackId] = useState("");
+  const [trackLoading, setTrackLoading] = useState(false);
+
+  // Persist recent transactions in localStorage
+  const saveTransaction = (tx: TransactionResult) => {
+    try {
+      const stored = JSON.parse(localStorage.getItem("mrc_recent_txs") || "[]");
+      const entry = { id: tx.id, from: tx.fromCurrency, to: tx.toCurrency, amount: tx.amount, date: new Date().toISOString() };
+      stored.unshift(entry);
+      localStorage.setItem("mrc_recent_txs", JSON.stringify(stored.slice(0, 10)));
+    } catch {}
+  };
+
+  const getRecentTxs = (): { id: string; from: string; to: string; amount: number; date: string }[] => {
+    try { return JSON.parse(localStorage.getItem("mrc_recent_txs") || "[]"); } catch { return []; }
+  };
+
+  const handleTrackTransaction = async () => {
+    const id = trackId.trim();
+    if (!id) return;
+    setTrackLoading(true);
+    try {
+      const status = await getTransactionStatus(id);
+      if (!status?.id) throw new Error("Not found");
+      setTransaction({ id: status.id, payinAddress: status.payinAddress, payoutAddress: status.payoutAddress, fromCurrency: status.fromCurrency, toCurrency: status.toCurrency, amount: status.amountSend || 0 } as TransactionResult);
+      setTxStatus(status);
+      setStep("status");
+      setShowTracker(false);
+      setTrackId("");
+    } catch {
+      toast({ title: "Not found", description: "Could not find a transaction with that ID. Please check and try again.", variant: "destructive" });
+    } finally {
+      setTrackLoading(false);
+    }
+  };
 
   useEffect(() => {
     let retryCount = 0;
