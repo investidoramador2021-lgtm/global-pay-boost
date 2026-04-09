@@ -705,7 +705,7 @@ const ExchangeWidget = () => {
               </div>
               {belowMin && (
                 <p className="mt-1 font-body text-xs text-destructive">
-                  Minimum amount: {minAmount} {fromCurrency?.ticker?.toUpperCase()}
+                  Minimum amount: {minAmount} {fromCurrency ? displayTicker(fromCurrency) : ""}
                 </p>
               )}
               <CurrencyPicker show={showFromPicker} onSelect={setFromCurrency} onClose={() => setShowFromPicker(false)} exclude={toCurrency?.ticker} />
@@ -719,7 +719,7 @@ const ExchangeWidget = () => {
                 </span>
                 {fromCurrency && toCurrency && estimatedAmount && estimatedAmount !== "—" && parseFloat(sendAmount) > 0 && (
                   <span className="font-body text-[10px] text-muted-foreground sm:text-[11px]">
-                    1 {fromCurrency.ticker.toUpperCase()} ≈ {(parseFloat(estimatedAmount) / parseFloat(sendAmount)).toFixed(6)} {toCurrency.ticker.toUpperCase()}
+                    1 {displayTicker(fromCurrency)} ≈ {(parseFloat(estimatedAmount) / parseFloat(sendAmount)).toFixed(6)} {displayTicker(toCurrency)}
                   </span>
                 )}
               </div>
@@ -738,7 +738,11 @@ const ExchangeWidget = () => {
                 </span>
                 <button onClick={() => setShowToPicker(true)} className="flex items-center gap-2 rounded-lg bg-trust/10 px-4 py-2.5 transition-colors hover:bg-trust/20 touch-target">
                   {toCurrency?.image && <img src={toCurrency.image} alt="" className="h-5 w-5 rounded-full" />}
-                  <span className="font-display text-sm font-semibold uppercase text-trust">{toCurrency?.ticker || "Select"}</span>
+                  <span className="font-display text-sm font-semibold uppercase text-trust">{toCurrency ? displayTicker(toCurrency) : "Select"}</span>
+                  {toCurrency && networkLabel(toCurrency) && (
+                    <span className="rounded bg-trust/20 px-1 py-0.5 font-body text-[9px] uppercase text-trust">{networkLabel(toCurrency)}</span>
+                  )}
+                </button>
                 </button>
               </div>
               <CurrencyPicker show={showToPicker} onSelect={setToCurrency} onClose={() => setShowToPicker(false)} exclude={fromCurrency?.ticker} />
