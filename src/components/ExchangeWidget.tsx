@@ -250,25 +250,23 @@ const ExchangeWidget = () => {
     setTrackLoading(true);
     setWalletResults([]);
 
-    // If it looks like a transaction ID (short alphanumeric), try direct lookup first
-    const looksLikeTxId = input.length < 30 && /^[a-zA-Z0-9]+$/.test(input);
-
-    if (looksLikeTxId) {
-      try {
-        const status = await getTransactionStatus(input);
-        if (status?.id) {
-          setTransaction({ id: status.id, payinAddress: status.payinAddress, payoutAddress: status.payoutAddress, fromCurrency: status.fromCurrency, toCurrency: status.toCurrency, amount: status.amountSend || 0 } as TransactionResult);
-          setTxStatus(status);
-          setStep("status");
-          setShowTracker(false);
-          setTrackInput("");
-          setTrackLoading(false);
-          return;
-        }
-      } catch {}
+    // Try direct ChangeNOW transaction ID lookup first (works for any input)
+    try {
+      const status = await getTransactionStatus(input);
+      if (status?.id) {
+        setTransaction({ id: status.id, payinAddress: status.payinAddress, payoutAddress: status.payoutAddress, fromCurrency: status.fromCurrency, toCurrency: status.toCurrency, amount: status.amountSend || 0 } as TransactionResult);
+        setTxStatus(status);
+        setStep("status");
+        setShowTracker(false);
+        setTrackInput("");
+        setTrackLoading(false);
+        return;
+      }
+    } catch {
+      // Not a valid tx ID — continue to wallet lookup
     }
 
-    // Otherwise treat as wallet address — search DB
+    // Treat as wallet address — search DB
     try {
       const { data, error } = await supabase
         .from("swap_transactions")
