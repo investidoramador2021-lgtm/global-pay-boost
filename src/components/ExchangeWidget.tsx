@@ -1157,21 +1157,35 @@ const ExchangeWidget = () => {
                   </label>
                   <div className="flex gap-2">
                     {chainType === "evm" && (
-                      <button
-                        onClick={connectMetaMask}
-                        className={`flex flex-1 items-center justify-center gap-2 rounded-xl border p-3 transition-all active:scale-[0.98] ${
-                          connectedWallet?.type === "evm"
-                            ? "border-primary bg-primary/10 text-primary"
-                            : "border-border bg-card text-foreground hover:border-primary/50 hover:shadow-card"
-                        }`}
-                      >
-                        <Wallet className="h-5 w-5" />
-                        <span className="font-display text-sm font-semibold">
-                          {connectedWallet?.type === "evm"
-                            ? `${connectedWallet.address.slice(0, 6)}...${connectedWallet.address.slice(-4)}`
-                            : "MetaMask"}
-                        </span>
-                      </button>
+                      <>
+                        <button
+                          onClick={connectMetaMask}
+                          className={`flex flex-1 items-center justify-center gap-2 rounded-xl border p-3 transition-all active:scale-[0.98] ${
+                            connectedWallet?.type === "evm"
+                              ? "border-primary bg-primary/10 text-primary"
+                              : "border-border bg-card text-foreground hover:border-primary/50 hover:shadow-card"
+                          }`}
+                        >
+                          <img src="https://upload.wikimedia.org/wikipedia/commons/3/36/MetaMask_Fox.svg" alt="MetaMask" className="h-5 w-5" />
+                          <span className="font-display text-sm font-semibold">MetaMask</span>
+                        </button>
+                        <button
+                          onClick={connectTrustWallet}
+                          className={`flex flex-1 items-center justify-center gap-2 rounded-xl border p-3 transition-all active:scale-[0.98] ${
+                            connectedWallet?.type === "evm"
+                              ? "border-primary bg-primary/10 text-primary"
+                              : "border-border bg-card text-foreground hover:border-primary/50 hover:shadow-card"
+                          }`}
+                        >
+                          <img src="https://trustwallet.com/assets/images/media/assets/trust_platform.svg" alt="Trust Wallet" className="h-5 w-5" />
+                          <span className="font-display text-sm font-semibold">Trust</span>
+                        </button>
+                      </>
+                    )}
+                    {connectedWallet?.type === "evm" && (
+                      <div className="col-span-2 text-center font-body text-xs text-primary">
+                        {connectedWallet.address.slice(0, 6)}...{connectedWallet.address.slice(-4)}
+                      </div>
                     )}
                     {chainType === "solana" && (
                       <button
