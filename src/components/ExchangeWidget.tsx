@@ -227,17 +227,29 @@ const ExchangeWidget = () => {
       const entry = { id: tx.id, from: tx.fromCurrency, to: tx.toCurrency, amount: tx.amount, date: new Date().toISOString() };
       stored.unshift(entry);
       localStorage.setItem("mrc_recent_txs", JSON.stringify(stored.slice(0, 10)));
-    } catch {}
-    // DB — allows wallet-based lookup
+    } catch (e) {
+      console.error("[MRC] localStorage save failed:", e);
+    }
+    // DB — allows wallet-based lookup across devices
     try {
-      await supabase.from("swap_transactions").insert({
+      const addr = recipientAddr.trim().toLowerCase();
+      console.log("[MRC] Saving transaction to DB:", { id: tx.id, addr, from: tx.fromCurrency, to: tx.toCurrency, amount: tx.amount });
+      const { error } = await supabase.from("swap_transactions").insert({
         transaction_id: tx.id,
-        recipient_address: recipientAddr.trim().toLowerCase(),
+        recipient_address: addr,
         from_currency: tx.fromCurrency,
         to_currency: tx.toCurrency,
         amount: tx.amount,
       });
-    } catch {}
+      if (error) {
+        console.error("[MRC] DB save error:", error);
+        toast({ title: "Note", description: "Transaction created but tracking save failed. Save your Transaction ID: " + tx.id, variant: "destructive" });
+      } else {
+        console.log("[MRC] Transaction saved to DB successfully");
+      }
+    } catch (e) {
+      console.error("[MRC] DB save exception:", e);
+    }
   };
 
   const getRecentTxs = (): { id: string; from: string; to: string; amount: number; date: string }[] => {
