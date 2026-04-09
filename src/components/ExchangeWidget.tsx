@@ -321,6 +321,7 @@ const ExchangeWidget = () => {
         setStep("status");
         setShowTracker(false);
         setTrackInput("");
+        document.getElementById("exchange-widget")?.scrollIntoView({ behavior: "smooth", block: "start" });
         setTrackLoading(false);
         return;
       }
