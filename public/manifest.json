@@ -1,8 +1,8 @@
 {
-  "name": "MRC GlobalPay",
-  "short_name": "MRC GlobalPay",
+  "name": "MRC Global Pay",
+  "short_name": "MRC Pay",
   "description": "Instant, non-custodial crypto swaps from $0.30. No registration. 500+ assets.",
-  "start_url": "/",
+  "start_url": "/?utm_source=pwa&utm_medium=install",
   "display": "standalone",
   "background_color": "#0F1117",
   "theme_color": "#00FFA3",
