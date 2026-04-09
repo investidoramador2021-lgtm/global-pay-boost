@@ -95,11 +95,15 @@ function getValidationResult(address: string, expectedType: AddressNetworkType |
 const EVM_TICKERS = new Set(["eth", "bnb", "matic", "avax", "usdt", "usdc", "dai", "wbtc", "link", "uni", "aave", "hype", "bera", "op", "arb", "ftm", "celo"]);
 const EVM_NETWORKS = new Set(["eth", "bsc", "matic", "avax", "arb", "op", "base", "celo", "ftm", "one", "glmr", "movr"]);
 
+const TRON_TICKERS = new Set(["trx", "usdttrc20"]);
+const TRON_NETWORKS = new Set(["trx"]);
+
 export function tickerToAddressType(ticker?: string, network?: string): AddressNetworkType {
   const t = ticker?.toLowerCase() || "";
   const n = network?.toLowerCase() || "";
   if (t === "btc") return "btc";
   if (t === "sol" || n === "sol") return "sol";
+  if (TRON_TICKERS.has(t) || TRON_NETWORKS.has(n)) return "tron";
   if (EVM_TICKERS.has(t) || EVM_NETWORKS.has(n)) return "evm";
   return "unknown";
 }
