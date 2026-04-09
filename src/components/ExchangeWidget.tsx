@@ -743,7 +743,6 @@ const ExchangeWidget = () => {
                     <span className="rounded bg-trust/20 px-1 py-0.5 font-body text-[9px] uppercase text-trust">{networkLabel(toCurrency)}</span>
                   )}
                 </button>
-                </button>
               </div>
               <CurrencyPicker show={showToPicker} onSelect={setToCurrency} onClose={() => setShowToPicker(false)} exclude={fromCurrency?.ticker} />
             </div>
