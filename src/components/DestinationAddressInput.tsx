@@ -113,6 +113,7 @@ export function addressTypeLabel(type: AddressNetworkType): string {
     case "evm": return "Ethereum / EVM";
     case "btc": return "Bitcoin";
     case "sol": return "Solana";
+    case "tron": return "TRON (TRC20)";
     default: return "this network";
   }
 }
