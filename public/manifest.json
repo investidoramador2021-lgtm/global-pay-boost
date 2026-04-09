@@ -1,9 +1,11 @@
 {
+  "id": "com.mrcglobalpay.app",
   "name": "MRC Global Pay",
   "short_name": "MRC Pay",
   "description": "Instant, non-custodial crypto swaps from $0.30. No registration. 500+ assets.",
   "start_url": "/?utm_source=pwa&utm_medium=install",
   "display": "standalone",
+  "orientation": "any",
   "background_color": "#0F1117",
   "theme_color": "#00FFA3",
   "icons": [
@@ -16,7 +18,41 @@
       "src": "/favicon-192x192.png",
       "sizes": "192x192",
       "type": "image/png",
-      "purpose": "any maskable"
+      "purpose": "any"
+    },
+    {
+      "src": "/favicon-192x192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "maskable"
+    },
+    {
+      "src": "/icon-512x512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "/icon-512x512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "maskable"
+    }
+  ],
+  "screenshots": [
+    {
+      "src": "/screenshot-narrow.png",
+      "sizes": "1080x1920",
+      "type": "image/png",
+      "form_factor": "narrow",
+      "label": "MRC GlobalPay — Instant Crypto Swap"
+    },
+    {
+      "src": "/screenshot-wide.png",
+      "sizes": "1920x1080",
+      "type": "image/png",
+      "form_factor": "wide",
+      "label": "MRC GlobalPay — Desktop Dashboard"
     }
   ]
 }
