@@ -18,7 +18,7 @@ import {
 } from "@/lib/changenow";
 import { useToast } from "@/hooks/use-toast";
 
-const POPULAR_TICKERS = ["btc", "eth", "usdt", "sol", "xrp", "doge", "bnb", "ltc", "usdc", "trx"];
+const POPULAR_TICKERS = ["btc", "eth", "usdt", "usdttrc20", "sol", "xrp", "doge", "bnb", "ltc", "usdc", "trx"];
 
 type Step = "exchange" | "address" | "deposit" | "status";
 
