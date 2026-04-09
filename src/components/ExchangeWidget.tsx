@@ -1,6 +1,6 @@
 import { useState, useEffect, useCallback, useRef } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { ArrowDownUp, Loader2, Search, Copy, Check, ArrowLeft, ArrowRight, ArrowLeftRight, Clock, CheckCircle2, AlertCircle, ExternalLink, Wallet, QrCode, XCircle, Info, Mail, RefreshCw, Shield, Lock } from "lucide-react";
+import { ArrowDownUp, Loader2, Search, Copy, Check, ArrowLeft, ArrowRight, ArrowLeftRight, Clock, CheckCircle2, AlertCircle, ExternalLink, Wallet, QrCode, XCircle, Info, Mail, RefreshCw, Shield, Lock, ChevronDown } from "lucide-react";
 import DestinationAddressInput, { tickerToAddressType } from "@/components/DestinationAddressInput";
 import { supabase } from "@/integrations/supabase/client";
 import { Button } from "@/components/ui/button";
@@ -960,33 +960,40 @@ const ExchangeWidget = () => {
             </div>
 
             {/* Track existing transfer */}
-            <div className="mt-4 border-t border-border pt-4">
+            <div className="mt-5 pt-5 border-t border-border/60">
               <button
                 onClick={() => setShowTracker(!showTracker)}
-                className="flex w-full items-center justify-center gap-2 font-body text-sm text-muted-foreground transition-colors hover:text-foreground"
+                className="group flex w-full items-center justify-center gap-2.5 rounded-xl border border-primary/25 bg-primary/[0.06] px-4 py-3 font-body text-sm font-medium text-primary transition-all hover:bg-primary/[0.12] hover:border-primary/40 hover:shadow-[0_0_20px_-4px_hsl(var(--primary)/0.15)]"
               >
-                <Search className="h-4 w-4" />
+                <Search className="h-4 w-4 transition-transform group-hover:scale-110" />
                 Track an Existing Transfer
+                <ChevronDown className={`h-3.5 w-3.5 opacity-60 transition-transform duration-200 ${showTracker ? "rotate-180" : ""}`} />
               </button>
               {showTracker && (
                 <div className="mt-4 space-y-4 animate-in fade-in slide-in-from-top-2 duration-200">
                   {/* Search box */}
-                  <div className="rounded-xl border border-primary/20 bg-card p-4 space-y-3">
-                    <p className="font-body text-xs text-muted-foreground">
-                      Paste any wallet address used in your swap (sender or recipient) or your Transaction ID.
-                    </p>
+                  <div className="rounded-xl border border-border/80 bg-accent/40 p-5 space-y-3.5 shadow-sm">
+                    <div className="flex items-center gap-2 mb-1">
+                      <div className="flex h-7 w-7 items-center justify-center rounded-lg bg-primary/10">
+                        <Search className="h-3.5 w-3.5 text-primary" />
+                      </div>
+                      <div>
+                        <p className="font-display text-sm font-semibold text-foreground">Find Your Transfer</p>
+                        <p className="font-body text-[11px] text-muted-foreground">Enter a wallet address or transaction ID</p>
+                      </div>
+                    </div>
                     <div className="flex gap-2">
                       <Input
                         placeholder="Wallet address or Transaction ID"
                         value={trackInput}
                         onChange={(e) => setTrackInput(e.target.value)}
-                        className="flex-1 font-body text-sm border-muted-foreground/40"
+                        className="flex-1 font-body text-sm border-border/80 bg-background/60 placeholder:text-muted-foreground/50 focus-visible:ring-primary/30"
                         onKeyDown={(e) => e.key === "Enter" && handleTrackTransaction()}
                       />
                       <Button
                         onClick={handleTrackTransaction}
                         disabled={!trackInput.trim() || trackLoading}
-                        className="shrink-0 bg-primary text-primary-foreground hover:bg-primary/90 font-semibold px-5"
+                        className="shrink-0 bg-primary text-primary-foreground hover:bg-primary/90 font-semibold px-5 shadow-sm"
                       >
                         {trackLoading ? <Loader2 className="h-4 w-4 animate-spin" /> : (
                           <span className="flex items-center gap-1.5"><Search className="h-3.5 w-3.5" /> Find</span>
@@ -1001,16 +1008,16 @@ const ExchangeWidget = () => {
                         { label: "TRON", example: "T…" },
                         { label: "BCH", example: "bitcoincash:…" },
                       ].map(({ label }) => (
-                        <span key={label} className="rounded-md bg-accent px-2 py-0.5 font-body text-[10px] text-muted-foreground">{label}</span>
+                        <span key={label} className="rounded-md border border-border/60 bg-background/50 px-2 py-0.5 font-body text-[10px] font-medium text-muted-foreground">{label}</span>
                       ))}
                     </div>
                   </div>
 
                   {/* Wallet lookup results */}
                   {walletResults.length > 0 && (
-                    <div className="rounded-xl border border-trust/20 bg-card p-4">
+                    <div className="rounded-xl border border-trust/30 bg-trust/[0.04] p-4 shadow-sm">
                       <div className="flex items-center gap-2 mb-3">
-                        <div className="flex h-6 w-6 items-center justify-center rounded-full bg-trust/10">
+                        <div className="flex h-7 w-7 items-center justify-center rounded-lg bg-trust/10">
                           <CheckCircle2 className="h-3.5 w-3.5 text-trust" />
                         </div>
                         <p className="font-display text-sm font-semibold text-foreground">
@@ -1022,7 +1029,7 @@ const ExchangeWidget = () => {
                           <button
                             key={tx.transaction_id}
                             onClick={() => handleSelectWalletTx(tx.transaction_id)}
-                            className="group flex w-full items-center justify-between gap-3 rounded-lg border border-border bg-accent px-4 py-3 text-left transition-all hover:border-primary/40 hover:shadow-sm"
+                            className="group flex w-full items-center justify-between gap-3 rounded-lg border border-border/80 bg-background/60 px-4 py-3 text-left transition-all hover:border-primary/40 hover:bg-accent/60 hover:shadow-sm"
                           >
                             <div className="min-w-0 space-y-0.5">
                               <span className="flex items-center gap-1.5 font-body text-sm font-semibold text-foreground">
@@ -1050,16 +1057,16 @@ const ExchangeWidget = () => {
                     const recent = getRecentTxs();
                     if (recent.length === 0) return null;
                     return (
-                      <div className="rounded-xl border border-border bg-card p-4">
-                        <p className="mb-2 font-display text-xs font-medium text-muted-foreground flex items-center gap-1.5">
-                          <Clock className="h-3 w-3" /> Recent transfers (this device)
+                      <div className="rounded-xl border border-border/80 bg-accent/30 p-4 shadow-sm">
+                        <p className="mb-2.5 font-display text-xs font-semibold text-muted-foreground flex items-center gap-1.5">
+                          <Clock className="h-3 w-3 text-primary/70" /> Recent transfers on this device
                         </p>
                         <div className="space-y-1.5 max-h-32 overflow-y-auto">
                           {recent.map((tx) => (
                             <button
                               key={tx.id}
                               onClick={() => { setTrackInput(tx.id); }}
-                              className="group flex w-full items-center justify-between gap-2 rounded-lg border border-border bg-accent px-3 py-2 text-left transition-all hover:border-primary/40"
+                              className="group flex w-full items-center justify-between gap-2 rounded-lg border border-border/60 bg-background/50 px-3 py-2.5 text-left transition-all hover:border-primary/40 hover:bg-accent/60"
                             >
                               <div className="min-w-0">
                                 <span className="font-body text-xs font-semibold text-foreground">
