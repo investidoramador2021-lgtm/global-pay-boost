@@ -37,8 +37,13 @@ function detectNetwork(address: string): DetectedNetwork | null {
     return { name: "Bitcoin (Bech32)", shortName: "BTC", icon: "₿", type: "btc" };
   }
 
+  // TRON — starts with T, exactly 34 chars, Base58
+  if (/^T[a-km-zA-HJ-NP-Z1-9]{33}$/.test(t)) {
+    return { name: "TRON (TRC20)", shortName: "TRX", icon: "⟁", type: "tron" };
+  }
+
   // Solana — Base58, 32-44 chars, no 0x or bc1 prefix
-  if (t.length >= 32 && t.length <= 44 && !t.startsWith("0x") && !t.startsWith("bc1") && BASE58_REGEX.test(t)) {
+  if (t.length >= 32 && t.length <= 44 && !t.startsWith("0x") && !t.startsWith("bc1") && !t.startsWith("T") && BASE58_REGEX.test(t)) {
     return { name: "Solana", shortName: "SOL", icon: "◎", type: "sol" };
   }
 
