@@ -64,7 +64,14 @@ export const usePWAInstall = () => {
   }, []);
 
   const triggerAndroidInstall = useCallback(async () => {
-    if (!deferredPrompt) return;
+    if (!deferredPrompt) {
+      // Prompt not ready yet — inform user
+      if (typeof window !== "undefined" && (window as any).gtag) {
+        (window as any).gtag("event", "pwa_install_click", { platform: "android", status: "not_ready" });
+      }
+      alert("Gathering app data, try again in a moment.");
+      return;
+    }
     trackInstallEvent("android");
     await deferredPrompt.prompt();
     const { outcome } = await deferredPrompt.userChoice;
