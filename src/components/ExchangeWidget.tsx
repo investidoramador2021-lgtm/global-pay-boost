@@ -919,7 +919,7 @@ const ExchangeWidget = () => {
                 <div className="mt-3 space-y-3">
                   <div className="flex gap-2">
                     <Input
-                      placeholder="Transaction ID or Wallet Address"
+                      placeholder="Paste your wallet address to find transfers"
                       value={trackInput}
                       onChange={(e) => setTrackInput(e.target.value)}
                       className="flex-1 font-body text-sm"
