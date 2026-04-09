@@ -42,32 +42,27 @@ const GetTheAppBadges = ({ variant = "section" }: GetTheAppBadgesProps) => {
     setIosSheetOpen(false);
   };
 
+  const badgeBtn =
+    "block rounded-lg transition-all duration-200 hover:scale-105 hover:brightness-110 active:scale-[0.97] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary";
+
   const badges = (
     <div className="flex items-center gap-3">
-      <button
-        onClick={handleGooglePlay}
-        className="group relative overflow-hidden rounded-xl border border-border/60 bg-background/80 backdrop-blur transition-all duration-200 hover:border-primary/40 hover:shadow-[0_0_20px_hsl(var(--primary)/0.15)] active:scale-[0.97]"
-        aria-label="Get it on Google Play"
-      >
+      <button onClick={handleGooglePlay} className={badgeBtn} aria-label="Get it on Google Play">
         <img
           src={badgeGooglePlay}
           alt="Get it on Google Play"
           loading="lazy"
-          className="h-[44px] w-auto sm:h-[48px]"
+          className="h-11 w-auto rounded-lg sm:h-12"
           width={646}
           height={512}
         />
       </button>
-      <button
-        onClick={handleAppStore}
-        className="group relative overflow-hidden rounded-xl border border-border/60 bg-background/80 backdrop-blur transition-all duration-200 hover:border-primary/40 hover:shadow-[0_0_20px_hsl(var(--primary)/0.15)] active:scale-[0.97]"
-        aria-label="Download on the App Store"
-      >
+      <button onClick={handleAppStore} className={badgeBtn} aria-label="Download on the App Store">
         <img
           src={badgeAppStore}
           alt="Download on the App Store"
           loading="lazy"
-          className="h-[44px] w-auto sm:h-[48px]"
+          className="h-11 w-auto rounded-lg sm:h-12"
           width={646}
           height={512}
         />
@@ -86,31 +81,28 @@ const GetTheAppBadges = ({ variant = "section" }: GetTheAppBadgesProps) => {
 
   return (
     <>
-      <div className="relative overflow-hidden rounded-2xl border border-primary/20 bg-gradient-to-br from-primary/[0.08] via-background to-primary/[0.04]">
-        {/* Decorative glow */}
-        <div className="pointer-events-none absolute -right-20 -top-20 h-60 w-60 rounded-full bg-primary/10 blur-3xl" />
-        <div className="pointer-events-none absolute -bottom-10 -left-10 h-40 w-40 rounded-full bg-primary/5 blur-2xl" />
+      <div className="relative overflow-hidden rounded-2xl border border-primary/20 bg-gradient-to-r from-primary/[0.06] via-background to-primary/[0.04] shadow-[0_0_40px_hsl(var(--primary)/0.06)]">
+        {/* Decorative accent */}
+        <div className="pointer-events-none absolute -right-16 -top-16 h-48 w-48 rounded-full bg-primary/10 blur-3xl" />
 
-        <div className="relative flex flex-col items-center gap-5 p-6 sm:flex-row sm:items-center sm:gap-6 sm:p-8">
-          {/* Icon + text */}
-          <div className="flex items-center gap-4 text-center sm:text-left">
-            <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-2xl bg-primary/15 text-primary shadow-[0_0_24px_hsl(var(--primary)/0.2)]">
+        <div className="relative flex flex-col gap-5 p-6 sm:flex-row sm:items-center sm:justify-between sm:p-7">
+          {/* Left: icon + copy */}
+          <div className="flex items-center gap-4">
+            <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-2xl bg-primary/15 text-primary shadow-[0_0_20px_hsl(var(--primary)/0.2)]">
               <Smartphone className="h-6 w-6" />
             </div>
-            <div className="min-w-0">
-              <h3 className="font-display text-base font-bold text-foreground sm:text-lg">
+            <div>
+              <h3 className="font-display text-base font-bold text-foreground">
                 Get the App
               </h3>
               <p className="font-body text-sm text-muted-foreground">
-                Instant access on any device — fast, secure & offline-ready
+                Fast, secure &amp; offline-ready — install on any device
               </p>
             </div>
           </div>
 
-          {/* Badges */}
-          <div className="shrink-0 sm:ml-auto">
-            {badges}
-          </div>
+          {/* Right: badges */}
+          <div className="shrink-0">{badges}</div>
         </div>
       </div>
 
