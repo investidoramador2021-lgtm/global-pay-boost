@@ -20,6 +20,60 @@ import { useToast } from "@/hooks/use-toast";
 
 const POPULAR_TICKERS = ["btc", "eth", "usdt", "usdttrc20", "sol", "xrp", "doge", "bnb", "ltc", "usdc", "trx"];
 
+// Display-friendly ticker: strips network suffixes so users see "USDT" not "usdttrc20"
+const DISPLAY_TICKER_MAP: Record<string, string> = {
+  usdterc20: "USDT",
+  usdttrc20: "USDT",
+  usdtbsc: "USDT",
+  usdtsol: "USDT",
+  usdtmatic: "USDT",
+  usdtarc20: "USDT",
+  usdtarb: "USDT",
+  usdtop: "USDT",
+  usdtton: "USDT",
+  usdtcelo: "USDT",
+  usdtapt: "USDT",
+  usdtassethub: "USDT",
+  usdcsol: "USDC",
+  usdcmatic: "USDC",
+  usdcbsc: "USDC",
+  usdcarc20: "USDC",
+  usdcop: "USDC",
+  usdcarb: "USDC",
+  usdcbase: "USDC",
+  usdccelo: "USDC",
+  usdcsui: "USDC",
+  usdcapt: "USDC",
+  usdcmon: "USDC",
+  usdczksync: "USDC",
+  usdcalgo: "USDC",
+  ethbsc: "ETH",
+  etharb: "ETH",
+  ethop: "ETH",
+  ethbase: "ETH",
+  ethlna: "ETH",
+  ethmanta: "ETH",
+  bnbbsc: "BNB",
+};
+
+function displayTicker(c: { ticker: string; name?: string }): string {
+  return DISPLAY_TICKER_MAP[c.ticker.toLowerCase()] || c.ticker.toUpperCase();
+}
+
+function networkLabel(c: { ticker: string; name: string }): string | null {
+  // Extract network from name in parentheses, e.g. "Tether (TRC20)" → "TRC20"
+  const match = c.name.match(/\(([^)]+)\)/);
+  if (match) return match[1];
+  // If display ticker differs from raw ticker, there's a network suffix but no parenthetical
+  if (DISPLAY_TICKER_MAP[c.ticker.toLowerCase()]) {
+    const raw = c.ticker.toLowerCase();
+    const base = DISPLAY_TICKER_MAP[raw].toLowerCase();
+    const suffix = raw.replace(base, "");
+    return suffix ? suffix.toUpperCase() : null;
+  }
+  return null;
+}
+
 type Step = "exchange" | "address" | "deposit" | "status";
 
 // Chain detection helpers
