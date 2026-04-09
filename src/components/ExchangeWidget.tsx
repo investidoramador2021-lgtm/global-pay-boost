@@ -258,23 +258,43 @@ const ExchangeWidget = () => {
     try { return JSON.parse(localStorage.getItem("mrc_recent_txs") || "[]"); } catch { return []; }
   };
 
+  // Normalise wallet addresses for DB search — handles BCH cashaddr, case, etc.
+  const normaliseWalletForSearch = (raw: string): string[] => {
+    let addr = raw.trim();
+    const variants: Set<string> = new Set();
+    // Strip BCH cashaddr prefix
+    if (addr.toLowerCase().startsWith("bitcoincash:")) {
+      addr = addr.slice("bitcoincash:".length);
+    }
+    // Always include lowercase (EVM, BTC, TRON all lowercase-safe)
+    variants.add(addr.toLowerCase());
+    // Also include original case for Solana (Base58 is case-sensitive)
+    variants.add(addr);
+    return [...variants];
+  };
+
   const handleTrackTransaction = async () => {
     const input = trackInput.trim();
     if (!input) return;
     setTrackLoading(true);
     setWalletResults([]);
 
-    // Detect if input looks like a wallet address (long, starts with 0x / T / bc1 / base58)
+    // Detect if input looks like a wallet address
     const looksLikeWallet = input.length >= 26;
 
     if (looksLikeWallet) {
-      // Wallet address — search DB by recipient OR payin address
+      // Wallet address — search DB by recipient OR payin address with normalization
       try {
-        const normalised = input.toLowerCase();
+        const variants = normaliseWalletForSearch(input);
+        // Build OR filter for all variants × both columns
+        const orClauses = variants.flatMap(v => [
+          `recipient_address.eq.${v}`,
+          `payin_address.eq.${v}`,
+        ]).join(",");
         const { data, error } = await supabase
           .from("swap_transactions")
           .select("transaction_id, from_currency, to_currency, amount, created_at")
-          .or(`recipient_address.eq.${normalised},payin_address.eq.${normalised}`)
+          .or(orClauses)
           .order("created_at", { ascending: false })
           .limit(10);
         if (error) throw error;
@@ -284,11 +304,9 @@ const ExchangeWidget = () => {
           return;
         }
       } catch {}
-      // No DB results — show helpful message
       toast({
         title: "No transfers found yet",
-        description: "Wallet tracking is available for all new swaps. Your next swap from this wallet will appear here automatically.",
-        variant: "destructive",
+        description: "Wallet tracking works for all new swaps. Your next swap will appear here automatically.",
       });
       setTrackLoading(false);
       return;
