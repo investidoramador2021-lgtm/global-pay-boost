@@ -702,7 +702,6 @@ const ExchangeWidget = () => {
                     <span className="rounded bg-primary/20 px-1 py-0.5 font-body text-[9px] uppercase text-primary">{networkLabel(fromCurrency)}</span>
                   )}
                 </button>
-                </button>
               </div>
               {belowMin && (
                 <p className="mt-1 font-body text-xs text-destructive">
