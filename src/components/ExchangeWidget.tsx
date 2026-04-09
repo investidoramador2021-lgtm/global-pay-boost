@@ -211,7 +211,8 @@ const ExchangeWidget = () => {
       provider = eth;
     }
     if (!provider) {
-      toast({ title: "Trust Wallet not found", description: "Please install Trust Wallet browser extension.", variant: "destructive" });
+      window.open("https://trustwallet.com/browser-extension", "_blank", "noopener");
+      toast({ title: "Trust Wallet not detected", description: "Opening Trust Wallet download page. Install it and refresh.", variant: "destructive" });
       return;
     }
     try {
