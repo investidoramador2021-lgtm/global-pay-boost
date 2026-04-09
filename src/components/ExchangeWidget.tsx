@@ -697,7 +697,11 @@ const ExchangeWidget = () => {
                 />
                 <button onClick={() => setShowFromPicker(true)} className="flex items-center gap-2 rounded-lg bg-primary/10 px-4 py-2.5 transition-colors hover:bg-primary/20 touch-target">
                   {fromCurrency?.image && <img src={fromCurrency.image} alt="" className="h-5 w-5 rounded-full" />}
-                  <span className="font-display text-sm font-semibold uppercase text-primary">{fromCurrency?.ticker || "Select"}</span>
+                  <span className="font-display text-sm font-semibold uppercase text-primary">{fromCurrency ? displayTicker(fromCurrency) : "Select"}</span>
+                  {fromCurrency && networkLabel(fromCurrency) && (
+                    <span className="rounded bg-primary/20 px-1 py-0.5 font-body text-[9px] uppercase text-primary">{networkLabel(fromCurrency)}</span>
+                  )}
+                </button>
                 </button>
               </div>
               {belowMin && (
