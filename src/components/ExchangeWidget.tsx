@@ -215,16 +215,28 @@ const ExchangeWidget = () => {
 
   const [retrying, setRetrying] = useState(false);
   const [showTracker, setShowTracker] = useState(false);
-  const [trackId, setTrackId] = useState("");
+  const [trackInput, setTrackInput] = useState("");
   const [trackLoading, setTrackLoading] = useState(false);
+  const [walletResults, setWalletResults] = useState<{ transaction_id: string; from_currency: string; to_currency: string; amount: number; created_at: string }[]>([]);
 
-  // Persist recent transactions in localStorage
-  const saveTransaction = (tx: TransactionResult) => {
+  // Persist recent transactions in localStorage + DB
+  const saveTransaction = async (tx: TransactionResult, recipientAddr: string) => {
+    // localStorage
     try {
       const stored = JSON.parse(localStorage.getItem("mrc_recent_txs") || "[]");
       const entry = { id: tx.id, from: tx.fromCurrency, to: tx.toCurrency, amount: tx.amount, date: new Date().toISOString() };
       stored.unshift(entry);
       localStorage.setItem("mrc_recent_txs", JSON.stringify(stored.slice(0, 10)));
+    } catch {}
+    // DB — allows wallet-based lookup
+    try {
+      await supabase.from("swap_transactions").insert({
+        transaction_id: tx.id,
+        recipient_address: recipientAddr.trim().toLowerCase(),
+        from_currency: tx.fromCurrency,
+        to_currency: tx.toCurrency,
+        amount: tx.amount,
+      });
     } catch {}
   };
 
@@ -233,19 +245,63 @@ const ExchangeWidget = () => {
   };
 
   const handleTrackTransaction = async () => {
-    const id = trackId.trim();
-    if (!id) return;
+    const input = trackInput.trim();
+    if (!input) return;
+    setTrackLoading(true);
+    setWalletResults([]);
+
+    // If it looks like a transaction ID (short alphanumeric), try direct lookup first
+    const looksLikeTxId = input.length < 30 && /^[a-zA-Z0-9]+$/.test(input);
+
+    if (looksLikeTxId) {
+      try {
+        const status = await getTransactionStatus(input);
+        if (status?.id) {
+          setTransaction({ id: status.id, payinAddress: status.payinAddress, payoutAddress: status.payoutAddress, fromCurrency: status.fromCurrency, toCurrency: status.toCurrency, amount: status.amountSend || 0 } as TransactionResult);
+          setTxStatus(status);
+          setStep("status");
+          setShowTracker(false);
+          setTrackInput("");
+          setTrackLoading(false);
+          return;
+        }
+      } catch {}
+    }
+
+    // Otherwise treat as wallet address — search DB
+    try {
+      const { data, error } = await supabase
+        .from("swap_transactions")
+        .select("transaction_id, from_currency, to_currency, amount, created_at")
+        .eq("recipient_address", input.toLowerCase())
+        .order("created_at", { ascending: false })
+        .limit(10);
+      if (error) throw error;
+      if (data && data.length > 0) {
+        setWalletResults(data);
+      } else {
+        toast({ title: "No transfers found", description: "No transfers found for this wallet address. Try pasting your Transaction ID instead.", variant: "destructive" });
+      }
+    } catch {
+      toast({ title: "Lookup failed", description: "Could not search for transfers. Please try again.", variant: "destructive" });
+    } finally {
+      setTrackLoading(false);
+    }
+  };
+
+  const handleSelectWalletTx = async (txId: string) => {
     setTrackLoading(true);
     try {
-      const status = await getTransactionStatus(id);
+      const status = await getTransactionStatus(txId);
       if (!status?.id) throw new Error("Not found");
       setTransaction({ id: status.id, payinAddress: status.payinAddress, payoutAddress: status.payoutAddress, fromCurrency: status.fromCurrency, toCurrency: status.toCurrency, amount: status.amountSend || 0 } as TransactionResult);
       setTxStatus(status);
       setStep("status");
       setShowTracker(false);
-      setTrackId("");
+      setTrackInput("");
+      setWalletResults([]);
     } catch {
-      toast({ title: "Not found", description: "Could not find a transaction with that ID. Please check and try again.", variant: "destructive" });
+      toast({ title: "Error", description: "Could not fetch transaction status.", variant: "destructive" });
     } finally {
       setTrackLoading(false);
     }
@@ -487,7 +543,7 @@ const ExchangeWidget = () => {
         ...(refundAddress && { refundAddress: refundAddress.trim() }),
       });
       setTransaction(result);
-      saveTransaction(result);
+      saveTransaction(result, recipientAddress);
       setStep("deposit");
     } catch (err: unknown) {
       const msg = err instanceof Error ? err.message : "Transaction creation failed";
@@ -855,32 +911,59 @@ const ExchangeWidget = () => {
                 <div className="mt-3 space-y-3">
                   <div className="flex gap-2">
                     <Input
-                      placeholder="Enter your Transaction ID"
-                      value={trackId}
-                      onChange={(e) => setTrackId(e.target.value)}
+                      placeholder="Transaction ID or Wallet Address"
+                      value={trackInput}
+                      onChange={(e) => setTrackInput(e.target.value)}
                       className="flex-1 font-body text-sm"
                       onKeyDown={(e) => e.key === "Enter" && handleTrackTransaction()}
                     />
                     <Button
                       onClick={handleTrackTransaction}
-                      disabled={!trackId.trim() || trackLoading}
+                      disabled={!trackInput.trim() || trackLoading}
                       className="shrink-0 bg-primary text-primary-foreground hover:bg-primary/90"
                     >
                       {trackLoading ? <Loader2 className="h-4 w-4 animate-spin" /> : "Track"}
                     </Button>
                   </div>
-                  {/* Recent transactions */}
+                  {/* Wallet lookup results */}
+                  {walletResults.length > 0 && (
+                    <div>
+                      <p className="mb-1.5 font-body text-xs font-medium text-muted-foreground">Transfers for this wallet</p>
+                      <div className="space-y-1.5 max-h-40 overflow-y-auto">
+                        {walletResults.map((tx) => (
+                          <button
+                            key={tx.transaction_id}
+                            onClick={() => handleSelectWalletTx(tx.transaction_id)}
+                            className="flex w-full items-center justify-between gap-2 rounded-lg border border-border bg-accent px-3 py-2 text-left transition-colors hover:bg-accent/80"
+                          >
+                            <div className="min-w-0">
+                              <span className="font-body text-xs font-semibold text-foreground">
+                                {Number(tx.amount)} {tx.from_currency?.toUpperCase()} → {tx.to_currency?.toUpperCase()}
+                              </span>
+                              <span className="ms-2 font-body text-[10px] text-muted-foreground">
+                                {new Date(tx.created_at).toLocaleDateString()}
+                              </span>
+                            </div>
+                            <code className="shrink-0 font-body text-[10px] text-muted-foreground">
+                              {tx.transaction_id.slice(0, 8)}…
+                            </code>
+                          </button>
+                        ))}
+                      </div>
+                    </div>
+                  )}
+                  {/* Recent transactions from localStorage */}
                   {(() => {
                     const recent = getRecentTxs();
                     if (recent.length === 0) return null;
                     return (
                       <div>
-                        <p className="mb-1.5 font-body text-xs font-medium text-muted-foreground">Recent transfers</p>
+                        <p className="mb-1.5 font-body text-xs font-medium text-muted-foreground">Recent transfers (this device)</p>
                         <div className="space-y-1.5 max-h-32 overflow-y-auto">
                           {recent.map((tx) => (
                             <button
                               key={tx.id}
-                              onClick={() => { setTrackId(tx.id); }}
+                              onClick={() => { setTrackInput(tx.id); }}
                               className="flex w-full items-center justify-between gap-2 rounded-lg border border-border bg-accent px-3 py-2 text-left transition-colors hover:bg-accent/80"
                             >
                               <div className="min-w-0">
