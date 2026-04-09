@@ -841,6 +841,68 @@ const ExchangeWidget = () => {
                 </span>
               )}
             </div>
+
+            {/* Track existing transfer */}
+            <div className="mt-4 border-t border-border pt-4">
+              <button
+                onClick={() => setShowTracker(!showTracker)}
+                className="flex w-full items-center justify-center gap-2 font-body text-sm text-muted-foreground transition-colors hover:text-foreground"
+              >
+                <Search className="h-4 w-4" />
+                Track an Existing Transfer
+              </button>
+              {showTracker && (
+                <div className="mt-3 space-y-3">
+                  <div className="flex gap-2">
+                    <Input
+                      placeholder="Enter your Transaction ID"
+                      value={trackId}
+                      onChange={(e) => setTrackId(e.target.value)}
+                      className="flex-1 font-body text-sm"
+                      onKeyDown={(e) => e.key === "Enter" && handleTrackTransaction()}
+                    />
+                    <Button
+                      onClick={handleTrackTransaction}
+                      disabled={!trackId.trim() || trackLoading}
+                      className="shrink-0 bg-primary text-primary-foreground hover:bg-primary/90"
+                    >
+                      {trackLoading ? <Loader2 className="h-4 w-4 animate-spin" /> : "Track"}
+                    </Button>
+                  </div>
+                  {/* Recent transactions */}
+                  {(() => {
+                    const recent = getRecentTxs();
+                    if (recent.length === 0) return null;
+                    return (
+                      <div>
+                        <p className="mb-1.5 font-body text-xs font-medium text-muted-foreground">Recent transfers</p>
+                        <div className="space-y-1.5 max-h-32 overflow-y-auto">
+                          {recent.map((tx) => (
+                            <button
+                              key={tx.id}
+                              onClick={() => { setTrackId(tx.id); }}
+                              className="flex w-full items-center justify-between gap-2 rounded-lg border border-border bg-accent px-3 py-2 text-left transition-colors hover:bg-accent/80"
+                            >
+                              <div className="min-w-0">
+                                <span className="font-body text-xs font-semibold text-foreground">
+                                  {tx.amount} {tx.from?.toUpperCase()} → {tx.to?.toUpperCase()}
+                                </span>
+                                <span className="ms-2 font-body text-[10px] text-muted-foreground">
+                                  {new Date(tx.date).toLocaleDateString()}
+                                </span>
+                              </div>
+                              <code className="shrink-0 font-body text-[10px] text-muted-foreground">
+                                {tx.id.slice(0, 8)}…
+                              </code>
+                            </button>
+                          ))}
+                        </div>
+                      </div>
+                    );
+                  })()}
+                </div>
+              )}
+            </div>
           </motion.div>
         )}
 
