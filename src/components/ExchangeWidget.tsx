@@ -250,7 +250,36 @@ const ExchangeWidget = () => {
     setTrackLoading(true);
     setWalletResults([]);
 
-    // Try direct ChangeNOW transaction ID lookup first (works for any input)
+    // Detect if input looks like a wallet address (long, starts with 0x / T / bc1 / base58)
+    const looksLikeWallet = input.length >= 26;
+
+    if (looksLikeWallet) {
+      // Wallet address — search DB first (fast)
+      try {
+        const { data, error } = await supabase
+          .from("swap_transactions")
+          .select("transaction_id, from_currency, to_currency, amount, created_at")
+          .eq("recipient_address", input.toLowerCase())
+          .order("created_at", { ascending: false })
+          .limit(10);
+        if (error) throw error;
+        if (data && data.length > 0) {
+          setWalletResults(data);
+          setTrackLoading(false);
+          return;
+        }
+      } catch {}
+      // No DB results — show helpful message
+      toast({
+        title: "No transfers found yet",
+        description: "Wallet tracking is available for all new swaps. Your next swap from this wallet will appear here automatically.",
+        variant: "destructive",
+      });
+      setTrackLoading(false);
+      return;
+    }
+
+    // Short input — treat as Transaction ID
     try {
       const status = await getTransactionStatus(input);
       if (status?.id) {
@@ -262,29 +291,10 @@ const ExchangeWidget = () => {
         setTrackLoading(false);
         return;
       }
-    } catch {
-      // Not a valid tx ID — continue to wallet lookup
-    }
+    } catch {}
 
-    // Treat as wallet address — search DB
-    try {
-      const { data, error } = await supabase
-        .from("swap_transactions")
-        .select("transaction_id, from_currency, to_currency, amount, created_at")
-        .eq("recipient_address", input.toLowerCase())
-        .order("created_at", { ascending: false })
-        .limit(10);
-      if (error) throw error;
-      if (data && data.length > 0) {
-        setWalletResults(data);
-      } else {
-        toast({ title: "No transfers found", description: "No transfers found for this wallet address. Try pasting your Transaction ID instead.", variant: "destructive" });
-      }
-    } catch {
-      toast({ title: "Lookup failed", description: "Could not search for transfers. Please try again.", variant: "destructive" });
-    } finally {
-      setTrackLoading(false);
-    }
+    toast({ title: "Not found", description: "Could not find a transfer with this ID. Double-check and try again.", variant: "destructive" });
+    setTrackLoading(false);
   };
 
   const handleSelectWalletTx = async (txId: string) => {
@@ -909,7 +919,7 @@ const ExchangeWidget = () => {
                 <div className="mt-3 space-y-3">
                   <div className="flex gap-2">
                     <Input
-                      placeholder="Transaction ID or Wallet Address"
+                      placeholder="Paste your wallet address to find transfers"
                       value={trackInput}
                       onChange={(e) => setTrackInput(e.target.value)}
                       className="flex-1 font-body text-sm"
