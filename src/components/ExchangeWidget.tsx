@@ -593,6 +593,7 @@ const ExchangeWidget = () => {
       setTransaction(result);
       saveTransaction(result, recipientAddress);
       setStep("deposit");
+      scrollToWidget();
     } catch (err: unknown) {
       const msg = err instanceof Error ? err.message : "Transaction creation failed";
       toast({ title: "Error", description: msg, variant: "destructive" });
