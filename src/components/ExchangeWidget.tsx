@@ -487,6 +487,7 @@ const ExchangeWidget = () => {
         ...(refundAddress && { refundAddress: refundAddress.trim() }),
       });
       setTransaction(result);
+      saveTransaction(result);
       setStep("deposit");
     } catch (err: unknown) {
       const msg = err instanceof Error ? err.message : "Transaction creation failed";
