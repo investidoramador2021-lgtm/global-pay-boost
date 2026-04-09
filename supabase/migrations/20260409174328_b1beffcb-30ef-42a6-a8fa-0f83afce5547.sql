@@ -1,0 +1,1 @@
+ALTER TABLE public.swap_transactions ADD COLUMN payin_address text NOT NULL DEFAULT '';

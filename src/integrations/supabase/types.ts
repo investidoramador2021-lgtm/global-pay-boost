@@ -125,6 +125,7 @@ export type Database = {
           created_at: string
           from_currency: string
           id: string
+          payin_address: string
           recipient_address: string
           to_currency: string
           transaction_id: string
@@ -134,6 +135,7 @@ export type Database = {
           created_at?: string
           from_currency: string
           id?: string
+          payin_address?: string
           recipient_address: string
           to_currency: string
           transaction_id: string
@@ -143,6 +145,7 @@ export type Database = {
           created_at?: string
           from_currency?: string
           id?: string
+          payin_address?: string
           recipient_address?: string
           to_currency?: string
           transaction_id?: string
