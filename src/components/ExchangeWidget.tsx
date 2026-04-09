@@ -173,7 +173,6 @@ const ExchangeWidget = () => {
       toast({ title: "MetaMask not found", description: "Please install MetaMask browser extension.", variant: "destructive" });
       return;
     }
-    // Prefer MetaMask's own provider to avoid Trust Wallet / other wallet hijacking
     const eth = (window as any).ethereum;
     let provider = eth;
     if (eth?.providers?.length) {
@@ -193,6 +192,38 @@ const ExchangeWidget = () => {
     } catch (err: any) {
       if (err?.code === 4001) return;
       toast({ title: "Connection failed", description: err?.message || "Could not connect MetaMask", variant: "destructive" });
+    }
+  };
+
+  const connectTrustWallet = async () => {
+    if (typeof window === "undefined") {
+      toast({ title: "Trust Wallet not found", description: "Please install Trust Wallet browser extension.", variant: "destructive" });
+      return;
+    }
+    const eth = (window as any).ethereum;
+    let provider: any = null;
+    // Trust Wallet injects trustwallet on the window or sets isTrust on the provider
+    if ((window as any).trustwallet) {
+      provider = (window as any).trustwallet;
+    } else if (eth?.providers?.length) {
+      provider = eth.providers.find((p: any) => p.isTrust || p.isTrustWallet);
+    } else if (eth?.isTrust || eth?.isTrustWallet) {
+      provider = eth;
+    }
+    if (!provider) {
+      toast({ title: "Trust Wallet not found", description: "Please install Trust Wallet browser extension.", variant: "destructive" });
+      return;
+    }
+    try {
+      const accounts = await provider.request({ method: "eth_requestAccounts" });
+      if (accounts?.[0]) {
+        setRecipientAddress(accounts[0]);
+        setConnectedWallet({ address: accounts[0], type: "evm" });
+        toast({ title: "Wallet connected", description: `Connected: ${accounts[0].slice(0, 6)}...${accounts[0].slice(-4)}` });
+      }
+    } catch (err: any) {
+      if (err?.code === 4001) return;
+      toast({ title: "Connection failed", description: err?.message || "Could not connect Trust Wallet", variant: "destructive" });
     }
   };
 
