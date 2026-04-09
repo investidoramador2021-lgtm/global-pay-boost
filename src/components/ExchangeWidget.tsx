@@ -20,6 +20,60 @@ import { useToast } from "@/hooks/use-toast";
 
 const POPULAR_TICKERS = ["btc", "eth", "usdt", "usdttrc20", "sol", "xrp", "doge", "bnb", "ltc", "usdc", "trx"];
 
+// Display-friendly ticker: strips network suffixes so users see "USDT" not "usdttrc20"
+const DISPLAY_TICKER_MAP: Record<string, string> = {
+  usdterc20: "USDT",
+  usdttrc20: "USDT",
+  usdtbsc: "USDT",
+  usdtsol: "USDT",
+  usdtmatic: "USDT",
+  usdtarc20: "USDT",
+  usdtarb: "USDT",
+  usdtop: "USDT",
+  usdtton: "USDT",
+  usdtcelo: "USDT",
+  usdtapt: "USDT",
+  usdtassethub: "USDT",
+  usdcsol: "USDC",
+  usdcmatic: "USDC",
+  usdcbsc: "USDC",
+  usdcarc20: "USDC",
+  usdcop: "USDC",
+  usdcarb: "USDC",
+  usdcbase: "USDC",
+  usdccelo: "USDC",
+  usdcsui: "USDC",
+  usdcapt: "USDC",
+  usdcmon: "USDC",
+  usdczksync: "USDC",
+  usdcalgo: "USDC",
+  ethbsc: "ETH",
+  etharb: "ETH",
+  ethop: "ETH",
+  ethbase: "ETH",
+  ethlna: "ETH",
+  ethmanta: "ETH",
+  bnbbsc: "BNB",
+};
+
+function displayTicker(c: { ticker: string; name?: string }): string {
+  return DISPLAY_TICKER_MAP[c.ticker.toLowerCase()] || c.ticker.toUpperCase();
+}
+
+function networkLabel(c: { ticker: string; name: string }): string | null {
+  // Extract network from name in parentheses, e.g. "Tether (TRC20)" → "TRC20"
+  const match = c.name.match(/\(([^)]+)\)/);
+  if (match) return match[1];
+  // If display ticker differs from raw ticker, there's a network suffix but no parenthetical
+  if (DISPLAY_TICKER_MAP[c.ticker.toLowerCase()]) {
+    const raw = c.ticker.toLowerCase();
+    const base = DISPLAY_TICKER_MAP[raw].toLowerCase();
+    const suffix = raw.replace(base, "");
+    return suffix ? suffix.toUpperCase() : null;
+  }
+  return null;
+}
+
 type Step = "exchange" | "address" | "deposit" | "status";
 
 // Chain detection helpers
@@ -469,14 +523,12 @@ const ExchangeWidget = () => {
           >
             {c.image && <img src={c.image} alt={c.name} className="h-6 w-6 rounded-full" loading="lazy" />}
             <div>
-              <span className="font-display text-sm font-semibold uppercase text-foreground">{c.ticker}</span>
+              <span className="font-display text-sm font-semibold uppercase text-foreground">{displayTicker(c)}</span>
+              {networkLabel(c) && (
+                <span className="ms-1.5 rounded bg-muted px-1.5 py-0.5 font-body text-[10px] uppercase text-muted-foreground">{networkLabel(c)}</span>
+              )}
               <span className="ms-2 font-body text-xs text-muted-foreground">{c.name}</span>
             </div>
-            {c.network && c.network !== c.ticker && (
-              <span className="ms-auto rounded bg-accent px-1.5 py-0.5 font-body text-[10px] uppercase text-muted-foreground">
-                {c.network}
-              </span>
-            )}
           </button>
         ))}
         {visibleCount < items.length && (
@@ -645,12 +697,15 @@ const ExchangeWidget = () => {
                 />
                 <button onClick={() => setShowFromPicker(true)} className="flex items-center gap-2 rounded-lg bg-primary/10 px-4 py-2.5 transition-colors hover:bg-primary/20 touch-target">
                   {fromCurrency?.image && <img src={fromCurrency.image} alt="" className="h-5 w-5 rounded-full" />}
-                  <span className="font-display text-sm font-semibold uppercase text-primary">{fromCurrency?.ticker || "Select"}</span>
+                  <span className="font-display text-sm font-semibold uppercase text-primary">{fromCurrency ? displayTicker(fromCurrency) : "Select"}</span>
+                  {fromCurrency && networkLabel(fromCurrency) && (
+                    <span className="rounded bg-primary/20 px-1 py-0.5 font-body text-[9px] uppercase text-primary">{networkLabel(fromCurrency)}</span>
+                  )}
                 </button>
               </div>
               {belowMin && (
                 <p className="mt-1 font-body text-xs text-destructive">
-                  Minimum amount: {minAmount} {fromCurrency?.ticker?.toUpperCase()}
+                  Minimum amount: {minAmount} {fromCurrency ? displayTicker(fromCurrency) : ""}
                 </p>
               )}
               <CurrencyPicker show={showFromPicker} onSelect={setFromCurrency} onClose={() => setShowFromPicker(false)} exclude={toCurrency?.ticker} />
@@ -664,7 +719,7 @@ const ExchangeWidget = () => {
                 </span>
                 {fromCurrency && toCurrency && estimatedAmount && estimatedAmount !== "—" && parseFloat(sendAmount) > 0 && (
                   <span className="font-body text-[10px] text-muted-foreground sm:text-[11px]">
-                    1 {fromCurrency.ticker.toUpperCase()} ≈ {(parseFloat(estimatedAmount) / parseFloat(sendAmount)).toFixed(6)} {toCurrency.ticker.toUpperCase()}
+                    1 {displayTicker(fromCurrency)} ≈ {(parseFloat(estimatedAmount) / parseFloat(sendAmount)).toFixed(6)} {displayTicker(toCurrency)}
                   </span>
                 )}
               </div>
@@ -683,7 +738,10 @@ const ExchangeWidget = () => {
                 </span>
                 <button onClick={() => setShowToPicker(true)} className="flex items-center gap-2 rounded-lg bg-trust/10 px-4 py-2.5 transition-colors hover:bg-trust/20 touch-target">
                   {toCurrency?.image && <img src={toCurrency.image} alt="" className="h-5 w-5 rounded-full" />}
-                  <span className="font-display text-sm font-semibold uppercase text-trust">{toCurrency?.ticker || "Select"}</span>
+                  <span className="font-display text-sm font-semibold uppercase text-trust">{toCurrency ? displayTicker(toCurrency) : "Select"}</span>
+                  {toCurrency && networkLabel(toCurrency) && (
+                    <span className="rounded bg-trust/20 px-1 py-0.5 font-body text-[9px] uppercase text-trust">{networkLabel(toCurrency)}</span>
+                  )}
                 </button>
               </div>
               <CurrencyPicker show={showToPicker} onSelect={setToCurrency} onClose={() => setShowToPicker(false)} exclude={fromCurrency?.ticker} />
