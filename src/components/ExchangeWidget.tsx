@@ -949,63 +949,97 @@ const ExchangeWidget = () => {
                 Track an Existing Transfer
               </button>
               {showTracker && (
-                <div className="mt-3 space-y-3">
-                  <div className="flex gap-2">
-                    <Input
-                      placeholder="Paste your wallet address to find transfers"
-                      value={trackInput}
-                      onChange={(e) => setTrackInput(e.target.value)}
-                      className="flex-1 font-body text-sm"
-                      onKeyDown={(e) => e.key === "Enter" && handleTrackTransaction()}
-                    />
-                    <Button
-                      onClick={handleTrackTransaction}
-                      disabled={!trackInput.trim() || trackLoading}
-                      className="shrink-0 bg-primary text-primary-foreground hover:bg-primary/90"
-                    >
-                      {trackLoading ? <Loader2 className="h-4 w-4 animate-spin" /> : "Track"}
-                    </Button>
+                <div className="mt-4 space-y-4 animate-in fade-in slide-in-from-top-2 duration-200">
+                  {/* Search box */}
+                  <div className="rounded-xl border border-primary/20 bg-card p-4 space-y-3">
+                    <p className="font-body text-xs text-muted-foreground">
+                      Paste any wallet address used in your swap (sender or recipient) or your Transaction ID.
+                    </p>
+                    <div className="flex gap-2">
+                      <Input
+                        placeholder="Wallet address or Transaction ID"
+                        value={trackInput}
+                        onChange={(e) => setTrackInput(e.target.value)}
+                        className="flex-1 font-body text-sm border-muted-foreground/40"
+                        onKeyDown={(e) => e.key === "Enter" && handleTrackTransaction()}
+                      />
+                      <Button
+                        onClick={handleTrackTransaction}
+                        disabled={!trackInput.trim() || trackLoading}
+                        className="shrink-0 bg-primary text-primary-foreground hover:bg-primary/90 font-semibold px-5"
+                      >
+                        {trackLoading ? <Loader2 className="h-4 w-4 animate-spin" /> : (
+                          <span className="flex items-center gap-1.5"><Search className="h-3.5 w-3.5" /> Find</span>
+                        )}
+                      </Button>
+                    </div>
+                    <div className="flex flex-wrap gap-1.5">
+                      {[
+                        { label: "BTC", example: "bc1q…, 1A…, 3M…" },
+                        { label: "ETH/EVM", example: "0x…" },
+                        { label: "SOL", example: "Base58" },
+                        { label: "TRON", example: "T…" },
+                        { label: "BCH", example: "bitcoincash:…" },
+                      ].map(({ label }) => (
+                        <span key={label} className="rounded-md bg-accent px-2 py-0.5 font-body text-[10px] text-muted-foreground">{label}</span>
+                      ))}
+                    </div>
                   </div>
+
                   {/* Wallet lookup results */}
                   {walletResults.length > 0 && (
-                    <div>
-                      <p className="mb-1.5 font-body text-xs font-medium text-muted-foreground">Transfers for this wallet</p>
-                      <div className="space-y-1.5 max-h-40 overflow-y-auto">
+                    <div className="rounded-xl border border-trust/20 bg-card p-4">
+                      <div className="flex items-center gap-2 mb-3">
+                        <div className="flex h-6 w-6 items-center justify-center rounded-full bg-trust/10">
+                          <CheckCircle2 className="h-3.5 w-3.5 text-trust" />
+                        </div>
+                        <p className="font-display text-sm font-semibold text-foreground">
+                          {walletResults.length} transfer{walletResults.length > 1 ? "s" : ""} found
+                        </p>
+                      </div>
+                      <div className="space-y-2 max-h-48 overflow-y-auto">
                         {walletResults.map((tx) => (
                           <button
                             key={tx.transaction_id}
                             onClick={() => handleSelectWalletTx(tx.transaction_id)}
-                            className="flex w-full items-center justify-between gap-2 rounded-lg border border-border bg-accent px-3 py-2 text-left transition-colors hover:bg-accent/80"
+                            className="group flex w-full items-center justify-between gap-3 rounded-lg border border-border bg-accent px-4 py-3 text-left transition-all hover:border-primary/40 hover:shadow-sm"
                           >
-                            <div className="min-w-0">
-                              <span className="font-body text-xs font-semibold text-foreground">
+                            <div className="min-w-0 space-y-0.5">
+                              <span className="flex items-center gap-1.5 font-body text-sm font-semibold text-foreground">
+                                <ArrowLeftRight className="h-3.5 w-3.5 text-primary" />
                                 {Number(tx.amount)} {tx.from_currency?.toUpperCase()} → {tx.to_currency?.toUpperCase()}
                               </span>
-                              <span className="ms-2 font-body text-[10px] text-muted-foreground">
-                                {new Date(tx.created_at).toLocaleDateString()}
+                              <span className="block font-body text-[11px] text-muted-foreground">
+                                {new Date(tx.created_at).toLocaleDateString(undefined, { month: "short", day: "numeric", year: "numeric", hour: "2-digit", minute: "2-digit" })}
                               </span>
                             </div>
-                            <code className="shrink-0 font-body text-[10px] text-muted-foreground">
-                              {tx.transaction_id.slice(0, 8)}…
-                            </code>
+                            <div className="flex items-center gap-1.5 shrink-0">
+                              <code className="font-body text-[10px] text-muted-foreground group-hover:text-foreground transition-colors">
+                                {tx.transaction_id.slice(0, 8)}…
+                              </code>
+                              <ArrowRight className="h-3.5 w-3.5 text-muted-foreground group-hover:text-primary transition-colors" />
+                            </div>
                           </button>
                         ))}
                       </div>
                     </div>
                   )}
+
                   {/* Recent transactions from localStorage */}
                   {(() => {
                     const recent = getRecentTxs();
                     if (recent.length === 0) return null;
                     return (
-                      <div>
-                        <p className="mb-1.5 font-body text-xs font-medium text-muted-foreground">Recent transfers (this device)</p>
+                      <div className="rounded-xl border border-border bg-card p-4">
+                        <p className="mb-2 font-display text-xs font-medium text-muted-foreground flex items-center gap-1.5">
+                          <Clock className="h-3 w-3" /> Recent transfers (this device)
+                        </p>
                         <div className="space-y-1.5 max-h-32 overflow-y-auto">
                           {recent.map((tx) => (
                             <button
                               key={tx.id}
                               onClick={() => { setTrackInput(tx.id); }}
-                              className="flex w-full items-center justify-between gap-2 rounded-lg border border-border bg-accent px-3 py-2 text-left transition-colors hover:bg-accent/80"
+                              className="group flex w-full items-center justify-between gap-2 rounded-lg border border-border bg-accent px-3 py-2 text-left transition-all hover:border-primary/40"
                             >
                               <div className="min-w-0">
                                 <span className="font-body text-xs font-semibold text-foreground">
@@ -1015,7 +1049,7 @@ const ExchangeWidget = () => {
                                   {new Date(tx.date).toLocaleDateString()}
                                 </span>
                               </div>
-                              <code className="shrink-0 font-body text-[10px] text-muted-foreground">
+                              <code className="shrink-0 font-body text-[10px] text-muted-foreground group-hover:text-foreground transition-colors">
                                 {tx.id.slice(0, 8)}…
                               </code>
                             </button>
