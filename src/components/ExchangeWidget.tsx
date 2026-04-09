@@ -60,10 +60,36 @@ function displayTicker(c: { ticker: string; name?: string }): string {
   return DISPLAY_TICKER_MAP[c.ticker.toLowerCase()] || c.ticker.toUpperCase();
 }
 
+// Map short network codes to user-friendly blockchain names
+const NETWORK_FRIENDLY_NAME: Record<string, string> = {
+  "TRC20": "Tron",
+  "ERC20": "Ethereum",
+  "Binance Smart Chain": "BNB Chain",
+  "SOL": "Solana",
+  "Polygon": "Polygon",
+  "AVAX C-CHAIN": "Avalanche",
+  "Arbitrum One": "Arbitrum",
+  "Optimism": "Optimism",
+  "Base": "Base",
+  "TON": "TON",
+  "CELO": "Celo",
+  "Aptos": "Aptos",
+  "Sui": "Sui",
+  "Linea": "Linea",
+  "Manta": "Manta",
+  "ZkSync Era": "zkSync",
+  "Algorand": "Algorand",
+  "Assethub": "Polkadot",
+  "Monad": "Monad",
+  "HyperEVM": "Hyperliquid",
+};
+
 function networkLabel(c: { ticker: string; name: string }): string | null {
   // Extract network from name in parentheses, e.g. "Tether (TRC20)" → "TRC20"
   const match = c.name.match(/\(([^)]+)\)/);
-  if (match) return match[1];
+  if (match) {
+    return NETWORK_FRIENDLY_NAME[match[1]] || match[1];
+  }
   // If display ticker differs from raw ticker, there's a network suffix but no parenthetical
   if (DISPLAY_TICKER_MAP[c.ticker.toLowerCase()]) {
     const raw = c.ticker.toLowerCase();
