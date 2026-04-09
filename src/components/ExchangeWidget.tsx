@@ -610,6 +610,7 @@ const ExchangeWidget = () => {
 
   const handleProceedToStatus = () => {
     setStep("status");
+    scrollToWidget();
   };
 
   const handleNewExchange = () => {
