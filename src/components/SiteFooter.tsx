@@ -155,6 +155,7 @@ const FooterLinkList = ({ title, links }: { title: string; links: FooterLink[] }
 import { useTranslation } from "react-i18next";
 import { useLocation } from "react-router-dom";
 import { getLangFromPath, langPath } from "@/i18n";
+import GetTheAppBadges from "@/components/GetTheAppBadges";
 
 const SiteFooter = () => {
   const { t } = useTranslation();
