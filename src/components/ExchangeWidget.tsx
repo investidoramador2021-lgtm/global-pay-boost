@@ -233,10 +233,12 @@ const ExchangeWidget = () => {
     // DB — allows wallet-based lookup across devices
     try {
       const addr = recipientAddr.trim().toLowerCase();
-      console.log("[MRC] Saving transaction to DB:", { id: tx.id, addr, from: tx.fromCurrency, to: tx.toCurrency, amount: tx.amount });
+      const payinAddr = (tx.payinAddress || "").trim().toLowerCase();
+      console.log("[MRC] Saving transaction to DB:", { id: tx.id, addr, payinAddr, from: tx.fromCurrency, to: tx.toCurrency, amount: tx.amount });
       const { error } = await supabase.from("swap_transactions").insert({
         transaction_id: tx.id,
         recipient_address: addr,
+        payin_address: payinAddr,
         from_currency: tx.fromCurrency,
         to_currency: tx.toCurrency,
         amount: tx.amount,
@@ -266,12 +268,13 @@ const ExchangeWidget = () => {
     const looksLikeWallet = input.length >= 26;
 
     if (looksLikeWallet) {
-      // Wallet address — search DB first (fast)
+      // Wallet address — search DB by recipient OR payin address
       try {
+        const normalised = input.toLowerCase();
         const { data, error } = await supabase
           .from("swap_transactions")
           .select("transaction_id, from_currency, to_currency, amount, created_at")
-          .eq("recipient_address", input.toLowerCase())
+          .or(`recipient_address.eq.${normalised},payin_address.eq.${normalised}`)
           .order("created_at", { ascending: false })
           .limit(10);
         if (error) throw error;
