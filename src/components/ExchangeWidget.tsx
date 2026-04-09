@@ -631,8 +631,28 @@ const ExchangeWidget = () => {
         email: notifyEmail.trim(),
       });
       if (error) throw error;
+      // Send swap confirmation email
+      try {
+        await supabase.functions.invoke("send-transactional-email", {
+          body: {
+            templateName: "swap-confirmation",
+            recipientEmail: notifyEmail.trim(),
+            idempotencyKey: `swap-confirm-${transaction.id}`,
+            templateData: {
+              transactionId: transaction.id,
+              fromAmount: String(transaction.amount ?? sendAmount),
+              fromCurrency: transaction.fromCurrency || fromCurrency?.ticker || "",
+              toCurrency: transaction.toCurrency || toCurrency?.ticker || "",
+              recipientAddress: recipientAddress.trim(),
+              depositAddress: transaction.payinAddress || "",
+            },
+          },
+        });
+      } catch (emailErr) {
+        console.error("[MRC] Swap confirmation email failed:", emailErr);
+      }
       setEmailSubmitted(true);
-      toast({ title: "Subscribed!", description: "You'll receive status updates for this transfer." });
+      toast({ title: "Subscribed!", description: "You'll receive a confirmation email with your exchange details." });
     } catch (err: any) {
       toast({ title: "Error", description: err?.message || "Could not subscribe", variant: "destructive" });
     } finally {
