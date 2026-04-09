@@ -179,7 +179,8 @@ const ExchangeWidget = () => {
       provider = eth.providers.find((p: any) => p.isMetaMask && !p.isTrust) || eth.providers.find((p: any) => p.isMetaMask);
     }
     if (!provider || !provider.isMetaMask) {
-      toast({ title: "MetaMask not found", description: "Please install MetaMask browser extension. If you have multiple wallets, ensure MetaMask is enabled.", variant: "destructive" });
+      window.open("https://metamask.io/download/", "_blank", "noopener");
+      toast({ title: "MetaMask not detected", description: "Opening MetaMask download page. Install it and refresh.", variant: "destructive" });
       return;
     }
     try {
