@@ -4,7 +4,7 @@ import { CheckCircle2, AlertCircle, Clipboard, Loader2, ShieldAlert } from "luci
 
 // ── Network types ───────────────────────────────────────────────────
 
-export type AddressNetworkType = "evm" | "btc" | "sol" | "unknown";
+export type AddressNetworkType = "evm" | "btc" | "sol" | "tron" | "unknown";
 
 interface DetectedNetwork {
   name: string;
