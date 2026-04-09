@@ -56,7 +56,8 @@ function detectPartialNetwork(address: string): DetectedNetwork | null {
   if (t.startsWith("0x") && t.length < 42) return { name: "Ethereum / EVM", shortName: "ETH", icon: "⟠", type: "evm" };
   if (t.startsWith("bc1") && t.length < 26) return { name: "Bitcoin (Bech32)", shortName: "BTC", icon: "₿", type: "btc" };
   if ((t.startsWith("1") || t.startsWith("3")) && t.length < 26 && BASE58_REGEX.test(t)) return { name: "Bitcoin", shortName: "BTC", icon: "₿", type: "btc" };
-  if (t.length < 32 && BASE58_REGEX.test(t) && !t.startsWith("0x") && !t.startsWith("bc1")) return { name: "Solana", shortName: "SOL", icon: "◎", type: "sol" };
+  if (t.startsWith("T") && t.length < 34 && BASE58_REGEX.test(t)) return { name: "TRON (TRC20)", shortName: "TRX", icon: "⟁", type: "tron" };
+  if (t.length < 32 && BASE58_REGEX.test(t) && !t.startsWith("0x") && !t.startsWith("bc1") && !t.startsWith("T")) return { name: "Solana", shortName: "SOL", icon: "◎", type: "sol" };
   return null;
 }
 
