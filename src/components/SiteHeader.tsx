@@ -87,9 +87,8 @@ const SiteHeader = () => {
           ))}
           {pwa.canInstall && (
             <button
-              onClick={pwa.triggerInstall}
+              onClick={() => { pwa.triggerInstall(); setMobileOpen(false); }}
               className="flex items-center gap-2 py-3 font-body text-sm font-medium text-primary active:text-primary/80"
-              onClick2={() => setMobileOpen(false)}
             >
               <Download className="h-4 w-4" />
               Install App
