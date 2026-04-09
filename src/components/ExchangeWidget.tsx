@@ -215,16 +215,28 @@ const ExchangeWidget = () => {
 
   const [retrying, setRetrying] = useState(false);
   const [showTracker, setShowTracker] = useState(false);
-  const [trackId, setTrackId] = useState("");
+  const [trackInput, setTrackInput] = useState("");
   const [trackLoading, setTrackLoading] = useState(false);
+  const [walletResults, setWalletResults] = useState<{ transaction_id: string; from_currency: string; to_currency: string; amount: number; created_at: string }[]>([]);
 
-  // Persist recent transactions in localStorage
-  const saveTransaction = (tx: TransactionResult) => {
+  // Persist recent transactions in localStorage + DB
+  const saveTransaction = async (tx: TransactionResult, recipientAddr: string) => {
+    // localStorage
     try {
       const stored = JSON.parse(localStorage.getItem("mrc_recent_txs") || "[]");
       const entry = { id: tx.id, from: tx.fromCurrency, to: tx.toCurrency, amount: tx.amount, date: new Date().toISOString() };
       stored.unshift(entry);
       localStorage.setItem("mrc_recent_txs", JSON.stringify(stored.slice(0, 10)));
+    } catch {}
+    // DB — allows wallet-based lookup
+    try {
+      await supabase.from("swap_transactions").insert({
+        transaction_id: tx.id,
+        recipient_address: recipientAddr.trim().toLowerCase(),
+        from_currency: tx.fromCurrency,
+        to_currency: tx.toCurrency,
+        amount: tx.amount,
+      });
     } catch {}
   };
 
@@ -233,19 +245,63 @@ const ExchangeWidget = () => {
   };
 
   const handleTrackTransaction = async () => {
-    const id = trackId.trim();
-    if (!id) return;
+    const input = trackInput.trim();
+    if (!input) return;
+    setTrackLoading(true);
+    setWalletResults([]);
+
+    // If it looks like a transaction ID (short alphanumeric), try direct lookup first
+    const looksLikeTxId = input.length < 30 && /^[a-zA-Z0-9]+$/.test(input);
+
+    if (looksLikeTxId) {
+      try {
+        const status = await getTransactionStatus(input);
+        if (status?.id) {
+          setTransaction({ id: status.id, payinAddress: status.payinAddress, payoutAddress: status.payoutAddress, fromCurrency: status.fromCurrency, toCurrency: status.toCurrency, amount: status.amountSend || 0 } as TransactionResult);
+          setTxStatus(status);
+          setStep("status");
+          setShowTracker(false);
+          setTrackInput("");
+          setTrackLoading(false);
+          return;
+        }
+      } catch {}
+    }
+
+    // Otherwise treat as wallet address — search DB
+    try {
+      const { data, error } = await supabase
+        .from("swap_transactions")
+        .select("transaction_id, from_currency, to_currency, amount, created_at")
+        .eq("recipient_address", input.toLowerCase())
+        .order("created_at", { ascending: false })
+        .limit(10);
+      if (error) throw error;
+      if (data && data.length > 0) {
+        setWalletResults(data);
+      } else {
+        toast({ title: "No transfers found", description: "No transfers found for this wallet address. Try pasting your Transaction ID instead.", variant: "destructive" });
+      }
+    } catch {
+      toast({ title: "Lookup failed", description: "Could not search for transfers. Please try again.", variant: "destructive" });
+    } finally {
+      setTrackLoading(false);
+    }
+  };
+
+  const handleSelectWalletTx = async (txId: string) => {
     setTrackLoading(true);
     try {
-      const status = await getTransactionStatus(id);
+      const status = await getTransactionStatus(txId);
       if (!status?.id) throw new Error("Not found");
       setTransaction({ id: status.id, payinAddress: status.payinAddress, payoutAddress: status.payoutAddress, fromCurrency: status.fromCurrency, toCurrency: status.toCurrency, amount: status.amountSend || 0 } as TransactionResult);
       setTxStatus(status);
       setStep("status");
       setShowTracker(false);
-      setTrackId("");
+      setTrackInput("");
+      setWalletResults([]);
     } catch {
-      toast({ title: "Not found", description: "Could not find a transaction with that ID. Please check and try again.", variant: "destructive" });
+      toast({ title: "Error", description: "Could not fetch transaction status.", variant: "destructive" });
     } finally {
       setTrackLoading(false);
     }
