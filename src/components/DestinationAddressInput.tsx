@@ -4,7 +4,7 @@ import { CheckCircle2, AlertCircle, Clipboard, Loader2, ShieldAlert } from "luci
 
 // ── Network types ───────────────────────────────────────────────────
 
-export type AddressNetworkType = "evm" | "btc" | "sol" | "unknown";
+export type AddressNetworkType = "evm" | "btc" | "sol" | "tron" | "unknown";
 
 interface DetectedNetwork {
   name: string;
@@ -37,8 +37,13 @@ function detectNetwork(address: string): DetectedNetwork | null {
     return { name: "Bitcoin (Bech32)", shortName: "BTC", icon: "₿", type: "btc" };
   }
 
+  // TRON — starts with T, exactly 34 chars, Base58
+  if (/^T[a-km-zA-HJ-NP-Z1-9]{33}$/.test(t)) {
+    return { name: "TRON (TRC20)", shortName: "TRX", icon: "⟁", type: "tron" };
+  }
+
   // Solana — Base58, 32-44 chars, no 0x or bc1 prefix
-  if (t.length >= 32 && t.length <= 44 && !t.startsWith("0x") && !t.startsWith("bc1") && BASE58_REGEX.test(t)) {
+  if (t.length >= 32 && t.length <= 44 && !t.startsWith("0x") && !t.startsWith("bc1") && !t.startsWith("T") && BASE58_REGEX.test(t)) {
     return { name: "Solana", shortName: "SOL", icon: "◎", type: "sol" };
   }
 
@@ -51,7 +56,8 @@ function detectPartialNetwork(address: string): DetectedNetwork | null {
   if (t.startsWith("0x") && t.length < 42) return { name: "Ethereum / EVM", shortName: "ETH", icon: "⟠", type: "evm" };
   if (t.startsWith("bc1") && t.length < 26) return { name: "Bitcoin (Bech32)", shortName: "BTC", icon: "₿", type: "btc" };
   if ((t.startsWith("1") || t.startsWith("3")) && t.length < 26 && BASE58_REGEX.test(t)) return { name: "Bitcoin", shortName: "BTC", icon: "₿", type: "btc" };
-  if (t.length < 32 && BASE58_REGEX.test(t) && !t.startsWith("0x") && !t.startsWith("bc1")) return { name: "Solana", shortName: "SOL", icon: "◎", type: "sol" };
+  if (t.startsWith("T") && t.length < 34 && BASE58_REGEX.test(t)) return { name: "TRON (TRC20)", shortName: "TRX", icon: "⟁", type: "tron" };
+  if (t.length < 32 && BASE58_REGEX.test(t) && !t.startsWith("0x") && !t.startsWith("bc1") && !t.startsWith("T")) return { name: "Solana", shortName: "SOL", icon: "◎", type: "sol" };
   return null;
 }
 
@@ -89,11 +95,15 @@ function getValidationResult(address: string, expectedType: AddressNetworkType |
 const EVM_TICKERS = new Set(["eth", "bnb", "matic", "avax", "usdt", "usdc", "dai", "wbtc", "link", "uni", "aave", "hype", "bera", "op", "arb", "ftm", "celo"]);
 const EVM_NETWORKS = new Set(["eth", "bsc", "matic", "avax", "arb", "op", "base", "celo", "ftm", "one", "glmr", "movr"]);
 
+const TRON_TICKERS = new Set(["trx", "usdttrc20"]);
+const TRON_NETWORKS = new Set(["trx"]);
+
 export function tickerToAddressType(ticker?: string, network?: string): AddressNetworkType {
   const t = ticker?.toLowerCase() || "";
   const n = network?.toLowerCase() || "";
   if (t === "btc") return "btc";
   if (t === "sol" || n === "sol") return "sol";
+  if (TRON_TICKERS.has(t) || TRON_NETWORKS.has(n)) return "tron";
   if (EVM_TICKERS.has(t) || EVM_NETWORKS.has(n)) return "evm";
   return "unknown";
 }
@@ -103,6 +113,7 @@ export function addressTypeLabel(type: AddressNetworkType): string {
     case "evm": return "Ethereum / EVM";
     case "btc": return "Bitcoin";
     case "sol": return "Solana";
+    case "tron": return "TRON (TRC20)";
     default: return "this network";
   }
 }
