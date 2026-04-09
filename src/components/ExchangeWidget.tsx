@@ -268,12 +268,13 @@ const ExchangeWidget = () => {
     const looksLikeWallet = input.length >= 26;
 
     if (looksLikeWallet) {
-      // Wallet address — search DB first (fast)
+      // Wallet address — search DB by recipient OR payin address
       try {
+        const normalised = input.toLowerCase();
         const { data, error } = await supabase
           .from("swap_transactions")
           .select("transaction_id, from_currency, to_currency, amount, created_at")
-          .eq("recipient_address", input.toLowerCase())
+          .or(`recipient_address.eq.${normalised},payin_address.eq.${normalised}`)
           .order("created_at", { ascending: false })
           .limit(10);
         if (error) throw error;
