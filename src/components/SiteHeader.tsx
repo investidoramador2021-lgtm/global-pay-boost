@@ -10,7 +10,6 @@ const SiteHeader = () => {
   const [mobileOpen, setMobileOpen] = useState(false);
   const { theme, toggleTheme } = useTheme();
   const { t } = useTranslation();
-  const { t } = useTranslation();
 
   const navLinks = [
     { label: t("nav.howItWorks"), href: "/#how-it-works" },
