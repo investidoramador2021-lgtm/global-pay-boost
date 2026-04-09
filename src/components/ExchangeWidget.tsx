@@ -1682,9 +1682,23 @@ const ExchangeWidget = () => {
             )}
 
             {txStatus?.status === "finished" && (
-              <Button className="mt-6 w-full bg-trust text-trust-foreground hover:bg-trust/90" size="lg" onClick={handleNewExchange}>
-                Start New Exchange
-              </Button>
+              <div className="mt-6 space-y-3">
+                <div className="flex flex-col items-center gap-2 rounded-xl border border-primary/20 bg-primary/[0.06] p-4 text-center">
+                  <span className="text-sm font-medium text-foreground">How was your experience?</span>
+                  <p className="text-xs text-muted-foreground">Your feedback helps us improve and helps others find us</p>
+                  <a
+                    href="https://www.trustpilot.com/evaluate/mrcglobalpay.com"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="mt-1 inline-flex items-center gap-2 rounded-lg bg-[#00b67a] px-5 py-2.5 text-sm font-bold text-white transition-opacity hover:opacity-90"
+                  >
+                    Leave us a review ⭐
+                  </a>
+                </div>
+                <Button className="w-full bg-trust text-trust-foreground hover:bg-trust/90" size="lg" onClick={handleNewExchange}>
+                  Start New Exchange
+                </Button>
+              </div>
             )}
             {txStatus?.status === "failed" && (
               <Button className="mt-6 w-full" size="lg" variant="destructive" onClick={handleNewExchange}>
