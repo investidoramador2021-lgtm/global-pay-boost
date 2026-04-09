@@ -807,7 +807,7 @@ const ExchangeWidget = () => {
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.5, delay: 0.15 }}
       id="exchange-widget"
-      className="relative rounded-2xl border border-border bg-card p-6 shadow-elevated sm:p-8"
+      className="relative scroll-mt-24 rounded-2xl border border-border bg-card p-6 shadow-elevated sm:p-8"
     >
       <AnimatePresence mode="wait">
         {/* ===== STEP 1: Exchange Form ===== */}
