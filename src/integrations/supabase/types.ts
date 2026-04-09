@@ -119,6 +119,36 @@ export type Database = {
         }
         Relationships: []
       }
+      swap_transactions: {
+        Row: {
+          amount: number
+          created_at: string
+          from_currency: string
+          id: string
+          recipient_address: string
+          to_currency: string
+          transaction_id: string
+        }
+        Insert: {
+          amount?: number
+          created_at?: string
+          from_currency: string
+          id?: string
+          recipient_address: string
+          to_currency: string
+          transaction_id: string
+        }
+        Update: {
+          amount?: number
+          created_at?: string
+          from_currency?: string
+          id?: string
+          recipient_address?: string
+          to_currency?: string
+          transaction_id?: string
+        }
+        Relationships: []
+      }
       transfer_email_subscriptions: {
         Row: {
           created_at: string
