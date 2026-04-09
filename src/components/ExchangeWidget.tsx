@@ -523,14 +523,12 @@ const ExchangeWidget = () => {
           >
             {c.image && <img src={c.image} alt={c.name} className="h-6 w-6 rounded-full" loading="lazy" />}
             <div>
-              <span className="font-display text-sm font-semibold uppercase text-foreground">{c.ticker}</span>
+              <span className="font-display text-sm font-semibold uppercase text-foreground">{displayTicker(c)}</span>
+              {networkLabel(c) && (
+                <span className="ms-1.5 rounded bg-muted px-1.5 py-0.5 font-body text-[10px] uppercase text-muted-foreground">{networkLabel(c)}</span>
+              )}
               <span className="ms-2 font-body text-xs text-muted-foreground">{c.name}</span>
             </div>
-            {c.network && c.network !== c.ticker && (
-              <span className="ms-auto rounded bg-accent px-1.5 py-0.5 font-body text-[10px] uppercase text-muted-foreground">
-                {c.network}
-              </span>
-            )}
           </button>
         ))}
         {visibleCount < items.length && (
