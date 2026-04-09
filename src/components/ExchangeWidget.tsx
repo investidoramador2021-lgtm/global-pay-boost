@@ -342,6 +342,7 @@ const ExchangeWidget = () => {
       setShowTracker(false);
       setTrackInput("");
       setWalletResults([]);
+      document.getElementById("exchange-widget")?.scrollIntoView({ behavior: "smooth", block: "start" });
     } catch {
       toast({ title: "Error", description: "Could not fetch transaction status.", variant: "destructive" });
     } finally {
