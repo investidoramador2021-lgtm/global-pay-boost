@@ -18,15 +18,16 @@ export default defineConfig(({ mode }) => ({
     mode === "development" && componentTagger(),
     VitePWA({
       registerType: "autoUpdate",
-      includeAssets: ["favicon.png", "favicon-32x32.png", "favicon-192x192.png"],
+      includeAssets: ["favicon.png", "favicon-32x32.png", "favicon-192x192.png", "icon-512x512.png"],
       manifest: {
+        id: "com.mrcglobalpay.app",
         name: "MRC Global Pay",
         short_name: "MRC Pay",
         description: "Swap 500+ cryptocurrencies instantly with zero confirmation delays. No registration required.",
         theme_color: "#00FFA3",
-        background_color: "#000000",
+        background_color: "#0F1117",
         display: "standalone",
-        orientation: "portrait",
+        orientation: "any",
         scope: "/",
         start_url: "/?utm_source=pwa&utm_medium=install",
         icons: [
@@ -34,6 +35,7 @@ export default defineConfig(({ mode }) => ({
             src: "/favicon-192x192.png",
             sizes: "192x192",
             type: "image/png",
+            purpose: "any",
           },
           {
             src: "/favicon-192x192.png",
@@ -42,9 +44,32 @@ export default defineConfig(({ mode }) => ({
             purpose: "maskable",
           },
           {
-            src: "/favicon-32x32.png",
-            sizes: "32x32",
+            src: "/icon-512x512.png",
+            sizes: "512x512",
             type: "image/png",
+            purpose: "any",
+          },
+          {
+            src: "/icon-512x512.png",
+            sizes: "512x512",
+            type: "image/png",
+            purpose: "maskable",
+          },
+        ],
+        screenshots: [
+          {
+            src: "/screenshot-narrow.png",
+            sizes: "1080x1920",
+            type: "image/png",
+            form_factor: "narrow" as any,
+            label: "MRC GlobalPay — Instant Crypto Swap",
+          },
+          {
+            src: "/screenshot-wide.png",
+            sizes: "1920x1080",
+            type: "image/png",
+            form_factor: "wide" as any,
+            label: "MRC GlobalPay — Desktop Dashboard",
           },
         ],
       },
