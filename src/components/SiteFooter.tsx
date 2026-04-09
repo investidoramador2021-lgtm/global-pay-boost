@@ -236,21 +236,29 @@ const SiteFooter = () => {
           </div>
         </div>
 
-        {/* Technical Partners */}
+        {/* Get the App + Technical Partners */}
         <div className="mt-8 border-t border-border pt-6 sm:mt-12 sm:pt-8">
-          <div className="mb-6">
-            <h3 className="font-display text-xs font-semibold uppercase tracking-wider text-foreground/60 mb-3 text-center sm:text-left">
-              Technical Partners
-            </h3>
-            <div className="flex flex-wrap items-center justify-center gap-6 sm:justify-start">
-              {["ChangeNOW", "Fireblocks"].map((partner) => (
-                <span
-                  key={partner}
-                  className="rounded border border-border bg-muted/50 px-3 py-1.5 font-body text-xs font-medium text-muted-foreground grayscale"
-                >
-                  {partner}
-                </span>
-              ))}
+          <div className="mb-6 flex flex-col gap-6 sm:flex-row sm:items-start sm:justify-between">
+            <div>
+              <h3 className="font-display text-xs font-semibold uppercase tracking-wider text-foreground/60 mb-3 text-center sm:text-left">
+                Get the App
+              </h3>
+              <GetTheAppBadges variant="inline" />
+            </div>
+            <div>
+              <h3 className="font-display text-xs font-semibold uppercase tracking-wider text-foreground/60 mb-3 text-center sm:text-left">
+                Technical Partners
+              </h3>
+              <div className="flex flex-wrap items-center justify-center gap-6 sm:justify-start">
+                {["ChangeNOW", "Fireblocks"].map((partner) => (
+                  <span
+                    key={partner}
+                    className="rounded border border-border bg-muted/50 px-3 py-1.5 font-body text-xs font-medium text-muted-foreground grayscale"
+                  >
+                    {partner}
+                  </span>
+                ))}
+              </div>
             </div>
           </div>
 
