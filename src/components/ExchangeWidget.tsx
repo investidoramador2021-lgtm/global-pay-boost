@@ -173,7 +173,6 @@ const ExchangeWidget = () => {
       toast({ title: "MetaMask not found", description: "Please install MetaMask browser extension.", variant: "destructive" });
       return;
     }
-    // Prefer MetaMask's own provider to avoid Trust Wallet / other wallet hijacking
     const eth = (window as any).ethereum;
     let provider = eth;
     if (eth?.providers?.length) {
@@ -193,6 +192,38 @@ const ExchangeWidget = () => {
     } catch (err: any) {
       if (err?.code === 4001) return;
       toast({ title: "Connection failed", description: err?.message || "Could not connect MetaMask", variant: "destructive" });
+    }
+  };
+
+  const connectTrustWallet = async () => {
+    if (typeof window === "undefined") {
+      toast({ title: "Trust Wallet not found", description: "Please install Trust Wallet browser extension.", variant: "destructive" });
+      return;
+    }
+    const eth = (window as any).ethereum;
+    let provider: any = null;
+    // Trust Wallet injects trustwallet on the window or sets isTrust on the provider
+    if ((window as any).trustwallet) {
+      provider = (window as any).trustwallet;
+    } else if (eth?.providers?.length) {
+      provider = eth.providers.find((p: any) => p.isTrust || p.isTrustWallet);
+    } else if (eth?.isTrust || eth?.isTrustWallet) {
+      provider = eth;
+    }
+    if (!provider) {
+      toast({ title: "Trust Wallet not found", description: "Please install Trust Wallet browser extension.", variant: "destructive" });
+      return;
+    }
+    try {
+      const accounts = await provider.request({ method: "eth_requestAccounts" });
+      if (accounts?.[0]) {
+        setRecipientAddress(accounts[0]);
+        setConnectedWallet({ address: accounts[0], type: "evm" });
+        toast({ title: "Wallet connected", description: `Connected: ${accounts[0].slice(0, 6)}...${accounts[0].slice(-4)}` });
+      }
+    } catch (err: any) {
+      if (err?.code === 4001) return;
+      toast({ title: "Connection failed", description: err?.message || "Could not connect Trust Wallet", variant: "destructive" });
     }
   };
 
@@ -1126,21 +1157,35 @@ const ExchangeWidget = () => {
                   </label>
                   <div className="flex gap-2">
                     {chainType === "evm" && (
-                      <button
-                        onClick={connectMetaMask}
-                        className={`flex flex-1 items-center justify-center gap-2 rounded-xl border p-3 transition-all active:scale-[0.98] ${
-                          connectedWallet?.type === "evm"
-                            ? "border-primary bg-primary/10 text-primary"
-                            : "border-border bg-card text-foreground hover:border-primary/50 hover:shadow-card"
-                        }`}
-                      >
-                        <Wallet className="h-5 w-5" />
-                        <span className="font-display text-sm font-semibold">
-                          {connectedWallet?.type === "evm"
-                            ? `${connectedWallet.address.slice(0, 6)}...${connectedWallet.address.slice(-4)}`
-                            : "MetaMask"}
-                        </span>
-                      </button>
+                      <>
+                        <button
+                          onClick={connectMetaMask}
+                          className={`flex flex-1 items-center justify-center gap-2 rounded-xl border p-3 transition-all active:scale-[0.98] ${
+                            connectedWallet?.type === "evm"
+                              ? "border-primary bg-primary/10 text-primary"
+                              : "border-border bg-card text-foreground hover:border-primary/50 hover:shadow-card"
+                          }`}
+                        >
+                          <svg className="h-5 w-5" viewBox="0 0 35 33" fill="none"><path d="M32.96 1l-13.14 9.72 2.45-5.73L32.96 1z" fill="#E2761B" stroke="#E2761B" strokeLinecap="round" strokeLinejoin="round"/><path d="M2.66 1l13.02 9.81L13.35 4.99 2.66 1z" fill="#E4761B" stroke="#E4761B" strokeLinecap="round" strokeLinejoin="round"/><path d="M28.23 23.53l-3.5 5.34 7.49 2.06 2.15-7.28-6.14-.12zM.99 23.65l2.13 7.28 7.47-2.06-3.48-5.34-6.12.12z" fill="#E4761B" stroke="#E4761B" strokeLinecap="round" strokeLinejoin="round"/></svg>
+                          <span className="font-display text-sm font-semibold">MetaMask</span>
+                        </button>
+                        <button
+                          onClick={connectTrustWallet}
+                          className={`flex flex-1 items-center justify-center gap-2 rounded-xl border p-3 transition-all active:scale-[0.98] ${
+                            connectedWallet?.type === "evm"
+                              ? "border-primary bg-primary/10 text-primary"
+                              : "border-border bg-card text-foreground hover:border-primary/50 hover:shadow-card"
+                          }`}
+                        >
+                          <Shield className="h-5 w-5 text-[hsl(220,90%,56%)]" />
+                          <span className="font-display text-sm font-semibold">Trust</span>
+                        </button>
+                      </>
+                    )}
+                    {connectedWallet?.type === "evm" && (
+                      <div className="col-span-2 text-center font-body text-xs text-primary">
+                        {connectedWallet.address.slice(0, 6)}...{connectedWallet.address.slice(-4)}
+                      </div>
                     )}
                     {chainType === "solana" && (
                       <button
