@@ -80,7 +80,7 @@ export const usePWAInstall = () => {
     setIosSheetOpen(true);
   }, []);
 
-  const canInstall = !installed && (showAndroidInstall || showIOSInstall);
+  const canInstall = !installed;
 
   return {
     canInstall,
