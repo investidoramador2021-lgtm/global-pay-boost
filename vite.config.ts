@@ -19,6 +19,8 @@ export default defineConfig(({ mode }) => ({
     VitePWA({
       registerType: "autoUpdate",
       devOptions: { enabled: false },
+      strategies: "generateSW",
+      injectRegister: "script",
       manifestFilename: "manifest.json",
       includeAssets: ["favicon.png", "favicon-32x32.png", "favicon-192x192.png", "icon-512x512.png"],
       manifest: {
@@ -95,6 +97,10 @@ export default defineConfig(({ mode }) => ({
       workbox: {
         navigateFallback: "/index.html",
         navigateFallbackDenylist: [/^\/~oauth/, /^\/\.well-known/],
+        cleanupOutdatedCaches: true,
+        clientsClaim: true,
+        skipWaiting: true,
+        globPatterns: ["**/*.{js,css,html,ico,png,svg,webp,json,woff2}"],
         runtimeCaching: [
           {
             urlPattern: /^https:\/\/api\.changenow\.io\/.*/i,
