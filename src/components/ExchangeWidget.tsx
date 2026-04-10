@@ -1039,7 +1039,7 @@ const ExchangeWidget = () => {
             <div className="mb-5 flex items-center justify-between">
               <div className="flex rounded-xl border border-border bg-accent p-1 gap-1">
                 <button
-                  onClick={() => setWidgetMode("exchange")}
+                  onClick={() => { setWidgetMode("exchange"); setGStep("form"); }}
                   className={`flex items-center gap-1.5 rounded-lg px-4 py-2 font-display text-sm font-semibold transition-all ${
                     widgetMode === "exchange"
                       ? "bg-primary text-primary-foreground shadow-card"
