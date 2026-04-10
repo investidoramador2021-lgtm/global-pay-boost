@@ -1,0 +1,2 @@
+REVOKE ALL ON FUNCTION public.upsert_customer_capture(TEXT, TEXT, TEXT, TEXT, TEXT, JSONB) FROM PUBLIC;
+GRANT EXECUTE ON FUNCTION public.upsert_customer_capture(TEXT, TEXT, TEXT, TEXT, TEXT, JSONB) TO service_role;

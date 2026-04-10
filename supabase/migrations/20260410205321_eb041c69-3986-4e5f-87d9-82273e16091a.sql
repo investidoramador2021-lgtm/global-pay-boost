@@ -1,0 +1,1 @@
+COMMENT ON FUNCTION public.update_customers_updated_at() IS 'Maintains updated_at on customer records';

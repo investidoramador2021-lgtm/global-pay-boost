@@ -1,0 +1,1 @@
+ALTER TABLE public.customers FORCE ROW LEVEL SECURITY;
