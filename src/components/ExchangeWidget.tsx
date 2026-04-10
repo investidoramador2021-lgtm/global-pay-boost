@@ -1546,11 +1546,11 @@ const ExchangeWidget = () => {
                     {/* Rate & Fee info bar */}
                     <div className="my-3 flex flex-wrap items-center justify-center gap-2">
                       <span className="flex items-center gap-1 rounded-md border border-trust/20 bg-trust/5 px-2 py-1 font-body text-[10px] font-medium text-trust sm:text-[11px]">
-                        <CheckCircle2 className="h-3 w-3" /> No extra fees
+                        <CheckCircle2 className="h-3 w-3" /> All-in pricing
                       </span>
                       {getGuardarianRateText() && (
                         <span className="font-body text-[10px] text-muted-foreground sm:text-[11px]">
-                          Estimated Rate: {getGuardarianRateText()}
+                          {getGuardarianRateText()}
                         </span>
                       )}
                     </div>
