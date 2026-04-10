@@ -20,7 +20,6 @@ import {
   getGuardarianCurrencies,
   getGuardarianEstimate,
   getGuardarianMinMax,
-  getGuardarianPartnerToken,
   createGuardarianTransaction,
   createGuardarianSellTransaction,
   type GuardarianCurrency,
@@ -688,6 +687,7 @@ const ExchangeWidget = () => {
   }, []);
 
   // Extract payment methods from currency data when fiat currency changes
+  // Also auto-select PIX for BRL, SEPA for EUR
   useEffect(() => {
     if (widgetMode !== "buysell") return;
     const fiatCurrency = gTradeDirection === "buy" ? gFromCurrency : gToCurrency;
@@ -716,7 +716,20 @@ const ExchangeWidget = () => {
 
     const eligibleMethods = allMethods.filter((pm) => gTradeDirection === "sell" ? pm.withdrawal_enabled : pm.deposit_enabled);
     setGPaymentMethods(eligibleMethods);
-    setGSelectedPaymentMethod((current) => current && eligibleMethods.some((pm) => pm.type === current) ? current : (eligibleMethods[0]?.type || ""));
+
+    // Localization: auto-select payment method based on fiat currency
+    const ticker = fiatCurrency.ticker?.toUpperCase();
+    const FIAT_METHOD_MAP: Record<string, string> = {
+      BRL: "pix",
+      EUR: "sepa",
+      GBP: "faster_payments",
+    };
+    const preferred = FIAT_METHOD_MAP[ticker];
+    if (preferred && eligibleMethods.some((pm) => pm.type.toLowerCase() === preferred)) {
+      setGSelectedPaymentMethod(eligibleMethods.find((pm) => pm.type.toLowerCase() === preferred)!.type);
+    } else {
+      setGSelectedPaymentMethod((current) => current && eligibleMethods.some((pm) => pm.type === current) ? current : (eligibleMethods[0]?.type || ""));
+    }
   }, [widgetMode, gFromCurrency, gToCurrency, gTradeDirection]);
 
   useEffect(() => {
@@ -1072,6 +1085,7 @@ const ExchangeWidget = () => {
 
       const fromNet = getNetworkParam(gFromCurrency);
       const toNet = getNetworkParam(gToCurrency);
+      const emailParam = gPayoutEmail.trim() || undefined;
 
       if (gTradeDirection === "sell") {
         result = await createGuardarianSellTransaction({
@@ -1081,6 +1095,7 @@ const ExchangeWidget = () => {
           ...(fromNet ? { from_network: fromNet } : {}),
           ...(toNet ? { to_network: toNet } : {}),
           deposit_address: gPayoutAddress.trim() || undefined,
+          email: emailParam,
           ...(gSelectedPaymentMethod ? { payment_method: gSelectedPaymentMethod } : {}),
         });
       } else {
@@ -1091,55 +1106,24 @@ const ExchangeWidget = () => {
           ...(fromNet ? { from_network: fromNet } : {}),
           ...(toNet ? { to_network: toNet } : {}),
           payout_address: gPayoutAddress.trim(),
+          email: emailParam,
           ...(gSelectedPaymentMethod ? { payment_method: gSelectedPaymentMethod } : {}),
         });
       }
 
-      // If the API returns a redirect_url, open it in a new tab (clean redirect)
+      // Use the redirect_url to embed checkout in iframe modal
       const redirectUrl = result?.redirect_url;
       if (redirectUrl) {
-        window.open(redirectUrl, "_blank", "noopener,noreferrer");
-        toast({ title: "Checkout opened", description: "Complete your purchase in the new tab. You can close this overlay." });
+        setGCheckoutUrl(redirectUrl);
+        setGStep("checkout");
+        toast({ title: "Checkout ready", description: "Complete your purchase below." });
         return;
       }
 
-      // Fallback: use calculator widget URL in a new tab
-      const token = await getGuardarianPartnerToken();
-      if (!token) throw new Error("Provider is not configured.");
-
-      const params = new URLSearchParams({
-        partner_api_token: token,
-        default_fiat_currency: gTradeDirection === "buy" ? gFromCurrency!.ticker : gToCurrency!.ticker,
-        default_crypto_currency: gTradeDirection === "buy" ? gToCurrency!.ticker : gFromCurrency!.ticker,
-        default_fiat_amount: gSendAmount,
-        payout_address: gPayoutAddress.trim(),
-        theme: "blue",
-        type: gTradeDirection === "sell" ? "sell" : "buy",
-      });
-
-      const widgetUrl = `https://guardarian.com/calculator/v1?${params.toString()}`;
-      setGCheckoutUrl(widgetUrl);
-      window.open(widgetUrl, "_blank", "noopener,noreferrer");
-      toast({ title: "Checkout opened", description: "Complete your purchase in the new tab." });
+      toast({ title: "Service Temporarily Unavailable", description: "Could not initialize checkout. Please try again.", variant: "destructive" });
     } catch (err: any) {
-      // Final fallback: open calculator widget directly
-      try {
-        const token = await getGuardarianPartnerToken();
-        const params = new URLSearchParams({
-          partner_api_token: token || "",
-          default_fiat_currency: gTradeDirection === "buy" ? gFromCurrency!.ticker : gToCurrency!.ticker,
-          default_crypto_currency: gTradeDirection === "buy" ? gToCurrency!.ticker : gFromCurrency!.ticker,
-          default_fiat_amount: gSendAmount,
-          payout_address: gPayoutAddress.trim(),
-          theme: "blue",
-          type: gTradeDirection === "sell" ? "sell" : "buy",
-        });
-        const widgetUrl = `https://guardarian.com/calculator/v1?${params.toString()}`;
-        window.open(widgetUrl, "_blank", "noopener,noreferrer");
-        toast({ title: "Checkout opened", description: "Complete your purchase in the new tab." });
-      } catch {
-        toast({ title: "Service Temporarily Unavailable", description: "Please try again in a moment.", variant: "destructive" });
-      }
+      const msg = err?.message || "Transaction creation failed";
+      toast({ title: "Service Temporarily Unavailable", description: msg, variant: "destructive" });
     } finally {
       setGCreatingTx(false);
     }
@@ -1468,7 +1452,7 @@ const ExchangeWidget = () => {
                             {gTradeDirection === "buy" ? (
                               <div className="overflow-y-auto p-2" style={{ maxHeight: 400 }}>
                                 {guardarianFiat
-                                  .filter((c) => isSellEligibleFiat(c) && (!gSearchQuery || c.ticker.toLowerCase().includes(gSearchQuery.toLowerCase()) || c.name.toLowerCase().includes(gSearchQuery.toLowerCase())))
+                                  .filter((c) => (!gSearchQuery || c.ticker.toLowerCase().includes(gSearchQuery.toLowerCase()) || c.name.toLowerCase().includes(gSearchQuery.toLowerCase())))
                                   .map((c) => (
                                     <button
                                       key={c.ticker}
@@ -1609,16 +1593,46 @@ const ExchangeWidget = () => {
                               ? `Your bank / ${gToCurrency?.ticker || "fiat"} payout details`
                               : `Your ${gToCurrency?.ticker || "crypto"} wallet`}
                           </label>
+                          {gTradeDirection === "buy" ? (
+                            <DestinationAddressInput
+                              value={gPayoutAddress}
+                              onChange={setGPayoutAddress}
+                              currencyTicker={gToCurrency?.ticker}
+                              expectedNetworkType={gToCurrency ? tickerToAddressType(gToCurrency.ticker?.toLowerCase(), gToCurrency.networks?.[0]?.network?.toLowerCase()) : undefined}
+                            />
+                          ) : (
+                            <Input
+                              type="text"
+                              placeholder="Payout details will be collected at checkout"
+                              value={gPayoutAddress}
+                              onChange={(e) => setGPayoutAddress(e.target.value)}
+                              className="min-h-[48px] rounded-xl border-border bg-accent font-mono text-xs placeholder:text-muted-foreground/50"
+                            />
+                          )}
+                        </div>
+
+                        {/* Contact Email — silent auth */}
+                        <div className="mt-3">
+                          <label className="mb-1.5 flex items-center gap-1.5 font-body text-xs font-medium uppercase tracking-wider text-muted-foreground">
+                            <Mail className="h-3 w-3" /> Contact Email
+                          </label>
                           <Input
-                            type="text"
-                            placeholder={gTradeDirection === "sell"
-                              ? `Payout details will be collected at checkout`
-                              : `Paste your ${gToCurrency?.ticker || "crypto"} address`}
-                            value={gPayoutAddress}
-                            onChange={(e) => setGPayoutAddress(e.target.value)}
-                            className="min-h-[48px] rounded-xl border-border bg-accent font-mono text-xs placeholder:text-muted-foreground/50"
+                            type="email"
+                            placeholder="your@email.com — for order confirmation"
+                            value={gPayoutEmail}
+                            onChange={(e) => setGPayoutEmail(e.target.value)}
+                            className="min-h-[48px] rounded-xl border-border bg-accent font-body text-sm placeholder:text-muted-foreground/50"
+                            maxLength={255}
                           />
                         </div>
+
+                        {/* PIX badge when BRL selected */}
+                        {((gTradeDirection === "buy" && gFromCurrency?.ticker === "BRL") || (gTradeDirection === "sell" && gToCurrency?.ticker === "BRL")) && gSelectedPaymentMethod?.toLowerCase() === "pix" && (
+                          <div className="mt-2 flex items-center gap-2 rounded-lg border border-primary/20 bg-primary/5 px-3 py-2">
+                            <span className="font-display text-sm font-bold text-primary">PIX</span>
+                            <span className="font-body text-[11px] text-muted-foreground">Instant Brazilian payment — no fees</span>
+                          </div>
+                        )}
 
                         {/* Fee breakdown — slim */}
                         {gFullEstimate && (
