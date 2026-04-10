@@ -872,7 +872,44 @@ const ExchangeWidget = () => {
     );
   };
 
-  const CurrencyPicker = ({
+  const GuardarianCryptoList = ({ items, onSelect }: { items: GuardarianCurrency[]; onSelect: (c: GuardarianCurrency) => void }) => {
+    const [visibleCount, setVisibleCount] = useState(BATCH_SIZE);
+    const listRef = useRef<HTMLDivElement>(null);
+
+    const handleScroll = useCallback(() => {
+      const el = listRef.current;
+      if (!el) return;
+      if (el.scrollTop + el.clientHeight >= el.scrollHeight - 100) {
+        setVisibleCount((prev) => Math.min(prev + BATCH_SIZE, items.length));
+      }
+    }, [items.length]);
+
+    useEffect(() => { setVisibleCount(BATCH_SIZE); }, [items.length]);
+
+    return (
+      <div ref={listRef} onScroll={handleScroll} className="overflow-y-auto p-2" style={{ maxHeight: 400 }}>
+        {items.slice(0, visibleCount).map((c) => (
+          <button
+            key={`${c.ticker}-${c.networks?.[0]?.network || ''}`}
+            onClick={() => onSelect(c)}
+            className="flex w-full items-center gap-3 rounded-lg px-3 py-2.5 text-left transition-colors hover:bg-accent"
+          >
+            <div>
+              <span className="font-display text-sm font-semibold uppercase text-foreground">{c.ticker}</span>
+              {c.networks?.[0]?.network && c.networks[0].network !== c.ticker && (
+                <span className="ms-1.5 rounded bg-muted px-1.5 py-0.5 font-body text-[10px] uppercase text-muted-foreground">{c.networks[0].network}</span>
+              )}
+              <span className="ms-2 font-body text-xs text-muted-foreground">{c.name}</span>
+            </div>
+          </button>
+        ))}
+        {visibleCount < items.length && (
+          <div className="py-2 text-center font-body text-xs text-muted-foreground">Scroll for more...</div>
+        )}
+      </div>
+    );
+  };
+
     show,
     onSelect,
     onClose,
