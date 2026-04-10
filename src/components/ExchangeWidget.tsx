@@ -695,15 +695,22 @@ const ExchangeWidget = () => {
     return allMethods;
   }, []);
 
-  const pickPreferredGuardarianMethod = useCallback((ticker: string | undefined, methods: GuardarianPaymentMethod[]) => {
+  const pickPreferredGuardarianMethod = useCallback((ticker: string | undefined, methods: GuardarianPaymentMethod[], direction: FiatFlow) => {
     const smartDefault = getSmartDefaultMethod(ticker || "");
     if (smartDefault) {
-      const match = methods.find((pm) => pm.type?.toUpperCase() === smartDefault || pm.payment_method?.toUpperCase() === smartDefault);
+      const match = methods.find((pm) => {
+        const rawCandidates = [pm.type, pm.payment_method, pm.payment_category]
+          .filter(Boolean)
+          .map((value) => String(value).toUpperCase());
+        return rawCandidates.some((value) => value === smartDefault || value.includes(smartDefault));
+      });
       if (match) return match.type;
-      // For key markets, inject the method name even if API didn't return it
-      if (ticker?.toUpperCase() === "BRL") return "PIX";
-      if (ticker?.toUpperCase() === "EUR") return "SEPA";
-      if (ticker?.toUpperCase() === "GBP") return "FASTER_PAYMENTS";
+      // Never inject alias-only methods for sell quotes; Guardarian expects the real raw type.
+      if (direction === "buy") {
+        if (ticker?.toUpperCase() === "BRL") return methods.find((pm) => /PIX/i.test(pm.type) || /PIX/i.test(pm.payment_method || "") || /PIX/i.test(pm.payment_category || ""))?.type || "";
+        if (ticker?.toUpperCase() === "EUR") return methods.find((pm) => /SEPA|OPEN_BANKING/i.test(pm.type) || /SEPA|OPEN_BANKING/i.test(pm.payment_method || "") || /SEPA|OPEN_BANKING/i.test(pm.payment_category || ""))?.type || "";
+        if (ticker?.toUpperCase() === "GBP") return methods.find((pm) => /FPS|FASTER/i.test(pm.type) || /FPS|FASTER/i.test(pm.payment_method || "") || /FPS|FASTER/i.test(pm.payment_category || ""))?.type || "";
+      }
     }
     return methods[0]?.type || "";
   }, []);
@@ -742,11 +749,12 @@ const ExchangeWidget = () => {
 
         if (cancelled) return;
 
-        const syntheticPreferredMethods = [
+        const shouldInjectBuyFallbacks = gTradeDirection === "buy";
+        const syntheticPreferredMethods = shouldInjectBuyFallbacks ? [
           ...(fiatCurrency.ticker === "BRL" ? [{ type: "PIX", payment_category: "BANK_TRANSFER", deposit_enabled: true, withdrawal_enabled: false }] : []),
           ...(fiatCurrency.ticker === "EUR" ? [{ type: "SEPA", payment_category: "BANK_TRANSFER", deposit_enabled: true, withdrawal_enabled: true }] : []),
           ...(fiatCurrency.ticker === "GBP" ? [{ type: "FASTER_PAYMENTS", payment_category: "BANK_TRANSFER", deposit_enabled: true, withdrawal_enabled: true }] : []),
-        ];
+        ] : [];
         const mergedPreferredMethods = [
           ...syntheticPreferredMethods.filter((pm) => !eligibleMethods.some((existing) => existing.type === pm.type)),
           ...eligibleMethods,
@@ -758,26 +766,20 @@ const ExchangeWidget = () => {
         setGPaymentMethods(finalMethods);
         setGSelectedPaymentMethod((current) => {
           if (current && finalMethods.some((pm) => pm.type === current)) return current;
-          return pickPreferredGuardarianMethod(fiatCurrency.ticker, finalMethods);
+          return pickPreferredGuardarianMethod(fiatCurrency.ticker, finalMethods, gTradeDirection);
         });
       } catch {
         if (cancelled) return;
         const finalMethods = fallbackMethods.length
           ? [
-              ...(fiatCurrency.ticker === "BRL" && !fallbackMethods.some((pm) => pm.type === "PIX") ? [{ type: "PIX", payment_category: "BANK_TRANSFER", deposit_enabled: true, withdrawal_enabled: false }] : []),
-              ...(fiatCurrency.ticker === "EUR" && !fallbackMethods.some((pm) => pm.type === "SEPA") ? [{ type: "SEPA", payment_category: "BANK_TRANSFER", deposit_enabled: true, withdrawal_enabled: true }] : []),
-              ...(fiatCurrency.ticker === "GBP" && !fallbackMethods.some((pm) => pm.type === "FASTER_PAYMENTS") ? [{ type: "FASTER_PAYMENTS", payment_category: "BANK_TRANSFER", deposit_enabled: true, withdrawal_enabled: true }] : []),
+              ...(gTradeDirection === "buy" && fiatCurrency.ticker === "BRL" && !fallbackMethods.some((pm) => pm.type === "PIX") ? [{ type: "PIX", payment_category: "BANK_TRANSFER", deposit_enabled: true, withdrawal_enabled: false }] : []),
+              ...(gTradeDirection === "buy" && fiatCurrency.ticker === "EUR" && !fallbackMethods.some((pm) => pm.type === "SEPA") ? [{ type: "SEPA", payment_category: "BANK_TRANSFER", deposit_enabled: true, withdrawal_enabled: true }] : []),
+              ...(gTradeDirection === "buy" && fiatCurrency.ticker === "GBP" && !fallbackMethods.some((pm) => pm.type === "FASTER_PAYMENTS") ? [{ type: "FASTER_PAYMENTS", payment_category: "BANK_TRANSFER", deposit_enabled: true, withdrawal_enabled: true }] : []),
               ...fallbackMethods,
             ]
-          : (fiatCurrency.ticker === "BRL"
-              ? [{ type: "PIX", payment_category: "BANK_TRANSFER", deposit_enabled: true, withdrawal_enabled: false }]
-              : fiatCurrency.ticker === "EUR"
-                ? [{ type: "SEPA", payment_category: "BANK_TRANSFER", deposit_enabled: true, withdrawal_enabled: true }]
-                : fiatCurrency.ticker === "GBP"
-                  ? [{ type: "FASTER_PAYMENTS", payment_category: "BANK_TRANSFER", deposit_enabled: true, withdrawal_enabled: true }]
-                  : []);
+          : [];
         setGPaymentMethods(finalMethods);
-        setGSelectedPaymentMethod(pickPreferredGuardarianMethod(fiatCurrency.ticker, finalMethods));
+        setGSelectedPaymentMethod(pickPreferredGuardarianMethod(fiatCurrency.ticker, finalMethods, gTradeDirection));
       }
     };
 
@@ -864,7 +866,7 @@ const ExchangeWidget = () => {
         setGEstimatedAmount("");
         setGFullEstimate(null);
         setGEstimateError(gTradeDirection === "sell"
-          ? "This sell route is unavailable for the selected payout currency. Try EUR or another supported fiat option."
+          ? "This sell route is unavailable for the selected payout currency or method. Try another fiat option shown in the list."
           : "Service temporarily unavailable. Please refresh and try again.");
         return;
       }
