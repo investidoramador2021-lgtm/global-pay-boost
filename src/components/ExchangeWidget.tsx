@@ -1219,12 +1219,12 @@ const ExchangeWidget = () => {
         ...(effectivePaymentMethod ? { payment_method: effectivePaymentMethod } : {}),
       });
 
-      // Use the redirect_url to embed checkout in iframe modal
+      // Open checkout in a new tab — iframe is blocked by Guardarian's X-Frame-Options
       const checkoutUrl = result?.checkout_url || result?.redirect_url;
       if (checkoutUrl) {
         setGCheckoutUrl(checkoutUrl);
         setGStep("checkout");
-        toast({ title: "Checkout ready", description: "Complete your purchase below." });
+        toast({ title: "Transaction created", description: "Click 'Proceed to Secure Payment' to complete your purchase." });
         return;
       }
 
@@ -2047,65 +2047,150 @@ const ExchangeWidget = () => {
 
                     {gStep === "checkout" && (
                       <div className="mt-4 space-y-4">
-                        <div className="flex flex-col gap-2 sm:flex-row sm:items-center sm:justify-between">
-                          <button
-                            onClick={() => setGStep("compare")}
-                            className="flex items-center gap-1.5 font-body text-xs text-muted-foreground transition-colors hover:text-foreground"
-                          >
-                            <ArrowLeft className="h-3.5 w-3.5" /> Back to offers
-                          </button>
+                        <button
+                          onClick={() => { setGCheckoutUrl(""); setGStep("form"); setGPaymentOpened(false); }}
+                          className="flex items-center gap-1.5 font-body text-xs text-muted-foreground transition-colors hover:text-foreground"
+                        >
+                          <ArrowLeft className="h-3.5 w-3.5" /> Start over
+                        </button>
 
-                          {gCheckoutUrl && (
-                            <button
-                              onClick={() => window.open(gCheckoutUrl, "_blank", "noopener,noreferrer")}
-                              className="inline-flex items-center gap-2 rounded-full border border-border bg-background px-3 py-2 font-body text-xs font-semibold text-foreground transition-colors hover:bg-accent"
-                            >
-                              Open in new tab <ExternalLink className="h-3.5 w-3.5" />
-                            </button>
-                          )}
-                        </div>
-
-                        <div className="overflow-hidden rounded-[28px] border border-border bg-card shadow-elevated">
-                          <div className="border-b border-border bg-accent/40 p-4 sm:flex sm:items-center sm:justify-between sm:gap-4">
-                            <div>
-                              <p className="font-body text-[11px] font-semibold uppercase tracking-[0.22em] text-muted-foreground">Secure checkout</p>
-                              <h3 className="mt-1 font-display text-lg font-bold text-foreground">Complete your purchase without leaving this page</h3>
+                        {!gPaymentOpened ? (
+                          /* ── Transaction Ready — Pre-redirect screen ── */
+                          <div className="overflow-hidden rounded-[28px] border border-border bg-card shadow-elevated">
+                            <div className="border-b border-border bg-accent/40 p-5 text-center">
+                              <div className="mx-auto mb-3 flex h-14 w-14 items-center justify-center rounded-full bg-primary/10">
+                                <Shield className="h-7 w-7 text-primary" />
+                              </div>
+                              <h3 className="font-display text-lg font-bold text-foreground">Transaction Ready</h3>
                               <p className="mt-1 font-body text-xs text-muted-foreground">
-                                Some bank or identity verification flows can still open provider-controlled windows when required.
+                                Your order has been created. Click below to complete payment on the secure Guardarian gateway.
                               </p>
                             </div>
 
-                            <div className="mt-3 flex items-center gap-3 sm:mt-0">
-                              <ProviderMark letter="G" />
-                              <div>
-                                <p className="font-display text-sm font-bold text-foreground">Guardarian</p>
-                                <p className="font-body text-[11px] text-muted-foreground">{gSendAmount} {gFromCurrency?.ticker} → {gEstimatedAmount || "—"} {gToCurrency?.ticker}</p>
+                            {/* Order summary */}
+                            <div className="space-y-3 p-5">
+                              <div className="rounded-xl border border-border bg-accent/40 p-4 space-y-2">
+                                <div className="flex justify-between font-body text-sm">
+                                  <span className="text-muted-foreground">You pay</span>
+                                  <span className="font-semibold text-foreground">{gSendAmount} {gFromCurrency?.ticker}</span>
+                                </div>
+                                <div className="flex justify-between font-body text-sm">
+                                  <span className="text-muted-foreground">You receive</span>
+                                  <span className="font-semibold text-primary">{gEstimatedAmount || "—"} {gToCurrency?.ticker}</span>
+                                </div>
+                                <div className="flex justify-between font-body text-sm">
+                                  <span className="text-muted-foreground">Wallet</span>
+                                  <span className="max-w-[180px] truncate font-mono text-xs text-foreground">{gPayoutAddress}</span>
+                                </div>
+                                {gPayoutEmail && (
+                                  <div className="flex justify-between font-body text-sm">
+                                    <span className="text-muted-foreground">Email</span>
+                                    <span className="text-foreground">{gPayoutEmail}</span>
+                                  </div>
+                                )}
+                              </div>
+
+                              {/* Provider badge */}
+                              <div className="flex items-center justify-center gap-2 py-2">
+                                <ProviderMark letter="G" />
+                                <div className="text-left">
+                                  <p className="font-display text-sm font-bold text-foreground">Guardarian</p>
+                                  <p className="font-body text-[10px] text-muted-foreground">Regulated payment gateway</p>
+                                </div>
+                              </div>
+
+                              {/* CTA: Open payment in new tab */}
+                              <Button
+                                className="w-full min-h-[52px] rounded-2xl text-base font-bold tracking-wide transition-all duration-300 hover:shadow-neon shadow-card"
+                                size="lg"
+                                style={{
+                                  background: "linear-gradient(135deg, hsl(var(--primary)) 0%, hsl(var(--trust)) 100%)",
+                                  color: "hsl(var(--primary-foreground))",
+                                }}
+                                onClick={() => {
+                                  if (gCheckoutUrl) {
+                                    window.open(gCheckoutUrl, "_blank", "noopener,noreferrer");
+                                    setGPaymentOpened(true);
+                                  }
+                                }}
+                              >
+                                <Lock className="mr-2 h-4 w-4" />
+                                Proceed to Secure Payment
+                                <ExternalLink className="ml-2 h-4 w-4" />
+                              </Button>
+
+                              {/* Fallback link */}
+                              <p className="text-center font-body text-[11px] text-muted-foreground">
+                                Window didn't open?{" "}
+                                <a
+                                  href={gCheckoutUrl}
+                                  target="_blank"
+                                  rel="noopener noreferrer"
+                                  className="font-semibold text-primary hover:underline"
+                                >
+                                  Click here to open manually
+                                </a>
+                              </p>
+
+                              {/* Trust signals */}
+                              <div className="flex flex-wrap items-center justify-center gap-x-4 gap-y-1 pt-2">
+                                <span className="flex items-center gap-1 font-body text-[10px] text-muted-foreground"><Shield className="h-3 w-3 text-primary" /> 256-bit encryption</span>
+                                <span className="flex items-center gap-1 font-body text-[10px] text-muted-foreground"><Lock className="h-3 w-3 text-primary" /> PCI DSS compliant</span>
+                                <span className="flex items-center gap-1 font-body text-[10px] text-muted-foreground"><CheckCircle2 className="h-3 w-3 text-primary" /> KYC verified</span>
                               </div>
                             </div>
                           </div>
-
-                          <div className="bg-background p-2 sm:p-3">
-                            {gCheckoutUrl ? (
-                              <iframe
-                                title="Guardarian checkout"
-                                src={gCheckoutUrl}
-                                className="h-[720px] w-full rounded-[24px] border border-border bg-background"
-                                sandbox="allow-scripts allow-same-origin allow-forms allow-popups allow-popups-to-escape-sandbox allow-top-navigation allow-modals"
-                                allow="payment; camera"
-                                referrerPolicy="origin-when-cross-origin"
-                              />
-                            ) : (
-                              <div className="flex h-[420px] items-center justify-center rounded-[24px] border border-border bg-accent/30">
-                                <Loader2 className="h-6 w-6 animate-spin text-primary" />
+                        ) : (
+                          /* ── Waiting for Payment — Post-redirect screen ── */
+                          <div className="overflow-hidden rounded-[28px] border border-border bg-card shadow-elevated">
+                            <div className="p-6 text-center space-y-4">
+                              <div className="mx-auto flex h-16 w-16 items-center justify-center rounded-full bg-primary/10">
+                                <Loader2 className="h-8 w-8 animate-spin text-primary" />
                               </div>
-                            )}
-                          </div>
-                        </div>
+                              <h3 className="font-display text-lg font-bold text-foreground">Waiting for Payment</h3>
+                              <p className="font-body text-sm text-muted-foreground">
+                                Complete your payment on the Guardarian tab. Once finished, you'll receive a confirmation email at <span className="font-semibold text-foreground">{gPayoutEmail || "your email"}</span>.
+                              </p>
 
-                        <div className="flex gap-2 rounded-2xl border border-border bg-accent/50 p-3 font-body text-[11px] text-muted-foreground">
-                          <Info className="mt-0.5 h-4 w-4 shrink-0 text-primary" />
-                          <span>If your browser or bank blocks the embedded step, use the fallback button above to continue in a new tab.</span>
-                        </div>
+                              {/* Order recap */}
+                              <div className="mx-auto max-w-xs rounded-xl border border-border bg-accent/40 p-4 space-y-2 text-left">
+                                <div className="flex justify-between font-body text-sm">
+                                  <span className="text-muted-foreground">Amount</span>
+                                  <span className="font-semibold text-foreground">{gSendAmount} {gFromCurrency?.ticker}</span>
+                                </div>
+                                <div className="flex justify-between font-body text-sm">
+                                  <span className="text-muted-foreground">Receiving</span>
+                                  <span className="font-semibold text-primary">{gEstimatedAmount || "—"} {gToCurrency?.ticker}</span>
+                                </div>
+                              </div>
+
+                              {/* Re-open payment tab */}
+                              <Button
+                                variant="outline"
+                                className="mx-auto"
+                                onClick={() => {
+                                  if (gCheckoutUrl) window.open(gCheckoutUrl, "_blank", "noopener,noreferrer");
+                                }}
+                              >
+                                <ExternalLink className="mr-2 h-4 w-4" />
+                                Re-open Payment Tab
+                              </Button>
+
+                              {/* Return to dashboard */}
+                              <Button
+                                className="w-full min-h-[48px] rounded-xl bg-primary text-primary-foreground hover:bg-primary/90 font-bold"
+                                size="lg"
+                                onClick={() => {
+                                  setGStep("form");
+                                  setGCheckoutUrl("");
+                                  setGPaymentOpened(false);
+                                }}
+                              >
+                                Return to Dashboard
+                              </Button>
+                            </div>
+                          </div>
+                        )}
                       </div>
                     )}
                   </>
