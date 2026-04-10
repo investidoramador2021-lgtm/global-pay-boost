@@ -696,18 +696,14 @@ const ExchangeWidget = () => {
   }, []);
 
   const pickPreferredGuardarianMethod = useCallback((ticker: string | undefined, methods: GuardarianPaymentMethod[]) => {
-    const normalizedTicker = ticker?.toUpperCase();
-    const preferredMap: Record<string, string> = {
-      BRL: "PIX",
-      EUR: "SEPA",
-      GBP: "FASTER_PAYMENTS",
-    };
-    const preferred = preferredMap[normalizedTicker || ""];
-    if (preferred) {
-      const matchedPreferred = methods.find((pm) => pm.type?.toUpperCase() === preferred || pm.payment_method?.toUpperCase() === preferred);
-      if (matchedPreferred) return matchedPreferred.type;
-      if (normalizedTicker === "BRL") return "PIX";
-      if (normalizedTicker === "EUR") return "SEPA";
+    const smartDefault = getSmartDefaultMethod(ticker || "");
+    if (smartDefault) {
+      const match = methods.find((pm) => pm.type?.toUpperCase() === smartDefault || pm.payment_method?.toUpperCase() === smartDefault);
+      if (match) return match.type;
+      // For key markets, inject the method name even if API didn't return it
+      if (ticker?.toUpperCase() === "BRL") return "PIX";
+      if (ticker?.toUpperCase() === "EUR") return "SEPA";
+      if (ticker?.toUpperCase() === "GBP") return "FASTER_PAYMENTS";
     }
     return methods[0]?.type || "";
   }, []);
