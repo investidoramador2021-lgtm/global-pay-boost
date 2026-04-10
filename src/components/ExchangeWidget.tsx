@@ -1244,12 +1244,16 @@ const ExchangeWidget = () => {
       const fromNet = getNetworkParam(gFromCurrency);
       const toNet = getNetworkParam(gToCurrency);
       const emailParam = gPayoutEmail.trim() || undefined;
-      const effectivePaymentMethod = resolveGuardarianPaymentMethod(
+      let effectivePaymentMethod = resolveGuardarianPaymentMethod(
         (gTradeDirection === "buy" ? gFromCurrency : gToCurrency)?.ticker,
         gPaymentMethods,
         gSelectedPaymentMethod,
         gTradeDirection,
       );
+      // Hard-map EUR sell to SEPA
+      if (isSellSepaCorridor && !effectivePaymentMethod) {
+        effectivePaymentMethod = "SEPA";
+      }
 
       if (gTradeDirection === "sell") {
         result = await createGuardarianTransaction({
