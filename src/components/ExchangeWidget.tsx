@@ -1,6 +1,6 @@
 import { useState, useEffect, useCallback, useRef } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { ArrowDownUp, Loader2, Search, Copy, Check, ArrowLeft, ArrowRight, ArrowLeftRight, Clock, CheckCircle2, AlertCircle, ExternalLink, Wallet, QrCode, XCircle, Info, Mail, RefreshCw, Shield, Lock, ChevronDown, Share2 } from "lucide-react";
+import { ArrowDownUp, Loader2, Search, Copy, Check, ArrowLeft, ArrowRight, ArrowLeftRight, Clock, CheckCircle2, AlertCircle, ExternalLink, Wallet, QrCode, XCircle, Info, Mail, RefreshCw, Shield, Lock, ChevronDown, Share2, CreditCard, Repeat } from "lucide-react";
 import DestinationAddressInput, { tickerToAddressType } from "@/components/DestinationAddressInput";
 import { supabase } from "@/integrations/supabase/client";
 import { Button } from "@/components/ui/button";
@@ -16,6 +16,12 @@ import {
   type TransactionResult,
   type TransactionStatus,
 } from "@/lib/changenow";
+import {
+  getGuardarianCurrencies,
+  getGuardarianEstimate,
+  getGuardarianMinMax,
+  type GuardarianCurrency,
+} from "@/lib/guardarian";
 import { useToast } from "@/hooks/use-toast";
 import { usePushNotifications } from "@/hooks/use-push-notifications";
 
