@@ -20,6 +20,7 @@ import {
   getGuardarianCurrencies,
   getGuardarianEstimate,
   getGuardarianMinMax,
+  getGuardarianPaymentMethods,
   createGuardarianTransaction,
   createGuardarianSellTransaction,
   type GuardarianCurrency,
@@ -677,60 +678,97 @@ const ExchangeWidget = () => {
     loadGuardarianCurrencies();
   }, [widgetMode, guardarianLoaded, loadGuardarianCurrencies]);
 
-  const isSellEligibleFiat = useCallback((currency: GuardarianCurrency | null) => {
-    if (!currency || currency.currency_type !== "FIAT") return false;
-    const methods = [
-      ...(currency.payment_methods || []),
-      ...(currency.networks || []).flatMap((network) => network.payment_methods || []),
-    ];
-    return methods.some((pm) => pm.withdrawal_enabled);
+  const collectGuardarianPaymentMethods = useCallback((currency: GuardarianCurrency | null) => {
+    if (!currency) return [] as GuardarianPaymentMethod[];
+    const allMethods: GuardarianPaymentMethod[] = [];
+    const seen = new Set<string>();
+    const addMethod = (pm: GuardarianPaymentMethod | undefined) => {
+      if (!pm?.type || seen.has(pm.type)) return;
+      seen.add(pm.type);
+      allMethods.push(pm);
+    };
+    for (const net of currency.networks || []) {
+      for (const pm of net.payment_methods || []) addMethod(pm as GuardarianPaymentMethod);
+    }
+    for (const pm of currency.payment_methods || []) addMethod(pm as GuardarianPaymentMethod);
+    return allMethods;
   }, []);
 
-  // Extract payment methods from currency data when fiat currency changes
-  // Also auto-select PIX for BRL, SEPA for EUR
+  const pickPreferredGuardarianMethod = useCallback((ticker: string | undefined, methods: GuardarianPaymentMethod[]) => {
+    const normalizedTicker = ticker?.toUpperCase();
+    const preferredMap: Record<string, string> = {
+      BRL: "PIX",
+      EUR: "SEPA",
+      GBP: "FASTER_PAYMENTS",
+    };
+    const preferred = preferredMap[normalizedTicker || ""];
+    if (preferred) {
+      const matchedPreferred = methods.find((pm) => pm.type?.toUpperCase() === preferred || pm.payment_method?.toUpperCase() === preferred);
+      if (matchedPreferred) return matchedPreferred.type;
+      if (normalizedTicker === "BRL") return "PIX";
+      if (normalizedTicker === "EUR") return "SEPA";
+    }
+    return methods[0]?.type || "";
+  }, []);
+
+  const isSellEligibleFiat = useCallback((currency: GuardarianCurrency | null) => {
+    if (!currency || currency.currency_type !== "FIAT") return false;
+    const methods = collectGuardarianPaymentMethods(currency);
+    return methods.some((pm) => pm.withdrawal_enabled);
+  }, [collectGuardarianPaymentMethods]);
+
   useEffect(() => {
     if (widgetMode !== "buysell") return;
     const fiatCurrency = gTradeDirection === "buy" ? gFromCurrency : gToCurrency;
-    if (!fiatCurrency) {
+    if (!fiatCurrency || fiatCurrency.currency_type !== "FIAT") {
       setGPaymentMethods([]);
       setGSelectedPaymentMethod("");
       return;
     }
 
-    const allMethods: GuardarianPaymentMethod[] = [];
-    const seen = new Set<string>();
-    for (const net of fiatCurrency.networks || []) {
-      for (const pm of net.payment_methods || []) {
-        if (!seen.has(pm.type)) {
-          seen.add(pm.type);
-          allMethods.push(pm);
-        }
-      }
-    }
-    for (const pm of fiatCurrency.payment_methods || []) {
-      if (!seen.has(pm.type)) {
-        seen.add(pm.type);
-        allMethods.push(pm);
-      }
-    }
+    let cancelled = false;
 
-    const eligibleMethods = allMethods.filter((pm) => gTradeDirection === "sell" ? pm.withdrawal_enabled : pm.deposit_enabled);
-    setGPaymentMethods(eligibleMethods);
+    const loadPaymentMethods = async () => {
+      const fallbackMethods = collectGuardarianPaymentMethods(fiatCurrency)
+        .filter((pm) => gTradeDirection === "sell" ? pm.withdrawal_enabled : pm.deposit_enabled);
 
-    // Localization: auto-select payment method based on fiat currency
-    const ticker = fiatCurrency.ticker?.toUpperCase();
-    const FIAT_METHOD_MAP: Record<string, string> = {
-      BRL: "pix",
-      EUR: "sepa",
-      GBP: "faster_payments",
+      try {
+        const liveMethods = await getGuardarianPaymentMethods(fiatCurrency.ticker, fiatCurrency.currency_type);
+        const eligibleMethods = (liveMethods.length ? liveMethods : fallbackMethods)
+          .filter((pm) => gTradeDirection === "sell" ? pm.withdrawal_enabled : pm.deposit_enabled);
+
+        if (cancelled) return;
+
+        const finalMethods = eligibleMethods.length
+          ? eligibleMethods
+          : (fiatCurrency.ticker === "BRL"
+              ? [{ type: "PIX", payment_category: "BANK_TRANSFER", deposit_enabled: true, withdrawal_enabled: false }]
+              : fiatCurrency.ticker === "EUR"
+                ? [{ type: "SEPA", payment_category: "BANK_TRANSFER", deposit_enabled: true, withdrawal_enabled: true }]
+                : fallbackMethods);
+
+        setGPaymentMethods(finalMethods);
+        setGSelectedPaymentMethod((current) => {
+          if (current && finalMethods.some((pm) => pm.type === current)) return current;
+          return pickPreferredGuardarianMethod(fiatCurrency.ticker, finalMethods);
+        });
+      } catch {
+        if (cancelled) return;
+        const finalMethods = fallbackMethods.length
+          ? fallbackMethods
+          : (fiatCurrency.ticker === "BRL"
+              ? [{ type: "PIX", payment_category: "BANK_TRANSFER", deposit_enabled: true, withdrawal_enabled: false }]
+              : fiatCurrency.ticker === "EUR"
+                ? [{ type: "SEPA", payment_category: "BANK_TRANSFER", deposit_enabled: true, withdrawal_enabled: true }]
+                : []);
+        setGPaymentMethods(finalMethods);
+        setGSelectedPaymentMethod(pickPreferredGuardarianMethod(fiatCurrency.ticker, finalMethods));
+      }
     };
-    const preferred = FIAT_METHOD_MAP[ticker];
-    if (preferred && eligibleMethods.some((pm) => pm.type.toLowerCase() === preferred)) {
-      setGSelectedPaymentMethod(eligibleMethods.find((pm) => pm.type.toLowerCase() === preferred)!.type);
-    } else {
-      setGSelectedPaymentMethod((current) => current && eligibleMethods.some((pm) => pm.type === current) ? current : (eligibleMethods[0]?.type || ""));
-    }
-  }, [widgetMode, gFromCurrency, gToCurrency, gTradeDirection]);
+
+    loadPaymentMethods();
+    return () => { cancelled = true; };
+  }, [widgetMode, gFromCurrency, gToCurrency, gTradeDirection, collectGuardarianPaymentMethods, pickPreferredGuardarianMethod]);
 
   useEffect(() => {
     if (widgetMode !== "buysell" || gTradeDirection !== "sell") return;
@@ -1072,7 +1110,12 @@ const ExchangeWidget = () => {
       return;
     }
 
-    // Show review overlay instead of redirecting immediately
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!gPayoutEmail.trim() || !emailRegex.test(gPayoutEmail.trim())) {
+      toast({ title: "Email required", description: "Enter a valid email address to continue.", variant: "destructive" });
+      return;
+    }
+
     setGShowReview(true);
   };
 
@@ -1112,9 +1155,9 @@ const ExchangeWidget = () => {
       }
 
       // Use the redirect_url to embed checkout in iframe modal
-      const redirectUrl = result?.redirect_url;
-      if (redirectUrl) {
-        setGCheckoutUrl(redirectUrl);
+      const checkoutUrl = result?.checkout_url || result?.redirect_url;
+      if (checkoutUrl) {
+        setGCheckoutUrl(checkoutUrl);
         setGStep("checkout");
         toast({ title: "Checkout ready", description: "Complete your purchase below." });
         return;
@@ -1325,7 +1368,23 @@ const ExchangeWidget = () => {
                   <Repeat className="h-4 w-4" /> Exchange
                 </button>
                 <button
-                  onClick={() => setWidgetMode("buysell")}
+                  onClick={() => {
+                    setWidgetMode("buysell");
+                    setGTradeDirection("buy");
+                    setGStep("form");
+                    setGCheckoutUrl("");
+                    setGShowReview(false);
+                    setGEstimateError("");
+                    setGSelectedPaymentMethod("");
+                    setGPayoutAddress("");
+                    setGPayoutEmail("");
+                    if (guardarianFiat.length) {
+                      setGFromCurrency(guardarianFiat.find((c) => c.ticker === "USD") || guardarianFiat[0] || null);
+                    }
+                    if (guardarianCrypto.length) {
+                      setGToCurrency(guardarianCrypto.find((c) => c.ticker === "BTC") || guardarianCrypto[0] || null);
+                    }
+                  }}
                   className={`flex items-center justify-center gap-1.5 rounded-lg px-4 py-2 font-display text-sm font-semibold transition-all ${
                     widgetMode === "buysell"
                       ? "bg-primary text-primary-foreground shadow-card"
@@ -2946,7 +3005,7 @@ const ExchangeWidget = () => {
 
             <div className="mt-4 flex items-center gap-2 rounded-lg border border-primary/20 bg-primary/5 p-3">
               <Shield className="h-4 w-4 shrink-0 text-primary" />
-              <p className="font-body text-[11px] text-muted-foreground">You'll be redirected to a secure checkout to complete your {gTradeDirection === "sell" ? "sale" : "purchase"}.</p>
+              <p className="font-body text-[11px] text-muted-foreground">A secure checkout will open below in this window to complete your {gTradeDirection === "sell" ? "sale" : "purchase"}.</p>
             </div>
 
             <div className="mt-5 flex gap-3">
