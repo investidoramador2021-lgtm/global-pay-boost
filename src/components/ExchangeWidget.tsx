@@ -739,13 +739,17 @@ const ExchangeWidget = () => {
 
         if (cancelled) return;
 
-        const finalMethods = eligibleMethods.length
-          ? eligibleMethods
-          : (fiatCurrency.ticker === "BRL"
-              ? [{ type: "PIX", payment_category: "BANK_TRANSFER", deposit_enabled: true, withdrawal_enabled: false }]
-              : fiatCurrency.ticker === "EUR"
-                ? [{ type: "SEPA", payment_category: "BANK_TRANSFER", deposit_enabled: true, withdrawal_enabled: true }]
-                : fallbackMethods);
+        const syntheticPreferredMethods = [
+          ...(fiatCurrency.ticker === "BRL" ? [{ type: "PIX", payment_category: "BANK_TRANSFER", deposit_enabled: true, withdrawal_enabled: false }] : []),
+          ...(fiatCurrency.ticker === "EUR" ? [{ type: "SEPA", payment_category: "BANK_TRANSFER", deposit_enabled: true, withdrawal_enabled: true }] : []),
+        ];
+        const mergedPreferredMethods = [
+          ...syntheticPreferredMethods.filter((pm) => !eligibleMethods.some((existing) => existing.type === pm.type)),
+          ...eligibleMethods,
+        ];
+        const finalMethods = mergedPreferredMethods.length
+          ? mergedPreferredMethods
+          : fallbackMethods;
 
         setGPaymentMethods(finalMethods);
         setGSelectedPaymentMethod((current) => {
@@ -755,7 +759,11 @@ const ExchangeWidget = () => {
       } catch {
         if (cancelled) return;
         const finalMethods = fallbackMethods.length
-          ? fallbackMethods
+          ? [
+              ...(fiatCurrency.ticker === "BRL" && !fallbackMethods.some((pm) => pm.type === "PIX") ? [{ type: "PIX", payment_category: "BANK_TRANSFER", deposit_enabled: true, withdrawal_enabled: false }] : []),
+              ...(fiatCurrency.ticker === "EUR" && !fallbackMethods.some((pm) => pm.type === "SEPA") ? [{ type: "SEPA", payment_category: "BANK_TRANSFER", deposit_enabled: true, withdrawal_enabled: true }] : []),
+              ...fallbackMethods,
+            ]
           : (fiatCurrency.ticker === "BRL"
               ? [{ type: "PIX", payment_category: "BANK_TRANSFER", deposit_enabled: true, withdrawal_enabled: false }]
               : fiatCurrency.ticker === "EUR"
