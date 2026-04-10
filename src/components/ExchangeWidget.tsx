@@ -20,7 +20,6 @@ import {
   getGuardarianCurrencies,
   getGuardarianEstimate,
   getGuardarianMinMax,
-  createGuardarianTransaction,
   getGuardarianPartnerToken,
   type GuardarianCurrency,
   type GuardarianEstimate,
@@ -66,6 +65,60 @@ function guardarianLogoUrl(c: GuardarianCurrency): string {
   if (raw.startsWith("http")) return raw;
   return `https://guardarian.com${raw}`;
 }
+
+const ProviderMark = ({ letter, tone = "primary" }: { letter: string; tone?: "primary" | "muted" }) => (
+  <div
+    className={`flex h-11 w-11 shrink-0 items-center justify-center rounded-2xl border font-display text-sm font-black uppercase shadow-card ${
+      tone === "primary"
+        ? "border-primary/20 bg-primary/10 text-primary"
+        : "border-border bg-accent text-foreground"
+    }`}
+    aria-hidden="true"
+  >
+    {letter}
+  </div>
+);
+
+const PaymentMethodChip = ({ label, accent = false }: { label: string; accent?: boolean }) => (
+  <span
+    className={`inline-flex items-center rounded-full border px-2.5 py-1 font-body text-[10px] font-semibold tracking-wide ${
+      accent
+        ? "border-primary/20 bg-primary/10 text-primary"
+        : "border-border bg-background/80 text-muted-foreground"
+    }`}
+  >
+    {label}
+  </span>
+);
+
+const GuardarianAssetIcon = ({ currency, small = false }: { currency: GuardarianCurrency; small?: boolean }) => {
+  const logo = guardarianLogoUrl(currency);
+  const [failed, setFailed] = useState(!logo);
+
+  useEffect(() => {
+    setFailed(!logo);
+  }, [logo]);
+
+  const sizeClass = small ? "h-4 w-4 text-[9px]" : "h-5 w-5 text-[10px]";
+
+  if (failed || !logo) {
+    return (
+      <div className={`flex ${sizeClass} items-center justify-center rounded-full bg-accent font-display font-bold uppercase text-foreground`}>
+        {currency.ticker.slice(0, 1)}
+      </div>
+    );
+  }
+
+  return (
+    <img
+      src={logo}
+      alt={currency.name}
+      className={`${sizeClass} rounded-full object-cover`}
+      loading="lazy"
+      onError={() => setFailed(true)}
+    />
+  );
+};
 
 // Display-friendly ticker: strips network suffixes so users see "USDT" not "usdttrc20"
 const DISPLAY_TICKER_MAP: Record<string, string> = {
@@ -214,6 +267,7 @@ const ExchangeWidget = () => {
   const [gPayoutAddress, setGPayoutAddress] = useState("");
   const [gPayoutEmail, setGPayoutEmail] = useState("");
   const [gCreatingTx, setGCreatingTx] = useState(false);
+  const [gCheckoutUrl, setGCheckoutUrl] = useState("");
   const [gSelectedProvider, setGSelectedProvider] = useState<"guardarian" | "transak">("guardarian");
 
   // Transaction flow state
@@ -862,6 +916,33 @@ const ExchangeWidget = () => {
     }
   };
 
+  const handleStartGuardarianCheckout = async () => {
+    if (!gFromCurrency || !gToCurrency || !gPayoutAddress.trim()) return;
+
+    setGCreatingTx(true);
+
+    try {
+      const token = await getGuardarianPartnerToken();
+      if (!token) throw new Error("Provider is not configured.");
+
+      const params = new URLSearchParams({
+        partner_api_token: token,
+        default_fiat_currency: gFromCurrency.ticker,
+        default_crypto_currency: gToCurrency.ticker,
+        default_fiat_amount: gSendAmount,
+        payout_address: gPayoutAddress.trim(),
+        theme: "blue",
+      });
+
+      setGCheckoutUrl(`https://guardarian.com/calculator/v1?${params.toString()}`);
+      setGStep("checkout");
+    } catch (err: any) {
+      toast({ title: "Checkout unavailable", description: err?.message || "Could not load the embedded checkout.", variant: "destructive" });
+    } finally {
+      setGCreatingTx(false);
+    }
+  };
+
   const filteredCurrencies = currencies.filter((c) => {
     if (!searchQuery) return true;
     const q = searchQuery.toLowerCase();
@@ -942,7 +1023,7 @@ const ExchangeWidget = () => {
             onClick={() => onSelect(c)}
             className="flex w-full items-center gap-3 rounded-lg px-3 py-2.5 text-left transition-colors hover:bg-accent"
           >
-            {guardarianLogoUrl(c) && <img src={guardarianLogoUrl(c)} alt={c.name} className="h-6 w-6 rounded-full object-cover" loading="lazy" />}
+            <GuardarianAssetIcon currency={c} />
             <div>
               <span className="font-display text-sm font-semibold uppercase text-foreground">{c.ticker}</span>
               {c.networks?.[0]?.network && c.networks[0].network !== c.ticker && (
@@ -1048,7 +1129,7 @@ const ExchangeWidget = () => {
             <div className="mb-5 flex items-center justify-between">
               <div className="flex rounded-xl border border-border bg-accent p-1 gap-1">
                 <button
-                  onClick={() => { setWidgetMode("exchange"); setGStep("form"); }}
+                  onClick={() => { setWidgetMode("exchange"); setGStep("form"); setGCheckoutUrl(""); }}
                   className={`flex items-center gap-1.5 rounded-lg px-4 py-2 font-display text-sm font-semibold transition-all ${
                     widgetMode === "exchange"
                       ? "bg-primary text-primary-foreground shadow-card"
@@ -1172,7 +1253,7 @@ const ExchangeWidget = () => {
                           {gEstimating ? <Loader2 className="h-6 w-6 animate-spin text-muted-foreground" /> : `≈ ${gEstimatedAmount || "—"}`}
                         </span>
                         <button onClick={() => setGShowToPicker(true)} className="flex items-center gap-2 rounded-lg bg-trust/10 px-4 py-2.5 transition-colors hover:bg-trust/20">
-                          {gToCurrency && guardarianLogoUrl(gToCurrency) && <img src={guardarianLogoUrl(gToCurrency)} alt="" className="h-5 w-5 rounded-full object-cover" />}
+                          {gToCurrency && <GuardarianAssetIcon currency={gToCurrency} />}
                           <span className="font-display text-sm font-semibold uppercase text-trust">{gToCurrency?.ticker || "Select"}</span>
                           <ChevronDown className="h-3.5 w-3.5 text-trust/60" />
                         </button>
@@ -1204,7 +1285,7 @@ const ExchangeWidget = () => {
                                     onClick={() => { setGToCurrency(c); setGShowToPicker(false); setGSearchQuery(""); }}
                                     className="flex items-center gap-1.5 rounded-lg border border-border bg-accent px-3 py-1.5 font-display text-xs font-semibold uppercase text-foreground transition-colors hover:border-primary/40"
                                   >
-                                    {guardarianLogoUrl(c) && <img src={guardarianLogoUrl(c)} alt="" className="h-4 w-4 rounded-full object-cover" />}
+                                    <GuardarianAssetIcon currency={c} small />
                                     {ticker}
                                   </button>
                                 );
@@ -1231,6 +1312,7 @@ const ExchangeWidget = () => {
                           disabled={!gEstimatedAmount || gEstimatedAmount === "—" || (parseFloat(gSendAmount) < gMinAmount) || (parseFloat(gSendAmount) > gMaxAmount)}
                           onClick={() => {
                             setGSelectedProvider("guardarian");
+                            setGCheckoutUrl("");
                             setGStep("compare");
                           }}
                         >
@@ -1247,167 +1329,218 @@ const ExchangeWidget = () => {
                     {gStep === "compare" && (
                       <div className="mt-4 space-y-4">
                         <button
-                          onClick={() => setGStep("form")}
+                          onClick={() => { setGCheckoutUrl(""); setGStep("form"); }}
                           className="flex items-center gap-1.5 font-body text-xs text-muted-foreground transition-colors hover:text-foreground"
                         >
                           <ArrowLeft className="h-3.5 w-3.5" /> Back
                         </button>
-
-                        {/* Recipient wallet */}
-                        <div>
-                          <label className="mb-1 block font-body text-[11px] font-medium uppercase tracking-wider text-muted-foreground">
-                            Recipient {gToCurrency?.ticker} address
-                          </label>
-                          <input
-                            type="text"
-                            placeholder={`Enter your ${gToCurrency?.ticker || "crypto"} wallet address`}
-                            value={gPayoutAddress}
-                            onChange={(e) => setGPayoutAddress(e.target.value)}
-                            className="w-full rounded-lg border border-border bg-background px-3 py-2.5 font-mono text-xs text-foreground outline-none transition-colors placeholder:text-muted-foreground/50 focus:border-primary focus:ring-1 focus:ring-primary/30"
-                          />
-                        </div>
-
-                        {/* Payment offers heading */}
-                        <p className="font-body text-sm font-medium text-muted-foreground">Payment offers</p>
-
-                        {/* Provider cards - ChangeNOW style with logos */}
-                        <div className="space-y-3">
-                          {/* Guardarian */}
-                          <button
-                            type="button"
-                            onClick={() => setGSelectedProvider("guardarian")}
-                            className={`group relative flex w-full flex-col rounded-2xl border-2 p-4 text-left transition-all duration-200 ${
-                              gSelectedProvider === "guardarian"
-                                ? "border-primary bg-card shadow-md"
-                                : "border-border bg-card hover:border-primary/40"
-                            }`}
-                          >
-                            <div className="flex items-center justify-between">
-                              <div className="flex items-center gap-3">
-                                <img src="https://guardarian.com/favicon-32x32.png" alt="Guardarian" className="h-8 w-8 rounded-lg" />
-                                <span className="font-display text-base font-bold text-foreground">Guardarian</span>
+                        <div className="overflow-hidden rounded-[28px] border border-border bg-card shadow-elevated">
+                          <div className="bg-hero-gradient p-4 text-primary-foreground sm:p-5">
+                            <div className="flex flex-col gap-4 sm:flex-row sm:items-start sm:justify-between">
+                              <div>
+                                <p className="font-body text-[11px] font-semibold uppercase tracking-[0.22em] text-primary-foreground/75">Live quote</p>
+                                <h3 className="mt-1 font-display text-xl font-bold">Payment offers</h3>
+                                <p className="mt-1 max-w-lg font-body text-xs text-primary-foreground/80">
+                                  Final availability can vary by country, bank, payment method, and verification status.
+                                </p>
                               </div>
-                              <div className="flex items-center gap-2">
-                                <span className="font-display text-base font-bold text-foreground">
-                                  {gEstimating ? "…" : gEstimatedAmount || "—"} <span className="text-sm font-medium text-muted-foreground">{gToCurrency?.ticker}</span>
-                                </span>
-                                {gSelectedProvider === "guardarian" && (
-                                  <CheckCircle2 className="h-6 w-6 text-primary" />
-                                )}
-                                {gSelectedProvider !== "guardarian" && (
-                                  <div className="h-6 w-6 rounded-full border-2 border-muted-foreground/30" />
-                                )}
-                              </div>
+                              <span className="inline-flex w-fit items-center rounded-full border border-primary-foreground/20 bg-background/10 px-3 py-1 font-body text-[11px] font-semibold uppercase tracking-wide text-primary-foreground">
+                                In-app first
+                              </span>
                             </div>
-                            <div className="mt-3 flex flex-wrap items-center gap-2">
-                              <img src="https://cdn.jsdelivr.net/gh/nicepay-dev/payment-icon@master/images/VISA.svg" alt="VISA" className="h-5" />
-                              <img src="https://cdn.jsdelivr.net/gh/nicepay-dev/payment-icon@master/images/Mastercard.svg" alt="Mastercard" className="h-5" />
-                              <span className="inline-flex items-center rounded bg-[#004494] px-1.5 py-0.5 font-body text-[9px] font-bold text-white tracking-wide">S€PA</span>
-                              <span className="inline-flex items-center font-body text-[11px] font-medium text-foreground"> Pay</span>
-                              <span className="inline-flex items-center font-body text-[11px] font-medium text-foreground">G Pay</span>
-                              <span className="inline-flex items-center font-body text-[11px] font-medium text-muted-foreground">Revolut</span>
-                              <span className="inline-flex items-center font-body text-[11px] font-medium text-muted-foreground">Swift</span>
-                            </div>
-                          </button>
 
-                          {/* Transak */}
-                          <button
-                            type="button"
-                            onClick={() => setGSelectedProvider("transak")}
-                            className={`group relative flex w-full flex-col rounded-2xl border-2 p-4 text-left transition-all duration-200 ${
-                              gSelectedProvider === "transak"
-                                ? "border-primary bg-card shadow-md"
-                                : "border-border bg-card hover:border-primary/40"
-                            }`}
-                          >
-                            <div className="flex items-center justify-between">
-                              <div className="flex items-center gap-3">
-                                <img src="https://assets.transak.com/images/favicon.png" alt="Transak" className="h-8 w-8 rounded-lg" />
-                                <span className="font-display text-base font-bold text-foreground">Transak</span>
+                            <div className="mt-5 grid gap-3 sm:grid-cols-2">
+                              <div className="rounded-2xl border border-primary-foreground/15 bg-background/10 p-4">
+                                <p className="font-body text-[11px] uppercase tracking-wide text-primary-foreground/70">You pay</p>
+                                <p className="mt-1 font-display text-2xl font-bold">{gSendAmount} {gFromCurrency?.ticker}</p>
                               </div>
-                              <div className="flex items-center gap-2">
-                                <span className="font-body text-sm text-muted-foreground">Compare →</span>
-                                {gSelectedProvider === "transak" && (
-                                  <CheckCircle2 className="h-6 w-6 text-primary" />
-                                )}
-                                {gSelectedProvider !== "transak" && (
-                                  <div className="h-6 w-6 rounded-full border-2 border-muted-foreground/30" />
-                                )}
+                              <div className="rounded-2xl border border-primary-foreground/15 bg-background/10 p-4">
+                                <p className="font-body text-[11px] uppercase tracking-wide text-primary-foreground/70">You get</p>
+                                <p className="mt-1 font-display text-2xl font-bold">{gEstimating ? "…" : gEstimatedAmount || "—"} {gToCurrency?.ticker}</p>
                               </div>
-                            </div>
-                            <div className="mt-3 flex flex-wrap items-center gap-2">
-                              <img src="https://cdn.jsdelivr.net/gh/nicepay-dev/payment-icon@master/images/VISA.svg" alt="VISA" className="h-5" />
-                              <img src="https://cdn.jsdelivr.net/gh/nicepay-dev/payment-icon@master/images/Mastercard.svg" alt="Mastercard" className="h-5" />
-                              <span className="inline-flex items-center rounded bg-[#004494] px-1.5 py-0.5 font-body text-[9px] font-bold text-white tracking-wide">S€PA</span>
-                              <span className="inline-flex items-center font-body text-[11px] font-medium text-foreground"> Pay</span>
-                              <span className="inline-flex items-center font-body text-[11px] font-medium text-foreground">G Pay</span>
-                            </div>
-                          </button>
-                        </div>
-
-                        {/* Fee breakdown for Guardarian */}
-                        {gFullEstimate && gSelectedProvider === "guardarian" && (
-                          <div className="rounded-xl border border-border bg-muted/30 p-3 space-y-1.5">
-                            {gFullEstimate.service_fees?.map((fee, i) => (
-                              <div key={i} className="flex items-center justify-between font-body text-[11px]">
-                                <span className="text-muted-foreground">Service fee ({fee.percentage})</span>
-                                <span className="font-medium text-foreground">{fee.amount} {fee.currency}</span>
-                              </div>
-                            ))}
-                            {gFullEstimate.network_fee && (
-                              <div className="flex items-center justify-between font-body text-[11px]">
-                                <span className="text-muted-foreground">Network fee</span>
-                                <span className="font-medium text-foreground">{parseFloat(gFullEstimate.network_fee.amount).toFixed(8)} {gFullEstimate.network_fee.currency}</span>
-                              </div>
-                            )}
-                            <div className="flex items-center justify-between border-t border-border pt-1.5 font-body text-[11px]">
-                              <span className="text-muted-foreground">Rate</span>
-                              <span className="font-medium text-foreground">1 {gFromCurrency?.ticker} ≈ {gFullEstimate.estimated_exchange_rate} {gToCurrency?.ticker}</span>
                             </div>
                           </div>
-                        )}
 
-                        {/* CTA Button */}
-                        <Button
-                          className="w-full min-h-[48px] bg-primary text-primary-foreground hover:bg-primary/90 hover:shadow-neon shadow-card text-sm font-bold transition-all duration-300"
-                          size="lg"
-                          disabled={gCreatingTx || !gPayoutAddress.trim()}
-                          onClick={async () => {
-                            if (!gFromCurrency || !gToCurrency) return;
+                          <div className="space-y-4 p-4 sm:p-5">
+                            <div>
+                              <label className="mb-1.5 block font-body text-[11px] font-medium uppercase tracking-wider text-muted-foreground">
+                                Recipient {gToCurrency?.ticker} address
+                              </label>
+                              <Input
+                                type="text"
+                                placeholder={`Enter your ${gToCurrency?.ticker || "crypto"} wallet address`}
+                                value={gPayoutAddress}
+                                onChange={(e) => setGPayoutAddress(e.target.value)}
+                                className="min-h-[52px] rounded-2xl border-border bg-background font-mono text-xs"
+                              />
+                            </div>
 
-                            if (gSelectedProvider === "guardarian") {
-                              setGCreatingTx(true);
-                              try {
-                                const token = await getGuardarianPartnerToken();
-                                const widgetUrl = `https://guardarian.com/calculator/v1?partner_api_token=${encodeURIComponent(token)}&default_fiat_currency=${encodeURIComponent(gFromCurrency.ticker)}&default_crypto_currency=${encodeURIComponent(gToCurrency.ticker)}&default_fiat_amount=${encodeURIComponent(gSendAmount)}&payout_address=${encodeURIComponent(gPayoutAddress.trim())}&theme=blue`;
-                                window.open(widgetUrl, "_blank", "noopener");
-                                toast({ title: "Guardarian checkout opened", description: "Complete your purchase in the new tab." });
-                              } catch (err: any) {
-                                toast({ title: "Error", description: err?.message || "Could not open checkout", variant: "destructive" });
-                              } finally {
-                                setGCreatingTx(false);
-                              }
-                            } else if (gSelectedProvider === "transak") {
-                              const transakUrl = `https://global.transak.com/?apiKey=none&cryptoCurrencyCode=${encodeURIComponent(gToCurrency.ticker)}&fiatCurrency=${encodeURIComponent(gFromCurrency.ticker)}&fiatAmount=${encodeURIComponent(gSendAmount)}&walletAddress=${encodeURIComponent(gPayoutAddress.trim())}&themeColor=10b981`;
-                              window.open(transakUrl, "_blank", "noopener");
-                              toast({ title: "Transak checkout opened", description: "Complete your purchase in the new tab." });
-                            }
-                          }}
-                        >
-                          {gCreatingTx ? (
-                            <Loader2 className="h-5 w-5 animate-spin" />
-                          ) : (
-                            <>
-                              <CreditCard className="mr-2 h-4 w-4" />
-                              {`Buy ${gToCurrency?.ticker || "Crypto"} via ${gSelectedProvider === "guardarian" ? "Guardarian" : "Transak"}`}
-                            </>
+                            <button
+                              type="button"
+                              onClick={() => setGSelectedProvider("guardarian")}
+                              className={`w-full rounded-[24px] border p-4 text-left transition-all duration-200 ${
+                                gSelectedProvider === "guardarian"
+                                  ? "border-primary bg-primary/5 shadow-card"
+                                  : "border-border bg-card hover:border-primary/40"
+                              }`}
+                            >
+                              <div className="flex flex-col gap-4 sm:flex-row sm:items-start sm:justify-between">
+                                <div className="flex items-start gap-3">
+                                  <ProviderMark letter="G" />
+                                  <div>
+                                    <div className="flex flex-wrap items-center gap-2">
+                                      <span className="font-display text-lg font-bold text-foreground">Guardarian</span>
+                                      <span className="inline-flex items-center rounded-full border border-primary/20 bg-primary/10 px-2.5 py-1 font-body text-[10px] font-semibold uppercase tracking-wide text-primary">Live</span>
+                                    </div>
+                                    <p className="mt-1 font-body text-xs text-muted-foreground">
+                                      Embedded checkout with region-aware availability and provider-side compliance checks.
+                                    </p>
+                                    <div className="mt-3 flex flex-wrap gap-2">
+                                      <PaymentMethodChip label="Visa" accent />
+                                      <PaymentMethodChip label="Mastercard" accent />
+                                      <PaymentMethodChip label="SEPA" />
+                                      <PaymentMethodChip label="Apple Pay" />
+                                      <PaymentMethodChip label="Google Pay" />
+                                    </div>
+                                  </div>
+                                </div>
+
+                                <div className="flex items-center justify-between gap-3 sm:block sm:text-right">
+                                  <div>
+                                    <p className="font-body text-[11px] uppercase tracking-wide text-muted-foreground">Estimated receive</p>
+                                    <p className="mt-1 font-display text-xl font-bold text-foreground">{gEstimating ? "…" : gEstimatedAmount || "—"} {gToCurrency?.ticker}</p>
+                                  </div>
+                                  <div className="flex h-8 w-8 items-center justify-center rounded-full border border-primary/20 bg-primary/10 text-primary">
+                                    <CheckCircle2 className="h-4 w-4" />
+                                  </div>
+                                </div>
+                              </div>
+                            </button>
+
+                            <div className="w-full rounded-[24px] border border-border bg-accent/40 p-4 opacity-80">
+                              <div className="flex flex-col gap-4 sm:flex-row sm:items-start sm:justify-between">
+                                <div className="flex items-start gap-3">
+                                  <ProviderMark letter="T" tone="muted" />
+                                  <div>
+                                    <div className="flex flex-wrap items-center gap-2">
+                                      <span className="font-display text-lg font-bold text-foreground">Transak</span>
+                                      <span className="inline-flex items-center rounded-full border border-border bg-background px-2.5 py-1 font-body text-[10px] font-semibold uppercase tracking-wide text-muted-foreground">Unavailable</span>
+                                    </div>
+                                    <p className="mt-1 font-body text-xs text-muted-foreground">
+                                      Hidden from checkout until valid partner credentials are configured.
+                                    </p>
+                                    <div className="mt-3 flex flex-wrap gap-2">
+                                      <PaymentMethodChip label="Visa" />
+                                      <PaymentMethodChip label="Mastercard" />
+                                      <PaymentMethodChip label="Bank transfer" />
+                                    </div>
+                                  </div>
+                                </div>
+
+                                <div className="rounded-full border border-border bg-background px-3 py-1 font-body text-[11px] font-medium text-muted-foreground">
+                                  Broken path removed
+                                </div>
+                              </div>
+                            </div>
+
+                            {gFullEstimate && (
+                              <div className="rounded-2xl border border-border bg-accent/40 p-4 space-y-2">
+                                {gFullEstimate.service_fees?.map((fee, i) => (
+                                  <div key={i} className="flex items-center justify-between gap-3 font-body text-[11px]">
+                                    <span className="text-muted-foreground">Service fee ({fee.percentage})</span>
+                                    <span className="font-medium text-foreground">{fee.amount} {fee.currency}</span>
+                                  </div>
+                                ))}
+                                {gFullEstimate.network_fee && (
+                                  <div className="flex items-center justify-between gap-3 font-body text-[11px]">
+                                    <span className="text-muted-foreground">Network fee</span>
+                                    <span className="font-medium text-foreground">{parseFloat(gFullEstimate.network_fee.amount).toFixed(8)} {gFullEstimate.network_fee.currency}</span>
+                                  </div>
+                                )}
+                                <div className="flex items-center justify-between gap-3 border-t border-border pt-2 font-body text-[11px]">
+                                  <span className="text-muted-foreground">Rate</span>
+                                  <span className="font-medium text-foreground">1 {gFromCurrency?.ticker} ≈ {gFullEstimate.estimated_exchange_rate} {gToCurrency?.ticker}</span>
+                                </div>
+                              </div>
+                            )}
+
+                            <Button
+                              className="w-full min-h-[52px] rounded-2xl bg-primary text-primary-foreground hover:bg-primary/90 hover:shadow-neon shadow-card text-sm font-bold transition-all duration-300"
+                              size="lg"
+                              disabled={gCreatingTx || !gPayoutAddress.trim() || gSelectedProvider !== "guardarian"}
+                              onClick={handleStartGuardarianCheckout}
+                            >
+                              {gCreatingTx ? <Loader2 className="h-5 w-5 animate-spin" /> : <><CreditCard className="mr-2 h-4 w-4" />Continue with Guardarian</>}
+                            </Button>
+
+                            <div className="flex flex-wrap items-center justify-center gap-3 pt-1">
+                              <span className="flex items-center gap-1 font-body text-[10px] text-muted-foreground"><Shield className="h-3 w-3" /> Regulated</span>
+                              <span className="flex items-center gap-1 font-body text-[10px] text-muted-foreground"><Lock className="h-3 w-3" /> KYC-compliant</span>
+                              <span className="flex items-center gap-1 font-body text-[10px] text-muted-foreground"><CheckCircle2 className="h-3 w-3" /> Embedded when supported</span>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    )}
+
+                    {gStep === "checkout" && (
+                      <div className="mt-4 space-y-4">
+                        <div className="flex flex-col gap-2 sm:flex-row sm:items-center sm:justify-between">
+                          <button
+                            onClick={() => setGStep("compare")}
+                            className="flex items-center gap-1.5 font-body text-xs text-muted-foreground transition-colors hover:text-foreground"
+                          >
+                            <ArrowLeft className="h-3.5 w-3.5" /> Back to offers
+                          </button>
+
+                          {gCheckoutUrl && (
+                            <button
+                              onClick={() => window.open(gCheckoutUrl, "_blank", "noopener,noreferrer")}
+                              className="inline-flex items-center gap-2 rounded-full border border-border bg-background px-3 py-2 font-body text-xs font-semibold text-foreground transition-colors hover:bg-accent"
+                            >
+                              Open in new tab <ExternalLink className="h-3.5 w-3.5" />
+                            </button>
                           )}
-                        </Button>
+                        </div>
 
-                        <div className="flex items-center justify-center gap-3 pt-1">
-                          <span className="flex items-center gap-1 font-body text-[10px] text-muted-foreground"><Shield className="h-3 w-3" /> Regulated</span>
-                          <span className="flex items-center gap-1 font-body text-[10px] text-muted-foreground"><Lock className="h-3 w-3" /> KYC-compliant</span>
-                          <span className="flex items-center gap-1 font-body text-[10px] text-muted-foreground"><CheckCircle2 className="h-3 w-3" /> Secure checkout</span>
+                        <div className="overflow-hidden rounded-[28px] border border-border bg-card shadow-elevated">
+                          <div className="border-b border-border bg-accent/40 p-4 sm:flex sm:items-center sm:justify-between sm:gap-4">
+                            <div>
+                              <p className="font-body text-[11px] font-semibold uppercase tracking-[0.22em] text-muted-foreground">Secure checkout</p>
+                              <h3 className="mt-1 font-display text-lg font-bold text-foreground">Complete your purchase without leaving this page</h3>
+                              <p className="mt-1 font-body text-xs text-muted-foreground">
+                                Some bank or identity verification flows can still open provider-controlled windows when required.
+                              </p>
+                            </div>
+
+                            <div className="mt-3 flex items-center gap-3 sm:mt-0">
+                              <ProviderMark letter="G" />
+                              <div>
+                                <p className="font-display text-sm font-bold text-foreground">Guardarian</p>
+                                <p className="font-body text-[11px] text-muted-foreground">{gSendAmount} {gFromCurrency?.ticker} → {gEstimatedAmount || "—"} {gToCurrency?.ticker}</p>
+                              </div>
+                            </div>
+                          </div>
+
+                          <div className="bg-background p-2 sm:p-3">
+                            {gCheckoutUrl ? (
+                              <iframe
+                                title="Guardarian checkout"
+                                src={gCheckoutUrl}
+                                className="h-[720px] w-full rounded-[24px] border border-border bg-background"
+                                referrerPolicy="strict-origin-when-cross-origin"
+                              />
+                            ) : (
+                              <div className="flex h-[420px] items-center justify-center rounded-[24px] border border-border bg-accent/30">
+                                <Loader2 className="h-6 w-6 animate-spin text-primary" />
+                              </div>
+                            )}
+                          </div>
+                        </div>
+
+                        <div className="flex gap-2 rounded-2xl border border-border bg-accent/50 p-3 font-body text-[11px] text-muted-foreground">
+                          <Info className="mt-0.5 h-4 w-4 shrink-0 text-primary" />
+                          <span>If your browser or bank blocks the embedded step, use the fallback button above to continue in a new tab.</span>
                         </div>
                       </div>
                     )}
