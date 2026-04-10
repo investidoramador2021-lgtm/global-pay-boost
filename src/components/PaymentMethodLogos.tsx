@@ -1,6 +1,7 @@
 /**
  * Payment Method Logo components — maps raw Guardarian payment_method strings
- * to professional SVG logos / icons. Ensures "Logo-First" UI.
+ * to professional SVG logos / icons. Ensures "Logo-First" UI with adaptive
+ * dark/light mode visibility.
  */
 
 // ─── SVG Logo Components ────────────────────────────────────────────
@@ -21,56 +22,56 @@ export const MastercardLogo = ({ className = "h-5 w-auto" }: { className?: strin
 
 export const SepaLogo = ({ className = "h-5 w-auto" }: { className?: string }) => (
   <svg className={className} viewBox="0 0 120 40" xmlns="http://www.w3.org/2000/svg">
-    <rect rx="4" width="120" height="40" fill="#003DA5"/>
+    <rect rx="6" width="120" height="40" fill="#003DA5"/>
     <text x="60" y="26" textAnchor="middle" fill="white" fontFamily="Arial,sans-serif" fontSize="16" fontWeight="bold">SEPA</text>
   </svg>
 );
 
 export const PixLogo = ({ className = "h-5 w-auto" }: { className?: string }) => (
   <svg className={className} viewBox="0 0 120 40" xmlns="http://www.w3.org/2000/svg">
-    <rect rx="4" width="120" height="40" fill="#32BCAD"/>
+    <rect rx="6" width="120" height="40" fill="#32BCAD"/>
     <text x="60" y="26" textAnchor="middle" fill="white" fontFamily="Arial,sans-serif" fontSize="16" fontWeight="bold">PIX</text>
   </svg>
 );
 
 export const SwiftLogo = ({ className = "h-5 w-auto" }: { className?: string }) => (
   <svg className={className} viewBox="0 0 120 40" xmlns="http://www.w3.org/2000/svg">
-    <rect rx="4" width="120" height="40" fill="#E31937"/>
+    <rect rx="6" width="120" height="40" fill="#E31937"/>
     <text x="60" y="26" textAnchor="middle" fill="white" fontFamily="Arial,sans-serif" fontSize="14" fontWeight="bold">SWIFT</text>
   </svg>
 );
 
 export const FpsLogo = ({ className = "h-5 w-auto" }: { className?: string }) => (
   <svg className={className} viewBox="0 0 120 40" xmlns="http://www.w3.org/2000/svg">
-    <rect rx="4" width="120" height="40" fill="#6B2C91"/>
+    <rect rx="6" width="120" height="40" fill="#6B2C91"/>
     <text x="60" y="26" textAnchor="middle" fill="white" fontFamily="Arial,sans-serif" fontSize="14" fontWeight="bold">FPS</text>
   </svg>
 );
 
 export const ApplePayLogo = ({ className = "h-5 w-auto" }: { className?: string }) => (
   <svg className={className} viewBox="0 0 120 40" xmlns="http://www.w3.org/2000/svg">
-    <rect rx="4" width="120" height="40" fill="#000"/>
+    <rect rx="6" width="120" height="40" fill="#000"/>
     <text x="60" y="26" textAnchor="middle" fill="white" fontFamily="Arial,sans-serif" fontSize="13" fontWeight="bold"> Pay</text>
   </svg>
 );
 
 export const GooglePayLogo = ({ className = "h-5 w-auto" }: { className?: string }) => (
   <svg className={className} viewBox="0 0 120 40" xmlns="http://www.w3.org/2000/svg">
-    <rect rx="4" width="120" height="40" fill="#fff" stroke="#ddd"/>
-    <text x="60" y="26" textAnchor="middle" fill="#5F6368" fontFamily="Arial,sans-serif" fontSize="13" fontWeight="bold">G Pay</text>
+    <rect rx="6" width="120" height="40" fill="#4285F4"/>
+    <text x="60" y="26" textAnchor="middle" fill="white" fontFamily="Arial,sans-serif" fontSize="13" fontWeight="bold">G Pay</text>
   </svg>
 );
 
 export const BankTransferIcon = ({ className = "h-5 w-auto" }: { className?: string }) => (
   <svg className={className} viewBox="0 0 120 40" xmlns="http://www.w3.org/2000/svg">
-    <rect rx="4" width="120" height="40" fill="#64748b"/>
+    <rect rx="6" width="120" height="40" fill="#6366F1"/>
     <text x="60" y="26" textAnchor="middle" fill="white" fontFamily="Arial,sans-serif" fontSize="11" fontWeight="bold">Bank Transfer</text>
   </svg>
 );
 
 export const CardIcon = ({ className = "h-5 w-auto" }: { className?: string }) => (
   <svg className={className} viewBox="0 0 120 40" xmlns="http://www.w3.org/2000/svg">
-    <rect rx="4" width="120" height="40" fill="#475569"/>
+    <rect rx="6" width="120" height="40" fill="#475569"/>
     <text x="60" y="26" textAnchor="middle" fill="white" fontFamily="Arial,sans-serif" fontSize="13" fontWeight="bold">Card</text>
   </svg>
 );
@@ -82,7 +83,6 @@ export interface PaymentMethodDisplay {
 }
 
 const PAYMENT_METHOD_MAP: Record<string, PaymentMethodDisplay> = {
-  // Exact Guardarian API types
   "visa": { label: "Visa", Logo: VisaLogo },
   "mastercard": { label: "Mastercard", Logo: MastercardLogo },
   "sepa": { label: "SEPA", Logo: SepaLogo },
@@ -94,7 +94,6 @@ const PAYMENT_METHOD_MAP: Record<string, PaymentMethodDisplay> = {
   "apple_pay": { label: "Apple Pay", Logo: ApplePayLogo },
   "google_pay": { label: "Google Pay", Logo: GooglePayLogo },
   "bank_transfer": { label: "Bank Transfer", Logo: BankTransferIcon },
-  // Common variations
   "card_payment": { label: "Card", Logo: CardIcon },
   "credit_card": { label: "Card", Logo: CardIcon },
   "debit_card": { label: "Card", Logo: CardIcon },
