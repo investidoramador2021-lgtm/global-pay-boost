@@ -1193,23 +1193,8 @@ const ExchangeWidget = () => {
     setGShowReview(false);
     setGCreatingTx(true);
 
-    // Lead capture — save to customers table for MSB compliance & marketing
-    try {
-      await supabase.rpc("upsert_customer_capture", {
-        p_email: gPayoutEmail.trim().toLowerCase(),
-        p_latest_trade_direction: gTradeDirection,
-        p_latest_from_currency: gFromCurrency?.ticker || null,
-        p_latest_to_currency: gToCurrency?.ticker || null,
-        p_latest_payment_method: gSelectedPaymentMethod || null,
-        p_metadata: {
-          wallet_address: gPayoutAddress.trim() || undefined,
-          amount: gSendAmount,
-          timestamp: new Date().toISOString(),
-        },
-      });
-    } catch (captureErr) {
-      console.error("[MRC] Customer capture failed:", captureErr);
-    }
+    // Lead capture is now handled server-side in the guardarian edge function
+    // using service_role, so it bypasses RLS restrictions
 
     try {
       const fromNet = getNetworkParam(gFromCurrency);
@@ -2104,9 +2089,9 @@ const ExchangeWidget = () => {
                                 title="Guardarian checkout"
                                 src={gCheckoutUrl}
                                 className="h-[720px] w-full rounded-[24px] border border-border bg-background"
-                                sandbox="allow-scripts allow-same-origin allow-forms allow-popups allow-popups-to-escape-sandbox allow-top-navigation-by-user-activation"
+                                sandbox="allow-scripts allow-same-origin allow-forms allow-popups allow-popups-to-escape-sandbox allow-top-navigation-by-user-activation allow-modals"
                                 allow="payment; camera"
-                                referrerPolicy="strict-origin-when-cross-origin"
+                                referrerPolicy="origin-when-cross-origin"
                               />
                             ) : (
                               <div className="flex h-[420px] items-center justify-center rounded-[24px] border border-border bg-accent/30">
