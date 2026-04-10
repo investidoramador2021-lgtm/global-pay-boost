@@ -306,6 +306,7 @@ const ExchangeWidget = () => {
   const [gSelectedPaymentMethod, setGSelectedPaymentMethod] = useState<string>("");
   const [gEstimateError, setGEstimateError] = useState("");
   const gEstimateRequestIdRef = useRef(0);
+  const [gPaymentOpened, setGPaymentOpened] = useState(false);
 
   // Transaction flow state
   const [step, setStep] = useState<Step>("exchange");
