@@ -1326,7 +1326,9 @@ const ExchangeWidget = () => {
 
                     {/* You Get (Crypto) */}
                     <div className="relative">
-                      <label className="mb-1.5 block font-body text-xs font-medium uppercase tracking-wider text-muted-foreground">You Get</label>
+                      <label className="mb-1.5 block font-body text-xs font-medium uppercase tracking-wider text-muted-foreground">
+                        {gTradeDirection === "buy" ? "You Receive (Crypto)" : "You Get (Fiat)"}
+                      </label>
                       <div className="flex items-center gap-3 rounded-xl border border-border bg-accent p-4">
                         <span className="flex-1 font-display text-2xl font-bold text-foreground">
                           {gEstimating ? <Loader2 className="h-6 w-6 animate-spin text-muted-foreground" /> : `≈ ${gEstimatedAmount || "—"}`}
