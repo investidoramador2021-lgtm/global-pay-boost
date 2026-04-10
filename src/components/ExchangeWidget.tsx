@@ -278,6 +278,8 @@ const ExchangeWidget = () => {
   const [gShowReview, setGShowReview] = useState(false);
   const [gCurrencyRetryCount, setGCurrencyRetryCount] = useState(0);
   const [gCurrencyError, setGCurrencyError] = useState(false);
+  const [gPaymentMethods, setGPaymentMethods] = useState<GuardarianPaymentMethod[]>([]);
+  const [gSelectedPaymentMethod, setGSelectedPaymentMethod] = useState<string>("");
 
   // Transaction flow state
   const [step, setStep] = useState<Step>("exchange");
