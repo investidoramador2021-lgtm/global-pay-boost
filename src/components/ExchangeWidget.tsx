@@ -716,6 +716,14 @@ const ExchangeWidget = () => {
     }
   }, []);
 
+  // Helper: only pass network for crypto currencies, skip for fiat
+  const getNetworkParam = (currency: GuardarianCurrency | null): string | undefined => {
+    if (!currency || currency.currency_type === "FIAT") return undefined;
+    const net = currency.networks?.[0]?.network;
+    // Only pass network if it differs from the ticker (avoids redundant/wrong values)
+    return net && net.toUpperCase() !== currency.ticker.toUpperCase() ? net : undefined;
+  };
+
   // Guardarian estimate
   const fetchGuardarianEstimate = useCallback(async () => {
     if (!gFromCurrency || !gToCurrency || !gSendAmount || parseFloat(gSendAmount) <= 0) {
@@ -724,23 +732,26 @@ const ExchangeWidget = () => {
     }
     setGEstimating(true);
     try {
-      // Pick first available network
-      const fromNetwork = gFromCurrency.networks?.[0]?.network || gFromCurrency.ticker;
-      const toNetwork = gToCurrency.networks?.[0]?.network || gToCurrency.ticker;
+      const fromNetwork = getNetworkParam(gFromCurrency);
+      const toNetwork = getNetworkParam(gToCurrency);
+      const estimateParams: Parameters<typeof getGuardarianEstimate>[0] = {
+        from_currency: gFromCurrency.ticker,
+        to_currency: gToCurrency.ticker,
+        from_amount: gSendAmount,
+      };
+      if (fromNetwork) estimateParams.from_network = fromNetwork;
+      if (toNetwork) estimateParams.to_network = toNetwork;
+
+      const minMaxParams: Parameters<typeof getGuardarianMinMax>[0] = {
+        from_currency: gFromCurrency.ticker,
+        to_currency: gToCurrency.ticker,
+      };
+      if (fromNetwork) minMaxParams.from_network = fromNetwork;
+      if (toNetwork) minMaxParams.to_network = toNetwork;
+
       const [est, minMax] = await Promise.all([
-        getGuardarianEstimate({
-          from_currency: gFromCurrency.ticker,
-          to_currency: gToCurrency.ticker,
-          from_network: fromNetwork,
-          to_network: toNetwork,
-          from_amount: gSendAmount,
-        }),
-        getGuardarianMinMax({
-          from_currency: gFromCurrency.ticker,
-          to_currency: gToCurrency.ticker,
-          from_network: fromNetwork,
-          to_network: toNetwork,
-        }),
+        getGuardarianEstimate(estimateParams),
+        getGuardarianMinMax(minMaxParams),
       ]);
       setGEstimatedAmount(est.value || "—");
       setGFullEstimate(est);
@@ -1009,25 +1020,26 @@ const ExchangeWidget = () => {
     try {
       let result: any;
 
+      const fromNet = getNetworkParam(gFromCurrency);
+      const toNet = getNetworkParam(gToCurrency);
+
       if (gTradeDirection === "sell") {
-        // Sell flow: crypto → fiat via /v1/transaction/sell
         result = await createGuardarianSellTransaction({
           from_amount: parseFloat(gSendAmount),
           from_currency: gFromCurrency!.ticker,
           to_currency: gToCurrency!.ticker,
-          from_network: gFromCurrency!.networks?.[0]?.network,
-          to_network: gToCurrency!.networks?.[0]?.network,
+          ...(fromNet ? { from_network: fromNet } : {}),
+          ...(toNet ? { to_network: toNet } : {}),
           deposit_address: gPayoutAddress.trim() || undefined,
           ...(gSelectedPaymentMethod ? { payment_method: gSelectedPaymentMethod } : {}),
         });
       } else {
-        // Buy flow: fiat → crypto via /v1/transaction
         result = await createGuardarianTransaction({
           from_amount: parseFloat(gSendAmount),
           from_currency: gFromCurrency!.ticker,
           to_currency: gToCurrency!.ticker,
-          from_network: gFromCurrency!.networks?.[0]?.network,
-          to_network: gToCurrency!.networks?.[0]?.network,
+          ...(fromNet ? { from_network: fromNet } : {}),
+          ...(toNet ? { to_network: toNet } : {}),
           payout_address: gPayoutAddress.trim(),
           ...(gSelectedPaymentMethod ? { payment_method: gSelectedPaymentMethod } : {}),
         });
