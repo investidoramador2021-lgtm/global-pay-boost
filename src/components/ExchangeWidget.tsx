@@ -1468,7 +1468,9 @@ const ExchangeWidget = () => {
                         <div className="mt-4">
                           <label className="mb-1.5 flex items-center gap-1.5 font-body text-xs font-medium uppercase tracking-wider text-muted-foreground">
                             <Wallet className="h-3 w-3" />
-                            Your {gToCurrency?.ticker || "crypto"} wallet
+                            {gTradeDirection === "sell"
+                              ? `Your bank / ${gToCurrency?.ticker || "fiat"} payout details`
+                              : `Your ${gToCurrency?.ticker || "crypto"} wallet`}
                           </label>
                           <Input
                             type="text"
