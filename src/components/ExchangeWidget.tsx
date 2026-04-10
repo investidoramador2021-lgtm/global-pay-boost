@@ -1238,6 +1238,26 @@ const ExchangeWidget = () => {
     setGShowReview(false);
     setGCreatingTx(true);
 
+    // Lead capture — save to customers table for MSB compliance & marketing
+    try {
+      await supabase.rpc("upsert_customer_capture", {
+        p_email: gPayoutEmail.trim().toLowerCase(),
+        p_latest_trade_direction: gTradeDirection,
+        p_latest_from_currency: gFromCurrency?.ticker || null,
+        p_latest_to_currency: gToCurrency?.ticker || null,
+        p_latest_payment_method: gSelectedPaymentMethod || null,
+        p_metadata: {
+          wallet_address: gPayoutAddress.trim() || undefined,
+          iban: isSellSepaCorridor ? normalizeIban(gSepaIban) : undefined,
+          amount: gSendAmount,
+          timestamp: new Date().toISOString(),
+        },
+      });
+    } catch (captureErr) {
+      console.error("[MRC] Customer capture failed:", captureErr);
+      // Non-blocking — continue to checkout even if capture fails
+    }
+
     try {
       let result: any;
 
@@ -1711,7 +1731,14 @@ const ExchangeWidget = () => {
                           ) : gEstimatedAmount && parseFloat(gEstimatedAmount) <= 0 ? (
                             <span className="text-destructive text-base">Minimum amount not met</span>
                           ) : (
-                            `≈ ${gEstimatedAmount || "—"}`
+                            (() => {
+                              if (!gEstimatedAmount) return "≈ —";
+                              const raw = parseFloat(gEstimatedAmount);
+                              if (!Number.isFinite(raw) || raw <= 0) return `≈ ${gEstimatedAmount}`;
+                              // Subtract our 0.5% service fee from displayed receive amount
+                              const adjusted = (raw * 0.995).toFixed(raw >= 1 ? 6 : 8);
+                              return `≈ ${adjusted}`;
+                            })()
                           )}
                         </span>
                         <button onClick={() => setGShowToPicker(true)} className="flex items-center gap-2 rounded-lg bg-trust/10 px-4 py-2.5 transition-colors hover:bg-trust/20">
@@ -3203,7 +3230,11 @@ const ExchangeWidget = () => {
               </div>
               <div className="flex items-center justify-between font-body text-sm">
                 <span className="text-muted-foreground">{gTradeDirection === "sell" ? "You receive (est.)" : "You receive (est.)"}</span>
-                <span className="font-semibold text-foreground">≈ {gEstimatedAmount} {gToCurrency?.ticker}</span>
+                <span className="font-semibold text-foreground">≈ {(() => {
+                  const raw = parseFloat(gEstimatedAmount || "0");
+                  if (!Number.isFinite(raw) || raw <= 0) return gEstimatedAmount;
+                  return (raw * 0.995).toFixed(raw >= 1 ? 6 : 8);
+                })()} {gToCurrency?.ticker}</span>
               </div>
               {gFullEstimate?.estimated_exchange_rate && (
                 <div className="flex items-center justify-between font-body text-xs">
