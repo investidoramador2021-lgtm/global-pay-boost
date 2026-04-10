@@ -42,6 +42,7 @@ export interface GuardarianEstimate {
 export interface GuardarianTransaction {
   id: string;
   status: string;
+  checkout_url?: string;
   redirect_url: string;
   from_currency: string;
   to_currency: string;
@@ -66,6 +67,7 @@ export interface GuardarianMinMax {
 
 export interface GuardarianPaymentMethod {
   type: string;
+  payment_method?: string;
   payment_category: string;
   deposit_enabled: boolean;
   withdrawal_enabled: boolean;
@@ -76,7 +78,7 @@ async function callGuardarian(body: Record<string, unknown>) {
     method: 'POST',
     body,
   });
-  if (error) throw new Error(error.message);
+  if (error) throw new Error(error.message || 'Failed to reach the payment service');
   return data;
 }
 
