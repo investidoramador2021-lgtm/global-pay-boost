@@ -1937,8 +1937,6 @@ const ExchangeWidget = () => {
                         >
                           {gCreatingTx ? (
                             <><Loader2 className="mr-2 h-4 w-4 animate-spin" />Opening checkout…</>
-                          ) : gTradeDirection === "sell" ? (
-                            <><CreditCard className="mr-2 h-4 w-4" />Sell {gFromCurrency?.ticker || "Crypto"}</>
                           ) : (
                             <><CreditCard className="mr-2 h-4 w-4" />Buy {gToCurrency?.ticker || "Crypto"}</>
                           )}
