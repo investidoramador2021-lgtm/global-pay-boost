@@ -1389,7 +1389,7 @@ const ExchangeWidget = () => {
                         </p>
                       )}
 
-                      {/* Fiat Currency Picker */}
+                      {/* From Currency Picker — shows fiat for buy, crypto for sell */}
                       {gShowFromPicker && (
                         <div className="fixed inset-0 z-50 flex items-center justify-center bg-foreground/40 p-4" onClick={() => setGShowFromPicker(false)}>
                           <div className="w-full max-w-md rounded-2xl border border-border bg-card shadow-elevated" onClick={(e) => e.stopPropagation()}>
@@ -1397,28 +1397,39 @@ const ExchangeWidget = () => {
                               <Search className="h-4 w-4 text-muted-foreground" />
                               <input
                                 autoFocus
-                                placeholder="Search fiat currency..."
+                                placeholder={gTradeDirection === "buy" ? "Search fiat currency..." : "Search crypto..."}
                                 className="flex-1 bg-transparent font-body text-sm text-foreground outline-none placeholder:text-muted-foreground"
                                 value={gSearchQuery}
                                 onChange={(e) => setGSearchQuery(e.target.value)}
                               />
                               <button onClick={() => { setGShowFromPicker(false); setGSearchQuery(""); }} className="font-body text-xs text-muted-foreground hover:text-foreground">Cancel</button>
                             </div>
-                            <div className="overflow-y-auto p-2" style={{ maxHeight: 400 }}>
-                              {guardarianFiat
-                                .filter((c) => !gSearchQuery || c.ticker.toLowerCase().includes(gSearchQuery.toLowerCase()) || c.name.toLowerCase().includes(gSearchQuery.toLowerCase()))
-                                .map((c) => (
-                                  <button
-                                    key={c.ticker}
-                                    onClick={() => { setGFromCurrency(c); setGShowFromPicker(false); setGSearchQuery(""); }}
-                                    className="flex w-full items-center gap-3 rounded-lg px-3 py-2.5 text-left transition-colors hover:bg-accent"
-                                  >
-                                    {fiatFlagUrl(c.ticker) && <img src={fiatFlagUrl(c.ticker)} alt={c.ticker} className="h-6 w-6 rounded-full object-cover" loading="lazy" />}
-                                    <span className="font-display text-sm font-semibold uppercase text-foreground">{c.ticker}</span>
-                                    <span className="font-body text-xs text-muted-foreground">{c.name}</span>
-                                  </button>
-                                ))}
-                            </div>
+                            {gTradeDirection === "buy" ? (
+                              <div className="overflow-y-auto p-2" style={{ maxHeight: 400 }}>
+                                {guardarianFiat
+                                  .filter((c) => !gSearchQuery || c.ticker.toLowerCase().includes(gSearchQuery.toLowerCase()) || c.name.toLowerCase().includes(gSearchQuery.toLowerCase()))
+                                  .map((c) => (
+                                    <button
+                                      key={c.ticker}
+                                      onClick={() => { setGFromCurrency(c); setGShowFromPicker(false); setGSearchQuery(""); }}
+                                      className="flex w-full items-center gap-3 rounded-lg px-3 py-2.5 text-left transition-colors hover:bg-accent"
+                                    >
+                                      {fiatFlagUrl(c.ticker) && <img src={fiatFlagUrl(c.ticker)} alt={c.ticker} className="h-6 w-6 rounded-full object-cover" loading="lazy" />}
+                                      <span className="font-display text-sm font-semibold uppercase text-foreground">{c.ticker}</span>
+                                      <span className="font-body text-xs text-muted-foreground">{c.name}</span>
+                                    </button>
+                                  ))}
+                              </div>
+                            ) : (
+                              <GuardarianCryptoList
+                                items={guardarianCrypto.filter((c) => {
+                                  if (!gSearchQuery) return true;
+                                  const q = gSearchQuery.toLowerCase();
+                                  return c.ticker.toLowerCase().includes(q) || c.name.toLowerCase().includes(q);
+                                })}
+                                onSelect={(c) => { setGFromCurrency(c); setGShowFromPicker(false); setGSearchQuery(""); }}
+                              />
+                            )}
                           </div>
                         </div>
                       )}
