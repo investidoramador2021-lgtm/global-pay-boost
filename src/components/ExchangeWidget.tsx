@@ -1416,7 +1416,7 @@ const ExchangeWidget = () => {
                     )}
 
                     {/* ===== STEP 2: PROVIDER COMPARISON ===== */}
-                    {gStep === "compare" && (
+                    {false && gStep === "compare" && (
                       <div className="mt-4 space-y-4">
                         <button
                           onClick={() => { setGCheckoutUrl(""); setGStep("form"); }}
