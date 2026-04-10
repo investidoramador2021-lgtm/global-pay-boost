@@ -271,6 +271,9 @@ const ExchangeWidget = () => {
   const [gCreatingTx, setGCreatingTx] = useState(false);
   const [gCheckoutUrl, setGCheckoutUrl] = useState("");
   const [gSelectedProvider, setGSelectedProvider] = useState<"guardarian" | "transak">("guardarian");
+  const [gShowReview, setGShowReview] = useState(false);
+  const [gCurrencyRetryCount, setGCurrencyRetryCount] = useState(0);
+  const [gCurrencyError, setGCurrencyError] = useState(false);
 
   // Transaction flow state
   const [step, setStep] = useState<Step>("exchange");
@@ -632,26 +635,52 @@ const ExchangeWidget = () => {
     loadCurrencies();
   }, []);
 
-  // Load Guardarian currencies on first switch to buysell mode
+  // Load Guardarian currencies on first switch to buysell mode — with retry
+  const loadGuardarianCurrencies = useCallback(async (retryNum = 0) => {
+    setGuardarianLoading(true);
+    setGCurrencyError(false);
+    try {
+      const data = await getGuardarianCurrencies();
+      if ((data as any)?.fallback) throw new Error("Provider unavailable");
+      const fiat = (data.fiat_currencies || []).filter((c: GuardarianCurrency) => c.enabled && c.is_available !== false);
+      const crypto = (data.crypto_currencies || []).filter((c: GuardarianCurrency) => c.enabled && c.is_available !== false);
+      setGuardarianFiat(fiat);
+      setGuardarianCrypto(crypto);
+      // Deep-link pre-selection: check URL params
+      const dlParams = new URLSearchParams(window.location.search);
+      const dlFiat = dlParams.get("fiat")?.toUpperCase();
+      const dlCrypto = dlParams.get("crypto")?.toUpperCase();
+      setGFromCurrency(fiat.find((c: GuardarianCurrency) => c.ticker === (dlFiat || "USD")) || fiat.find((c: GuardarianCurrency) => c.ticker === "EUR") || fiat[0] || null);
+      setGToCurrency(crypto.find((c: GuardarianCurrency) => c.ticker === (dlCrypto || "BTC")) || crypto[0] || null);
+      setGuardarianLoaded(true);
+      setGCurrencyRetryCount(0);
+    } catch (err) {
+      console.error("Failed to load Guardarian currencies:", err);
+      if (retryNum < 3) {
+        setGCurrencyRetryCount(retryNum + 1);
+        setTimeout(() => loadGuardarianCurrencies(retryNum + 1), 2000 * (retryNum + 1));
+      } else {
+        setGCurrencyError(true);
+      }
+    } finally {
+      setGuardarianLoading(false);
+    }
+  }, []);
+
   useEffect(() => {
     if (widgetMode !== "buysell" || guardarianLoaded) return;
-    setGuardarianLoading(true);
-    getGuardarianCurrencies()
-      .then((data) => {
-        const fiat = (data.fiat_currencies || []).filter((c) => c.enabled && c.is_available !== false);
-        const crypto = (data.crypto_currencies || []).filter((c) => c.enabled && c.is_available !== false);
-        setGuardarianFiat(fiat);
-        setGuardarianCrypto(crypto);
-        setGFromCurrency(fiat.find((c) => c.ticker === "USD") || fiat.find((c) => c.ticker === "EUR") || fiat[0] || null);
-        setGToCurrency(crypto.find((c) => c.ticker === "BTC") || crypto[0] || null);
-        setGuardarianLoaded(true);
-      })
-      .catch((err) => {
-        console.error("Failed to load Guardarian currencies:", err);
-        toast({ title: "Connection issue", description: "Could not load Buy/Sell currencies.", variant: "destructive" });
-      })
-      .finally(() => setGuardarianLoading(false));
-  }, [widgetMode, guardarianLoaded]);
+    loadGuardarianCurrencies();
+  }, [widgetMode, guardarianLoaded, loadGuardarianCurrencies]);
+
+  // Deep-link: ?tab=buy&crypto=SOL&fiat=USD activates Buy/Sell tab automatically
+  useEffect(() => {
+    const params = new URLSearchParams(window.location.search);
+    const tab = params.get("tab")?.toLowerCase();
+    if (tab === "buy" || tab === "sell" || tab === "buysell") {
+      setWidgetMode("buysell");
+      if (tab === "sell") setGTradeDirection("sell");
+    }
+  }, []);
 
   // Guardarian estimate
   const fetchGuardarianEstimate = useCallback(async () => {
@@ -934,6 +963,12 @@ const ExchangeWidget = () => {
       return;
     }
 
+    // Show review overlay instead of redirecting immediately
+    setGShowReview(true);
+  };
+
+  const handleConfirmGuardarianCheckout = async () => {
+    setGShowReview(false);
     setGCreatingTx(true);
 
     try {
@@ -942,8 +977,8 @@ const ExchangeWidget = () => {
 
       const params = new URLSearchParams({
         partner_api_token: token,
-        default_fiat_currency: gFromCurrency.ticker,
-        default_crypto_currency: gToCurrency.ticker,
+        default_fiat_currency: gFromCurrency!.ticker,
+        default_crypto_currency: gToCurrency!.ticker,
         default_fiat_amount: gSendAmount,
         payout_address: gPayoutAddress.trim(),
         theme: "blue",
@@ -1142,11 +1177,11 @@ const ExchangeWidget = () => {
         {step === "exchange" && (
           <motion.div key="exchange" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}>
             {/* ===== MODE TABS: Exchange | Buy/Sell ===== */}
-            <div className="mb-5 flex items-center justify-between">
-              <div className="flex rounded-xl border border-border bg-accent p-1 gap-1">
+            <div className="mb-5 flex items-center justify-between gap-2">
+              <div className="flex rounded-xl border border-border bg-accent p-1 gap-1 max-[480px]:w-full max-[480px]:grid max-[480px]:grid-cols-2">
                 <button
                   onClick={() => { setWidgetMode("exchange"); setGStep("form"); setGCheckoutUrl(""); }}
-                  className={`flex items-center gap-1.5 rounded-lg px-4 py-2 font-display text-sm font-semibold transition-all ${
+                  className={`flex items-center justify-center gap-1.5 rounded-lg px-4 py-2 font-display text-sm font-semibold transition-all ${
                     widgetMode === "exchange"
                       ? "bg-primary text-primary-foreground shadow-card"
                       : "text-muted-foreground hover:text-foreground hover:bg-background"
@@ -1156,7 +1191,7 @@ const ExchangeWidget = () => {
                 </button>
                 <button
                   onClick={() => setWidgetMode("buysell")}
-                  className={`flex items-center gap-1.5 rounded-lg px-4 py-2 font-display text-sm font-semibold transition-all ${
+                  className={`flex items-center justify-center gap-1.5 rounded-lg px-4 py-2 font-display text-sm font-semibold transition-all ${
                     widgetMode === "buysell"
                       ? "bg-primary text-primary-foreground shadow-card"
                       : "text-muted-foreground hover:text-foreground hover:bg-background"
@@ -1165,7 +1200,7 @@ const ExchangeWidget = () => {
                   <CreditCard className="h-4 w-4" /> Buy / Sell
                 </button>
               </div>
-              <span className="flex items-center gap-1.5 rounded-full border border-trust/30 bg-trust/10 px-2.5 py-1 font-body text-[10px] font-semibold uppercase tracking-wider text-trust">
+              <span className="hidden min-[481px]:flex items-center gap-1.5 rounded-full border border-trust/30 bg-trust/10 px-2.5 py-1 font-body text-[10px] font-semibold uppercase tracking-wider text-trust">
                 <span className="relative flex h-2 w-2">
                   <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-trust opacity-75"></span>
                   <span className="relative inline-flex h-2 w-2 rounded-full bg-trust"></span>
@@ -1178,15 +1213,43 @@ const ExchangeWidget = () => {
             {widgetMode === "buysell" && (
               <div>
                 {guardarianLoading ? (
-                  <div className="flex h-60 items-center justify-center">
-                    <Loader2 className="h-6 w-6 animate-spin text-primary" />
-                    <span className="ml-2 text-sm text-muted-foreground">Loading currencies…</span>
+                  <div className="flex h-60 flex-col items-center justify-center gap-3">
+                    <Loader2 className="h-8 w-8 animate-spin text-primary" />
+                    <span className="text-sm text-muted-foreground animate-pulse">
+                      {gCurrencyRetryCount > 0 ? `Retrying… (${gCurrencyRetryCount}/3)` : "Loading currencies…"}
+                    </span>
+                  </div>
+                ) : gCurrencyError ? (
+                  <div className="flex h-60 flex-col items-center justify-center gap-3 text-center">
+                    <AlertCircle className="h-8 w-8 text-destructive" />
+                    <p className="text-sm text-muted-foreground">Could not load currencies. Please try again.</p>
+                    <Button variant="outline" size="sm" onClick={() => loadGuardarianCurrencies(0)}>
+                      <RefreshCw className="mr-1.5 h-3.5 w-3.5" /> Retry
+                    </Button>
                   </div>
                 ) : (
                   <>
+                    {/* Buy / Sell toggle */}
+                    <div className="mb-4 flex rounded-lg border border-border bg-accent p-0.5 gap-0.5">
+                      <button
+                        onClick={() => setGTradeDirection("buy")}
+                        className={`flex-1 rounded-md px-3 py-1.5 font-display text-xs font-semibold transition-all ${
+                          gTradeDirection === "buy" ? "bg-primary text-primary-foreground shadow-sm" : "text-muted-foreground hover:text-foreground"
+                        }`}
+                      >Buy</button>
+                      <button
+                        onClick={() => setGTradeDirection("sell")}
+                        className={`flex-1 rounded-md px-3 py-1.5 font-display text-xs font-semibold transition-all ${
+                          gTradeDirection === "sell" ? "bg-primary text-primary-foreground shadow-sm" : "text-muted-foreground hover:text-foreground"
+                        }`}
+                      >Sell</button>
+                    </div>
+
                     {/* You Pay (Fiat) */}
                     <div className="relative">
-                      <label className="mb-1.5 block font-body text-xs font-medium uppercase tracking-wider text-muted-foreground">You Pay</label>
+                      <label className="mb-1.5 block font-body text-xs font-medium uppercase tracking-wider text-muted-foreground">
+                        {gTradeDirection === "buy" ? "You Pay (Fiat)" : "You Sell (Crypto)"}
+                      </label>
                       <div className="flex items-center gap-3 rounded-xl border border-border bg-accent p-4">
                         <Input
                           type="number"
@@ -1263,7 +1326,9 @@ const ExchangeWidget = () => {
 
                     {/* You Get (Crypto) */}
                     <div className="relative">
-                      <label className="mb-1.5 block font-body text-xs font-medium uppercase tracking-wider text-muted-foreground">You Get</label>
+                      <label className="mb-1.5 block font-body text-xs font-medium uppercase tracking-wider text-muted-foreground">
+                        {gTradeDirection === "buy" ? "You Receive (Crypto)" : "You Get (Fiat)"}
+                      </label>
                       <div className="flex items-center gap-3 rounded-xl border border-border bg-accent p-4">
                         <span className="flex-1 font-display text-2xl font-bold text-foreground">
                           {gEstimating ? <Loader2 className="h-6 w-6 animate-spin text-muted-foreground" /> : `≈ ${gEstimatedAmount || "—"}`}
@@ -2551,6 +2616,74 @@ const ExchangeWidget = () => {
           </motion.div>
         )}
       </AnimatePresence>
+
+      {/* ===== Review Summary Overlay ===== */}
+      {gShowReview && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-foreground/50 p-4" onClick={() => setGShowReview(false)}>
+          <motion.div
+            initial={{ opacity: 0, scale: 0.95 }}
+            animate={{ opacity: 1, scale: 1 }}
+            exit={{ opacity: 0, scale: 0.95 }}
+            className="w-full max-w-md rounded-2xl border border-border bg-card p-6 shadow-elevated"
+            onClick={(e) => e.stopPropagation()}
+          >
+            <h3 className="font-display text-lg font-bold text-foreground">Review your order</h3>
+            <p className="mt-1 font-body text-xs text-muted-foreground">Please confirm the details before proceeding to checkout.</p>
+
+            <div className="mt-5 space-y-3 rounded-xl border border-border bg-accent/50 p-4">
+              <div className="flex items-center justify-between font-body text-sm">
+                <span className="text-muted-foreground">You pay</span>
+                <span className="font-semibold text-foreground">{gSendAmount} {gFromCurrency?.ticker}</span>
+              </div>
+              <div className="flex items-center justify-between font-body text-sm">
+                <span className="text-muted-foreground">You receive (est.)</span>
+                <span className="font-semibold text-foreground">≈ {gEstimatedAmount} {gToCurrency?.ticker}</span>
+              </div>
+              {gFullEstimate?.estimated_exchange_rate && (
+                <div className="flex items-center justify-between font-body text-xs">
+                  <span className="text-muted-foreground">Exchange rate</span>
+                  <span className="text-foreground">1 {gFromCurrency?.ticker} ≈ {gFullEstimate.estimated_exchange_rate} {gToCurrency?.ticker}</span>
+                </div>
+              )}
+              {gFullEstimate?.network_fee && (
+                <div className="flex items-center justify-between font-body text-xs">
+                  <span className="text-muted-foreground">Network fee</span>
+                  <span className="text-foreground">{parseFloat(gFullEstimate.network_fee.amount).toFixed(6)} {gFullEstimate.network_fee.currency}</span>
+                </div>
+              )}
+              {gFullEstimate?.service_fees?.map((fee, i) => (
+                <div key={i} className="flex items-center justify-between font-body text-xs">
+                  <span className="text-muted-foreground">Service fee ({fee.percentage})</span>
+                  <span className="text-foreground">{fee.amount} {fee.currency}</span>
+                </div>
+              ))}
+              <div className="border-t border-border pt-2">
+                <div className="flex items-start justify-between font-body text-xs">
+                  <span className="text-muted-foreground">Wallet</span>
+                  <span className="max-w-[200px] break-all text-right font-mono text-foreground">{gPayoutAddress}</span>
+                </div>
+              </div>
+            </div>
+
+            <div className="mt-4 flex items-center gap-2 rounded-lg border border-primary/20 bg-primary/5 p-3">
+              <Shield className="h-4 w-4 shrink-0 text-primary" />
+              <p className="font-body text-[11px] text-muted-foreground">You'll be redirected to Guardarian's secure checkout to complete your payment.</p>
+            </div>
+
+            <div className="mt-5 flex gap-3">
+              <Button variant="outline" className="flex-1" onClick={() => setGShowReview(false)}>Cancel</Button>
+              <Button
+                className="flex-1 min-h-[44px]"
+                disabled={gCreatingTx}
+                onClick={handleConfirmGuardarianCheckout}
+              >
+                {gCreatingTx ? <Loader2 className="mr-2 h-4 w-4 animate-spin" /> : <CreditCard className="mr-2 h-4 w-4" />}
+                Confirm & Pay
+              </Button>
+            </div>
+          </motion.div>
+        </div>
+      )}
     </motion.div>
   );
 };
