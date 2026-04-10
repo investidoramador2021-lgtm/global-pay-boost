@@ -1,6 +1,6 @@
 import { useState, useEffect, useCallback, useRef } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { ArrowDownUp, Loader2, Search, Copy, Check, ArrowLeft, ArrowRight, ArrowLeftRight, Clock, CheckCircle2, AlertCircle, ExternalLink, Wallet, QrCode, XCircle, Info, Mail, RefreshCw, Shield, Lock, ChevronDown, Share2 } from "lucide-react";
+import { ArrowDownUp, Loader2, Search, Copy, Check, ArrowLeft, ArrowRight, ArrowLeftRight, Clock, CheckCircle2, AlertCircle, ExternalLink, Wallet, QrCode, XCircle, Info, Mail, RefreshCw, Shield, Lock, ChevronDown, Share2, CreditCard, Repeat } from "lucide-react";
 import DestinationAddressInput, { tickerToAddressType } from "@/components/DestinationAddressInput";
 import { supabase } from "@/integrations/supabase/client";
 import { Button } from "@/components/ui/button";
@@ -16,6 +16,12 @@ import {
   type TransactionResult,
   type TransactionStatus,
 } from "@/lib/changenow";
+import {
+  getGuardarianCurrencies,
+  getGuardarianEstimate,
+  getGuardarianMinMax,
+  type GuardarianCurrency,
+} from "@/lib/guardarian";
 import { useToast } from "@/hooks/use-toast";
 import { usePushNotifications } from "@/hooks/use-push-notifications";
 
@@ -143,6 +149,25 @@ const ExchangeWidget = () => {
   const [showToPicker, setShowToPicker] = useState(false);
   const [searchQuery, setSearchQuery] = useState("");
   const debounceRef = useRef<ReturnType<typeof setTimeout>>();
+
+  // ===== Dual-tab mode: "exchange" (ChangeNOW) vs "buysell" (Guardarian) =====
+  type WidgetMode = "exchange" | "buysell";
+  const [widgetMode, setWidgetMode] = useState<WidgetMode>("exchange");
+  const [guardarianFiat, setGuardarianFiat] = useState<GuardarianCurrency[]>([]);
+  const [guardarianCrypto, setGuardarianCrypto] = useState<GuardarianCurrency[]>([]);
+  const [guardarianLoading, setGuardarianLoading] = useState(false);
+  const [guardarianLoaded, setGuardarianLoaded] = useState(false);
+  const [gFromCurrency, setGFromCurrency] = useState<GuardarianCurrency | null>(null);
+  const [gToCurrency, setGToCurrency] = useState<GuardarianCurrency | null>(null);
+  const [gSendAmount, setGSendAmount] = useState("100");
+  const [gEstimatedAmount, setGEstimatedAmount] = useState<string>("");
+  const [gEstimating, setGEstimating] = useState(false);
+  const [gMinAmount, setGMinAmount] = useState<number>(0);
+  const [gMaxAmount, setGMaxAmount] = useState<number>(999999);
+  const gDebounceRef = useRef<ReturnType<typeof setTimeout>>();
+  const [gShowFromPicker, setGShowFromPicker] = useState(false);
+  const [gShowToPicker, setGShowToPicker] = useState(false);
+  const [gSearchQuery, setGSearchQuery] = useState("");
 
   // Transaction flow state
   const [step, setStep] = useState<Step>("exchange");
@@ -503,6 +528,70 @@ const ExchangeWidget = () => {
 
     loadCurrencies();
   }, []);
+
+  // Load Guardarian currencies on first switch to buysell mode
+  useEffect(() => {
+    if (widgetMode !== "buysell" || guardarianLoaded) return;
+    setGuardarianLoading(true);
+    getGuardarianCurrencies()
+      .then((data) => {
+        const fiat = (data.fiat_currencies || []).filter((c) => c.enabled && c.is_available);
+        const crypto = (data.crypto_currencies || []).filter((c) => c.enabled && c.is_available);
+        setGuardarianFiat(fiat);
+        setGuardarianCrypto(crypto);
+        setGFromCurrency(fiat.find((c) => c.ticker === "USD") || fiat.find((c) => c.ticker === "EUR") || fiat[0] || null);
+        setGToCurrency(crypto.find((c) => c.ticker === "BTC") || crypto[0] || null);
+        setGuardarianLoaded(true);
+      })
+      .catch((err) => {
+        console.error("Failed to load Guardarian currencies:", err);
+        toast({ title: "Connection issue", description: "Could not load Buy/Sell currencies.", variant: "destructive" });
+      })
+      .finally(() => setGuardarianLoading(false));
+  }, [widgetMode, guardarianLoaded]);
+
+  // Guardarian estimate
+  const fetchGuardarianEstimate = useCallback(async () => {
+    if (!gFromCurrency || !gToCurrency || !gSendAmount || parseFloat(gSendAmount) <= 0) {
+      setGEstimatedAmount("");
+      return;
+    }
+    setGEstimating(true);
+    try {
+      // Pick first available network
+      const fromNetwork = gFromCurrency.networks?.[0]?.network || gFromCurrency.ticker;
+      const toNetwork = gToCurrency.networks?.[0]?.network || gToCurrency.ticker;
+      const [est, minMax] = await Promise.all([
+        getGuardarianEstimate({
+          from_currency: gFromCurrency.ticker,
+          to_currency: gToCurrency.ticker,
+          from_network: fromNetwork,
+          to_network: toNetwork,
+          from_amount: gSendAmount,
+        }),
+        getGuardarianMinMax({
+          from_currency: gFromCurrency.ticker,
+          to_currency: gToCurrency.ticker,
+          from_network: fromNetwork,
+          to_network: toNetwork,
+        }),
+      ]);
+      setGEstimatedAmount(est.value || "—");
+      setGMinAmount(minMax.min || 0);
+      setGMaxAmount(minMax.max || 999999);
+    } catch {
+      setGEstimatedAmount("—");
+    } finally {
+      setGEstimating(false);
+    }
+  }, [gFromCurrency, gToCurrency, gSendAmount]);
+
+  useEffect(() => {
+    if (widgetMode !== "buysell") return;
+    if (gDebounceRef.current) clearTimeout(gDebounceRef.current);
+    gDebounceRef.current = setTimeout(fetchGuardarianEstimate, 600);
+    return () => { if (gDebounceRef.current) clearTimeout(gDebounceRef.current); };
+  }, [fetchGuardarianEstimate, widgetMode]);
 
   const fetchEstimate = useCallback(async () => {
     if (!fromCurrency || !toCurrency || !sendAmount || parseFloat(sendAmount) <= 0) {
@@ -868,137 +957,339 @@ const ExchangeWidget = () => {
         {/* ===== STEP 1: Exchange Form ===== */}
         {step === "exchange" && (
           <motion.div key="exchange" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}>
-            <div className="mb-6 flex items-center justify-between">
-              <h2 className="font-display text-lg font-semibold text-foreground">Limitless Web3.0 Crypto Exchange</h2>
+            {/* ===== MODE TABS: Exchange | Buy/Sell ===== */}
+            <div className="mb-5 flex items-center justify-between">
+              <div className="flex rounded-xl border border-border bg-accent p-1 gap-1">
+                <button
+                  onClick={() => setWidgetMode("exchange")}
+                  className={`flex items-center gap-1.5 rounded-lg px-4 py-2 font-display text-sm font-semibold transition-all ${
+                    widgetMode === "exchange"
+                      ? "bg-primary text-primary-foreground shadow-card"
+                      : "text-muted-foreground hover:text-foreground hover:bg-background"
+                  }`}
+                >
+                  <Repeat className="h-4 w-4" /> Exchange
+                </button>
+                <button
+                  onClick={() => setWidgetMode("buysell")}
+                  className={`flex items-center gap-1.5 rounded-lg px-4 py-2 font-display text-sm font-semibold transition-all ${
+                    widgetMode === "buysell"
+                      ? "bg-primary text-primary-foreground shadow-card"
+                      : "text-muted-foreground hover:text-foreground hover:bg-background"
+                  }`}
+                >
+                  <CreditCard className="h-4 w-4" /> Buy / Sell
+                </button>
+              </div>
               <span className="flex items-center gap-1.5 rounded-full border border-trust/30 bg-trust/10 px-2.5 py-1 font-body text-[10px] font-semibold uppercase tracking-wider text-trust">
                 <span className="relative flex h-2 w-2">
                   <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-trust opacity-75"></span>
                   <span className="relative inline-flex h-2 w-2 rounded-full bg-trust"></span>
                 </span>
-                System Online
+                Online
               </span>
             </div>
 
-            {/* Rate Type Toggle */}
-            <div className="mb-4 flex items-center gap-2">
-              <button
-                onClick={() => setFixedRate(true)}
-                className={`relative rounded-lg border px-3 py-1.5 font-body text-xs font-semibold transition-colors ${
-                  fixedRate
-                    ? "border-primary bg-primary/10 text-primary ring-1 ring-primary/30"
-                    : "border-border bg-accent text-muted-foreground hover:border-primary/40"
-                }`}
-              >
-                <Lock className="me-1 inline h-3 w-3" /> Fixed Rate
-                <span className="ms-1.5 inline-flex rounded bg-primary/20 px-1.5 py-0.5 font-body text-[9px] font-bold uppercase tracking-wider text-primary">
-                  Recommended
-                </span>
-              </button>
-              <button
-                onClick={() => setFixedRate(false)}
-                className={`rounded-lg border px-3 py-1.5 font-body text-xs font-semibold transition-colors ${
-                  !fixedRate
-                    ? "border-primary bg-primary/10 text-primary"
-                    : "border-border bg-accent text-muted-foreground hover:border-primary/40"
-                }`}
-              >
-                Expected Rate
-              </button>
-            </div>
+            {/* ===== BUY/SELL MODE (Guardarian) ===== */}
+            {widgetMode === "buysell" && (
+              <div>
+                {guardarianLoading ? (
+                  <div className="flex h-60 items-center justify-center">
+                    <Loader2 className="h-6 w-6 animate-spin text-primary" />
+                    <span className="ml-2 text-sm text-muted-foreground">Loading currencies…</span>
+                  </div>
+                ) : (
+                  <>
+                    {/* You Pay (Fiat) */}
+                    <div className="relative">
+                      <label className="mb-1.5 block font-body text-xs font-medium uppercase tracking-wider text-muted-foreground">You Pay</label>
+                      <div className="flex items-center gap-3 rounded-xl border border-border bg-accent p-4">
+                        <Input
+                          type="number"
+                          value={gSendAmount}
+                          onChange={(e) => setGSendAmount(e.target.value)}
+                          className="flex-1 border-none bg-transparent p-0 font-display text-2xl font-bold text-foreground shadow-none focus-visible:ring-0"
+                          min={0}
+                          step="any"
+                        />
+                        <button onClick={() => setGShowFromPicker(true)} className="flex items-center gap-2 rounded-lg bg-primary/10 px-4 py-2.5 transition-colors hover:bg-primary/20">
+                          <span className="font-display text-sm font-semibold uppercase text-primary">{gFromCurrency?.ticker || "Select"}</span>
+                          <ChevronDown className="h-3.5 w-3.5 text-primary/60" />
+                        </button>
+                      </div>
+                      {/* Min/Max validation */}
+                      {parseFloat(gSendAmount) > 0 && gMinAmount > 0 && parseFloat(gSendAmount) < gMinAmount && (
+                        <p className="mt-1 font-body text-xs text-destructive">
+                          Minimum: {gMinAmount} {gFromCurrency?.ticker}
+                        </p>
+                      )}
+                      {parseFloat(gSendAmount) > 0 && gMaxAmount < 999999 && parseFloat(gSendAmount) > gMaxAmount && (
+                        <p className="mt-1 font-body text-xs text-destructive">
+                          Maximum: {gMaxAmount} {gFromCurrency?.ticker}
+                        </p>
+                      )}
 
-            {/* Popular Assets Quick Select */}
-            <div className="mb-4 flex items-center gap-2">
-              <span className="font-body text-[10px] font-medium uppercase tracking-wider text-muted-foreground">Popular:</span>
-              {["btc", "eth", "usdt", "sol"].map((ticker) => {
-                const c = currencies.find((cur) => cur.ticker === ticker);
-                if (!c) return null;
-                return (
-                  <button
-                    key={ticker}
-                    onClick={() => setFromCurrency(c)}
-                    className={`flex items-center gap-1.5 rounded-lg border px-3 py-1.5 font-display text-xs font-semibold uppercase transition-colors ${
-                      fromCurrency?.ticker === ticker
-                        ? "border-primary bg-primary/10 text-primary"
-                        : "border-border bg-accent text-foreground hover:border-primary/40"
-                    }`}
-                  >
-                    {c.image && <img src={c.image} alt="" className="h-4 w-4 rounded-full" />}
-                    {ticker}
-                  </button>
-                );
-              })}
-            </div>
+                      {/* Fiat Currency Picker */}
+                      {gShowFromPicker && (
+                        <div className="fixed inset-0 z-50 flex items-center justify-center bg-foreground/40 p-4" onClick={() => setGShowFromPicker(false)}>
+                          <div className="w-full max-w-md rounded-2xl border border-border bg-card shadow-elevated" onClick={(e) => e.stopPropagation()}>
+                            <div className="flex items-center gap-2 border-b border-border p-4">
+                              <Search className="h-4 w-4 text-muted-foreground" />
+                              <input
+                                autoFocus
+                                placeholder="Search fiat currency..."
+                                className="flex-1 bg-transparent font-body text-sm text-foreground outline-none placeholder:text-muted-foreground"
+                                value={gSearchQuery}
+                                onChange={(e) => setGSearchQuery(e.target.value)}
+                              />
+                              <button onClick={() => { setGShowFromPicker(false); setGSearchQuery(""); }} className="font-body text-xs text-muted-foreground hover:text-foreground">Cancel</button>
+                            </div>
+                            <div className="overflow-y-auto p-2" style={{ maxHeight: 400 }}>
+                              {guardarianFiat
+                                .filter((c) => !gSearchQuery || c.ticker.toLowerCase().includes(gSearchQuery.toLowerCase()) || c.name.toLowerCase().includes(gSearchQuery.toLowerCase()))
+                                .map((c) => (
+                                  <button
+                                    key={c.ticker}
+                                    onClick={() => { setGFromCurrency(c); setGShowFromPicker(false); setGSearchQuery(""); }}
+                                    className="flex w-full items-center gap-3 rounded-lg px-3 py-2.5 text-left transition-colors hover:bg-accent"
+                                  >
+                                    <span className="font-display text-sm font-semibold uppercase text-foreground">{c.ticker}</span>
+                                    <span className="font-body text-xs text-muted-foreground">{c.name}</span>
+                                  </button>
+                                ))}
+                            </div>
+                          </div>
+                        </div>
+                      )}
+                    </div>
 
-            <div className="relative">
-              <label className="mb-1.5 block font-body text-xs font-medium uppercase tracking-wider text-muted-foreground">You Send</label>
-              <div className="flex items-center gap-3 rounded-xl border border-border bg-accent p-4 sm:p-4">
-                <Input
-                  type="number"
-                  value={sendAmount}
-                  onChange={(e) => setSendAmount(e.target.value)}
-                  className="flex-1 border-none bg-transparent p-0 font-display text-2xl font-bold text-foreground shadow-none focus-visible:ring-0"
-                  min={0}
-                  step="any"
-                />
-                <button onClick={() => setShowFromPicker(true)} className="flex items-center gap-2 rounded-lg bg-primary/10 px-4 py-2.5 transition-colors hover:bg-primary/20 touch-target">
-                  {fromCurrency?.image && <img src={fromCurrency.image} alt="" className="h-5 w-5 rounded-full" />}
-                  <span className="font-display text-sm font-semibold uppercase text-primary">{fromCurrency ? displayTicker(fromCurrency) : "Select"}</span>
-                  {fromCurrency && networkLabel(fromCurrency) && (
-                    <span className="rounded bg-primary/20 px-1 py-0.5 font-body text-[9px] uppercase text-primary">{networkLabel(fromCurrency)}</span>
-                  )}
-                </button>
-              </div>
-              {belowMin && (
-                <p className="mt-1 font-body text-xs text-destructive">
-                  Minimum amount: {minAmount} {fromCurrency ? displayTicker(fromCurrency) : ""}
-                </p>
-              )}
-              <CurrencyPicker show={showFromPicker} onSelect={setFromCurrency} onClose={() => setShowFromPicker(false)} exclude={toCurrency?.ticker} />
-            </div>
+                    {/* Rate info */}
+                    <div className="my-3 flex items-center justify-center">
+                      <span className="flex items-center gap-1 rounded-md border border-trust/20 bg-trust/5 px-2 py-1 font-body text-[10px] font-medium text-trust sm:text-[11px]">
+                        <CheckCircle2 className="h-3 w-3" /> All fees included · Powered by Guardarian
+                      </span>
+                    </div>
 
-            {/* Rate info bar */}
-            <div className="my-3 flex items-center justify-between gap-2">
-              <div className="flex flex-wrap items-center gap-1.5 sm:gap-3">
-                <span className="flex items-center gap-1 rounded-md border border-trust/20 bg-trust/5 px-2 py-1 font-body text-[10px] font-medium text-trust sm:text-[11px]">
-                  <CheckCircle2 className="h-3 w-3" /> All fees included
-                </span>
-                {fromCurrency && toCurrency && estimatedAmount && estimatedAmount !== "—" && parseFloat(sendAmount) > 0 && (
-                  <span className="font-body text-[10px] text-muted-foreground sm:text-[11px]">
-                    1 {displayTicker(fromCurrency)} ≈ {(parseFloat(estimatedAmount) / parseFloat(sendAmount)).toFixed(6)} {displayTicker(toCurrency)}
-                  </span>
+                    {/* You Get (Crypto) */}
+                    <div className="relative">
+                      <label className="mb-1.5 block font-body text-xs font-medium uppercase tracking-wider text-muted-foreground">You Get</label>
+                      <div className="flex items-center gap-3 rounded-xl border border-border bg-accent p-4">
+                        <span className="flex-1 font-display text-2xl font-bold text-foreground">
+                          {gEstimating ? <Loader2 className="h-6 w-6 animate-spin text-muted-foreground" /> : `≈ ${gEstimatedAmount || "—"}`}
+                        </span>
+                        <button onClick={() => setGShowToPicker(true)} className="flex items-center gap-2 rounded-lg bg-trust/10 px-4 py-2.5 transition-colors hover:bg-trust/20">
+                          <span className="font-display text-sm font-semibold uppercase text-trust">{gToCurrency?.ticker || "Select"}</span>
+                          <ChevronDown className="h-3.5 w-3.5 text-trust/60" />
+                        </button>
+                      </div>
+
+                      {/* Crypto Currency Picker */}
+                      {gShowToPicker && (
+                        <div className="fixed inset-0 z-50 flex items-center justify-center bg-foreground/40 p-4" onClick={() => setGShowToPicker(false)}>
+                          <div className="w-full max-w-md rounded-2xl border border-border bg-card shadow-elevated" onClick={(e) => e.stopPropagation()}>
+                            <div className="flex items-center gap-2 border-b border-border p-4">
+                              <Search className="h-4 w-4 text-muted-foreground" />
+                              <input
+                                autoFocus
+                                placeholder="Search crypto..."
+                                className="flex-1 bg-transparent font-body text-sm text-foreground outline-none placeholder:text-muted-foreground"
+                                value={gSearchQuery}
+                                onChange={(e) => setGSearchQuery(e.target.value)}
+                              />
+                              <button onClick={() => { setGShowToPicker(false); setGSearchQuery(""); }} className="font-body text-xs text-muted-foreground hover:text-foreground">Cancel</button>
+                            </div>
+                            {/* Quick Select */}
+                            <div className="flex gap-2 border-b border-border px-4 pb-3">
+                              {["BTC", "ETH", "SOL", "USDT"].map((ticker) => {
+                                const c = guardarianCrypto.find((cur) => cur.ticker === ticker);
+                                if (!c) return null;
+                                return (
+                                  <button
+                                    key={ticker}
+                                    onClick={() => { setGToCurrency(c); setGShowToPicker(false); setGSearchQuery(""); }}
+                                    className="flex items-center gap-1.5 rounded-lg border border-border bg-accent px-3 py-1.5 font-display text-xs font-semibold uppercase text-foreground transition-colors hover:border-primary/40"
+                                  >
+                                    {ticker}
+                                  </button>
+                                );
+                              })}
+                            </div>
+                            <div className="overflow-y-auto p-2" style={{ maxHeight: 400 }}>
+                              {guardarianCrypto
+                                .filter((c) => !gSearchQuery || c.ticker.toLowerCase().includes(gSearchQuery.toLowerCase()) || c.name.toLowerCase().includes(gSearchQuery.toLowerCase()))
+                                .slice(0, 100)
+                                .map((c) => (
+                                  <button
+                                    key={`${c.ticker}-${c.networks?.[0]?.network || ''}`}
+                                    onClick={() => { setGToCurrency(c); setGShowToPicker(false); setGSearchQuery(""); }}
+                                    className="flex w-full items-center gap-3 rounded-lg px-3 py-2.5 text-left transition-colors hover:bg-accent"
+                                  >
+                                    <div>
+                                      <span className="font-display text-sm font-semibold uppercase text-foreground">{c.ticker}</span>
+                                      {c.networks?.[0]?.network && c.networks[0].network !== c.ticker && (
+                                        <span className="ms-1.5 rounded bg-muted px-1.5 py-0.5 font-body text-[10px] uppercase text-muted-foreground">{c.networks[0].network}</span>
+                                      )}
+                                      <span className="ms-2 font-body text-xs text-muted-foreground">{c.name}</span>
+                                    </div>
+                                  </button>
+                                ))}
+                            </div>
+                          </div>
+                        </div>
+                      )}
+                    </div>
+
+                    <Button
+                      className="mt-5 w-full min-h-[52px] bg-primary text-primary-foreground hover:bg-primary/90 hover:shadow-neon shadow-card text-base font-bold transition-shadow duration-300"
+                      size="lg"
+                      disabled={!gEstimatedAmount || gEstimatedAmount === "—" || (parseFloat(gSendAmount) < gMinAmount) || (parseFloat(gSendAmount) > gMaxAmount)}
+                      onClick={() => {
+                        if (!gFromCurrency || !gToCurrency) return;
+                        // Guardarian creates a redirect-based transaction
+                        const siteUrl = window.location.origin;
+                        window.open(
+                          `https://guardarian.com/calculator/v1?partner_api_token=${encodeURIComponent("")}&default_fiat_currency=${gFromCurrency.ticker}&default_crypto_currency=${gToCurrency.ticker}&default_fiat_amount=${gSendAmount}&theme=blue`,
+                          "_blank",
+                          "noopener"
+                        );
+                      }}
+                    >
+                      Buy {gToCurrency?.ticker || "Crypto"} Now
+                    </Button>
+                    <p className="mt-1.5 flex items-center justify-center gap-1.5 font-body text-[11px] text-muted-foreground">
+                      <Shield className="h-3 w-3 text-primary" />
+                      Secure Fiat Gateway · Powered by Guardarian
+                    </p>
+                  </>
                 )}
               </div>
-              <button onClick={handleSwap} className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full border border-border bg-background text-primary transition-colors hover:bg-accent" aria-label="Swap currencies">
-                <ArrowDownUp className="h-4 w-4" />
-              </button>
-            </div>
+            )}
 
-            <div className="relative">
-              <label className="mb-1.5 block font-body text-xs font-medium uppercase tracking-wider text-muted-foreground">
-                You Get {fixedRate ? <span className="text-trust font-bold">(GUARANTEED)</span> : "(estimated)"}
-              </label>
-              <div className="flex items-center gap-3 rounded-xl border border-border bg-accent p-4 sm:p-4">
-                <span className="flex-1 font-display text-2xl font-bold text-foreground">
-                  {estimating ? <Loader2 className="h-6 w-6 animate-spin text-muted-foreground" /> : `≈ ${estimatedAmount || "—"}`}
-                </span>
-                <button onClick={() => setShowToPicker(true)} className="flex items-center gap-2 rounded-lg bg-trust/10 px-4 py-2.5 transition-colors hover:bg-trust/20 touch-target">
-                  {toCurrency?.image && <img src={toCurrency.image} alt="" className="h-5 w-5 rounded-full" />}
-                  <span className="font-display text-sm font-semibold uppercase text-trust">{toCurrency ? displayTicker(toCurrency) : "Select"}</span>
-                  {toCurrency && networkLabel(toCurrency) && (
-                    <span className="rounded bg-trust/20 px-1 py-0.5 font-body text-[9px] uppercase text-trust">{networkLabel(toCurrency)}</span>
+            {/* ===== EXCHANGE MODE (ChangeNOW) ===== */}
+            {widgetMode === "exchange" && (
+              <>
+                {/* Rate Type Toggle */}
+                <div className="mb-4 flex items-center gap-2">
+                  <button
+                    onClick={() => setFixedRate(true)}
+                    className={`relative rounded-lg border px-3 py-1.5 font-body text-xs font-semibold transition-colors ${
+                      fixedRate
+                        ? "border-primary bg-primary/10 text-primary ring-1 ring-primary/30"
+                        : "border-border bg-accent text-muted-foreground hover:border-primary/40"
+                    }`}
+                  >
+                    <Lock className="me-1 inline h-3 w-3" /> Fixed Rate
+                    <span className="ms-1.5 inline-flex rounded bg-primary/20 px-1.5 py-0.5 font-body text-[9px] font-bold uppercase tracking-wider text-primary">
+                      Recommended
+                    </span>
+                  </button>
+                  <button
+                    onClick={() => setFixedRate(false)}
+                    className={`rounded-lg border px-3 py-1.5 font-body text-xs font-semibold transition-colors ${
+                      !fixedRate
+                        ? "border-primary bg-primary/10 text-primary"
+                        : "border-border bg-accent text-muted-foreground hover:border-primary/40"
+                    }`}
+                  >
+                    Expected Rate
+                  </button>
+                </div>
+
+                {/* Popular Assets Quick Select */}
+                <div className="mb-4 flex items-center gap-2">
+                  <span className="font-body text-[10px] font-medium uppercase tracking-wider text-muted-foreground">Popular:</span>
+                  {["btc", "eth", "usdt", "sol"].map((ticker) => {
+                    const c = currencies.find((cur) => cur.ticker === ticker);
+                    if (!c) return null;
+                    return (
+                      <button
+                        key={ticker}
+                        onClick={() => setFromCurrency(c)}
+                        className={`flex items-center gap-1.5 rounded-lg border px-3 py-1.5 font-display text-xs font-semibold uppercase transition-colors ${
+                          fromCurrency?.ticker === ticker
+                            ? "border-primary bg-primary/10 text-primary"
+                            : "border-border bg-accent text-foreground hover:border-primary/40"
+                        }`}
+                      >
+                        {c.image && <img src={c.image} alt="" className="h-4 w-4 rounded-full" />}
+                        {ticker}
+                      </button>
+                    );
+                  })}
+                </div>
+
+                <div className="relative">
+                  <label className="mb-1.5 block font-body text-xs font-medium uppercase tracking-wider text-muted-foreground">You Send</label>
+                  <div className="flex items-center gap-3 rounded-xl border border-border bg-accent p-4 sm:p-4">
+                    <Input
+                      type="number"
+                      value={sendAmount}
+                      onChange={(e) => setSendAmount(e.target.value)}
+                      className="flex-1 border-none bg-transparent p-0 font-display text-2xl font-bold text-foreground shadow-none focus-visible:ring-0"
+                      min={0}
+                      step="any"
+                    />
+                    <button onClick={() => setShowFromPicker(true)} className="flex items-center gap-2 rounded-lg bg-primary/10 px-4 py-2.5 transition-colors hover:bg-primary/20 touch-target">
+                      {fromCurrency?.image && <img src={fromCurrency.image} alt="" className="h-5 w-5 rounded-full" />}
+                      <span className="font-display text-sm font-semibold uppercase text-primary">{fromCurrency ? displayTicker(fromCurrency) : "Select"}</span>
+                      {fromCurrency && networkLabel(fromCurrency) && (
+                        <span className="rounded bg-primary/20 px-1 py-0.5 font-body text-[9px] uppercase text-primary">{networkLabel(fromCurrency)}</span>
+                      )}
+                    </button>
+                  </div>
+                  {belowMin && (
+                    <p className="mt-1 font-body text-xs text-destructive">
+                      Minimum amount: {minAmount} {fromCurrency ? displayTicker(fromCurrency) : ""}
+                    </p>
                   )}
-                </button>
-              </div>
-              <CurrencyPicker show={showToPicker} onSelect={setToCurrency} onClose={() => setShowToPicker(false)} exclude={fromCurrency?.ticker} />
-            </div>
+                  <CurrencyPicker show={showFromPicker} onSelect={setFromCurrency} onClose={() => setShowFromPicker(false)} exclude={toCurrency?.ticker} />
+                </div>
 
-            <Button className="mt-5 w-full min-h-[52px] bg-primary text-primary-foreground hover:bg-primary/90 hover:shadow-neon shadow-card text-base font-bold transition-shadow duration-300" size="lg" disabled={!estimatedAmount || estimatedAmount === "—" || belowMin} onClick={handleExchangeNow}>
-              Exchange Now
-            </Button>
-            <p className="mt-1.5 flex items-center justify-center gap-1.5 font-body text-[11px] text-muted-foreground">
-              <Shield className="h-3 w-3 text-primary" />
-              Secure Swap via Registered MSB
-            </p>
+                {/* Rate info bar */}
+                <div className="my-3 flex items-center justify-between gap-2">
+                  <div className="flex flex-wrap items-center gap-1.5 sm:gap-3">
+                    <span className="flex items-center gap-1 rounded-md border border-trust/20 bg-trust/5 px-2 py-1 font-body text-[10px] font-medium text-trust sm:text-[11px]">
+                      <CheckCircle2 className="h-3 w-3" /> All fees included
+                    </span>
+                    {fromCurrency && toCurrency && estimatedAmount && estimatedAmount !== "—" && parseFloat(sendAmount) > 0 && (
+                      <span className="font-body text-[10px] text-muted-foreground sm:text-[11px]">
+                        1 {displayTicker(fromCurrency)} ≈ {(parseFloat(estimatedAmount) / parseFloat(sendAmount)).toFixed(6)} {displayTicker(toCurrency)}
+                      </span>
+                    )}
+                  </div>
+                  <button onClick={handleSwap} className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full border border-border bg-background text-primary transition-colors hover:bg-accent" aria-label="Swap currencies">
+                    <ArrowDownUp className="h-4 w-4" />
+                  </button>
+                </div>
+
+                <div className="relative">
+                  <label className="mb-1.5 block font-body text-xs font-medium uppercase tracking-wider text-muted-foreground">
+                    You Get {fixedRate ? <span className="text-trust font-bold">(GUARANTEED)</span> : "(estimated)"}
+                  </label>
+                  <div className="flex items-center gap-3 rounded-xl border border-border bg-accent p-4 sm:p-4">
+                    <span className="flex-1 font-display text-2xl font-bold text-foreground">
+                      {estimating ? <Loader2 className="h-6 w-6 animate-spin text-muted-foreground" /> : `≈ ${estimatedAmount || "—"}`}
+                    </span>
+                    <button onClick={() => setShowToPicker(true)} className="flex items-center gap-2 rounded-lg bg-trust/10 px-4 py-2.5 transition-colors hover:bg-trust/20 touch-target">
+                      {toCurrency?.image && <img src={toCurrency.image} alt="" className="h-5 w-5 rounded-full" />}
+                      <span className="font-display text-sm font-semibold uppercase text-trust">{toCurrency ? displayTicker(toCurrency) : "Select"}</span>
+                      {toCurrency && networkLabel(toCurrency) && (
+                        <span className="rounded bg-trust/20 px-1 py-0.5 font-body text-[9px] uppercase text-trust">{networkLabel(toCurrency)}</span>
+                      )}
+                    </button>
+                  </div>
+                  <CurrencyPicker show={showToPicker} onSelect={setToCurrency} onClose={() => setShowToPicker(false)} exclude={fromCurrency?.ticker} />
+                </div>
+
+                <Button className="mt-5 w-full min-h-[52px] bg-primary text-primary-foreground hover:bg-primary/90 hover:shadow-neon shadow-card text-base font-bold transition-shadow duration-300" size="lg" disabled={!estimatedAmount || estimatedAmount === "—" || belowMin} onClick={handleExchangeNow}>
+                  Exchange Now
+                </Button>
+                <p className="mt-1.5 flex items-center justify-center gap-1.5 font-body text-[11px] text-muted-foreground">
+                  <Shield className="h-3 w-3 text-primary" />
+                  Secure Swap via Registered MSB
+                </p>
+              </>
+            )}
 
             {/* Trust signals row */}
             <div className="mt-2 grid grid-cols-3 gap-2">
