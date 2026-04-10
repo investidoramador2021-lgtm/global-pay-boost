@@ -9,7 +9,7 @@ const corsHeaders = {
 const GUARDARIAN_BASE = 'https://api-payments.guardarian.com/v1';
 
 function badRequest(msg: string) {
-  return new Response(JSON.stringify({ error: msg }), {
+  return new Response(JSON.stringify({ error: msg, fallback: false }), {
     status: 400,
     headers: { ...corsHeaders, 'Content-Type': 'application/json' },
   });
@@ -22,7 +22,10 @@ function jsonResponse(data: unknown, status = 200) {
   });
 }
 
-// Simple in-memory cache for currencies (60s)
+function containedError(error: string, fallback = true, extra: Record<string, unknown> = {}) {
+  return jsonResponse({ error, fallback, ...extra }, fallback ? 200 : 400);
+}
+
 let currencyCache: { data: unknown; ts: number } | null = null;
 const CACHE_TTL = 60_000;
 
@@ -33,7 +36,7 @@ Deno.serve(async (req) => {
 
   const apiKey = Deno.env.get('GUARDARIAN_API_KEY');
   if (!apiKey) {
-    return jsonResponse({ error: 'GUARDARIAN_API_KEY not configured' }, 500);
+    return containedError('Provider is not configured', true, { crypto_currencies: [], fiat_currencies: [] });
   }
 
   try {
@@ -41,27 +44,26 @@ Deno.serve(async (req) => {
     const action = body.action;
 
     const headers: Record<string, string> = {
-      'Accept': 'application/json',
+      Accept: 'application/json',
       'x-api-key': apiKey,
     };
 
     switch (action) {
-      case 'partner-token': {
-        // Return the partner API token for use in the calculator widget URL
-        return jsonResponse({ token: apiKey });
-      }
+      case 'partner-token':
+        return jsonResponse({ token: apiKey, fallback: false });
 
       case 'currencies': {
-        // Return cached if fresh
         if (currencyCache && Date.now() - currencyCache.ts < CACHE_TTL) {
           return jsonResponse(currencyCache.data);
         }
+
         const resp = await fetch(`${GUARDARIAN_BASE}/currencies`, { headers });
         if (!resp.ok) {
           const text = await resp.text();
           console.error('Guardarian currencies error:', text);
-          return jsonResponse({ error: 'Failed to fetch currencies' }, resp.status);
+          return containedError('Failed to fetch currencies', true, { crypto_currencies: [], fiat_currencies: [] });
         }
+
         const data = await resp.json();
         currencyCache = { data, ts: Date.now() };
         return jsonResponse(data);
@@ -87,8 +89,9 @@ Deno.serve(async (req) => {
         if (!resp.ok) {
           const text = await resp.text();
           console.error('Guardarian estimate error:', text);
-          return jsonResponse({ error: 'Estimate unavailable', value: null }, resp.status >= 500 ? 502 : resp.status);
+          return containedError('Estimate unavailable', resp.status >= 500, { value: null });
         }
+
         return jsonResponse(await resp.json());
       }
 
@@ -96,7 +99,6 @@ Deno.serve(async (req) => {
         const { from_currency, to_currency, from_network, to_network } = body;
         if (!from_currency || !to_currency) return badRequest('Missing from_currency/to_currency');
 
-        // Build pair string: e.g. "eur_btc" or "eur_usdt-eth"
         let pair = `${from_currency.toLowerCase()}`;
         if (from_network && from_network.toLowerCase() !== from_currency.toLowerCase()) {
           pair += `-${from_network.toLowerCase()}`;
@@ -110,8 +112,9 @@ Deno.serve(async (req) => {
         if (!resp.ok) {
           const text = await resp.text();
           console.error('Guardarian min-max error:', text);
-          return jsonResponse({ min: 0, max: 999999, error: 'Min/max unavailable' });
+          return containedError('Min/max unavailable', true, { min: 0, max: 999999 });
         }
+
         return jsonResponse(await resp.json());
       }
 
@@ -129,6 +132,7 @@ Deno.serve(async (req) => {
           skip_choose_payout_address: true,
           skip_choose_payment_category: false,
         };
+
         if (from_network) txBody.from_network = from_network;
         if (to_network) txBody.to_network = to_network;
         if (email) txBody.email = email;
@@ -139,11 +143,14 @@ Deno.serve(async (req) => {
           headers: { ...headers, 'Content-Type': 'application/json' },
           body: JSON.stringify(txBody),
         });
-        const data = await resp.json();
+
+        const text = await resp.text();
+        const data = text ? JSON.parse(text) : null;
         if (!resp.ok) {
-          console.error('Guardarian create-transaction error:', JSON.stringify(data));
-          return jsonResponse({ error: data.message || 'Transaction creation failed' }, resp.status);
+          console.error('Guardarian create-transaction error:', text);
+          return containedError(data?.message || 'Transaction creation failed', resp.status >= 500, { details: data });
         }
+
         return jsonResponse(data);
       }
 
@@ -153,6 +160,6 @@ Deno.serve(async (req) => {
   } catch (error: unknown) {
     const msg = error instanceof Error ? error.message : 'Unknown error';
     console.error('Guardarian edge function error:', msg);
-    return jsonResponse({ error: msg }, 500);
+    return containedError(msg, true);
   }
 });

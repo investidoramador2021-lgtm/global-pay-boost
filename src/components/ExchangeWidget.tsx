@@ -245,7 +245,9 @@ const ExchangeWidget = () => {
 
   // ===== Dual-tab mode: "exchange" (ChangeNOW) vs "buysell" (Guardarian) =====
   type WidgetMode = "exchange" | "buysell";
+  type FiatFlow = "buy" | "sell";
   const [widgetMode, setWidgetMode] = useState<WidgetMode>("exchange");
+  const [gTradeDirection, setGTradeDirection] = useState<FiatFlow>("buy");
   const [guardarianFiat, setGuardarianFiat] = useState<GuardarianCurrency[]>([]);
   const [guardarianCrypto, setGuardarianCrypto] = useState<GuardarianCurrency[]>([]);
   const [guardarianLoading, setGuardarianLoading] = useState(false);
