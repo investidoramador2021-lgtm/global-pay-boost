@@ -1474,7 +1474,9 @@ const ExchangeWidget = () => {
                           </label>
                           <Input
                             type="text"
-                            placeholder={`Paste your ${gToCurrency?.ticker || "crypto"} address`}
+                            placeholder={gTradeDirection === "sell"
+                              ? `Payout details will be collected at checkout`
+                              : `Paste your ${gToCurrency?.ticker || "crypto"} address`}
                             value={gPayoutAddress}
                             onChange={(e) => setGPayoutAddress(e.target.value)}
                             className="min-h-[48px] rounded-xl border-border bg-accent font-mono text-xs placeholder:text-muted-foreground/50"
