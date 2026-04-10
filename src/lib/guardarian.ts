@@ -123,6 +123,7 @@ export async function createGuardarianTransaction(params: {
   from_amount: number;
   from_currency: string;
   to_currency: string;
+  payout_currency?: string;
   from_network?: string;
   to_network?: string;
   payout_address?: string;
