@@ -1213,15 +1213,43 @@ const ExchangeWidget = () => {
             {widgetMode === "buysell" && (
               <div>
                 {guardarianLoading ? (
-                  <div className="flex h-60 items-center justify-center">
-                    <Loader2 className="h-6 w-6 animate-spin text-primary" />
-                    <span className="ml-2 text-sm text-muted-foreground">Loading currencies…</span>
+                  <div className="flex h-60 flex-col items-center justify-center gap-3">
+                    <Loader2 className="h-8 w-8 animate-spin text-primary" />
+                    <span className="text-sm text-muted-foreground animate-pulse">
+                      {gCurrencyRetryCount > 0 ? `Retrying… (${gCurrencyRetryCount}/3)` : "Loading currencies…"}
+                    </span>
+                  </div>
+                ) : gCurrencyError ? (
+                  <div className="flex h-60 flex-col items-center justify-center gap-3 text-center">
+                    <AlertCircle className="h-8 w-8 text-destructive" />
+                    <p className="text-sm text-muted-foreground">Could not load currencies. Please try again.</p>
+                    <Button variant="outline" size="sm" onClick={() => loadGuardarianCurrencies(0)}>
+                      <RefreshCw className="mr-1.5 h-3.5 w-3.5" /> Retry
+                    </Button>
                   </div>
                 ) : (
                   <>
+                    {/* Buy / Sell toggle */}
+                    <div className="mb-4 flex rounded-lg border border-border bg-accent p-0.5 gap-0.5">
+                      <button
+                        onClick={() => setGTradeDirection("buy")}
+                        className={`flex-1 rounded-md px-3 py-1.5 font-display text-xs font-semibold transition-all ${
+                          gTradeDirection === "buy" ? "bg-primary text-primary-foreground shadow-sm" : "text-muted-foreground hover:text-foreground"
+                        }`}
+                      >Buy</button>
+                      <button
+                        onClick={() => setGTradeDirection("sell")}
+                        className={`flex-1 rounded-md px-3 py-1.5 font-display text-xs font-semibold transition-all ${
+                          gTradeDirection === "sell" ? "bg-primary text-primary-foreground shadow-sm" : "text-muted-foreground hover:text-foreground"
+                        }`}
+                      >Sell</button>
+                    </div>
+
                     {/* You Pay (Fiat) */}
                     <div className="relative">
-                      <label className="mb-1.5 block font-body text-xs font-medium uppercase tracking-wider text-muted-foreground">You Pay</label>
+                      <label className="mb-1.5 block font-body text-xs font-medium uppercase tracking-wider text-muted-foreground">
+                        {gTradeDirection === "buy" ? "You Pay (Fiat)" : "You Sell (Crypto)"}
+                      </label>
                       <div className="flex items-center gap-3 rounded-xl border border-border bg-accent p-4">
                         <Input
                           type="number"
