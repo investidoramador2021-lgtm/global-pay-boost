@@ -3105,25 +3105,14 @@ const ExchangeWidget = () => {
                   <span className="text-foreground">{fee.amount} {fee.currency}</span>
                 </div>
               ))}
-              {gTradeDirection === "sell" && isSellSepaCorridor ? (
-                <div className="border-t border-border pt-2 space-y-2">
-                  <div className="flex items-start justify-between font-body text-xs">
-                    <span className="text-muted-foreground">IBAN</span>
-                    <span className="max-w-[200px] break-all text-right font-mono text-foreground">{gSepaIban}</span>
-                  </div>
-                  <div className="flex items-start justify-between font-body text-xs">
-                    <span className="text-muted-foreground">BIC / SWIFT</span>
-                    <span className="max-w-[200px] break-all text-right font-mono text-foreground">{gSepaBic}</span>
-                  </div>
-                </div>
-              ) : gPayoutAddress ? (
+              {gPayoutAddress && (
                 <div className="border-t border-border pt-2">
                   <div className="flex items-start justify-between font-body text-xs">
-                    <span className="text-muted-foreground">{gTradeDirection === "sell" ? "Payout details" : "Wallet"}</span>
+                    <span className="text-muted-foreground">Wallet</span>
                     <span className="max-w-[200px] break-all text-right font-mono text-foreground">{gPayoutAddress}</span>
                   </div>
                 </div>
-              ) : null}
+              )}
               {gSelectedPaymentMethod && (
                 <div className="flex items-center justify-between font-body text-xs">
                   <span className="text-muted-foreground">Payment method</span>
