@@ -715,14 +715,11 @@ const ExchangeWidget = () => {
     return methods[0]?.type || "";
   }, []);
 
-  const isSellEligibleFiat = useCallback((currency: GuardarianCurrency | null) => {
-    if (!currency || currency.currency_type !== "FIAT") return false;
-    const methods = collectGuardarianPaymentMethods(currency);
-    // Only show currencies that have at least one withdrawal-enabled method.
-    // This prevents showing USD/BRL/TRY etc. that always fail with "Estimate unavailable".
-    if (methods.length === 0) return false;
-    return methods.some((pm) => pm.withdrawal_enabled);
-  }, [collectGuardarianPaymentMethods]);
+  // Allow all fiat currencies for sell — the estimate API will validate corridor availability
+  const isSellEligibleFiat = useCallback((_currency: GuardarianCurrency | null) => {
+    if (!_currency || _currency.currency_type !== "FIAT") return false;
+    return true;
+  }, []);
 
   useEffect(() => {
     if (widgetMode !== "buysell") return;
@@ -1145,13 +1142,13 @@ const ExchangeWidget = () => {
       const emailParam = gPayoutEmail.trim() || undefined;
 
       if (gTradeDirection === "sell") {
-        result = await createGuardarianSellTransaction({
+        result = await createGuardarianTransaction({
           from_amount: parseFloat(gSendAmount),
           from_currency: gFromCurrency!.ticker,
           to_currency: gToCurrency!.ticker,
           ...(fromNet ? { from_network: fromNet } : {}),
           ...(toNet ? { to_network: toNet } : {}),
-          deposit_address: gPayoutAddress.trim() || undefined,
+          payout_address: gPayoutAddress.trim() || undefined,
           email: emailParam,
           ...(gSelectedPaymentMethod ? { payment_method: gSelectedPaymentMethod } : {}),
         });
