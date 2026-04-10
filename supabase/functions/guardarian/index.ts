@@ -51,7 +51,7 @@ Deno.serve(async (req) => {
         if (currencyCache && Date.now() - currencyCache.ts < CACHE_TTL) {
           return jsonResponse(currencyCache.data);
         }
-        const resp = await fetch(`${GUARDARIAN_BASE}/currencies?available=true`, { headers });
+        const resp = await fetch(`${GUARDARIAN_BASE}/currencies`, { headers });
         if (!resp.ok) {
           const text = await resp.text();
           console.error('Guardarian currencies error:', text);
