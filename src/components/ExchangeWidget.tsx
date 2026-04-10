@@ -827,13 +827,8 @@ const ExchangeWidget = () => {
     return () => { cancelled = true; };
   }, [widgetMode, gFromCurrency, gToCurrency, gTradeDirection, collectGuardarianPaymentMethods, resolveGuardarianPaymentMethod]);
 
-  const isSellSepaCorridor = gTradeDirection === "sell" && gToCurrency?.ticker === "EUR";
   const hasValidGuardarianEmail = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(gPayoutEmail.trim());
-  const hasValidGuardarianPayoutDetails = gTradeDirection === "buy"
-    ? Boolean(gPayoutAddress.trim())
-    : isSellSepaCorridor
-      ? isValidIban(gSepaIban) && isValidBic(gSepaBic)
-      : Boolean(gPayoutAddress.trim());
+  const hasValidGuardarianPayoutDetails = Boolean(gPayoutAddress.trim());
   const canStartGuardarianCheckout = !gCreatingTx
     && Boolean(gEstimatedAmount)
     && gEstimatedAmount !== "—"
