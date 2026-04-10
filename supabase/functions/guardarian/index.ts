@@ -215,11 +215,12 @@ Deno.serve(async (req) => {
         }
 
         const txBody: Record<string, unknown> = {
-          from_amount,
-          from_currency,
-          to_currency,
-          payout_currency: to_currency,
-          skip_choose_payout_address: !!(payout_address || bank_details),
+          from_amount: typeof from_amount === 'string' ? parseFloat(from_amount) : Number(from_amount),
+          from_currency: String(from_currency).toUpperCase(),
+          to_currency: String(to_currency).toUpperCase(),
+          payout_currency: String(to_currency).toUpperCase(),
+          deposit_currency: String(from_currency).toUpperCase(),
+          skip_choose_payout_address: !!(payout_address),
           skip_choose_payment_category: false,
           redirects: {
             successful: SUCCESS_URL,

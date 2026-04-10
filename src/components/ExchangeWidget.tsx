@@ -2089,7 +2089,7 @@ const ExchangeWidget = () => {
                                 title="Guardarian checkout"
                                 src={gCheckoutUrl}
                                 className="h-[720px] w-full rounded-[24px] border border-border bg-background"
-                                sandbox="allow-scripts allow-same-origin allow-forms allow-popups allow-popups-to-escape-sandbox allow-top-navigation-by-user-activation allow-modals"
+                                sandbox="allow-scripts allow-same-origin allow-forms allow-popups allow-popups-to-escape-sandbox allow-top-navigation allow-modals"
                                 allow="payment; camera"
                                 referrerPolicy="origin-when-cross-origin"
                               />
