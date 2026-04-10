@@ -910,6 +910,7 @@ const ExchangeWidget = () => {
     );
   };
 
+  const CurrencyPicker = ({
     show,
     onSelect,
     onClose,
