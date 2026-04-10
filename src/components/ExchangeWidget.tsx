@@ -1501,6 +1501,34 @@ const ExchangeWidget = () => {
                           </div>
                         )}
 
+                        {/* Dynamic Payment Methods */}
+                        {gPaymentMethods.length > 0 && (
+                          <div className="mt-3">
+                            <label className="mb-1.5 block font-body text-[10px] font-medium uppercase tracking-wider text-muted-foreground">
+                              Payment Method
+                            </label>
+                            <div className="flex flex-wrap gap-1.5">
+                              {gPaymentMethods.map((pm) => {
+                                const label = pm.type?.replace(/_/g, " ").replace(/\b\w/g, l => l.toUpperCase()) || pm.payment_category;
+                                const isSelected = gSelectedPaymentMethod === pm.type;
+                                return (
+                                  <button
+                                    key={pm.type}
+                                    onClick={() => setGSelectedPaymentMethod(pm.type)}
+                                    className={`inline-flex items-center rounded-full border px-2.5 py-1 font-body text-[10px] font-semibold tracking-wide transition-all ${
+                                      isSelected
+                                        ? "border-primary/30 bg-primary/10 text-primary shadow-sm"
+                                        : "border-border bg-background/80 text-muted-foreground hover:border-primary/20 hover:text-foreground"
+                                    }`}
+                                  >
+                                    {label}
+                                  </button>
+                                );
+                              })}
+                            </div>
+                          </div>
+                        )}
+
                         {/* CTA */}
                         <Button
                           className="mt-5 w-full min-h-[52px] rounded-xl text-base font-bold tracking-wide transition-all duration-300 hover:shadow-neon shadow-card"
@@ -1514,6 +1542,8 @@ const ExchangeWidget = () => {
                         >
                           {gCreatingTx ? (
                             <><Loader2 className="mr-2 h-4 w-4 animate-spin" />Opening checkout…</>
+                          ) : gTradeDirection === "sell" ? (
+                            <><CreditCard className="mr-2 h-4 w-4" />Sell {gFromCurrency?.ticker || "Crypto"}</>
                           ) : (
                             <><CreditCard className="mr-2 h-4 w-4" />Buy {gToCurrency?.ticker || "Crypto"}</>
                           )}
@@ -1525,11 +1555,20 @@ const ExchangeWidget = () => {
                           <span className="flex items-center gap-1 font-body text-[10px] text-muted-foreground"><Lock className="h-3 w-3 text-primary" /> Secure checkout</span>
                         </div>
                         <div className="mt-2 flex flex-wrap items-center justify-center gap-1.5">
-                          <PaymentMethodChip label="Visa" accent />
-                          <PaymentMethodChip label="Mastercard" accent />
-                          <PaymentMethodChip label="SEPA" />
-                          <PaymentMethodChip label="Apple Pay" />
-                          <PaymentMethodChip label="Google Pay" />
+                          {gPaymentMethods.length > 0 ? (
+                            gPaymentMethods.slice(0, 5).map((pm) => {
+                              const label = pm.type?.replace(/_/g, " ").replace(/\b\w/g, l => l.toUpperCase()) || pm.payment_category;
+                              return <PaymentMethodChip key={pm.type} label={label} accent={gSelectedPaymentMethod === pm.type} />;
+                            })
+                          ) : (
+                            <>
+                              <PaymentMethodChip label="Visa" accent />
+                              <PaymentMethodChip label="Mastercard" accent />
+                              <PaymentMethodChip label="SEPA" />
+                              <PaymentMethodChip label="Apple Pay" />
+                              <PaymentMethodChip label="Google Pay" />
+                            </>
+                          )}
                         </div>
                       </>
                     )}
