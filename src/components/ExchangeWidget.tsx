@@ -311,7 +311,17 @@ const ExchangeWidget = () => {
   const gEstimateRequestIdRef = useRef(0);
   const [gPaymentOpened, setGPaymentOpened] = useState(false);
 
-  // Transaction flow state
+  // Sell-flow: dynamic bank detail fields
+  const [gBankFields, setGBankFields] = useState<Record<string, string>>({});
+  const gPayoutFieldDefs = gTradeDirection === "sell" && gToCurrency?.currency_type === "FIAT"
+    ? getPayoutFieldsForCurrency(gToCurrency.ticker)
+    : [];
+  const gBankFieldsValid = gPayoutFieldDefs.length === 0 || gPayoutFieldDefs.every((f) => {
+    const val = gBankFields[f.key] || "";
+    return f.validate(val);
+  });
+
+
   const [step, setStep] = useState<Step>("exchange");
   const [recipientAddress, setRecipientAddress] = useState("");
   const [refLinkAddressLocked, setRefLinkAddressLocked] = useState(false);
