@@ -1457,10 +1457,10 @@ const ExchangeWidget = () => {
           <motion.div key="exchange" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}>
             {/* ===== MODE TABS: Exchange | Buy/Sell ===== */}
             <div className="mb-5 flex items-center justify-between gap-2">
-              <div className="flex rounded-xl border border-border bg-accent p-1 gap-1 max-[480px]:w-full max-[480px]:grid max-[480px]:grid-cols-2">
+              <div className="flex rounded-xl border border-border bg-accent p-1 gap-1 max-[480px]:w-full max-[480px]:grid max-[480px]:grid-cols-3">
                 <button
                   onClick={() => { setWidgetMode("exchange"); setGStep("form"); setGCheckoutUrl(""); }}
-                  className={`flex items-center justify-center gap-1.5 rounded-lg px-4 py-2 font-display text-sm font-semibold transition-all ${
+                  className={`flex items-center justify-center gap-1.5 rounded-lg px-3 py-2 font-display text-sm font-semibold transition-all ${
                     widgetMode === "exchange"
                       ? "bg-primary text-primary-foreground shadow-card"
                       : "text-muted-foreground hover:text-foreground hover:bg-background"
@@ -1479,8 +1479,9 @@ const ExchangeWidget = () => {
                     setGSelectedPaymentMethod("");
                     setGPayoutAddress("");
                     setGPayoutEmail("");
-                          setGSepaIban("");
-                          setGSepaBic("");
+                    setGBankFields({});
+                    setGSepaIban("");
+                    setGSepaBic("");
                     if (guardarianFiat.length) {
                       setGFromCurrency(guardarianFiat.find((c) => c.ticker === "USD") || guardarianFiat[0] || null);
                     }
@@ -1488,13 +1489,42 @@ const ExchangeWidget = () => {
                       setGToCurrency(guardarianCrypto.find((c) => c.ticker === "BTC") || guardarianCrypto[0] || null);
                     }
                   }}
-                  className={`flex items-center justify-center gap-1.5 rounded-lg px-4 py-2 font-display text-sm font-semibold transition-all ${
-                    widgetMode === "buysell"
+                  className={`flex items-center justify-center gap-1.5 rounded-lg px-3 py-2 font-display text-sm font-semibold transition-all ${
+                    widgetMode === "buysell" && gTradeDirection === "buy"
                       ? "bg-primary text-primary-foreground shadow-card"
                       : "text-muted-foreground hover:text-foreground hover:bg-background"
                   }`}
                 >
-                  <CreditCard className="h-4 w-4" /> Buy Crypto
+                  <CreditCard className="h-4 w-4" /> Buy
+                </button>
+                <button
+                  onClick={() => {
+                    setWidgetMode("buysell");
+                    setGTradeDirection("sell");
+                    setGStep("form");
+                    setGCheckoutUrl("");
+                    setGShowReview(false);
+                    setGEstimateError("");
+                    setGSelectedPaymentMethod("");
+                    setGPayoutAddress("");
+                    setGPayoutEmail("");
+                    setGBankFields({});
+                    setGSepaIban("");
+                    setGSepaBic("");
+                    if (guardarianCrypto.length) {
+                      setGFromCurrency(guardarianCrypto.find((c) => c.ticker === "BTC") || guardarianCrypto[0] || null);
+                    }
+                    if (guardarianFiat.length) {
+                      setGToCurrency(guardarianFiat.find((c) => c.ticker === "EUR") || guardarianFiat[0] || null);
+                    }
+                  }}
+                  className={`flex items-center justify-center gap-1.5 rounded-lg px-3 py-2 font-display text-sm font-semibold transition-all ${
+                    widgetMode === "buysell" && gTradeDirection === "sell"
+                      ? "bg-primary text-primary-foreground shadow-card"
+                      : "text-muted-foreground hover:text-foreground hover:bg-background"
+                  }`}
+                >
+                  <Wallet className="h-4 w-4" /> Sell
                 </button>
               </div>
               <span className="hidden min-[481px]:flex items-center gap-1.5 rounded-full border border-trust/30 bg-trust/10 px-2.5 py-1 font-body text-[10px] font-semibold uppercase tracking-wider text-trust">
