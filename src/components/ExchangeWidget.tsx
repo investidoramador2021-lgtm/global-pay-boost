@@ -2616,6 +2616,74 @@ const ExchangeWidget = () => {
           </motion.div>
         )}
       </AnimatePresence>
+
+      {/* ===== Review Summary Overlay ===== */}
+      {gShowReview && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-foreground/50 p-4" onClick={() => setGShowReview(false)}>
+          <motion.div
+            initial={{ opacity: 0, scale: 0.95 }}
+            animate={{ opacity: 1, scale: 1 }}
+            exit={{ opacity: 0, scale: 0.95 }}
+            className="w-full max-w-md rounded-2xl border border-border bg-card p-6 shadow-elevated"
+            onClick={(e) => e.stopPropagation()}
+          >
+            <h3 className="font-display text-lg font-bold text-foreground">Review your order</h3>
+            <p className="mt-1 font-body text-xs text-muted-foreground">Please confirm the details before proceeding to checkout.</p>
+
+            <div className="mt-5 space-y-3 rounded-xl border border-border bg-accent/50 p-4">
+              <div className="flex items-center justify-between font-body text-sm">
+                <span className="text-muted-foreground">You pay</span>
+                <span className="font-semibold text-foreground">{gSendAmount} {gFromCurrency?.ticker}</span>
+              </div>
+              <div className="flex items-center justify-between font-body text-sm">
+                <span className="text-muted-foreground">You receive (est.)</span>
+                <span className="font-semibold text-foreground">≈ {gEstimatedAmount} {gToCurrency?.ticker}</span>
+              </div>
+              {gFullEstimate?.estimated_exchange_rate && (
+                <div className="flex items-center justify-between font-body text-xs">
+                  <span className="text-muted-foreground">Exchange rate</span>
+                  <span className="text-foreground">1 {gFromCurrency?.ticker} ≈ {gFullEstimate.estimated_exchange_rate} {gToCurrency?.ticker}</span>
+                </div>
+              )}
+              {gFullEstimate?.network_fee && (
+                <div className="flex items-center justify-between font-body text-xs">
+                  <span className="text-muted-foreground">Network fee</span>
+                  <span className="text-foreground">{parseFloat(gFullEstimate.network_fee.amount).toFixed(6)} {gFullEstimate.network_fee.currency}</span>
+                </div>
+              )}
+              {gFullEstimate?.service_fees?.map((fee, i) => (
+                <div key={i} className="flex items-center justify-between font-body text-xs">
+                  <span className="text-muted-foreground">Service fee ({fee.percentage})</span>
+                  <span className="text-foreground">{fee.amount} {fee.currency}</span>
+                </div>
+              ))}
+              <div className="border-t border-border pt-2">
+                <div className="flex items-start justify-between font-body text-xs">
+                  <span className="text-muted-foreground">Wallet</span>
+                  <span className="max-w-[200px] break-all text-right font-mono text-foreground">{gPayoutAddress}</span>
+                </div>
+              </div>
+            </div>
+
+            <div className="mt-4 flex items-center gap-2 rounded-lg border border-primary/20 bg-primary/5 p-3">
+              <Shield className="h-4 w-4 shrink-0 text-primary" />
+              <p className="font-body text-[11px] text-muted-foreground">You'll be redirected to Guardarian's secure checkout to complete your payment.</p>
+            </div>
+
+            <div className="mt-5 flex gap-3">
+              <Button variant="outline" className="flex-1" onClick={() => setGShowReview(false)}>Cancel</Button>
+              <Button
+                className="flex-1 min-h-[44px]"
+                disabled={gCreatingTx}
+                onClick={handleConfirmGuardarianCheckout}
+              >
+                {gCreatingTx ? <Loader2 className="mr-2 h-4 w-4 animate-spin" /> : <CreditCard className="mr-2 h-4 w-4" />}
+                Confirm & Pay
+              </Button>
+            </div>
+          </motion.div>
+        </div>
+      )}
     </motion.div>
   );
 };
