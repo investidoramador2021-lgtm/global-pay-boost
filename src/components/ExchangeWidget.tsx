@@ -623,6 +623,7 @@ const ExchangeWidget = () => {
         }),
       ]);
       setGEstimatedAmount(est.value || "—");
+      setGFullEstimate(est);
       setGMinAmount(minMax.min || 0);
       setGMaxAmount(minMax.max || 999999);
     } catch {
