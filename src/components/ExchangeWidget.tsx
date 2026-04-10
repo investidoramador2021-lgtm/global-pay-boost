@@ -1815,7 +1815,7 @@ const ExchangeWidget = () => {
                         {/* PIX badge when BRL selected */}
                         {/* Market-specific payment badge */}
                         {(() => {
-                          const fiatTicker = gTradeDirection === "buy" ? gFromCurrency?.ticker : gToCurrency?.ticker;
+                          const fiatTicker = gFromCurrency?.ticker;
                           const method = gSelectedPaymentMethod?.toLowerCase();
                           if (fiatTicker === "BRL" && method === "pix") {
                             const { Logo } = resolvePaymentMethodDisplay("PIX");
