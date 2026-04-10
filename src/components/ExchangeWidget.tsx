@@ -1,6 +1,6 @@
 import { useState, useEffect, useCallback, useRef } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { ArrowDownUp, Loader2, Search, Copy, Check, ArrowLeft, ArrowRight, ArrowLeftRight, Clock, CheckCircle2, AlertCircle, ExternalLink, Wallet, QrCode, XCircle, Info, Mail, RefreshCw, Shield, Lock, ChevronDown } from "lucide-react";
+import { ArrowDownUp, Loader2, Search, Copy, Check, ArrowLeft, ArrowRight, ArrowLeftRight, Clock, CheckCircle2, AlertCircle, ExternalLink, Wallet, QrCode, XCircle, Info, Mail, RefreshCw, Shield, Lock, ChevronDown, Share2 } from "lucide-react";
 import DestinationAddressInput, { tickerToAddressType } from "@/components/DestinationAddressInput";
 import { supabase } from "@/integrations/supabase/client";
 import { Button } from "@/components/ui/button";
@@ -1764,9 +1764,36 @@ const ExchangeWidget = () => {
                     Leave us a review ⭐
                   </a>
                 </div>
-                <Button className="w-full bg-trust text-trust-foreground hover:bg-trust/90" size="lg" onClick={handleNewExchange}>
-                  Start New Exchange
-                </Button>
+                <div className="flex gap-2">
+                  <Button
+                    className="flex-1 bg-trust text-trust-foreground hover:bg-trust/90"
+                    size="lg"
+                    onClick={handleNewExchange}
+                  >
+                    Start New Exchange
+                  </Button>
+                  {typeof navigator !== "undefined" && !!navigator.share && (
+                    <Button
+                      variant="outline"
+                      size="lg"
+                      className="shrink-0"
+                      onClick={async () => {
+                        try {
+                          await navigator.share({
+                            title: "Crypto Swap Complete — MRC GlobalPay",
+                            text: `I just swapped ${txStatus.fromCurrency?.toUpperCase()} → ${txStatus.toCurrency?.toUpperCase()}${txStatus.amountReceive ? ` and received ${txStatus.amountReceive} ${txStatus.toCurrency?.toUpperCase()}` : ""} on MRC GlobalPay — fast, no KYC, non-custodial!`,
+                            url: "https://mrcglobalpay.com",
+                          });
+                        } catch (e) {
+                          // User cancelled or share failed silently
+                        }
+                      }}
+                    >
+                      <Share2 className="h-4 w-4 mr-1.5" />
+                      Share
+                    </Button>
+                  )}
+                </div>
               </div>
             )}
             {txStatus?.status === "failed" && (
