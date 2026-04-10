@@ -1694,12 +1694,39 @@ const ExchangeWidget = () => {
                         </div>
 
                         {/* PIX badge when BRL selected */}
-                        {((gTradeDirection === "buy" && gFromCurrency?.ticker === "BRL") || (gTradeDirection === "sell" && gToCurrency?.ticker === "BRL")) && gSelectedPaymentMethod?.toLowerCase() === "pix" && (
-                          <div className="mt-2 flex items-center gap-2 rounded-lg border border-primary/20 bg-primary/5 px-3 py-2">
-                            <span className="font-display text-sm font-bold text-primary">PIX</span>
-                            <span className="font-body text-[11px] text-muted-foreground">Instant Brazilian payment — no fees</span>
-                          </div>
-                        )}
+                        {/* Market-specific payment badge */}
+                        {(() => {
+                          const fiatTicker = gTradeDirection === "buy" ? gFromCurrency?.ticker : gToCurrency?.ticker;
+                          const method = gSelectedPaymentMethod?.toLowerCase();
+                          if (fiatTicker === "BRL" && method === "pix") {
+                            const { Logo } = resolvePaymentMethodDisplay("PIX");
+                            return (
+                              <div className="mt-2 flex items-center gap-2 rounded-lg border border-primary/20 bg-primary/5 px-3 py-2">
+                                <Logo className="h-5 w-auto" />
+                                <span className="font-body text-[11px] text-muted-foreground">Instant Brazilian payment — no fees</span>
+                              </div>
+                            );
+                          }
+                          if (fiatTicker === "EUR" && method === "sepa") {
+                            const { Logo } = resolvePaymentMethodDisplay("SEPA");
+                            return (
+                              <div className="mt-2 flex items-center gap-2 rounded-lg border border-primary/20 bg-primary/5 px-3 py-2">
+                                <Logo className="h-5 w-auto" />
+                                <span className="font-body text-[11px] text-muted-foreground">SEPA bank transfer — EU-wide</span>
+                              </div>
+                            );
+                          }
+                          if (fiatTicker === "GBP" && (method === "faster_payments" || method === "fps")) {
+                            const { Logo } = resolvePaymentMethodDisplay("FPS");
+                            return (
+                              <div className="mt-2 flex items-center gap-2 rounded-lg border border-primary/20 bg-primary/5 px-3 py-2">
+                                <Logo className="h-5 w-auto" />
+                                <span className="font-body text-[11px] text-muted-foreground">Faster Payments — UK instant</span>
+                              </div>
+                            );
+                          }
+                          return null;
+                        })()}
 
                         {/* Fee breakdown — slim */}
                         {gFullEstimate && (
