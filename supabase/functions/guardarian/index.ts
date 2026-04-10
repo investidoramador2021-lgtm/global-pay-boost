@@ -69,6 +69,24 @@ Deno.serve(async (req) => {
         return jsonResponse(data);
       }
 
+      case 'payment-methods': {
+        const { currency, currency_type } = body;
+        if (!currency) return badRequest('Missing currency');
+
+        const params = new URLSearchParams();
+        params.set('currency', currency);
+        if (currency_type) params.set('currency_type', currency_type);
+
+        const resp = await fetch(`${GUARDARIAN_BASE}/payment-methods?${params.toString()}`, { headers });
+        if (!resp.ok) {
+          const text = await resp.text();
+          console.error('Guardarian payment-methods error:', text);
+          return containedError('Payment methods unavailable', true, { payment_methods: [] });
+        }
+
+        return jsonResponse(await resp.json());
+      }
+
       case 'estimate': {
         const { from_currency, from_network, to_currency, to_network, from_amount, to_amount } = body;
         if (!from_currency || !to_currency) return badRequest('Missing from_currency/to_currency');
@@ -119,7 +137,7 @@ Deno.serve(async (req) => {
       }
 
       case 'create-transaction': {
-        const { from_amount, from_currency, to_currency, from_network, to_network, payout_address, email, redirects } = body;
+        const { from_amount, from_currency, to_currency, from_network, to_network, payout_address, email, deposit_address, payment_method } = body;
         if (!from_currency || !to_currency || !payout_address) {
           return badRequest('Missing required transaction fields');
         }
@@ -131,12 +149,17 @@ Deno.serve(async (req) => {
           payout_address,
           skip_choose_payout_address: true,
           skip_choose_payment_category: false,
+          redirects: {
+            successful: 'https://mrcglobalpay.com/?status=success',
+            cancelled: 'https://mrcglobalpay.com/?status=cancelled',
+            failed: 'https://mrcglobalpay.com/?status=failed',
+          },
         };
 
         if (from_network) txBody.from_network = from_network;
         if (to_network) txBody.to_network = to_network;
         if (email) txBody.email = email;
-        if (redirects) txBody.redirects = redirects;
+        if (payment_method) txBody.payment_method = payment_method;
 
         const resp = await fetch(`${GUARDARIAN_BASE}/transaction`, {
           method: 'POST',
@@ -149,6 +172,49 @@ Deno.serve(async (req) => {
         if (!resp.ok) {
           console.error('Guardarian create-transaction error:', text);
           return containedError(data?.message || 'Transaction creation failed', resp.status >= 500, { details: data });
+        }
+
+        return jsonResponse(data);
+      }
+
+      case 'create-sell-transaction': {
+        const { from_amount, from_currency, to_currency, from_network, to_network, deposit_address, payout_address, email, payment_method } = body;
+        if (!from_currency || !to_currency) {
+          return badRequest('Missing required sell transaction fields');
+        }
+
+        const txBody: Record<string, unknown> = {
+          from_amount,
+          from_currency,
+          to_currency,
+          skip_choose_payout_address: !!payout_address,
+          skip_choose_payment_category: false,
+          redirects: {
+            successful: 'https://mrcglobalpay.com/?status=success',
+            cancelled: 'https://mrcglobalpay.com/?status=cancelled',
+            failed: 'https://mrcglobalpay.com/?status=failed',
+          },
+        };
+
+        if (from_network) txBody.from_network = from_network;
+        if (to_network) txBody.to_network = to_network;
+        if (payout_address) txBody.payout_address = payout_address;
+        if (deposit_address) txBody.deposit_address = deposit_address;
+        if (email) txBody.email = email;
+        if (payment_method) txBody.payment_method = payment_method;
+
+        // Use the sell endpoint
+        const resp = await fetch(`${GUARDARIAN_BASE}/transaction/sell`, {
+          method: 'POST',
+          headers: { ...headers, 'Content-Type': 'application/json' },
+          body: JSON.stringify(txBody),
+        });
+
+        const text = await resp.text();
+        const data = text ? JSON.parse(text) : null;
+        if (!resp.ok) {
+          console.error('Guardarian create-sell-transaction error:', text);
+          return containedError(data?.message || 'Sell transaction creation failed', resp.status >= 500, { details: data });
         }
 
         return jsonResponse(data);

@@ -62,6 +62,13 @@ export interface GuardarianMinMax {
   max: number;
 }
 
+export interface GuardarianPaymentMethod {
+  type: string;
+  payment_category: string;
+  deposit_enabled: boolean;
+  withdrawal_enabled: boolean;
+}
+
 async function callGuardarian(body: Record<string, unknown>) {
   const { data, error } = await supabase.functions.invoke('guardarian', {
     method: 'POST',
@@ -78,6 +85,11 @@ export async function getGuardarianCurrencies(): Promise<GuardarianCurrenciesRes
 export async function getGuardarianPartnerToken(): Promise<string> {
   const data = await callGuardarian({ action: 'partner-token' });
   return data?.token || '';
+}
+
+export async function getGuardarianPaymentMethods(currency: string, currencyType?: string): Promise<GuardarianPaymentMethod[]> {
+  const data = await callGuardarian({ action: 'payment-methods', currency, currency_type: currencyType });
+  return data?.payment_methods || data || [];
 }
 
 export async function getGuardarianEstimate(params: {
@@ -108,7 +120,21 @@ export async function createGuardarianTransaction(params: {
   to_network?: string;
   payout_address: string;
   email?: string;
-  redirects?: { successful?: string; cancelled?: string; failed?: string };
+  payment_method?: string;
 }) {
   return callGuardarian({ action: 'create-transaction', ...params });
+}
+
+export async function createGuardarianSellTransaction(params: {
+  from_amount: number;
+  from_currency: string;
+  to_currency: string;
+  from_network?: string;
+  to_network?: string;
+  payout_address?: string;
+  deposit_address?: string;
+  email?: string;
+  payment_method?: string;
+}) {
+  return callGuardarian({ action: 'create-sell-transaction', ...params });
 }
