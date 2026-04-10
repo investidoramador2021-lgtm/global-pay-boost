@@ -119,6 +119,42 @@ export type Database = {
         }
         Relationships: []
       }
+      customers: {
+        Row: {
+          created_at: string
+          email: string
+          id: string
+          latest_from_currency: string | null
+          latest_payment_method: string | null
+          latest_to_currency: string | null
+          latest_trade_direction: string | null
+          metadata: Json
+          updated_at: string
+        }
+        Insert: {
+          created_at?: string
+          email: string
+          id?: string
+          latest_from_currency?: string | null
+          latest_payment_method?: string | null
+          latest_to_currency?: string | null
+          latest_trade_direction?: string | null
+          metadata?: Json
+          updated_at?: string
+        }
+        Update: {
+          created_at?: string
+          email?: string
+          id?: string
+          latest_from_currency?: string | null
+          latest_payment_method?: string | null
+          latest_to_currency?: string | null
+          latest_trade_direction?: string | null
+          metadata?: Json
+          updated_at?: string
+        }
+        Relationships: []
+      }
       email_send_log: {
         Row: {
           created_at: string
