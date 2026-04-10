@@ -271,6 +271,9 @@ const ExchangeWidget = () => {
   const [gCreatingTx, setGCreatingTx] = useState(false);
   const [gCheckoutUrl, setGCheckoutUrl] = useState("");
   const [gSelectedProvider, setGSelectedProvider] = useState<"guardarian" | "transak">("guardarian");
+  const [gShowReview, setGShowReview] = useState(false);
+  const [gCurrencyRetryCount, setGCurrencyRetryCount] = useState(0);
+  const [gCurrencyError, setGCurrencyError] = useState(false);
 
   // Transaction flow state
   const [step, setStep] = useState<Step>("exchange");
@@ -632,26 +635,52 @@ const ExchangeWidget = () => {
     loadCurrencies();
   }, []);
 
-  // Load Guardarian currencies on first switch to buysell mode
+  // Load Guardarian currencies on first switch to buysell mode — with retry
+  const loadGuardarianCurrencies = useCallback(async (retryNum = 0) => {
+    setGuardarianLoading(true);
+    setGCurrencyError(false);
+    try {
+      const data = await getGuardarianCurrencies();
+      if (data?.fallback) throw new Error("Provider unavailable");
+      const fiat = (data.fiat_currencies || []).filter((c: GuardarianCurrency) => c.enabled && c.is_available !== false);
+      const crypto = (data.crypto_currencies || []).filter((c: GuardarianCurrency) => c.enabled && c.is_available !== false);
+      setGuardarianFiat(fiat);
+      setGuardarianCrypto(crypto);
+      // Deep-link pre-selection: check URL params
+      const dlParams = new URLSearchParams(window.location.search);
+      const dlFiat = dlParams.get("fiat")?.toUpperCase();
+      const dlCrypto = dlParams.get("crypto")?.toUpperCase();
+      setGFromCurrency(fiat.find((c: GuardarianCurrency) => c.ticker === (dlFiat || "USD")) || fiat.find((c: GuardarianCurrency) => c.ticker === "EUR") || fiat[0] || null);
+      setGToCurrency(crypto.find((c: GuardarianCurrency) => c.ticker === (dlCrypto || "BTC")) || crypto[0] || null);
+      setGuardarianLoaded(true);
+      setGCurrencyRetryCount(0);
+    } catch (err) {
+      console.error("Failed to load Guardarian currencies:", err);
+      if (retryNum < 3) {
+        setGCurrencyRetryCount(retryNum + 1);
+        setTimeout(() => loadGuardarianCurrencies(retryNum + 1), 2000 * (retryNum + 1));
+      } else {
+        setGCurrencyError(true);
+      }
+    } finally {
+      setGuardarianLoading(false);
+    }
+  }, []);
+
   useEffect(() => {
     if (widgetMode !== "buysell" || guardarianLoaded) return;
-    setGuardarianLoading(true);
-    getGuardarianCurrencies()
-      .then((data) => {
-        const fiat = (data.fiat_currencies || []).filter((c) => c.enabled && c.is_available !== false);
-        const crypto = (data.crypto_currencies || []).filter((c) => c.enabled && c.is_available !== false);
-        setGuardarianFiat(fiat);
-        setGuardarianCrypto(crypto);
-        setGFromCurrency(fiat.find((c) => c.ticker === "USD") || fiat.find((c) => c.ticker === "EUR") || fiat[0] || null);
-        setGToCurrency(crypto.find((c) => c.ticker === "BTC") || crypto[0] || null);
-        setGuardarianLoaded(true);
-      })
-      .catch((err) => {
-        console.error("Failed to load Guardarian currencies:", err);
-        toast({ title: "Connection issue", description: "Could not load Buy/Sell currencies.", variant: "destructive" });
-      })
-      .finally(() => setGuardarianLoading(false));
-  }, [widgetMode, guardarianLoaded]);
+    loadGuardarianCurrencies();
+  }, [widgetMode, guardarianLoaded, loadGuardarianCurrencies]);
+
+  // Deep-link: ?tab=buy&crypto=SOL&fiat=USD activates Buy/Sell tab automatically
+  useEffect(() => {
+    const params = new URLSearchParams(window.location.search);
+    const tab = params.get("tab")?.toLowerCase();
+    if (tab === "buy" || tab === "sell" || tab === "buysell") {
+      setWidgetMode("buysell");
+      if (tab === "sell") setGTradeDirection("sell");
+    }
+  }, []);
 
   // Guardarian estimate
   const fetchGuardarianEstimate = useCallback(async () => {
