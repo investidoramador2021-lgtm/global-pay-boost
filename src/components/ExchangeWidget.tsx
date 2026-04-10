@@ -1193,8 +1193,13 @@ const ExchangeWidget = () => {
       return;
     }
 
-    if (!gPayoutAddress.trim()) {
+    if (gTradeDirection === "buy" && !gPayoutAddress.trim()) {
       toast({ title: "Wallet required", description: `Enter your ${gToCurrency.ticker} wallet address to continue.`, variant: "destructive" });
+      return;
+    }
+
+    if (gTradeDirection === "sell" && !gBankFieldsValid) {
+      toast({ title: "Bank details required", description: "Please fill in all required payout fields correctly.", variant: "destructive" });
       return;
     }
 
@@ -1210,19 +1215,27 @@ const ExchangeWidget = () => {
     setGShowReview(false);
     setGCreatingTx(true);
 
-    // Lead capture is now handled server-side in the guardarian edge function
-    // using service_role, so it bypasses RLS restrictions
-
     try {
       const fromNet = getNetworkParam(gFromCurrency);
       const toNet = getNetworkParam(gToCurrency);
       const emailParam = gPayoutEmail.trim() || undefined;
+      const fiatCurrency = gTradeDirection === "buy" ? gFromCurrency : gToCurrency;
       const effectivePaymentMethod = resolveGuardarianPaymentMethod(
-        gFromCurrency?.ticker,
+        fiatCurrency?.ticker,
         gPaymentMethods,
         gSelectedPaymentMethod,
         gTradeDirection,
       );
+
+      // Build bank_details for sell flow
+      let bankDetails: GuardarianBankDetails | undefined;
+      if (gTradeDirection === "sell" && gPayoutFieldDefs.length > 0) {
+        bankDetails = {};
+        for (const field of gPayoutFieldDefs) {
+          const raw = gBankFields[field.key] || "";
+          bankDetails[field.key] = field.sanitize ? field.sanitize(raw) : raw.trim();
+        }
+      }
 
       const result = await createGuardarianTransaction({
         from_amount: parseFloat(gSendAmount),
@@ -1231,17 +1244,23 @@ const ExchangeWidget = () => {
         payout_currency: gToCurrency!.ticker,
         ...(fromNet ? { from_network: fromNet } : {}),
         ...(toNet ? { to_network: toNet } : {}),
-        payout_address: gPayoutAddress.trim(),
+        ...(gTradeDirection === "buy" ? { payout_address: gPayoutAddress.trim() } : {}),
+        ...(bankDetails ? { bank_details: bankDetails } : {}),
         email: emailParam,
         ...(effectivePaymentMethod ? { payment_method: effectivePaymentMethod } : {}),
+        trade_direction: gTradeDirection,
       });
 
-      // Open checkout in a new tab — iframe is blocked by Guardarian's X-Frame-Options
       const checkoutUrl = result?.checkout_url || result?.redirect_url;
       if (checkoutUrl) {
         setGCheckoutUrl(checkoutUrl);
         setGStep("checkout");
-        toast({ title: "Transaction created", description: "Click 'Proceed to Secure Payment' to complete your purchase." });
+        toast({
+          title: "Transaction created",
+          description: gTradeDirection === "sell"
+            ? "Click 'Proceed to Secure Payout' to complete your sale."
+            : "Click 'Proceed to Secure Payment' to complete your purchase.",
+        });
         return;
       }
 
