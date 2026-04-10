@@ -22,15 +22,15 @@ export default defineConfig(({ mode }) => ({
       includeAssets: ["favicon.png", "favicon-32x32.png", "favicon-192x192.png", "icon-512x512.png"],
       manifest: {
         id: "com.mrcglobalpay.app",
-        name: "MRC Global Pay",
-        short_name: "MRC Pay",
-        description: "Swap 500+ cryptocurrencies instantly with zero confirmation delays. No registration required.",
-        theme_color: "#00FFA3",
+        name: "MRC Global Swap Pay",
+        short_name: "Swap Pay",
+        description: "Instant crypto swaps with no minimum. Swap dust from $0.30. Non-custodial wallet-to-wallet exchange for 500+ cryptocurrencies.",
+        theme_color: "#0F1117",
         background_color: "#0F1117",
         display: "standalone",
         orientation: "any",
         scope: "/",
-        start_url: "/?utm_source=pwa&utm_medium=install",
+        start_url: "/",
         categories: ["finance", "business"],
         icons: [
           {
