@@ -1462,14 +1462,6 @@ const ExchangeWidget = () => {
                         </p>
                       </div>
                     )}
-
-                        <div className="flex items-center justify-center gap-3 pt-1">
-                          <span className="flex items-center gap-1 font-body text-[10px] text-muted-foreground"><Shield className="h-3 w-3" /> Regulated</span>
-                          <span className="flex items-center gap-1 font-body text-[10px] text-muted-foreground"><Lock className="h-3 w-3" /> KYC-compliant</span>
-                          <span className="flex items-center gap-1 font-body text-[10px] text-muted-foreground"><CheckCircle2 className="h-3 w-3" /> Secure checkout</span>
-                        </div>
-                      </div>
-                    )}
                   </>
                 )}
               </div>
