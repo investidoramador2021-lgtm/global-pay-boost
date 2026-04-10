@@ -205,6 +205,8 @@ const ExchangeWidget = () => {
   const [gShowFromPicker, setGShowFromPicker] = useState(false);
   const [gShowToPicker, setGShowToPicker] = useState(false);
   const [gSearchQuery, setGSearchQuery] = useState("");
+  type BuySellStep = "form" | "compare";
+  const [gStep, setGStep] = useState<BuySellStep>("form");
 
   // Transaction flow state
   const [step, setStep] = useState<Step>("exchange");
