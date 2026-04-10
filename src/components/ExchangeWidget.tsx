@@ -529,6 +529,70 @@ const ExchangeWidget = () => {
     loadCurrencies();
   }, []);
 
+  // Load Guardarian currencies on first switch to buysell mode
+  useEffect(() => {
+    if (widgetMode !== "buysell" || guardarianLoaded) return;
+    setGuardarianLoading(true);
+    getGuardarianCurrencies()
+      .then((data) => {
+        const fiat = (data.fiat_currencies || []).filter((c) => c.enabled && c.is_available);
+        const crypto = (data.crypto_currencies || []).filter((c) => c.enabled && c.is_available);
+        setGuardarianFiat(fiat);
+        setGuardarianCrypto(crypto);
+        setGFromCurrency(fiat.find((c) => c.ticker === "USD") || fiat.find((c) => c.ticker === "EUR") || fiat[0] || null);
+        setGToCurrency(crypto.find((c) => c.ticker === "BTC") || crypto[0] || null);
+        setGuardarianLoaded(true);
+      })
+      .catch((err) => {
+        console.error("Failed to load Guardarian currencies:", err);
+        toast({ title: "Connection issue", description: "Could not load Buy/Sell currencies.", variant: "destructive" });
+      })
+      .finally(() => setGuardarianLoading(false));
+  }, [widgetMode, guardarianLoaded]);
+
+  // Guardarian estimate
+  const fetchGuardarianEstimate = useCallback(async () => {
+    if (!gFromCurrency || !gToCurrency || !gSendAmount || parseFloat(gSendAmount) <= 0) {
+      setGEstimatedAmount("");
+      return;
+    }
+    setGEstimating(true);
+    try {
+      // Pick first available network
+      const fromNetwork = gFromCurrency.networks?.[0]?.network || gFromCurrency.ticker;
+      const toNetwork = gToCurrency.networks?.[0]?.network || gToCurrency.ticker;
+      const [est, minMax] = await Promise.all([
+        getGuardarianEstimate({
+          from_currency: gFromCurrency.ticker,
+          to_currency: gToCurrency.ticker,
+          from_network: fromNetwork,
+          to_network: toNetwork,
+          from_amount: gSendAmount,
+        }),
+        getGuardarianMinMax({
+          from_currency: gFromCurrency.ticker,
+          to_currency: gToCurrency.ticker,
+          from_network: fromNetwork,
+          to_network: toNetwork,
+        }),
+      ]);
+      setGEstimatedAmount(est.value || "—");
+      setGMinAmount(minMax.min || 0);
+      setGMaxAmount(minMax.max || 999999);
+    } catch {
+      setGEstimatedAmount("—");
+    } finally {
+      setGEstimating(false);
+    }
+  }, [gFromCurrency, gToCurrency, gSendAmount]);
+
+  useEffect(() => {
+    if (widgetMode !== "buysell") return;
+    if (gDebounceRef.current) clearTimeout(gDebounceRef.current);
+    gDebounceRef.current = setTimeout(fetchGuardarianEstimate, 600);
+    return () => { if (gDebounceRef.current) clearTimeout(gDebounceRef.current); };
+  }, [fetchGuardarianEstimate, widgetMode]);
+
   const fetchEstimate = useCallback(async () => {
     if (!fromCurrency || !toCurrency || !sendAmount || parseFloat(sendAmount) <= 0) {
       setEstimatedAmount("");
