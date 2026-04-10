@@ -1376,10 +1376,17 @@ const ExchangeWidget = () => {
                             if (!gFromCurrency || !gToCurrency) return;
 
                             if (gSelectedProvider === "guardarian") {
-                              // Use Guardarian calculator widget URL - works reliably unlike checkout redirect
-                              const widgetUrl = `https://guardarian.com/calculator/v1?partner_api_token=3dba4adc-1fa6-4122-8ace-c25fdec09fae&default_fiat_currency=${encodeURIComponent(gFromCurrency.ticker)}&default_crypto_currency=${encodeURIComponent(gToCurrency.ticker)}&default_fiat_amount=${encodeURIComponent(gSendAmount)}&payout_address=${encodeURIComponent(gPayoutAddress.trim())}&theme=blue`;
-                              window.open(widgetUrl, "_blank", "noopener");
-                              toast({ title: "Guardarian checkout opened", description: "Complete your purchase in the new tab." });
+                              setGCreatingTx(true);
+                              try {
+                                const token = await getGuardarianPartnerToken();
+                                const widgetUrl = `https://guardarian.com/calculator/v1?partner_api_token=${encodeURIComponent(token)}&default_fiat_currency=${encodeURIComponent(gFromCurrency.ticker)}&default_crypto_currency=${encodeURIComponent(gToCurrency.ticker)}&default_fiat_amount=${encodeURIComponent(gSendAmount)}&payout_address=${encodeURIComponent(gPayoutAddress.trim())}&theme=blue`;
+                                window.open(widgetUrl, "_blank", "noopener");
+                                toast({ title: "Guardarian checkout opened", description: "Complete your purchase in the new tab." });
+                              } catch (err: any) {
+                                toast({ title: "Error", description: err?.message || "Could not open checkout", variant: "destructive" });
+                              } finally {
+                                setGCreatingTx(false);
+                              }
                             } else if (gSelectedProvider === "transak") {
                               const transakUrl = `https://global.transak.com/?apiKey=none&cryptoCurrencyCode=${encodeURIComponent(gToCurrency.ticker)}&fiatCurrency=${encodeURIComponent(gFromCurrency.ticker)}&fiatAmount=${encodeURIComponent(gSendAmount)}&walletAddress=${encodeURIComponent(gPayoutAddress.trim())}&themeColor=10b981`;
                               window.open(transakUrl, "_blank", "noopener");
