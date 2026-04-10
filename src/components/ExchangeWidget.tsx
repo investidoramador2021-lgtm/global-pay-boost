@@ -535,8 +535,8 @@ const ExchangeWidget = () => {
     setGuardarianLoading(true);
     getGuardarianCurrencies()
       .then((data) => {
-        const fiat = (data.fiat_currencies || []).filter((c) => c.enabled && c.is_available);
-        const crypto = (data.crypto_currencies || []).filter((c) => c.enabled && c.is_available);
+        const fiat = (data.fiat_currencies || []).filter((c) => c.enabled && c.is_available !== false);
+        const crypto = (data.crypto_currencies || []).filter((c) => c.enabled && c.is_available !== false);
         setGuardarianFiat(fiat);
         setGuardarianCrypto(crypto);
         setGFromCurrency(fiat.find((c) => c.ticker === "USD") || fiat.find((c) => c.ticker === "EUR") || fiat[0] || null);
