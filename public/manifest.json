@@ -8,6 +8,7 @@
   "orientation": "any",
   "background_color": "#0F1117",
   "theme_color": "#00FFA3",
+  "categories": ["finance", "business"],
   "icons": [
     {
       "src": "/favicon-32x32.png",
