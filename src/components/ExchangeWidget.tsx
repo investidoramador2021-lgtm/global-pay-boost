@@ -912,12 +912,16 @@ const ExchangeWidget = () => {
       };
       if (fromNetwork) estimateParams.from_network = fromNetwork;
       if (toNetwork) estimateParams.to_network = toNetwork;
-      const effectivePaymentMethod = resolveGuardarianPaymentMethod(
+      let effectivePaymentMethod = resolveGuardarianPaymentMethod(
         (gTradeDirection === "buy" ? gFromCurrency : gToCurrency)?.ticker,
         gPaymentMethods,
         gSelectedPaymentMethod,
         gTradeDirection,
       );
+      // Hard-map EUR sell to SEPA if resolver missed it
+      if (gTradeDirection === "sell" && gToCurrency.ticker === "EUR" && !effectivePaymentMethod) {
+        effectivePaymentMethod = "SEPA";
+      }
       if (effectivePaymentMethod) estimateParams.payment_method = effectivePaymentMethod;
 
       const minMaxParams: Parameters<typeof getGuardarianMinMax>[0] = {
