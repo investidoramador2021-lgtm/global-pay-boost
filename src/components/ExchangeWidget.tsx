@@ -3230,7 +3230,11 @@ const ExchangeWidget = () => {
               </div>
               <div className="flex items-center justify-between font-body text-sm">
                 <span className="text-muted-foreground">{gTradeDirection === "sell" ? "You receive (est.)" : "You receive (est.)"}</span>
-                <span className="font-semibold text-foreground">≈ {gEstimatedAmount} {gToCurrency?.ticker}</span>
+                <span className="font-semibold text-foreground">≈ {(() => {
+                  const raw = parseFloat(gEstimatedAmount || "0");
+                  if (!Number.isFinite(raw) || raw <= 0) return gEstimatedAmount;
+                  return (raw * 0.995).toFixed(raw >= 1 ? 6 : 8);
+                })()} {gToCurrency?.ticker}</span>
               </div>
               {gFullEstimate?.estimated_exchange_rate && (
                 <div className="flex items-center justify-between font-body text-xs">
