@@ -18,6 +18,7 @@ export default defineConfig(({ mode }) => ({
     mode === "development" && componentTagger(),
     VitePWA({
       registerType: "autoUpdate",
+      manifestFilename: "manifest.json",
       includeAssets: ["favicon.png", "favicon-32x32.png", "favicon-192x192.png", "icon-512x512.png"],
       manifest: {
         id: "com.mrcglobalpay.app",
