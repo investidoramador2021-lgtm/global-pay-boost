@@ -710,8 +710,14 @@ const ExchangeWidget = () => {
 
   const isSellEligibleFiat = useCallback((currency: GuardarianCurrency | null) => {
     if (!currency || currency.currency_type !== "FIAT") return false;
+    // Be permissive: show all available fiat currencies in the sell picker.
+    // The estimate endpoint will return a fallback/error for unsupported corridors,
+    // which the UI already handles gracefully with "Unavailable" messaging.
     const methods = collectGuardarianPaymentMethods(currency);
-    return methods.some((pm) => pm.withdrawal_enabled);
+    // If we have method data and at least one supports withdrawal, great.
+    // If we have NO method data at all, still allow — the live API call will verify.
+    if (methods.length === 0) return true;
+    return methods.some((pm) => pm.withdrawal_enabled || pm.deposit_enabled);
   }, [collectGuardarianPaymentMethods]);
 
   useEffect(() => {
