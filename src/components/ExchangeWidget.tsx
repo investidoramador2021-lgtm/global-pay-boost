@@ -21,6 +21,7 @@ import {
   getGuardarianEstimate,
   getGuardarianMinMax,
   getGuardarianPartnerToken,
+  createGuardarianTransaction,
   type GuardarianCurrency,
   type GuardarianEstimate,
 } from "@/lib/guardarian";
@@ -972,6 +973,30 @@ const ExchangeWidget = () => {
     setGCreatingTx(true);
 
     try {
+      // Try creating a real transaction via the API for proper 3DS/redirect support
+      const result = await createGuardarianTransaction({
+        from_amount: parseFloat(gSendAmount),
+        from_currency: gFromCurrency!.ticker,
+        to_currency: gToCurrency!.ticker,
+        from_network: gFromCurrency!.networks?.[0]?.network,
+        to_network: gToCurrency!.networks?.[0]?.network,
+        payout_address: gPayoutAddress.trim(),
+        redirects: {
+          successful: window.location.origin + "/?status=success",
+          cancelled: window.location.origin + "/?status=cancelled",
+          failed: window.location.origin + "/?status=failed",
+        },
+      });
+
+      // If the API returns a redirect_url, open it in a new tab (clean redirect)
+      const redirectUrl = result?.redirect_url;
+      if (redirectUrl) {
+        window.open(redirectUrl, "_blank", "noopener,noreferrer");
+        toast({ title: "Checkout opened", description: "Complete your purchase in the new tab. You can close this overlay." });
+        return;
+      }
+
+      // Fallback: use calculator widget URL in a new tab
       const token = await getGuardarianPartnerToken();
       if (!token) throw new Error("Provider is not configured.");
 
@@ -986,9 +1011,26 @@ const ExchangeWidget = () => {
 
       const widgetUrl = `https://guardarian.com/calculator/v1?${params.toString()}`;
       setGCheckoutUrl(widgetUrl);
-      window.location.assign(widgetUrl);
+      window.open(widgetUrl, "_blank", "noopener,noreferrer");
+      toast({ title: "Checkout opened", description: "Complete your purchase in the new tab." });
     } catch (err: any) {
-      toast({ title: "Checkout unavailable", description: err?.message || "Could not load the embedded checkout.", variant: "destructive" });
+      // Final fallback: open calculator widget directly
+      try {
+        const token = await getGuardarianPartnerToken();
+        const params = new URLSearchParams({
+          partner_api_token: token || "",
+          default_fiat_currency: gFromCurrency!.ticker,
+          default_crypto_currency: gToCurrency!.ticker,
+          default_fiat_amount: gSendAmount,
+          payout_address: gPayoutAddress.trim(),
+          theme: "blue",
+        });
+        const widgetUrl = `https://guardarian.com/calculator/v1?${params.toString()}`;
+        window.open(widgetUrl, "_blank", "noopener,noreferrer");
+        toast({ title: "Checkout opened", description: "Complete your purchase in the new tab." });
+      } catch {
+        toast({ title: "Checkout unavailable", description: err?.message || "Could not open checkout.", variant: "destructive" });
+      }
     } finally {
       setGCreatingTx(false);
     }

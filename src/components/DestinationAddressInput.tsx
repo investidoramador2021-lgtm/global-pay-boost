@@ -33,8 +33,12 @@ function detectNetwork(address: string): DetectedNetwork | null {
   if (/^3[a-km-zA-HJ-NP-Z1-9]{25,34}$/.test(t)) {
     return { name: "Bitcoin (P2SH)", shortName: "BTC", icon: "₿", type: "btc" };
   }
-  if (/^bc1[a-zA-HJ-NP-Z0-9]{25,90}$/.test(t)) {
-    return { name: "Bitcoin (Bech32)", shortName: "BTC", icon: "₿", type: "btc" };
+  if (/^(bc1|BC1)[a-zA-HJ-NP-Z0-9]{25,90}$/.test(t)) {
+    return { name: "Bitcoin (SegWit)", shortName: "BTC", icon: "₿", type: "btc" };
+  }
+  // Taproot (bc1p / BC1P)
+  if (/^(bc1p|BC1P)[a-zA-HJ-NP-Z0-9]{56,62}$/.test(t)) {
+    return { name: "Bitcoin (Taproot)", shortName: "BTC", icon: "₿", type: "btc" };
   }
 
   // TRON — starts with T, exactly 34 chars, Base58
