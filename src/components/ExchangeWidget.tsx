@@ -641,7 +641,7 @@ const ExchangeWidget = () => {
     setGCurrencyError(false);
     try {
       const data = await getGuardarianCurrencies();
-      if (data?.fallback) throw new Error("Provider unavailable");
+      if ((data as any)?.fallback) throw new Error("Provider unavailable");
       const fiat = (data.fiat_currencies || []).filter((c: GuardarianCurrency) => c.enabled && c.is_available !== false);
       const crypto = (data.crypto_currencies || []).filter((c: GuardarianCurrency) => c.enabled && c.is_available !== false);
       setGuardarianFiat(fiat);
