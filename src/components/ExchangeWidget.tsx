@@ -1731,7 +1731,14 @@ const ExchangeWidget = () => {
                           ) : gEstimatedAmount && parseFloat(gEstimatedAmount) <= 0 ? (
                             <span className="text-destructive text-base">Minimum amount not met</span>
                           ) : (
-                            `≈ ${gEstimatedAmount || "—"}`
+                            (() => {
+                              if (!gEstimatedAmount) return "≈ —";
+                              const raw = parseFloat(gEstimatedAmount);
+                              if (!Number.isFinite(raw) || raw <= 0) return `≈ ${gEstimatedAmount}`;
+                              // Subtract our 0.5% service fee from displayed receive amount
+                              const adjusted = (raw * 0.995).toFixed(raw >= 1 ? 6 : 8);
+                              return `≈ ${adjusted}`;
+                            })()
                           )}
                         </span>
                         <button onClick={() => setGShowToPicker(true)} className="flex items-center gap-2 rounded-lg bg-trust/10 px-4 py-2.5 transition-colors hover:bg-trust/20">
