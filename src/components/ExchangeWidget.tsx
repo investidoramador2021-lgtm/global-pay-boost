@@ -535,8 +535,8 @@ const ExchangeWidget = () => {
     setGuardarianLoading(true);
     getGuardarianCurrencies()
       .then((data) => {
-        const fiat = (data.fiat_currencies || []).filter((c) => c.enabled && c.is_available);
-        const crypto = (data.crypto_currencies || []).filter((c) => c.enabled && c.is_available);
+        const fiat = (data.fiat_currencies || []).filter((c) => c.enabled && c.is_available !== false);
+        const crypto = (data.crypto_currencies || []).filter((c) => c.enabled && c.is_available !== false);
         setGuardarianFiat(fiat);
         setGuardarianCrypto(crypto);
         setGFromCurrency(fiat.find((c) => c.ticker === "USD") || fiat.find((c) => c.ticker === "EUR") || fiat[0] || null);
@@ -872,6 +872,44 @@ const ExchangeWidget = () => {
     );
   };
 
+  const GuardarianCryptoList = ({ items, onSelect }: { items: GuardarianCurrency[]; onSelect: (c: GuardarianCurrency) => void }) => {
+    const [visibleCount, setVisibleCount] = useState(BATCH_SIZE);
+    const listRef = useRef<HTMLDivElement>(null);
+
+    const handleScroll = useCallback(() => {
+      const el = listRef.current;
+      if (!el) return;
+      if (el.scrollTop + el.clientHeight >= el.scrollHeight - 100) {
+        setVisibleCount((prev) => Math.min(prev + BATCH_SIZE, items.length));
+      }
+    }, [items.length]);
+
+    useEffect(() => { setVisibleCount(BATCH_SIZE); }, [items.length]);
+
+    return (
+      <div ref={listRef} onScroll={handleScroll} className="overflow-y-auto p-2" style={{ maxHeight: 400 }}>
+        {items.slice(0, visibleCount).map((c) => (
+          <button
+            key={`${c.ticker}-${c.networks?.[0]?.network || ''}`}
+            onClick={() => onSelect(c)}
+            className="flex w-full items-center gap-3 rounded-lg px-3 py-2.5 text-left transition-colors hover:bg-accent"
+          >
+            <div>
+              <span className="font-display text-sm font-semibold uppercase text-foreground">{c.ticker}</span>
+              {c.networks?.[0]?.network && c.networks[0].network !== c.ticker && (
+                <span className="ms-1.5 rounded bg-muted px-1.5 py-0.5 font-body text-[10px] uppercase text-muted-foreground">{c.networks[0].network}</span>
+              )}
+              <span className="ms-2 font-body text-xs text-muted-foreground">{c.name}</span>
+            </div>
+          </button>
+        ))}
+        {visibleCount < items.length && (
+          <div className="py-2 text-center font-body text-xs text-muted-foreground">Scroll for more...</div>
+        )}
+      </div>
+    );
+  };
+
   const CurrencyPicker = ({
     show,
     onSelect,
@@ -1114,26 +1152,14 @@ const ExchangeWidget = () => {
                                 );
                               })}
                             </div>
-                            <div className="overflow-y-auto p-2" style={{ maxHeight: 400 }}>
-                              {guardarianCrypto
-                                .filter((c) => !gSearchQuery || c.ticker.toLowerCase().includes(gSearchQuery.toLowerCase()) || c.name.toLowerCase().includes(gSearchQuery.toLowerCase()))
-                                .slice(0, 100)
-                                .map((c) => (
-                                  <button
-                                    key={`${c.ticker}-${c.networks?.[0]?.network || ''}`}
-                                    onClick={() => { setGToCurrency(c); setGShowToPicker(false); setGSearchQuery(""); }}
-                                    className="flex w-full items-center gap-3 rounded-lg px-3 py-2.5 text-left transition-colors hover:bg-accent"
-                                  >
-                                    <div>
-                                      <span className="font-display text-sm font-semibold uppercase text-foreground">{c.ticker}</span>
-                                      {c.networks?.[0]?.network && c.networks[0].network !== c.ticker && (
-                                        <span className="ms-1.5 rounded bg-muted px-1.5 py-0.5 font-body text-[10px] uppercase text-muted-foreground">{c.networks[0].network}</span>
-                                      )}
-                                      <span className="ms-2 font-body text-xs text-muted-foreground">{c.name}</span>
-                                    </div>
-                                  </button>
-                                ))}
-                            </div>
+                            <GuardarianCryptoList
+                              items={guardarianCrypto.filter((c) => {
+                                if (!gSearchQuery) return true;
+                                const q = gSearchQuery.toLowerCase();
+                                return c.ticker.toLowerCase().includes(q) || c.name.toLowerCase().includes(q) || c.networks?.some((n) => n.network.toLowerCase().includes(q) || n.name.toLowerCase().includes(q));
+                              })}
+                              onSelect={(c) => { setGToCurrency(c); setGShowToPicker(false); setGSearchQuery(""); }}
+                            />
                           </div>
                         </div>
                       )}
