@@ -739,6 +739,7 @@ const ExchangeWidget = () => {
         const syntheticPreferredMethods = [
           ...(fiatCurrency.ticker === "BRL" ? [{ type: "PIX", payment_category: "BANK_TRANSFER", deposit_enabled: true, withdrawal_enabled: false }] : []),
           ...(fiatCurrency.ticker === "EUR" ? [{ type: "SEPA", payment_category: "BANK_TRANSFER", deposit_enabled: true, withdrawal_enabled: true }] : []),
+          ...(fiatCurrency.ticker === "GBP" ? [{ type: "FASTER_PAYMENTS", payment_category: "BANK_TRANSFER", deposit_enabled: true, withdrawal_enabled: true }] : []),
         ];
         const mergedPreferredMethods = [
           ...syntheticPreferredMethods.filter((pm) => !eligibleMethods.some((existing) => existing.type === pm.type)),
