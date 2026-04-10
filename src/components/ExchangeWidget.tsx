@@ -1203,27 +1203,9 @@ const ExchangeWidget = () => {
       return;
     }
 
-    // Buy mode requires a wallet; sell mode requires payout details before checkout
-    if (gTradeDirection === "buy" && !gPayoutAddress.trim()) {
+    if (!gPayoutAddress.trim()) {
       toast({ title: "Wallet required", description: `Enter your ${gToCurrency.ticker} wallet address to continue.`, variant: "destructive" });
       return;
-    }
-
-    if (gTradeDirection === "sell") {
-      if (isSellSepaCorridor) {
-        if (!isValidIban(gSepaIban)) {
-          toast({ title: "IBAN required", description: "Enter a valid SEPA IBAN to continue.", variant: "destructive" });
-          return;
-        }
-
-        if (!isValidBic(gSepaBic)) {
-          toast({ title: "BIC required", description: "Enter a valid 8- or 11-character BIC / SWIFT code.", variant: "destructive" });
-          return;
-        }
-      } else if (!gPayoutAddress.trim()) {
-        toast({ title: "Payout details required", description: `Enter your ${gToCurrency.ticker} payout details to continue.`, variant: "destructive" });
-        return;
-      }
     }
 
     if (!gPayoutEmail.trim() || !hasValidGuardarianEmail) {
@@ -1248,65 +1230,35 @@ const ExchangeWidget = () => {
         p_latest_payment_method: gSelectedPaymentMethod || null,
         p_metadata: {
           wallet_address: gPayoutAddress.trim() || undefined,
-          iban: isSellSepaCorridor ? normalizeIban(gSepaIban) : undefined,
           amount: gSendAmount,
           timestamp: new Date().toISOString(),
         },
       });
     } catch (captureErr) {
       console.error("[MRC] Customer capture failed:", captureErr);
-      // Non-blocking — continue to checkout even if capture fails
     }
 
     try {
-      let result: any;
-
       const fromNet = getNetworkParam(gFromCurrency);
       const toNet = getNetworkParam(gToCurrency);
       const emailParam = gPayoutEmail.trim() || undefined;
-      let effectivePaymentMethod = resolveGuardarianPaymentMethod(
-        (gTradeDirection === "buy" ? gFromCurrency : gToCurrency)?.ticker,
+      const effectivePaymentMethod = resolveGuardarianPaymentMethod(
+        gFromCurrency?.ticker,
         gPaymentMethods,
         gSelectedPaymentMethod,
         gTradeDirection,
       );
-      // Hard-map EUR sell to SEPA
-      if (isSellSepaCorridor && !effectivePaymentMethod) {
-        effectivePaymentMethod = "SEPA";
-      }
 
-      if (gTradeDirection === "sell") {
-        result = await createGuardarianTransaction({
-          from_amount: parseFloat(gSendAmount),
-          from_currency: gFromCurrency!.ticker,
-          to_currency: gToCurrency!.ticker,
-          ...(fromNet ? { from_network: fromNet } : {}),
-          ...(toNet ? { to_network: toNet } : {}),
-          ...(isSellSepaCorridor
-            ? {
-                bank_details: {
-                  receiver_iban: normalizeIban(gSepaIban),
-                  receiver_bic: normalizeBic(gSepaBic),
-                },
-              }
-            : {
-                payout_address: gPayoutAddress.trim() || undefined,
-              }),
-          email: emailParam,
-          ...(effectivePaymentMethod ? { payment_method: effectivePaymentMethod } : {}),
-        });
-      } else {
-        result = await createGuardarianTransaction({
-          from_amount: parseFloat(gSendAmount),
-          from_currency: gFromCurrency!.ticker,
-          to_currency: gToCurrency!.ticker,
-          ...(fromNet ? { from_network: fromNet } : {}),
-          ...(toNet ? { to_network: toNet } : {}),
-          payout_address: gPayoutAddress.trim(),
-          email: emailParam,
-          ...(effectivePaymentMethod ? { payment_method: effectivePaymentMethod } : {}),
-        });
-      }
+      const result = await createGuardarianTransaction({
+        from_amount: parseFloat(gSendAmount),
+        from_currency: gFromCurrency!.ticker,
+        to_currency: gToCurrency!.ticker,
+        ...(fromNet ? { from_network: fromNet } : {}),
+        ...(toNet ? { to_network: toNet } : {}),
+        payout_address: gPayoutAddress.trim(),
+        email: emailParam,
+        ...(effectivePaymentMethod ? { payment_method: effectivePaymentMethod } : {}),
+      });
 
       // Use the redirect_url to embed checkout in iframe modal
       const checkoutUrl = result?.checkout_url || result?.redirect_url;
