@@ -1177,11 +1177,11 @@ const ExchangeWidget = () => {
         {step === "exchange" && (
           <motion.div key="exchange" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}>
             {/* ===== MODE TABS: Exchange | Buy/Sell ===== */}
-            <div className="mb-5 flex items-center justify-between">
-              <div className="flex rounded-xl border border-border bg-accent p-1 gap-1">
+            <div className="mb-5 flex items-center justify-between gap-2">
+              <div className="flex rounded-xl border border-border bg-accent p-1 gap-1 max-[480px]:w-full max-[480px]:grid max-[480px]:grid-cols-2">
                 <button
                   onClick={() => { setWidgetMode("exchange"); setGStep("form"); setGCheckoutUrl(""); }}
-                  className={`flex items-center gap-1.5 rounded-lg px-4 py-2 font-display text-sm font-semibold transition-all ${
+                  className={`flex items-center justify-center gap-1.5 rounded-lg px-4 py-2 font-display text-sm font-semibold transition-all ${
                     widgetMode === "exchange"
                       ? "bg-primary text-primary-foreground shadow-card"
                       : "text-muted-foreground hover:text-foreground hover:bg-background"
@@ -1191,7 +1191,7 @@ const ExchangeWidget = () => {
                 </button>
                 <button
                   onClick={() => setWidgetMode("buysell")}
-                  className={`flex items-center gap-1.5 rounded-lg px-4 py-2 font-display text-sm font-semibold transition-all ${
+                  className={`flex items-center justify-center gap-1.5 rounded-lg px-4 py-2 font-display text-sm font-semibold transition-all ${
                     widgetMode === "buysell"
                       ? "bg-primary text-primary-foreground shadow-card"
                       : "text-muted-foreground hover:text-foreground hover:bg-background"
@@ -1200,7 +1200,7 @@ const ExchangeWidget = () => {
                   <CreditCard className="h-4 w-4" /> Buy / Sell
                 </button>
               </div>
-              <span className="flex items-center gap-1.5 rounded-full border border-trust/30 bg-trust/10 px-2.5 py-1 font-body text-[10px] font-semibold uppercase tracking-wider text-trust">
+              <span className="hidden min-[481px]:flex items-center gap-1.5 rounded-full border border-trust/30 bg-trust/10 px-2.5 py-1 font-body text-[10px] font-semibold uppercase tracking-wider text-trust">
                 <span className="relative flex h-2 w-2">
                   <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-trust opacity-75"></span>
                   <span className="relative inline-flex h-2 w-2 rounded-full bg-trust"></span>
