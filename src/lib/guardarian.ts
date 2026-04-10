@@ -86,10 +86,7 @@ export async function getGuardarianCurrencies(): Promise<GuardarianCurrenciesRes
   return callGuardarian({ action: 'currencies' });
 }
 
-export async function getGuardarianPartnerToken(): Promise<string> {
-  const data = await callGuardarian({ action: 'partner-token' });
-  return data?.token || '';
-}
+// getGuardarianPartnerToken removed — API key must never be exposed to the client
 
 export async function getGuardarianPaymentMethods(currency: string, currencyType?: string): Promise<GuardarianPaymentMethod[]> {
   const data = await callGuardarian({ action: 'payment-methods', currency, currency_type: currencyType });

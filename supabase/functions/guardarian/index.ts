@@ -50,8 +50,8 @@ Deno.serve(async (req) => {
 
     switch (action) {
       case 'partner-token':
-        return jsonResponse({ token: apiKey, fallback: false });
-
+        // Removed — never expose API keys to the client
+        return badRequest('This endpoint has been disabled for security reasons');
       case 'currencies': {
         if (currencyCache && Date.now() - currencyCache.ts < CACHE_TTL) {
           return jsonResponse(currencyCache.data);
