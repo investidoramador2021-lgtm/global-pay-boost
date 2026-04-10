@@ -1777,8 +1777,18 @@ const ExchangeWidget = () => {
                         <div className="mt-2 flex flex-wrap items-center justify-center gap-1.5">
                           {gPaymentMethods.length > 0 ? (
                             gPaymentMethods.slice(0, 5).map((pm) => {
-                              const label = pm.type?.replace(/_/g, " ").replace(/\b\w/g, l => l.toUpperCase()) || pm.payment_category;
-                              return <PaymentMethodChip key={pm.type} label={label} accent={gSelectedPaymentMethod === pm.type} />;
+                              const display = resolvePaymentMethodDisplay(pm.type || "");
+                              const LogoComponent = display.Logo;
+                              return (
+                                <span key={pm.type} className={`inline-flex items-center gap-1 rounded-full border px-2.5 py-1 font-body text-[10px] font-semibold tracking-wide ${
+                                  gSelectedPaymentMethod === pm.type
+                                    ? "border-primary/20 bg-primary/10 text-primary"
+                                    : "border-border bg-background/80 text-muted-foreground"
+                                }`}>
+                                  <LogoComponent className="h-3 w-auto" />
+                                  {display.label}
+                                </span>
+                              );
                             })
                           ) : (
                             <>
