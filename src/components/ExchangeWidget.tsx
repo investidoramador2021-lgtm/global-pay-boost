@@ -869,9 +869,9 @@ const ExchangeWidget = () => {
   useEffect(() => {
     const params = new URLSearchParams(window.location.search);
     const tab = params.get("tab")?.toLowerCase();
-    if (tab === "buy" || tab === "sell" || tab === "buysell") {
+    if (tab === "buy" || tab === "buysell") {
       setWidgetMode("buysell");
-      if (tab === "sell") setGTradeDirection("sell");
+      setGTradeDirection("buy");
     }
   }, []);
 
