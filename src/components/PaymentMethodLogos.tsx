@@ -99,6 +99,8 @@ const PAYMENT_METHOD_MAP: Record<string, PaymentMethodDisplay> = {
   "mastercard": { label: "Mastercard", Logo: MastercardLogo },
   "sepa": { label: "SEPA", Logo: SepaLogo },
   "sepa_instant": { label: "SEPA Instant", Logo: SepaLogo },
+  "open_banking": { label: "SEPA", Logo: SepaLogo },
+  "open_banking_1": { label: "SEPA", Logo: SepaLogo },
   "pix": { label: "PIX", Logo: PixLogo },
   "swift": { label: "SWIFT", Logo: SwiftLogo },
   "faster_payments": { label: "FPS", Logo: FpsLogo },
@@ -124,6 +126,7 @@ export function resolvePaymentMethodDisplay(rawType: string): PaymentMethodDispl
   if (key.includes("visa")) return PAYMENT_METHOD_MAP["visa"];
   if (key.includes("mastercard") || key.includes("master_card")) return PAYMENT_METHOD_MAP["mastercard"];
   if (key.includes("sepa")) return PAYMENT_METHOD_MAP["sepa"];
+  if (key.includes("open_banking") || key.includes("open banking")) return PAYMENT_METHOD_MAP["sepa"];
   if (key.includes("pix")) return PAYMENT_METHOD_MAP["pix"];
   if (key.includes("swift")) return PAYMENT_METHOD_MAP["swift"];
   if (key.includes("fps") || key.includes("faster")) return PAYMENT_METHOD_MAP["faster_payments"];

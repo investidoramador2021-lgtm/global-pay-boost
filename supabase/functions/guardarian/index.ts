@@ -185,7 +185,7 @@ Deno.serve(async (req) => {
       }
 
       case 'create-transaction': {
-        const { from_amount, from_currency, to_currency, from_network, to_network, payout_address, deposit_address, email, payment_method } = body;
+        const { from_amount, from_currency, to_currency, from_network, to_network, payout_address, bank_details, deposit_address, email, payment_method } = body;
         if (!from_currency || !to_currency) {
           return badRequest('Missing required transaction fields', origin);
         }
@@ -194,7 +194,7 @@ Deno.serve(async (req) => {
           from_amount,
           from_currency,
           to_currency,
-          skip_choose_payout_address: !!payout_address,
+          skip_choose_payout_address: !!(payout_address || bank_details),
           skip_choose_payment_category: false,
           redirects: {
             successful: SUCCESS_URL,
@@ -206,6 +206,7 @@ Deno.serve(async (req) => {
         if (from_network) txBody.from_network = from_network;
         if (to_network) txBody.to_network = to_network;
         if (payout_address) txBody.payout_address = payout_address;
+        if (bank_details) txBody.bank_details = bank_details;
         if (deposit_address) txBody.deposit_address = deposit_address;
         if (email) txBody.email = email;
         if (payment_method) txBody.payment_method = payment_method;

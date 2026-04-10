@@ -69,6 +69,27 @@ function guardarianLogoUrl(c: GuardarianCurrency): string {
   return `https://guardarian.com${raw}`;
 }
 
+function normalizeIban(value: string): string {
+  return value.replace(/[^a-zA-Z0-9]/g, "").toUpperCase();
+}
+
+function formatIban(value: string): string {
+  return normalizeIban(value).replace(/(.{4})/g, "$1 ").trim();
+}
+
+function isValidIban(value: string): boolean {
+  const normalized = normalizeIban(value);
+  return normalized.length >= 15 && normalized.length <= 34 && /^[A-Z]{2}\d{2}[A-Z0-9]+$/.test(normalized);
+}
+
+function normalizeBic(value: string): string {
+  return value.replace(/[^a-zA-Z0-9]/g, "").toUpperCase();
+}
+
+function isValidBic(value: string): boolean {
+  return /^[A-Z]{6}[A-Z0-9]{2}([A-Z0-9]{3})?$/.test(normalizeBic(value));
+}
+
 const ProviderMark = ({ letter, tone = "primary" }: { letter: string; tone?: "primary" | "muted" }) => (
   <div
     className={`flex h-11 w-11 shrink-0 items-center justify-center rounded-2xl border font-display text-sm font-black uppercase shadow-card ${
@@ -273,6 +294,8 @@ const ExchangeWidget = () => {
   const [gFullEstimate, setGFullEstimate] = useState<GuardarianEstimate | null>(null);
   const [gPayoutAddress, setGPayoutAddress] = useState("");
   const [gPayoutEmail, setGPayoutEmail] = useState("");
+  const [gSepaIban, setGSepaIban] = useState("");
+  const [gSepaBic, setGSepaBic] = useState("");
   const [gCreatingTx, setGCreatingTx] = useState(false);
   const [gCheckoutUrl, setGCheckoutUrl] = useState("");
   const [gSelectedProvider, setGSelectedProvider] = useState<"guardarian" | "transak">("guardarian");
@@ -707,13 +730,10 @@ const ExchangeWidget = () => {
         return rawCandidates.some((value) => value === smartDefault || value.includes(smartDefault));
       });
       if (match) return match.type;
-      // Never inject alias-only methods for sell quotes; Guardarian expects the real raw type.
-      if (direction === "buy") {
-        if (ticker?.toUpperCase() === "BRL") return methods.find((pm) => /PIX/i.test(pm.type) || /PIX/i.test(pm.payment_method || "") || /PIX/i.test(pm.payment_category || ""))?.type || "";
-        if (ticker?.toUpperCase() === "EUR") return methods.find((pm) => /SEPA|OPEN_BANKING/i.test(pm.type) || /SEPA|OPEN_BANKING/i.test(pm.payment_method || "") || /SEPA|OPEN_BANKING/i.test(pm.payment_category || ""))?.type || "";
-        if (ticker?.toUpperCase() === "GBP") return methods.find((pm) => /FPS|FASTER/i.test(pm.type) || /FPS|FASTER/i.test(pm.payment_method || "") || /FPS|FASTER/i.test(pm.payment_category || ""))?.type || "";
-      }
     }
+    if (ticker?.toUpperCase() === "BRL") return methods.find((pm) => /PIX/i.test(pm.type) || /PIX/i.test(pm.payment_method || "") || /PIX/i.test(pm.payment_category || ""))?.type || "";
+    if (ticker?.toUpperCase() === "EUR") return methods.find((pm) => /SEPA|OPEN_BANKING/i.test(pm.type) || /SEPA|OPEN_BANKING/i.test(pm.payment_method || "") || /SEPA|OPEN_BANKING/i.test(pm.payment_category || ""))?.type || "";
+    if (ticker?.toUpperCase() === "GBP") return methods.find((pm) => /FPS|FASTER/i.test(pm.type) || /FPS|FASTER/i.test(pm.payment_method || "") || /FPS|FASTER/i.test(pm.payment_category || ""))?.type || "";
     return methods[0]?.type || "";
   }, []);
 
@@ -723,22 +743,18 @@ const ExchangeWidget = () => {
     selectedMethod: string,
     direction: FiatFlow,
   ) => {
-    if (direction === "sell") return "";
+    const eligibleMethods = methods.filter((pm) => direction === "sell" ? pm.withdrawal_enabled : pm.deposit_enabled);
+    const methodPool = eligibleMethods.length ? eligibleMethods : (direction === "sell" ? [] : methods);
 
-    const eligibleMethods = methods.filter((pm) => pm.deposit_enabled);
+    if (!methodPool.length) return "";
 
-    if (!eligibleMethods.length) {
-      if (selectedMethod && methods.some((pm) => pm.type === selectedMethod)) return selectedMethod;
-      return pickPreferredGuardarianMethod(ticker, methods, direction);
-    }
+    const preferredMethod = pickPreferredGuardarianMethod(ticker, methodPool, direction);
 
-    const preferredMethod = pickPreferredGuardarianMethod(ticker, eligibleMethods, direction);
-
-    if (selectedMethod && eligibleMethods.some((pm) => pm.type === selectedMethod)) {
+    if (selectedMethod && methodPool.some((pm) => pm.type === selectedMethod)) {
       return selectedMethod;
     }
 
-    return preferredMethod || eligibleMethods[0]?.type || "";
+    return preferredMethod || methodPool[0]?.type || "";
   }, [pickPreferredGuardarianMethod]);
 
   // Allow all fiat currencies for sell — the estimate API will validate corridor availability
@@ -766,7 +782,7 @@ const ExchangeWidget = () => {
       const allMethods = collectGuardarianPaymentMethods(fiatCurrency);
       const filteredMethods = allMethods.filter(directionFilter);
       // For sell: if no withdrawal methods exist, show all methods but mark them — estimate will be sent without payment_method
-      const fallbackMethods = filteredMethods.length > 0 ? filteredMethods : (gTradeDirection === "sell" ? allMethods : []);
+      const fallbackMethods = filteredMethods.length > 0 ? filteredMethods : [];
 
       try {
         const liveMethods = await getGuardarianPaymentMethods(fiatCurrency.ticker, fiatCurrency.currency_type);
@@ -810,6 +826,29 @@ const ExchangeWidget = () => {
     loadPaymentMethods();
     return () => { cancelled = true; };
   }, [widgetMode, gFromCurrency, gToCurrency, gTradeDirection, collectGuardarianPaymentMethods, resolveGuardarianPaymentMethod]);
+
+  const isSellSepaCorridor = gTradeDirection === "sell" && gToCurrency?.ticker === "EUR";
+  const hasValidGuardarianEmail = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(gPayoutEmail.trim());
+  const hasValidGuardarianPayoutDetails = gTradeDirection === "buy"
+    ? Boolean(gPayoutAddress.trim())
+    : isSellSepaCorridor
+      ? isValidIban(gSepaIban) && isValidBic(gSepaBic)
+      : Boolean(gPayoutAddress.trim());
+  const canStartGuardarianCheckout = !gCreatingTx
+    && Boolean(gEstimatedAmount)
+    && gEstimatedAmount !== "—"
+    && parseFloat(gEstimatedAmount) > 0
+    && parseFloat(gSendAmount) >= gMinAmount
+    && parseFloat(gSendAmount) <= gMaxAmount
+    && hasValidGuardarianEmail
+    && hasValidGuardarianPayoutDetails;
+
+  useEffect(() => {
+    if (!isSellSepaCorridor) {
+      setGSepaIban("");
+      setGSepaBic("");
+    }
+  }, [isSellSepaCorridor]);
 
   useEffect(() => {
     if (widgetMode !== "buysell" || gTradeDirection !== "sell") return;
@@ -1160,14 +1199,30 @@ const ExchangeWidget = () => {
       return;
     }
 
-    // Buy mode requires wallet address; sell mode collects payout at checkout
+    // Buy mode requires a wallet; sell mode requires payout details before checkout
     if (gTradeDirection === "buy" && !gPayoutAddress.trim()) {
       toast({ title: "Wallet required", description: `Enter your ${gToCurrency.ticker} wallet address to continue.`, variant: "destructive" });
       return;
     }
 
-    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    if (!gPayoutEmail.trim() || !emailRegex.test(gPayoutEmail.trim())) {
+    if (gTradeDirection === "sell") {
+      if (isSellSepaCorridor) {
+        if (!isValidIban(gSepaIban)) {
+          toast({ title: "IBAN required", description: "Enter a valid SEPA IBAN to continue.", variant: "destructive" });
+          return;
+        }
+
+        if (!isValidBic(gSepaBic)) {
+          toast({ title: "BIC required", description: "Enter a valid 8- or 11-character BIC / SWIFT code.", variant: "destructive" });
+          return;
+        }
+      } else if (!gPayoutAddress.trim()) {
+        toast({ title: "Payout details required", description: `Enter your ${gToCurrency.ticker} payout details to continue.`, variant: "destructive" });
+        return;
+      }
+    }
+
+    if (!gPayoutEmail.trim() || !hasValidGuardarianEmail) {
       toast({ title: "Email required", description: "Enter a valid email address to continue.", variant: "destructive" });
       return;
     }
@@ -1199,7 +1254,16 @@ const ExchangeWidget = () => {
           to_currency: gToCurrency!.ticker,
           ...(fromNet ? { from_network: fromNet } : {}),
           ...(toNet ? { to_network: toNet } : {}),
-          payout_address: gPayoutAddress.trim() || undefined,
+          ...(isSellSepaCorridor
+            ? {
+                bank_details: {
+                  receiver_iban: normalizeIban(gSepaIban),
+                  receiver_bic: normalizeBic(gSepaBic),
+                },
+              }
+            : {
+                payout_address: gPayoutAddress.trim() || undefined,
+              }),
           email: emailParam,
           ...(effectivePaymentMethod ? { payment_method: effectivePaymentMethod } : {}),
         });
@@ -1440,6 +1504,8 @@ const ExchangeWidget = () => {
                     setGSelectedPaymentMethod("");
                     setGPayoutAddress("");
                     setGPayoutEmail("");
+                          setGSepaIban("");
+                          setGSepaBic("");
                     if (guardarianFiat.length) {
                       setGFromCurrency(guardarianFiat.find((c) => c.ticker === "USD") || guardarianFiat[0] || null);
                     }
@@ -1490,6 +1556,8 @@ const ExchangeWidget = () => {
                       <button
                         onClick={() => {
                           setGTradeDirection("buy");
+                          setGSepaIban("");
+                          setGSepaBic("");
                           // Enforce Buy = Fiat → Crypto
                           const fiat = guardarianFiat.find(c => c.ticker === (gFromCurrency?.currency_type === "FIAT" ? gFromCurrency.ticker : gToCurrency?.ticker)) || guardarianFiat.find(c => c.ticker === "USD") || guardarianFiat[0];
                           const crypto = guardarianCrypto.find(c => c.ticker === (gToCurrency?.currency_type === "CRYPTO" ? gToCurrency.ticker : gFromCurrency?.ticker)) || guardarianCrypto.find(c => c.ticker === "BTC") || guardarianCrypto[0];
@@ -1503,6 +1571,9 @@ const ExchangeWidget = () => {
                       <button
                         onClick={() => {
                           setGTradeDirection("sell");
+                          setGPayoutAddress("");
+                          setGSepaIban("");
+                          setGSepaBic("");
                           // Enforce Sell = Crypto → Fiat
                           const crypto = guardarianCrypto.find(c => c.ticker === (gFromCurrency?.currency_type === "CRYPTO" ? gFromCurrency.ticker : gToCurrency?.ticker)) || guardarianCrypto.find(c => c.ticker === "BTC") || guardarianCrypto[0];
                           const fiat = guardarianFiat.find(c => c.ticker === (gToCurrency?.currency_type === "FIAT" ? gToCurrency.ticker : gFromCurrency?.ticker))
@@ -1729,18 +1800,37 @@ const ExchangeWidget = () => {
                               expectedNetworkType={gToCurrency ? tickerToAddressType(gToCurrency.ticker?.toLowerCase(), gToCurrency.networks?.[0]?.network?.toLowerCase()) : undefined}
                             />
                           ) : (
-                            <Input
-                              type="text"
-                              placeholder={
-                                gToCurrency?.ticker === "EUR" ? "Enter your IBAN (e.g. DE89 3704 0044 …)"
-                                : gToCurrency?.ticker === "BRL" ? "Enter your PIX Key (CPF, email, or phone)"
-                                : gToCurrency?.ticker === "GBP" ? "Enter your UK sort code + account number"
-                                : "Enter your bank / payout details"
-                              }
-                              value={gPayoutAddress}
-                              onChange={(e) => setGPayoutAddress(e.target.value)}
-                              className="min-h-[48px] rounded-xl border-border bg-accent font-mono text-xs placeholder:text-muted-foreground/50"
-                            />
+                            isSellSepaCorridor ? (
+                              <div className="space-y-3">
+                                <Input
+                                  type="text"
+                                  placeholder="Enter your IBAN (e.g. DE89 3704 0044 0532 0130 00)"
+                                  value={gSepaIban}
+                                  onChange={(e) => setGSepaIban(formatIban(e.target.value))}
+                                  className="min-h-[48px] rounded-xl border-border bg-accent font-mono text-xs placeholder:text-muted-foreground/50"
+                                />
+                                <Input
+                                  type="text"
+                                  placeholder="Enter your BIC / SWIFT (e.g. COBADEFFXXX)"
+                                  value={gSepaBic}
+                                  onChange={(e) => setGSepaBic(normalizeBic(e.target.value))}
+                                  className="min-h-[48px] rounded-xl border-border bg-accent font-mono text-xs uppercase placeholder:text-muted-foreground/50"
+                                  maxLength={11}
+                                />
+                              </div>
+                            ) : (
+                              <Input
+                                type="text"
+                                placeholder={
+                                  gToCurrency?.ticker === "BRL" ? "Enter your PIX Key (CPF, email, or phone)"
+                                  : gToCurrency?.ticker === "GBP" ? "Enter your UK sort code + account number"
+                                  : "Enter your bank / payout details"
+                                }
+                                value={gPayoutAddress}
+                                onChange={(e) => setGPayoutAddress(e.target.value)}
+                                className="min-h-[48px] rounded-xl border-border bg-accent font-mono text-xs placeholder:text-muted-foreground/50"
+                              />
+                            )
                           )}
                         </div>
 
@@ -1773,7 +1863,7 @@ const ExchangeWidget = () => {
                               </div>
                             );
                           }
-                          if (fiatTicker === "EUR" && method === "sepa") {
+                          if (fiatTicker === "EUR" && /sepa|open_banking/.test(method)) {
                             const { Logo } = resolvePaymentMethodDisplay("SEPA");
                             return (
                               <div className="mt-2 flex items-center gap-2 rounded-lg border border-primary/20 bg-primary/5 px-3 py-2">
@@ -1879,7 +1969,7 @@ const ExchangeWidget = () => {
                             background: "linear-gradient(135deg, hsl(var(--primary)) 0%, hsl(var(--trust)) 100%)",
                             color: "hsl(var(--primary-foreground))",
                           }}
-                          disabled={gCreatingTx || !gEstimatedAmount || gEstimatedAmount === "—" || (parseFloat(gEstimatedAmount) <= 0) || (parseFloat(gSendAmount) < gMinAmount) || (parseFloat(gSendAmount) > gMaxAmount)}
+                          disabled={!canStartGuardarianCheckout}
                           onClick={handleStartGuardarianCheckout}
                         >
                           {gCreatingTx ? (
@@ -3125,18 +3215,29 @@ const ExchangeWidget = () => {
                   <span className="text-foreground">{fee.amount} {fee.currency}</span>
                 </div>
               ))}
-              {gPayoutAddress && (
+              {gTradeDirection === "sell" && isSellSepaCorridor ? (
+                <div className="border-t border-border pt-2 space-y-2">
+                  <div className="flex items-start justify-between font-body text-xs">
+                    <span className="text-muted-foreground">IBAN</span>
+                    <span className="max-w-[200px] break-all text-right font-mono text-foreground">{gSepaIban}</span>
+                  </div>
+                  <div className="flex items-start justify-between font-body text-xs">
+                    <span className="text-muted-foreground">BIC / SWIFT</span>
+                    <span className="max-w-[200px] break-all text-right font-mono text-foreground">{gSepaBic}</span>
+                  </div>
+                </div>
+              ) : gPayoutAddress ? (
                 <div className="border-t border-border pt-2">
                   <div className="flex items-start justify-between font-body text-xs">
-                    <span className="text-muted-foreground">{gTradeDirection === "sell" ? "Deposit address" : "Wallet"}</span>
+                    <span className="text-muted-foreground">{gTradeDirection === "sell" ? "Payout details" : "Wallet"}</span>
                     <span className="max-w-[200px] break-all text-right font-mono text-foreground">{gPayoutAddress}</span>
                   </div>
                 </div>
-              )}
+              ) : null}
               {gSelectedPaymentMethod && (
                 <div className="flex items-center justify-between font-body text-xs">
                   <span className="text-muted-foreground">Payment method</span>
-                  <span className="text-foreground">{gSelectedPaymentMethod.replace(/_/g, " ").replace(/\b\w/g, l => l.toUpperCase())}</span>
+                  <span className="text-foreground">{resolvePaymentMethodDisplay(gSelectedPaymentMethod).label}</span>
                 </div>
               )}
             </div>
