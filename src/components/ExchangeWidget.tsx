@@ -1455,8 +1455,8 @@ const ExchangeWidget = () => {
                           // Enforce Sell = Crypto → Fiat
                           const crypto = guardarianCrypto.find(c => c.ticker === (gFromCurrency?.currency_type === "CRYPTO" ? gFromCurrency.ticker : gToCurrency?.ticker)) || guardarianCrypto.find(c => c.ticker === "BTC") || guardarianCrypto[0];
                           const fiat = guardarianFiat.find(c => c.ticker === (gToCurrency?.currency_type === "FIAT" ? gToCurrency.ticker : gFromCurrency?.ticker))
-                            || guardarianFiat.find(c => c.ticker === "EUR" && isSellEligibleFiat(c))
-                            || guardarianFiat.find(c => isSellEligibleFiat(c))
+                            || guardarianFiat.find(c => c.ticker === "EUR")
+                            || guardarianFiat.find(c => c.ticker === "USD")
                             || guardarianFiat[0];
                           setGFromCurrency(crypto);
                           setGToCurrency(fiat);
