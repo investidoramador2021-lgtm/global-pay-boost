@@ -1114,26 +1114,14 @@ const ExchangeWidget = () => {
                                 );
                               })}
                             </div>
-                            <div className="overflow-y-auto p-2" style={{ maxHeight: 400 }}>
-                              {guardarianCrypto
-                                .filter((c) => !gSearchQuery || c.ticker.toLowerCase().includes(gSearchQuery.toLowerCase()) || c.name.toLowerCase().includes(gSearchQuery.toLowerCase()))
-                                .slice(0, 100)
-                                .map((c) => (
-                                  <button
-                                    key={`${c.ticker}-${c.networks?.[0]?.network || ''}`}
-                                    onClick={() => { setGToCurrency(c); setGShowToPicker(false); setGSearchQuery(""); }}
-                                    className="flex w-full items-center gap-3 rounded-lg px-3 py-2.5 text-left transition-colors hover:bg-accent"
-                                  >
-                                    <div>
-                                      <span className="font-display text-sm font-semibold uppercase text-foreground">{c.ticker}</span>
-                                      {c.networks?.[0]?.network && c.networks[0].network !== c.ticker && (
-                                        <span className="ms-1.5 rounded bg-muted px-1.5 py-0.5 font-body text-[10px] uppercase text-muted-foreground">{c.networks[0].network}</span>
-                                      )}
-                                      <span className="ms-2 font-body text-xs text-muted-foreground">{c.name}</span>
-                                    </div>
-                                  </button>
-                                ))}
-                            </div>
+                            <GuardarianCryptoList
+                              items={guardarianCrypto.filter((c) => {
+                                if (!gSearchQuery) return true;
+                                const q = gSearchQuery.toLowerCase();
+                                return c.ticker.toLowerCase().includes(q) || c.name.toLowerCase().includes(q) || c.networks?.some((n) => n.network.toLowerCase().includes(q) || n.name.toLowerCase().includes(q));
+                              })}
+                              onSelect={(c) => { setGToCurrency(c); setGShowToPicker(false); setGSearchQuery(""); }}
+                            />
                           </div>
                         </div>
                       )}
