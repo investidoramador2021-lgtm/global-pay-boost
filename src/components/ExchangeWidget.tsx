@@ -733,8 +733,9 @@ const ExchangeWidget = () => {
     let cancelled = false;
 
     const loadPaymentMethods = async () => {
+      // For sell, prefer withdrawal-enabled methods but fall back to all methods if none found
       const directionFilter = (pm: GuardarianPaymentMethod) =>
-        gTradeDirection === "sell" ? pm.withdrawal_enabled : pm.deposit_enabled;
+        gTradeDirection === "sell" ? (pm.withdrawal_enabled || pm.deposit_enabled) : pm.deposit_enabled;
       const fallbackMethods = collectGuardarianPaymentMethods(fiatCurrency).filter(directionFilter);
 
       try {
