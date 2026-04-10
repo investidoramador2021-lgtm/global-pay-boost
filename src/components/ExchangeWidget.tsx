@@ -279,6 +279,7 @@ const ExchangeWidget = () => {
   const [gCurrencyError, setGCurrencyError] = useState(false);
   const [gPaymentMethods, setGPaymentMethods] = useState<GuardarianPaymentMethod[]>([]);
   const [gSelectedPaymentMethod, setGSelectedPaymentMethod] = useState<string>("");
+  const [gEstimateError, setGEstimateError] = useState("");
 
   // Transaction flow state
   const [step, setStep] = useState<Step>("exchange");
@@ -677,16 +678,27 @@ const ExchangeWidget = () => {
     loadGuardarianCurrencies();
   }, [widgetMode, guardarianLoaded, loadGuardarianCurrencies]);
 
+  const isSellEligibleFiat = useCallback((currency: GuardarianCurrency | null) => {
+    if (!currency || currency.currency_type !== "FIAT") return false;
+    const methods = [
+      ...(currency.payment_methods || []),
+      ...(currency.networks || []).flatMap((network) => network.payment_methods || []),
+    ];
+    return methods.some((pm) => pm.withdrawal_enabled);
+  }, []);
+
   // Extract payment methods from currency data when fiat currency changes
   useEffect(() => {
     if (widgetMode !== "buysell") return;
     const fiatCurrency = gTradeDirection === "buy" ? gFromCurrency : gToCurrency;
-    if (!fiatCurrency) { setGPaymentMethods([]); return; }
+    if (!fiatCurrency) {
+      setGPaymentMethods([]);
+      setGSelectedPaymentMethod("");
+      return;
+    }
 
-    // Payment methods are embedded in the currency's networks
     const allMethods: GuardarianPaymentMethod[] = [];
     const seen = new Set<string>();
-    // Collect from networks
     for (const net of fiatCurrency.networks || []) {
       for (const pm of net.payment_methods || []) {
         if (!seen.has(pm.type)) {
@@ -695,16 +707,31 @@ const ExchangeWidget = () => {
         }
       }
     }
-    // Also collect from top-level payment_methods
     for (const pm of fiatCurrency.payment_methods || []) {
       if (!seen.has(pm.type)) {
         seen.add(pm.type);
         allMethods.push(pm);
       }
     }
-    setGPaymentMethods(allMethods);
-    setGSelectedPaymentMethod(allMethods.length > 0 ? allMethods[0].type : "");
-  }, [widgetMode, gFromCurrency?.ticker, gToCurrency?.ticker, gTradeDirection]);
+
+    const eligibleMethods = allMethods.filter((pm) => gTradeDirection === "sell" ? pm.withdrawal_enabled : pm.deposit_enabled);
+    setGPaymentMethods(eligibleMethods);
+    setGSelectedPaymentMethod((current) => current && eligibleMethods.some((pm) => pm.type === current) ? current : (eligibleMethods[0]?.type || ""));
+  }, [widgetMode, gFromCurrency, gToCurrency, gTradeDirection]);
+
+  useEffect(() => {
+    if (widgetMode !== "buysell" || gTradeDirection !== "sell") return;
+    if (!gFromCurrency || gFromCurrency.currency_type !== "CRYPTO") {
+      setGFromCurrency(guardarianCrypto.find((c) => c.ticker === "BTC") || guardarianCrypto[0] || null);
+    }
+    if (!gToCurrency || !isSellEligibleFiat(gToCurrency)) {
+      setGToCurrency(
+        guardarianFiat.find((c) => c.ticker === "EUR" && isSellEligibleFiat(c))
+          || guardarianFiat.find((c) => isSellEligibleFiat(c))
+          || null
+      );
+    }
+  }, [widgetMode, gTradeDirection, gFromCurrency, gToCurrency, guardarianCrypto, guardarianFiat, isSellEligibleFiat]);
 
   // Deep-link: ?tab=buy&crypto=SOL&fiat=USD activates Buy/Sell tab automatically
   useEffect(() => {
@@ -720,17 +747,27 @@ const ExchangeWidget = () => {
   const getNetworkParam = (currency: GuardarianCurrency | null): string | undefined => {
     if (!currency || currency.currency_type === "FIAT") return undefined;
     const net = currency.networks?.[0]?.network;
-    // Only pass network if it differs from the ticker (avoids redundant/wrong values)
     return net && net.toUpperCase() !== currency.ticker.toUpperCase() ? net : undefined;
+  };
+
+  const getGuardarianRateText = () => {
+    if (!gFullEstimate?.estimated_exchange_rate || !gFromCurrency || !gToCurrency) return "";
+    const rate = Number(gFullEstimate.estimated_exchange_rate);
+    if (!Number.isFinite(rate) || rate <= 0) return "";
+    return `1 ${gFromCurrency.ticker} ≈ ${rate.toLocaleString(undefined, { maximumFractionDigits: 8 })} ${gToCurrency.ticker}`;
   };
 
   // Guardarian estimate
   const fetchGuardarianEstimate = useCallback(async () => {
     if (!gFromCurrency || !gToCurrency || !gSendAmount || parseFloat(gSendAmount) <= 0) {
       setGEstimatedAmount("");
+      setGFullEstimate(null);
+      setGEstimateError("");
       return;
     }
     setGEstimating(true);
+    setGFullEstimate(null);
+    setGEstimateError("");
     try {
       const fromNetwork = getNetworkParam(gFromCurrency);
       const toNetwork = getNetworkParam(gToCurrency);
@@ -741,6 +778,7 @@ const ExchangeWidget = () => {
       };
       if (fromNetwork) estimateParams.from_network = fromNetwork;
       if (toNetwork) estimateParams.to_network = toNetwork;
+      if (gSelectedPaymentMethod) estimateParams.payment_method = gSelectedPaymentMethod;
 
       const minMaxParams: Parameters<typeof getGuardarianMinMax>[0] = {
         from_currency: gFromCurrency.ticker,
@@ -753,16 +791,28 @@ const ExchangeWidget = () => {
         getGuardarianEstimate(estimateParams),
         getGuardarianMinMax(minMaxParams),
       ]);
-      setGEstimatedAmount(est.value || "—");
+      setGMinAmount(Number(minMax.min) || 0);
+      setGMaxAmount(Number(minMax.max) || 999999);
+
+      if ((est as any)?.fallback || !est?.value) {
+        setGEstimatedAmount("");
+        setGFullEstimate(null);
+        setGEstimateError(gTradeDirection === "sell"
+          ? "This sell route is unavailable for the selected payout currency. Try EUR or another supported fiat option."
+          : "Service temporarily unavailable. Please refresh and try again.");
+        return;
+      }
+
+      setGEstimatedAmount(est.value || "");
       setGFullEstimate(est);
-      setGMinAmount(minMax.min || 0);
-      setGMaxAmount(minMax.max || 999999);
     } catch {
-      setGEstimatedAmount("—");
+      setGEstimatedAmount("");
+      setGFullEstimate(null);
+      setGEstimateError("Service temporarily unavailable. Please refresh and try again.");
     } finally {
       setGEstimating(false);
     }
-  }, [gFromCurrency, gToCurrency, gSendAmount]);
+  }, [gFromCurrency, gToCurrency, gSendAmount, gTradeDirection, gSelectedPaymentMethod]);
 
   useEffect(() => {
     if (widgetMode !== "buysell") return;
@@ -1418,7 +1468,7 @@ const ExchangeWidget = () => {
                             {gTradeDirection === "buy" ? (
                               <div className="overflow-y-auto p-2" style={{ maxHeight: 400 }}>
                                 {guardarianFiat
-                                  .filter((c) => !gSearchQuery || c.ticker.toLowerCase().includes(gSearchQuery.toLowerCase()) || c.name.toLowerCase().includes(gSearchQuery.toLowerCase()))
+                                  .filter((c) => isSellEligibleFiat(c) && (!gSearchQuery || c.ticker.toLowerCase().includes(gSearchQuery.toLowerCase()) || c.name.toLowerCase().includes(gSearchQuery.toLowerCase())))
                                   .map((c) => (
                                     <button
                                       key={c.ticker}
@@ -1451,12 +1501,18 @@ const ExchangeWidget = () => {
                       <span className="flex items-center gap-1 rounded-md border border-trust/20 bg-trust/5 px-2 py-1 font-body text-[10px] font-medium text-trust sm:text-[11px]">
                         <CheckCircle2 className="h-3 w-3" /> No extra fees
                       </span>
-                      {gFullEstimate?.estimated_exchange_rate && gFromCurrency && gToCurrency && (
+                      {getGuardarianRateText() && (
                         <span className="font-body text-[10px] text-muted-foreground sm:text-[11px]">
-                          Estimated Rate: 1 {gFromCurrency.ticker} ≈ {gFullEstimate.estimated_exchange_rate} {gToCurrency.ticker}
+                          Estimated Rate: {getGuardarianRateText()}
                         </span>
                       )}
                     </div>
+                    {gEstimateError && (
+                      <div className="mb-3 flex items-center gap-2 rounded-lg border border-destructive/20 bg-destructive/5 px-3 py-2 font-body text-[11px] text-destructive">
+                        <AlertCircle className="h-3.5 w-3.5 shrink-0" />
+                        <span>{gEstimateError}</span>
+                      </div>
+                    )}
 
                     {/* You Get (Crypto) */}
                     <div className="relative">
@@ -1465,7 +1521,7 @@ const ExchangeWidget = () => {
                       </label>
                       <div className="flex items-center gap-3 rounded-xl border border-border bg-accent p-4">
                         <span className="flex-1 font-display text-2xl font-bold text-foreground">
-                          {gEstimating ? <Loader2 className="h-6 w-6 animate-spin text-muted-foreground" /> : `≈ ${gEstimatedAmount || "—"}`}
+                          {gEstimating ? <Loader2 className="h-6 w-6 animate-spin text-muted-foreground" /> : gEstimateError ? "Unavailable" : `≈ ${gEstimatedAmount || "—"}`}
                         </span>
                         <button onClick={() => setGShowToPicker(true)} className="flex items-center gap-2 rounded-lg bg-trust/10 px-4 py-2.5 transition-colors hover:bg-trust/20">
                           {gToCurrency && (
@@ -1524,7 +1580,7 @@ const ExchangeWidget = () => {
                             ) : (
                               <div className="overflow-y-auto p-2" style={{ maxHeight: 400 }}>
                                 {guardarianFiat
-                                  .filter((c) => !gSearchQuery || c.ticker.toLowerCase().includes(gSearchQuery.toLowerCase()) || c.name.toLowerCase().includes(gSearchQuery.toLowerCase()))
+                                  .filter((c) => isSellEligibleFiat(c) && (!gSearchQuery || c.ticker.toLowerCase().includes(gSearchQuery.toLowerCase()) || c.name.toLowerCase().includes(gSearchQuery.toLowerCase())))
                                   .map((c) => (
                                     <button
                                       key={c.ticker}
@@ -1792,7 +1848,7 @@ const ExchangeWidget = () => {
                                 )}
                                 <div className="flex items-center justify-between gap-3 border-t border-border pt-2 font-body text-[11px]">
                                   <span className="text-muted-foreground">Rate</span>
-                                  <span className="font-medium text-foreground">1 {gFromCurrency?.ticker} ≈ {gFullEstimate.estimated_exchange_rate} {gToCurrency?.ticker}</span>
+                                  <span className="font-medium text-foreground">{getGuardarianRateText()}</span>
                                 </div>
                               </div>
                             )}
@@ -2843,7 +2899,7 @@ const ExchangeWidget = () => {
               {gFullEstimate?.estimated_exchange_rate && (
                 <div className="flex items-center justify-between font-body text-xs">
                   <span className="text-muted-foreground">Exchange rate</span>
-                  <span className="text-foreground">1 {gFromCurrency?.ticker} ≈ {gFullEstimate.estimated_exchange_rate} {gToCurrency?.ticker}</span>
+                  <span className="text-foreground">{getGuardarianRateText()}</span>
                 </div>
               )}
               {gFullEstimate?.network_fee && (

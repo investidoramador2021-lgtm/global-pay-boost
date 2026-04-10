@@ -88,7 +88,7 @@ Deno.serve(async (req) => {
       }
 
       case 'estimate': {
-        const { from_currency, from_network, to_currency, to_network, from_amount, to_amount } = body;
+        const { from_currency, from_network, to_currency, to_network, from_amount, to_amount, payment_method } = body;
         if (!from_currency || !to_currency) return badRequest('Missing from_currency/to_currency');
         if (!from_amount && !to_amount) return badRequest('Missing from_amount or to_amount');
 
@@ -97,6 +97,7 @@ Deno.serve(async (req) => {
         params.set('to_currency', to_currency);
         if (from_network) params.set('from_network', from_network);
         if (to_network) params.set('to_network', to_network);
+        if (payment_method) params.set('payment_method', String(payment_method));
         if (from_amount) params.set('from_amount', String(from_amount));
         if (to_amount) {
           params.set('to_amount', String(to_amount));
