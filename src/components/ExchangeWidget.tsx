@@ -928,6 +928,7 @@ const ExchangeWidget = () => {
             onClick={() => onSelect(c)}
             className="flex w-full items-center gap-3 rounded-lg px-3 py-2.5 text-left transition-colors hover:bg-accent"
           >
+            {guardarianLogoUrl(c) && <img src={guardarianLogoUrl(c)} alt={c.name} className="h-6 w-6 rounded-full object-cover" loading="lazy" />}
             <div>
               <span className="font-display text-sm font-semibold uppercase text-foreground">{c.ticker}</span>
               {c.networks?.[0]?.network && c.networks[0].network !== c.ticker && (
@@ -1085,6 +1086,7 @@ const ExchangeWidget = () => {
                           step="any"
                         />
                         <button onClick={() => setGShowFromPicker(true)} className="flex items-center gap-2 rounded-lg bg-primary/10 px-4 py-2.5 transition-colors hover:bg-primary/20">
+                          {gFromCurrency && fiatFlagUrl(gFromCurrency.ticker) && <img src={fiatFlagUrl(gFromCurrency.ticker)} alt="" className="h-5 w-5 rounded-full object-cover" />}
                           <span className="font-display text-sm font-semibold uppercase text-primary">{gFromCurrency?.ticker || "Select"}</span>
                           <ChevronDown className="h-3.5 w-3.5 text-primary/60" />
                         </button>
@@ -1125,6 +1127,7 @@ const ExchangeWidget = () => {
                                     onClick={() => { setGFromCurrency(c); setGShowFromPicker(false); setGSearchQuery(""); }}
                                     className="flex w-full items-center gap-3 rounded-lg px-3 py-2.5 text-left transition-colors hover:bg-accent"
                                   >
+                                    {fiatFlagUrl(c.ticker) && <img src={fiatFlagUrl(c.ticker)} alt={c.ticker} className="h-6 w-6 rounded-full object-cover" loading="lazy" />}
                                     <span className="font-display text-sm font-semibold uppercase text-foreground">{c.ticker}</span>
                                     <span className="font-body text-xs text-muted-foreground">{c.name}</span>
                                   </button>
@@ -1150,6 +1153,7 @@ const ExchangeWidget = () => {
                           {gEstimating ? <Loader2 className="h-6 w-6 animate-spin text-muted-foreground" /> : `≈ ${gEstimatedAmount || "—"}`}
                         </span>
                         <button onClick={() => setGShowToPicker(true)} className="flex items-center gap-2 rounded-lg bg-trust/10 px-4 py-2.5 transition-colors hover:bg-trust/20">
+                          {gToCurrency && guardarianLogoUrl(gToCurrency) && <img src={guardarianLogoUrl(gToCurrency)} alt="" className="h-5 w-5 rounded-full object-cover" />}
                           <span className="font-display text-sm font-semibold uppercase text-trust">{gToCurrency?.ticker || "Select"}</span>
                           <ChevronDown className="h-3.5 w-3.5 text-trust/60" />
                         </button>
@@ -1176,11 +1180,12 @@ const ExchangeWidget = () => {
                                 const c = guardarianCrypto.find((cur) => cur.ticker === ticker);
                                 if (!c) return null;
                                 return (
-                                  <button
+                                   <button
                                     key={ticker}
                                     onClick={() => { setGToCurrency(c); setGShowToPicker(false); setGSearchQuery(""); }}
                                     className="flex items-center gap-1.5 rounded-lg border border-border bg-accent px-3 py-1.5 font-display text-xs font-semibold uppercase text-foreground transition-colors hover:border-primary/40"
                                   >
+                                    {guardarianLogoUrl(c) && <img src={guardarianLogoUrl(c)} alt="" className="h-4 w-4 rounded-full object-cover" />}
                                     {ticker}
                                   </button>
                                 );
