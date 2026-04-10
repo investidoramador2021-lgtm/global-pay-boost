@@ -407,6 +407,33 @@ export type Database = {
           read_ct: number
         }[]
       }
+      upsert_customer_capture: {
+        Args: {
+          p_email: string
+          p_latest_from_currency?: string
+          p_latest_payment_method?: string
+          p_latest_to_currency?: string
+          p_latest_trade_direction?: string
+          p_metadata?: Json
+        }
+        Returns: {
+          created_at: string
+          email: string
+          id: string
+          latest_from_currency: string | null
+          latest_payment_method: string | null
+          latest_to_currency: string | null
+          latest_trade_direction: string | null
+          metadata: Json
+          updated_at: string
+        }
+        SetofOptions: {
+          from: "*"
+          to: "customers"
+          isOneToOne: true
+          isSetofReturn: false
+        }
+      }
     }
     Enums: {
       [_ in never]: never
