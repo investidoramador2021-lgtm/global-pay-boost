@@ -22,7 +22,6 @@ import {
   getGuardarianMinMax,
   getGuardarianPaymentMethods,
   createGuardarianTransaction,
-  createGuardarianSellTransaction,
   type GuardarianCurrency,
   type GuardarianEstimate,
   type GuardarianPaymentMethod,
