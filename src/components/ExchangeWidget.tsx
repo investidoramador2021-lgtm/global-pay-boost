@@ -2822,11 +2822,11 @@ const ExchangeWidget = () => {
 
             <div className="mt-5 space-y-3 rounded-xl border border-border bg-accent/50 p-4">
               <div className="flex items-center justify-between font-body text-sm">
-                <span className="text-muted-foreground">You pay</span>
+                <span className="text-muted-foreground">{gTradeDirection === "sell" ? "You sell" : "You pay"}</span>
                 <span className="font-semibold text-foreground">{gSendAmount} {gFromCurrency?.ticker}</span>
               </div>
               <div className="flex items-center justify-between font-body text-sm">
-                <span className="text-muted-foreground">You receive (est.)</span>
+                <span className="text-muted-foreground">{gTradeDirection === "sell" ? "You receive (est.)" : "You receive (est.)"}</span>
                 <span className="font-semibold text-foreground">≈ {gEstimatedAmount} {gToCurrency?.ticker}</span>
               </div>
               {gFullEstimate?.estimated_exchange_rate && (
@@ -2847,17 +2847,25 @@ const ExchangeWidget = () => {
                   <span className="text-foreground">{fee.amount} {fee.currency}</span>
                 </div>
               ))}
-              <div className="border-t border-border pt-2">
-                <div className="flex items-start justify-between font-body text-xs">
-                  <span className="text-muted-foreground">Wallet</span>
-                  <span className="max-w-[200px] break-all text-right font-mono text-foreground">{gPayoutAddress}</span>
+              {gPayoutAddress && (
+                <div className="border-t border-border pt-2">
+                  <div className="flex items-start justify-between font-body text-xs">
+                    <span className="text-muted-foreground">{gTradeDirection === "sell" ? "Deposit address" : "Wallet"}</span>
+                    <span className="max-w-[200px] break-all text-right font-mono text-foreground">{gPayoutAddress}</span>
+                  </div>
                 </div>
-              </div>
+              )}
+              {gSelectedPaymentMethod && (
+                <div className="flex items-center justify-between font-body text-xs">
+                  <span className="text-muted-foreground">Payment method</span>
+                  <span className="text-foreground">{gSelectedPaymentMethod.replace(/_/g, " ").replace(/\b\w/g, l => l.toUpperCase())}</span>
+                </div>
+              )}
             </div>
 
             <div className="mt-4 flex items-center gap-2 rounded-lg border border-primary/20 bg-primary/5 p-3">
               <Shield className="h-4 w-4 shrink-0 text-primary" />
-              <p className="font-body text-[11px] text-muted-foreground">You'll be redirected to Guardarian's secure checkout to complete your payment.</p>
+              <p className="font-body text-[11px] text-muted-foreground">You'll be redirected to a secure checkout to complete your {gTradeDirection === "sell" ? "sale" : "purchase"}.</p>
             </div>
 
             <div className="mt-5 flex gap-3">
@@ -2868,7 +2876,7 @@ const ExchangeWidget = () => {
                 onClick={handleConfirmGuardarianCheckout}
               >
                 {gCreatingTx ? <Loader2 className="mr-2 h-4 w-4 animate-spin" /> : <CreditCard className="mr-2 h-4 w-4" />}
-                Confirm & Pay
+                {gTradeDirection === "sell" ? "Confirm & Sell" : "Confirm & Pay"}
               </Button>
             </div>
           </motion.div>
