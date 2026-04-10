@@ -838,29 +838,7 @@ const ExchangeWidget = () => {
     && hasValidGuardarianEmail
     && hasValidGuardarianPayoutDetails;
 
-  useEffect(() => {
-    if (!isSellSepaCorridor) {
-      setGSepaIban("");
-      setGSepaBic("");
-    }
-  }, [isSellSepaCorridor]);
-
-  useEffect(() => {
-    if (widgetMode !== "buysell" || gTradeDirection !== "sell") return;
-    if (!gFromCurrency || gFromCurrency.currency_type !== "CRYPTO") {
-      setGFromCurrency(guardarianCrypto.find((c) => c.ticker === "BTC") || guardarianCrypto[0] || null);
-    }
-    if (!gToCurrency || gToCurrency.currency_type !== "FIAT") {
-      setGToCurrency(
-        guardarianFiat.find((c) => c.ticker === "EUR")
-          || guardarianFiat.find((c) => c.ticker === "USD")
-          || guardarianFiat[0]
-          || null
-      );
-    }
-  }, [widgetMode, gTradeDirection, gFromCurrency, gToCurrency, guardarianCrypto, guardarianFiat]);
-
-  // Deep-link: ?tab=buy&crypto=SOL&fiat=USD activates Buy/Sell tab automatically
+  // Deep-link: ?tab=buy&crypto=SOL&fiat=USD activates Buy tab automatically
   useEffect(() => {
     const params = new URLSearchParams(window.location.search);
     const tab = params.get("tab")?.toLowerCase();
