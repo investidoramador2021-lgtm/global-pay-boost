@@ -790,12 +790,12 @@ const ExchangeWidget = () => {
 
         if (cancelled) return;
 
-        const shouldInjectBuyFallbacks = gTradeDirection === "buy";
-        const syntheticPreferredMethods = shouldInjectBuyFallbacks ? [
+        // Inject synthetic preferred methods for BOTH buy and sell directions
+        const syntheticPreferredMethods = [
           ...(fiatCurrency.ticker === "BRL" ? [{ type: "PIX", payment_category: "BANK_TRANSFER", deposit_enabled: true, withdrawal_enabled: false }] : []),
           ...(fiatCurrency.ticker === "EUR" ? [{ type: "SEPA", payment_category: "BANK_TRANSFER", deposit_enabled: true, withdrawal_enabled: true }] : []),
           ...(fiatCurrency.ticker === "GBP" ? [{ type: "FASTER_PAYMENTS", payment_category: "BANK_TRANSFER", deposit_enabled: true, withdrawal_enabled: true }] : []),
-        ] : [];
+        ];
         const mergedPreferredMethods = [
           ...syntheticPreferredMethods.filter((pm) => !eligibleMethods.some((existing) => existing.type === pm.type)),
           ...eligibleMethods,
@@ -812,9 +812,9 @@ const ExchangeWidget = () => {
         if (cancelled) return;
         const finalMethods = fallbackMethods.length
           ? [
-              ...(gTradeDirection === "buy" && fiatCurrency.ticker === "BRL" && !fallbackMethods.some((pm) => pm.type === "PIX") ? [{ type: "PIX", payment_category: "BANK_TRANSFER", deposit_enabled: true, withdrawal_enabled: false }] : []),
-              ...(gTradeDirection === "buy" && fiatCurrency.ticker === "EUR" && !fallbackMethods.some((pm) => pm.type === "SEPA") ? [{ type: "SEPA", payment_category: "BANK_TRANSFER", deposit_enabled: true, withdrawal_enabled: true }] : []),
-              ...(gTradeDirection === "buy" && fiatCurrency.ticker === "GBP" && !fallbackMethods.some((pm) => pm.type === "FASTER_PAYMENTS") ? [{ type: "FASTER_PAYMENTS", payment_category: "BANK_TRANSFER", deposit_enabled: true, withdrawal_enabled: true }] : []),
+              ...(!fallbackMethods.some((pm) => pm.type === "PIX") && fiatCurrency.ticker === "BRL" ? [{ type: "PIX", payment_category: "BANK_TRANSFER", deposit_enabled: true, withdrawal_enabled: false }] : []),
+              ...(!fallbackMethods.some((pm) => pm.type === "SEPA") && fiatCurrency.ticker === "EUR" ? [{ type: "SEPA", payment_category: "BANK_TRANSFER", deposit_enabled: true, withdrawal_enabled: true }] : []),
+              ...(!fallbackMethods.some((pm) => pm.type === "FASTER_PAYMENTS") && fiatCurrency.ticker === "GBP" ? [{ type: "FASTER_PAYMENTS", payment_category: "BANK_TRANSFER", deposit_enabled: true, withdrawal_enabled: true }] : []),
               ...fallbackMethods,
             ]
           : [];
@@ -912,12 +912,16 @@ const ExchangeWidget = () => {
       };
       if (fromNetwork) estimateParams.from_network = fromNetwork;
       if (toNetwork) estimateParams.to_network = toNetwork;
-      const effectivePaymentMethod = resolveGuardarianPaymentMethod(
+      let effectivePaymentMethod = resolveGuardarianPaymentMethod(
         (gTradeDirection === "buy" ? gFromCurrency : gToCurrency)?.ticker,
         gPaymentMethods,
         gSelectedPaymentMethod,
         gTradeDirection,
       );
+      // Hard-map EUR sell to SEPA if resolver missed it
+      if (gTradeDirection === "sell" && gToCurrency.ticker === "EUR" && !effectivePaymentMethod) {
+        effectivePaymentMethod = "SEPA";
+      }
       if (effectivePaymentMethod) estimateParams.payment_method = effectivePaymentMethod;
 
       const minMaxParams: Parameters<typeof getGuardarianMinMax>[0] = {
@@ -1240,12 +1244,16 @@ const ExchangeWidget = () => {
       const fromNet = getNetworkParam(gFromCurrency);
       const toNet = getNetworkParam(gToCurrency);
       const emailParam = gPayoutEmail.trim() || undefined;
-      const effectivePaymentMethod = resolveGuardarianPaymentMethod(
+      let effectivePaymentMethod = resolveGuardarianPaymentMethod(
         (gTradeDirection === "buy" ? gFromCurrency : gToCurrency)?.ticker,
         gPaymentMethods,
         gSelectedPaymentMethod,
         gTradeDirection,
       );
+      // Hard-map EUR sell to SEPA
+      if (isSellSepaCorridor && !effectivePaymentMethod) {
+        effectivePaymentMethod = "SEPA";
+      }
 
       if (gTradeDirection === "sell") {
         result = await createGuardarianTransaction({
