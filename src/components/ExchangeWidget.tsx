@@ -23,7 +23,6 @@ import {
   getGuardarianPartnerToken,
   createGuardarianTransaction,
   createGuardarianSellTransaction,
-  getGuardarianPaymentMethods,
   type GuardarianCurrency,
   type GuardarianEstimate,
   type GuardarianPaymentMethod,
