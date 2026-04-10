@@ -1572,7 +1572,15 @@ const ExchangeWidget = () => {
                       </label>
                       <div className="flex items-center gap-3 rounded-xl border border-border bg-accent p-4">
                         <span className="flex-1 font-display text-2xl font-bold text-foreground">
-                          {gEstimating ? <Loader2 className="h-6 w-6 animate-spin text-muted-foreground" /> : gEstimateError ? "Unavailable" : `≈ ${gEstimatedAmount || "—"}`}
+                          {gEstimating ? (
+                            <Loader2 className="h-6 w-6 animate-spin text-muted-foreground" />
+                          ) : gEstimateError ? (
+                            "Unavailable"
+                          ) : gEstimatedAmount && parseFloat(gEstimatedAmount) <= 0 ? (
+                            <span className="text-destructive text-base">Minimum amount not met</span>
+                          ) : (
+                            `≈ ${gEstimatedAmount || "—"}`
+                          )}
                         </span>
                         <button onClick={() => setGShowToPicker(true)} className="flex items-center gap-2 rounded-lg bg-trust/10 px-4 py-2.5 transition-colors hover:bg-trust/20">
                           {gToCurrency && (
@@ -1792,11 +1800,11 @@ const ExchangeWidget = () => {
                                     onClick={() => setGSelectedPaymentMethod(pm.type)}
                                     className={`inline-flex items-center gap-1.5 rounded-lg border px-3 py-2 font-body text-[11px] font-semibold tracking-wide transition-all ${
                                       isSelected
-                                        ? "border-primary/40 bg-primary/10 text-primary shadow-sm ring-1 ring-primary/20"
-                                        : "border-border bg-background/80 text-muted-foreground hover:border-primary/20 hover:text-foreground"
+                                        ? "border-primary/40 bg-white/90 dark:bg-white/10 text-primary shadow-sm ring-1 ring-primary/20"
+                                        : "border-border bg-gray-100 dark:bg-white/5 text-muted-foreground hover:border-primary/20 hover:text-foreground"
                                     }`}
                                   >
-                                    <LogoComponent className="h-4 w-auto" />
+                                    <span className="rounded bg-white dark:bg-white/15 p-0.5"><LogoComponent className="h-4 w-auto" /></span>
                                     <span>{display.label}</span>
                                   </button>
                                 );
@@ -1813,7 +1821,7 @@ const ExchangeWidget = () => {
                             background: "linear-gradient(135deg, hsl(var(--primary)) 0%, hsl(var(--trust)) 100%)",
                             color: "hsl(var(--primary-foreground))",
                           }}
-                          disabled={gCreatingTx || !gEstimatedAmount || gEstimatedAmount === "—" || (parseFloat(gSendAmount) < gMinAmount) || (parseFloat(gSendAmount) > gMaxAmount)}
+                          disabled={gCreatingTx || !gEstimatedAmount || gEstimatedAmount === "—" || (parseFloat(gEstimatedAmount) <= 0) || (parseFloat(gSendAmount) < gMinAmount) || (parseFloat(gSendAmount) > gMaxAmount)}
                           onClick={handleStartGuardarianCheckout}
                         >
                           {gCreatingTx ? (
@@ -1832,16 +1840,16 @@ const ExchangeWidget = () => {
                         </div>
                         <div className="mt-2 flex flex-wrap items-center justify-center gap-1.5">
                           {gPaymentMethods.length > 0 ? (
-                            gPaymentMethods.slice(0, 5).map((pm) => {
+                          gPaymentMethods.slice(0, 5).map((pm) => {
                               const display = resolvePaymentMethodDisplay(pm.type || "");
                               const LogoComponent = display.Logo;
                               return (
                                 <span key={pm.type} className={`inline-flex items-center gap-1 rounded-full border px-2.5 py-1 font-body text-[10px] font-semibold tracking-wide ${
                                   gSelectedPaymentMethod === pm.type
-                                    ? "border-primary/20 bg-primary/10 text-primary"
-                                    : "border-border bg-background/80 text-muted-foreground"
+                                    ? "border-primary/20 bg-white/90 dark:bg-white/10 text-primary"
+                                    : "border-border bg-gray-100 dark:bg-white/5 text-muted-foreground"
                                 }`}>
-                                  <LogoComponent className="h-3 w-auto" />
+                                  <span className="rounded bg-white dark:bg-white/15 p-0.5"><LogoComponent className="h-3 w-auto" /></span>
                                   {display.label}
                                 </span>
                               );
