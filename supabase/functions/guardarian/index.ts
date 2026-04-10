@@ -107,7 +107,7 @@ Deno.serve(async (req) => {
         if (!resp.ok) {
           const text = await resp.text();
           console.error('Guardarian estimate error:', text);
-          return containedError('Estimate unavailable', resp.status >= 500, { value: null });
+          return containedError('Estimate unavailable', true, { value: null });
         }
 
         return jsonResponse(await resp.json());
