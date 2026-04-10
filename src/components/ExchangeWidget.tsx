@@ -207,8 +207,13 @@ const ExchangeWidget = () => {
   const [gShowFromPicker, setGShowFromPicker] = useState(false);
   const [gShowToPicker, setGShowToPicker] = useState(false);
   const [gSearchQuery, setGSearchQuery] = useState("");
-  type BuySellStep = "form" | "compare";
+  type BuySellStep = "form" | "compare" | "checkout";
   const [gStep, setGStep] = useState<BuySellStep>("form");
+  const [gFullEstimate, setGFullEstimate] = useState<GuardarianEstimate | null>(null);
+  const [gPayoutAddress, setGPayoutAddress] = useState("");
+  const [gPayoutEmail, setGPayoutEmail] = useState("");
+  const [gCreatingTx, setGCreatingTx] = useState(false);
+  const [gSelectedProvider, setGSelectedProvider] = useState<"guardarian" | "banxa" | "transak">("guardarian");
 
   // Transaction flow state
   const [step, setStep] = useState<Step>("exchange");
