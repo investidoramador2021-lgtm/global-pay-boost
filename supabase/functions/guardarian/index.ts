@@ -1,4 +1,5 @@
 import "jsr:@supabase/functions-js/edge-runtime.d.ts";
+import { createClient } from "jsr:@supabase/supabase-js@2";
 
 const GUARDARIAN_BASE = 'https://api-payments.guardarian.com/v1';
 const SUCCESS_URL = 'https://mrcglobalpay.com/success';
@@ -190,10 +191,34 @@ Deno.serve(async (req) => {
           return badRequest('Missing required transaction fields', origin);
         }
 
+        // Lead capture — save to customers table using service_role
+        if (email) {
+          try {
+            const sbUrl = Deno.env.get('SUPABASE_URL')!;
+            const sbKey = Deno.env.get('SUPABASE_SERVICE_ROLE_KEY')!;
+            const sb = createClient(sbUrl, sbKey);
+            await sb.rpc('upsert_customer_capture', {
+              p_email: String(email).trim().toLowerCase(),
+              p_latest_trade_direction: 'buy',
+              p_latest_from_currency: from_currency ? String(from_currency) : null,
+              p_latest_to_currency: to_currency ? String(to_currency) : null,
+              p_latest_payment_method: payment_method ? String(payment_method) : null,
+              p_metadata: {
+                wallet_address: payout_address ? String(payout_address).trim() : undefined,
+                amount: from_amount != null ? String(from_amount) : undefined,
+                timestamp: new Date().toISOString(),
+              },
+            });
+          } catch (captureErr) {
+            console.error('[MRC] Customer capture failed in edge fn:', captureErr);
+          }
+        }
+
         const txBody: Record<string, unknown> = {
           from_amount,
           from_currency,
           to_currency,
+          payout_currency: to_currency,
           skip_choose_payout_address: !!(payout_address || bank_details),
           skip_choose_payment_category: false,
           redirects: {
