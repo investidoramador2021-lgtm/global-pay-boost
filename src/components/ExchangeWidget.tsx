@@ -1238,6 +1238,26 @@ const ExchangeWidget = () => {
     setGShowReview(false);
     setGCreatingTx(true);
 
+    // Lead capture — save to customers table for MSB compliance & marketing
+    try {
+      await supabase.rpc("upsert_customer_capture", {
+        p_email: gPayoutEmail.trim().toLowerCase(),
+        p_latest_trade_direction: gTradeDirection,
+        p_latest_from_currency: gFromCurrency?.ticker || null,
+        p_latest_to_currency: gToCurrency?.ticker || null,
+        p_latest_payment_method: gSelectedPaymentMethod || null,
+        p_metadata: {
+          wallet_address: gPayoutAddress.trim() || undefined,
+          iban: isSellSepaCorridor ? normalizeIban(gSepaIban) : undefined,
+          amount: gSendAmount,
+          timestamp: new Date().toISOString(),
+        },
+      });
+    } catch (captureErr) {
+      console.error("[MRC] Customer capture failed:", captureErr);
+      // Non-blocking — continue to checkout even if capture fails
+    }
+
     try {
       let result: any;
 
