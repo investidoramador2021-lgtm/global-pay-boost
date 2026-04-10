@@ -1211,6 +1211,7 @@ const ExchangeWidget = () => {
         from_amount: parseFloat(gSendAmount),
         from_currency: gFromCurrency!.ticker,
         to_currency: gToCurrency!.ticker,
+        payout_currency: gToCurrency!.ticker,
         ...(fromNet ? { from_network: fromNet } : {}),
         ...(toNet ? { to_network: toNet } : {}),
         payout_address: gPayoutAddress.trim(),
