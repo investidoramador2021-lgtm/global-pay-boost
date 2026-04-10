@@ -58,7 +58,10 @@ function fiatFlagUrl(ticker: string): string {
 }
 
 function guardarianLogoUrl(c: GuardarianCurrency): string {
-  return c.networks?.[0]?.logo_url || "";
+  const raw = c.networks?.[0]?.logo_url || "";
+  if (!raw) return "";
+  if (raw.startsWith("http")) return raw;
+  return `https://guardarian.com${raw}`;
 }
 
 // Display-friendly ticker: strips network suffixes so users see "USDT" not "usdttrc20"
