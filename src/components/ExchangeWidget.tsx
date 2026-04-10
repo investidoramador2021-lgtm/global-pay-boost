@@ -2153,6 +2153,16 @@ const ExchangeWidget = () => {
                                 Complete your payment on the Guardarian tab. Once finished, you'll receive a confirmation email at <span className="font-semibold text-foreground">{gPayoutEmail || "your email"}</span>.
                               </p>
 
+                              {/* Live updates note */}
+                              <div className="mx-auto max-w-xs rounded-xl border border-primary/30 bg-primary/10 p-3 text-left">
+                                <div className="flex gap-2">
+                                  <Info className="mt-0.5 h-4 w-4 shrink-0 text-primary" />
+                                  <p className="font-body text-xs text-foreground leading-relaxed">
+                                    <span className="font-bold">Bookmark this page!</span> You can return here anytime to check your transaction status live using the <span className="font-semibold text-primary">"Track an Existing Transfer"</span> feature below.
+                                  </p>
+                                </div>
+                              </div>
+
                               {/* Order recap */}
                               <div className="mx-auto max-w-xs rounded-xl border border-border bg-accent/40 p-4 space-y-2 text-left">
                                 <div className="flex justify-between font-body text-sm">
