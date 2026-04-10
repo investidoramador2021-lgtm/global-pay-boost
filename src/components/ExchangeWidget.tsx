@@ -3076,11 +3076,11 @@ const ExchangeWidget = () => {
 
             <div className="mt-5 space-y-3 rounded-xl border border-border bg-accent/50 p-4">
               <div className="flex items-center justify-between font-body text-sm">
-                <span className="text-muted-foreground">{gTradeDirection === "sell" ? "You sell" : "You pay"}</span>
+                <span className="text-muted-foreground">You pay</span>
                 <span className="font-semibold text-foreground">{gSendAmount} {gFromCurrency?.ticker}</span>
               </div>
               <div className="flex items-center justify-between font-body text-sm">
-                <span className="text-muted-foreground">{gTradeDirection === "sell" ? "You receive (est.)" : "You receive (est.)"}</span>
+                <span className="text-muted-foreground">You receive (est.)</span>
                 <span className="font-semibold text-foreground">≈ {(() => {
                   const raw = parseFloat(gEstimatedAmount || "0");
                   if (!Number.isFinite(raw) || raw <= 0) return gEstimatedAmount;
@@ -3123,7 +3123,7 @@ const ExchangeWidget = () => {
 
             <div className="mt-4 flex items-center gap-2 rounded-lg border border-primary/20 bg-primary/5 p-3">
               <Shield className="h-4 w-4 shrink-0 text-primary" />
-              <p className="font-body text-[11px] text-muted-foreground">A secure checkout will open below in this window to complete your {gTradeDirection === "sell" ? "sale" : "purchase"}.</p>
+              <p className="font-body text-[11px] text-muted-foreground">A secure checkout will open below in this window to complete your purchase.</p>
             </div>
 
             <div className="mt-5 flex gap-3">
@@ -3134,7 +3134,7 @@ const ExchangeWidget = () => {
                 onClick={handleConfirmGuardarianCheckout}
               >
                 {gCreatingTx ? <Loader2 className="mr-2 h-4 w-4 animate-spin" /> : <CreditCard className="mr-2 h-4 w-4" />}
-                {gTradeDirection === "sell" ? "Confirm & Sell" : "Confirm & Pay"}
+                Confirm & Pay
               </Button>
             </div>
           </motion.div>
