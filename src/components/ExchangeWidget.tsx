@@ -842,7 +842,9 @@ const ExchangeWidget = () => {
   }, [widgetMode, gFromCurrency, gToCurrency, gTradeDirection, collectGuardarianPaymentMethods, resolveGuardarianPaymentMethod]);
 
   const hasValidGuardarianEmail = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(gPayoutEmail.trim());
-  const hasValidGuardarianPayoutDetails = Boolean(gPayoutAddress.trim());
+  const hasValidGuardarianPayoutDetails = gTradeDirection === "sell"
+    ? gBankFieldsValid // Sell: bank details must be valid
+    : Boolean(gPayoutAddress.trim()); // Buy: wallet address required
   const canStartGuardarianCheckout = !gCreatingTx
     && Boolean(gEstimatedAmount)
     && gEstimatedAmount !== "—"
@@ -850,7 +852,8 @@ const ExchangeWidget = () => {
     && parseFloat(gSendAmount) >= gMinAmount
     && parseFloat(gSendAmount) <= gMaxAmount
     && hasValidGuardarianEmail
-    && hasValidGuardarianPayoutDetails;
+    && hasValidGuardarianPayoutDetails
+    && (gTradeDirection === "buy" ? Boolean(gPayoutAddress.trim()) : true);
 
   // Deep-link: ?tab=buy&crypto=SOL&fiat=USD activates Buy tab automatically
   useEffect(() => {
