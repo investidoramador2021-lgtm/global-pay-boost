@@ -22,8 +22,10 @@ import {
   getGuardarianMinMax,
   getGuardarianPartnerToken,
   createGuardarianTransaction,
+  createGuardarianSellTransaction,
   type GuardarianCurrency,
   type GuardarianEstimate,
+  type GuardarianPaymentMethod,
 } from "@/lib/guardarian";
 import { useToast } from "@/hooks/use-toast";
 import { usePushNotifications } from "@/hooks/use-push-notifications";
@@ -275,6 +277,8 @@ const ExchangeWidget = () => {
   const [gShowReview, setGShowReview] = useState(false);
   const [gCurrencyRetryCount, setGCurrencyRetryCount] = useState(0);
   const [gCurrencyError, setGCurrencyError] = useState(false);
+  const [gPaymentMethods, setGPaymentMethods] = useState<GuardarianPaymentMethod[]>([]);
+  const [gSelectedPaymentMethod, setGSelectedPaymentMethod] = useState<string>("");
 
   // Transaction flow state
   const [step, setStep] = useState<Step>("exchange");
@@ -673,6 +677,35 @@ const ExchangeWidget = () => {
     loadGuardarianCurrencies();
   }, [widgetMode, guardarianLoaded, loadGuardarianCurrencies]);
 
+  // Extract payment methods from currency data when fiat currency changes
+  useEffect(() => {
+    if (widgetMode !== "buysell") return;
+    const fiatCurrency = gTradeDirection === "buy" ? gFromCurrency : gToCurrency;
+    if (!fiatCurrency) { setGPaymentMethods([]); return; }
+
+    // Payment methods are embedded in the currency's networks
+    const allMethods: GuardarianPaymentMethod[] = [];
+    const seen = new Set<string>();
+    // Collect from networks
+    for (const net of fiatCurrency.networks || []) {
+      for (const pm of net.payment_methods || []) {
+        if (!seen.has(pm.type)) {
+          seen.add(pm.type);
+          allMethods.push(pm);
+        }
+      }
+    }
+    // Also collect from top-level payment_methods
+    for (const pm of fiatCurrency.payment_methods || []) {
+      if (!seen.has(pm.type)) {
+        seen.add(pm.type);
+        allMethods.push(pm);
+      }
+    }
+    setGPaymentMethods(allMethods);
+    setGSelectedPaymentMethod(allMethods.length > 0 ? allMethods[0].type : "");
+  }, [widgetMode, gFromCurrency?.ticker, gToCurrency?.ticker, gTradeDirection]);
+
   // Deep-link: ?tab=buy&crypto=SOL&fiat=USD activates Buy/Sell tab automatically
   useEffect(() => {
     const params = new URLSearchParams(window.location.search);
@@ -959,7 +992,8 @@ const ExchangeWidget = () => {
       return;
     }
 
-    if (!gPayoutAddress.trim()) {
+    // Buy mode requires wallet address; sell mode collects payout at checkout
+    if (gTradeDirection === "buy" && !gPayoutAddress.trim()) {
       toast({ title: "Wallet required", description: `Enter your ${gToCurrency.ticker} wallet address to continue.`, variant: "destructive" });
       return;
     }
@@ -973,20 +1007,31 @@ const ExchangeWidget = () => {
     setGCreatingTx(true);
 
     try {
-      // Try creating a real transaction via the API for proper 3DS/redirect support
-      const result = await createGuardarianTransaction({
-        from_amount: parseFloat(gSendAmount),
-        from_currency: gFromCurrency!.ticker,
-        to_currency: gToCurrency!.ticker,
-        from_network: gFromCurrency!.networks?.[0]?.network,
-        to_network: gToCurrency!.networks?.[0]?.network,
-        payout_address: gPayoutAddress.trim(),
-        redirects: {
-          successful: window.location.origin + "/?status=success",
-          cancelled: window.location.origin + "/?status=cancelled",
-          failed: window.location.origin + "/?status=failed",
-        },
-      });
+      let result: any;
+
+      if (gTradeDirection === "sell") {
+        // Sell flow: crypto → fiat via /v1/transaction/sell
+        result = await createGuardarianSellTransaction({
+          from_amount: parseFloat(gSendAmount),
+          from_currency: gFromCurrency!.ticker,
+          to_currency: gToCurrency!.ticker,
+          from_network: gFromCurrency!.networks?.[0]?.network,
+          to_network: gToCurrency!.networks?.[0]?.network,
+          deposit_address: gPayoutAddress.trim() || undefined,
+          ...(gSelectedPaymentMethod ? { payment_method: gSelectedPaymentMethod } : {}),
+        });
+      } else {
+        // Buy flow: fiat → crypto via /v1/transaction
+        result = await createGuardarianTransaction({
+          from_amount: parseFloat(gSendAmount),
+          from_currency: gFromCurrency!.ticker,
+          to_currency: gToCurrency!.ticker,
+          from_network: gFromCurrency!.networks?.[0]?.network,
+          to_network: gToCurrency!.networks?.[0]?.network,
+          payout_address: gPayoutAddress.trim(),
+          ...(gSelectedPaymentMethod ? { payment_method: gSelectedPaymentMethod } : {}),
+        });
+      }
 
       // If the API returns a redirect_url, open it in a new tab (clean redirect)
       const redirectUrl = result?.redirect_url;
@@ -1002,11 +1047,12 @@ const ExchangeWidget = () => {
 
       const params = new URLSearchParams({
         partner_api_token: token,
-        default_fiat_currency: gFromCurrency!.ticker,
-        default_crypto_currency: gToCurrency!.ticker,
+        default_fiat_currency: gTradeDirection === "buy" ? gFromCurrency!.ticker : gToCurrency!.ticker,
+        default_crypto_currency: gTradeDirection === "buy" ? gToCurrency!.ticker : gFromCurrency!.ticker,
         default_fiat_amount: gSendAmount,
         payout_address: gPayoutAddress.trim(),
         theme: "blue",
+        type: gTradeDirection === "sell" ? "sell" : "buy",
       });
 
       const widgetUrl = `https://guardarian.com/calculator/v1?${params.toString()}`;
@@ -1019,17 +1065,18 @@ const ExchangeWidget = () => {
         const token = await getGuardarianPartnerToken();
         const params = new URLSearchParams({
           partner_api_token: token || "",
-          default_fiat_currency: gFromCurrency!.ticker,
-          default_crypto_currency: gToCurrency!.ticker,
+          default_fiat_currency: gTradeDirection === "buy" ? gFromCurrency!.ticker : gToCurrency!.ticker,
+          default_crypto_currency: gTradeDirection === "buy" ? gToCurrency!.ticker : gFromCurrency!.ticker,
           default_fiat_amount: gSendAmount,
           payout_address: gPayoutAddress.trim(),
           theme: "blue",
+          type: gTradeDirection === "sell" ? "sell" : "buy",
         });
         const widgetUrl = `https://guardarian.com/calculator/v1?${params.toString()}`;
         window.open(widgetUrl, "_blank", "noopener,noreferrer");
         toast({ title: "Checkout opened", description: "Complete your purchase in the new tab." });
       } catch {
-        toast({ title: "Checkout unavailable", description: err?.message || "Could not open checkout.", variant: "destructive" });
+        toast({ title: "Service Temporarily Unavailable", description: "Please try again in a moment.", variant: "destructive" });
       }
     } finally {
       setGCreatingTx(false);
@@ -1274,13 +1321,31 @@ const ExchangeWidget = () => {
                     {/* Buy / Sell toggle */}
                     <div className="mb-4 flex rounded-lg border border-border bg-accent p-0.5 gap-0.5">
                       <button
-                        onClick={() => setGTradeDirection("buy")}
+                        onClick={() => {
+                          if (gTradeDirection !== "buy") {
+                            // Swap currencies: sell→buy means from=fiat, to=crypto
+                            const prevFrom = gFromCurrency;
+                            const prevTo = gToCurrency;
+                            setGFromCurrency(prevTo);
+                            setGToCurrency(prevFrom);
+                          }
+                          setGTradeDirection("buy");
+                        }}
                         className={`flex-1 rounded-md px-3 py-1.5 font-display text-xs font-semibold transition-all ${
                           gTradeDirection === "buy" ? "bg-primary text-primary-foreground shadow-sm" : "text-muted-foreground hover:text-foreground"
                         }`}
                       >Buy</button>
                       <button
-                        onClick={() => setGTradeDirection("sell")}
+                        onClick={() => {
+                          if (gTradeDirection !== "sell") {
+                            // Swap currencies: buy→sell means from=crypto, to=fiat
+                            const prevFrom = gFromCurrency;
+                            const prevTo = gToCurrency;
+                            setGFromCurrency(prevTo);
+                            setGToCurrency(prevFrom);
+                          }
+                          setGTradeDirection("sell");
+                        }}
                         className={`flex-1 rounded-md px-3 py-1.5 font-display text-xs font-semibold transition-all ${
                           gTradeDirection === "sell" ? "bg-primary text-primary-foreground shadow-sm" : "text-muted-foreground hover:text-foreground"
                         }`}
@@ -1302,7 +1367,11 @@ const ExchangeWidget = () => {
                           step="any"
                         />
                         <button onClick={() => setGShowFromPicker(true)} className="flex items-center gap-2 rounded-lg bg-primary/10 px-4 py-2.5 transition-colors hover:bg-primary/20">
-                          {gFromCurrency && fiatFlagUrl(gFromCurrency.ticker) && <img src={fiatFlagUrl(gFromCurrency.ticker)} alt="" className="h-5 w-5 rounded-full object-cover" />}
+                          {gFromCurrency && (
+                            gTradeDirection === "buy" && fiatFlagUrl(gFromCurrency.ticker)
+                              ? <img src={fiatFlagUrl(gFromCurrency.ticker)} alt="" className="h-5 w-5 rounded-full object-cover" />
+                              : gTradeDirection === "sell" && <GuardarianAssetIcon currency={gFromCurrency} />
+                          )}
                           <span className="font-display text-sm font-semibold uppercase text-primary">{gFromCurrency?.ticker || "Select"}</span>
                           <ChevronDown className="h-3.5 w-3.5 text-primary/60" />
                         </button>
@@ -1319,7 +1388,7 @@ const ExchangeWidget = () => {
                         </p>
                       )}
 
-                      {/* Fiat Currency Picker */}
+                      {/* From Currency Picker — shows fiat for buy, crypto for sell */}
                       {gShowFromPicker && (
                         <div className="fixed inset-0 z-50 flex items-center justify-center bg-foreground/40 p-4" onClick={() => setGShowFromPicker(false)}>
                           <div className="w-full max-w-md rounded-2xl border border-border bg-card shadow-elevated" onClick={(e) => e.stopPropagation()}>
@@ -1327,28 +1396,39 @@ const ExchangeWidget = () => {
                               <Search className="h-4 w-4 text-muted-foreground" />
                               <input
                                 autoFocus
-                                placeholder="Search fiat currency..."
+                                placeholder={gTradeDirection === "buy" ? "Search fiat currency..." : "Search crypto..."}
                                 className="flex-1 bg-transparent font-body text-sm text-foreground outline-none placeholder:text-muted-foreground"
                                 value={gSearchQuery}
                                 onChange={(e) => setGSearchQuery(e.target.value)}
                               />
                               <button onClick={() => { setGShowFromPicker(false); setGSearchQuery(""); }} className="font-body text-xs text-muted-foreground hover:text-foreground">Cancel</button>
                             </div>
-                            <div className="overflow-y-auto p-2" style={{ maxHeight: 400 }}>
-                              {guardarianFiat
-                                .filter((c) => !gSearchQuery || c.ticker.toLowerCase().includes(gSearchQuery.toLowerCase()) || c.name.toLowerCase().includes(gSearchQuery.toLowerCase()))
-                                .map((c) => (
-                                  <button
-                                    key={c.ticker}
-                                    onClick={() => { setGFromCurrency(c); setGShowFromPicker(false); setGSearchQuery(""); }}
-                                    className="flex w-full items-center gap-3 rounded-lg px-3 py-2.5 text-left transition-colors hover:bg-accent"
-                                  >
-                                    {fiatFlagUrl(c.ticker) && <img src={fiatFlagUrl(c.ticker)} alt={c.ticker} className="h-6 w-6 rounded-full object-cover" loading="lazy" />}
-                                    <span className="font-display text-sm font-semibold uppercase text-foreground">{c.ticker}</span>
-                                    <span className="font-body text-xs text-muted-foreground">{c.name}</span>
-                                  </button>
-                                ))}
-                            </div>
+                            {gTradeDirection === "buy" ? (
+                              <div className="overflow-y-auto p-2" style={{ maxHeight: 400 }}>
+                                {guardarianFiat
+                                  .filter((c) => !gSearchQuery || c.ticker.toLowerCase().includes(gSearchQuery.toLowerCase()) || c.name.toLowerCase().includes(gSearchQuery.toLowerCase()))
+                                  .map((c) => (
+                                    <button
+                                      key={c.ticker}
+                                      onClick={() => { setGFromCurrency(c); setGShowFromPicker(false); setGSearchQuery(""); }}
+                                      className="flex w-full items-center gap-3 rounded-lg px-3 py-2.5 text-left transition-colors hover:bg-accent"
+                                    >
+                                      {fiatFlagUrl(c.ticker) && <img src={fiatFlagUrl(c.ticker)} alt={c.ticker} className="h-6 w-6 rounded-full object-cover" loading="lazy" />}
+                                      <span className="font-display text-sm font-semibold uppercase text-foreground">{c.ticker}</span>
+                                      <span className="font-body text-xs text-muted-foreground">{c.name}</span>
+                                    </button>
+                                  ))}
+                              </div>
+                            ) : (
+                              <GuardarianCryptoList
+                                items={guardarianCrypto.filter((c) => {
+                                  if (!gSearchQuery) return true;
+                                  const q = gSearchQuery.toLowerCase();
+                                  return c.ticker.toLowerCase().includes(q) || c.name.toLowerCase().includes(q);
+                                })}
+                                onSelect={(c) => { setGFromCurrency(c); setGShowFromPicker(false); setGSearchQuery(""); }}
+                              />
+                            )}
                           </div>
                         </div>
                       )}
@@ -1376,13 +1456,17 @@ const ExchangeWidget = () => {
                           {gEstimating ? <Loader2 className="h-6 w-6 animate-spin text-muted-foreground" /> : `≈ ${gEstimatedAmount || "—"}`}
                         </span>
                         <button onClick={() => setGShowToPicker(true)} className="flex items-center gap-2 rounded-lg bg-trust/10 px-4 py-2.5 transition-colors hover:bg-trust/20">
-                          {gToCurrency && <GuardarianAssetIcon currency={gToCurrency} />}
+                          {gToCurrency && (
+                            gTradeDirection === "sell" && fiatFlagUrl(gToCurrency.ticker)
+                              ? <img src={fiatFlagUrl(gToCurrency.ticker)} alt="" className="h-5 w-5 rounded-full object-cover" />
+                              : gTradeDirection === "buy" && <GuardarianAssetIcon currency={gToCurrency} />
+                          )}
                           <span className="font-display text-sm font-semibold uppercase text-trust">{gToCurrency?.ticker || "Select"}</span>
                           <ChevronDown className="h-3.5 w-3.5 text-trust/60" />
                         </button>
                       </div>
 
-                      {/* Crypto Currency Picker */}
+                      {/* To Currency Picker — shows crypto for buy, fiat for sell */}
                       {gShowToPicker && (
                         <div className="fixed inset-0 z-50 flex items-center justify-center bg-foreground/40 p-4" onClick={() => setGShowToPicker(false)}>
                           <div className="w-full max-w-md rounded-2xl border border-border bg-card shadow-elevated" onClick={(e) => e.stopPropagation()}>
@@ -1390,38 +1474,58 @@ const ExchangeWidget = () => {
                               <Search className="h-4 w-4 text-muted-foreground" />
                               <input
                                 autoFocus
-                                placeholder="Search crypto..."
+                                placeholder={gTradeDirection === "buy" ? "Search crypto..." : "Search fiat currency..."}
                                 className="flex-1 bg-transparent font-body text-sm text-foreground outline-none placeholder:text-muted-foreground"
                                 value={gSearchQuery}
                                 onChange={(e) => setGSearchQuery(e.target.value)}
                               />
                               <button onClick={() => { setGShowToPicker(false); setGSearchQuery(""); }} className="font-body text-xs text-muted-foreground hover:text-foreground">Cancel</button>
                             </div>
-                            {/* Quick Select */}
-                            <div className="flex gap-2 border-b border-border px-4 pb-3">
-                              {["BTC", "ETH", "SOL", "USDT"].map((ticker) => {
-                                const c = guardarianCrypto.find((cur) => cur.ticker === ticker);
-                                if (!c) return null;
-                                return (
-                                   <button
-                                    key={ticker}
-                                    onClick={() => { setGToCurrency(c); setGShowToPicker(false); setGSearchQuery(""); }}
-                                    className="flex items-center gap-1.5 rounded-lg border border-border bg-accent px-3 py-1.5 font-display text-xs font-semibold uppercase text-foreground transition-colors hover:border-primary/40"
-                                  >
-                                    <GuardarianAssetIcon currency={c} small />
-                                    {ticker}
-                                  </button>
-                                );
-                              })}
-                            </div>
-                            <GuardarianCryptoList
-                              items={guardarianCrypto.filter((c) => {
-                                if (!gSearchQuery) return true;
-                                const q = gSearchQuery.toLowerCase();
-                                return c.ticker.toLowerCase().includes(q) || c.name.toLowerCase().includes(q) || c.networks?.some((n) => n.network.toLowerCase().includes(q) || n.name.toLowerCase().includes(q));
-                              })}
-                              onSelect={(c) => { setGToCurrency(c); setGShowToPicker(false); setGSearchQuery(""); }}
-                            />
+                            {gTradeDirection === "buy" ? (
+                              <>
+                                {/* Quick Select */}
+                                <div className="flex gap-2 border-b border-border px-4 pb-3">
+                                  {["BTC", "ETH", "SOL", "USDT"].map((ticker) => {
+                                    const c = guardarianCrypto.find((cur) => cur.ticker === ticker);
+                                    if (!c) return null;
+                                    return (
+                                      <button
+                                        key={ticker}
+                                        onClick={() => { setGToCurrency(c); setGShowToPicker(false); setGSearchQuery(""); }}
+                                        className="flex items-center gap-1.5 rounded-lg border border-border bg-accent px-3 py-1.5 font-display text-xs font-semibold uppercase text-foreground transition-colors hover:border-primary/40"
+                                      >
+                                        <GuardarianAssetIcon currency={c} small />
+                                        {ticker}
+                                      </button>
+                                    );
+                                  })}
+                                </div>
+                                <GuardarianCryptoList
+                                  items={guardarianCrypto.filter((c) => {
+                                    if (!gSearchQuery) return true;
+                                    const q = gSearchQuery.toLowerCase();
+                                    return c.ticker.toLowerCase().includes(q) || c.name.toLowerCase().includes(q) || c.networks?.some((n) => n.network.toLowerCase().includes(q) || n.name.toLowerCase().includes(q));
+                                  })}
+                                  onSelect={(c) => { setGToCurrency(c); setGShowToPicker(false); setGSearchQuery(""); }}
+                                />
+                              </>
+                            ) : (
+                              <div className="overflow-y-auto p-2" style={{ maxHeight: 400 }}>
+                                {guardarianFiat
+                                  .filter((c) => !gSearchQuery || c.ticker.toLowerCase().includes(gSearchQuery.toLowerCase()) || c.name.toLowerCase().includes(gSearchQuery.toLowerCase()))
+                                  .map((c) => (
+                                    <button
+                                      key={c.ticker}
+                                      onClick={() => { setGToCurrency(c); setGShowToPicker(false); setGSearchQuery(""); }}
+                                      className="flex w-full items-center gap-3 rounded-lg px-3 py-2.5 text-left transition-colors hover:bg-accent"
+                                    >
+                                      {fiatFlagUrl(c.ticker) && <img src={fiatFlagUrl(c.ticker)} alt={c.ticker} className="h-6 w-6 rounded-full object-cover" loading="lazy" />}
+                                      <span className="font-display text-sm font-semibold uppercase text-foreground">{c.ticker}</span>
+                                      <span className="font-body text-xs text-muted-foreground">{c.name}</span>
+                                    </button>
+                                  ))}
+                              </div>
+                            )}
                           </div>
                         </div>
                       )}
@@ -1433,11 +1537,15 @@ const ExchangeWidget = () => {
                         <div className="mt-4">
                           <label className="mb-1.5 flex items-center gap-1.5 font-body text-xs font-medium uppercase tracking-wider text-muted-foreground">
                             <Wallet className="h-3 w-3" />
-                            Your {gToCurrency?.ticker || "crypto"} wallet
+                            {gTradeDirection === "sell"
+                              ? `Your bank / ${gToCurrency?.ticker || "fiat"} payout details`
+                              : `Your ${gToCurrency?.ticker || "crypto"} wallet`}
                           </label>
                           <Input
                             type="text"
-                            placeholder={`Paste your ${gToCurrency?.ticker || "crypto"} address`}
+                            placeholder={gTradeDirection === "sell"
+                              ? `Payout details will be collected at checkout`
+                              : `Paste your ${gToCurrency?.ticker || "crypto"} address`}
                             value={gPayoutAddress}
                             onChange={(e) => setGPayoutAddress(e.target.value)}
                             className="min-h-[48px] rounded-xl border-border bg-accent font-mono text-xs placeholder:text-muted-foreground/50"
@@ -1466,6 +1574,34 @@ const ExchangeWidget = () => {
                           </div>
                         )}
 
+                        {/* Dynamic Payment Methods */}
+                        {gPaymentMethods.length > 0 && (
+                          <div className="mt-3">
+                            <label className="mb-1.5 block font-body text-[10px] font-medium uppercase tracking-wider text-muted-foreground">
+                              Payment Method
+                            </label>
+                            <div className="flex flex-wrap gap-1.5">
+                              {gPaymentMethods.map((pm) => {
+                                const label = pm.type?.replace(/_/g, " ").replace(/\b\w/g, l => l.toUpperCase()) || pm.payment_category;
+                                const isSelected = gSelectedPaymentMethod === pm.type;
+                                return (
+                                  <button
+                                    key={pm.type}
+                                    onClick={() => setGSelectedPaymentMethod(pm.type)}
+                                    className={`inline-flex items-center rounded-full border px-2.5 py-1 font-body text-[10px] font-semibold tracking-wide transition-all ${
+                                      isSelected
+                                        ? "border-primary/30 bg-primary/10 text-primary shadow-sm"
+                                        : "border-border bg-background/80 text-muted-foreground hover:border-primary/20 hover:text-foreground"
+                                    }`}
+                                  >
+                                    {label}
+                                  </button>
+                                );
+                              })}
+                            </div>
+                          </div>
+                        )}
+
                         {/* CTA */}
                         <Button
                           className="mt-5 w-full min-h-[52px] rounded-xl text-base font-bold tracking-wide transition-all duration-300 hover:shadow-neon shadow-card"
@@ -1479,6 +1615,8 @@ const ExchangeWidget = () => {
                         >
                           {gCreatingTx ? (
                             <><Loader2 className="mr-2 h-4 w-4 animate-spin" />Opening checkout…</>
+                          ) : gTradeDirection === "sell" ? (
+                            <><CreditCard className="mr-2 h-4 w-4" />Sell {gFromCurrency?.ticker || "Crypto"}</>
                           ) : (
                             <><CreditCard className="mr-2 h-4 w-4" />Buy {gToCurrency?.ticker || "Crypto"}</>
                           )}
@@ -1490,11 +1628,20 @@ const ExchangeWidget = () => {
                           <span className="flex items-center gap-1 font-body text-[10px] text-muted-foreground"><Lock className="h-3 w-3 text-primary" /> Secure checkout</span>
                         </div>
                         <div className="mt-2 flex flex-wrap items-center justify-center gap-1.5">
-                          <PaymentMethodChip label="Visa" accent />
-                          <PaymentMethodChip label="Mastercard" accent />
-                          <PaymentMethodChip label="SEPA" />
-                          <PaymentMethodChip label="Apple Pay" />
-                          <PaymentMethodChip label="Google Pay" />
+                          {gPaymentMethods.length > 0 ? (
+                            gPaymentMethods.slice(0, 5).map((pm) => {
+                              const label = pm.type?.replace(/_/g, " ").replace(/\b\w/g, l => l.toUpperCase()) || pm.payment_category;
+                              return <PaymentMethodChip key={pm.type} label={label} accent={gSelectedPaymentMethod === pm.type} />;
+                            })
+                          ) : (
+                            <>
+                              <PaymentMethodChip label="Visa" accent />
+                              <PaymentMethodChip label="Mastercard" accent />
+                              <PaymentMethodChip label="SEPA" />
+                              <PaymentMethodChip label="Apple Pay" />
+                              <PaymentMethodChip label="Google Pay" />
+                            </>
+                          )}
                         </div>
                       </>
                     )}
@@ -2674,11 +2821,11 @@ const ExchangeWidget = () => {
 
             <div className="mt-5 space-y-3 rounded-xl border border-border bg-accent/50 p-4">
               <div className="flex items-center justify-between font-body text-sm">
-                <span className="text-muted-foreground">You pay</span>
+                <span className="text-muted-foreground">{gTradeDirection === "sell" ? "You sell" : "You pay"}</span>
                 <span className="font-semibold text-foreground">{gSendAmount} {gFromCurrency?.ticker}</span>
               </div>
               <div className="flex items-center justify-between font-body text-sm">
-                <span className="text-muted-foreground">You receive (est.)</span>
+                <span className="text-muted-foreground">{gTradeDirection === "sell" ? "You receive (est.)" : "You receive (est.)"}</span>
                 <span className="font-semibold text-foreground">≈ {gEstimatedAmount} {gToCurrency?.ticker}</span>
               </div>
               {gFullEstimate?.estimated_exchange_rate && (
@@ -2699,17 +2846,25 @@ const ExchangeWidget = () => {
                   <span className="text-foreground">{fee.amount} {fee.currency}</span>
                 </div>
               ))}
-              <div className="border-t border-border pt-2">
-                <div className="flex items-start justify-between font-body text-xs">
-                  <span className="text-muted-foreground">Wallet</span>
-                  <span className="max-w-[200px] break-all text-right font-mono text-foreground">{gPayoutAddress}</span>
+              {gPayoutAddress && (
+                <div className="border-t border-border pt-2">
+                  <div className="flex items-start justify-between font-body text-xs">
+                    <span className="text-muted-foreground">{gTradeDirection === "sell" ? "Deposit address" : "Wallet"}</span>
+                    <span className="max-w-[200px] break-all text-right font-mono text-foreground">{gPayoutAddress}</span>
+                  </div>
                 </div>
-              </div>
+              )}
+              {gSelectedPaymentMethod && (
+                <div className="flex items-center justify-between font-body text-xs">
+                  <span className="text-muted-foreground">Payment method</span>
+                  <span className="text-foreground">{gSelectedPaymentMethod.replace(/_/g, " ").replace(/\b\w/g, l => l.toUpperCase())}</span>
+                </div>
+              )}
             </div>
 
             <div className="mt-4 flex items-center gap-2 rounded-lg border border-primary/20 bg-primary/5 p-3">
               <Shield className="h-4 w-4 shrink-0 text-primary" />
-              <p className="font-body text-[11px] text-muted-foreground">You'll be redirected to Guardarian's secure checkout to complete your payment.</p>
+              <p className="font-body text-[11px] text-muted-foreground">You'll be redirected to a secure checkout to complete your {gTradeDirection === "sell" ? "sale" : "purchase"}.</p>
             </div>
 
             <div className="mt-5 flex gap-3">
@@ -2720,7 +2875,7 @@ const ExchangeWidget = () => {
                 onClick={handleConfirmGuardarianCheckout}
               >
                 {gCreatingTx ? <Loader2 className="mr-2 h-4 w-4 animate-spin" /> : <CreditCard className="mr-2 h-4 w-4" />}
-                Confirm & Pay
+                {gTradeDirection === "sell" ? "Confirm & Sell" : "Confirm & Pay"}
               </Button>
             </div>
           </motion.div>
