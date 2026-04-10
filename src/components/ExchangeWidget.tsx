@@ -1702,16 +1702,41 @@ const ExchangeWidget = () => {
                           <div className="mt-3 space-y-1.5 rounded-xl border border-border bg-accent/40 px-4 py-3">
                             {gFullEstimate.service_fees?.map((fee, i) => (
                               <div key={i} className="flex items-center justify-between font-body text-[11px]">
-                                <span className="text-muted-foreground">Fee ({fee.percentage})</span>
+                                <span className="text-muted-foreground">Provider fee ({fee.percentage})</span>
                                 <span className="font-medium text-foreground">{fee.amount} {fee.currency}</span>
                               </div>
                             ))}
                             {gFullEstimate.network_fee && (
                               <div className="flex items-center justify-between font-body text-[11px]">
-                                <span className="text-muted-foreground">Network</span>
+                                <span className="text-muted-foreground">Network fee</span>
                                 <span className="font-medium text-foreground">{parseFloat(gFullEstimate.network_fee.amount).toFixed(6)} {gFullEstimate.network_fee.currency}</span>
                               </div>
                             )}
+                            {/* Our 0.5% service fee */}
+                            <div className="flex items-center justify-between font-body text-[11px]">
+                              <span className="text-muted-foreground">MRC service fee (0.5%)</span>
+                              <span className="font-medium text-foreground">
+                                {(parseFloat(gSendAmount) * 0.005).toFixed(2)} {gFromCurrency?.ticker}
+                              </span>
+                            </div>
+                            {/* Total fees */}
+                            <div className="flex items-center justify-between border-t border-border pt-1.5 font-body text-[11px] font-semibold">
+                              <span className="text-foreground">Total fees</span>
+                              <span className="text-foreground">
+                                {(() => {
+                                  const providerFees = (gFullEstimate.service_fees || []).reduce((sum, f) => sum + parseFloat(f.amount || "0"), 0);
+                                  const networkFee = parseFloat(gFullEstimate.network_fee?.amount || "0");
+                                  const ourFee = parseFloat(gSendAmount) * 0.005;
+                                  // If fees are in different currencies, show separately
+                                  const feesCurrency = gFullEstimate.service_fees?.[0]?.currency || gFromCurrency?.ticker || "";
+                                  const networkCurrency = gFullEstimate.network_fee?.currency || "";
+                                  if (networkCurrency && networkCurrency !== feesCurrency) {
+                                    return `${(providerFees + ourFee).toFixed(2)} ${feesCurrency} + ${networkFee.toFixed(6)} ${networkCurrency}`;
+                                  }
+                                  return `${(providerFees + networkFee + ourFee).toFixed(4)} ${feesCurrency}`;
+                                })()}
+                              </span>
+                            </div>
                             <div className="flex items-center justify-between border-t border-border pt-1.5 font-body text-[11px]">
                               <span className="text-muted-foreground">Rate</span>
                               <span className="font-medium text-foreground">1 {gFromCurrency?.ticker} ≈ {gFullEstimate.estimated_exchange_rate} {gToCurrency?.ticker}</span>
