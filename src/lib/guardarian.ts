@@ -35,6 +35,8 @@ export interface GuardarianEstimate {
   converted_amount?: { amount: string; currency: string };
   network_fee?: { amount: string; currency: string };
   service_fees?: { amount: string; currency: string; name: string; percentage: string }[];
+  error?: string;
+  fallback?: boolean;
 }
 
 export interface GuardarianTransaction {
@@ -99,6 +101,7 @@ export async function getGuardarianEstimate(params: {
   to_network?: string;
   from_amount?: string;
   to_amount?: string;
+  payment_method?: string;
 }): Promise<GuardarianEstimate> {
   return callGuardarian({ action: 'estimate', ...params });
 }
