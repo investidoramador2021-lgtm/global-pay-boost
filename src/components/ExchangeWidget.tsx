@@ -978,20 +978,31 @@ const ExchangeWidget = () => {
     setGCreatingTx(true);
 
     try {
-      // Try creating a real transaction via the API for proper 3DS/redirect support
-      const result = await createGuardarianTransaction({
-        from_amount: parseFloat(gSendAmount),
-        from_currency: gFromCurrency!.ticker,
-        to_currency: gToCurrency!.ticker,
-        from_network: gFromCurrency!.networks?.[0]?.network,
-        to_network: gToCurrency!.networks?.[0]?.network,
-        payout_address: gPayoutAddress.trim(),
-        redirects: {
-          successful: window.location.origin + "/?status=success",
-          cancelled: window.location.origin + "/?status=cancelled",
-          failed: window.location.origin + "/?status=failed",
-        },
-      });
+      let result: any;
+
+      if (gTradeDirection === "sell") {
+        // Sell flow: crypto → fiat via /v1/transaction/sell
+        result = await createGuardarianSellTransaction({
+          from_amount: parseFloat(gSendAmount),
+          from_currency: gFromCurrency!.ticker,
+          to_currency: gToCurrency!.ticker,
+          from_network: gFromCurrency!.networks?.[0]?.network,
+          to_network: gToCurrency!.networks?.[0]?.network,
+          deposit_address: gPayoutAddress.trim() || undefined,
+          ...(gSelectedPaymentMethod ? { payment_method: gSelectedPaymentMethod } : {}),
+        });
+      } else {
+        // Buy flow: fiat → crypto via /v1/transaction
+        result = await createGuardarianTransaction({
+          from_amount: parseFloat(gSendAmount),
+          from_currency: gFromCurrency!.ticker,
+          to_currency: gToCurrency!.ticker,
+          from_network: gFromCurrency!.networks?.[0]?.network,
+          to_network: gToCurrency!.networks?.[0]?.network,
+          payout_address: gPayoutAddress.trim(),
+          ...(gSelectedPaymentMethod ? { payment_method: gSelectedPaymentMethod } : {}),
+        });
+      }
 
       // If the API returns a redirect_url, open it in a new tab (clean redirect)
       const redirectUrl = result?.redirect_url;
@@ -1007,11 +1018,12 @@ const ExchangeWidget = () => {
 
       const params = new URLSearchParams({
         partner_api_token: token,
-        default_fiat_currency: gFromCurrency!.ticker,
-        default_crypto_currency: gToCurrency!.ticker,
+        default_fiat_currency: gTradeDirection === "buy" ? gFromCurrency!.ticker : gToCurrency!.ticker,
+        default_crypto_currency: gTradeDirection === "buy" ? gToCurrency!.ticker : gFromCurrency!.ticker,
         default_fiat_amount: gSendAmount,
         payout_address: gPayoutAddress.trim(),
         theme: "blue",
+        type: gTradeDirection === "sell" ? "sell" : "buy",
       });
 
       const widgetUrl = `https://guardarian.com/calculator/v1?${params.toString()}`;
@@ -1024,17 +1036,18 @@ const ExchangeWidget = () => {
         const token = await getGuardarianPartnerToken();
         const params = new URLSearchParams({
           partner_api_token: token || "",
-          default_fiat_currency: gFromCurrency!.ticker,
-          default_crypto_currency: gToCurrency!.ticker,
+          default_fiat_currency: gTradeDirection === "buy" ? gFromCurrency!.ticker : gToCurrency!.ticker,
+          default_crypto_currency: gTradeDirection === "buy" ? gToCurrency!.ticker : gFromCurrency!.ticker,
           default_fiat_amount: gSendAmount,
           payout_address: gPayoutAddress.trim(),
           theme: "blue",
+          type: gTradeDirection === "sell" ? "sell" : "buy",
         });
         const widgetUrl = `https://guardarian.com/calculator/v1?${params.toString()}`;
         window.open(widgetUrl, "_blank", "noopener,noreferrer");
         toast({ title: "Checkout opened", description: "Complete your purchase in the new tab." });
       } catch {
-        toast({ title: "Checkout unavailable", description: err?.message || "Could not open checkout.", variant: "destructive" });
+        toast({ title: "Service Temporarily Unavailable", description: "Please try again in a moment.", variant: "destructive" });
       }
     } finally {
       setGCreatingTx(false);
