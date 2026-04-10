@@ -678,21 +678,33 @@ const ExchangeWidget = () => {
     loadGuardarianCurrencies();
   }, [widgetMode, guardarianLoaded, loadGuardarianCurrencies]);
 
-  // Fetch payment methods when fiat currency changes
+  // Extract payment methods from currency data when fiat currency changes
   useEffect(() => {
-    if (widgetMode !== "buysell" || !gFromCurrency) return;
-    const fiatTicker = gTradeDirection === "buy" ? gFromCurrency.ticker : gToCurrency?.ticker;
-    if (!fiatTicker) return;
-    setGPaymentMethods([]);
-    setGSelectedPaymentMethod("");
-    getGuardarianPaymentMethods(fiatTicker, "FIAT")
-      .then((methods) => {
-        const available = Array.isArray(methods) ? methods : [];
-        setGPaymentMethods(available);
-        // Auto-select first available method
-        if (available.length > 0) setGSelectedPaymentMethod(available[0].type || "");
-      })
-      .catch(() => setGPaymentMethods([]));
+    if (widgetMode !== "buysell") return;
+    const fiatCurrency = gTradeDirection === "buy" ? gFromCurrency : gToCurrency;
+    if (!fiatCurrency) { setGPaymentMethods([]); return; }
+
+    // Payment methods are embedded in the currency's networks
+    const allMethods: GuardarianPaymentMethod[] = [];
+    const seen = new Set<string>();
+    // Collect from networks
+    for (const net of fiatCurrency.networks || []) {
+      for (const pm of net.payment_methods || []) {
+        if (!seen.has(pm.type)) {
+          seen.add(pm.type);
+          allMethods.push(pm);
+        }
+      }
+    }
+    // Also collect from top-level payment_methods
+    for (const pm of fiatCurrency.payment_methods || []) {
+      if (!seen.has(pm.type)) {
+        seen.add(pm.type);
+        allMethods.push(pm);
+      }
+    }
+    setGPaymentMethods(allMethods);
+    setGSelectedPaymentMethod(allMethods.length > 0 ? allMethods[0].type : "");
   }, [widgetMode, gFromCurrency?.ticker, gToCurrency?.ticker, gTradeDirection]);
 
   // Deep-link: ?tab=buy&crypto=SOL&fiat=USD activates Buy/Sell tab automatically
