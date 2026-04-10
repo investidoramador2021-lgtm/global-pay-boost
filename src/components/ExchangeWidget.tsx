@@ -732,10 +732,14 @@ const ExchangeWidget = () => {
     let cancelled = false;
 
     const loadPaymentMethods = async () => {
-      // For sell, prefer withdrawal-enabled methods but fall back to all methods if none found
-      const directionFilter = (pm: GuardarianPaymentMethod) =>
-        gTradeDirection === "sell" ? (pm.withdrawal_enabled || pm.deposit_enabled) : pm.deposit_enabled;
-      const fallbackMethods = collectGuardarianPaymentMethods(fiatCurrency).filter(directionFilter);
+      // For sell, strictly use withdrawal-enabled methods only
+      const withdrawalFilter = (pm: GuardarianPaymentMethod) => pm.withdrawal_enabled;
+      const depositFilter = (pm: GuardarianPaymentMethod) => pm.deposit_enabled;
+      const directionFilter = gTradeDirection === "sell" ? withdrawalFilter : depositFilter;
+      const allMethods = collectGuardarianPaymentMethods(fiatCurrency);
+      const filteredMethods = allMethods.filter(directionFilter);
+      // For sell: if no withdrawal methods exist, show all methods but mark them — estimate will be sent without payment_method
+      const fallbackMethods = filteredMethods.length > 0 ? filteredMethods : (gTradeDirection === "sell" ? allMethods : []);
 
       try {
         const liveMethods = await getGuardarianPaymentMethods(fiatCurrency.ticker, fiatCurrency.currency_type);
@@ -841,7 +845,13 @@ const ExchangeWidget = () => {
       };
       if (fromNetwork) estimateParams.from_network = fromNetwork;
       if (toNetwork) estimateParams.to_network = toNetwork;
-      if (gSelectedPaymentMethod) estimateParams.payment_method = gSelectedPaymentMethod;
+      // For sell: only send payment_method if it's a withdrawal-enabled method
+      // Sending a deposit-only method (like VISA_MC7) causes "Estimate unavailable"
+      if (gSelectedPaymentMethod) {
+        const selectedPm = gPaymentMethods.find(pm => pm.type === gSelectedPaymentMethod);
+        const shouldSendMethod = gTradeDirection === "buy" || (selectedPm?.withdrawal_enabled);
+        if (shouldSendMethod) estimateParams.payment_method = gSelectedPaymentMethod;
+      }
 
       const minMaxParams: Parameters<typeof getGuardarianMinMax>[0] = {
         from_currency: gFromCurrency.ticker,
