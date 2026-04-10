@@ -786,14 +786,15 @@ const ExchangeWidget = () => {
     if (!gFromCurrency || gFromCurrency.currency_type !== "CRYPTO") {
       setGFromCurrency(guardarianCrypto.find((c) => c.ticker === "BTC") || guardarianCrypto[0] || null);
     }
-    if (!gToCurrency || !isSellEligibleFiat(gToCurrency)) {
+    if (!gToCurrency || gToCurrency.currency_type !== "FIAT") {
       setGToCurrency(
-        guardarianFiat.find((c) => c.ticker === "EUR" && isSellEligibleFiat(c))
-          || guardarianFiat.find((c) => isSellEligibleFiat(c))
+        guardarianFiat.find((c) => c.ticker === "EUR")
+          || guardarianFiat.find((c) => c.ticker === "USD")
+          || guardarianFiat[0]
           || null
       );
     }
-  }, [widgetMode, gTradeDirection, gFromCurrency, gToCurrency, guardarianCrypto, guardarianFiat, isSellEligibleFiat]);
+  }, [widgetMode, gTradeDirection, gFromCurrency, gToCurrency, guardarianCrypto, guardarianFiat]);
 
   // Deep-link: ?tab=buy&crypto=SOL&fiat=USD activates Buy/Sell tab automatically
   useEffect(() => {
