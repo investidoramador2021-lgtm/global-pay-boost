@@ -678,6 +678,23 @@ const ExchangeWidget = () => {
     loadGuardarianCurrencies();
   }, [widgetMode, guardarianLoaded, loadGuardarianCurrencies]);
 
+  // Fetch payment methods when fiat currency changes
+  useEffect(() => {
+    if (widgetMode !== "buysell" || !gFromCurrency) return;
+    const fiatTicker = gTradeDirection === "buy" ? gFromCurrency.ticker : gToCurrency?.ticker;
+    if (!fiatTicker) return;
+    setGPaymentMethods([]);
+    setGSelectedPaymentMethod("");
+    getGuardarianPaymentMethods(fiatTicker, "FIAT")
+      .then((methods) => {
+        const available = Array.isArray(methods) ? methods : [];
+        setGPaymentMethods(available);
+        // Auto-select first available method
+        if (available.length > 0) setGSelectedPaymentMethod(available[0].type || "");
+      })
+      .catch(() => setGPaymentMethods([]));
+  }, [widgetMode, gFromCurrency?.ticker, gToCurrency?.ticker, gTradeDirection]);
+
   // Deep-link: ?tab=buy&crypto=SOL&fiat=USD activates Buy/Sell tab automatically
   useEffect(() => {
     const params = new URLSearchParams(window.location.search);
