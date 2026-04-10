@@ -981,7 +981,8 @@ const ExchangeWidget = () => {
       return;
     }
 
-    if (!gPayoutAddress.trim()) {
+    // Buy mode requires wallet address; sell mode collects payout at checkout
+    if (gTradeDirection === "buy" && !gPayoutAddress.trim()) {
       toast({ title: "Wallet required", description: `Enter your ${gToCurrency.ticker} wallet address to continue.`, variant: "destructive" });
       return;
     }
