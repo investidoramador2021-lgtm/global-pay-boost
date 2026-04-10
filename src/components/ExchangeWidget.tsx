@@ -714,6 +714,33 @@ const ExchangeWidget = () => {
     return methods[0]?.type || "";
   }, []);
 
+  const resolveGuardarianPaymentMethod = useCallback((
+    ticker: string | undefined,
+    methods: GuardarianPaymentMethod[],
+    selectedMethod: string,
+    direction: FiatFlow,
+  ) => {
+    const eligibleMethods = methods.filter((pm) => direction === "sell" ? pm.withdrawal_enabled : pm.deposit_enabled);
+
+    if (!eligibleMethods.length) {
+      if (direction === "sell") return "";
+      if (selectedMethod && methods.some((pm) => pm.type === selectedMethod)) return selectedMethod;
+      return pickPreferredGuardarianMethod(ticker, methods, direction);
+    }
+
+    const preferredMethod = pickPreferredGuardarianMethod(ticker, eligibleMethods, direction);
+
+    if (direction === "sell" && ticker?.toUpperCase() === "EUR" && preferredMethod) {
+      return preferredMethod;
+    }
+
+    if (selectedMethod && eligibleMethods.some((pm) => pm.type === selectedMethod)) {
+      return selectedMethod;
+    }
+
+    return preferredMethod || eligibleMethods[0]?.type || "";
+  }, [pickPreferredGuardarianMethod]);
+
   // Allow all fiat currencies for sell — the estimate API will validate corridor availability
   const isSellEligibleFiat = useCallback((_currency: GuardarianCurrency | null) => {
     if (!_currency || _currency.currency_type !== "FIAT") return false;
@@ -763,8 +790,7 @@ const ExchangeWidget = () => {
 
         setGPaymentMethods(finalMethods);
         setGSelectedPaymentMethod((current) => {
-          if (current && finalMethods.some((pm) => pm.type === current)) return current;
-          return pickPreferredGuardarianMethod(fiatCurrency.ticker, finalMethods, gTradeDirection);
+          return resolveGuardarianPaymentMethod(fiatCurrency.ticker, finalMethods, current, gTradeDirection);
         });
       } catch {
         if (cancelled) return;
@@ -777,13 +803,13 @@ const ExchangeWidget = () => {
             ]
           : [];
         setGPaymentMethods(finalMethods);
-        setGSelectedPaymentMethod(pickPreferredGuardarianMethod(fiatCurrency.ticker, finalMethods, gTradeDirection));
+        setGSelectedPaymentMethod(resolveGuardarianPaymentMethod(fiatCurrency.ticker, finalMethods, "", gTradeDirection));
       }
     };
 
     loadPaymentMethods();
     return () => { cancelled = true; };
-  }, [widgetMode, gFromCurrency, gToCurrency, gTradeDirection, collectGuardarianPaymentMethods, pickPreferredGuardarianMethod]);
+  }, [widgetMode, gFromCurrency, gToCurrency, gTradeDirection, collectGuardarianPaymentMethods, resolveGuardarianPaymentMethod]);
 
   useEffect(() => {
     if (widgetMode !== "buysell" || gTradeDirection !== "sell") return;
@@ -845,13 +871,13 @@ const ExchangeWidget = () => {
       };
       if (fromNetwork) estimateParams.from_network = fromNetwork;
       if (toNetwork) estimateParams.to_network = toNetwork;
-      // For sell: only send payment_method if it's a withdrawal-enabled method
-      // Sending a deposit-only method (like VISA_MC7) causes "Estimate unavailable"
-      if (gSelectedPaymentMethod) {
-        const selectedPm = gPaymentMethods.find(pm => pm.type === gSelectedPaymentMethod);
-        const shouldSendMethod = gTradeDirection === "buy" || (selectedPm?.withdrawal_enabled);
-        if (shouldSendMethod) estimateParams.payment_method = gSelectedPaymentMethod;
-      }
+      const effectivePaymentMethod = resolveGuardarianPaymentMethod(
+        (gTradeDirection === "buy" ? gFromCurrency : gToCurrency)?.ticker,
+        gPaymentMethods,
+        gSelectedPaymentMethod,
+        gTradeDirection,
+      );
+      if (effectivePaymentMethod) estimateParams.payment_method = effectivePaymentMethod;
 
       const minMaxParams: Parameters<typeof getGuardarianMinMax>[0] = {
         from_currency: gFromCurrency.ticker,
@@ -885,7 +911,7 @@ const ExchangeWidget = () => {
     } finally {
       setGEstimating(false);
     }
-  }, [gFromCurrency, gToCurrency, gSendAmount, gTradeDirection, gSelectedPaymentMethod, gPaymentMethods]);
+  }, [gFromCurrency, gToCurrency, gSendAmount, gTradeDirection, gSelectedPaymentMethod, gPaymentMethods, resolveGuardarianPaymentMethod]);
 
   useEffect(() => {
     if (widgetMode !== "buysell") return;
@@ -1151,6 +1177,12 @@ const ExchangeWidget = () => {
       const fromNet = getNetworkParam(gFromCurrency);
       const toNet = getNetworkParam(gToCurrency);
       const emailParam = gPayoutEmail.trim() || undefined;
+      const effectivePaymentMethod = resolveGuardarianPaymentMethod(
+        (gTradeDirection === "buy" ? gFromCurrency : gToCurrency)?.ticker,
+        gPaymentMethods,
+        gSelectedPaymentMethod,
+        gTradeDirection,
+      );
 
       if (gTradeDirection === "sell") {
         result = await createGuardarianTransaction({
@@ -1161,7 +1193,7 @@ const ExchangeWidget = () => {
           ...(toNet ? { to_network: toNet } : {}),
           payout_address: gPayoutAddress.trim() || undefined,
           email: emailParam,
-          ...(gSelectedPaymentMethod ? { payment_method: gSelectedPaymentMethod } : {}),
+          ...(effectivePaymentMethod ? { payment_method: effectivePaymentMethod } : {}),
         });
       } else {
         result = await createGuardarianTransaction({
@@ -1172,7 +1204,7 @@ const ExchangeWidget = () => {
           ...(toNet ? { to_network: toNet } : {}),
           payout_address: gPayoutAddress.trim(),
           email: emailParam,
-          ...(gSelectedPaymentMethod ? { payment_method: gSelectedPaymentMethod } : {}),
+          ...(effectivePaymentMethod ? { payment_method: effectivePaymentMethod } : {}),
         });
       }
 
