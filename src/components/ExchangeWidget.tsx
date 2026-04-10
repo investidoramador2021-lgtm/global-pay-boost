@@ -27,6 +27,7 @@ import {
   type GuardarianEstimate,
   type GuardarianPaymentMethod,
 } from "@/lib/guardarian";
+import { resolvePaymentMethodDisplay, getSmartDefaultMethod } from "@/components/PaymentMethodLogos";
 import { useToast } from "@/hooks/use-toast";
 import { usePushNotifications } from "@/hooks/use-push-notifications";
 
@@ -695,18 +696,14 @@ const ExchangeWidget = () => {
   }, []);
 
   const pickPreferredGuardarianMethod = useCallback((ticker: string | undefined, methods: GuardarianPaymentMethod[]) => {
-    const normalizedTicker = ticker?.toUpperCase();
-    const preferredMap: Record<string, string> = {
-      BRL: "PIX",
-      EUR: "SEPA",
-      GBP: "FASTER_PAYMENTS",
-    };
-    const preferred = preferredMap[normalizedTicker || ""];
-    if (preferred) {
-      const matchedPreferred = methods.find((pm) => pm.type?.toUpperCase() === preferred || pm.payment_method?.toUpperCase() === preferred);
-      if (matchedPreferred) return matchedPreferred.type;
-      if (normalizedTicker === "BRL") return "PIX";
-      if (normalizedTicker === "EUR") return "SEPA";
+    const smartDefault = getSmartDefaultMethod(ticker || "");
+    if (smartDefault) {
+      const match = methods.find((pm) => pm.type?.toUpperCase() === smartDefault || pm.payment_method?.toUpperCase() === smartDefault);
+      if (match) return match.type;
+      // For key markets, inject the method name even if API didn't return it
+      if (ticker?.toUpperCase() === "BRL") return "PIX";
+      if (ticker?.toUpperCase() === "EUR") return "SEPA";
+      if (ticker?.toUpperCase() === "GBP") return "FASTER_PAYMENTS";
     }
     return methods[0]?.type || "";
   }, []);
@@ -742,6 +739,7 @@ const ExchangeWidget = () => {
         const syntheticPreferredMethods = [
           ...(fiatCurrency.ticker === "BRL" ? [{ type: "PIX", payment_category: "BANK_TRANSFER", deposit_enabled: true, withdrawal_enabled: false }] : []),
           ...(fiatCurrency.ticker === "EUR" ? [{ type: "SEPA", payment_category: "BANK_TRANSFER", deposit_enabled: true, withdrawal_enabled: true }] : []),
+          ...(fiatCurrency.ticker === "GBP" ? [{ type: "FASTER_PAYMENTS", payment_category: "BANK_TRANSFER", deposit_enabled: true, withdrawal_enabled: true }] : []),
         ];
         const mergedPreferredMethods = [
           ...syntheticPreferredMethods.filter((pm) => !eligibleMethods.some((existing) => existing.type === pm.type)),
@@ -762,13 +760,16 @@ const ExchangeWidget = () => {
           ? [
               ...(fiatCurrency.ticker === "BRL" && !fallbackMethods.some((pm) => pm.type === "PIX") ? [{ type: "PIX", payment_category: "BANK_TRANSFER", deposit_enabled: true, withdrawal_enabled: false }] : []),
               ...(fiatCurrency.ticker === "EUR" && !fallbackMethods.some((pm) => pm.type === "SEPA") ? [{ type: "SEPA", payment_category: "BANK_TRANSFER", deposit_enabled: true, withdrawal_enabled: true }] : []),
+              ...(fiatCurrency.ticker === "GBP" && !fallbackMethods.some((pm) => pm.type === "FASTER_PAYMENTS") ? [{ type: "FASTER_PAYMENTS", payment_category: "BANK_TRANSFER", deposit_enabled: true, withdrawal_enabled: true }] : []),
               ...fallbackMethods,
             ]
           : (fiatCurrency.ticker === "BRL"
               ? [{ type: "PIX", payment_category: "BANK_TRANSFER", deposit_enabled: true, withdrawal_enabled: false }]
               : fiatCurrency.ticker === "EUR"
                 ? [{ type: "SEPA", payment_category: "BANK_TRANSFER", deposit_enabled: true, withdrawal_enabled: true }]
-                : []);
+                : fiatCurrency.ticker === "GBP"
+                  ? [{ type: "FASTER_PAYMENTS", payment_category: "BANK_TRANSFER", deposit_enabled: true, withdrawal_enabled: true }]
+                  : []);
         setGPaymentMethods(finalMethods);
         setGSelectedPaymentMethod(pickPreferredGuardarianMethod(fiatCurrency.ticker, finalMethods));
       }
@@ -1435,14 +1436,12 @@ const ExchangeWidget = () => {
                     <div className="mb-4 flex rounded-lg border border-border bg-accent p-0.5 gap-0.5">
                       <button
                         onClick={() => {
-                          if (gTradeDirection !== "buy") {
-                            // Swap currencies: sell→buy means from=fiat, to=crypto
-                            const prevFrom = gFromCurrency;
-                            const prevTo = gToCurrency;
-                            setGFromCurrency(prevTo);
-                            setGToCurrency(prevFrom);
-                          }
                           setGTradeDirection("buy");
+                          // Enforce Buy = Fiat → Crypto
+                          const fiat = guardarianFiat.find(c => c.ticker === (gFromCurrency?.currency_type === "FIAT" ? gFromCurrency.ticker : gToCurrency?.ticker)) || guardarianFiat.find(c => c.ticker === "USD") || guardarianFiat[0];
+                          const crypto = guardarianCrypto.find(c => c.ticker === (gToCurrency?.currency_type === "CRYPTO" ? gToCurrency.ticker : gFromCurrency?.ticker)) || guardarianCrypto.find(c => c.ticker === "BTC") || guardarianCrypto[0];
+                          setGFromCurrency(fiat);
+                          setGToCurrency(crypto);
                         }}
                         className={`flex-1 rounded-md px-3 py-1.5 font-display text-xs font-semibold transition-all ${
                           gTradeDirection === "buy" ? "bg-primary text-primary-foreground shadow-sm" : "text-muted-foreground hover:text-foreground"
@@ -1450,14 +1449,15 @@ const ExchangeWidget = () => {
                       >Buy</button>
                       <button
                         onClick={() => {
-                          if (gTradeDirection !== "sell") {
-                            // Swap currencies: buy→sell means from=crypto, to=fiat
-                            const prevFrom = gFromCurrency;
-                            const prevTo = gToCurrency;
-                            setGFromCurrency(prevTo);
-                            setGToCurrency(prevFrom);
-                          }
                           setGTradeDirection("sell");
+                          // Enforce Sell = Crypto → Fiat
+                          const crypto = guardarianCrypto.find(c => c.ticker === (gFromCurrency?.currency_type === "CRYPTO" ? gFromCurrency.ticker : gToCurrency?.ticker)) || guardarianCrypto.find(c => c.ticker === "BTC") || guardarianCrypto[0];
+                          const fiat = guardarianFiat.find(c => c.ticker === (gToCurrency?.currency_type === "FIAT" ? gToCurrency.ticker : gFromCurrency?.ticker))
+                            || guardarianFiat.find(c => c.ticker === "EUR" && isSellEligibleFiat(c))
+                            || guardarianFiat.find(c => isSellEligibleFiat(c))
+                            || guardarianFiat[0];
+                          setGFromCurrency(crypto);
+                          setGToCurrency(fiat);
                         }}
                         className={`flex-1 rounded-md px-3 py-1.5 font-display text-xs font-semibold transition-all ${
                           gTradeDirection === "sell" ? "bg-primary text-primary-foreground shadow-sm" : "text-muted-foreground hover:text-foreground"
@@ -1550,11 +1550,11 @@ const ExchangeWidget = () => {
                     {/* Rate & Fee info bar */}
                     <div className="my-3 flex flex-wrap items-center justify-center gap-2">
                       <span className="flex items-center gap-1 rounded-md border border-trust/20 bg-trust/5 px-2 py-1 font-body text-[10px] font-medium text-trust sm:text-[11px]">
-                        <CheckCircle2 className="h-3 w-3" /> No extra fees
+                        <CheckCircle2 className="h-3 w-3" /> All-in pricing
                       </span>
                       {getGuardarianRateText() && (
                         <span className="font-body text-[10px] text-muted-foreground sm:text-[11px]">
-                          Estimated Rate: {getGuardarianRateText()}
+                          {getGuardarianRateText()}
                         </span>
                       )}
                     </div>
@@ -1694,28 +1694,80 @@ const ExchangeWidget = () => {
                         </div>
 
                         {/* PIX badge when BRL selected */}
-                        {((gTradeDirection === "buy" && gFromCurrency?.ticker === "BRL") || (gTradeDirection === "sell" && gToCurrency?.ticker === "BRL")) && gSelectedPaymentMethod?.toLowerCase() === "pix" && (
-                          <div className="mt-2 flex items-center gap-2 rounded-lg border border-primary/20 bg-primary/5 px-3 py-2">
-                            <span className="font-display text-sm font-bold text-primary">PIX</span>
-                            <span className="font-body text-[11px] text-muted-foreground">Instant Brazilian payment — no fees</span>
-                          </div>
-                        )}
+                        {/* Market-specific payment badge */}
+                        {(() => {
+                          const fiatTicker = gTradeDirection === "buy" ? gFromCurrency?.ticker : gToCurrency?.ticker;
+                          const method = gSelectedPaymentMethod?.toLowerCase();
+                          if (fiatTicker === "BRL" && method === "pix") {
+                            const { Logo } = resolvePaymentMethodDisplay("PIX");
+                            return (
+                              <div className="mt-2 flex items-center gap-2 rounded-lg border border-primary/20 bg-primary/5 px-3 py-2">
+                                <Logo className="h-5 w-auto" />
+                                <span className="font-body text-[11px] text-muted-foreground">Instant Brazilian payment — no fees</span>
+                              </div>
+                            );
+                          }
+                          if (fiatTicker === "EUR" && method === "sepa") {
+                            const { Logo } = resolvePaymentMethodDisplay("SEPA");
+                            return (
+                              <div className="mt-2 flex items-center gap-2 rounded-lg border border-primary/20 bg-primary/5 px-3 py-2">
+                                <Logo className="h-5 w-auto" />
+                                <span className="font-body text-[11px] text-muted-foreground">SEPA bank transfer — EU-wide</span>
+                              </div>
+                            );
+                          }
+                          if (fiatTicker === "GBP" && (method === "faster_payments" || method === "fps")) {
+                            const { Logo } = resolvePaymentMethodDisplay("FPS");
+                            return (
+                              <div className="mt-2 flex items-center gap-2 rounded-lg border border-primary/20 bg-primary/5 px-3 py-2">
+                                <Logo className="h-5 w-auto" />
+                                <span className="font-body text-[11px] text-muted-foreground">Faster Payments — UK instant</span>
+                              </div>
+                            );
+                          }
+                          return null;
+                        })()}
 
                         {/* Fee breakdown — slim */}
                         {gFullEstimate && (
                           <div className="mt-3 space-y-1.5 rounded-xl border border-border bg-accent/40 px-4 py-3">
                             {gFullEstimate.service_fees?.map((fee, i) => (
                               <div key={i} className="flex items-center justify-between font-body text-[11px]">
-                                <span className="text-muted-foreground">Fee ({fee.percentage})</span>
+                                <span className="text-muted-foreground">Provider fee ({fee.percentage})</span>
                                 <span className="font-medium text-foreground">{fee.amount} {fee.currency}</span>
                               </div>
                             ))}
                             {gFullEstimate.network_fee && (
                               <div className="flex items-center justify-between font-body text-[11px]">
-                                <span className="text-muted-foreground">Network</span>
+                                <span className="text-muted-foreground">Network fee</span>
                                 <span className="font-medium text-foreground">{parseFloat(gFullEstimate.network_fee.amount).toFixed(6)} {gFullEstimate.network_fee.currency}</span>
                               </div>
                             )}
+                            {/* Our 0.5% service fee */}
+                            <div className="flex items-center justify-between font-body text-[11px]">
+                              <span className="text-muted-foreground">MRC service fee (0.5%)</span>
+                              <span className="font-medium text-foreground">
+                                {(parseFloat(gSendAmount) * 0.005).toFixed(2)} {gFromCurrency?.ticker}
+                              </span>
+                            </div>
+                            {/* Total fees */}
+                            <div className="flex items-center justify-between border-t border-border pt-1.5 font-body text-[11px] font-semibold">
+                              <span className="text-foreground">Total fees</span>
+                              <span className="text-foreground">
+                                {(() => {
+                                  const providerFees = (gFullEstimate.service_fees || []).reduce((sum, f) => sum + parseFloat(f.amount || "0"), 0);
+                                  const networkFee = parseFloat(gFullEstimate.network_fee?.amount || "0");
+                                  const ourFee = parseFloat(gSendAmount) * 0.005;
+                                  // If fees are in different currencies, show separately
+                                  const feesCurrency = gFullEstimate.service_fees?.[0]?.currency || gFromCurrency?.ticker || "";
+                                  const networkCurrency = gFullEstimate.network_fee?.currency || "";
+                                  if (networkCurrency && networkCurrency !== feesCurrency) {
+                                    return `${(providerFees + ourFee).toFixed(2)} ${feesCurrency} + ${networkFee.toFixed(6)} ${networkCurrency}`;
+                                  }
+                                  return `${(providerFees + networkFee + ourFee).toFixed(4)} ${feesCurrency}`;
+                                })()}
+                              </span>
+                            </div>
                             <div className="flex items-center justify-between border-t border-border pt-1.5 font-body text-[11px]">
                               <span className="text-muted-foreground">Rate</span>
                               <span className="font-medium text-foreground">1 {gFromCurrency?.ticker} ≈ {gFullEstimate.estimated_exchange_rate} {gToCurrency?.ticker}</span>
@@ -1723,7 +1775,7 @@ const ExchangeWidget = () => {
                           </div>
                         )}
 
-                        {/* Dynamic Payment Methods */}
+                        {/* Dynamic Payment Methods — Logo-Driven UI */}
                         {gPaymentMethods.length > 0 && (
                           <div className="mt-3">
                             <label className="mb-1.5 block font-body text-[10px] font-medium uppercase tracking-wider text-muted-foreground">
@@ -1731,19 +1783,21 @@ const ExchangeWidget = () => {
                             </label>
                             <div className="flex flex-wrap gap-1.5">
                               {gPaymentMethods.map((pm) => {
-                                const label = pm.type?.replace(/_/g, " ").replace(/\b\w/g, l => l.toUpperCase()) || pm.payment_category;
+                                const display = resolvePaymentMethodDisplay(pm.type || pm.payment_category || "");
                                 const isSelected = gSelectedPaymentMethod === pm.type;
+                                const LogoComponent = display.Logo;
                                 return (
                                   <button
                                     key={pm.type}
                                     onClick={() => setGSelectedPaymentMethod(pm.type)}
-                                    className={`inline-flex items-center rounded-full border px-2.5 py-1 font-body text-[10px] font-semibold tracking-wide transition-all ${
+                                    className={`inline-flex items-center gap-1.5 rounded-lg border px-3 py-2 font-body text-[11px] font-semibold tracking-wide transition-all ${
                                       isSelected
-                                        ? "border-primary/30 bg-primary/10 text-primary shadow-sm"
+                                        ? "border-primary/40 bg-primary/10 text-primary shadow-sm ring-1 ring-primary/20"
                                         : "border-border bg-background/80 text-muted-foreground hover:border-primary/20 hover:text-foreground"
                                     }`}
                                   >
-                                    {label}
+                                    <LogoComponent className="h-4 w-auto" />
+                                    <span>{display.label}</span>
                                   </button>
                                 );
                               })}
@@ -1779,8 +1833,18 @@ const ExchangeWidget = () => {
                         <div className="mt-2 flex flex-wrap items-center justify-center gap-1.5">
                           {gPaymentMethods.length > 0 ? (
                             gPaymentMethods.slice(0, 5).map((pm) => {
-                              const label = pm.type?.replace(/_/g, " ").replace(/\b\w/g, l => l.toUpperCase()) || pm.payment_category;
-                              return <PaymentMethodChip key={pm.type} label={label} accent={gSelectedPaymentMethod === pm.type} />;
+                              const display = resolvePaymentMethodDisplay(pm.type || "");
+                              const LogoComponent = display.Logo;
+                              return (
+                                <span key={pm.type} className={`inline-flex items-center gap-1 rounded-full border px-2.5 py-1 font-body text-[10px] font-semibold tracking-wide ${
+                                  gSelectedPaymentMethod === pm.type
+                                    ? "border-primary/20 bg-primary/10 text-primary"
+                                    : "border-border bg-background/80 text-muted-foreground"
+                                }`}>
+                                  <LogoComponent className="h-3 w-auto" />
+                                  {display.label}
+                                </span>
+                              );
                             })
                           ) : (
                             <>
