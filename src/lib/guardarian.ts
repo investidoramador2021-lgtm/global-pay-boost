@@ -262,6 +262,7 @@ export async function createGuardarianTransaction(params: {
   deposit_address?: string;
   email?: string;
   payment_method?: string;
+  trade_direction?: "buy" | "sell";
 }) {
   return callGuardarian({ action: 'create-transaction', ...params });
 }
