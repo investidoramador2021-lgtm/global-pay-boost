@@ -885,7 +885,7 @@ const ExchangeWidget = () => {
     } finally {
       setGEstimating(false);
     }
-  }, [gFromCurrency, gToCurrency, gSendAmount, gTradeDirection, gSelectedPaymentMethod]);
+  }, [gFromCurrency, gToCurrency, gSendAmount, gTradeDirection, gSelectedPaymentMethod, gPaymentMethods]);
 
   useEffect(() => {
     if (widgetMode !== "buysell") return;
