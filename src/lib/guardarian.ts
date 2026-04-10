@@ -73,6 +73,11 @@ export interface GuardarianPaymentMethod {
   withdrawal_enabled: boolean;
 }
 
+export interface GuardarianBankDetails {
+  receiver_iban: string;
+  receiver_bic: string;
+}
+
 async function callGuardarian(body: Record<string, unknown>) {
   const { data, error } = await supabase.functions.invoke('guardarian', {
     method: 'POST',
@@ -121,6 +126,7 @@ export async function createGuardarianTransaction(params: {
   from_network?: string;
   to_network?: string;
   payout_address?: string;
+  bank_details?: GuardarianBankDetails;
   deposit_address?: string;
   email?: string;
   payment_method?: string;
