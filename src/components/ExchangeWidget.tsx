@@ -963,6 +963,12 @@ const ExchangeWidget = () => {
       return;
     }
 
+    // Show review overlay instead of redirecting immediately
+    setGShowReview(true);
+  };
+
+  const handleConfirmGuardarianCheckout = async () => {
+    setGShowReview(false);
     setGCreatingTx(true);
 
     try {
@@ -971,8 +977,8 @@ const ExchangeWidget = () => {
 
       const params = new URLSearchParams({
         partner_api_token: token,
-        default_fiat_currency: gFromCurrency.ticker,
-        default_crypto_currency: gToCurrency.ticker,
+        default_fiat_currency: gFromCurrency!.ticker,
+        default_crypto_currency: gToCurrency!.ticker,
         default_fiat_amount: gSendAmount,
         payout_address: gPayoutAddress.trim(),
         theme: "blue",
