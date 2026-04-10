@@ -1,42 +1,89 @@
 import "jsr:@supabase/functions-js/edge-runtime.d.ts";
 
-const corsHeaders = {
-  'Access-Control-Allow-Origin': '*',
-  'Access-Control-Allow-Headers': 'authorization, x-client-info, apikey, content-type, x-supabase-client-platform, x-supabase-client-platform-version, x-supabase-client-runtime, x-supabase-client-runtime-version',
-  'Access-Control-Allow-Methods': 'GET, POST, OPTIONS',
-};
-
 const GUARDARIAN_BASE = 'https://api-payments.guardarian.com/v1';
-
-function badRequest(msg: string) {
-  return new Response(JSON.stringify({ error: msg, fallback: false }), {
-    status: 400,
-    headers: { ...corsHeaders, 'Content-Type': 'application/json' },
-  });
-}
-
-function jsonResponse(data: unknown, status = 200) {
-  return new Response(JSON.stringify(data), {
-    status,
-    headers: { ...corsHeaders, 'Content-Type': 'application/json' },
-  });
-}
-
-function containedError(error: string, fallback = true, extra: Record<string, unknown> = {}) {
-  return jsonResponse({ error, fallback, ...extra }, fallback ? 200 : 400);
-}
-
-let currencyCache: { data: unknown; ts: number } | null = null;
+const SUCCESS_URL = 'https://mrcglobalpay.com/success';
+const CANCEL_URL = 'https://mrcglobalpay.com/?status=cancelled';
+const FAILED_URL = 'https://mrcglobalpay.com/?status=failed';
 const CACHE_TTL = 60_000;
 
+let currencyCache: { data: unknown; ts: number } | null = null;
+
+function getCorsHeaders(origin?: string | null) {
+  const allowOrigin = origin && (
+    origin === 'https://mrcglobalpay.com' ||
+    origin === 'https://global-pay-boost.lovable.app' ||
+    origin.endsWith('.lovable.app')
+  )
+    ? origin
+    : '*';
+
+  return {
+    'Access-Control-Allow-Origin': allowOrigin,
+    'Access-Control-Allow-Headers': 'authorization, x-client-info, apikey, content-type, x-supabase-client-platform, x-supabase-client-platform-version, x-supabase-client-runtime, x-supabase-client-runtime-version',
+    'Access-Control-Allow-Methods': 'GET, POST, OPTIONS',
+  };
+}
+
+function badRequest(msg: string, origin?: string | null) {
+  return new Response(JSON.stringify({ error: msg, fallback: false }), {
+    status: 400,
+    headers: { ...getCorsHeaders(origin), 'Content-Type': 'application/json' },
+  });
+}
+
+function jsonResponse(data: unknown, status = 200, origin?: string | null) {
+  return new Response(JSON.stringify(data), {
+    status,
+    headers: { ...getCorsHeaders(origin), 'Content-Type': 'application/json' },
+  });
+}
+
+function containedError(error: string, fallback = true, extra: Record<string, unknown> = {}, origin?: string | null) {
+  return jsonResponse({ error, fallback, ...extra }, fallback ? 200 : 400, origin);
+}
+
+function normalizePaymentMethodsFromCurrency(currency: any) {
+  const methods: any[] = [];
+  const seen = new Set<string>();
+
+  const addMethod = (pm: any) => {
+    const type = String(pm?.type || pm?.payment_method || '').trim();
+    if (!type || seen.has(type)) return;
+    seen.add(type);
+    methods.push({
+      type,
+      payment_method: pm?.payment_method,
+      payment_category: pm?.payment_category || currency?.currency_type || 'FIAT',
+      deposit_enabled: Boolean(pm?.deposit_enabled),
+      withdrawal_enabled: Boolean(pm?.withdrawal_enabled),
+    });
+  };
+
+  for (const pm of currency?.payment_methods || []) addMethod(pm);
+  for (const network of currency?.networks || []) {
+    for (const pm of network?.payment_methods || []) addMethod(pm);
+  }
+
+  return methods;
+}
+
+async function fetchGuardarianJson(path: string, headers: Record<string, string>) {
+  const resp = await fetch(`${GUARDARIAN_BASE}${path}`, { headers });
+  const text = await resp.text();
+  const data = text ? JSON.parse(text) : null;
+  return { resp, text, data };
+}
+
 Deno.serve(async (req) => {
+  const origin = req.headers.get('origin');
+
   if (req.method === 'OPTIONS') {
-    return new Response(null, { headers: corsHeaders });
+    return new Response(null, { headers: getCorsHeaders(origin) });
   }
 
   const apiKey = Deno.env.get('GUARDARIAN_API_KEY');
   if (!apiKey) {
-    return containedError('Provider is not configured', true, { crypto_currencies: [], fiat_currencies: [] });
+    return containedError('Provider is not configured', true, { crypto_currencies: [], fiat_currencies: [] }, origin);
   }
 
   try {
@@ -48,55 +95,57 @@ Deno.serve(async (req) => {
       'x-api-key': apiKey,
     };
 
+    const forwardedFor = req.headers.get('x-forwarded-for');
+    if (forwardedFor) headers['x-forwarded-for'] = forwardedFor;
+
     switch (action) {
       case 'partner-token':
-        // Removed — never expose API keys to the client
-        return badRequest('This endpoint has been disabled for security reasons');
+        return badRequest('This endpoint has been disabled for security reasons', origin);
+
       case 'currencies': {
         if (currencyCache && Date.now() - currencyCache.ts < CACHE_TTL) {
-          return jsonResponse(currencyCache.data);
+          return jsonResponse(currencyCache.data, 200, origin);
         }
 
-        const resp = await fetch(`${GUARDARIAN_BASE}/currencies`, { headers });
+        const { resp, text, data } = await fetchGuardarianJson('/currencies', headers);
         if (!resp.ok) {
-          const text = await resp.text();
           console.error('Guardarian currencies error:', text);
-          return containedError('Failed to fetch currencies', true, { crypto_currencies: [], fiat_currencies: [] });
+          return containedError('Failed to fetch currencies', true, { crypto_currencies: [], fiat_currencies: [] }, origin);
         }
 
-        const data = await resp.json();
         currencyCache = { data, ts: Date.now() };
-        return jsonResponse(data);
+        return jsonResponse(data, 200, origin);
       }
 
       case 'payment-methods': {
-        const { currency, currency_type } = body;
-        if (!currency) return badRequest('Missing currency');
+        const currency = String(body.currency || '').trim().toUpperCase();
+        const currencyType = String(body.currency_type || 'FIAT').trim().toUpperCase();
+        if (!currency) return badRequest('Missing currency', origin);
 
-        const params = new URLSearchParams();
-        params.set('currency', currency);
-        if (currency_type) params.set('currency_type', currency_type);
-
-        const resp = await fetch(`${GUARDARIAN_BASE}/payment-methods?${params.toString()}`, { headers });
+        const endpoint = currencyType === 'CRYPTO' ? '/currencies/crypto' : '/currencies/fiat';
+        const { resp, text, data } = await fetchGuardarianJson(endpoint, headers);
         if (!resp.ok) {
-          const text = await resp.text();
-          console.error('Guardarian payment-methods error:', text);
-          return containedError('Payment methods unavailable', true, { payment_methods: [] });
+          console.error('Guardarian payment-methods source error:', text);
+          return containedError('Payment methods unavailable', true, { payment_methods: [] }, origin);
         }
 
-        return jsonResponse(await resp.json());
+        const items = Array.isArray(data) ? data : [];
+        const matchedCurrency = items.find((item) => String(item?.ticker || '').toUpperCase() === currency);
+        const paymentMethods = matchedCurrency ? normalizePaymentMethodsFromCurrency(matchedCurrency) : [];
+
+        return jsonResponse({ payment_methods: paymentMethods, fallback: false }, 200, origin);
       }
 
       case 'estimate': {
         const { from_currency, from_network, to_currency, to_network, from_amount, to_amount, payment_method } = body;
-        if (!from_currency || !to_currency) return badRequest('Missing from_currency/to_currency');
-        if (!from_amount && !to_amount) return badRequest('Missing from_amount or to_amount');
+        if (!from_currency || !to_currency) return badRequest('Missing from_currency/to_currency', origin);
+        if (!from_amount && !to_amount) return badRequest('Missing from_amount or to_amount', origin);
 
         const params = new URLSearchParams();
-        params.set('from_currency', from_currency);
-        params.set('to_currency', to_currency);
-        if (from_network) params.set('from_network', from_network);
-        if (to_network) params.set('to_network', to_network);
+        params.set('from_currency', String(from_currency));
+        params.set('to_currency', String(to_currency));
+        if (from_network) params.set('from_network', String(from_network));
+        if (to_network) params.set('to_network', String(to_network));
         if (payment_method) params.set('payment_method', String(payment_method));
         if (from_amount) params.set('from_amount', String(from_amount));
         if (to_amount) {
@@ -104,43 +153,41 @@ Deno.serve(async (req) => {
           params.set('type', 'reverse');
         }
 
-        const resp = await fetch(`${GUARDARIAN_BASE}/estimate?${params.toString()}`, { headers });
+        const { resp, text, data } = await fetchGuardarianJson(`/estimate?${params.toString()}`, headers);
         if (!resp.ok) {
-          const text = await resp.text();
           console.error('Guardarian estimate error:', text);
-          return containedError('Estimate unavailable', true, { value: null });
+          return containedError('Estimate unavailable', true, { value: null }, origin);
         }
 
-        return jsonResponse(await resp.json());
+        return jsonResponse(data, 200, origin);
       }
 
       case 'min-max': {
         const { from_currency, to_currency, from_network, to_network } = body;
-        if (!from_currency || !to_currency) return badRequest('Missing from_currency/to_currency');
+        if (!from_currency || !to_currency) return badRequest('Missing from_currency/to_currency', origin);
 
-        let pair = `${from_currency.toLowerCase()}`;
-        if (from_network && from_network.toLowerCase() !== from_currency.toLowerCase()) {
-          pair += `-${from_network.toLowerCase()}`;
+        let pair = `${String(from_currency).toLowerCase()}`;
+        if (from_network && String(from_network).toLowerCase() !== String(from_currency).toLowerCase()) {
+          pair += `-${String(from_network).toLowerCase()}`;
         }
-        pair += `_${to_currency.toLowerCase()}`;
-        if (to_network && to_network.toLowerCase() !== to_currency.toLowerCase()) {
-          pair += `-${to_network.toLowerCase()}`;
+        pair += `_${String(to_currency).toLowerCase()}`;
+        if (to_network && String(to_network).toLowerCase() !== String(to_currency).toLowerCase()) {
+          pair += `-${String(to_network).toLowerCase()}`;
         }
 
-        const resp = await fetch(`${GUARDARIAN_BASE}/market-info/min-max-range/${pair}`, { headers });
+        const { resp, text, data } = await fetchGuardarianJson(`/market-info/min-max-range/${pair}`, headers);
         if (!resp.ok) {
-          const text = await resp.text();
           console.error('Guardarian min-max error:', text);
-          return containedError('Min/max unavailable', true, { min: 0, max: 999999 });
+          return containedError('Min/max unavailable', true, { min: 0, max: 999999 }, origin);
         }
 
-        return jsonResponse(await resp.json());
+        return jsonResponse(data, 200, origin);
       }
 
       case 'create-transaction': {
-        const { from_amount, from_currency, to_currency, from_network, to_network, payout_address, email, deposit_address, payment_method } = body;
+        const { from_amount, from_currency, to_currency, from_network, to_network, payout_address, email, payment_method } = body;
         if (!from_currency || !to_currency || !payout_address) {
-          return badRequest('Missing required transaction fields');
+          return badRequest('Missing required transaction fields', origin);
         }
 
         const txBody: Record<string, unknown> = {
@@ -151,9 +198,9 @@ Deno.serve(async (req) => {
           skip_choose_payout_address: true,
           skip_choose_payment_category: false,
           redirects: {
-            successful: 'https://mrcglobalpay.com/?status=success',
-            cancelled: 'https://mrcglobalpay.com/?status=cancelled',
-            failed: 'https://mrcglobalpay.com/?status=failed',
+            successful: SUCCESS_URL,
+            cancelled: CANCEL_URL,
+            failed: FAILED_URL,
           },
         };
 
@@ -172,16 +219,17 @@ Deno.serve(async (req) => {
         const data = text ? JSON.parse(text) : null;
         if (!resp.ok) {
           console.error('Guardarian create-transaction error:', text);
-          return containedError(data?.message || 'Transaction creation failed', resp.status >= 500, { details: data });
+          return containedError(data?.message || 'Transaction creation failed', resp.status >= 500, { details: data }, origin);
         }
 
-        return jsonResponse(data);
+        if (data && !data.checkout_url && data.redirect_url) data.checkout_url = data.redirect_url;
+        return jsonResponse(data, 200, origin);
       }
 
       case 'create-sell-transaction': {
         const { from_amount, from_currency, to_currency, from_network, to_network, deposit_address, payout_address, email, payment_method } = body;
         if (!from_currency || !to_currency) {
-          return badRequest('Missing required sell transaction fields');
+          return badRequest('Missing required sell transaction fields', origin);
         }
 
         const txBody: Record<string, unknown> = {
@@ -191,9 +239,9 @@ Deno.serve(async (req) => {
           skip_choose_payout_address: !!payout_address,
           skip_choose_payment_category: false,
           redirects: {
-            successful: 'https://mrcglobalpay.com/?status=success',
-            cancelled: 'https://mrcglobalpay.com/?status=cancelled',
-            failed: 'https://mrcglobalpay.com/?status=failed',
+            successful: SUCCESS_URL,
+            cancelled: CANCEL_URL,
+            failed: FAILED_URL,
           },
         };
 
@@ -204,7 +252,6 @@ Deno.serve(async (req) => {
         if (email) txBody.email = email;
         if (payment_method) txBody.payment_method = payment_method;
 
-        // Use the sell endpoint
         const resp = await fetch(`${GUARDARIAN_BASE}/transaction/sell`, {
           method: 'POST',
           headers: { ...headers, 'Content-Type': 'application/json' },
@@ -215,18 +262,19 @@ Deno.serve(async (req) => {
         const data = text ? JSON.parse(text) : null;
         if (!resp.ok) {
           console.error('Guardarian create-sell-transaction error:', text);
-          return containedError(data?.message || 'Sell transaction creation failed', resp.status >= 500, { details: data });
+          return containedError(data?.message || 'Sell transaction creation failed', resp.status >= 500, { details: data }, origin);
         }
 
-        return jsonResponse(data);
+        if (data && !data.checkout_url && data.redirect_url) data.checkout_url = data.redirect_url;
+        return jsonResponse(data, 200, origin);
       }
 
       default:
-        return badRequest(`Invalid action: ${action}`);
+        return badRequest(`Invalid action: ${action}`, origin);
     }
   } catch (error: unknown) {
     const msg = error instanceof Error ? error.message : 'Unknown error';
     console.error('Guardarian edge function error:', msg);
-    return containedError(msg, true);
+    return containedError(msg, true, {}, origin);
   }
 });
