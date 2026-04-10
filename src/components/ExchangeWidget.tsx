@@ -27,6 +27,40 @@ import { usePushNotifications } from "@/hooks/use-push-notifications";
 
 const POPULAR_TICKERS = ["btc", "eth", "usdt", "usdttrc20", "sol", "xrp", "doge", "bnb", "ltc", "usdc", "trx"];
 
+// Fiat currency → country code for flag images
+const FIAT_TO_COUNTRY: Record<string, string> = {
+  USD: "us", EUR: "eu", GBP: "gb", CAD: "ca", AUD: "au", JPY: "jp", CHF: "ch",
+  NOK: "no", SEK: "se", DKK: "dk", NZD: "nz", BRL: "br", ARS: "ar", MXN: "mx",
+  COP: "co", CLP: "cl", PEN: "pe", AED: "ae", SAR: "sa", QAR: "qa", KWD: "kw",
+  BHD: "bh", OMR: "om", TRY: "tr", ZAR: "za", NGN: "ng", KES: "ke", GHS: "gh",
+  EGP: "eg", MAD: "ma", TND: "tn", INR: "in", PKR: "pk", BDT: "bd", LKR: "lk",
+  IDR: "id", MYR: "my", THB: "th", VND: "vn", PHP: "ph", SGD: "sg", HKD: "hk",
+  TWD: "tw", KRW: "kr", CNY: "cn", ILS: "il", PLN: "pl", CZK: "cz", HUF: "hu",
+  RON: "ro", BGN: "bg", HRK: "hr", RSD: "rs", UAH: "ua", GEL: "ge", KZT: "kz",
+  UZS: "uz", RUB: "ru", ISK: "is", JOD: "jo", BWP: "bw", MUR: "mu", UGX: "ug",
+  TZS: "tz", XOF: "sn", XAF: "cm", DOP: "do", CRC: "cr", GTQ: "gt", BOB: "bo",
+  PYG: "py", UYU: "uy", VES: "ve", JMD: "jm", TTD: "tt", BBD: "bb", BSD: "bs",
+  BZD: "bz", GYD: "gy", SRD: "sr", FJD: "fj", TOP: "to", WST: "ws", PGK: "pg",
+  MVR: "mv", NPR: "np", MMK: "mm", KHR: "kh", LAK: "la", BND: "bn", MNT: "mn",
+  AFN: "af", IRR: "ir", IQD: "iq", SYP: "sy", LBP: "lb", LYD: "ly", SDG: "sd",
+  ETB: "et", AOA: "ao", MZN: "mz", ZMW: "zm", ZWL: "zw", MWK: "mw", RWF: "rw",
+  BIF: "bi", DJF: "dj", ERN: "er", SOS: "so", GMD: "gm", SLL: "sl", GNF: "gn",
+  LRD: "lr", CVE: "cv", STN: "st", KMF: "km", SCR: "sc", MGA: "mg", LSL: "ls",
+  SZL: "sz", NAD: "na", CDF: "cd", XPF: "pf", ALL: "al", MKD: "mk", BAM: "ba",
+  MDL: "md", GIP: "gi", FKP: "fk", SHP: "sh", AWG: "aw", ANG: "an", HTG: "ht",
+  PAB: "pa", NIO: "ni", HNL: "hn", SVC: "sv", CUP: "cu", BMD: "bm", KYD: "ky",
+};
+
+function fiatFlagUrl(ticker: string): string {
+  const code = FIAT_TO_COUNTRY[ticker.toUpperCase()];
+  if (!code) return "";
+  return `https://flagcdn.com/w40/${code}.png`;
+}
+
+function guardarianLogoUrl(c: GuardarianCurrency): string {
+  return c.networks?.[0]?.logo_url || "";
+}
+
 // Display-friendly ticker: strips network suffixes so users see "USDT" not "usdttrc20"
 const DISPLAY_TICKER_MAP: Record<string, string> = {
   usdterc20: "USDT",
@@ -894,6 +928,7 @@ const ExchangeWidget = () => {
             onClick={() => onSelect(c)}
             className="flex w-full items-center gap-3 rounded-lg px-3 py-2.5 text-left transition-colors hover:bg-accent"
           >
+            {guardarianLogoUrl(c) && <img src={guardarianLogoUrl(c)} alt={c.name} className="h-6 w-6 rounded-full object-cover" loading="lazy" />}
             <div>
               <span className="font-display text-sm font-semibold uppercase text-foreground">{c.ticker}</span>
               {c.networks?.[0]?.network && c.networks[0].network !== c.ticker && (
@@ -1051,6 +1086,7 @@ const ExchangeWidget = () => {
                           step="any"
                         />
                         <button onClick={() => setGShowFromPicker(true)} className="flex items-center gap-2 rounded-lg bg-primary/10 px-4 py-2.5 transition-colors hover:bg-primary/20">
+                          {gFromCurrency && fiatFlagUrl(gFromCurrency.ticker) && <img src={fiatFlagUrl(gFromCurrency.ticker)} alt="" className="h-5 w-5 rounded-full object-cover" />}
                           <span className="font-display text-sm font-semibold uppercase text-primary">{gFromCurrency?.ticker || "Select"}</span>
                           <ChevronDown className="h-3.5 w-3.5 text-primary/60" />
                         </button>
@@ -1091,6 +1127,7 @@ const ExchangeWidget = () => {
                                     onClick={() => { setGFromCurrency(c); setGShowFromPicker(false); setGSearchQuery(""); }}
                                     className="flex w-full items-center gap-3 rounded-lg px-3 py-2.5 text-left transition-colors hover:bg-accent"
                                   >
+                                    {fiatFlagUrl(c.ticker) && <img src={fiatFlagUrl(c.ticker)} alt={c.ticker} className="h-6 w-6 rounded-full object-cover" loading="lazy" />}
                                     <span className="font-display text-sm font-semibold uppercase text-foreground">{c.ticker}</span>
                                     <span className="font-body text-xs text-muted-foreground">{c.name}</span>
                                   </button>
@@ -1116,6 +1153,7 @@ const ExchangeWidget = () => {
                           {gEstimating ? <Loader2 className="h-6 w-6 animate-spin text-muted-foreground" /> : `≈ ${gEstimatedAmount || "—"}`}
                         </span>
                         <button onClick={() => setGShowToPicker(true)} className="flex items-center gap-2 rounded-lg bg-trust/10 px-4 py-2.5 transition-colors hover:bg-trust/20">
+                          {gToCurrency && guardarianLogoUrl(gToCurrency) && <img src={guardarianLogoUrl(gToCurrency)} alt="" className="h-5 w-5 rounded-full object-cover" />}
                           <span className="font-display text-sm font-semibold uppercase text-trust">{gToCurrency?.ticker || "Select"}</span>
                           <ChevronDown className="h-3.5 w-3.5 text-trust/60" />
                         </button>
@@ -1142,11 +1180,12 @@ const ExchangeWidget = () => {
                                 const c = guardarianCrypto.find((cur) => cur.ticker === ticker);
                                 if (!c) return null;
                                 return (
-                                  <button
+                                   <button
                                     key={ticker}
                                     onClick={() => { setGToCurrency(c); setGShowToPicker(false); setGSearchQuery(""); }}
                                     className="flex items-center gap-1.5 rounded-lg border border-border bg-accent px-3 py-1.5 font-display text-xs font-semibold uppercase text-foreground transition-colors hover:border-primary/40"
                                   >
+                                    {guardarianLogoUrl(c) && <img src={guardarianLogoUrl(c)} alt="" className="h-4 w-4 rounded-full object-cover" />}
                                     {ticker}
                                   </button>
                                 );
