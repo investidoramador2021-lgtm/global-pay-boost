@@ -760,13 +760,16 @@ const ExchangeWidget = () => {
           ? [
               ...(fiatCurrency.ticker === "BRL" && !fallbackMethods.some((pm) => pm.type === "PIX") ? [{ type: "PIX", payment_category: "BANK_TRANSFER", deposit_enabled: true, withdrawal_enabled: false }] : []),
               ...(fiatCurrency.ticker === "EUR" && !fallbackMethods.some((pm) => pm.type === "SEPA") ? [{ type: "SEPA", payment_category: "BANK_TRANSFER", deposit_enabled: true, withdrawal_enabled: true }] : []),
+              ...(fiatCurrency.ticker === "GBP" && !fallbackMethods.some((pm) => pm.type === "FASTER_PAYMENTS") ? [{ type: "FASTER_PAYMENTS", payment_category: "BANK_TRANSFER", deposit_enabled: true, withdrawal_enabled: true }] : []),
               ...fallbackMethods,
             ]
           : (fiatCurrency.ticker === "BRL"
               ? [{ type: "PIX", payment_category: "BANK_TRANSFER", deposit_enabled: true, withdrawal_enabled: false }]
               : fiatCurrency.ticker === "EUR"
                 ? [{ type: "SEPA", payment_category: "BANK_TRANSFER", deposit_enabled: true, withdrawal_enabled: true }]
-                : []);
+                : fiatCurrency.ticker === "GBP"
+                  ? [{ type: "FASTER_PAYMENTS", payment_category: "BANK_TRANSFER", deposit_enabled: true, withdrawal_enabled: true }]
+                  : []);
         setGPaymentMethods(finalMethods);
         setGSelectedPaymentMethod(pickPreferredGuardarianMethod(fiatCurrency.ticker, finalMethods));
       }
