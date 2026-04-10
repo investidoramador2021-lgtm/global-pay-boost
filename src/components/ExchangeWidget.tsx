@@ -1584,7 +1584,7 @@ const ExchangeWidget = () => {
                     {/* You Pay (Fiat) */}
                     <div className="relative">
                       <label className="mb-1.5 block font-body text-xs font-medium uppercase tracking-wider text-muted-foreground">
-                        {gTradeDirection === "buy" ? "You Pay (Fiat)" : "You Sell (Crypto)"}
+                        You Pay (Fiat)
                       </label>
                       <div className="flex items-center gap-3 rounded-xl border border-border bg-accent p-4">
                         <Input
@@ -1784,53 +1784,17 @@ const ExchangeWidget = () => {
                     {gStep === "form" && (
                       <>
                         {/* Wallet address — compact inline */}
-                        <div className="mt-4">
+                         <div className="mt-4">
                           <label className="mb-1.5 flex items-center gap-1.5 font-body text-xs font-medium uppercase tracking-wider text-muted-foreground">
                             <Wallet className="h-3 w-3" />
-                            {gTradeDirection === "sell"
-                              ? `Your bank / ${gToCurrency?.ticker || "fiat"} payout details`
-                              : `Your ${gToCurrency?.ticker || "crypto"} wallet`}
+                            Your {gToCurrency?.ticker || "crypto"} wallet
                           </label>
-                          {gTradeDirection === "buy" ? (
-                            <DestinationAddressInput
-                              value={gPayoutAddress}
-                              onChange={setGPayoutAddress}
-                              currencyTicker={gToCurrency?.ticker}
-                              expectedNetworkType={gToCurrency ? tickerToAddressType(gToCurrency.ticker?.toLowerCase(), gToCurrency.networks?.[0]?.network?.toLowerCase()) : undefined}
-                            />
-                          ) : (
-                            isSellSepaCorridor ? (
-                              <div className="space-y-3">
-                                <Input
-                                  type="text"
-                                  placeholder="Enter your IBAN (e.g. DE89 3704 0044 0532 0130 00)"
-                                  value={gSepaIban}
-                                  onChange={(e) => setGSepaIban(formatIban(e.target.value))}
-                                  className="min-h-[48px] rounded-xl border-border bg-accent font-mono text-xs placeholder:text-muted-foreground/50"
-                                />
-                                <Input
-                                  type="text"
-                                  placeholder="Enter your BIC / SWIFT (e.g. COBADEFFXXX)"
-                                  value={gSepaBic}
-                                  onChange={(e) => setGSepaBic(normalizeBic(e.target.value))}
-                                  className="min-h-[48px] rounded-xl border-border bg-accent font-mono text-xs uppercase placeholder:text-muted-foreground/50"
-                                  maxLength={11}
-                                />
-                              </div>
-                            ) : (
-                              <Input
-                                type="text"
-                                placeholder={
-                                  gToCurrency?.ticker === "BRL" ? "Enter your PIX Key (CPF, email, or phone)"
-                                  : gToCurrency?.ticker === "GBP" ? "Enter your UK sort code + account number"
-                                  : "Enter your bank / payout details"
-                                }
-                                value={gPayoutAddress}
-                                onChange={(e) => setGPayoutAddress(e.target.value)}
-                                className="min-h-[48px] rounded-xl border-border bg-accent font-mono text-xs placeholder:text-muted-foreground/50"
-                              />
-                            )
-                          )}
+                          <DestinationAddressInput
+                            value={gPayoutAddress}
+                            onChange={setGPayoutAddress}
+                            currencyTicker={gToCurrency?.ticker}
+                            expectedNetworkType={gToCurrency ? tickerToAddressType(gToCurrency.ticker?.toLowerCase(), gToCurrency.networks?.[0]?.network?.toLowerCase()) : undefined}
+                          />
                         </div>
 
                         {/* Contact Email — silent auth */}
