@@ -1320,98 +1320,73 @@ const ExchangeWidget = () => {
 
                     {gStep === "form" && (
                       <>
-                        <div className="mt-4 overflow-hidden rounded-[28px] border border-border bg-card shadow-card">
-                          <div className="border-b border-border bg-accent/40 p-4 sm:flex sm:items-start sm:justify-between sm:gap-4">
-                            <div>
-                              <p className="font-body text-[11px] font-semibold uppercase tracking-[0.22em] text-muted-foreground">Best available route</p>
-                              <h3 className="mt-1 font-display text-lg font-bold text-foreground">Buy in one step, then complete checkout</h3>
-                              <p className="mt-1 font-body text-xs text-muted-foreground">
-                                Payment methods and region-specific checks are shown by the provider only when available for that buyer.
-                              </p>
-                            </div>
-                            <div className="mt-3 flex items-center gap-3 sm:mt-0">
-                              <ProviderMark letter="G" />
-                              <div>
-                                <p className="font-display text-sm font-bold text-foreground">Guardarian</p>
-                                <p className="font-body text-[11px] text-muted-foreground">Live checkout</p>
-                              </div>
-                            </div>
-                          </div>
-
-                          <div className="space-y-4 p-4 sm:p-5">
-                            <div>
-                              <label className="mb-1.5 block font-body text-[11px] font-medium uppercase tracking-wider text-muted-foreground">
-                                Recipient {gToCurrency?.ticker} address
-                              </label>
-                              <Input
-                                type="text"
-                                placeholder={`Enter your ${gToCurrency?.ticker || "crypto"} wallet address`}
-                                value={gPayoutAddress}
-                                onChange={(e) => setGPayoutAddress(e.target.value)}
-                                className="min-h-[52px] rounded-2xl border-border bg-background font-mono text-xs"
-                              />
-                            </div>
-
-                            <div className="rounded-2xl border border-border bg-accent/30 p-4">
-                              <div className="flex flex-col gap-4 sm:flex-row sm:items-start sm:justify-between">
-                                <div>
-                                  <div className="flex flex-wrap items-center gap-2">
-                                    <span className="font-display text-base font-bold text-foreground">Available payment methods</span>
-                                    <span className="inline-flex items-center rounded-full border border-primary/20 bg-primary/10 px-2.5 py-1 font-body text-[10px] font-semibold uppercase tracking-wide text-primary">Auto-selected</span>
-                                  </div>
-                                  <div className="mt-3 flex flex-wrap gap-2">
-                                    <PaymentMethodChip label="Visa" accent />
-                                    <PaymentMethodChip label="Mastercard" accent />
-                                    <PaymentMethodChip label="SEPA" />
-                                    <PaymentMethodChip label="Apple Pay" />
-                                    <PaymentMethodChip label="Google Pay" />
-                                  </div>
-                                </div>
-
-                                <div className="rounded-2xl border border-border bg-background px-4 py-3 sm:min-w-[190px] sm:text-right">
-                                  <p className="font-body text-[11px] uppercase tracking-wide text-muted-foreground">Estimated receive</p>
-                                  <p className="mt-1 font-display text-xl font-bold text-foreground">
-                                    {gEstimating ? "…" : gEstimatedAmount || "—"} {gToCurrency?.ticker}
-                                  </p>
-                                </div>
-                              </div>
-                            </div>
-
-                            {gFullEstimate && (
-                              <div className="rounded-2xl border border-border bg-background p-4 space-y-2">
-                                {gFullEstimate.service_fees?.map((fee, i) => (
-                                  <div key={i} className="flex items-center justify-between gap-3 font-body text-[11px]">
-                                    <span className="text-muted-foreground">Service fee ({fee.percentage})</span>
-                                    <span className="font-medium text-foreground">{fee.amount} {fee.currency}</span>
-                                  </div>
-                                ))}
-                                {gFullEstimate.network_fee && (
-                                  <div className="flex items-center justify-between gap-3 font-body text-[11px]">
-                                    <span className="text-muted-foreground">Network fee</span>
-                                    <span className="font-medium text-foreground">{parseFloat(gFullEstimate.network_fee.amount).toFixed(8)} {gFullEstimate.network_fee.currency}</span>
-                                  </div>
-                                )}
-                                <div className="flex items-center justify-between gap-3 border-t border-border pt-2 font-body text-[11px]">
-                                  <span className="text-muted-foreground">Rate</span>
-                                  <span className="font-medium text-foreground">1 {gFromCurrency?.ticker} ≈ {gFullEstimate.estimated_exchange_rate} {gToCurrency?.ticker}</span>
-                                </div>
-                              </div>
-                            )}
-                          </div>
+                        {/* Wallet address — compact inline */}
+                        <div className="mt-4">
+                          <label className="mb-1.5 flex items-center gap-1.5 font-body text-xs font-medium uppercase tracking-wider text-muted-foreground">
+                            <Wallet className="h-3 w-3" />
+                            Your {gToCurrency?.ticker || "crypto"} wallet
+                          </label>
+                          <Input
+                            type="text"
+                            placeholder={`Paste your ${gToCurrency?.ticker || "crypto"} address`}
+                            value={gPayoutAddress}
+                            onChange={(e) => setGPayoutAddress(e.target.value)}
+                            className="min-h-[48px] rounded-xl border-border bg-accent font-mono text-xs placeholder:text-muted-foreground/50"
+                          />
                         </div>
 
+                        {/* Fee breakdown — slim */}
+                        {gFullEstimate && (
+                          <div className="mt-3 space-y-1.5 rounded-xl border border-border bg-accent/40 px-4 py-3">
+                            {gFullEstimate.service_fees?.map((fee, i) => (
+                              <div key={i} className="flex items-center justify-between font-body text-[11px]">
+                                <span className="text-muted-foreground">Fee ({fee.percentage})</span>
+                                <span className="font-medium text-foreground">{fee.amount} {fee.currency}</span>
+                              </div>
+                            ))}
+                            {gFullEstimate.network_fee && (
+                              <div className="flex items-center justify-between font-body text-[11px]">
+                                <span className="text-muted-foreground">Network</span>
+                                <span className="font-medium text-foreground">{parseFloat(gFullEstimate.network_fee.amount).toFixed(6)} {gFullEstimate.network_fee.currency}</span>
+                              </div>
+                            )}
+                            <div className="flex items-center justify-between border-t border-border pt-1.5 font-body text-[11px]">
+                              <span className="text-muted-foreground">Rate</span>
+                              <span className="font-medium text-foreground">1 {gFromCurrency?.ticker} ≈ {gFullEstimate.estimated_exchange_rate} {gToCurrency?.ticker}</span>
+                            </div>
+                          </div>
+                        )}
+
+                        {/* CTA */}
                         <Button
-                          className="mt-5 w-full min-h-[52px] bg-primary text-primary-foreground hover:bg-primary/90 hover:shadow-neon shadow-card text-base font-bold transition-shadow duration-300"
+                          className="mt-5 w-full min-h-[52px] rounded-xl text-base font-bold tracking-wide transition-all duration-300 hover:shadow-neon shadow-card"
                           size="lg"
+                          style={{
+                            background: "linear-gradient(135deg, hsl(var(--primary)) 0%, hsl(var(--trust)) 100%)",
+                            color: "hsl(var(--primary-foreground))",
+                          }}
                           disabled={gCreatingTx || !gEstimatedAmount || gEstimatedAmount === "—" || (parseFloat(gSendAmount) < gMinAmount) || (parseFloat(gSendAmount) > gMaxAmount)}
                           onClick={handleStartGuardarianCheckout}
                         >
-                          {gCreatingTx ? <><Loader2 className="mr-2 h-4 w-4 animate-spin" />Opening secure checkout...</> : `Buy ${gToCurrency?.ticker || "Crypto"} now`}
+                          {gCreatingTx ? (
+                            <><Loader2 className="mr-2 h-4 w-4 animate-spin" />Opening checkout…</>
+                          ) : (
+                            <><CreditCard className="mr-2 h-4 w-4" />Buy {gToCurrency?.ticker || "Crypto"}</>
+                          )}
                         </Button>
-                        <p className="mt-1.5 flex items-center justify-center gap-1.5 font-body text-[11px] text-muted-foreground">
-                          <Shield className="h-3 w-3 text-primary" />
-                          Reduced to one on-page step before checkout
-                        </p>
+
+                        {/* Trust signals — compact row */}
+                        <div className="mt-3 flex flex-wrap items-center justify-center gap-x-4 gap-y-1">
+                          <span className="flex items-center gap-1 font-body text-[10px] text-muted-foreground"><Shield className="h-3 w-3 text-primary" /> Regulated provider</span>
+                          <span className="flex items-center gap-1 font-body text-[10px] text-muted-foreground"><Lock className="h-3 w-3 text-primary" /> Secure checkout</span>
+                        </div>
+                        <div className="mt-2 flex flex-wrap items-center justify-center gap-1.5">
+                          <PaymentMethodChip label="Visa" accent />
+                          <PaymentMethodChip label="Mastercard" accent />
+                          <PaymentMethodChip label="SEPA" />
+                          <PaymentMethodChip label="Apple Pay" />
+                          <PaymentMethodChip label="Google Pay" />
+                        </div>
                       </>
                     )}
 
