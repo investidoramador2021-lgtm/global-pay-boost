@@ -1457,13 +1457,17 @@ const ExchangeWidget = () => {
                           {gEstimating ? <Loader2 className="h-6 w-6 animate-spin text-muted-foreground" /> : `≈ ${gEstimatedAmount || "—"}`}
                         </span>
                         <button onClick={() => setGShowToPicker(true)} className="flex items-center gap-2 rounded-lg bg-trust/10 px-4 py-2.5 transition-colors hover:bg-trust/20">
-                          {gToCurrency && <GuardarianAssetIcon currency={gToCurrency} />}
+                          {gToCurrency && (
+                            gTradeDirection === "sell" && fiatFlagUrl(gToCurrency.ticker)
+                              ? <img src={fiatFlagUrl(gToCurrency.ticker)} alt="" className="h-5 w-5 rounded-full object-cover" />
+                              : gTradeDirection === "buy" && <GuardarianAssetIcon currency={gToCurrency} />
+                          )}
                           <span className="font-display text-sm font-semibold uppercase text-trust">{gToCurrency?.ticker || "Select"}</span>
                           <ChevronDown className="h-3.5 w-3.5 text-trust/60" />
                         </button>
                       </div>
 
-                      {/* Crypto Currency Picker */}
+                      {/* To Currency Picker — shows crypto for buy, fiat for sell */}
                       {gShowToPicker && (
                         <div className="fixed inset-0 z-50 flex items-center justify-center bg-foreground/40 p-4" onClick={() => setGShowToPicker(false)}>
                           <div className="w-full max-w-md rounded-2xl border border-border bg-card shadow-elevated" onClick={(e) => e.stopPropagation()}>
@@ -1471,38 +1475,58 @@ const ExchangeWidget = () => {
                               <Search className="h-4 w-4 text-muted-foreground" />
                               <input
                                 autoFocus
-                                placeholder="Search crypto..."
+                                placeholder={gTradeDirection === "buy" ? "Search crypto..." : "Search fiat currency..."}
                                 className="flex-1 bg-transparent font-body text-sm text-foreground outline-none placeholder:text-muted-foreground"
                                 value={gSearchQuery}
                                 onChange={(e) => setGSearchQuery(e.target.value)}
                               />
                               <button onClick={() => { setGShowToPicker(false); setGSearchQuery(""); }} className="font-body text-xs text-muted-foreground hover:text-foreground">Cancel</button>
                             </div>
-                            {/* Quick Select */}
-                            <div className="flex gap-2 border-b border-border px-4 pb-3">
-                              {["BTC", "ETH", "SOL", "USDT"].map((ticker) => {
-                                const c = guardarianCrypto.find((cur) => cur.ticker === ticker);
-                                if (!c) return null;
-                                return (
-                                   <button
-                                    key={ticker}
-                                    onClick={() => { setGToCurrency(c); setGShowToPicker(false); setGSearchQuery(""); }}
-                                    className="flex items-center gap-1.5 rounded-lg border border-border bg-accent px-3 py-1.5 font-display text-xs font-semibold uppercase text-foreground transition-colors hover:border-primary/40"
-                                  >
-                                    <GuardarianAssetIcon currency={c} small />
-                                    {ticker}
-                                  </button>
-                                );
-                              })}
-                            </div>
-                            <GuardarianCryptoList
-                              items={guardarianCrypto.filter((c) => {
-                                if (!gSearchQuery) return true;
-                                const q = gSearchQuery.toLowerCase();
-                                return c.ticker.toLowerCase().includes(q) || c.name.toLowerCase().includes(q) || c.networks?.some((n) => n.network.toLowerCase().includes(q) || n.name.toLowerCase().includes(q));
-                              })}
-                              onSelect={(c) => { setGToCurrency(c); setGShowToPicker(false); setGSearchQuery(""); }}
-                            />
+                            {gTradeDirection === "buy" ? (
+                              <>
+                                {/* Quick Select */}
+                                <div className="flex gap-2 border-b border-border px-4 pb-3">
+                                  {["BTC", "ETH", "SOL", "USDT"].map((ticker) => {
+                                    const c = guardarianCrypto.find((cur) => cur.ticker === ticker);
+                                    if (!c) return null;
+                                    return (
+                                      <button
+                                        key={ticker}
+                                        onClick={() => { setGToCurrency(c); setGShowToPicker(false); setGSearchQuery(""); }}
+                                        className="flex items-center gap-1.5 rounded-lg border border-border bg-accent px-3 py-1.5 font-display text-xs font-semibold uppercase text-foreground transition-colors hover:border-primary/40"
+                                      >
+                                        <GuardarianAssetIcon currency={c} small />
+                                        {ticker}
+                                      </button>
+                                    );
+                                  })}
+                                </div>
+                                <GuardarianCryptoList
+                                  items={guardarianCrypto.filter((c) => {
+                                    if (!gSearchQuery) return true;
+                                    const q = gSearchQuery.toLowerCase();
+                                    return c.ticker.toLowerCase().includes(q) || c.name.toLowerCase().includes(q) || c.networks?.some((n) => n.network.toLowerCase().includes(q) || n.name.toLowerCase().includes(q));
+                                  })}
+                                  onSelect={(c) => { setGToCurrency(c); setGShowToPicker(false); setGSearchQuery(""); }}
+                                />
+                              </>
+                            ) : (
+                              <div className="overflow-y-auto p-2" style={{ maxHeight: 400 }}>
+                                {guardarianFiat
+                                  .filter((c) => !gSearchQuery || c.ticker.toLowerCase().includes(gSearchQuery.toLowerCase()) || c.name.toLowerCase().includes(gSearchQuery.toLowerCase()))
+                                  .map((c) => (
+                                    <button
+                                      key={c.ticker}
+                                      onClick={() => { setGToCurrency(c); setGShowToPicker(false); setGSearchQuery(""); }}
+                                      className="flex w-full items-center gap-3 rounded-lg px-3 py-2.5 text-left transition-colors hover:bg-accent"
+                                    >
+                                      {fiatFlagUrl(c.ticker) && <img src={fiatFlagUrl(c.ticker)} alt={c.ticker} className="h-6 w-6 rounded-full object-cover" loading="lazy" />}
+                                      <span className="font-display text-sm font-semibold uppercase text-foreground">{c.ticker}</span>
+                                      <span className="font-body text-xs text-muted-foreground">{c.name}</span>
+                                    </button>
+                                  ))}
+                              </div>
+                            )}
                           </div>
                         </div>
                       )}
