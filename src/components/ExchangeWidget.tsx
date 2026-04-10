@@ -717,14 +717,11 @@ const ExchangeWidget = () => {
 
   const isSellEligibleFiat = useCallback((currency: GuardarianCurrency | null) => {
     if (!currency || currency.currency_type !== "FIAT") return false;
-    // Be permissive: show all available fiat currencies in the sell picker.
-    // The estimate endpoint will return a fallback/error for unsupported corridors,
-    // which the UI already handles gracefully with "Unavailable" messaging.
     const methods = collectGuardarianPaymentMethods(currency);
-    // If we have method data and at least one supports withdrawal, great.
-    // If we have NO method data at all, still allow — the live API call will verify.
-    if (methods.length === 0) return true;
-    return methods.some((pm) => pm.withdrawal_enabled || pm.deposit_enabled);
+    // Only show currencies that have at least one withdrawal-enabled method.
+    // This prevents showing USD/BRL/TRY etc. that always fail with "Estimate unavailable".
+    if (methods.length === 0) return false;
+    return methods.some((pm) => pm.withdrawal_enabled);
   }, [collectGuardarianPaymentMethods]);
 
   useEffect(() => {
@@ -739,13 +736,13 @@ const ExchangeWidget = () => {
     let cancelled = false;
 
     const loadPaymentMethods = async () => {
-      const fallbackMethods = collectGuardarianPaymentMethods(fiatCurrency)
-        .filter((pm) => gTradeDirection === "sell" ? pm.withdrawal_enabled : pm.deposit_enabled);
+      const directionFilter = (pm: GuardarianPaymentMethod) =>
+        gTradeDirection === "sell" ? pm.withdrawal_enabled : pm.deposit_enabled;
+      const fallbackMethods = collectGuardarianPaymentMethods(fiatCurrency).filter(directionFilter);
 
       try {
         const liveMethods = await getGuardarianPaymentMethods(fiatCurrency.ticker, fiatCurrency.currency_type);
-        const eligibleMethods = (liveMethods.length ? liveMethods : fallbackMethods)
-          .filter((pm) => gTradeDirection === "sell" ? pm.withdrawal_enabled : pm.deposit_enabled);
+        const eligibleMethods = (liveMethods.length ? liveMethods : fallbackMethods).filter(directionFilter);
 
         if (cancelled) return;
 
@@ -1686,7 +1683,12 @@ const ExchangeWidget = () => {
                           ) : (
                             <Input
                               type="text"
-                              placeholder="Payout details will be collected at checkout"
+                              placeholder={
+                                gToCurrency?.ticker === "EUR" ? "Enter your IBAN (e.g. DE89 3704 0044 …)"
+                                : gToCurrency?.ticker === "BRL" ? "Enter your PIX Key (CPF, email, or phone)"
+                                : gToCurrency?.ticker === "GBP" ? "Enter your UK sort code + account number"
+                                : "Enter your bank / payout details"
+                              }
                               value={gPayoutAddress}
                               onChange={(e) => setGPayoutAddress(e.target.value)}
                               className="min-h-[48px] rounded-xl border-border bg-accent font-mono text-xs placeholder:text-muted-foreground/50"
