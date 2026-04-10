@@ -725,7 +725,7 @@ const ExchangeWidget = () => {
   ) => {
     if (direction === "sell") return "";
 
-    const eligibleMethods = methods.filter((pm) => direction === "sell" ? pm.withdrawal_enabled : pm.deposit_enabled);
+    const eligibleMethods = methods.filter((pm) => pm.deposit_enabled);
 
     if (!eligibleMethods.length) {
       if (selectedMethod && methods.some((pm) => pm.type === selectedMethod)) return selectedMethod;
