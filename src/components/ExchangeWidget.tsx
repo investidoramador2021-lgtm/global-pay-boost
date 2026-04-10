@@ -22,7 +22,6 @@ import {
   getGuardarianMinMax,
   getGuardarianPaymentMethods,
   createGuardarianTransaction,
-  createGuardarianSellTransaction,
   type GuardarianCurrency,
   type GuardarianEstimate,
   type GuardarianPaymentMethod,
@@ -715,14 +714,11 @@ const ExchangeWidget = () => {
     return methods[0]?.type || "";
   }, []);
 
-  const isSellEligibleFiat = useCallback((currency: GuardarianCurrency | null) => {
-    if (!currency || currency.currency_type !== "FIAT") return false;
-    const methods = collectGuardarianPaymentMethods(currency);
-    // Only show currencies that have at least one withdrawal-enabled method.
-    // This prevents showing USD/BRL/TRY etc. that always fail with "Estimate unavailable".
-    if (methods.length === 0) return false;
-    return methods.some((pm) => pm.withdrawal_enabled);
-  }, [collectGuardarianPaymentMethods]);
+  // Allow all fiat currencies for sell — the estimate API will validate corridor availability
+  const isSellEligibleFiat = useCallback((_currency: GuardarianCurrency | null) => {
+    if (!_currency || _currency.currency_type !== "FIAT") return false;
+    return true;
+  }, []);
 
   useEffect(() => {
     if (widgetMode !== "buysell") return;
@@ -736,8 +732,9 @@ const ExchangeWidget = () => {
     let cancelled = false;
 
     const loadPaymentMethods = async () => {
+      // For sell, prefer withdrawal-enabled methods but fall back to all methods if none found
       const directionFilter = (pm: GuardarianPaymentMethod) =>
-        gTradeDirection === "sell" ? pm.withdrawal_enabled : pm.deposit_enabled;
+        gTradeDirection === "sell" ? (pm.withdrawal_enabled || pm.deposit_enabled) : pm.deposit_enabled;
       const fallbackMethods = collectGuardarianPaymentMethods(fiatCurrency).filter(directionFilter);
 
       try {
@@ -789,14 +786,15 @@ const ExchangeWidget = () => {
     if (!gFromCurrency || gFromCurrency.currency_type !== "CRYPTO") {
       setGFromCurrency(guardarianCrypto.find((c) => c.ticker === "BTC") || guardarianCrypto[0] || null);
     }
-    if (!gToCurrency || !isSellEligibleFiat(gToCurrency)) {
+    if (!gToCurrency || gToCurrency.currency_type !== "FIAT") {
       setGToCurrency(
-        guardarianFiat.find((c) => c.ticker === "EUR" && isSellEligibleFiat(c))
-          || guardarianFiat.find((c) => isSellEligibleFiat(c))
+        guardarianFiat.find((c) => c.ticker === "EUR")
+          || guardarianFiat.find((c) => c.ticker === "USD")
+          || guardarianFiat[0]
           || null
       );
     }
-  }, [widgetMode, gTradeDirection, gFromCurrency, gToCurrency, guardarianCrypto, guardarianFiat, isSellEligibleFiat]);
+  }, [widgetMode, gTradeDirection, gFromCurrency, gToCurrency, guardarianCrypto, guardarianFiat]);
 
   // Deep-link: ?tab=buy&crypto=SOL&fiat=USD activates Buy/Sell tab automatically
   useEffect(() => {
@@ -1145,13 +1143,13 @@ const ExchangeWidget = () => {
       const emailParam = gPayoutEmail.trim() || undefined;
 
       if (gTradeDirection === "sell") {
-        result = await createGuardarianSellTransaction({
+        result = await createGuardarianTransaction({
           from_amount: parseFloat(gSendAmount),
           from_currency: gFromCurrency!.ticker,
           to_currency: gToCurrency!.ticker,
           ...(fromNet ? { from_network: fromNet } : {}),
           ...(toNet ? { to_network: toNet } : {}),
-          deposit_address: gPayoutAddress.trim() || undefined,
+          payout_address: gPayoutAddress.trim() || undefined,
           email: emailParam,
           ...(gSelectedPaymentMethod ? { payment_method: gSelectedPaymentMethod } : {}),
         });
@@ -1458,8 +1456,8 @@ const ExchangeWidget = () => {
                           // Enforce Sell = Crypto → Fiat
                           const crypto = guardarianCrypto.find(c => c.ticker === (gFromCurrency?.currency_type === "CRYPTO" ? gFromCurrency.ticker : gToCurrency?.ticker)) || guardarianCrypto.find(c => c.ticker === "BTC") || guardarianCrypto[0];
                           const fiat = guardarianFiat.find(c => c.ticker === (gToCurrency?.currency_type === "FIAT" ? gToCurrency.ticker : gFromCurrency?.ticker))
-                            || guardarianFiat.find(c => c.ticker === "EUR" && isSellEligibleFiat(c))
-                            || guardarianFiat.find(c => isSellEligibleFiat(c))
+                            || guardarianFiat.find(c => c.ticker === "EUR")
+                            || guardarianFiat.find(c => c.ticker === "USD")
                             || guardarianFiat[0];
                           setGFromCurrency(crypto);
                           setGToCurrency(fiat);
