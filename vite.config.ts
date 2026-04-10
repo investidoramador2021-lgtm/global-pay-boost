@@ -92,18 +92,16 @@ export default defineConfig(({ mode }) => ({
         ],
       },
       workbox: {
+        navigateFallback: "/index.html",
         navigateFallbackDenylist: [/^\/~oauth/, /^\/\.well-known/],
         runtimeCaching: [
           {
             urlPattern: /^https:\/\/api\.changenow\.io\/.*/i,
-            handler: "NetworkFirst",
-            options: {
-              cacheName: "changenow-api-cache",
-              expiration: {
-                maxEntries: 50,
-                maxAgeSeconds: 60 * 5, // 5 minutes
-              },
-            },
+            handler: "NetworkOnly",
+          },
+          {
+            urlPattern: /^https:\/\/.*\.supabase\.co\/.*/i,
+            handler: "NetworkOnly",
           },
           {
             urlPattern: /\.(?:png|jpg|jpeg|svg|gif|webp|ico)$/i,
@@ -112,7 +110,7 @@ export default defineConfig(({ mode }) => ({
               cacheName: "image-cache",
               expiration: {
                 maxEntries: 100,
-                maxAgeSeconds: 60 * 60 * 24 * 30, // 30 days
+                maxAgeSeconds: 60 * 60 * 24 * 30,
               },
             },
           },
@@ -123,7 +121,7 @@ export default defineConfig(({ mode }) => ({
               cacheName: "static-assets",
               expiration: {
                 maxEntries: 50,
-                maxAgeSeconds: 60 * 60 * 24 * 7, // 7 days
+                maxAgeSeconds: 60 * 60 * 24 * 7,
               },
             },
           },
