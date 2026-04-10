@@ -30,6 +30,7 @@ export default defineConfig(({ mode }) => ({
         orientation: "any",
         scope: "/",
         start_url: "/?utm_source=pwa&utm_medium=install",
+        categories: ["finance", "business"],
         icons: [
           {
             src: "/favicon-192x192.png",
