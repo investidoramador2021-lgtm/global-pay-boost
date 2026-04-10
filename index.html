@@ -51,5 +51,14 @@
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-F7N7W6M492"></script>
     <script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-F7N7W6M492');</script>
     <script type="module" src="/src/main.tsx"></script>
+    <script>
+      if('serviceWorker' in navigator){
+        var isIframe=false;try{isIframe=window.self!==window.top}catch(e){isIframe=true}
+        var isPreview=location.hostname.indexOf('id-preview--')!==-1||location.hostname.indexOf('lovableproject.com')!==-1;
+        if(!isIframe&&!isPreview){
+          window.addEventListener('load',function(){navigator.serviceWorker.register('/pwabuilder-sw.js')});
+        }
+      }
+    </script>
   </body>
 </html>
