@@ -1432,14 +1432,12 @@ const ExchangeWidget = () => {
                     <div className="mb-4 flex rounded-lg border border-border bg-accent p-0.5 gap-0.5">
                       <button
                         onClick={() => {
-                          if (gTradeDirection !== "buy") {
-                            // Swap currencies: sell→buy means from=fiat, to=crypto
-                            const prevFrom = gFromCurrency;
-                            const prevTo = gToCurrency;
-                            setGFromCurrency(prevTo);
-                            setGToCurrency(prevFrom);
-                          }
                           setGTradeDirection("buy");
+                          // Enforce Buy = Fiat → Crypto
+                          const fiat = guardarianFiat.find(c => c.ticker === (gFromCurrency?.currency_type === "FIAT" ? gFromCurrency.ticker : gToCurrency?.ticker)) || guardarianFiat.find(c => c.ticker === "USD") || guardarianFiat[0];
+                          const crypto = guardarianCrypto.find(c => c.ticker === (gToCurrency?.currency_type === "CRYPTO" ? gToCurrency.ticker : gFromCurrency?.ticker)) || guardarianCrypto.find(c => c.ticker === "BTC") || guardarianCrypto[0];
+                          setGFromCurrency(fiat);
+                          setGToCurrency(crypto);
                         }}
                         className={`flex-1 rounded-md px-3 py-1.5 font-display text-xs font-semibold transition-all ${
                           gTradeDirection === "buy" ? "bg-primary text-primary-foreground shadow-sm" : "text-muted-foreground hover:text-foreground"
@@ -1447,14 +1445,15 @@ const ExchangeWidget = () => {
                       >Buy</button>
                       <button
                         onClick={() => {
-                          if (gTradeDirection !== "sell") {
-                            // Swap currencies: buy→sell means from=crypto, to=fiat
-                            const prevFrom = gFromCurrency;
-                            const prevTo = gToCurrency;
-                            setGFromCurrency(prevTo);
-                            setGToCurrency(prevFrom);
-                          }
                           setGTradeDirection("sell");
+                          // Enforce Sell = Crypto → Fiat
+                          const crypto = guardarianCrypto.find(c => c.ticker === (gFromCurrency?.currency_type === "CRYPTO" ? gFromCurrency.ticker : gToCurrency?.ticker)) || guardarianCrypto.find(c => c.ticker === "BTC") || guardarianCrypto[0];
+                          const fiat = guardarianFiat.find(c => c.ticker === (gToCurrency?.currency_type === "FIAT" ? gToCurrency.ticker : gFromCurrency?.ticker))
+                            || guardarianFiat.find(c => c.ticker === "EUR" && isSellEligibleFiat(c))
+                            || guardarianFiat.find(c => isSellEligibleFiat(c))
+                            || guardarianFiat[0];
+                          setGFromCurrency(crypto);
+                          setGToCurrency(fiat);
                         }}
                         className={`flex-1 rounded-md px-3 py-1.5 font-display text-xs font-semibold transition-all ${
                           gTradeDirection === "sell" ? "bg-primary text-primary-foreground shadow-sm" : "text-muted-foreground hover:text-foreground"
