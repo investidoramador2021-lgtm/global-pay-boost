@@ -1,0 +1,1 @@
+COMMENT ON TABLE public.customers IS 'Customer capture records for fiat checkout flows';
