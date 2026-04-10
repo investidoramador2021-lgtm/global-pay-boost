@@ -27,6 +27,7 @@ import {
   type GuardarianEstimate,
   type GuardarianPaymentMethod,
 } from "@/lib/guardarian";
+import { resolvePaymentMethodDisplay, getSmartDefaultMethod } from "@/components/PaymentMethodLogos";
 import { useToast } from "@/hooks/use-toast";
 import { usePushNotifications } from "@/hooks/use-push-notifications";
 
