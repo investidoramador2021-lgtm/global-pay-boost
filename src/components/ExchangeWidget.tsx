@@ -17,6 +17,7 @@ import {
   type TransactionStatus,
 } from "@/lib/changenow";
 import { useToast } from "@/hooks/use-toast";
+import { usePushNotifications } from "@/hooks/use-push-notifications";
 
 const POPULAR_TICKERS = ["btc", "eth", "usdt", "usdttrc20", "sol", "xrp", "doge", "bnb", "ltc", "usdc", "trx"];
 
@@ -128,6 +129,8 @@ const STATUS_LABELS: Record<string, { label: string; color: string; icon: React.
 
 const ExchangeWidget = () => {
   const { toast } = useToast();
+  const { subscribe: subscribePush, supported: pushSupported } = usePushNotifications();
+  const pushSubscribedRef = useRef(false);
   const [currencies, setCurrencies] = useState<Currency[]>([]);
   const [fromCurrency, setFromCurrency] = useState<Currency | null>(null);
   const [toCurrency, setToCurrency] = useState<Currency | null>(null);
@@ -537,11 +540,23 @@ const ExchangeWidget = () => {
   useEffect(() => {
     if (step === "status" && transaction?.id) {
       const poll = async () => {
-        try {
+         try {
           const status = await getTransactionStatus(transaction.id);
           setTxStatus(status);
           if (["finished", "failed", "refunded"].includes(status.status)) {
             if (statusPollRef.current) clearInterval(statusPollRef.current);
+            // Trigger push notification on completion
+            if (status.status === "finished") {
+              supabase.functions.invoke("send-push-notification", {
+                method: "POST",
+                body: {
+                  transaction_id: transaction.id,
+                  title: "Swap Complete ✅",
+                  body: `Your ${status.fromCurrency?.toUpperCase()} → ${status.toCurrency?.toUpperCase()} swap is done! ${status.amountReceive ? status.amountReceive + " " + status.toCurrency?.toUpperCase() + " received." : ""}`,
+                  url: "/",
+                },
+              }).catch(console.error);
+            }
           }
         } catch (err) {
           console.error("Status poll error:", err);
@@ -549,6 +564,13 @@ const ExchangeWidget = () => {
       };
       poll();
       statusPollRef.current = setInterval(poll, 15000);
+
+      // Auto-subscribe to push notifications for this transaction
+      if (pushSupported && !pushSubscribedRef.current) {
+        pushSubscribedRef.current = true;
+        subscribePush(transaction.id).catch(console.error);
+      }
+
       return () => { if (statusPollRef.current) clearInterval(statusPollRef.current); };
     }
   }, [step, transaction?.id]);
