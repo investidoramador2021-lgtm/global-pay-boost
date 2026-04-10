@@ -1322,13 +1322,31 @@ const ExchangeWidget = () => {
                     {/* Buy / Sell toggle */}
                     <div className="mb-4 flex rounded-lg border border-border bg-accent p-0.5 gap-0.5">
                       <button
-                        onClick={() => setGTradeDirection("buy")}
+                        onClick={() => {
+                          if (gTradeDirection !== "buy") {
+                            // Swap currencies: sell→buy means from=fiat, to=crypto
+                            const prevFrom = gFromCurrency;
+                            const prevTo = gToCurrency;
+                            setGFromCurrency(prevTo);
+                            setGToCurrency(prevFrom);
+                          }
+                          setGTradeDirection("buy");
+                        }}
                         className={`flex-1 rounded-md px-3 py-1.5 font-display text-xs font-semibold transition-all ${
                           gTradeDirection === "buy" ? "bg-primary text-primary-foreground shadow-sm" : "text-muted-foreground hover:text-foreground"
                         }`}
                       >Buy</button>
                       <button
-                        onClick={() => setGTradeDirection("sell")}
+                        onClick={() => {
+                          if (gTradeDirection !== "sell") {
+                            // Swap currencies: buy→sell means from=crypto, to=fiat
+                            const prevFrom = gFromCurrency;
+                            const prevTo = gToCurrency;
+                            setGFromCurrency(prevTo);
+                            setGToCurrency(prevFrom);
+                          }
+                          setGTradeDirection("sell");
+                        }}
                         className={`flex-1 rounded-md px-3 py-1.5 font-display text-xs font-semibold transition-all ${
                           gTradeDirection === "sell" ? "bg-primary text-primary-foreground shadow-sm" : "text-muted-foreground hover:text-foreground"
                         }`}
