@@ -1760,21 +1760,63 @@ const ExchangeWidget = () => {
 
                     {gStep === "form" && (
                       <>
-                        {/* Wallet address — compact inline */}
-                         <div className="mt-4">
-                          <label className="mb-1.5 flex items-center gap-1.5 font-body text-xs font-medium uppercase tracking-wider text-muted-foreground">
-                            <Wallet className="h-3 w-3" />
-                            Your {gToCurrency?.ticker || "crypto"} wallet
-                          </label>
-                          <DestinationAddressInput
-                            value={gPayoutAddress}
-                            onChange={setGPayoutAddress}
-                            currencyTicker={gToCurrency?.ticker}
-                            expectedNetworkType={gToCurrency ? tickerToAddressType(gToCurrency.ticker?.toLowerCase(), gToCurrency.networks?.[0]?.network?.toLowerCase()) : undefined}
-                          />
-                        </div>
+                        {/* Wallet address — only for Buy mode */}
+                        {gTradeDirection === "buy" && (
+                          <div className="mt-4">
+                            <label className="mb-1.5 flex items-center gap-1.5 font-body text-xs font-medium uppercase tracking-wider text-muted-foreground">
+                              <Wallet className="h-3 w-3" />
+                              Your {gToCurrency?.ticker || "crypto"} wallet
+                            </label>
+                            <DestinationAddressInput
+                              value={gPayoutAddress}
+                              onChange={setGPayoutAddress}
+                              currencyTicker={gToCurrency?.ticker}
+                              expectedNetworkType={gToCurrency ? tickerToAddressType(gToCurrency.ticker?.toLowerCase(), gToCurrency.networks?.[0]?.network?.toLowerCase()) : undefined}
+                            />
+                          </div>
+                        )}
 
-                        {/* Contact Email — silent auth */}
+                        {/* Dynamic bank detail fields — only for Sell mode */}
+                        {gTradeDirection === "sell" && gPayoutFieldDefs.length > 0 && (
+                          <div className="mt-4 space-y-3">
+                            <label className="mb-1 flex items-center gap-1.5 font-body text-xs font-medium uppercase tracking-wider text-muted-foreground">
+                              <Shield className="h-3 w-3" /> Payout Details ({gToCurrency?.ticker || "Fiat"})
+                            </label>
+                            {gPayoutFieldDefs.map((field) => {
+                              const val = gBankFields[field.key] || "";
+                              const isValid = !val || field.validate(val);
+                              return (
+                                <div key={field.key}>
+                                  <label className="mb-1 block font-body text-[11px] font-medium text-muted-foreground">
+                                    {field.label}
+                                  </label>
+                                  <Input
+                                    type="text"
+                                    inputMode={field.inputMode || "text"}
+                                    placeholder={field.placeholder}
+                                    value={val}
+                                    onChange={(e) => setGBankFields((prev) => ({ ...prev, [field.key]: e.target.value }))}
+                                    maxLength={field.maxLength}
+                                    className={`min-h-[48px] rounded-xl font-body text-sm placeholder:text-muted-foreground/50 ${
+                                      val && !isValid
+                                        ? "border-destructive bg-destructive/5"
+                                        : val && isValid
+                                          ? "border-trust bg-trust/5"
+                                          : "border-border bg-accent"
+                                    }`}
+                                  />
+                                  {val && !isValid && (
+                                    <p className="mt-0.5 font-body text-[10px] text-destructive">
+                                      Invalid format — please check and try again
+                                    </p>
+                                  )}
+                                </div>
+                              );
+                            })}
+                          </div>
+                        )}
+
+                        {/* Contact Email */}
                         <div className="mt-3">
                           <label className="mb-1.5 flex items-center gap-1.5 font-body text-xs font-medium uppercase tracking-wider text-muted-foreground">
                             <Mail className="h-3 w-3" /> Contact Email
@@ -1789,10 +1831,9 @@ const ExchangeWidget = () => {
                           />
                         </div>
 
-                        {/* PIX badge when BRL selected */}
                         {/* Market-specific payment badge */}
                         {(() => {
-                          const fiatTicker = gFromCurrency?.ticker;
+                          const fiatTicker = (gTradeDirection === "buy" ? gFromCurrency : gToCurrency)?.ticker;
                           const method = gSelectedPaymentMethod?.toLowerCase();
                           if (fiatTicker === "BRL" && method === "pix") {
                             const { Logo } = resolvePaymentMethodDisplay("PIX");
@@ -1839,14 +1880,12 @@ const ExchangeWidget = () => {
                                 <span className="font-medium text-foreground">{parseFloat(gFullEstimate.network_fee.amount).toFixed(6)} {gFullEstimate.network_fee.currency}</span>
                               </div>
                             )}
-                            {/* Our 0.5% service fee */}
                             <div className="flex items-center justify-between font-body text-[11px]">
                               <span className="text-muted-foreground">MRC service fee (0.5%)</span>
                               <span className="font-medium text-foreground">
                                 {(parseFloat(gSendAmount) * 0.005).toFixed(2)} {gFromCurrency?.ticker}
                               </span>
                             </div>
-                            {/* Total fees */}
                             <div className="flex items-center justify-between border-t border-border pt-1.5 font-body text-[11px] font-semibold">
                               <span className="text-foreground">Total fees</span>
                               <span className="text-foreground">
@@ -1854,7 +1893,6 @@ const ExchangeWidget = () => {
                                   const providerFees = (gFullEstimate.service_fees || []).reduce((sum, f) => sum + parseFloat(f.amount || "0"), 0);
                                   const networkFee = parseFloat(gFullEstimate.network_fee?.amount || "0");
                                   const ourFee = parseFloat(gSendAmount) * 0.005;
-                                  // If fees are in different currencies, show separately
                                   const feesCurrency = gFullEstimate.service_fees?.[0]?.currency || gFromCurrency?.ticker || "";
                                   const networkCurrency = gFullEstimate.network_fee?.currency || "";
                                   if (networkCurrency && networkCurrency !== feesCurrency) {
@@ -1871,11 +1909,11 @@ const ExchangeWidget = () => {
                           </div>
                         )}
 
-                        {/* Dynamic Payment Methods — Logo-Driven UI */}
+                        {/* Dynamic Payment Methods */}
                         {gPaymentMethods.length > 0 && (
                           <div className="mt-3">
                             <label className="mb-1.5 block font-body text-[10px] font-medium uppercase tracking-wider text-muted-foreground">
-                              Payment Method
+                              {gTradeDirection === "sell" ? "Payout Method" : "Payment Method"}
                             </label>
                             <div className="flex flex-wrap gap-1.5">
                               {gPaymentMethods.map((pm) => {
@@ -1914,12 +1952,14 @@ const ExchangeWidget = () => {
                         >
                           {gCreatingTx ? (
                             <><Loader2 className="mr-2 h-4 w-4 animate-spin" />Opening checkout…</>
+                          ) : gTradeDirection === "sell" ? (
+                            <><Wallet className="mr-2 h-4 w-4" />Sell {gFromCurrency?.ticker || "Crypto"}</>
                           ) : (
                             <><CreditCard className="mr-2 h-4 w-4" />Buy {gToCurrency?.ticker || "Crypto"}</>
                           )}
                         </Button>
 
-                        {/* Trust signals — compact row */}
+                        {/* Trust signals */}
                         <div className="mt-3 flex flex-wrap items-center justify-center gap-x-4 gap-y-1">
                           <span className="flex items-center gap-1 font-body text-[10px] text-muted-foreground"><Shield className="h-3 w-3 text-primary" /> Regulated provider</span>
                           <span className="flex items-center gap-1 font-body text-[10px] text-muted-foreground"><Lock className="h-3 w-3 text-primary" /> Secure checkout</span>
