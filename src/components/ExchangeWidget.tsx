@@ -1572,7 +1572,15 @@ const ExchangeWidget = () => {
                       </label>
                       <div className="flex items-center gap-3 rounded-xl border border-border bg-accent p-4">
                         <span className="flex-1 font-display text-2xl font-bold text-foreground">
-                          {gEstimating ? <Loader2 className="h-6 w-6 animate-spin text-muted-foreground" /> : gEstimateError ? "Unavailable" : `≈ ${gEstimatedAmount || "—"}`}
+                          {gEstimating ? (
+                            <Loader2 className="h-6 w-6 animate-spin text-muted-foreground" />
+                          ) : gEstimateError ? (
+                            "Unavailable"
+                          ) : gEstimatedAmount && parseFloat(gEstimatedAmount) <= 0 ? (
+                            <span className="text-destructive text-base">Minimum amount not met</span>
+                          ) : (
+                            `≈ ${gEstimatedAmount || "—"}`
+                          )}
                         </span>
                         <button onClick={() => setGShowToPicker(true)} className="flex items-center gap-2 rounded-lg bg-trust/10 px-4 py-2.5 transition-colors hover:bg-trust/20">
                           {gToCurrency && (
