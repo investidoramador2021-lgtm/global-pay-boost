@@ -1821,7 +1821,7 @@ const ExchangeWidget = () => {
                             background: "linear-gradient(135deg, hsl(var(--primary)) 0%, hsl(var(--trust)) 100%)",
                             color: "hsl(var(--primary-foreground))",
                           }}
-                          disabled={gCreatingTx || !gEstimatedAmount || gEstimatedAmount === "—" || (parseFloat(gSendAmount) < gMinAmount) || (parseFloat(gSendAmount) > gMaxAmount)}
+                          disabled={gCreatingTx || !gEstimatedAmount || gEstimatedAmount === "—" || (parseFloat(gEstimatedAmount) <= 0) || (parseFloat(gSendAmount) < gMinAmount) || (parseFloat(gSendAmount) > gMaxAmount)}
                           onClick={handleStartGuardarianCheckout}
                         >
                           {gCreatingTx ? (
