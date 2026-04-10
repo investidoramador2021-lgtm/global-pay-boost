@@ -185,51 +185,9 @@ Deno.serve(async (req) => {
       }
 
       case 'create-transaction': {
-        const { from_amount, from_currency, to_currency, from_network, to_network, payout_address, email, payment_method } = body;
-        if (!from_currency || !to_currency || !payout_address) {
-          return badRequest('Missing required transaction fields', origin);
-        }
-
-        const txBody: Record<string, unknown> = {
-          from_amount,
-          from_currency,
-          to_currency,
-          payout_address,
-          skip_choose_payout_address: true,
-          skip_choose_payment_category: false,
-          redirects: {
-            successful: SUCCESS_URL,
-            cancelled: CANCEL_URL,
-            failed: FAILED_URL,
-          },
-        };
-
-        if (from_network) txBody.from_network = from_network;
-        if (to_network) txBody.to_network = to_network;
-        if (email) txBody.email = email;
-        if (payment_method) txBody.payment_method = payment_method;
-
-        const resp = await fetch(`${GUARDARIAN_BASE}/transaction`, {
-          method: 'POST',
-          headers: { ...headers, 'Content-Type': 'application/json' },
-          body: JSON.stringify(txBody),
-        });
-
-        const text = await resp.text();
-        const data = text ? JSON.parse(text) : null;
-        if (!resp.ok) {
-          console.error('Guardarian create-transaction error:', text);
-          return containedError(data?.message || 'Transaction creation failed', resp.status >= 500, { details: data }, origin);
-        }
-
-        if (data && !data.checkout_url && data.redirect_url) data.checkout_url = data.redirect_url;
-        return jsonResponse(data, 200, origin);
-      }
-
-      case 'create-sell-transaction': {
-        const { from_amount, from_currency, to_currency, from_network, to_network, deposit_address, payout_address, email, payment_method } = body;
+        const { from_amount, from_currency, to_currency, from_network, to_network, payout_address, deposit_address, email, payment_method } = body;
         if (!from_currency || !to_currency) {
-          return badRequest('Missing required sell transaction fields', origin);
+          return badRequest('Missing required transaction fields', origin);
         }
 
         const txBody: Record<string, unknown> = {
@@ -252,7 +210,7 @@ Deno.serve(async (req) => {
         if (email) txBody.email = email;
         if (payment_method) txBody.payment_method = payment_method;
 
-        const resp = await fetch(`${GUARDARIAN_BASE}/transaction/sell`, {
+        const resp = await fetch(`${GUARDARIAN_BASE}/transaction`, {
           method: 'POST',
           headers: { ...headers, 'Content-Type': 'application/json' },
           body: JSON.stringify(txBody),
@@ -261,13 +219,16 @@ Deno.serve(async (req) => {
         const text = await resp.text();
         const data = text ? JSON.parse(text) : null;
         if (!resp.ok) {
-          console.error('Guardarian create-sell-transaction error:', text);
-          return containedError(data?.message || 'Sell transaction creation failed', resp.status >= 500, { details: data }, origin);
+          console.error('Guardarian create-transaction error:', text);
+          return containedError(data?.message || 'Transaction creation failed', resp.status >= 500, { details: data }, origin);
         }
 
         if (data && !data.checkout_url && data.redirect_url) data.checkout_url = data.redirect_url;
         return jsonResponse(data, 200, origin);
       }
+
+      // 'create-sell-transaction' is now handled by 'create-transaction' — both use POST /v1/transaction
+      case 'create-sell-transaction':
 
       default:
         return badRequest(`Invalid action: ${action}`, origin);
