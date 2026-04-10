@@ -74,6 +74,22 @@ export default defineConfig(({ mode }) => ({
             label: "MRC GlobalPay — Desktop Dashboard",
           },
         ],
+        shortcuts: [
+          {
+            name: "Swap Crypto",
+            short_name: "Swap",
+            description: "Instantly swap 500+ cryptocurrencies",
+            url: "/swap?utm_source=pwa_shortcut",
+            icons: [{ src: "/favicon-192x192.png", sizes: "192x192", type: "image/png" }],
+          },
+          {
+            name: "View Wallet",
+            short_name: "Wallet",
+            description: "Check your wallet and transaction history",
+            url: "/wallet?utm_source=pwa_shortcut",
+            icons: [{ src: "/favicon-192x192.png", sizes: "192x192", type: "image/png" }],
+          },
+        ],
       },
       workbox: {
         navigateFallbackDenylist: [/^\/~oauth/, /^\/\.well-known/],
