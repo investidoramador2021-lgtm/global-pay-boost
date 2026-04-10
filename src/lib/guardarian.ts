@@ -75,6 +75,11 @@ export async function getGuardarianCurrencies(): Promise<GuardarianCurrenciesRes
   return callGuardarian({ action: 'currencies' });
 }
 
+export async function getGuardarianPartnerToken(): Promise<string> {
+  const data = await callGuardarian({ action: 'partner-token' });
+  return data?.token || '';
+}
+
 export async function getGuardarianEstimate(params: {
   from_currency: string;
   to_currency: string;

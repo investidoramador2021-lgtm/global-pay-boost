@@ -46,6 +46,11 @@ Deno.serve(async (req) => {
     };
 
     switch (action) {
+      case 'partner-token': {
+        // Return the partner API token for use in the calculator widget URL
+        return jsonResponse({ token: apiKey });
+      }
+
       case 'currencies': {
         // Return cached if fresh
         if (currencyCache && Date.now() - currencyCache.ts < CACHE_TTL) {
