@@ -871,7 +871,7 @@ const ExchangeWidget = () => {
         setGEstimatedAmount("");
         setGFullEstimate(null);
         setGEstimateError(gTradeDirection === "sell"
-          ? "This sell route is unavailable for the selected payout currency or method. Try another fiat option shown in the list."
+          ? `Sell to ${gToCurrency.ticker} is not currently supported by our provider. Try EUR (SEPA) for off-ramping.`
           : "Service temporarily unavailable. Please refresh and try again.");
         return;
       }
