@@ -213,7 +213,7 @@ const ExchangeWidget = () => {
   const [gPayoutAddress, setGPayoutAddress] = useState("");
   const [gPayoutEmail, setGPayoutEmail] = useState("");
   const [gCreatingTx, setGCreatingTx] = useState(false);
-  const [gSelectedProvider, setGSelectedProvider] = useState<"guardarian" | "banxa" | "transak">("guardarian");
+  const [gSelectedProvider, setGSelectedProvider] = useState<"guardarian" | "transak">("guardarian");
 
   // Transaction flow state
   const [step, setStep] = useState<Step>("exchange");
