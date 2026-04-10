@@ -1368,7 +1368,11 @@ const ExchangeWidget = () => {
                           step="any"
                         />
                         <button onClick={() => setGShowFromPicker(true)} className="flex items-center gap-2 rounded-lg bg-primary/10 px-4 py-2.5 transition-colors hover:bg-primary/20">
-                          {gFromCurrency && fiatFlagUrl(gFromCurrency.ticker) && <img src={fiatFlagUrl(gFromCurrency.ticker)} alt="" className="h-5 w-5 rounded-full object-cover" />}
+                          {gFromCurrency && (
+                            gTradeDirection === "buy" && fiatFlagUrl(gFromCurrency.ticker)
+                              ? <img src={fiatFlagUrl(gFromCurrency.ticker)} alt="" className="h-5 w-5 rounded-full object-cover" />
+                              : gTradeDirection === "sell" && <GuardarianAssetIcon currency={gFromCurrency} />
+                          )}
                           <span className="font-display text-sm font-semibold uppercase text-primary">{gFromCurrency?.ticker || "Select"}</span>
                           <ChevronDown className="h-3.5 w-3.5 text-primary/60" />
                         </button>
