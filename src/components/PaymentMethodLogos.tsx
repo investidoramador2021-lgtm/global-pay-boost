@@ -4,77 +4,89 @@
  * dark/light mode visibility.
  */
 
+import { forwardRef } from "react";
+
 // ─── SVG Logo Components ────────────────────────────────────────────
-export const VisaLogo = ({ className = "h-5 w-auto" }: { className?: string }) => (
-  <svg className={className} viewBox="0 0 780 500" fill="none" xmlns="http://www.w3.org/2000/svg">
+export const VisaLogo = forwardRef<SVGSVGElement, { className?: string }>(({ className = "h-5 w-auto" }, ref) => (
+  <svg ref={ref} className={className} viewBox="0 0 780 500" fill="none" xmlns="http://www.w3.org/2000/svg">
     <path d="M293.2 348.73l33.36-195.76h53.34l-33.38 195.76H293.2zm246.11-191.54c-10.57-3.97-27.16-8.21-47.89-8.21-52.77 0-89.94 26.59-90.21 64.64-.54 28.12 26.49 43.81 46.73 53.15 20.79 9.54 27.78 15.65 27.68 24.18-.14 13.07-16.58 19.03-31.94 19.03-21.38 0-32.7-2.96-50.28-10.27l-6.88-3.11-7.49 43.87c12.46 5.48 35.56 10.24 59.53 10.49 56.13 0 92.56-26.27 92.97-66.88.21-22.27-14.02-39.24-44.79-53.22-18.64-9.06-30.08-15.12-29.95-24.29 0-8.14 9.66-16.83 30.55-16.83 17.43-.28 30.06 3.53 39.91 7.49l4.78 2.26 7.28-42.3zm137.31-4.22h-41.27c-12.78 0-22.35 3.49-27.95 16.26L501.41 348.73h56.08s9.16-24.14 11.23-29.43h68.52c1.6 6.88 6.5 29.43 6.5 29.43h49.58l-43.28-195.76h-.38zm-65.83 126.4c4.43-11.32 21.33-54.88 21.33-54.88-.31.52 4.39-11.37 7.1-18.73l3.62 16.92s10.25 46.87 12.4 56.69h-44.45zM258.02 152.97L205.72 286.69l-5.58-27.13c-9.71-31.18-39.95-64.98-73.82-81.89l47.83 171.h56.47l84.04-195.76h-56.64v.06z" fill="#1A1F71"/>
     <path d="M146.92 152.96H60.87l-.68 4.01c66.94 16.21 111.21 55.33 129.58 102.38L171.66 169.4c-3.22-12.35-12.57-16.05-24.74-16.44z" fill="#F9A533"/>
   </svg>
-);
+));
+VisaLogo.displayName = "VisaLogo";
 
-export const MastercardLogo = ({ className = "h-5 w-auto" }: { className?: string }) => (
-  <svg className={className} viewBox="0 0 152 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+export const MastercardLogo = forwardRef<SVGSVGElement, { className?: string }>(({ className = "h-5 w-auto" }, ref) => (
+  <svg ref={ref} className={className} viewBox="0 0 152 100" fill="none" xmlns="http://www.w3.org/2000/svg">
     <circle cx="48" cy="50" r="38" fill="#EB001B"/>
     <circle cx="104" cy="50" r="38" fill="#F79E1B"/>
     <path d="M76 21.5C83.93 28.16 89 37.54 89 48s-5.07 19.84-13 26.5C68.07 67.84 63 58.46 63 48s5.07-19.84 13-26.5z" fill="#FF5F00"/>
   </svg>
-);
+));
+MastercardLogo.displayName = "MastercardLogo";
 
-export const SepaLogo = ({ className = "h-5 w-auto" }: { className?: string }) => (
-  <svg className={className} viewBox="0 0 120 40" xmlns="http://www.w3.org/2000/svg">
+export const SepaLogo = forwardRef<SVGSVGElement, { className?: string }>(({ className = "h-5 w-auto" }, ref) => (
+  <svg ref={ref} className={className} viewBox="0 0 120 40" xmlns="http://www.w3.org/2000/svg">
     <rect rx="6" width="120" height="40" fill="#003DA5"/>
     <text x="60" y="26" textAnchor="middle" fill="white" fontFamily="Arial,sans-serif" fontSize="16" fontWeight="bold">SEPA</text>
   </svg>
-);
+));
+SepaLogo.displayName = "SepaLogo";
 
-export const PixLogo = ({ className = "h-5 w-auto" }: { className?: string }) => (
-  <svg className={className} viewBox="0 0 120 40" xmlns="http://www.w3.org/2000/svg">
+export const PixLogo = forwardRef<SVGSVGElement, { className?: string }>(({ className = "h-5 w-auto" }, ref) => (
+  <svg ref={ref} className={className} viewBox="0 0 120 40" xmlns="http://www.w3.org/2000/svg">
     <rect rx="6" width="120" height="40" fill="#32BCAD"/>
     <text x="60" y="26" textAnchor="middle" fill="white" fontFamily="Arial,sans-serif" fontSize="16" fontWeight="bold">PIX</text>
   </svg>
-);
+));
+PixLogo.displayName = "PixLogo";
 
-export const SwiftLogo = ({ className = "h-5 w-auto" }: { className?: string }) => (
-  <svg className={className} viewBox="0 0 120 40" xmlns="http://www.w3.org/2000/svg">
+export const SwiftLogo = forwardRef<SVGSVGElement, { className?: string }>(({ className = "h-5 w-auto" }, ref) => (
+  <svg ref={ref} className={className} viewBox="0 0 120 40" xmlns="http://www.w3.org/2000/svg">
     <rect rx="6" width="120" height="40" fill="#E31937"/>
     <text x="60" y="26" textAnchor="middle" fill="white" fontFamily="Arial,sans-serif" fontSize="14" fontWeight="bold">SWIFT</text>
   </svg>
-);
+));
+SwiftLogo.displayName = "SwiftLogo";
 
-export const FpsLogo = ({ className = "h-5 w-auto" }: { className?: string }) => (
-  <svg className={className} viewBox="0 0 120 40" xmlns="http://www.w3.org/2000/svg">
+export const FpsLogo = forwardRef<SVGSVGElement, { className?: string }>(({ className = "h-5 w-auto" }, ref) => (
+  <svg ref={ref} className={className} viewBox="0 0 120 40" xmlns="http://www.w3.org/2000/svg">
     <rect rx="6" width="120" height="40" fill="#6B2C91"/>
     <text x="60" y="26" textAnchor="middle" fill="white" fontFamily="Arial,sans-serif" fontSize="14" fontWeight="bold">FPS</text>
   </svg>
-);
+));
+FpsLogo.displayName = "FpsLogo";
 
-export const ApplePayLogo = ({ className = "h-5 w-auto" }: { className?: string }) => (
-  <svg className={className} viewBox="0 0 120 40" xmlns="http://www.w3.org/2000/svg">
+export const ApplePayLogo = forwardRef<SVGSVGElement, { className?: string }>(({ className = "h-5 w-auto" }, ref) => (
+  <svg ref={ref} className={className} viewBox="0 0 120 40" xmlns="http://www.w3.org/2000/svg">
     <rect rx="6" width="120" height="40" fill="#000"/>
     <text x="60" y="26" textAnchor="middle" fill="white" fontFamily="Arial,sans-serif" fontSize="13" fontWeight="bold"> Pay</text>
   </svg>
-);
+));
+ApplePayLogo.displayName = "ApplePayLogo";
 
-export const GooglePayLogo = ({ className = "h-5 w-auto" }: { className?: string }) => (
-  <svg className={className} viewBox="0 0 120 40" xmlns="http://www.w3.org/2000/svg">
+export const GooglePayLogo = forwardRef<SVGSVGElement, { className?: string }>(({ className = "h-5 w-auto" }, ref) => (
+  <svg ref={ref} className={className} viewBox="0 0 120 40" xmlns="http://www.w3.org/2000/svg">
     <rect rx="6" width="120" height="40" fill="#4285F4"/>
     <text x="60" y="26" textAnchor="middle" fill="white" fontFamily="Arial,sans-serif" fontSize="13" fontWeight="bold">G Pay</text>
   </svg>
-);
+));
+GooglePayLogo.displayName = "GooglePayLogo";
 
-export const BankTransferIcon = ({ className = "h-5 w-auto" }: { className?: string }) => (
-  <svg className={className} viewBox="0 0 120 40" xmlns="http://www.w3.org/2000/svg">
+export const BankTransferIcon = forwardRef<SVGSVGElement, { className?: string }>(({ className = "h-5 w-auto" }, ref) => (
+  <svg ref={ref} className={className} viewBox="0 0 120 40" xmlns="http://www.w3.org/2000/svg">
     <rect rx="6" width="120" height="40" fill="#6366F1"/>
     <text x="60" y="26" textAnchor="middle" fill="white" fontFamily="Arial,sans-serif" fontSize="11" fontWeight="bold">Bank Transfer</text>
   </svg>
-);
+));
+BankTransferIcon.displayName = "BankTransferIcon";
 
-export const CardIcon = ({ className = "h-5 w-auto" }: { className?: string }) => (
-  <svg className={className} viewBox="0 0 120 40" xmlns="http://www.w3.org/2000/svg">
+export const CardIcon = forwardRef<SVGSVGElement, { className?: string }>(({ className = "h-5 w-auto" }, ref) => (
+  <svg ref={ref} className={className} viewBox="0 0 120 40" xmlns="http://www.w3.org/2000/svg">
     <rect rx="6" width="120" height="40" fill="#475569"/>
     <text x="60" y="26" textAnchor="middle" fill="white" fontFamily="Arial,sans-serif" fontSize="13" fontWeight="bold">Card</text>
   </svg>
-);
+));
+CardIcon.displayName = "CardIcon";
 
 // ─── Payment method type → display label + logo mapping ────────────
 export interface PaymentMethodDisplay {

@@ -1,4 +1,4 @@
-import { useState, useEffect, useCallback, useRef } from "react";
+import { useState, useEffect, useCallback, useRef, forwardRef } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { ArrowDownUp, Loader2, Search, Copy, Check, ArrowLeft, ArrowRight, ArrowLeftRight, Clock, CheckCircle2, AlertCircle, ExternalLink, Wallet, QrCode, XCircle, Info, Mail, RefreshCw, Shield, Lock, ChevronDown, Share2, CreditCard, Repeat } from "lucide-react";
 import DestinationAddressInput, { tickerToAddressType } from "@/components/DestinationAddressInput";
@@ -94,7 +94,7 @@ const PaymentMethodChip = ({ label, accent = false }: { label: string; accent?: 
   </span>
 );
 
-const GuardarianAssetIcon = ({ currency, small = false }: { currency: GuardarianCurrency; small?: boolean }) => {
+const GuardarianAssetIcon = forwardRef<HTMLImageElement | HTMLDivElement, { currency: GuardarianCurrency; small?: boolean }>(({ currency, small = false }, ref) => {
   const logo = guardarianLogoUrl(currency);
   const [failed, setFailed] = useState(!logo);
 
@@ -106,7 +106,7 @@ const GuardarianAssetIcon = ({ currency, small = false }: { currency: Guardarian
 
   if (failed || !logo) {
     return (
-      <div className={`flex ${sizeClass} items-center justify-center rounded-full bg-accent font-display font-bold uppercase text-foreground`}>
+      <div ref={ref as React.Ref<HTMLDivElement>} className={`flex ${sizeClass} items-center justify-center rounded-full bg-accent font-display font-bold uppercase text-foreground`}>
         {currency.ticker.slice(0, 1)}
       </div>
     );
@@ -114,6 +114,7 @@ const GuardarianAssetIcon = ({ currency, small = false }: { currency: Guardarian
 
   return (
     <img
+      ref={ref as React.Ref<HTMLImageElement>}
       src={logo}
       alt={currency.name}
       className={`${sizeClass} rounded-full object-cover`}
@@ -121,7 +122,8 @@ const GuardarianAssetIcon = ({ currency, small = false }: { currency: Guardarian
       onError={() => setFailed(true)}
     />
   );
-};
+});
+GuardarianAssetIcon.displayName = "GuardarianAssetIcon";
 
 // Display-friendly ticker: strips network suffixes so users see "USDT" not "usdttrc20"
 const DISPLAY_TICKER_MAP: Record<string, string> = {
@@ -280,6 +282,7 @@ const ExchangeWidget = () => {
   const [gPaymentMethods, setGPaymentMethods] = useState<GuardarianPaymentMethod[]>([]);
   const [gSelectedPaymentMethod, setGSelectedPaymentMethod] = useState<string>("");
   const [gEstimateError, setGEstimateError] = useState("");
+  const gEstimateRequestIdRef = useRef(0);
 
   // Transaction flow state
   const [step, setStep] = useState<Step>("exchange");
@@ -720,19 +723,16 @@ const ExchangeWidget = () => {
     selectedMethod: string,
     direction: FiatFlow,
   ) => {
+    if (direction === "sell") return "";
+
     const eligibleMethods = methods.filter((pm) => direction === "sell" ? pm.withdrawal_enabled : pm.deposit_enabled);
 
     if (!eligibleMethods.length) {
-      if (direction === "sell") return "";
       if (selectedMethod && methods.some((pm) => pm.type === selectedMethod)) return selectedMethod;
       return pickPreferredGuardarianMethod(ticker, methods, direction);
     }
 
     const preferredMethod = pickPreferredGuardarianMethod(ticker, eligibleMethods, direction);
-
-    if (direction === "sell" && ticker?.toUpperCase() === "EUR" && preferredMethod) {
-      return preferredMethod;
-    }
 
     if (selectedMethod && eligibleMethods.some((pm) => pm.type === selectedMethod)) {
       return selectedMethod;
@@ -852,6 +852,8 @@ const ExchangeWidget = () => {
 
   // Guardarian estimate
   const fetchGuardarianEstimate = useCallback(async () => {
+    const requestId = ++gEstimateRequestIdRef.current;
+
     if (!gFromCurrency || !gToCurrency || !gSendAmount || parseFloat(gSendAmount) <= 0) {
       setGEstimatedAmount("");
       setGFullEstimate(null);
@@ -890,6 +892,9 @@ const ExchangeWidget = () => {
         getGuardarianEstimate(estimateParams),
         getGuardarianMinMax(minMaxParams),
       ]);
+
+      if (requestId !== gEstimateRequestIdRef.current) return;
+
       setGMinAmount(Number(minMax.min) || 0);
       setGMaxAmount(Number(minMax.max) || 999999);
 
@@ -905,11 +910,14 @@ const ExchangeWidget = () => {
       setGEstimatedAmount(est.value || "");
       setGFullEstimate(est);
     } catch {
+      if (requestId !== gEstimateRequestIdRef.current) return;
       setGEstimatedAmount("");
       setGFullEstimate(null);
       setGEstimateError("Service temporarily unavailable. Please refresh and try again.");
     } finally {
-      setGEstimating(false);
+      if (requestId === gEstimateRequestIdRef.current) {
+        setGEstimating(false);
+      }
     }
   }, [gFromCurrency, gToCurrency, gSendAmount, gTradeDirection, gSelectedPaymentMethod, gPaymentMethods, resolveGuardarianPaymentMethod]);
 
