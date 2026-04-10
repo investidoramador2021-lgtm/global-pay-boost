@@ -827,13 +827,8 @@ const ExchangeWidget = () => {
     return () => { cancelled = true; };
   }, [widgetMode, gFromCurrency, gToCurrency, gTradeDirection, collectGuardarianPaymentMethods, resolveGuardarianPaymentMethod]);
 
-  const isSellSepaCorridor = gTradeDirection === "sell" && gToCurrency?.ticker === "EUR";
   const hasValidGuardarianEmail = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(gPayoutEmail.trim());
-  const hasValidGuardarianPayoutDetails = gTradeDirection === "buy"
-    ? Boolean(gPayoutAddress.trim())
-    : isSellSepaCorridor
-      ? isValidIban(gSepaIban) && isValidBic(gSepaBic)
-      : Boolean(gPayoutAddress.trim());
+  const hasValidGuardarianPayoutDetails = Boolean(gPayoutAddress.trim());
   const canStartGuardarianCheckout = !gCreatingTx
     && Boolean(gEstimatedAmount)
     && gEstimatedAmount !== "—"
@@ -843,35 +838,13 @@ const ExchangeWidget = () => {
     && hasValidGuardarianEmail
     && hasValidGuardarianPayoutDetails;
 
-  useEffect(() => {
-    if (!isSellSepaCorridor) {
-      setGSepaIban("");
-      setGSepaBic("");
-    }
-  }, [isSellSepaCorridor]);
-
-  useEffect(() => {
-    if (widgetMode !== "buysell" || gTradeDirection !== "sell") return;
-    if (!gFromCurrency || gFromCurrency.currency_type !== "CRYPTO") {
-      setGFromCurrency(guardarianCrypto.find((c) => c.ticker === "BTC") || guardarianCrypto[0] || null);
-    }
-    if (!gToCurrency || gToCurrency.currency_type !== "FIAT") {
-      setGToCurrency(
-        guardarianFiat.find((c) => c.ticker === "EUR")
-          || guardarianFiat.find((c) => c.ticker === "USD")
-          || guardarianFiat[0]
-          || null
-      );
-    }
-  }, [widgetMode, gTradeDirection, gFromCurrency, gToCurrency, guardarianCrypto, guardarianFiat]);
-
-  // Deep-link: ?tab=buy&crypto=SOL&fiat=USD activates Buy/Sell tab automatically
+  // Deep-link: ?tab=buy&crypto=SOL&fiat=USD activates Buy tab automatically
   useEffect(() => {
     const params = new URLSearchParams(window.location.search);
     const tab = params.get("tab")?.toLowerCase();
-    if (tab === "buy" || tab === "sell" || tab === "buysell") {
+    if (tab === "buy" || tab === "buysell") {
       setWidgetMode("buysell");
-      if (tab === "sell") setGTradeDirection("sell");
+      setGTradeDirection("buy");
     }
   }, []);
 
@@ -1203,27 +1176,9 @@ const ExchangeWidget = () => {
       return;
     }
 
-    // Buy mode requires a wallet; sell mode requires payout details before checkout
-    if (gTradeDirection === "buy" && !gPayoutAddress.trim()) {
+    if (!gPayoutAddress.trim()) {
       toast({ title: "Wallet required", description: `Enter your ${gToCurrency.ticker} wallet address to continue.`, variant: "destructive" });
       return;
-    }
-
-    if (gTradeDirection === "sell") {
-      if (isSellSepaCorridor) {
-        if (!isValidIban(gSepaIban)) {
-          toast({ title: "IBAN required", description: "Enter a valid SEPA IBAN to continue.", variant: "destructive" });
-          return;
-        }
-
-        if (!isValidBic(gSepaBic)) {
-          toast({ title: "BIC required", description: "Enter a valid 8- or 11-character BIC / SWIFT code.", variant: "destructive" });
-          return;
-        }
-      } else if (!gPayoutAddress.trim()) {
-        toast({ title: "Payout details required", description: `Enter your ${gToCurrency.ticker} payout details to continue.`, variant: "destructive" });
-        return;
-      }
     }
 
     if (!gPayoutEmail.trim() || !hasValidGuardarianEmail) {
@@ -1248,65 +1203,35 @@ const ExchangeWidget = () => {
         p_latest_payment_method: gSelectedPaymentMethod || null,
         p_metadata: {
           wallet_address: gPayoutAddress.trim() || undefined,
-          iban: isSellSepaCorridor ? normalizeIban(gSepaIban) : undefined,
           amount: gSendAmount,
           timestamp: new Date().toISOString(),
         },
       });
     } catch (captureErr) {
       console.error("[MRC] Customer capture failed:", captureErr);
-      // Non-blocking — continue to checkout even if capture fails
     }
 
     try {
-      let result: any;
-
       const fromNet = getNetworkParam(gFromCurrency);
       const toNet = getNetworkParam(gToCurrency);
       const emailParam = gPayoutEmail.trim() || undefined;
-      let effectivePaymentMethod = resolveGuardarianPaymentMethod(
-        (gTradeDirection === "buy" ? gFromCurrency : gToCurrency)?.ticker,
+      const effectivePaymentMethod = resolveGuardarianPaymentMethod(
+        gFromCurrency?.ticker,
         gPaymentMethods,
         gSelectedPaymentMethod,
         gTradeDirection,
       );
-      // Hard-map EUR sell to SEPA
-      if (isSellSepaCorridor && !effectivePaymentMethod) {
-        effectivePaymentMethod = "SEPA";
-      }
 
-      if (gTradeDirection === "sell") {
-        result = await createGuardarianTransaction({
-          from_amount: parseFloat(gSendAmount),
-          from_currency: gFromCurrency!.ticker,
-          to_currency: gToCurrency!.ticker,
-          ...(fromNet ? { from_network: fromNet } : {}),
-          ...(toNet ? { to_network: toNet } : {}),
-          ...(isSellSepaCorridor
-            ? {
-                bank_details: {
-                  receiver_iban: normalizeIban(gSepaIban),
-                  receiver_bic: normalizeBic(gSepaBic),
-                },
-              }
-            : {
-                payout_address: gPayoutAddress.trim() || undefined,
-              }),
-          email: emailParam,
-          ...(effectivePaymentMethod ? { payment_method: effectivePaymentMethod } : {}),
-        });
-      } else {
-        result = await createGuardarianTransaction({
-          from_amount: parseFloat(gSendAmount),
-          from_currency: gFromCurrency!.ticker,
-          to_currency: gToCurrency!.ticker,
-          ...(fromNet ? { from_network: fromNet } : {}),
-          ...(toNet ? { to_network: toNet } : {}),
-          payout_address: gPayoutAddress.trim(),
-          email: emailParam,
-          ...(effectivePaymentMethod ? { payment_method: effectivePaymentMethod } : {}),
-        });
-      }
+      const result = await createGuardarianTransaction({
+        from_amount: parseFloat(gSendAmount),
+        from_currency: gFromCurrency!.ticker,
+        to_currency: gToCurrency!.ticker,
+        ...(fromNet ? { from_network: fromNet } : {}),
+        ...(toNet ? { to_network: toNet } : {}),
+        payout_address: gPayoutAddress.trim(),
+        email: emailParam,
+        ...(effectivePaymentMethod ? { payment_method: effectivePaymentMethod } : {}),
+      });
 
       // Use the redirect_url to embed checkout in iframe modal
       const checkoutUrl = result?.checkout_url || result?.redirect_url;
@@ -1547,7 +1472,7 @@ const ExchangeWidget = () => {
                       : "text-muted-foreground hover:text-foreground hover:bg-background"
                   }`}
                 >
-                  <CreditCard className="h-4 w-4" /> Buy / Sell
+                  <CreditCard className="h-4 w-4" /> Buy Crypto
                 </button>
               </div>
               <span className="hidden min-[481px]:flex items-center gap-1.5 rounded-full border border-trust/30 bg-trust/10 px-2.5 py-1 font-body text-[10px] font-semibold uppercase tracking-wider text-trust">
@@ -1579,48 +1504,12 @@ const ExchangeWidget = () => {
                   </div>
                 ) : (
                   <>
-                    {/* Buy / Sell toggle */}
-                    <div className="mb-4 flex rounded-lg border border-border bg-accent p-0.5 gap-0.5">
-                      <button
-                        onClick={() => {
-                          setGTradeDirection("buy");
-                          setGSepaIban("");
-                          setGSepaBic("");
-                          // Enforce Buy = Fiat → Crypto
-                          const fiat = guardarianFiat.find(c => c.ticker === (gFromCurrency?.currency_type === "FIAT" ? gFromCurrency.ticker : gToCurrency?.ticker)) || guardarianFiat.find(c => c.ticker === "USD") || guardarianFiat[0];
-                          const crypto = guardarianCrypto.find(c => c.ticker === (gToCurrency?.currency_type === "CRYPTO" ? gToCurrency.ticker : gFromCurrency?.ticker)) || guardarianCrypto.find(c => c.ticker === "BTC") || guardarianCrypto[0];
-                          setGFromCurrency(fiat);
-                          setGToCurrency(crypto);
-                        }}
-                        className={`flex-1 rounded-md px-3 py-1.5 font-display text-xs font-semibold transition-all ${
-                          gTradeDirection === "buy" ? "bg-primary text-primary-foreground shadow-sm" : "text-muted-foreground hover:text-foreground"
-                        }`}
-                      >Buy</button>
-                      <button
-                        onClick={() => {
-                          setGTradeDirection("sell");
-                          setGPayoutAddress("");
-                          setGSepaIban("");
-                          setGSepaBic("");
-                          // Enforce Sell = Crypto → Fiat
-                          const crypto = guardarianCrypto.find(c => c.ticker === (gFromCurrency?.currency_type === "CRYPTO" ? gFromCurrency.ticker : gToCurrency?.ticker)) || guardarianCrypto.find(c => c.ticker === "BTC") || guardarianCrypto[0];
-                          const fiat = guardarianFiat.find(c => c.ticker === (gToCurrency?.currency_type === "FIAT" ? gToCurrency.ticker : gFromCurrency?.ticker))
-                            || guardarianFiat.find(c => c.ticker === "EUR")
-                            || guardarianFiat.find(c => c.ticker === "USD")
-                            || guardarianFiat[0];
-                          setGFromCurrency(crypto);
-                          setGToCurrency(fiat);
-                        }}
-                        className={`flex-1 rounded-md px-3 py-1.5 font-display text-xs font-semibold transition-all ${
-                          gTradeDirection === "sell" ? "bg-primary text-primary-foreground shadow-sm" : "text-muted-foreground hover:text-foreground"
-                        }`}
-                      >Sell</button>
-                    </div>
+                    {/* Buy mode — no sell toggle */}
 
                     {/* You Pay (Fiat) */}
                     <div className="relative">
                       <label className="mb-1.5 block font-body text-xs font-medium uppercase tracking-wider text-muted-foreground">
-                        {gTradeDirection === "buy" ? "You Pay (Fiat)" : "You Sell (Crypto)"}
+                        You Pay (Fiat)
                       </label>
                       <div className="flex items-center gap-3 rounded-xl border border-border bg-accent p-4">
                         <Input
@@ -1820,53 +1709,17 @@ const ExchangeWidget = () => {
                     {gStep === "form" && (
                       <>
                         {/* Wallet address — compact inline */}
-                        <div className="mt-4">
+                         <div className="mt-4">
                           <label className="mb-1.5 flex items-center gap-1.5 font-body text-xs font-medium uppercase tracking-wider text-muted-foreground">
                             <Wallet className="h-3 w-3" />
-                            {gTradeDirection === "sell"
-                              ? `Your bank / ${gToCurrency?.ticker || "fiat"} payout details`
-                              : `Your ${gToCurrency?.ticker || "crypto"} wallet`}
+                            Your {gToCurrency?.ticker || "crypto"} wallet
                           </label>
-                          {gTradeDirection === "buy" ? (
-                            <DestinationAddressInput
-                              value={gPayoutAddress}
-                              onChange={setGPayoutAddress}
-                              currencyTicker={gToCurrency?.ticker}
-                              expectedNetworkType={gToCurrency ? tickerToAddressType(gToCurrency.ticker?.toLowerCase(), gToCurrency.networks?.[0]?.network?.toLowerCase()) : undefined}
-                            />
-                          ) : (
-                            isSellSepaCorridor ? (
-                              <div className="space-y-3">
-                                <Input
-                                  type="text"
-                                  placeholder="Enter your IBAN (e.g. DE89 3704 0044 0532 0130 00)"
-                                  value={gSepaIban}
-                                  onChange={(e) => setGSepaIban(formatIban(e.target.value))}
-                                  className="min-h-[48px] rounded-xl border-border bg-accent font-mono text-xs placeholder:text-muted-foreground/50"
-                                />
-                                <Input
-                                  type="text"
-                                  placeholder="Enter your BIC / SWIFT (e.g. COBADEFFXXX)"
-                                  value={gSepaBic}
-                                  onChange={(e) => setGSepaBic(normalizeBic(e.target.value))}
-                                  className="min-h-[48px] rounded-xl border-border bg-accent font-mono text-xs uppercase placeholder:text-muted-foreground/50"
-                                  maxLength={11}
-                                />
-                              </div>
-                            ) : (
-                              <Input
-                                type="text"
-                                placeholder={
-                                  gToCurrency?.ticker === "BRL" ? "Enter your PIX Key (CPF, email, or phone)"
-                                  : gToCurrency?.ticker === "GBP" ? "Enter your UK sort code + account number"
-                                  : "Enter your bank / payout details"
-                                }
-                                value={gPayoutAddress}
-                                onChange={(e) => setGPayoutAddress(e.target.value)}
-                                className="min-h-[48px] rounded-xl border-border bg-accent font-mono text-xs placeholder:text-muted-foreground/50"
-                              />
-                            )
-                          )}
+                          <DestinationAddressInput
+                            value={gPayoutAddress}
+                            onChange={setGPayoutAddress}
+                            currencyTicker={gToCurrency?.ticker}
+                            expectedNetworkType={gToCurrency ? tickerToAddressType(gToCurrency.ticker?.toLowerCase(), gToCurrency.networks?.[0]?.network?.toLowerCase()) : undefined}
+                          />
                         </div>
 
                         {/* Contact Email — silent auth */}
@@ -1887,7 +1740,7 @@ const ExchangeWidget = () => {
                         {/* PIX badge when BRL selected */}
                         {/* Market-specific payment badge */}
                         {(() => {
-                          const fiatTicker = gTradeDirection === "buy" ? gFromCurrency?.ticker : gToCurrency?.ticker;
+                          const fiatTicker = gFromCurrency?.ticker;
                           const method = gSelectedPaymentMethod?.toLowerCase();
                           if (fiatTicker === "BRL" && method === "pix") {
                             const { Logo } = resolvePaymentMethodDisplay("PIX");
@@ -2009,8 +1862,6 @@ const ExchangeWidget = () => {
                         >
                           {gCreatingTx ? (
                             <><Loader2 className="mr-2 h-4 w-4 animate-spin" />Opening checkout…</>
-                          ) : gTradeDirection === "sell" ? (
-                            <><CreditCard className="mr-2 h-4 w-4" />Sell {gFromCurrency?.ticker || "Crypto"}</>
                           ) : (
                             <><CreditCard className="mr-2 h-4 w-4" />Buy {gToCurrency?.ticker || "Crypto"}</>
                           )}
@@ -3225,11 +3076,11 @@ const ExchangeWidget = () => {
 
             <div className="mt-5 space-y-3 rounded-xl border border-border bg-accent/50 p-4">
               <div className="flex items-center justify-between font-body text-sm">
-                <span className="text-muted-foreground">{gTradeDirection === "sell" ? "You sell" : "You pay"}</span>
+                <span className="text-muted-foreground">You pay</span>
                 <span className="font-semibold text-foreground">{gSendAmount} {gFromCurrency?.ticker}</span>
               </div>
               <div className="flex items-center justify-between font-body text-sm">
-                <span className="text-muted-foreground">{gTradeDirection === "sell" ? "You receive (est.)" : "You receive (est.)"}</span>
+                <span className="text-muted-foreground">You receive (est.)</span>
                 <span className="font-semibold text-foreground">≈ {(() => {
                   const raw = parseFloat(gEstimatedAmount || "0");
                   if (!Number.isFinite(raw) || raw <= 0) return gEstimatedAmount;
@@ -3254,25 +3105,14 @@ const ExchangeWidget = () => {
                   <span className="text-foreground">{fee.amount} {fee.currency}</span>
                 </div>
               ))}
-              {gTradeDirection === "sell" && isSellSepaCorridor ? (
-                <div className="border-t border-border pt-2 space-y-2">
-                  <div className="flex items-start justify-between font-body text-xs">
-                    <span className="text-muted-foreground">IBAN</span>
-                    <span className="max-w-[200px] break-all text-right font-mono text-foreground">{gSepaIban}</span>
-                  </div>
-                  <div className="flex items-start justify-between font-body text-xs">
-                    <span className="text-muted-foreground">BIC / SWIFT</span>
-                    <span className="max-w-[200px] break-all text-right font-mono text-foreground">{gSepaBic}</span>
-                  </div>
-                </div>
-              ) : gPayoutAddress ? (
+              {gPayoutAddress && (
                 <div className="border-t border-border pt-2">
                   <div className="flex items-start justify-between font-body text-xs">
-                    <span className="text-muted-foreground">{gTradeDirection === "sell" ? "Payout details" : "Wallet"}</span>
+                    <span className="text-muted-foreground">Wallet</span>
                     <span className="max-w-[200px] break-all text-right font-mono text-foreground">{gPayoutAddress}</span>
                   </div>
                 </div>
-              ) : null}
+              )}
               {gSelectedPaymentMethod && (
                 <div className="flex items-center justify-between font-body text-xs">
                   <span className="text-muted-foreground">Payment method</span>
@@ -3283,7 +3123,7 @@ const ExchangeWidget = () => {
 
             <div className="mt-4 flex items-center gap-2 rounded-lg border border-primary/20 bg-primary/5 p-3">
               <Shield className="h-4 w-4 shrink-0 text-primary" />
-              <p className="font-body text-[11px] text-muted-foreground">A secure checkout will open below in this window to complete your {gTradeDirection === "sell" ? "sale" : "purchase"}.</p>
+              <p className="font-body text-[11px] text-muted-foreground">A secure checkout will open below in this window to complete your purchase.</p>
             </div>
 
             <div className="mt-5 flex gap-3">
@@ -3294,7 +3134,7 @@ const ExchangeWidget = () => {
                 onClick={handleConfirmGuardarianCheckout}
               >
                 {gCreatingTx ? <Loader2 className="mr-2 h-4 w-4 animate-spin" /> : <CreditCard className="mr-2 h-4 w-4" />}
-                {gTradeDirection === "sell" ? "Confirm & Sell" : "Confirm & Pay"}
+                Confirm & Pay
               </Button>
             </div>
           </motion.div>
