@@ -121,6 +121,8 @@ Deno.serve(async (req) => {
           from_currency,
           to_currency,
           payout_address,
+          skip_choose_payout_address: true,
+          skip_choose_payment_category: false,
         };
         if (from_network) txBody.from_network = from_network;
         if (to_network) txBody.to_network = to_network;
