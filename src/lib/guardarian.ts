@@ -32,6 +32,27 @@ export interface GuardarianEstimate {
   from_network: string | null;
   value: string;
   estimated_exchange_rate: string;
+  converted_amount?: { amount: string; currency: string };
+  network_fee?: { amount: string; currency: string };
+  service_fees?: { amount: string; currency: string; name: string; percentage: string }[];
+}
+
+export interface GuardarianTransaction {
+  id: string;
+  status: string;
+  redirect_url: string;
+  from_currency: string;
+  to_currency: string;
+  expected_from_amount: string;
+  expected_to_amount: string;
+  from_amount: string;
+  to_amount: string | null;
+  estimate_breakdown?: {
+    convertedAmount?: { amount: string; currency: string };
+    estimatedExchangeRate?: string;
+    networkFee?: { amount: string; currency: string };
+    serviceFees?: { amount: string; currency: string; name: string; percentage: string }[];
+  };
 }
 
 export interface GuardarianMinMax {
