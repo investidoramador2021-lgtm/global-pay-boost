@@ -150,6 +150,25 @@ const ExchangeWidget = () => {
   const [searchQuery, setSearchQuery] = useState("");
   const debounceRef = useRef<ReturnType<typeof setTimeout>>();
 
+  // ===== Dual-tab mode: "exchange" (ChangeNOW) vs "buysell" (Guardarian) =====
+  type WidgetMode = "exchange" | "buysell";
+  const [widgetMode, setWidgetMode] = useState<WidgetMode>("exchange");
+  const [guardarianFiat, setGuardarianFiat] = useState<GuardarianCurrency[]>([]);
+  const [guardarianCrypto, setGuardarianCrypto] = useState<GuardarianCurrency[]>([]);
+  const [guardarianLoading, setGuardarianLoading] = useState(false);
+  const [guardarianLoaded, setGuardarianLoaded] = useState(false);
+  const [gFromCurrency, setGFromCurrency] = useState<GuardarianCurrency | null>(null);
+  const [gToCurrency, setGToCurrency] = useState<GuardarianCurrency | null>(null);
+  const [gSendAmount, setGSendAmount] = useState("100");
+  const [gEstimatedAmount, setGEstimatedAmount] = useState<string>("");
+  const [gEstimating, setGEstimating] = useState(false);
+  const [gMinAmount, setGMinAmount] = useState<number>(0);
+  const [gMaxAmount, setGMaxAmount] = useState<number>(999999);
+  const gDebounceRef = useRef<ReturnType<typeof setTimeout>>();
+  const [gShowFromPicker, setGShowFromPicker] = useState(false);
+  const [gShowToPicker, setGShowToPicker] = useState(false);
+  const [gSearchQuery, setGSearchQuery] = useState("");
+
   // Transaction flow state
   const [step, setStep] = useState<Step>("exchange");
   const [recipientAddress, setRecipientAddress] = useState("");
