@@ -34,7 +34,7 @@
     "subtitle": "Three simple steps. No delays, no friction.",
     "step1": {
       "title": "Input Details",
-      "description": "Select your trading pair and enter the recipient wallet address. No sign-up needed. Swaps from $0.30."
+      "description": "Select your swap pair and enter the recipient wallet address. No sign-up needed. Swaps from $0.30."
     },
     "step2": {
       "title": "Send Deposit",
@@ -58,7 +58,7 @@
     },
     "noAccount": {
       "title": "No Account Required",
-      "description": "Permissionless trading — start swapping immediately. No sign-ups, no personal data, no onboarding friction."
+      "description": "Permissionless access — start swapping immediately. No sign-ups, no personal data, no onboarding friction."
     },
     "assets": {
       "title": "500+ Crypto Assets",
