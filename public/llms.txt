@@ -6,6 +6,7 @@
 
 - [About](https://mrcglobalpay.com/about)
 - [Blog](https://mrcglobalpay.com/blog)
+- [Buy Crypto with PIX in Brazil](https://mrcglobalpay.com/blog/buy-crypto-instantly-with-pix-brazil)
 - [Developer Hub](https://mrcglobalpay.com/developer)
 - [API Docs](https://mrcglobalpay.com/developers)
 - [Swap Widget](https://mrcglobalpay.com/get-widget)
