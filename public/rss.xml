@@ -197,5 +197,14 @@
       <pubDate>Fri, 11 Apr 2026 00:00:00 GMT</pubDate>
       <category>Tools</category>
     </item>
+    <item>
+      <title>How to Send Crypto Privately in 2026: Breaking On-Chain Linkability</title>
+      <link>https://mrcglobalpay.com/blog/how-to-privately-transfer-crypto</link>
+      <guid isPermaLink="true">https://mrcglobalpay.com/blog/how-to-privately-transfer-crypto</guid>
+      <description>Break on-chain linkability with shielded routing. Send crypto privately through liquidity pools — fixed rate, no registration, under 60 seconds. MSB-compliant.</description>
+      <dc:creator>Marcus Chen</dc:creator>
+      <pubDate>Fri, 11 Apr 2026 00:00:00 GMT</pubDate>
+      <category>Guides</category>
+    </item>
   </channel>
 </rss>
