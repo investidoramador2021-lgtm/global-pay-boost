@@ -303,5 +303,58 @@
     "pdfBridgeId": "Bridge ID",
     "pdfExtraId": "Extra ID / Memo",
     "pdfFooter": "Privacy First: MRC GlobalPay is non-custodial. This information is not stored on our servers. Please save this for your records."
+  },
+  "explainer": {
+    "buysell": {
+      "heading": "Global Fiat-to-Crypto On-Ramp",
+      "subtitle": "Buy crypto instantly with your preferred payment method — Visa, Mastercard, Apple Pay, PIX, SEPA, and more. Direct to your wallet, no custodial delays.",
+      "step1": {
+        "title": "Choose Your Method",
+        "description": "Select your local currency (USD, EUR, BRL, etc.) and your preferred payment method."
+      },
+      "step2": {
+        "title": "Instant Verification",
+        "description": "Complete a quick, secure checkout via our integrated payment partners."
+      },
+      "step3": {
+        "title": "Direct Delivery",
+        "description": "Your crypto is sent directly to your designated wallet. No hidden fees, no custodial delays."
+      },
+      "cta": "Buy Now"
+    },
+    "bridge": {
+      "heading": "Permanent Liquidity Bridge",
+      "subtitle": "Generate one reusable deposit address for automated, recurring crypto conversions — perfect for miners and corporate payouts.",
+      "step1": {
+        "title": "One-Time Setup",
+        "description": "Link a source and destination pair. Generate one permanent address."
+      },
+      "step2": {
+        "title": "Automated Flow",
+        "description": "Use the same address for all future transfers — perfect for miners and corporate payouts."
+      },
+      "step3": {
+        "title": "Effortless Settlement",
+        "description": "Funds are automatically swapped and delivered every time they hit the bridge."
+      },
+      "cta": "Generate Bridge"
+    },
+    "private": {
+      "heading": "Practical Privacy for Everyday Transfers",
+      "subtitle": "Break on-chain linkability between your wallets with shielded routing. Your recipient receives funds with a clean history.",
+      "step1": {
+        "title": "Shield Your Wallet",
+        "description": "Avoid exposing your personal address on public ledgers during routine transfers."
+      },
+      "step2": {
+        "title": "Private Routing",
+        "description": "Funds are routed through shielded liquidity paths to break the on-chain link between sender and receiver."
+      },
+      "step3": {
+        "title": "Clean Delivery",
+        "description": "Your recipient receives the funds with a clean history, maintaining your financial privacy."
+      },
+      "cta": "Send Privately"
+    }
   }
 }
