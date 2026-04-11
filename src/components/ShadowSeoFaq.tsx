@@ -15,6 +15,18 @@ const shadowFaqs = [
     q: "Is there a minimum for crypto swaps?",
     a: "We are a leading no-minimum crypto exchange allowing swaps as low as $0.30.",
   },
+  {
+    q: "Can I buy crypto with PIX in Brazil?",
+    a: "Yes. MRC GlobalPay supports PIX as an instant payment method for buying Bitcoin, Ethereum, Solana, and 500+ cryptocurrencies. PIX payments confirm in under 10 seconds, and your crypto is delivered to your wallet in under 60 seconds. No account required.",
+  },
+  {
+    q: "Is PIX safe for buying cryptocurrency?",
+    a: "PIX is regulated by the Central Bank of Brazil with end-to-end encryption. MRC GlobalPay adds a non-custodial layer — we never hold your crypto. Tokens go directly to your personal wallet. The platform is a FINTRAC-registered Canadian MSB.",
+  },
+  {
+    q: "What is the minimum amount to buy crypto with PIX?",
+    a: "The minimum purchase via PIX on MRC GlobalPay is just $0.30 USD equivalent in BRL — the lowest in the industry. There is no account creation or identity verification required.",
+  },
 ];
 
 export { shadowFaqs };
