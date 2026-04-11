@@ -2299,8 +2299,8 @@ const ExchangeWidget = () => {
                               </h3>
                               <p className="mt-1 font-body text-xs text-muted-foreground">
                                 {gTradeDirection === "sell"
-                                  ? "{t("widget.orderCreatedSell")}"
-                                  : "{t("widget.orderCreatedPay")}"}
+                                  ? t("widget.orderCreatedSell")
+                                  : t("widget.orderCreatedPay")}
                               </p>
                             </div>
 
