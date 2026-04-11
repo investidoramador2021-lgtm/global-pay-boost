@@ -1,5 +1,5 @@
 import { Helmet } from "react-helmet-async";
-import { Shield, Code2, Zap, Link2, Globe, Clock } from "lucide-react";
+import { Shield, Code2, Zap, Link2, Globe, Clock, ExternalLink, Terminal, FileJson } from "lucide-react";
 import SiteHeader from "@/components/SiteHeader";
 import SiteFooter from "@/components/SiteFooter";
 import MsbTrustBar from "@/components/MsbTrustBar";
@@ -44,11 +44,21 @@ const DEEPLINK_EXAMPLES = [
   { url: "https://mrcglobalpay.com/solutions/how-to-swap-btc-to-usdc", desc: "BTC→USDC solution guide" },
 ];
 
+const FETCH_SNIPPET = `// Fetch the MRC GlobalPay Bot Manifest
+fetch('https://mrcglobalpay.com/trading-bot-manifest.json')
+  .then(res => res.json())
+  .then(data => {
+    console.log('Min swap:', data.min_swap_usd);
+    console.log('Pairs:', data.pairs);
+  });`;
+
+const CURL_SNIPPET = `curl -s https://mrcglobalpay.com/trading-bot-manifest.json | jq .`;
+
 const jsonLd = {
   "@context": "https://schema.org",
   "@type": "WebPage",
   name: "Developer Hub — MRC GlobalPay API & Widget Documentation",
-  description: "Integration docs for MRC GlobalPay's embeddable crypto swap widget, URL deep-linking, and supported blockchain networks.",
+  description: "Official Developer Hub for MRC GlobalPay. Access our crypto swap API, bot manifest, and $0.30 liquidity rails for automated trading and dust cleaning.",
   url: "https://mrcglobalpay.com/developer",
   isPartOf: {
     "@type": "WebSite",
@@ -67,6 +77,21 @@ const jsonLd = {
       { "@type": "ListItem", position: 1, name: "Home", item: "https://mrcglobalpay.com" },
       { "@type": "ListItem", position: 2, name: "Developer Hub", item: "https://mrcglobalpay.com/developer" },
     ],
+  },
+};
+
+const softwareSourceCodeJsonLd = {
+  "@context": "https://schema.org",
+  "@type": "SoftwareSourceCode",
+  name: "MRC GlobalPay Trading Bot Manifest",
+  codeRepository: "https://mrcglobalpay.com/trading-bot-manifest.json",
+  programmingLanguage: "JSON",
+  runtimePlatform: "Any",
+  description: "Machine-readable manifest for automated trading bots. Includes top swap pairs, minimum thresholds, and live API endpoints for the MRC GlobalPay $0.30 settlement engine.",
+  author: {
+    "@type": "Organization",
+    name: "MRC GlobalPay",
+    identifier: "C100000015",
   },
 };
 
@@ -128,17 +153,18 @@ const QuickFacts = () => (
 const DeveloperHub = () => (
   <>
     <Helmet>
-      <title>Developer Hub — Widget & API Docs | MRC GlobalPay</title>
-      <meta name="description" content="Integrate MRC GlobalPay's crypto swap widget into your site. One-line iframe, URL deep-linking docs, and supported chain table. Registration-free, non-custodial." />
+      <title>Developer Hub — API & Bot Access | MRC GlobalPay</title>
+      <meta name="description" content="Official Developer Hub for MRC GlobalPay. Access our crypto swap API, bot manifest, and $0.30 liquidity rails for automated trading and dust cleaning." />
       <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1" />
       <link rel="canonical" href="https://mrcglobalpay.com/developer" />
-      <meta property="og:title" content="Developer Hub — MRC GlobalPay" />
-      <meta property="og:description" content="Embed a free crypto swap widget with one line of code. 500+ tokens, live pricing, no API key needed." />
+      <meta property="og:title" content="Developer Hub — API & Bot Access | MRC GlobalPay" />
+      <meta property="og:description" content="Access our crypto swap API, bot manifest, and $0.30 liquidity rails for automated trading and dust recovery." />
       <meta property="og:url" content="https://mrcglobalpay.com/developer" />
       <meta property="og:type" content="website" />
       <meta property="og:site_name" content="MRC GlobalPay" />
       <script type="application/ld+json">{JSON.stringify(jsonLd)}</script>
       <script type="application/ld+json">{JSON.stringify(faqJsonLd)}</script>
+      <script type="application/ld+json">{JSON.stringify(softwareSourceCodeJsonLd)}</script>
     </Helmet>
 
     <SiteHeader />
@@ -162,6 +188,81 @@ const DeveloperHub = () => (
         </p>
 
         <QuickFacts />
+
+        {/* Section 0: Programmatic Liquidity & Bot Access */}
+        <section className="mb-14">
+          <h2 className="font-display text-2xl font-bold text-foreground mb-4 flex items-center gap-2">
+            <Terminal className="h-6 w-6 text-primary" />
+            Programmatic Liquidity &amp; Bot Access
+          </h2>
+          <p className="text-muted-foreground mb-6 leading-relaxed">
+            Integrate the MRC GlobalPay <strong className="text-foreground">$0.30 settlement engine</strong> into your trading bot or application.
+            Access our live rates, supported pairs, and regulatory verification via our machine-readable manifest.
+          </p>
+
+          {/* Manifest Link */}
+          <div className="rounded-xl border border-primary/20 bg-primary/5 p-5 mb-6">
+            <div className="flex flex-wrap items-center gap-3 mb-4">
+              <FileJson className="h-5 w-5 text-primary" />
+              <h3 className="font-display text-sm font-semibold text-foreground">Bot Manifest (JSON)</h3>
+            </div>
+            <p className="text-sm text-muted-foreground mb-4">
+              A static, machine-readable file listing the top 10 dust-swap pairs, minimum thresholds, and live API endpoints.
+              No authentication required.
+            </p>
+            <a
+              href="/trading-bot-manifest.json"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex items-center gap-2 rounded-lg bg-primary px-4 py-2.5 font-display text-sm font-semibold text-primary-foreground transition-colors hover:bg-primary/90"
+            >
+              <ExternalLink className="h-4 w-4" />
+              View Bot Manifest (JSON)
+            </a>
+          </div>
+
+          {/* Code Blocks */}
+          <div className="space-y-4">
+            <div>
+              <h4 className="font-display text-xs font-semibold uppercase tracking-wider text-muted-foreground mb-2">JavaScript / Fetch</h4>
+              <CodeBlock code={FETCH_SNIPPET} lang="javascript" />
+            </div>
+            <div>
+              <h4 className="font-display text-xs font-semibold uppercase tracking-wider text-muted-foreground mb-2">cURL</h4>
+              <CodeBlock code={CURL_SNIPPET} lang="bash" />
+            </div>
+          </div>
+        </section>
+
+        {/* Section 0b: Institutional Compliance */}
+        <section className="mb-14">
+          <h2 className="font-display text-2xl font-bold text-foreground mb-4 flex items-center gap-2">
+            <Shield className="h-6 w-6 text-primary" />
+            Institutional Compliance
+          </h2>
+          <div className="rounded-xl border border-border bg-card p-6">
+            <p className="text-muted-foreground leading-relaxed mb-4">
+              All programmatic swaps are settled under{" "}
+              <strong className="text-foreground">FINTRAC MSB Registration C100000015</strong>.
+              Our API is designed for non-custodial, high-velocity micro-asset recovery.
+            </p>
+            <div className="grid gap-3 sm:grid-cols-3">
+              {[
+                { label: "Registration", value: "C100000015" },
+                { label: "Jurisdiction", value: "Canada (FINTRAC)" },
+                { label: "Architecture", value: "Non-Custodial" },
+              ].map(({ label, value }) => (
+                <div key={label} className="rounded-lg border border-border bg-muted/30 p-3 text-center">
+                  <p className="font-display text-[10px] font-semibold uppercase tracking-wider text-muted-foreground">{label}</p>
+                  <p className="font-display text-sm font-bold text-foreground mt-1">{value}</p>
+                </div>
+              ))}
+            </div>
+            <p className="mt-4 text-xs text-muted-foreground">
+              <a href="/compliance" className="text-primary hover:underline">View full compliance documentation →</a>
+            </p>
+          </div>
+        </section>
 
         {/* Section 1: Widget Integration */}
         <section className="mb-14">
