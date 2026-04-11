@@ -945,7 +945,7 @@ const ExchangeWidget = () => {
         setGEstimatedAmount("");
         setGFullEstimate(null);
         setGEstimateError(gTradeDirection === "sell"
-          ? `Sell to ${gToCurrency.ticker} is not currently supported by our provider. Try EUR (SEPA) for off-ramping.`
+          ? `Sell to ${gToCurrency.ticker} is not currently supported by our provider. Try a different payout currency.`
           : "Service temporarily unavailable. Please refresh and try again.");
         return;
       }
@@ -1568,10 +1568,10 @@ const ExchangeWidget = () => {
                   <>
                     {/* Buy mode — no sell toggle */}
 
-                    {/* You Pay (Fiat) */}
+                    {/* You Pay */}
                     <div className="relative">
                       <label className="mb-1.5 block font-body text-xs font-medium uppercase tracking-wider text-muted-foreground">
-                        You Pay (Fiat)
+                        {gTradeDirection === "buy" ? "You Pay (Fiat)" : "You Pay (Crypto)"}
                       </label>
                       <div className="flex items-center gap-3 rounded-xl border border-border bg-accent p-4">
                         <Input
