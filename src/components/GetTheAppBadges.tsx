@@ -29,10 +29,10 @@ const GooglePlayBadge = ({ className = "" }: { className?: string }) => (
     </svg>
     <div className="leading-none">
       <div className="font-body text-[9px] font-normal uppercase tracking-wider text-background/80">
-        Get it on
+        Get it for
       </div>
       <div className="font-display text-sm font-semibold text-background">
-        Google Play
+        Android
       </div>
     </div>
   </div>
@@ -48,10 +48,10 @@ const AppStoreBadge = ({ className = "" }: { className?: string }) => (
     </svg>
     <div className="leading-none">
       <div className="font-body text-[9px] font-normal uppercase tracking-wider text-background/80">
-        Download on the
+        Get it for
       </div>
       <div className="font-display text-sm font-semibold text-background">
-        App Store
+        iOS
       </div>
     </div>
   </div>
@@ -67,16 +67,19 @@ const GetTheAppBadges = ({ variant = "section" }: GetTheAppBadgesProps) => {
   const pwa = usePWAInstall();
   const [iosSheetOpen, setIosSheetOpen] = useState(false);
 
-  const handleGooglePlay = () => {
+  const handleAndroid = () => {
     trackBadgeClick("google_play");
-    if (pwa.isAndroid || pwa.canInstall) {
+    if (pwa.canInstall) {
       pwa.triggerInstall();
+    } else if (pwa.isAndroid) {
+      // Already on Android but no install prompt — guide to add to home screen
+      alert("Tap the browser menu (⋮) and select 'Add to Home screen' to install the app.");
     } else {
       alert("Visit mrcglobalpay.com on your Android device to install the app.");
     }
   };
 
-  const handleAppStore = () => {
+  const handleIOS = () => {
     trackBadgeClick("app_store");
     if (pwa.isIOS) {
       pwa.triggerInstall();
@@ -93,16 +96,16 @@ const GetTheAppBadges = ({ variant = "section" }: GetTheAppBadgesProps) => {
   const badges = (
     <div className="flex flex-wrap items-center gap-3">
       <button
-        onClick={handleGooglePlay}
+        onClick={handleAndroid}
         className="transition-transform duration-150 hover:scale-105 active:scale-[0.97]"
-        aria-label="Get it on Google Play"
+        aria-label="Get it for Android"
       >
         <GooglePlayBadge />
       </button>
       <button
-        onClick={handleAppStore}
+        onClick={handleIOS}
         className="transition-transform duration-150 hover:scale-105 active:scale-[0.97]"
-        aria-label="Download on the App Store"
+        aria-label="Get it for iOS"
       >
         <AppStoreBadge />
       </button>
