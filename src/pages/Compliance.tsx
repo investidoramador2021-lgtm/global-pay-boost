@@ -3,8 +3,7 @@ import SiteHeader from "@/components/SiteHeader";
 import SiteFooter from "@/components/SiteFooter";
 import { Shield, MapPin, ExternalLink, CheckCircle2 } from "lucide-react";
 
-const FINTRAC_URL =
-  "https://www10.fintrac-canafe.gc.ca/msb-esm/public/detailed-information/bns-new/7b226d7362526567697374726174696f6e4e756d626572223a224d3233323235363338227d";
+const FINTRAC_URL = "https://fintrac-canafe.canada.ca/msb-esm/reg-eng";
 
 const Compliance = () => (
   <>
@@ -12,7 +11,7 @@ const Compliance = () => (
       <title>Compliance — FINTRAC Registered MSB | MRC GlobalPay</title>
       <meta
         name="description"
-        content="MRC GlobalPay is a FINTRAC-registered Money Services Business (MSB M23225638) headquartered in Ottawa, Canada. Non-custodial crypto exchange with full AML/CTF compliance."
+        content="MRC GlobalPay is a FINTRAC-registered Money Services Business (MSB C100000015) headquartered in Ottawa, Canada. Non-custodial crypto exchange with full AML/CTF compliance."
       />
       <meta name="robots" content="index, follow" />
       <link rel="canonical" href="https://mrcglobalpay.com/compliance" />
@@ -79,7 +78,7 @@ const Compliance = () => (
               <dl className="mt-4 space-y-3 font-body text-sm text-muted-foreground">
                 <div>
                   <dt className="font-semibold text-foreground/80">Registration Number</dt>
-                  <dd>M23225638</dd>
+                  <dd>C100000015</dd>
                 </div>
                 <div>
                   <dt className="font-semibold text-foreground/80">Regulator</dt>
