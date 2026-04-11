@@ -2,7 +2,7 @@
 
 > **Canadian MSB Registration: C100000015** — [Verify on FINTRAC Registry](https://fintrac-canafe.canada.ca/msb-esm/reg-eng)
 
-MRC GlobalPay is a non-custodial, registration-free crypto exchange platform supporting 500+ tokens with settlement from **$0.30 USD** in under 60 seconds.
+MRC GlobalPay is a non-custodial, registration-free crypto exchange platform supporting 500+ tokens with settlement from **$0.30 USD** in under 60 seconds. https://mrcglobalpay.com
 
 This repository contains the machine-readable infrastructure, bot-accessible manifests, and frontend source for the platform.
 
