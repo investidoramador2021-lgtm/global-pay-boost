@@ -223,23 +223,29 @@ Deno.serve(async (req) => {
         if (!from_currency || !to_currency) return badRequest('Missing from_currency/to_currency', origin);
         if (!from_amount && !to_amount) return badRequest('Missing from_amount or to_amount', origin);
         const resolvedSide = side || trade_direction;
+       
+       // For sell estimates, NEVER forward the user's IP — Guardarian geo-restricts
+       // sell quotes by IP and the retry-without-xff logic is unreliable across variants.
+       const estimateHeaders = resolvedSide === 'sell'
+         ? { Accept: 'application/json', 'x-api-key': apiKey }
+         : headers;
 
         const estimateVariants: Array<Record<string, unknown>> = [
           { from_currency, to_currency, from_network, to_network, from_amount, to_amount, payment_method, side: resolvedSide },
         ];
 
         if (resolvedSide === 'sell') {
-          for (const alias of getPaymentMethodAliases(payment_method)) {
-            estimateVariants.push({ from_currency, to_currency, from_network, to_network, from_amount, to_amount, payment_method: alias, side: resolvedSide });
-          }
-
-          estimateVariants.push(
-            { from_currency, to_currency, from_network, to_network, from_amount, to_amount, side: resolvedSide },
-            { from_currency, to_currency, to_network, from_amount, to_amount, payment_method, side: resolvedSide },
-            { from_currency, to_currency, to_network, from_amount, to_amount, side: resolvedSide },
-            { from_currency, to_currency, from_network, to_network, from_amount, to_amount, payment_method },
-            { from_currency, to_currency, from_network, to_network, from_amount, to_amount },
-          );
+         // Priority: minimal params first (most reliable), then add specifics
+         estimateVariants.length = 0;
+         estimateVariants.push(
+           { from_currency, to_currency, from_amount, to_amount, side: resolvedSide },
+           { from_currency, to_currency, from_network, from_amount, to_amount, side: resolvedSide },
+           { from_currency, to_currency, from_amount, to_amount, payment_method, side: resolvedSide },
+           { from_currency, to_currency, from_network, to_network, from_amount, to_amount, payment_method, side: resolvedSide },
+         );
+         for (const alias of getPaymentMethodAliases(payment_method)) {
+           estimateVariants.push({ from_currency, to_currency, from_amount, to_amount, payment_method: alias, side: resolvedSide });
+         }
         }
 
         const tried = new Set<string>();
@@ -250,10 +256,10 @@ Deno.serve(async (req) => {
           if (tried.has(path)) continue;
           tried.add(path);
 
-          const result = await fetchGuardarianJson(path, headers, {
-            retryWithoutForwardedFor: true,
-            attempts: 3,
-            retryDelayMs: 300,
+          const result = await fetchGuardarianJson(path, estimateHeaders, {
+           retryWithoutForwardedFor: resolvedSide !== 'sell',
+           attempts: 2,
+           retryDelayMs: 250,
           });
 
           if (result.resp.ok) {
