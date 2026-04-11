@@ -972,21 +972,17 @@ const ExchangeWidget = () => {
         const amt = parseFloat(gSendAmount);
         const rangeMin = Number(minMax.min) || 0;
         const rangeMax = Number(minMax.max) || 999999;
-        if (rangeMin > 0 && rangeMax < 999999 && (amt < rangeMin || amt > rangeMax)) {
+        const isOutOfRange = rangeMin > 0 && rangeMax < 999999 && (amt < rangeMin || amt > rangeMax);
+        const providerDetails = String((finalEstimate as any)?.details?.message || "").toLowerCase();
+
+        if (isOutOfRange) {
           setGEstimateError("");
         } else if (gTradeDirection === "sell" && gPaymentMethods.length === 0) {
-          // No withdrawal-enabled payment methods exist for this fiat currency
-          setGEstimateError(
-            `Sell to ${gToCurrency.ticker} is not currently available. Please select a different payout currency.`
-          );
-        } else if ((finalEstimate as any)?.fallback) {
-          setGEstimateError(
-            `Estimate unavailable for ${gFromCurrency.ticker} → ${gToCurrency.ticker}. Try a different amount or currency pair.`
-          );
+          setGEstimateError(`Sell to ${gToCurrency.ticker} is not currently available. Please select a different payout currency.`);
+        } else if (providerDetails.includes("payout methods")) {
+          setGEstimateError(`Sell to ${gToCurrency.ticker} is not currently available. Please select a different payout currency.`);
         } else {
-          setGEstimateError(
-            `Estimate unavailable for ${gFromCurrency.ticker} → ${gToCurrency.ticker}. Try a different amount or currency pair.`
-          );
+          setGEstimateError(`Estimate unavailable for ${gFromCurrency.ticker} → ${gToCurrency.ticker}. Try again in a moment.`);
         }
         return;
       }
