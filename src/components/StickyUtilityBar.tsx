@@ -1,6 +1,7 @@
-import { useState, useEffect, useCallback, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 import { ArrowRight, Activity, Loader2 } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
+import { useExchangeSync } from "@/hooks/use-exchange-sync";
 
 const barVariants = {
   hidden: { y: -100, opacity: 0 },
@@ -9,10 +10,18 @@ const barVariants = {
 };
 
 const StickyUtilityBar = () => {
+  const {
+    fromTicker,
+    toTicker,
+    options,
+    isReady,
+    canSubmit,
+    isSubmitting,
+    setFromTicker,
+    setToTicker,
+    requestSubmit,
+  } = useExchangeSync();
   const [visible, setVisible] = useState(false);
-  const [from, setFrom] = useState("BTC");
-  const [to, setTo] = useState("USDT");
-  const [loading, setLoading] = useState(false);
   const raf = useRef(0);
 
   useEffect(() => {
@@ -31,24 +40,7 @@ const StickyUtilityBar = () => {
     };
   }, []);
 
-  const handleGo = useCallback(() => {
-    if (loading) return;
-    setLoading(true);
-
-    const url = new URL(window.location.href);
-    url.searchParams.set("from", from.toLowerCase());
-    url.searchParams.set("to", to.toLowerCase());
-    url.hash = "exchange";
-    window.history.replaceState(null, "", url.toString());
-
-    const el = document.getElementById("exchange");
-    if (el) el.scrollIntoView({ behavior: "smooth" });
-
-    window.dispatchEvent(new CustomEvent("sticky-bar-swap", { detail: { from, to } }));
-    setTimeout(() => setLoading(false), 800);
-  }, [from, to, loading]);
-
-  const pairs = ["BTC", "ETH", "SOL", "USDT", "USDC", "XRP", "BNB", "DOGE"];
+  if (!isReady || options.length === 0) return null;
 
   return (
     <AnimatePresence>
@@ -59,41 +51,42 @@ const StickyUtilityBar = () => {
           initial="hidden"
           animate="visible"
           exit="exit"
-          transition={{ type: "spring", damping: 25, stiffness: 120 }}
-          className="fixed top-14 sm:top-16 inset-x-0 z-50 pointer-events-auto"
+          transition={{ type: "spring", damping: 20, stiffness: 100 }}
+          layout
+          className="fixed top-14 sm:top-16 inset-x-0 z-[9999] pointer-events-auto transform-gpu"
           style={{ willChange: "transform, opacity" }}
         >
-          <div className="border-b border-[#D4AF37]/10 bg-background/60 backdrop-blur-xl">
+          <div className="border-b border-primary/10 bg-background/60 backdrop-blur-xl">
             <div className="container mx-auto flex items-center justify-between gap-3 px-4 py-2">
               <div className="flex items-center gap-2">
                 <span className="hidden font-mono text-[10px] font-semibold uppercase tracking-widest text-muted-foreground sm:inline">
                   Quick Swap
                 </span>
                 <select
-                  value={from}
-                  onChange={(e) => setFrom(e.target.value)}
+                  value={(fromTicker || "BTC").toUpperCase()}
+                  onChange={(e) => setFromTicker(e.target.value)}
                   className="h-8 rounded-lg border border-border/60 bg-background/80 px-2 font-mono text-xs font-semibold text-foreground focus:border-primary/40 focus:outline-none focus:ring-1 focus:ring-primary/20"
                 >
-                  {pairs.map((p) => (
-                    <option key={p} value={p}>{p}</option>
+                  {options.map((option) => (
+                    <option key={option.ticker} value={option.ticker.toUpperCase()}>{option.label}</option>
                   ))}
                 </select>
                 <ArrowRight className="h-3.5 w-3.5 text-primary" />
                 <select
-                  value={to}
-                  onChange={(e) => setTo(e.target.value)}
+                  value={(toTicker || "USDT").toUpperCase()}
+                  onChange={(e) => setToTicker(e.target.value)}
                   className="h-8 rounded-lg border border-border/60 bg-background/80 px-2 font-mono text-xs font-semibold text-foreground focus:border-primary/40 focus:outline-none focus:ring-1 focus:ring-primary/20"
                 >
-                  {pairs.map((p) => (
-                    <option key={p} value={p}>{p}</option>
+                  {options.map((option) => (
+                    <option key={option.ticker} value={option.ticker.toUpperCase()}>{option.label}</option>
                   ))}
                 </select>
                 <button
-                  onClick={handleGo}
-                  disabled={loading}
-                  className="h-8 rounded-lg bg-primary px-3 font-mono text-[11px] font-bold uppercase tracking-wider text-primary-foreground flex items-center gap-1.5 hover:brightness-110 active:scale-95 disabled:opacity-70 disabled:pointer-events-none"
+                  onClick={requestSubmit}
+                  disabled={!canSubmit || isSubmitting}
+                  className="h-8 rounded-lg bg-primary px-3 font-mono text-[11px] font-bold uppercase tracking-wider text-primary-foreground flex items-center gap-1.5 hover:brightness-110 disabled:opacity-70 disabled:pointer-events-none"
                 >
-                  {loading ? <Loader2 className="h-3.5 w-3.5 animate-spin" /> : "Go"}
+                  {isSubmitting ? <Loader2 className="h-3.5 w-3.5 animate-spin" /> : "Go"}
                 </button>
               </div>
 
@@ -120,3 +113,5 @@ const StickyUtilityBar = () => {
 };
 
 export default StickyUtilityBar;
+
+

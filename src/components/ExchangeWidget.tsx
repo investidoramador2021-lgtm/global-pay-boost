@@ -35,6 +35,7 @@ import {
 import { resolvePaymentMethodDisplay, getSmartDefaultMethod } from "@/components/PaymentMethodLogos";
 import { useToast } from "@/hooks/use-toast";
 import { usePushNotifications } from "@/hooks/use-push-notifications";
+import { useExchangeSync } from "@/hooks/use-exchange-sync";
 
 const POPULAR_TICKERS = ["btc", "eth", "usdt", "usdttrc20", "sol", "xrp", "doge", "bnb", "ltc", "usdc", "trx"];
 
@@ -292,6 +293,17 @@ const ExchangeWidget = ({ onTabChange }: ExchangeWidgetProps = {}) => {
   const { toast } = useToast();
   const { t } = useTranslation();
   const { subscribe: subscribePush, supported: pushSupported } = usePushNotifications();
+  const {
+    fromTicker: syncedFromTicker,
+    toTicker: syncedToTicker,
+    setFromTicker: syncFromTicker,
+    setToTicker: syncToTicker,
+    setOptions: setSyncOptions,
+    setReady: setSyncReady,
+    setCanSubmit: setSyncCanSubmit,
+    registerSubmitHandler,
+    resetSubmitting,
+  } = useExchangeSync();
   const pushSubscribedRef = useRef(false);
   const [currencies, setCurrencies] = useState<Currency[]>([]);
   const [fromCurrency, setFromCurrency] = useState<Currency | null>(null);
@@ -712,25 +724,30 @@ const ExchangeWidget = ({ onTabChange }: ExchangeWidgetProps = {}) => {
         .then((data) => {
           if (Array.isArray(data)) {
             setCurrencies(data);
+            setSyncOptions(data.slice(0, 12).map((c) => ({ ticker: c.ticker, label: displayTicker(c) })));
+            setSyncReady(true);
 
-            // Helper: find currency by mapped ticker, fallback to raw param
             const findCurrency = (mapped: string | undefined, raw: string | undefined) => {
               if (!mapped) return null;
               const exact = data.find((c) => c.ticker === mapped);
               if (exact) return exact;
-              // If mapped ticker not found, try raw as last resort
               if (raw && raw !== mapped) return data.find((c) => c.ticker === raw) || null;
               return null;
             };
 
-            const fromMatch = findCurrency(paramFromMapped, paramFrom);
-            const toMatch = findCurrency(paramTo, rawTo);
-            setFromCurrency(fromMatch || data.find((c) => c.ticker === "btc") || data[0]);
-            setToCurrency(toMatch || data.find((c) => c.ticker === "eth") || data[1]);
+            const syncFromMatch = syncedFromTicker ? data.find((c) => c.ticker === syncedFromTicker) : null;
+            const syncToMatch = syncedToTicker ? data.find((c) => c.ticker === syncedToTicker) : null;
+            const fromMatch = syncFromMatch || findCurrency(paramFromMapped, paramFrom);
+            const toMatch = syncToMatch || findCurrency(paramTo, rawTo);
+            const nextFrom = fromMatch || data.find((c) => c.ticker === "btc") || data[0];
+            const nextTo = toMatch || data.find((c) => c.ticker === "eth") || data[1];
+            setFromCurrency(nextFrom);
+            setToCurrency(nextTo);
+            syncFromTicker(nextFrom.ticker);
+            syncToTicker(nextTo.ticker);
             if (paramAmount && parseFloat(paramAmount) > 0) {
               setSendAmount(paramAmount);
             }
-            // Ref-link address hydration
             const paramAddress = params.get("address")?.trim();
             if (paramAddress) {
               setRecipientAddress(paramAddress);
@@ -1245,6 +1262,7 @@ const ExchangeWidget = ({ onTabChange }: ExchangeWidgetProps = {}) => {
   const handleExchangeNow = () => {
     setStep("address");
     scrollToWidget();
+    resetSubmitting();
   };
 
   const handleCreateTransaction = async () => {
@@ -1450,6 +1468,36 @@ const ExchangeWidget = ({ onTabChange }: ExchangeWidgetProps = {}) => {
   });
 
   const belowMin = parseFloat(sendAmount) > 0 && minAmount > 0 && parseFloat(sendAmount) < minAmount;
+  const canExchangeNow = widgetMode === "exchange" && !loading && !estimating && !creatingTx && Boolean(fromCurrency && toCurrency) && Boolean(estimatedAmount) && estimatedAmount !== "—" && !belowMin;
+
+
+  useEffect(() => {
+    if (!fromCurrency) return;
+    syncFromTicker(fromCurrency.ticker);
+  }, [fromCurrency, syncFromTicker]);
+
+  useEffect(() => {
+    if (!toCurrency) return;
+    syncToTicker(toCurrency.ticker);
+  }, [toCurrency, syncToTicker]);
+
+  useEffect(() => {
+    if (!currencies.length) return;
+    if (syncedFromTicker) {
+      const nextFrom = currencies.find((c) => c.ticker === syncedFromTicker);
+      if (nextFrom && nextFrom.ticker !== fromCurrency?.ticker) setFromCurrency(nextFrom);
+    }
+    if (syncedToTicker) {
+      const nextTo = currencies.find((c) => c.ticker === syncedToTicker);
+      if (nextTo && nextTo.ticker !== toCurrency?.ticker) setToCurrency(nextTo);
+    }
+  }, [syncedFromTicker, syncedToTicker, currencies, fromCurrency?.ticker, toCurrency?.ticker]);
+
+  useEffect(() => {
+    setSyncCanSubmit(canExchangeNow);
+    registerSubmitHandler(() => handleExchangeNow);
+    return () => registerSubmitHandler(null);
+  }, [canExchangeNow, registerSubmitHandler, handleExchangeNow, setSyncCanSubmit]);
 
   const BATCH_SIZE = 50;
 
@@ -1610,7 +1658,8 @@ const ExchangeWidget = ({ onTabChange }: ExchangeWidgetProps = {}) => {
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.5, delay: 0.15 }}
       id="exchange-widget"
-      className="relative scroll-mt-24 rounded-2xl border border-border bg-card p-6 shadow-elevated sm:p-8"
+      className="relative scroll-mt-24 rounded-2xl border border-border bg-card p-6 shadow-elevated sm:p-8 transform-gpu"
+      style={{ backfaceVisibility: "hidden" }}
     >
       <AnimatePresence mode="wait">
         {/* ===== STEP 1: Exchange Form ===== */}
@@ -1621,7 +1670,7 @@ const ExchangeWidget = ({ onTabChange }: ExchangeWidgetProps = {}) => {
               <div className="flex rounded-xl border border-border bg-accent p-1 gap-1 max-[480px]:w-full max-[480px]:grid max-[480px]:grid-cols-4">
                 <button
                   onClick={() => { setWidgetMode("exchange"); setGStep("form"); setGCheckoutUrl(""); }}
-                  className={`flex items-center justify-center gap-1.5 rounded-lg px-3 py-2 font-display text-sm font-semibold transition-all ${
+                  className={`flex items-center justify-center gap-1.5 rounded-lg px-3 py-2 font-display text-sm font-semibold ${
                     widgetMode === "exchange"
                       ? "bg-primary text-primary-foreground shadow-card"
                       : "text-muted-foreground hover:text-foreground hover:bg-background"
@@ -1647,7 +1696,7 @@ const ExchangeWidget = ({ onTabChange }: ExchangeWidgetProps = {}) => {
                       applyGuardarianDefaults("buy");
                     }
                   }}
-                  className={`flex items-center justify-center gap-1.5 rounded-lg px-3 py-2 font-display text-sm font-semibold transition-all ${
+                  className={`flex items-center justify-center gap-1.5 rounded-lg px-3 py-2 font-display text-sm font-semibold ${
                     widgetMode === "buysell" && gTradeDirection === "buy"
                       ? "bg-primary text-primary-foreground shadow-card"
                       : "text-muted-foreground hover:text-foreground hover:bg-background"
@@ -1657,7 +1706,7 @@ const ExchangeWidget = ({ onTabChange }: ExchangeWidgetProps = {}) => {
                 </button>
                 <button
                   onClick={() => { setWidgetMode("private"); }}
-                  className={`flex items-center justify-center gap-1.5 rounded-lg px-3 py-2 font-display text-sm font-semibold transition-all ${
+                  className={`flex items-center justify-center gap-1.5 rounded-lg px-3 py-2 font-display text-sm font-semibold ${
                     widgetMode === "private"
                       ? "bg-primary text-primary-foreground shadow-card"
                       : "text-muted-foreground hover:text-foreground hover:bg-background"
@@ -1667,7 +1716,7 @@ const ExchangeWidget = ({ onTabChange }: ExchangeWidgetProps = {}) => {
                 </button>
                 <button
                   onClick={() => { setWidgetMode("bridge"); }}
-                  className={`flex items-center justify-center gap-1.5 rounded-lg px-3 py-2 font-display text-sm font-semibold transition-all ${
+                  className={`flex items-center justify-center gap-1.5 rounded-lg px-3 py-2 font-display text-sm font-semibold ${
                     widgetMode === "bridge"
                       ? "bg-primary text-primary-foreground shadow-card"
                       : "text-muted-foreground hover:text-foreground hover:bg-background"
@@ -2607,7 +2656,7 @@ const ExchangeWidget = ({ onTabChange }: ExchangeWidgetProps = {}) => {
                   <CurrencyPicker show={showToPicker} onSelect={setToCurrency} onClose={() => setShowToPicker(false)} exclude={fromCurrency?.ticker} />
                 </div>
 
-                <Button className="mt-5 w-full min-h-[52px] bg-primary text-primary-foreground hover:bg-primary/90 hover:shadow-neon shadow-card text-base font-bold transition-shadow duration-300" size="lg" disabled={!estimatedAmount || estimatedAmount === "—" || belowMin} onClick={handleExchangeNow}>
+                <Button className="mt-5 w-full min-h-[52px] bg-primary text-primary-foreground hover:bg-primary/90 hover:shadow-neon shadow-card text-base font-bold transition-shadow duration-300" size="lg" disabled={!canExchangeNow} onClick={handleExchangeNow}>
                   {t("widget.exchangeNow")}
                 </Button>
                 <p className="mt-1.5 flex items-center justify-center gap-1.5 font-body text-[11px] text-muted-foreground">
