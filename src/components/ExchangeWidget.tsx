@@ -3068,6 +3068,14 @@ const ExchangeWidget = ({ onTabChange }: ExchangeWidgetProps = {}) => {
                 </div>
               </div>
 
+              {/* FINTRAC Verified Badge */}
+              <div className="flex items-center justify-center gap-2 rounded-lg border border-emerald-500/20 bg-emerald-500/5 p-2.5">
+                <Shield className="h-4 w-4 text-emerald-500" />
+                <span className="font-mono text-[11px] font-semibold uppercase tracking-wider text-emerald-400">
+                  Verified by FINTRAC — MSB M23225638
+                </span>
+              </div>
+
               {/* Warning */}
               <div className="rounded-lg border border-amber-500/20 bg-amber-500/5 p-3">
                 <p className="font-body text-xs text-amber-600 dark:text-amber-400">

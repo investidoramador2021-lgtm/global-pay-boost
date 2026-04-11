@@ -311,11 +311,8 @@ const SiteFooter = () => {
           </div>
           <div className="flex flex-col items-center justify-between gap-4 sm:flex-row">
             <p className="font-body text-sm font-medium text-foreground/80">
-              © {new Date().getFullYear()} MRC Global Pay | Ottawa, Canada
+              © {new Date().getFullYear()} MRC Global Pay. Registered MSB — Canada.
             </p>
-            <span className="inline-flex items-center gap-1.5 rounded-full border border-primary/20 bg-primary/5 px-3 py-1 font-body text-[11px] font-medium text-muted-foreground">
-              Liquidity provided by top-tier partners
-            </span>
           </div>
         </div>
       </div>
