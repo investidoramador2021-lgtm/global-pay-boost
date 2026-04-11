@@ -68,6 +68,53 @@ function normalizePaymentMethodsFromCurrency(currency: any) {
   return methods;
 }
 
+function buildEstimateQuery(params: {
+  from_currency: unknown;
+  to_currency: unknown;
+  from_network?: unknown;
+  to_network?: unknown;
+  from_amount?: unknown;
+  to_amount?: unknown;
+  payment_method?: unknown;
+  side?: unknown;
+}) {
+  const searchParams = new URLSearchParams();
+
+  searchParams.set('from_currency', String(params.from_currency));
+  searchParams.set('to_currency', String(params.to_currency));
+  if (params.from_network) searchParams.set('from_network', String(params.from_network));
+  if (params.to_network) searchParams.set('to_network', String(params.to_network));
+  if (params.payment_method) searchParams.set('payment_method', String(params.payment_method));
+  if (params.side) searchParams.set('side', String(params.side));
+  if (params.from_amount) searchParams.set('from_amount', String(params.from_amount));
+  if (params.to_amount) {
+    searchParams.set('to_amount', String(params.to_amount));
+    searchParams.set('type', 'reverse');
+  }
+
+  return `/estimate?${searchParams.toString()}`;
+}
+
+function getPaymentMethodAliases(paymentMethod: unknown) {
+  const raw = String(paymentMethod || '').trim().toUpperCase();
+  if (!raw) return [] as string[];
+
+  const aliases = new Set<string>([raw]);
+
+  if (/OPEN_BANKING|SEPA|BANK_TRANSFER/.test(raw)) {
+    aliases.add('OPEN_BANKING_1');
+    aliases.add('SEPA');
+    aliases.add('BANK_TRANSFER');
+  }
+
+  if (/FASTER_PAYMENTS|FPS/.test(raw)) {
+    aliases.add('FASTER_PAYMENTS');
+    aliases.add('FPS');
+  }
+
+  return [...aliases];
+}
+
 async function fetchGuardarianJson(
   path: string,
   headers: Record<string, string>,
@@ -175,32 +222,53 @@ Deno.serve(async (req) => {
         const { from_currency, from_network, to_currency, to_network, from_amount, to_amount, payment_method, side, trade_direction } = body;
         if (!from_currency || !to_currency) return badRequest('Missing from_currency/to_currency', origin);
         if (!from_amount && !to_amount) return badRequest('Missing from_amount or to_amount', origin);
-
-        const params = new URLSearchParams();
-        params.set('from_currency', String(from_currency));
-        params.set('to_currency', String(to_currency));
-        if (from_network) params.set('from_network', String(from_network));
-        if (to_network) params.set('to_network', String(to_network));
-        if (payment_method) params.set('payment_method', String(payment_method));
         const resolvedSide = side || trade_direction;
-        if (resolvedSide) params.set('side', String(resolvedSide));
-        if (from_amount) params.set('from_amount', String(from_amount));
-        if (to_amount) {
-          params.set('to_amount', String(to_amount));
-          params.set('type', 'reverse');
+
+        const estimateVariants: Array<Record<string, unknown>> = [
+          { from_currency, to_currency, from_network, to_network, from_amount, to_amount, payment_method, side: resolvedSide },
+        ];
+
+        if (resolvedSide === 'sell') {
+          for (const alias of getPaymentMethodAliases(payment_method)) {
+            estimateVariants.push({ from_currency, to_currency, from_network, to_network, from_amount, to_amount, payment_method: alias, side: resolvedSide });
+          }
+
+          estimateVariants.push(
+            { from_currency, to_currency, from_network, to_network, from_amount, to_amount, side: resolvedSide },
+            { from_currency, to_currency, to_network, from_amount, to_amount, payment_method, side: resolvedSide },
+            { from_currency, to_currency, to_network, from_amount, to_amount, side: resolvedSide },
+            { from_currency, to_currency, from_network, to_network, from_amount, to_amount, payment_method },
+            { from_currency, to_currency, from_network, to_network, from_amount, to_amount },
+          );
         }
 
-        const { resp, text, data } = await fetchGuardarianJson(`/estimate?${params.toString()}`, headers, {
-          retryWithoutForwardedFor: true,
-          attempts: 3,
-          retryDelayMs: 300,
-        });
-        if (!resp.ok) {
-          console.error('Guardarian estimate error:', text);
-          return containedError('Estimate unavailable', true, { value: null, details: data }, origin);
+        const tried = new Set<string>();
+        let lastResult: Awaited<ReturnType<typeof fetchGuardarianJson>> | null = null;
+
+        for (const variant of estimateVariants) {
+          const path = buildEstimateQuery(variant);
+          if (tried.has(path)) continue;
+          tried.add(path);
+
+          const result = await fetchGuardarianJson(path, headers, {
+            retryWithoutForwardedFor: true,
+            attempts: 3,
+            retryDelayMs: 300,
+          });
+
+          if (result.resp.ok) {
+            return jsonResponse(result.data, 200, origin);
+          }
+
+          lastResult = result;
         }
 
-        return jsonResponse(data, 200, origin);
+        if (!lastResult?.resp.ok) {
+          console.error('Guardarian estimate error:', lastResult?.text);
+          return containedError('Estimate unavailable', true, { value: null, details: lastResult?.data }, origin);
+        }
+
+        return jsonResponse(lastResult.data, 200, origin);
       }
 
       case 'min-max': {
