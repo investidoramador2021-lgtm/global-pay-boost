@@ -105,6 +105,13 @@ Allow: /private-transfer/whitepaper
 
 Sitemap: https://mrcglobalpay.com/sitemap.xml
 
+# Syndication feeds
+# Blog RSS: https://mrcglobalpay.com/rss.xml
+# Blog Feed: https://mrcglobalpay.com/blog/feed.xml
+# Live Rates API: https://mrcglobalpay.com/api/v1/rates
+# Rates JSON: https://mrcglobalpay.com/api/rates.json
+# Rates XML: https://mrcglobalpay.com/export/rates.xml
+
 # Language subdirectories
 Allow: /es/
 Allow: /pt/
