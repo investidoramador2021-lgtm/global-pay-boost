@@ -77,7 +77,8 @@
     "tabs": {
       "exchange": "تبادلہ",
       "buy": "خریدیں",
-      "private": "نجی"
+      "private": "نجی",
+      "bridge": "بریج"
     },
     "online": "آن لائن",
     "fixedRate": "مقررہ شرح",
@@ -278,5 +279,29 @@
     "providerFee": "Provider fee",
     "invalidFormat": "Invalid format — please check and try again",
     "regulatedPaymentGateway": "Regulated payment gateway"
+  },
+  "bridge": {
+    "trustNotice": "ہم آپ کا ڈیٹا محفوظ نہیں کرتے۔ یہ رسید آپ کا واحد ریکارڈ ہے۔",
+    "fromCurrency": "سے (ذریعہ)",
+    "toCurrency": "تک (منزل)",
+    "destWallet": "منزل والیٹ ایڈریس",
+    "noStorageNotice": "ہم آپ کا ڈیٹا محفوظ نہیں کرتے۔",
+    "generating": "بنایا جا رہا ہے…",
+    "generateBtn": "مستقل ایڈریس بنائیں",
+    "addressCreated": "مستقل ایڈریس بنا دیا گیا",
+    "depositAddress": "مستقل ڈپازٹ ایڈریس",
+    "bridgeId": "Bridge ٹرانزیکشن ID",
+    "downloadReceipt": "رسید ڈاؤن لوڈ کریں",
+    "pdfDownloaded": "رسید ڈاؤن لوڈ ہو گئی ✓",
+    "newBridge": "نیا Bridge بنائیں",
+    "errorTitle": "Bridge غلطی",
+    "errorGeneric": "ایڈریس نہیں بن سکا۔ دوبارہ کوشش کریں۔",
+    "receiptTitle": "مستقل Bridge رسید",
+    "pdfPair": "کرنسی جوڑی",
+    "pdfDepositAddress": "ڈپازٹ ایڈریس",
+    "pdfDestWallet": "منزل والیٹ",
+    "pdfBridgeId": "Bridge ID",
+    "pdfExtraId": "اضافی ID / میمو",
+    "pdfFooter": "رازداری پہلے: MRC GlobalPay غیر تحویلی ہے۔ یہ معلومات ہمارے سرورز پر محفوظ نہیں ہوتی۔"
   }
 }

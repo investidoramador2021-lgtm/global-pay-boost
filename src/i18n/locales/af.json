@@ -77,7 +77,8 @@
     "tabs": {
       "exchange": "Ruil",
       "buy": "Koop",
-      "private": "Privaat"
+      "private": "Privaat",
+      "bridge": "Bridge"
     },
     "online": "Aanlyn",
     "fixedRate": "Vaste Koers",
@@ -278,5 +279,29 @@
     "providerFee": "Provider fee",
     "invalidFormat": "Invalid format — please check and try again",
     "regulatedPaymentGateway": "Regulated payment gateway"
+  },
+  "bridge": {
+    "trustNotice": "Ons stoor nie jou data nie. Hierdie kwitansie is jou enigste rekord.",
+    "fromCurrency": "Van (Bron)",
+    "toCurrency": "Na (Bestemming)",
+    "destWallet": "Bestemming Beursie-adres",
+    "noStorageNotice": "Ons stoor nie jou data nie.",
+    "generating": "Genereer…",
+    "generateBtn": "Genereer Permanente Adres",
+    "addressCreated": "Permanente Adres Geskep",
+    "depositAddress": "Permanente Deposito-adres",
+    "bridgeId": "Bridge Transaksie ID",
+    "downloadReceipt": "Laai Kwitansie Af",
+    "pdfDownloaded": "Afgelaai ✓",
+    "newBridge": "Skep Nuwe Bridge",
+    "errorTitle": "Bridge Fout",
+    "errorGeneric": "Kon nie adres skep nie. Probeer weer.",
+    "receiptTitle": "Permanente Bridge Kwitansie",
+    "pdfPair": "Geldeenheidpaar",
+    "pdfDepositAddress": "Deposito-adres",
+    "pdfDestWallet": "Bestemming Beursie",
+    "pdfBridgeId": "Bridge ID",
+    "pdfExtraId": "Extra ID / Memo",
+    "pdfFooter": "Privaatheid Eerste: MRC GlobalPay is nie-bewaarnemend. Hierdie inligting word nie op ons bedieners gestoor nie."
   }
 }

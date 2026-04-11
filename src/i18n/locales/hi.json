@@ -77,7 +77,8 @@
     "tabs": {
       "exchange": "एक्सचेंज",
       "buy": "खरीदें",
-      "private": "प्राइवेट"
+      "private": "प्राइवेट",
+      "bridge": "ब्रिज"
     },
     "online": "ऑनलाइन",
     "fixedRate": "निश्चित दर",
@@ -278,5 +279,29 @@
     "providerFee": "प्रदाता शुल्क",
     "invalidFormat": "अमान्य प्रारूप — जांचें और पुनः प्रयास करें",
     "regulatedPaymentGateway": "विनियमित भुगतान गेटवे"
+  },
+  "bridge": {
+    "trustNotice": "हम आपका डेटा संग्रहीत नहीं करते। यह रसीद आपका एकमात्र रिकॉर्ड है।",
+    "fromCurrency": "स्रोत",
+    "toCurrency": "गंतव्य",
+    "destWallet": "गंतव्य वॉलेट पता",
+    "noStorageNotice": "हम आपका डेटा संग्रहीत नहीं करते।",
+    "generating": "जनरेट हो रहा है…",
+    "generateBtn": "स्थायी पता जनरेट करें",
+    "addressCreated": "स्थायी पता बनाया गया",
+    "depositAddress": "स्थायी जमा पता",
+    "bridgeId": "ब्रिज लेनदेन ID",
+    "downloadReceipt": "रसीद डाउनलोड करें",
+    "pdfDownloaded": "रसीद डाउनलोड हो गई ✓",
+    "newBridge": "नया ब्रिज बनाएं",
+    "errorTitle": "ब्रिज त्रुटि",
+    "errorGeneric": "पता नहीं बन सका। कृपया पुनः प्रयास करें।",
+    "receiptTitle": "स्थायी ब्रिज रसीद",
+    "pdfPair": "मुद्रा जोड़ी",
+    "pdfDepositAddress": "जमा पता",
+    "pdfDestWallet": "गंतव्य वॉलेट",
+    "pdfBridgeId": "ब्रिज ID",
+    "pdfExtraId": "अतिरिक्त ID / मेमो",
+    "pdfFooter": "गोपनीयता प्राथमिकता: MRC GlobalPay गैर-कस्टोडियल है। यह जानकारी हमारे सर्वर पर संग्रहीत नहीं होती।"
   }
 }

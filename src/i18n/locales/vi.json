@@ -77,7 +77,8 @@
     "tabs": {
       "exchange": "Doi",
       "buy": "Mua",
-      "private": "Rieng tu"
+      "private": "Rieng tu",
+      "bridge": "Bridge"
     },
     "online": "Truc tuyen",
     "fixedRate": "Ty gia co dinh",
@@ -278,5 +279,29 @@
     "providerFee": "Provider fee",
     "invalidFormat": "Invalid format — please check and try again",
     "regulatedPaymentGateway": "Regulated payment gateway"
+  },
+  "bridge": {
+    "trustNotice": "Chúng tôi không lưu trữ dữ liệu của bạn. Biên lai này là bản ghi duy nhất.",
+    "fromCurrency": "Từ (Nguồn)",
+    "toCurrency": "Đến (Đích)",
+    "destWallet": "Địa Chỉ Ví Đích",
+    "noStorageNotice": "Chúng tôi không lưu trữ dữ liệu của bạn.",
+    "generating": "Đang tạo…",
+    "generateBtn": "Tạo Địa Chỉ Cố Định",
+    "addressCreated": "Đã Tạo Địa Chỉ Cố Định",
+    "depositAddress": "Địa Chỉ Nạp Cố Định",
+    "bridgeId": "ID Giao Dịch Bridge",
+    "downloadReceipt": "Tải Biên Lai",
+    "pdfDownloaded": "Đã Tải ✓",
+    "newBridge": "Tạo Bridge Mới",
+    "errorTitle": "Lỗi Bridge",
+    "errorGeneric": "Không thể tạo địa chỉ. Vui lòng thử lại.",
+    "receiptTitle": "Biên Lai Bridge Cố Định",
+    "pdfPair": "Cặp Tiền",
+    "pdfDepositAddress": "Địa Chỉ Nạp",
+    "pdfDestWallet": "Ví Đích",
+    "pdfBridgeId": "Bridge ID",
+    "pdfExtraId": "Extra ID / Memo",
+    "pdfFooter": "Quyền riêng tư: MRC GlobalPay không giữ tài sản. Thông tin này không được lưu trên máy chủ."
   }
 }

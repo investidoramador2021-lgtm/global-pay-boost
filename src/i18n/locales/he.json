@@ -77,7 +77,8 @@
     "tabs": {
       "exchange": "המרה",
       "buy": "קנייה",
-      "private": "פרטי"
+      "private": "פרטי",
+      "bridge": "Bridge"
     },
     "online": "מקוון",
     "fixedRate": "שער קבוע",
@@ -278,5 +279,29 @@
     "providerFee": "Provider fee",
     "invalidFormat": "Invalid format — please check and try again",
     "regulatedPaymentGateway": "Regulated payment gateway"
+  },
+  "bridge": {
+    "trustNotice": "איננו שומרים את הנתונים שלך. קבלה זו היא הרשומה היחידה שלך.",
+    "fromCurrency": "מ (מקור)",
+    "toCurrency": "אל (יעד)",
+    "destWallet": "כתובת ארנק יעד",
+    "noStorageNotice": "איננו שומרים את הנתונים שלך.",
+    "generating": "מייצר…",
+    "generateBtn": "צור כתובת קבועה",
+    "addressCreated": "כתובת קבועה נוצרה",
+    "depositAddress": "כתובת הפקדה קבועה",
+    "bridgeId": "מזהה עסקת Bridge",
+    "downloadReceipt": "הורד קבלה",
+    "pdfDownloaded": "הקבלה הורדה ✓",
+    "newBridge": "צור Bridge חדש",
+    "errorTitle": "שגיאת Bridge",
+    "errorGeneric": "לא ניתן ליצור כתובת. נסה שוב.",
+    "receiptTitle": "קבלת Bridge קבועה",
+    "pdfPair": "זוג מטבעות",
+    "pdfDepositAddress": "כתובת הפקדה",
+    "pdfDestWallet": "ארנק יעד",
+    "pdfBridgeId": "מזהה Bridge",
+    "pdfExtraId": "מזהה נוסף / Memo",
+    "pdfFooter": "פרטיות בראש: MRC GlobalPay אינו משמורני. מידע זה אינו מאוחסן בשרתים שלנו."
   }
 }

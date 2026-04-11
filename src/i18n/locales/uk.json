@@ -77,7 +77,8 @@
     "tabs": {
       "exchange": "Обмін",
       "buy": "Купити",
-      "private": "Приватний"
+      "private": "Приватний",
+      "bridge": "Бридж"
     },
     "online": "Онлайн",
     "fixedRate": "Фіксований курс",
@@ -278,5 +279,29 @@
     "providerFee": "Provider fee",
     "invalidFormat": "Invalid format — please check and try again",
     "regulatedPaymentGateway": "Regulated payment gateway"
+  },
+  "bridge": {
+    "trustNotice": "Ми не зберігаємо ваші дані. Цей чек є вашим єдиним записом.",
+    "fromCurrency": "З (Джерело)",
+    "toCurrency": "До (Призначення)",
+    "destWallet": "Адреса Гаманця Призначення",
+    "noStorageNotice": "Ми не зберігаємо ваші дані.",
+    "generating": "Генерація…",
+    "generateBtn": "Створити Постійну Адресу",
+    "addressCreated": "Постійну Адресу Створено",
+    "depositAddress": "Постійна Адреса Депозиту",
+    "bridgeId": "ID Транзакції Bridge",
+    "downloadReceipt": "Завантажити Квитанцію",
+    "pdfDownloaded": "Квитанцію Завантажено ✓",
+    "newBridge": "Створити Новий Bridge",
+    "errorTitle": "Помилка Bridge",
+    "errorGeneric": "Не вдалося створити адресу. Спробуйте ще раз.",
+    "receiptTitle": "Квитанція Постійного Bridge",
+    "pdfPair": "Валютна Пара",
+    "pdfDepositAddress": "Адреса Депозиту",
+    "pdfDestWallet": "Гаманець Призначення",
+    "pdfBridgeId": "Bridge ID",
+    "pdfExtraId": "Додатковий ID / Memo",
+    "pdfFooter": "Конфіденційність перш за все: MRC GlobalPay є некастодіальним. Ця інформація не зберігається на наших серверах."
   }
 }
