@@ -35,7 +35,7 @@ import {
 import { resolvePaymentMethodDisplay, getSmartDefaultMethod } from "@/components/PaymentMethodLogos";
 import { useToast } from "@/hooks/use-toast";
 import { usePushNotifications } from "@/hooks/use-push-notifications";
-import { useExchangeSync } from "@/hooks/use-exchange-sync";
+
 
 const POPULAR_TICKERS = ["btc", "eth", "usdt", "usdttrc20", "sol", "xrp", "doge", "bnb", "ltc", "usdc", "trx"];
 
@@ -293,17 +293,6 @@ const ExchangeWidget = ({ onTabChange }: ExchangeWidgetProps = {}) => {
   const { toast } = useToast();
   const { t } = useTranslation();
   const { subscribe: subscribePush, supported: pushSupported } = usePushNotifications();
-  const {
-    fromTicker: syncedFromTicker,
-    toTicker: syncedToTicker,
-    setFromTicker: syncFromTicker,
-    setToTicker: syncToTicker,
-    setOptions: setSyncOptions,
-    setReady: setSyncReady,
-    setCanSubmit: setSyncCanSubmit,
-    registerSubmitHandler,
-    resetSubmitting,
-  } = useExchangeSync();
   const pushSubscribedRef = useRef(false);
   const [currencies, setCurrencies] = useState<Currency[]>([]);
   const [fromCurrency, setFromCurrency] = useState<Currency | null>(null);
@@ -724,8 +713,6 @@ const ExchangeWidget = ({ onTabChange }: ExchangeWidgetProps = {}) => {
         .then((data) => {
           if (Array.isArray(data)) {
             setCurrencies(data);
-            setSyncOptions(data.slice(0, 12).map((c) => ({ ticker: c.ticker, label: displayTicker(c) })));
-            setSyncReady(true);
 
             const findCurrency = (mapped: string | undefined, raw: string | undefined) => {
               if (!mapped) return null;
@@ -735,16 +722,12 @@ const ExchangeWidget = ({ onTabChange }: ExchangeWidgetProps = {}) => {
               return null;
             };
 
-            const syncFromMatch = syncedFromTicker ? data.find((c) => c.ticker === syncedFromTicker) : null;
-            const syncToMatch = syncedToTicker ? data.find((c) => c.ticker === syncedToTicker) : null;
-            const fromMatch = syncFromMatch || findCurrency(paramFromMapped, paramFrom);
-            const toMatch = syncToMatch || findCurrency(paramTo, rawTo);
+            const fromMatch = findCurrency(paramFromMapped, paramFrom);
+            const toMatch = findCurrency(paramTo, rawTo);
             const nextFrom = fromMatch || data.find((c) => c.ticker === "btc") || data[0];
             const nextTo = toMatch || data.find((c) => c.ticker === "eth") || data[1];
             setFromCurrency(nextFrom);
             setToCurrency(nextTo);
-            syncFromTicker(nextFrom.ticker);
-            syncToTicker(nextTo.ticker);
             if (paramAmount && parseFloat(paramAmount) > 0) {
               setSendAmount(paramAmount);
             }
@@ -1262,7 +1245,6 @@ const ExchangeWidget = ({ onTabChange }: ExchangeWidgetProps = {}) => {
   const handleExchangeNow = () => {
     setStep("address");
     scrollToWidget();
-    resetSubmitting();
   };
 
   const handleCreateTransaction = async () => {
@@ -1471,33 +1453,6 @@ const ExchangeWidget = ({ onTabChange }: ExchangeWidgetProps = {}) => {
   const canExchangeNow = widgetMode === "exchange" && !loading && !estimating && !creatingTx && Boolean(fromCurrency && toCurrency) && Boolean(estimatedAmount) && estimatedAmount !== "—" && !belowMin;
 
 
-  useEffect(() => {
-    if (!fromCurrency) return;
-    syncFromTicker(fromCurrency.ticker);
-  }, [fromCurrency, syncFromTicker]);
-
-  useEffect(() => {
-    if (!toCurrency) return;
-    syncToTicker(toCurrency.ticker);
-  }, [toCurrency, syncToTicker]);
-
-  useEffect(() => {
-    if (!currencies.length) return;
-    if (syncedFromTicker) {
-      const nextFrom = currencies.find((c) => c.ticker === syncedFromTicker);
-      if (nextFrom && nextFrom.ticker !== fromCurrency?.ticker) setFromCurrency(nextFrom);
-    }
-    if (syncedToTicker) {
-      const nextTo = currencies.find((c) => c.ticker === syncedToTicker);
-      if (nextTo && nextTo.ticker !== toCurrency?.ticker) setToCurrency(nextTo);
-    }
-  }, [syncedFromTicker, syncedToTicker, currencies, fromCurrency?.ticker, toCurrency?.ticker]);
-
-  useEffect(() => {
-    setSyncCanSubmit(canExchangeNow);
-    registerSubmitHandler(() => handleExchangeNow);
-    return () => registerSubmitHandler(null);
-  }, [canExchangeNow, registerSubmitHandler, handleExchangeNow, setSyncCanSubmit]);
 
   const BATCH_SIZE = 50;
 
