@@ -53,6 +53,7 @@ const BridgeWhitepaper = lazy(() => import("./pages/BridgeWhitepaper.tsx"));
 const ShieldedWhitepaper = lazy(() => import("./pages/ShieldedWhitepaper.tsx"));
 const CryptoDustSolutions = lazy(() => import("./pages/CryptoDustSolutions.tsx"));
 const Compliance = lazy(() => import("./pages/Compliance.tsx"));
+const CryptoDustManifesto = lazy(() => import("./pages/CryptoDustManifesto.tsx"));
 const NotFound = lazy(() => import("./pages/NotFound.tsx"));
 
 const queryClient = new QueryClient();
