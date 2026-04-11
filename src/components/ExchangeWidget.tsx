@@ -955,7 +955,7 @@ const ExchangeWidget = () => {
       setGTradeDirection("buy");
     } else if (tab === "sell") {
       setWidgetMode("buysell");
-      setGTradeDirection("sell");
+      setGTradeDirection("buy");
     }
   }, []);
 
@@ -1628,32 +1628,6 @@ const ExchangeWidget = () => {
                   }`}
                 >
                   <CreditCard className="h-4 w-4" /> Buy
-                </button>
-                <button
-                  onClick={() => {
-                    setWidgetMode("buysell");
-                    setGTradeDirection("sell");
-                    setGStep("form");
-                    setGCheckoutUrl("");
-                    setGShowReview(false);
-                    setGEstimateError("");
-                    setGSelectedPaymentMethod("");
-                    setGPayoutAddress("");
-                    setGPayoutEmail("");
-                    setGBankFields({});
-                    setGSepaIban("");
-                    setGSepaBic("");
-                    if (guardarianFiat.length || guardarianCrypto.length) {
-                      applyGuardarianDefaults("sell");
-                    }
-                  }}
-                  className={`flex items-center justify-center gap-1.5 rounded-lg px-3 py-2 font-display text-sm font-semibold transition-all ${
-                    widgetMode === "buysell" && gTradeDirection === "sell"
-                      ? "bg-primary text-primary-foreground shadow-card"
-                      : "text-muted-foreground hover:text-foreground hover:bg-background"
-                  }`}
-                >
-                  <Wallet className="h-4 w-4" /> Sell
                 </button>
               </div>
               <span className="hidden min-[481px]:flex items-center gap-1.5 rounded-full border border-trust/30 bg-trust/10 px-2.5 py-1 font-body text-[10px] font-semibold uppercase tracking-wider text-trust">
