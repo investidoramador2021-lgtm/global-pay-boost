@@ -30,7 +30,7 @@ const images: Record<string, string> = {
 
 const logoComponents = [VisaLogo, MastercardLogo, ApplePayLogo, GooglePayLogo, PixLogo, SepaLogo];
 
-const transition = { duration: 0.4, ease: [0.25, 0.46, 0.45, 0.94] };
+const transition = { duration: 0.4, ease: "easeOut" as const };
 
 const DynamicExplainer = ({ activeTab, onCtaClick }: Props) => {
   const { t } = useTranslation();
