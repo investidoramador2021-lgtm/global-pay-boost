@@ -905,24 +905,23 @@ const ExchangeWidget = () => {
     try {
       const fromNetwork = getNetworkParam(gFromCurrency);
       const toNetwork = getNetworkParam(gToCurrency);
-      const estimateParams: Parameters<typeof getGuardarianEstimate>[0] = {
+      const baseEstimateParams: Parameters<typeof getGuardarianEstimate>[0] = {
         from_currency: gFromCurrency.ticker,
         to_currency: gToCurrency.ticker,
         from_amount: gSendAmount,
       };
-      if (fromNetwork) estimateParams.from_network = fromNetwork;
-      if (toNetwork) estimateParams.to_network = toNetwork;
+      if (fromNetwork) baseEstimateParams.from_network = fromNetwork;
+      if (toNetwork) baseEstimateParams.to_network = toNetwork;
+
       let effectivePaymentMethod = resolveGuardarianPaymentMethod(
         (gTradeDirection === "buy" ? gFromCurrency : gToCurrency)?.ticker,
         gPaymentMethods,
         gSelectedPaymentMethod,
         gTradeDirection,
       );
-      // Hard-map EUR sell to SEPA if resolver missed it
       if (gTradeDirection === "sell" && gToCurrency.ticker === "EUR" && !effectivePaymentMethod) {
         effectivePaymentMethod = "SEPA";
       }
-      if (effectivePaymentMethod) estimateParams.payment_method = effectivePaymentMethod;
 
       const minMaxParams: Parameters<typeof getGuardarianMinMax>[0] = {
         from_currency: gFromCurrency.ticker,
@@ -931,8 +930,12 @@ const ExchangeWidget = () => {
       if (fromNetwork) minMaxParams.from_network = fromNetwork;
       if (toNetwork) minMaxParams.to_network = toNetwork;
 
-      const [est, minMax] = await Promise.all([
-        getGuardarianEstimate(estimateParams),
+      const primaryEstimateParams = effectivePaymentMethod
+        ? { ...baseEstimateParams, payment_method: effectivePaymentMethod }
+        : baseEstimateParams;
+
+      const [primaryEstimate, minMax] = await Promise.all([
+        getGuardarianEstimate(primaryEstimateParams),
         getGuardarianMinMax(minMaxParams),
       ]);
 
@@ -941,17 +944,25 @@ const ExchangeWidget = () => {
       setGMinAmount(Number(minMax.min) || 0);
       setGMaxAmount(Number(minMax.max) || 999999);
 
-      if ((est as any)?.fallback || !est?.value) {
+      let finalEstimate = primaryEstimate;
+      if (((primaryEstimate as any)?.fallback || !primaryEstimate?.value) && effectivePaymentMethod) {
+        const fallbackEstimate = await getGuardarianEstimate(baseEstimateParams);
+        if (requestId !== gEstimateRequestIdRef.current) return;
+        if (!(fallbackEstimate as any)?.fallback && fallbackEstimate?.value) {
+          finalEstimate = fallbackEstimate;
+        }
+      }
+
+      if ((finalEstimate as any)?.fallback || !finalEstimate?.value) {
         setGEstimatedAmount("");
         setGFullEstimate(null);
-        // Check if the amount is simply out of range before claiming corridor is unsupported
         const amt = parseFloat(gSendAmount);
         const rangeMin = Number(minMax.min) || 0;
         const rangeMax = Number(minMax.max) || 999999;
         if (rangeMin > 0 && rangeMax < 999999 && (amt < rangeMin || amt > rangeMax)) {
-          // Corridor IS supported — amount is just out of range; no error banner needed
-          // The min/max warnings below the input handle this
           setGEstimateError("");
+        } else if ((finalEstimate as any)?.fallback) {
+          setGEstimateError("This corridor is temporarily unavailable. Please try again in a moment.");
         } else {
           setGEstimateError(
             `Estimate unavailable for ${gFromCurrency.ticker} → ${gToCurrency.ticker}. Try a different amount or currency pair.`
@@ -960,8 +971,8 @@ const ExchangeWidget = () => {
         return;
       }
 
-      setGEstimatedAmount(est.value || "");
-      setGFullEstimate(est);
+      setGEstimatedAmount(finalEstimate.value || "");
+      setGFullEstimate(finalEstimate);
     } catch {
       if (requestId !== gEstimateRequestIdRef.current) return;
       setGEstimatedAmount("");
