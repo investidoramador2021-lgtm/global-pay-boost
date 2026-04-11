@@ -971,6 +971,8 @@ const ExchangeWidget = () => {
     } else if (tab === "sell") {
       setWidgetMode("buysell");
       setGTradeDirection("buy");
+    } else if (tab === "bridge") {
+      setWidgetMode("bridge");
     }
   }, []);
 
