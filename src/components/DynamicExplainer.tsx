@@ -2,7 +2,6 @@ import { useTranslation } from "react-i18next";
 import { AnimatePresence, motion } from "framer-motion";
 import { CreditCard, Repeat, EyeOff, Link2, ShieldCheck, Zap, Wallet, ArrowRight, CheckCircle2 } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import { VisaLogo, MastercardLogo, ApplePayLogo, GooglePayLogo, PixLogo, SepaLogo } from "@/components/PaymentMethodLogos";
 import explainerBuy from "@/assets/explainer-buy-hd.jpg";
 import explainerBridge from "@/assets/explainer-bridge-hd.jpg";
 import explainerPrivate from "@/assets/explainer-private-hd.jpg";
@@ -28,9 +27,8 @@ const images: Record<string, string> = {
   exchange: explainerBuy,
 };
 
-const logoComponents = [VisaLogo, MastercardLogo, ApplePayLogo, GooglePayLogo, PixLogo, SepaLogo];
-
-const transition = { duration: 0.4, ease: "easeOut" as const };
+/* Clean text-based payment method labels — no crude SVGs */
+const paymentLabels = ["VISA", "Mastercard", "Apple Pay", "Google Pay", "PIX", "SEPA"];
 
 const DynamicExplainer = ({ activeTab, onCtaClick }: Props) => {
   const { t } = useTranslation();
@@ -47,7 +45,7 @@ const DynamicExplainer = ({ activeTab, onCtaClick }: Props) => {
             initial={{ opacity: 0, y: 24 }}
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: -24 }}
-            transition={transition}
+            transition={{ duration: 0.4, ease: "easeOut" }}
           >
             {/* Hero row: copy + large visual */}
             <div className="grid items-center gap-12 lg:grid-cols-2 lg:gap-20">
@@ -60,22 +58,22 @@ const DynamicExplainer = ({ activeTab, onCtaClick }: Props) => {
                   {t(`${prefix}.subtitle`)}
                 </p>
 
-                {/* Greyscale logo cloud — Buy mode only */}
+                {/* Premium payment method labels — Buy mode only */}
                 {mode === "buysell" && (
-                  <div className="mt-8 flex flex-wrap items-center gap-4">
-                    {logoComponents.map((Logo, i) => (
-                      <div
-                        key={i}
-                        className="group flex h-11 items-center rounded-lg border border-border/50 bg-card/50 px-4 backdrop-blur-sm transition-all duration-300 hover:border-primary/30 hover:bg-card hover:shadow-md"
+                  <div className="mt-8 flex flex-wrap items-center gap-3">
+                    {paymentLabels.map((label) => (
+                      <span
+                        key={label}
+                        className="inline-flex h-10 items-center rounded-full border border-border/60 bg-muted/30 px-5 text-xs font-semibold tracking-wide text-muted-foreground transition-all duration-300 hover:border-primary/40 hover:bg-primary/10 hover:text-foreground"
                       >
-                        <Logo className="h-6 w-auto grayscale opacity-60 transition-all duration-300 group-hover:grayscale-0 group-hover:opacity-100" />
-                      </div>
+                        {label}
+                      </span>
                     ))}
                   </div>
                 )}
 
                 {/* CTA */}
-                <div className="mt-8">
+                <div className="mt-8 sm:mt-10">
                   <Button
                     size="lg"
                     className="gap-2 text-base font-semibold"
@@ -99,10 +97,10 @@ const DynamicExplainer = ({ activeTab, onCtaClick }: Props) => {
                   loading="lazy"
                   width={1024}
                   height={1024}
-                  className="w-full max-w-lg rounded-3xl shadow-2xl ring-1 ring-border/10 sm:max-w-xl"
+                  className="w-full max-w-[280px] rounded-3xl shadow-2xl ring-1 ring-border/10 sm:max-w-sm md:max-w-md lg:max-w-lg"
                   initial={{ opacity: 0, scale: 0.95 }}
                   animate={{ opacity: 1, scale: 1 }}
-                  transition={{ ...transition, delay: 0.1 }}
+                  transition={{ duration: 0.4, ease: "easeOut", delay: 0.1 }}
                 />
               </div>
             </div>
@@ -117,7 +115,7 @@ const DynamicExplainer = ({ activeTab, onCtaClick }: Props) => {
                     className="relative rounded-2xl border border-border bg-card p-8 text-center shadow-card transition-shadow duration-300 hover:shadow-elevated sm:p-10"
                     initial={{ opacity: 0, y: 20 }}
                     animate={{ opacity: 1, y: 0 }}
-                    transition={{ ...transition, delay: 0.15 + idx * 0.1 }}
+                    transition={{ duration: 0.4, ease: "easeOut", delay: 0.15 + idx * 0.1 }}
                   >
                     <div className="mx-auto mb-5 flex h-16 w-16 items-center justify-center rounded-2xl bg-primary/10">
                       <Icon className="h-7 w-7 text-primary" />
