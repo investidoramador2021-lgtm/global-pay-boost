@@ -224,5 +224,14 @@
       <pubDate>Fri, 11 Apr 2026 00:00:00 GMT</pubDate>
       <category>Whitepaper</category>
     </item>
+    <item>
+      <title>Institutional Crypto Dust Consolidation — Recover Lost Liquidity</title>
+      <link>https://mrcglobalpay.com/crypto-dust-solutions</link>
+      <guid isPermaLink="true">https://mrcglobalpay.com/crypto-dust-solutions</guid>
+      <description>Consolidate fragmented cross-chain crypto dust into unified stablecoin assets through a FINTRAC-registered, non-custodial sweep engine. Swaps from $0.30.</description>
+      <dc:creator>MRC GlobalPay Team</dc:creator>
+      <pubDate>Fri, 11 Apr 2026 00:00:00 GMT</pubDate>
+      <category>Institutional</category>
+    </item>
   </channel>
 </rss>
