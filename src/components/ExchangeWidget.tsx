@@ -927,14 +927,15 @@ const ExchangeWidget = () => {
       if (fromNetwork) baseEstimateParams.from_network = fromNetwork;
       if (toNetwork) baseEstimateParams.to_network = toNetwork;
 
-      let effectivePaymentMethod = resolveGuardarianPaymentMethod(
+      const effectivePaymentMethod = resolveGuardarianPaymentMethod(
         (gTradeDirection === "buy" ? gFromCurrency : gToCurrency)?.ticker,
         gPaymentMethods,
         gSelectedPaymentMethod,
         gTradeDirection,
       );
-      // For sell: don't force a synthetic payment method — let the API use its default
-      // Only use a payment method if it was actually confirmed by the API as withdrawal-enabled
+      const requestPaymentMethod = gTradeDirection === "buy" ? effectivePaymentMethod : undefined;
+      // Off-ramp quotes are more reliable when Guardarian selects the payout rail
+      // from the fiat currency + bank details instead of us forcing the raw method code.
 
       const minMaxParams: Parameters<typeof getGuardarianMinMax>[0] = {
         from_currency: gFromCurrency.ticker,
@@ -943,8 +944,8 @@ const ExchangeWidget = () => {
       if (fromNetwork) minMaxParams.from_network = fromNetwork;
       if (toNetwork) minMaxParams.to_network = toNetwork;
 
-      const primaryEstimateParams = effectivePaymentMethod
-        ? { ...baseEstimateParams, payment_method: effectivePaymentMethod }
+      const primaryEstimateParams = requestPaymentMethod
+        ? { ...baseEstimateParams, payment_method: requestPaymentMethod }
         : baseEstimateParams;
 
       const [primaryEstimate, minMax] = await Promise.all([
@@ -958,7 +959,7 @@ const ExchangeWidget = () => {
       setGMaxAmount(Number(minMax.max) || 999999);
 
       let finalEstimate = primaryEstimate;
-      if (((primaryEstimate as any)?.fallback || !primaryEstimate?.value) && effectivePaymentMethod) {
+      if (((primaryEstimate as any)?.fallback || !primaryEstimate?.value) && requestPaymentMethod) {
         const fallbackEstimate = await getGuardarianEstimate(baseEstimateParams);
         if (requestId !== gEstimateRequestIdRef.current) return;
         if (!(fallbackEstimate as any)?.fallback && fallbackEstimate?.value) {
@@ -1273,6 +1274,7 @@ const ExchangeWidget = () => {
         gSelectedPaymentMethod,
         gTradeDirection,
       );
+      const requestPaymentMethod = gTradeDirection === "buy" ? effectivePaymentMethod : undefined;
 
       // Build bank_details for sell flow
       let bankDetails: GuardarianBankDetails | undefined;
@@ -1294,7 +1296,7 @@ const ExchangeWidget = () => {
         ...(gTradeDirection === "buy" ? { payout_address: gPayoutAddress.trim() } : {}),
         ...(bankDetails ? { bank_details: bankDetails } : {}),
         email: emailParam,
-        ...(effectivePaymentMethod ? { payment_method: effectivePaymentMethod } : {}),
+        ...(requestPaymentMethod ? { payment_method: requestPaymentMethod } : {}),
         trade_direction: gTradeDirection,
       });
 
