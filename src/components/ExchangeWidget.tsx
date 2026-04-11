@@ -1,8 +1,9 @@
 import { useState, useEffect, useCallback, useRef, forwardRef } from "react";
 import { useTranslation } from "react-i18next";
 import { motion, AnimatePresence } from "framer-motion";
-import { ArrowDownUp, Loader2, Search, Copy, Check, ArrowLeft, ArrowRight, ArrowLeftRight, Clock, CheckCircle2, AlertCircle, ExternalLink, Wallet, QrCode, XCircle, Info, Mail, RefreshCw, Shield, Lock, ChevronDown, Share2, CreditCard, Repeat, EyeOff } from "lucide-react";
+import { ArrowDownUp, Loader2, Search, Copy, Check, ArrowLeft, ArrowRight, ArrowLeftRight, Clock, CheckCircle2, AlertCircle, ExternalLink, Wallet, QrCode, XCircle, Info, Mail, RefreshCw, Shield, Lock, ChevronDown, Share2, CreditCard, Repeat, EyeOff, Link2 } from "lucide-react";
 import PrivateTransferTab from "@/components/PrivateTransferTab";
+import PermanentBridgeTab from "@/components/PermanentBridgeTab";
 import DestinationAddressInput, { tickerToAddressType } from "@/components/DestinationAddressInput";
 import { supabase } from "@/integrations/supabase/client";
 import { Button } from "@/components/ui/button";
@@ -302,7 +303,7 @@ const ExchangeWidget = () => {
   const debounceRef = useRef<ReturnType<typeof setTimeout>>();
 
   // ===== Dual-tab mode: "exchange" (ChangeNOW) vs "buysell" (Guardarian) =====
-  type WidgetMode = "exchange" | "buysell" | "private";
+  type WidgetMode = "exchange" | "buysell" | "private" | "bridge";
   type FiatFlow = "buy" | "sell";
   const [widgetMode, setWidgetMode] = useState<WidgetMode>("exchange");
   const [gTradeDirection, setGTradeDirection] = useState<FiatFlow>("buy");
@@ -1606,7 +1607,7 @@ const ExchangeWidget = () => {
           <motion.div key="exchange" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}>
             {/* ===== MODE TABS: Exchange | Buy/Sell ===== */}
             <div className="mb-5 flex items-center justify-between gap-2">
-              <div className="flex rounded-xl border border-border bg-accent p-1 gap-1 max-[480px]:w-full max-[480px]:grid max-[480px]:grid-cols-3">
+              <div className="flex rounded-xl border border-border bg-accent p-1 gap-1 max-[480px]:w-full max-[480px]:grid max-[480px]:grid-cols-4">
                 <button
                   onClick={() => { setWidgetMode("exchange"); setGStep("form"); setGCheckoutUrl(""); }}
                   className={`flex items-center justify-center gap-1.5 rounded-lg px-3 py-2 font-display text-sm font-semibold transition-all ${
@@ -2462,6 +2463,11 @@ const ExchangeWidget = () => {
             {/* ===== PRIVATE TRANSFER MODE ===== */}
             {widgetMode === "private" && (
               <PrivateTransferTab />
+            )}
+
+            {/* ===== PERMANENT BRIDGE MODE ===== */}
+            {widgetMode === "bridge" && (
+              <PermanentBridgeTab />
             )}
 
             {/* ===== EXCHANGE MODE (ChangeNOW) ===== */}
