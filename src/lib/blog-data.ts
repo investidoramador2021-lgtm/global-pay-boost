@@ -4,6 +4,7 @@ import { TRANSLATED_BTC_ETH_POSTS } from "@/lib/blog/translated-btc-eth-posts";
 import { TRANSLATED_DUST_POSTS } from "@/lib/blog/translated-dust-posts";
 import { PIX_POST_EN, TRANSLATED_PIX_POSTS } from "@/lib/blog/translated-pix-posts";
 import { SEPA_POST_EN, TRANSLATED_SEPA_POSTS } from "@/lib/blog/translated-sepa-posts";
+import { CARD_POST_EN, TRANSLATED_CARD_POSTS } from "@/lib/blog/translated-card-posts";
 import type { BlogPost, BlogAuthor } from "@/lib/blog/types";
 
 export type { BlogPost, BlogAuthor } from "@/lib/blog/types";
@@ -44,7 +45,7 @@ export async function fetchAllPosts(): Promise<BlogPost[]> {
 
   const dbPosts = (data || []).map(dbRowToPost);
   const dbSlugs = new Set(dbPosts.map((post) => post.slug));
-  const allSeedPosts = [...SEED_POSTS, PIX_POST_EN, SEPA_POST_EN];
+  const allSeedPosts = [...SEED_POSTS, PIX_POST_EN, SEPA_POST_EN, CARD_POST_EN];
   const uniqueSeedPosts = allSeedPosts.filter((post) => !dbSlugs.has(post.slug));
 
   return [...dbPosts, ...uniqueSeedPosts];
@@ -53,7 +54,7 @@ export async function fetchAllPosts(): Promise<BlogPost[]> {
 export async function fetchPostBySlug(slug: string, lang = "en"): Promise<BlogPost | undefined> {
   // For non-English languages, check all translated post collections
   if (lang !== "en") {
-    const translatedCollections = [TRANSLATED_BTC_ETH_POSTS, TRANSLATED_DUST_POSTS, TRANSLATED_PIX_POSTS, TRANSLATED_SEPA_POSTS];
+    const translatedCollections = [TRANSLATED_BTC_ETH_POSTS, TRANSLATED_DUST_POSTS, TRANSLATED_PIX_POSTS, TRANSLATED_SEPA_POSTS, TRANSLATED_CARD_POSTS];
     for (const collection of translatedCollections) {
       const translated = collection[lang];
       if (translated && translated.slug === slug) {
@@ -71,7 +72,7 @@ export async function fetchPostBySlug(slug: string, lang = "en"): Promise<BlogPo
 
   if (data) return dbRowToPost(data);
 
-  const allSeed = [...SEED_POSTS, PIX_POST_EN, SEPA_POST_EN];
+  const allSeed = [...SEED_POSTS, PIX_POST_EN, SEPA_POST_EN, CARD_POST_EN];
   return allSeed.find((post) => post.slug === slug);
 }
 
