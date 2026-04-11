@@ -20,6 +20,7 @@ import TrendingEcosystems from "@/components/TrendingEcosystems";
 import GetTheAppBadges from "@/components/GetTheAppBadges";
 import BentoSpecsSection from "@/components/BentoSpecsSection";
 import LiveNetworkBadge from "@/components/LiveNetworkBadge";
+import StickyUtilityBar from "@/components/StickyUtilityBar";
 import { Helmet } from "react-helmet-async";
 
 const Index = () => {
@@ -176,6 +177,7 @@ const Index = () => {
 
       <PullToRefresh onRefresh={handleRefresh}>
         <SiteHeader />
+        <StickyUtilityBar />
         <main>
           <HeroSection />
           <TrustBanner />
