@@ -980,6 +980,11 @@ const ExchangeWidget = ({ onTabChange }: ExchangeWidgetProps = {}) => {
     }
   }, []);
 
+  // Notify parent of tab changes
+  useEffect(() => {
+    onTabChange?.(widgetMode);
+  }, [widgetMode, onTabChange]);
+
   // Reset bank fields when fiat currency changes in sell mode
   useEffect(() => {
     if (gTradeDirection === "sell") {
