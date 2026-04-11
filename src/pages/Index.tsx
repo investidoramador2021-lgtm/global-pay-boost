@@ -34,7 +34,9 @@ const Index = () => {
     "@id": "https://mrcglobalpay.com/#organization",
     name: "MRC GlobalPay",
     url: "https://mrcglobalpay.com",
-    legalName: "MRC Global Pay",
+    legalName: "MRC GlobalPay",
+    identifier: "C100000015",
+    taxID: "C100000015",
     description:
       "Registered Money Services Business (MSB) offering instant, non-custodial crypto-to-crypto swaps starting at $0.30. No registration required. 500+ assets supported.",
     image: "https://pub-bb2e103a32db4e198524a2e9ed8f35b4.r2.dev/22f69f45-cf65-4871-9af4-b68ab4027213/id-preview-243bf129--23f851ec-c820-43c7-bbe2-d2e830f7c268.lovable.app-1773521796493.png",
@@ -42,7 +44,7 @@ const Index = () => {
     knowsAbout: ["Non-Custodial Swaps", "FINTRAC Compliance", "Micro-transactions", "Blockchain Interoperability", "Crypto Dust Conversion"],
     sameAs: [
       "https://www.linkedin.com/company/mrc-globalpay",
-      "https://www10.fintrac-canafe.gc.ca/msb-esm/public/detailed-information/bns-new/7b226d7362526567697374726174696f6e4e756d626572223a224d3233323235363338227d",
+      "https://fintrac-canafe.canada.ca/msb-esm/reg-eng",
     ],
     address: {
       "@type": "PostalAddress",
@@ -53,10 +55,10 @@ const Index = () => {
       addressCountry: "CA",
     },
     telephone: "+1-613-555-0100",
-    areaServed: {
-      "@type": "Place",
-      name: "Worldwide",
-    },
+    areaServed: [
+      { "@type": "Country", name: "Canada" },
+      { "@type": "Place", name: "International" },
+    ],
     serviceType: "Cryptocurrency Exchange",
     currenciesAccepted: "BTC, ETH, SOL, USDT, USDC",
     priceRange: "$0.30+",
