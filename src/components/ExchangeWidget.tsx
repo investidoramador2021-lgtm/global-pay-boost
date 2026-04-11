@@ -944,9 +944,19 @@ const ExchangeWidget = () => {
       if ((est as any)?.fallback || !est?.value) {
         setGEstimatedAmount("");
         setGFullEstimate(null);
-        setGEstimateError(gTradeDirection === "sell"
-          ? `Sell to ${gToCurrency.ticker} is not currently supported by our provider. Try a different payout currency.`
-          : "Service temporarily unavailable. Please refresh and try again.");
+        // Check if the amount is simply out of range before claiming corridor is unsupported
+        const amt = parseFloat(gSendAmount);
+        const rangeMin = Number(minMax.min) || 0;
+        const rangeMax = Number(minMax.max) || 999999;
+        if (rangeMin > 0 && rangeMax < 999999 && (amt < rangeMin || amt > rangeMax)) {
+          // Corridor IS supported — amount is just out of range; no error banner needed
+          // The min/max warnings below the input handle this
+          setGEstimateError("");
+        } else {
+          setGEstimateError(
+            `Estimate unavailable for ${gFromCurrency.ticker} → ${gToCurrency.ticker}. Try a different amount or currency pair.`
+          );
+        }
         return;
       }
 
