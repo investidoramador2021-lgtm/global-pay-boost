@@ -1,7 +1,7 @@
 import { useState, useRef, useEffect } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
 import { useTranslation } from "react-i18next";
-import { Globe, Search, Check } from "lucide-react";
+import { Search, Check } from "lucide-react";
 import {
   supportedLanguages,
   languageMeta,
@@ -10,6 +10,16 @@ import {
   langPath,
   type SupportedLanguage,
 } from "@/i18n";
+
+const LANG_TO_COUNTRY: Record<string, string> = {
+  en: "us", es: "es", pt: "br", fr: "fr", ja: "jp", fa: "ir",
+  ur: "pk", he: "il", af: "za", hi: "in", vi: "vn", tr: "tr", uk: "ua",
+};
+
+function flagUrl(lang: string, size = 40): string {
+  const code = LANG_TO_COUNTRY[lang] || lang;
+  return `https://flagcdn.com/w${size}/${code}.png`;
+}
 
 const LanguageSwitcher = () => {
   const { i18n } = useTranslation();
