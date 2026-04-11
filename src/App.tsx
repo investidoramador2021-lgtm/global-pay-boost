@@ -129,7 +129,11 @@ const App = () => (
                   ))}
                   {/* Standalone embed widget (no header/footer/nav) */}
                   <Route path="/embed/widget" element={<EmbedWidget />} />
-                  {/* Redirect old WordPress URLs to home */}
+                  {/* Redirect legacy sell/payout and old WordPress URLs to home */}
+                  <Route path="/sell" element={<Navigate to="/" replace />} />
+                  <Route path="/sell/*" element={<Navigate to="/" replace />} />
+                  <Route path="/payout" element={<Navigate to="/" replace />} />
+                  <Route path="/payout/*" element={<Navigate to="/" replace />} />
                   <Route path="/de/*" element={<Navigate to="/" replace />} />
                   <Route path="/wp-*" element={<Navigate to="/" replace />} />
                   <Route path="/wordpress/*" element={<Navigate to="/" replace />} />

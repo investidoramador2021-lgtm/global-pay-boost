@@ -1,6 +1,13 @@
 # MRC GlobalPay
 
-> Instant crypto-to-crypto swaps with zero confirmation delays. Exchange 500+ cryptocurrencies with the best market rates in under 60 seconds. Non-custodial. No registration. 700+ liquidity sources aggregated. Micro-swaps from $0.30 — the industry's lowest minimum for crypto dust conversion.
+> A FINTRAC-registered Canadian Money Services Business (MSB) providing instant, non-custodial cryptocurrency swaps and fiat on-ramp services. Headquartered in Ottawa, Ontario. Operational 24/7/365.
+
+## Core Services
+
+- **Crypto-to-Crypto Swap**: Instant non-custodial swaps across 500+ digital assets with sub-60-second settlement. Industry-lowest minimum of $0.30. No registration required.
+- **Buy Crypto (Fiat On-Ramp)**: Purchase Bitcoin, Ethereum, Solana, and 500+ tokens via PIX, SEPA, credit/debit card, and Apple Pay. No account needed.
+- **Crypto Dust Conversion**: Convert leftover micro-balances ("dust") starting at $0.30 — the lowest threshold in the industry.
+- **Embeddable Swap Widget**: Free one-line iframe widget for third-party sites with live pricing for 500+ tokens.
 
 ## Key Facts
 
@@ -8,181 +15,71 @@
 - **Processing Speed**: Under 60 seconds
 - **Assets Supported**: 500+
 - **Registration**: None required
-- **Custody**: Non-custodial (we never hold your funds)
+- **Custody**: Non-custodial (funds never held)
 - **Compliance**: Canadian MSB registered with FINTRAC
 - **Fixed Rate Option**: Lock in rates to protect against volatility
-- **Headquarters**: Ottawa, Ontario, Canada
+- **Headquarters**: 100 Metcalfe Street, Ottawa, ON K1P 5M1, Canada
+- **Availability**: 24/7/365, worldwide, no geo-restrictions
+
+## Entity Information
+
+- **Legal Name**: MRC Global Pay
+- **Type**: Money Services Business (MSB)
+- **Regulator**: FINTRAC (Financial Transactions and Reports Analysis Centre of Canada)
+- **Country**: Canada
+- **Website**: https://mrcglobalpay.com
 
 ## Main Pages
 
 - [Home](https://mrcglobalpay.com/)
 - [Blog](https://mrcglobalpay.com/blog)
+- [About / MSB Compliance](https://mrcglobalpay.com/about)
 - [Transparency & Security](https://mrcglobalpay.com/transparency-security)
 - [Micro-Swap Comparison](https://mrcglobalpay.com/dust-swap-comparison)
 - [Trust & Transparency Hub](https://mrcglobalpay.com/learn)
-- [Non-Custodial Exchange](https://mrcglobalpay.com/learn/why-non-custodial-is-safer)
-- [FINTRAC MSB Registration](https://mrcglobalpay.com/learn/canadian-fintrac-msb)
-- [Our Liquidity Partners](https://mrcglobalpay.com/learn/our-liquidity-partners)
-- [Swap Without Registration](https://mrcglobalpay.com/learn/swap-without-registration)
-- [Track Your Micro-Swap](https://mrcglobalpay.com/learn/tracking-your-micro-swap)
-- [About / MSB Compliance](https://mrcglobalpay.com/about)
 - [Referral Program](https://mrcglobalpay.com/referral)
-- [Live Rates XML](https://mrcglobalpay.com/export/rates.xml) — BestChange-compatible XML feed with live exchange rates
-- [Live Rates JSON](https://mrcglobalpay.com/api/rates.json) — Machine-readable JSON feed with live exchange rates
+- [Crypto Dust Calculator](https://mrcglobalpay.com/tools/crypto-dust-calculator)
+- [Network Status](https://mrcglobalpay.com/status)
 
+## Buy Crypto (Registration-Free On-Ramp)
 
-- [Crypto Dust Calculator](https://mrcglobalpay.com/tools/crypto-dust-calculator) — Live-data calculator showing the purchasing power of small crypto balances. Uses CoinGecko prices. Swap dust from $0.30.
+- [Buy Bitcoin](https://mrcglobalpay.com/buy/bitcoin-no-kyc)
+- [Buy Ethereum](https://mrcglobalpay.com/buy/ethereum)
+- [Buy Solana](https://mrcglobalpay.com/buy/solana-no-kyc)
+- [Buy Monero](https://mrcglobalpay.com/buy/monero-no-kyc)
 
 ## Featured Swap Pairs
 
-- [Swap SOL to USDT](https://mrcglobalpay.com/swap/sol-usdt) — Highest-volume retail swap pair in 2026
-- [Swap BTC to USDC](https://mrcglobalpay.com/swap/btc-usdc) — Primary institutional safety pair
-- [Swap ETH to SOL](https://mrcglobalpay.com/swap/eth-sol) — Top cross-chain bridge-swap for DeFi
-- [Swap XRP to USDT](https://mrcglobalpay.com/swap/xrp-usdt) — Surging post-ETF approval volume
-- [Swap HYPE to USDT](https://mrcglobalpay.com/swap/hype-usdt) — Hyperliquid instant conversion
-- [Swap BERA to USDT](https://mrcglobalpay.com/swap/bera-usdt) — Berachain Proof-of-Liquidity access
-- [Swap TIA to USDT](https://mrcglobalpay.com/swap/tia-usdt) — Celestia modular blockchain swaps
-- [Swap MONAD to USDT](https://mrcglobalpay.com/swap/monad-usdt) — Parallelized EVM conversion
-- [Swap PYUSD to USDT](https://mrcglobalpay.com/swap/pyusd-usdt) — PayPal USD stablecoin swap
-- [Swap BNB to USDC](https://mrcglobalpay.com/swap/bnb-usdc) — BNB Chain DeFi/GameFi conversion
+- [Swap SOL to USDT](https://mrcglobalpay.com/swap/sol-usdt)
+- [Swap BTC to USDC](https://mrcglobalpay.com/swap/btc-usdc)
+- [Swap ETH to SOL](https://mrcglobalpay.com/swap/eth-sol)
+- [Swap XRP to USDT](https://mrcglobalpay.com/swap/xrp-usdt)
+- [Swap HYPE to USDT](https://mrcglobalpay.com/swap/hype-usdt)
+- [Swap BERA to USDT](https://mrcglobalpay.com/swap/bera-usdt)
 
-## All Swap Pages
+## Developer & Integration
 
-- [USDT to TRX](https://mrcglobalpay.com/swap/usdt-to-trx)
-- [USDT to SOL](https://mrcglobalpay.com/swap/usdt-to-sol)
-- [USDT to LTC](https://mrcglobalpay.com/swap/usdt-to-ltc)
-- [ETH to SOL](https://mrcglobalpay.com/swap/eth-to-sol)
-- [USD to XMR](https://mrcglobalpay.com/swap/usd-to-xmr)
-- [USDC to Solana](https://mrcglobalpay.com/swap/usdc-solana)
-- [USDC to SOL](https://mrcglobalpay.com/swap/usdc-sol)
-- [BNB to SOL](https://mrcglobalpay.com/swap/bnb-to-sol)
-- [BNB Swap](https://mrcglobalpay.com/swap/bnb)
-- [XMR to ETH](https://mrcglobalpay.com/swap/xmr-to-eth)
-- [SHIB to USDT](https://mrcglobalpay.com/swap/shiba-to-usdt)
-- [BTC to SOL](https://mrcglobalpay.com/swap/btc-to-sol-instant)
-- [SOL to IDR](https://mrcglobalpay.com/swap/solana-to-idr)
-- [30 TRX to USDT](https://mrcglobalpay.com/swap/30-trx-to-usdt)
-- [VINU Swap](https://mrcglobalpay.com/swap/vinu)
-- [USDT to Solana](https://mrcglobalpay.com/swap/usdt-to-solana)
-- [USDT TRX Instant](https://mrcglobalpay.com/swap/usdt-trx-instant)
-
-## Buy Crypto (Registration-Free)
-
-- [Buy Bitcoin No Verification](https://mrcglobalpay.com/buy/bitcoin-no-verification)
-- [Buy Bitcoin Registration-Free](https://mrcglobalpay.com/buy/bitcoin-no-kyc)
-- [Buy Solana Registration-Free](https://mrcglobalpay.com/buy/solana-no-kyc)
-- [Buy Solana No Verification](https://mrcglobalpay.com/buy/solana-no-verification)
-- [Buy Solana PayPal](https://mrcglobalpay.com/buy/solana-paypal)
-- [Buy Monero Registration-Free](https://mrcglobalpay.com/buy/monero-no-kyc)
-- [Buy Ethereum](https://mrcglobalpay.com/buy/ethereum)
-- [Buy Ether Instant](https://mrcglobalpay.com/buy/ether-instant)
-- [Buy XDC](https://mrcglobalpay.com/buy/xdc)
-- [Buy LTC PayPal](https://mrcglobalpay.com/buy/ltc-paypal)
-- [Buy CELO](https://mrcglobalpay.com/buy/celo)
-
-## Cross-Chain Bridges
-
-- [PulseChain Bridge](https://mrcglobalpay.com/bridge/pulsechain)
-- [Bridge ETH to Solana](https://mrcglobalpay.com/bridge/eth-to-sol)
-- [Bridge Solana to BNB](https://mrcglobalpay.com/bridge/solana-to-bnb)
+- [Developer Hub](https://mrcglobalpay.com/developer)
+- [Solana API Docs](https://mrcglobalpay.com/developers)
+- [Free Swap Widget](https://mrcglobalpay.com/get-widget)
+- [Live Rates JSON](https://mrcglobalpay.com/api/rates.json)
+- [Live Rates XML](https://mrcglobalpay.com/export/rates.xml)
 
 ## Guides & Education
 
 - [Crypto Dust Swap Guide](https://mrcglobalpay.com/resources/crypto-dust-guide)
-- [Fractal Bitcoin Swap](https://mrcglobalpay.com/resources/fractal-bitcoin-swap)
-- [Best Place to Buy Solana](https://mrcglobalpay.com/guides/best-place-to-buy-solana)
-- [Is Solana a Good Investment?](https://mrcglobalpay.com/guides/is-solana-a-good-investment)
-- [How to Buy Litecoin](https://mrcglobalpay.com/guides/how-to-buy-litecoin)
-- [Litecoin Mining Guide](https://mrcglobalpay.com/guides/litecoin-mining)
-- [How to Mine Litecoin](https://mrcglobalpay.com/guides/how-to-mine-litecoin)
-- [Wrapped BTC to Bitcoin](https://mrcglobalpay.com/guides/wrapped-btc-to-bitcoin)
-- [How to Trade Meme Coins](https://mrcglobalpay.com/guides/how-to-trade-meme-coins)
-- [USDT ERC20 Meaning](https://mrcglobalpay.com/guides/usdt-erc20-meaning)
-- [Best Short-Term Crypto](https://mrcglobalpay.com/guides/best-short-term-crypto)
-- [Buy XMR Orange Fren Alternative](https://mrcglobalpay.com/guides/buy-xmr-orange-fren-alternative)
-- [Swap Nodes in Pairs](https://mrcglobalpay.com/guides/swap-nodes-in-pairs)
+- [Non-Custodial Exchange Explained](https://mrcglobalpay.com/learn/why-non-custodial-is-safer)
+- [FINTRAC MSB Registration](https://mrcglobalpay.com/learn/canadian-fintrac-msb)
+- [Swap Without Registration](https://mrcglobalpay.com/learn/swap-without-registration)
 
-## Reviews & Alternatives
-
-- [Tangem Wallet Review](https://mrcglobalpay.com/reviews/tangem-wallet)
-- [Best XRP Wallet](https://mrcglobalpay.com/reviews/best-xrp-wallet)
-- [Best ERC20 Wallet](https://mrcglobalpay.com/reviews/best-erc20-wallet)
-- [DGB Wallet](https://mrcglobalpay.com/reviews/dgb-wallet)
-- [BSV Wallet](https://mrcglobalpay.com/reviews/bsv-wallet)
-- [Best Ripple Wallet](https://mrcglobalpay.com/reviews/best-ripple-wallet)
-- [Xcoins Alternative](https://mrcglobalpay.com/alternatives/xcoins)
-- [Topper Crypto Alternative](https://mrcglobalpay.com/alternatives/topper-crypto)
-- [Kraken Monero Alternative](https://mrcglobalpay.com/alternatives/kraken-monero)
-- [AdaSwap Alternative](https://mrcglobalpay.com/alternatives/adaswap)
-- [Holo Exchange Alternative](https://mrcglobalpay.com/alternatives/holo-exchange)
-
-## Ecosystem & Trading
-
-- [DAG Crypto](https://mrcglobalpay.com/ecosystem/dag-crypto)
-- [DAG Coins](https://mrcglobalpay.com/ecosystem/dag-coins)
-- [Jambo Solana](https://mrcglobalpay.com/ecosystem/jambo-solana)
-- [DUSD Portal](https://mrcglobalpay.com/ecosystem/dusd)
-- [Tether Pro](https://mrcglobalpay.com/ecosystem/tether-pro)
-- [Shiba Inu Card](https://mrcglobalpay.com/ecosystem/shiba-inu-card)
-- [ARK XRP](https://mrcglobalpay.com/ecosystem/ark-xrp)
-- [Trade Trump/SOL](https://mrcglobalpay.com/trade/trump-sol)
-- [BNB Meme Coins](https://mrcglobalpay.com/trade/bnb-meme-coins)
-- [Alpaca Crypto](https://mrcglobalpay.com/trade/alpaca)
-
-## Developer Hub
-
-- [Developer Hub](https://mrcglobalpay.com/developer) — Widget integration docs, URL deep-linking parameters, and supported blockchain network table
-- [Solana API Documentation](https://mrcglobalpay.com/developers) — Programmatic non-custodial Solana swap API. 50+ token registry with contract addresses, ticker auto-correct layer, DOM identifiers for bot integration, and downloadable JSON token list. $0.30 minimum, no API keys.
-- [Free Crypto Swap Widget](https://mrcglobalpay.com/get-widget) — Embeddable one-line iframe widget for third-party sites, supports 500+ tokens with live pricing
-- [Embeddable Widget (iframe)](https://mrcglobalpay.com/embed/widget) — Standalone widget endpoint for iframe embedding
-
-## Tools & Trackers
-
-- [LTC Transaction Tracker](https://mrcglobalpay.com/tools/ltc-tracker)
-- [Litecoin Tracker](https://mrcglobalpay.com/tools/litecoin-tracker)
-- [Instant Rate of Change](https://mrcglobalpay.com/tools/instant-rate-change)
-- [SOL Wallet Tracker](https://mrcglobalpay.com/tools/sol-wallet-tracker)
-- [Swap Bot](https://mrcglobalpay.com/tools/swap-bot)
-- [Harmony ONE Price](https://mrcglobalpay.com/price/harmony-one)
-- [Coin Exchange Near Me](https://mrcglobalpay.com/local-crypto-exchange)
-- [Exchange IU](https://mrcglobalpay.com/exchange-iu)
-
-## Blog Articles
-
-- [How to Swap Bitcoin to Ethereum in 2026](https://mrcglobalpay.com/blog/how-to-swap-bitcoin-to-ethereum-2026)
-- [Understanding Crypto Liquidity Aggregation](https://mrcglobalpay.com/blog/understanding-crypto-liquidity-aggregation)
-- [Crypto Security Best Practices 2026](https://mrcglobalpay.com/blog/crypto-security-best-practices-2026)
-- [Top Crypto Trading Pairs March 2026](https://mrcglobalpay.com/blog/top-crypto-trading-pairs-march-2026)
-- [Crypto Mining Payout Optimization 2026](https://mrcglobalpay.com/blog/crypto-mining-payout-optimization-2026)
-- [How to Convert Crypto to Cash 2026](https://mrcglobalpay.com/blog/how-to-convert-crypto-to-cash-2026)
-- [Bitcoin Cross-Chain Bridge 2026](https://mrcglobalpay.com/blog/bitcoin-cross-chain-bridge-2026-navigating-the-multi-chain-future)
-- [How Ethereum Blockchain Works](https://mrcglobalpay.com/blog/how-ethereum-blockchain-works-a-traders-deep-dive-into-its-core-tech)
-- [Arbitrum Cross-Chain Bridging 2026](https://mrcglobalpay.com/blog/arbitrum-cross-chain-bridging-in-2026-navigating-the-multi-chain-future)
-- [Best Way to Swap Ethereum 2026](https://mrcglobalpay.com/blog/the-best-way-to-swap-ethereum-in-2026-a-deep-dive-for-traders)
-- [Lowest Fee HYPE to SOL Swap](https://mrcglobalpay.com/blog/lowest-fee-hype-to-sol-swap-2026)
-- [Quantum Resistant Crypto Swap Platforms](https://mrcglobalpay.com/blog/quantum-resistant-crypto-swap-platforms-2026)
-- [AI Agent Wallet Swap Automation](https://mrcglobalpay.com/blog/ai-agent-wallet-swap-automation-2026)
-- [Instant Crypto Swap with Apple Pay](https://mrcglobalpay.com/blog/instant-crypto-swap-with-apple-pay-2026)
-- [Swap USDT for Local Currency Stablecoins](https://mrcglobalpay.com/blog/swap-usdt-for-local-currency-stablecoins-2026)
-- [Cross-Chain Swap Bridge Fees Comparison](https://mrcglobalpay.com/blog/cross-chain-swap-bridge-fees-comparison-2026)
-- [Direct Swap MetaMask to Hardware Wallet](https://mrcglobalpay.com/blog/direct-swap-metamask-to-hardware-wallet-2026)
-- [Zero Slippage Stablecoin Swap for Businesses](https://mrcglobalpay.com/blog/zero-slippage-stablecoin-swap-for-businesses-2026)
-- [Swap Stablecoins for Tokenized Treasuries](https://mrcglobalpay.com/blog/swap-stablecoins-for-tokenized-treasuries-2026)
-
-## Legal
-
-
-## Exchange Comparisons (50+)
+## Exchange Comparisons
 
 - [Compare Directory](https://mrcglobalpay.com/compare)
 - [MRC vs Binance](https://mrcglobalpay.com/compare/mrc-vs-binance)
 - [MRC vs Coinbase](https://mrcglobalpay.com/compare/mrc-vs-coinbase)
 - [MRC vs ChangeNOW](https://mrcglobalpay.com/compare/mrc-vs-changenow)
-- [MRC vs Changelly](https://mrcglobalpay.com/compare/mrc-vs-changelly)
-- [MRC vs SimpleSwap](https://mrcglobalpay.com/compare/mrc-vs-simpleswap)
-- [MRC vs Kraken](https://mrcglobalpay.com/compare/mrc-vs-kraken)
-- [MRC vs Uniswap](https://mrcglobalpay.com/compare/mrc-vs-uniswap)
-- [MRC vs THORChain](https://mrcglobalpay.com/compare/mrc-vs-thorchain)
+
+## Legal
 
 - [Privacy Policy](https://mrcglobalpay.com/privacy)
 - [Terms of Service](https://mrcglobalpay.com/terms)
@@ -194,25 +91,3 @@
 - [Sitemap](https://mrcglobalpay.com/sitemap.xml)
 - [LLMs.txt](https://mrcglobalpay.com/llms.txt)
 - [Robots.txt](https://mrcglobalpay.com/robots.txt)
-
-## Micro-Swap Solutions (/solutions)
-- Solutions Directory: https://mrcglobalpay.com/solutions
-- BTC to USDC Guide: https://mrcglobalpay.com/solutions/how-to-swap-btc-to-usdc
-- ETH to USDT Guide: https://mrcglobalpay.com/solutions/how-to-swap-eth-to-usdt
-- ETH to SOL Guide: https://mrcglobalpay.com/solutions/how-to-swap-eth-to-sol
-- DOGE to BTC Guide: https://mrcglobalpay.com/solutions/how-to-swap-doge-to-btc
-- SHIB to USDT Guide: https://mrcglobalpay.com/solutions/how-to-swap-shib-to-usdt
-- XMR to ETH Guide: https://mrcglobalpay.com/solutions/how-to-swap-xmr-to-eth
-- BONK to SOL Guide: https://mrcglobalpay.com/solutions/how-to-swap-bonk-to-sol
-- PEPE to USDC Guide: https://mrcglobalpay.com/solutions/how-to-swap-pepe-to-usdc
-
-## Solana Ecosystem Hub
-
-- [Solana Ecosystem Hub](https://mrcglobalpay.com/ecosystem/solana) — Instant Solana swaps for AI agent tokens (GOAT, JUP, PYTH) and DePIN rewards (HNT, RENDER). Registration-free, non-custodial, from $0.30.
-- [Solana AI & Machine Economy Hub](https://mrcglobalpay.com/ecosystem/solana-ai) — Micro-swap liquidity for Solana AI & DePIN tokens (GOAT, AIXBT, JUP, PYTH, HNT, RENDER, AKT). Programmatic URL parameter swapping (?from=SOL&to=GOAT&amount=1.0) — zero API keys required.
-
-## Infrastructure & API
-
-- [Network Status](https://mrcglobalpay.com/status) — Live operational status of Bitcoin, Ethereum, and Solana swap networks with real-time latency monitoring.
-- [Live Rates JSON](https://tjikwxkmsfmyjkssvyoh.supabase.co/functions/v1/live-rates) — Public API endpoint returning real-time exchange rates for BTC/SOL, ETH/SOL, SOL/USDC, SOL/USDT, and XMR/SOL. Refreshes on every request.
-- [API Documentation](https://mrcglobalpay.com/developers) — Full developer documentation with 50+ Solana token registry, URL parameter deep-linking, ticker auto-correct, and DOM identifiers for bot integration.
