@@ -50,6 +50,7 @@ const Unsubscribe = lazy(() => import("./pages/Unsubscribe.tsx"));
 const PrivateTransfer = lazy(() => import("./pages/PrivateTransfer.tsx"));
 const PermanentBridge = lazy(() => import("./pages/PermanentBridge.tsx"));
 const BridgeWhitepaper = lazy(() => import("./pages/BridgeWhitepaper.tsx"));
+const ShieldedWhitepaper = lazy(() => import("./pages/ShieldedWhitepaper.tsx"));
 const NotFound = lazy(() => import("./pages/NotFound.tsx"));
 
 const queryClient = new QueryClient();
@@ -108,6 +109,7 @@ const AppRoutes = () => (
     <Route path="private-transfer" element={<PrivateTransfer />} />
     <Route path="permanent-bridge" element={<PermanentBridge />} />
     <Route path="permanent-bridge/whitepaper" element={<BridgeWhitepaper />} />
+    <Route path="private-transfer/whitepaper" element={<ShieldedWhitepaper />} />
     <Route path="unsubscribe" element={<Unsubscribe />} />
   </>
 );
