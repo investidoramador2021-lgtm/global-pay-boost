@@ -51,6 +51,7 @@ const PrivateTransfer = lazy(() => import("./pages/PrivateTransfer.tsx"));
 const PermanentBridge = lazy(() => import("./pages/PermanentBridge.tsx"));
 const BridgeWhitepaper = lazy(() => import("./pages/BridgeWhitepaper.tsx"));
 const ShieldedWhitepaper = lazy(() => import("./pages/ShieldedWhitepaper.tsx"));
+const CryptoDustSolutions = lazy(() => import("./pages/CryptoDustSolutions.tsx"));
 const NotFound = lazy(() => import("./pages/NotFound.tsx"));
 
 const queryClient = new QueryClient();
@@ -110,6 +111,7 @@ const AppRoutes = () => (
     <Route path="permanent-bridge" element={<PermanentBridge />} />
     <Route path="permanent-bridge/whitepaper" element={<BridgeWhitepaper />} />
     <Route path="private-transfer/whitepaper" element={<ShieldedWhitepaper />} />
+    <Route path="crypto-dust-solutions" element={<CryptoDustSolutions />} />
     <Route path="unsubscribe" element={<Unsubscribe />} />
   </>
 );
