@@ -39,6 +39,10 @@ const Index = () => {
     image: "https://pub-bb2e103a32db4e198524a2e9ed8f35b4.r2.dev/22f69f45-cf65-4871-9af4-b68ab4027213/id-preview-243bf129--23f851ec-c820-43c7-bbe2-d2e830f7c268.lovable.app-1773521796493.png",
     logo: "https://pub-bb2e103a32db4e198524a2e9ed8f35b4.r2.dev/22f69f45-cf65-4871-9af4-b68ab4027213/id-preview-243bf129--23f851ec-c820-43c7-bbe2-d2e830f7c268.lovable.app-1773521796493.png",
     knowsAbout: ["Non-Custodial Swaps", "FINTRAC Compliance", "Micro-transactions", "Blockchain Interoperability", "Crypto Dust Conversion"],
+    sameAs: [
+      "https://www.linkedin.com/company/mrc-globalpay",
+      "https://www10.fintrac-canafe.gc.ca/msb-esm/public/detailed-information/bns-new/7b226d7362526567697374726174696f6e4e756d626572223a224d3233323235363338227d",
+    ],
     address: {
       "@type": "PostalAddress",
       streetAddress: "100 Metcalfe Street",
@@ -67,6 +71,37 @@ const Index = () => {
       name: "Swap Cryptocurrency",
       description: "Instantly swap 500+ cryptocurrencies with no account required.",
     },
+  };
+
+  const homeFaqJsonLd = {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    mainEntity: [
+      {
+        "@type": "Question",
+        name: "How does a stateless bridge prevent session timeouts?",
+        acceptedAnswer: {
+          "@type": "Answer",
+          text: "MRC GlobalPay derives deterministic deposit addresses from BIP-44 master paths, eliminating server-side session state. No TTL expiry, no address reuse — each swap is atomically independent with permanent address validity.",
+        },
+      },
+      {
+        "@type": "Question",
+        name: "Is MRC GlobalPay a regulated Canadian MSB?",
+        acceptedAnswer: {
+          "@type": "Answer",
+          text: "Yes. MRC GlobalPay is FINTRAC-registered (MSB M23225638), headquartered at 100 Metcalfe Street, Ottawa, Ontario, Canada. All operations comply with Canadian AML/CTF regulations under non-custodial architecture.",
+        },
+      },
+      {
+        "@type": "Question",
+        name: "What are the benefits of non-custodial dust consolidation?",
+        acceptedAnswer: {
+          "@type": "Answer",
+          text: "Non-custodial consolidation eliminates counterparty risk, custodial exposure, and KYC friction. Dust sweeps execute as direct wallet-to-wallet atomic swaps from $0.30, with sub-60-second finality across 50+ blockchains.",
+        },
+      },
+    ],
   };
 
   const productJsonLd = {
@@ -136,6 +171,7 @@ const Index = () => {
         <meta name="twitter:image" content="https://pub-bb2e103a32db4e198524a2e9ed8f35b4.r2.dev/22f69f45-cf65-4871-9af4-b68ab4027213/id-preview-243bf129--23f851ec-c820-43c7-bbe2-d2e830f7c268.lovable.app-1773521796493.png" />
         <script type="application/ld+json">{JSON.stringify(financialServiceJsonLd)}</script>
         <script type="application/ld+json">{JSON.stringify(productJsonLd)}</script>
+        <script type="application/ld+json">{JSON.stringify(homeFaqJsonLd)}</script>
       </Helmet>
 
       <PullToRefresh onRefresh={handleRefresh}>

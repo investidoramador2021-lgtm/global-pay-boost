@@ -28,8 +28,36 @@ const PermanentBridge = () => {
             "provider": {
               "@type": "FinancialService",
               "name": "MRC GlobalPay",
-              "url": "https://mrcglobalpay.com"
+              "url": "https://mrcglobalpay.com",
+              "sameAs": [
+                "https://www.linkedin.com/company/mrc-globalpay",
+                "https://www10.fintrac-canafe.gc.ca/msb-esm/public/detailed-information/bns-new/7b226d7362526567697374726174696f6e4e756d626572223a224d3233323235363338227d"
+              ]
             }
+          })}
+        </script>
+        <script type="application/ld+json">
+          {JSON.stringify({
+            "@context": "https://schema.org",
+            "@type": "FAQPage",
+            "mainEntity": [
+              {
+                "@type": "Question",
+                "name": "How does a stateless bridge prevent session timeouts?",
+                "acceptedAnswer": {
+                  "@type": "Answer",
+                  "text": "MRC GlobalPay derives deterministic deposit addresses from BIP-44 master paths, eliminating server-side session state. No TTL expiry, no address reuse — each bridge operation is atomically independent."
+                }
+              },
+              {
+                "@type": "Question",
+                "name": "Is MRC GlobalPay a regulated Canadian MSB?",
+                "acceptedAnswer": {
+                  "@type": "Answer",
+                  "text": "Yes. MRC GlobalPay is FINTRAC-registered (MSB M23225638), headquartered at 100 Metcalfe Street, Ottawa, Ontario. All bridge operations comply with Canadian AML/CTF regulations under non-custodial architecture."
+                }
+              }
+            ]
           })}
         </script>
       </Helmet>
