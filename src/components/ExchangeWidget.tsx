@@ -1497,7 +1497,7 @@ const ExchangeWidget = ({ onTabChange }: ExchangeWidgetProps = {}) => {
     setSyncCanSubmit(canExchangeNow);
     registerSubmitHandler(() => handleExchangeNow);
     return () => registerSubmitHandler(null);
-  }, [canExchangeNow, registerSubmitHandler, handleExchangeNow, setSyncCanSubmit]);
+  const BATCH_SIZE = 50;
 
   const CurrencyList = ({ currencies: items, onSelect }: { currencies: Currency[]; onSelect: (c: Currency) => void }) => {
     const [visibleCount, setVisibleCount] = useState(BATCH_SIZE);

@@ -1,4 +1,4 @@
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 import { ArrowRight, Activity, Loader2 } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 import { useExchangeSync } from "@/hooks/use-exchange-sync";
@@ -11,7 +11,6 @@ const barVariants = {
 
 const StickyUtilityBar = () => {
   const {
-    visible: _unusedVisible,
     fromTicker,
     toTicker,
     options,
@@ -21,10 +20,7 @@ const StickyUtilityBar = () => {
     setFromTicker,
     setToTicker,
     requestSubmit,
-  } = {
-    visible: undefined,
-    ...useExchangeSync(),
-  };
+  } = useExchangeSync();
   const [visible, setVisible] = useState(false);
   const raf = useRef(0);
 
@@ -67,7 +63,7 @@ const StickyUtilityBar = () => {
                   Quick Swap
                 </span>
                 <select
-                  value={fromTicker.toUpperCase()}
+                  value={(fromTicker || "BTC").toUpperCase()}
                   onChange={(e) => setFromTicker(e.target.value)}
                   className="h-8 rounded-lg border border-border/60 bg-background/80 px-2 font-mono text-xs font-semibold text-foreground focus:border-primary/40 focus:outline-none focus:ring-1 focus:ring-primary/20"
                 >
@@ -77,7 +73,7 @@ const StickyUtilityBar = () => {
                 </select>
                 <ArrowRight className="h-3.5 w-3.5 text-primary" />
                 <select
-                  value={toTicker.toUpperCase()}
+                  value={(toTicker || "USDT").toUpperCase()}
                   onChange={(e) => setToTicker(e.target.value)}
                   className="h-8 rounded-lg border border-border/60 bg-background/80 px-2 font-mono text-xs font-semibold text-foreground focus:border-primary/40 focus:outline-none focus:ring-1 focus:ring-primary/20"
                 >
@@ -117,4 +113,5 @@ const StickyUtilityBar = () => {
 };
 
 export default StickyUtilityBar;
+
 
