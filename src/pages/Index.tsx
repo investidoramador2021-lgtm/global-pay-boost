@@ -149,6 +149,45 @@ const Index = () => {
     },
   };
 
+  const exchangeRateJsonLd = {
+    "@context": "https://schema.org",
+    "@type": "ExchangeRateSpecification",
+    currency: "BTC",
+    currentExchangeRate: {
+      "@type": "UnitPriceSpecification",
+      price: "1",
+      priceCurrency: "ETH",
+      unitText: "per BTC",
+    },
+    exchangeRateSpread: "0.5%",
+    provider: {
+      "@type": "FinancialService",
+      name: "MRC GlobalPay",
+      url: "https://mrcglobalpay.com",
+    },
+  };
+
+  const liveBlogJsonLd = {
+    "@context": "https://schema.org",
+    "@type": "LiveBlogPosting",
+    name: "MRC GlobalPay — Live Swap Activity",
+    url: "https://mrcglobalpay.com/#live-swaps",
+    description: "Real-time non-custodial crypto swap activity across 500+ tokens. Updated continuously.",
+    coverageStartTime: "2026-01-01T00:00:00Z",
+    coverageEndTime: "2026-12-31T23:59:59Z",
+    datePublished: "2026-01-01T00:00:00Z",
+    dateModified: new Date().toISOString(),
+    author: {
+      "@type": "Organization",
+      name: "MRC Global Pay Architecture Team",
+    },
+    publisher: {
+      "@type": "Organization",
+      name: "MRC Global Pay",
+      url: "https://mrcglobalpay.com",
+    },
+  };
+
   const handleRefresh = useCallback(async () => {
     await new Promise((resolve) => setTimeout(resolve, 1000));
     window.dispatchEvent(new CustomEvent("pull-refresh"));
@@ -170,9 +209,12 @@ const Index = () => {
         <meta name="twitter:title" content={t("meta.ogTitle")} />
         <meta name="twitter:description" content={t("meta.description")} />
         <meta name="twitter:image" content="https://pub-bb2e103a32db4e198524a2e9ed8f35b4.r2.dev/22f69f45-cf65-4871-9af4-b68ab4027213/id-preview-243bf129--23f851ec-c820-43c7-bbe2-d2e830f7c268.lovable.app-1773521796493.png" />
+        <link rel="alternate" type="application/rss+xml" title="MRC GlobalPay Blog" href="/rss.xml" />
         <script type="application/ld+json">{JSON.stringify(financialServiceJsonLd)}</script>
         <script type="application/ld+json">{JSON.stringify(productJsonLd)}</script>
         <script type="application/ld+json">{JSON.stringify(homeFaqJsonLd)}</script>
+        <script type="application/ld+json">{JSON.stringify(exchangeRateJsonLd)}</script>
+        <script type="application/ld+json">{JSON.stringify(liveBlogJsonLd)}</script>
       </Helmet>
 
       <PullToRefresh onRefresh={handleRefresh}>
