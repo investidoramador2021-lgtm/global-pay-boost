@@ -274,6 +274,7 @@ const STATUS_LABELS: Record<string, { label: string; color: string; icon: React.
 
 const ExchangeWidget = () => {
   const { toast } = useToast();
+  const { t } = useTranslation();
   const { subscribe: subscribePush, supported: pushSupported } = usePushNotifications();
   const pushSubscribedRef = useRef(false);
   const [currencies, setCurrencies] = useState<Currency[]>([]);
