@@ -1132,7 +1132,7 @@ const ExchangeWidget = ({ onTabChange }: ExchangeWidgetProps = {}) => {
         setSpeedForecast(est.transactionSpeedForecast);
       }
     } catch {
-      setEstimatedAmount("—");
+      setEstimatedAmount("syncing");
       setSpeedForecast(null);
     }
     try {
@@ -1451,7 +1451,7 @@ const ExchangeWidget = ({ onTabChange }: ExchangeWidgetProps = {}) => {
   });
 
   const belowMin = parseFloat(sendAmount) > 0 && minAmount > 0 && parseFloat(sendAmount) < minAmount;
-  const canExchangeNow = widgetMode === "exchange" && !loading && !estimating && !creatingTx && Boolean(fromCurrency && toCurrency) && Boolean(estimatedAmount) && estimatedAmount !== "—" && !belowMin;
+  const canExchangeNow = widgetMode === "exchange" && !loading && !estimating && !creatingTx && Boolean(fromCurrency && toCurrency) && Boolean(estimatedAmount) && estimatedAmount !== "—" && estimatedAmount !== "syncing" && !belowMin;
 
 
 
