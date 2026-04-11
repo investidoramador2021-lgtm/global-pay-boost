@@ -706,6 +706,7 @@ const ExchangeWidget = () => {
         // Sell: from=crypto, to=fiat
         setGFromCurrency(selectedCrypto);
         setGToCurrency(selectedFiat);
+        setGSendAmount("0.01"); // Sensible default for crypto sell
       } else {
         // Buy: from=fiat, to=crypto
         setGFromCurrency(selectedFiat);
