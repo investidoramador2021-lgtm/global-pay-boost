@@ -115,6 +115,7 @@ const AppRoutes = () => (
     <Route path="private-transfer/whitepaper" element={<ShieldedWhitepaper />} />
     <Route path="crypto-dust-solutions" element={<CryptoDustSolutions />} />
     <Route path="compliance" element={<Compliance />} />
+    <Route path="guide/crypto-dust" element={<CryptoDustManifesto />} />
     <Route path="unsubscribe" element={<Unsubscribe />} />
   </>
 );
