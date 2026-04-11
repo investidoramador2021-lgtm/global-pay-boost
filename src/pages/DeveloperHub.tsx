@@ -1,5 +1,6 @@
+import { useState } from "react";
 import { Helmet } from "react-helmet-async";
-import { Shield, Code2, Zap, Link2, Globe, Clock, ExternalLink, Terminal, FileJson } from "lucide-react";
+import { Shield, Code2, Zap, Link2, Globe, Clock, ExternalLink, Terminal, FileJson, Copy, Check } from "lucide-react";
 import SiteHeader from "@/components/SiteHeader";
 import SiteFooter from "@/components/SiteFooter";
 import MsbTrustBar from "@/components/MsbTrustBar";
@@ -126,13 +127,28 @@ const faqJsonLd = {
   ],
 };
 
-const CodeBlock = ({ code, lang = "html" }: { code: string; lang?: string }) => (
-  <div className="relative">
-    <pre className="overflow-x-auto rounded-lg border border-border bg-card p-4 font-mono text-sm leading-relaxed text-foreground">
-      <code>{code}</code>
-    </pre>
-  </div>
-);
+const CodeBlock = ({ code, lang = "html" }: { code: string; lang?: string }) => {
+  const [copied, setCopied] = useState(false);
+  const handleCopy = () => {
+    navigator.clipboard.writeText(code);
+    setCopied(true);
+    setTimeout(() => setCopied(false), 2000);
+  };
+  return (
+    <div className="relative group">
+      <button
+        onClick={handleCopy}
+        className="absolute right-2 top-2 flex items-center gap-1 rounded-md border border-border bg-background px-2 py-1 font-body text-[10px] font-medium text-muted-foreground opacity-0 transition-opacity group-hover:opacity-100 hover:text-foreground hover:bg-accent"
+        title="Copy to clipboard"
+      >
+        {copied ? <><Check className="h-3 w-3 text-primary" /> Copied</> : <><Copy className="h-3 w-3" /> Copy</>}
+      </button>
+      <pre className="overflow-x-auto rounded-lg border border-border bg-card p-4 pr-20 font-mono text-sm leading-relaxed text-foreground">
+        <code>{code}</code>
+      </pre>
+    </div>
+  );
+};
 
 const QuickFacts = () => (
   <div className="rounded-xl border border-primary/20 bg-primary/5 p-5 mb-10">
