@@ -49,6 +49,7 @@ const About = lazy(() => import("./pages/About.tsx"));
 const Unsubscribe = lazy(() => import("./pages/Unsubscribe.tsx"));
 const PrivateTransfer = lazy(() => import("./pages/PrivateTransfer.tsx"));
 const PermanentBridge = lazy(() => import("./pages/PermanentBridge.tsx"));
+const BridgeWhitepaper = lazy(() => import("./pages/BridgeWhitepaper.tsx"));
 const NotFound = lazy(() => import("./pages/NotFound.tsx"));
 
 const queryClient = new QueryClient();
