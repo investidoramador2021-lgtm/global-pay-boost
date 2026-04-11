@@ -2265,9 +2265,15 @@ const ExchangeWidget = () => {
                               <div className="mx-auto flex h-16 w-16 items-center justify-center rounded-full bg-primary/10">
                                 <Loader2 className="h-8 w-8 animate-spin text-primary" />
                               </div>
-                              <h3 className="font-display text-lg font-bold text-foreground">Waiting for Payment</h3>
+                              <h3 className="font-display text-lg font-bold text-foreground">
+                                {gTradeDirection === "sell" ? "Waiting for Crypto Deposit" : "Waiting for Payment"}
+                              </h3>
                               <p className="font-body text-sm text-muted-foreground">
-                                Complete your payment on the Guardarian tab. Once finished, you'll receive a confirmation email at <span className="font-semibold text-foreground">{gPayoutEmail || "your email"}</span>.
+                                {gTradeDirection === "sell"
+                                  ? `Send your crypto on the Guardarian tab. Once received, your payout will be sent to your bank account.`
+                                  : `Complete your payment on the Guardarian tab. Once finished, you'll receive a confirmation email at `}
+                                {gTradeDirection !== "sell" && <span className="font-semibold text-foreground">{gPayoutEmail || "your email"}</span>}
+                                {gTradeDirection !== "sell" && "."}
                               </p>
 
                               {/* Live updates note */}
