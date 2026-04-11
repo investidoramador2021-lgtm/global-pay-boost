@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Menu, X, Zap, Sun, Moon } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { useTheme } from "@/hooks/use-theme";
@@ -10,6 +10,23 @@ const SiteHeader = () => {
   const [mobileOpen, setMobileOpen] = useState(false);
   const { theme, toggleTheme } = useTheme();
   const { t } = useTranslation();
+  const [scrolled, setScrolled] = useState(false);
+
+  useEffect(() => {
+    let raf = 0;
+    const onScroll = () => {
+      if (raf) return;
+      raf = requestAnimationFrame(() => {
+        setScrolled(window.scrollY > 24);
+        raf = 0;
+      });
+    };
+    window.addEventListener("scroll", onScroll, { passive: true });
+    return () => {
+      window.removeEventListener("scroll", onScroll);
+      if (raf) cancelAnimationFrame(raf);
+    };
+  }, []);
 
   const navLinks = [
     { label: t("nav.howItWorks"), href: "/#how-it-works" },
@@ -23,7 +40,13 @@ const SiteHeader = () => {
   ];
 
   return (
-    <header className="sticky top-0 z-50 border-b border-border bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/80">
+    <header
+      className={`sticky top-0 z-50 border-b border-border transition-[backdrop-filter,background-color] duration-300 ${
+        scrolled
+          ? "bg-background/60 backdrop-blur-xl shadow-sm"
+          : "bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/80"
+      }`}
+    >
       <div className="container mx-auto flex h-14 items-center justify-between px-4 sm:h-16">
         <a href="/" className="font-display text-lg font-bold tracking-tight text-foreground sm:text-xl">
           MRC<span className="text-primary">GlobalPay</span>
@@ -94,8 +117,6 @@ const SiteHeader = () => {
           </Button>
         </div>
       )}
-
-      
     </header>
   );
 };
