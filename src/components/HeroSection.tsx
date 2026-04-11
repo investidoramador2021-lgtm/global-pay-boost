@@ -96,9 +96,9 @@ const HeroSection = () => {
                     <motion.div
                       key={key}
                       variants={trustCard}
-                      className="flex flex-col items-center gap-2 rounded-xl border border-border bg-card p-4 text-center shadow-card transition-all duration-300 hover:shadow-elevated hover:-translate-y-1"
+                      className="flex flex-col items-center gap-2 rounded-xl border border-border bg-card p-4 text-center shadow-card transform-gpu backface-hidden hover:shadow-elevated hover:-translate-y-1"
                     >
-                      <div className="flex h-10 w-10 items-center justify-center rounded-full bg-primary/10 transition-transform duration-300 hover:scale-110 hover:bg-primary/20">
+                      <div className="flex h-10 w-10 items-center justify-center rounded-full bg-primary/10 hover:scale-110 hover:bg-primary/20">
                         <Icon className="h-5 w-5 text-primary" />
                       </div>
                       <span className="font-display text-xs font-semibold text-foreground sm:text-sm">
@@ -122,7 +122,7 @@ const HeroSection = () => {
 
             {/* Widget with 3D tilt on scroll */}
             <motion.div
-              className="order-1 lg:order-2"
+              className="order-1 lg:order-2 transform-gpu"
               variants={widgetEntrance}
               initial="hidden"
               animate="show"
@@ -130,7 +130,7 @@ const HeroSection = () => {
                 perspective: 1000,
                 rotateX,
                 rotateY,
-                willChange: "transform",
+                backfaceVisibility: "hidden",
               }}
             >
               <ExchangeWidget onTabChange={setActiveTab} />
