@@ -2167,9 +2167,13 @@ const ExchangeWidget = () => {
                               <div className="mx-auto mb-3 flex h-14 w-14 items-center justify-center rounded-full bg-primary/10">
                                 <Shield className="h-7 w-7 text-primary" />
                               </div>
-                              <h3 className="font-display text-lg font-bold text-foreground">Transaction Ready</h3>
+                              <h3 className="font-display text-lg font-bold text-foreground">
+                                {gTradeDirection === "sell" ? "Payout Ready" : "Transaction Ready"}
+                              </h3>
                               <p className="mt-1 font-body text-xs text-muted-foreground">
-                                Your order has been created. Click below to complete payment on the secure Guardarian gateway.
+                                {gTradeDirection === "sell"
+                                  ? "Your sell order has been created. Click below to send your crypto and receive your payout."
+                                  : "Your order has been created. Click below to complete payment on the secure Guardarian gateway."}
                               </p>
                             </div>
 
