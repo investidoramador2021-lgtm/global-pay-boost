@@ -1,11 +1,34 @@
 import { useState, useEffect } from "react";
 import { Helmet } from "react-helmet-async";
 import { Link, useLocation } from "react-router-dom";
-import { Calendar, Clock, ArrowRight } from "lucide-react";
+import { Calendar, Clock, ArrowRight, FileText, Shield, Landmark } from "lucide-react";
 import SiteHeader from "@/components/SiteHeader";
 import SiteFooter from "@/components/SiteFooter";
 import { fetchAllPosts, type BlogPost } from "@/lib/blog-data";
 import { getLangFromPath, langPath } from "@/i18n";
+
+const WHITEPAPERS = [
+  {
+    title: "Infrastructure Persistence & Automated Settlement Rails",
+    subtitle: "Permanent Bridge Architecture",
+    excerpt: "How Stateless Address Persistence and Deterministic Routing transform fragmented liquidity into a permanent financial utility for corporate treasuries and industrial mining.",
+    path: "/permanent-bridge/whitepaper",
+    icon: Landmark,
+    accent: "42 100% 58%",
+    category: "Institutional Whitepaper",
+    tags: ["Settlement Rails", "Non-Custodial", "Mining Automation", "Corporate Treasury"],
+  },
+  {
+    title: "Decoupling On-Chain Identity: Shielded Settlement Architecture",
+    subtitle: "Corporate Privacy Sovereignty",
+    excerpt: "How Input Masking, Path Randomization, and Output Normalization protect HNWIs and corporate entities from wallet fingerprinting and heuristic analysis.",
+    path: "/private-transfer/whitepaper",
+    icon: Shield,
+    accent: "272 100% 68%",
+    category: "Institutional Whitepaper",
+    tags: ["Shielded Routing", "Privacy", "M&A Confidentiality", "Executive Payroll"],
+  },
+];
 
 const Blog = () => {
   const { pathname } = useLocation();
@@ -79,6 +102,65 @@ const Blog = () => {
               <p className="font-body text-sm leading-relaxed text-muted-foreground sm:text-base">
                 Whether you're converting dust-sized balances starting at $0.30 or executing larger swaps across 500+ cryptocurrencies, our meta aggregator engine handles the complexity so you don't have to. No registration, no minimum limits — just the best rate delivered in under 60 seconds. Browse our guides below to learn advanced swap strategies, security tips, and how to maximize value with a DEX aggregator workflow.
               </p>
+            </div>
+          </div>
+        </section>
+
+        {/* Featured Whitepapers */}
+        <section className="border-b border-border py-12 sm:py-16">
+          <div className="container mx-auto px-4">
+            <div className="mb-8 flex items-center gap-3">
+              <FileText className="h-5 w-5 text-primary" />
+              <h2 className="font-display text-xl font-bold text-foreground sm:text-2xl">Institutional Whitepapers</h2>
+            </div>
+            <div className="grid gap-6 md:grid-cols-2">
+              {WHITEPAPERS.map((wp) => (
+                <Link
+                  key={wp.path}
+                  to={lp(wp.path)}
+                  className="group relative overflow-hidden rounded-2xl border border-border bg-card p-6 transition-all hover:shadow-xl sm:p-8"
+                  style={{ borderColor: `hsl(${wp.accent} / 0.25)` }}
+                >
+                  <div
+                    className="pointer-events-none absolute -right-16 -top-16 h-48 w-48 rounded-full opacity-10 blur-3xl transition-opacity group-hover:opacity-20"
+                    style={{ background: `hsl(${wp.accent})` }}
+                  />
+                  <div className="mb-3 flex items-center gap-3">
+                    <span
+                      className="rounded-full px-3 py-1 font-body text-xs font-semibold"
+                      style={{ background: `hsl(${wp.accent} / 0.12)`, color: `hsl(${wp.accent})` }}
+                    >
+                      {wp.category}
+                    </span>
+                  </div>
+                  <div className="flex items-start gap-4">
+                    <wp.icon className="mt-1 h-8 w-8 shrink-0" style={{ color: `hsl(${wp.accent})` }} />
+                    <div>
+                      <h3 className="font-display text-lg font-bold text-foreground transition-colors group-hover:text-primary sm:text-xl">
+                        {wp.title}
+                      </h3>
+                      <p className="mt-1 font-body text-xs font-medium uppercase tracking-wider text-muted-foreground">
+                        {wp.subtitle}
+                      </p>
+                      <p className="mt-3 font-body text-sm leading-relaxed text-muted-foreground">
+                        {wp.excerpt}
+                      </p>
+                    </div>
+                  </div>
+                  <div className="mt-5 flex items-center justify-between">
+                    <div className="flex flex-wrap gap-2">
+                      {wp.tags.map((tag) => (
+                        <span key={tag} className="rounded-md bg-muted px-2 py-0.5 font-body text-xs text-muted-foreground">
+                          {tag}
+                        </span>
+                      ))}
+                    </div>
+                    <span className="flex items-center gap-1 font-body text-sm font-medium text-primary">
+                      Read <ArrowRight className="h-3.5 w-3.5" />
+                    </span>
+                  </div>
+                </Link>
+              ))}
             </div>
           </div>
         </section>

@@ -121,6 +121,21 @@ const PrivateTransfer = () => {
           </div>
         </div>
 
+        {/* Whitepaper Cross-Link */}
+        <div className="mx-auto max-w-3xl mt-10">
+          <div className="rounded-xl border border-purple-500/20 bg-card p-5 text-center">
+            <p className="font-body text-sm text-muted-foreground">
+              Deep-dive into Input Masking, Path Randomization, and Output Normalization.
+            </p>
+            <a
+              href="/private-transfer/whitepaper"
+              className="mt-3 inline-flex items-center gap-2 font-display text-sm font-semibold text-primary hover:text-primary/80 transition-colors"
+            >
+              Read the Shielded Architecture Whitepaper <span aria-hidden>→</span>
+            </a>
+          </div>
+        </div>
+
         {/* FAQ */}
         <div className="mx-auto max-w-2xl mt-12">
           <h2 className="font-display text-xl font-bold text-foreground text-center mb-6">Frequently Asked Questions</h2>
