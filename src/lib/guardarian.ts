@@ -37,6 +37,11 @@ export interface GuardarianEstimate {
   service_fees?: { amount: string; currency: string; name: string; percentage: string }[];
   error?: string;
   fallback?: boolean;
+  details?: {
+    message?: string;
+    code?: string;
+    [key: string]: unknown;
+  } | null;
 }
 
 export interface GuardarianTransaction {
@@ -120,11 +125,7 @@ function isValidPixKey(raw: string): boolean {
 }
 
 function sanitizePixKey(raw: string): string {
-  const v = raw.trim();
-  // If it's a CPF/CNPJ (digits only after stripping), remove formatting
-  const digits = v.replace(/[\s.\-/]/g, "");
-  if (/^\d{11}$/.test(digits) || /^\d{14}$/.test(digits)) return digits;
-  return v;
+  return raw.trim().replace(/[\s.-]/g, "");
 }
 
 export function getPayoutFieldsForCurrency(ticker: string): PayoutFieldDef[] {
@@ -237,6 +238,7 @@ export async function getGuardarianEstimate(params: {
   from_amount?: string;
   to_amount?: string;
   payment_method?: string;
+  side?: "buy" | "sell";
 }): Promise<GuardarianEstimate> {
   return callGuardarian({ action: 'estimate', ...params });
 }
@@ -262,6 +264,7 @@ export async function createGuardarianTransaction(params: {
   deposit_address?: string;
   email?: string;
   payment_method?: string;
+  side?: "buy" | "sell";
   trade_direction?: "buy" | "sell";
 }) {
   return callGuardarian({ action: 'create-transaction', ...params });
