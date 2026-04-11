@@ -302,6 +302,13 @@ const SiteFooter = () => {
               <a href="https://www.trustpilot.com/review/mrcglobalpay.com" target="_blank" rel="noopener" title="MRC GlobalPay reviews on Trustpilot">Trustpilot</a>
             </div>
           </div>
+          {/* Author / Expertise Attribution */}
+          <div className="mb-4 rounded-lg border border-border bg-muted/30 px-4 py-3">
+            <p className="font-body text-[11px] leading-relaxed text-muted-foreground">
+              <strong className="text-foreground/70">Technical content authored by</strong>{" "}
+              <span className="text-foreground/80">Vanguard Talent Advisory</span> — institutional fintech consultancy specializing in cross-chain settlement infrastructure, regulatory compliance engineering, and digital asset architecture.
+            </p>
+          </div>
           <div className="flex flex-col items-center justify-between gap-4 sm:flex-row">
             <p className="font-body text-sm font-medium text-foreground/80">
               © {new Date().getFullYear()} MRC Global Pay | Ottawa, Canada
