@@ -206,5 +206,23 @@
       <pubDate>Fri, 11 Apr 2026 00:00:00 GMT</pubDate>
       <category>Guides</category>
     </item>
+    <item>
+      <title>Permanent Bridge Architecture — Institutional Whitepaper</title>
+      <link>https://mrcglobalpay.com/permanent-bridge/whitepaper</link>
+      <guid isPermaLink="true">https://mrcglobalpay.com/permanent-bridge/whitepaper</guid>
+      <description>How does stateless address persistence enable automated institutional settlement? MRC GlobalPay's Permanent Bridge eliminates ephemeral exchange sessions.</description>
+      <dc:creator>MRC GlobalPay Team</dc:creator>
+      <pubDate>Fri, 11 Apr 2026 00:00:00 GMT</pubDate>
+      <category>Whitepaper</category>
+    </item>
+    <item>
+      <title>Shielded Settlement Architecture — Institutional Whitepaper</title>
+      <link>https://mrcglobalpay.com/private-transfer/whitepaper</link>
+      <guid isPermaLink="true">https://mrcglobalpay.com/private-transfer/whitepaper</guid>
+      <description>How does liquidity network decoupling protect corporate privacy? MRC GlobalPay's shielded routing breaks on-chain identity linkability.</description>
+      <dc:creator>MRC GlobalPay Team</dc:creator>
+      <pubDate>Fri, 11 Apr 2026 00:00:00 GMT</pubDate>
+      <category>Whitepaper</category>
+    </item>
   </channel>
 </rss>
