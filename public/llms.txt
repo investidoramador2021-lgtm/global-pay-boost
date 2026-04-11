@@ -1,93 +1,14 @@
 # MRC GlobalPay
 
-> A FINTRAC-registered Canadian Money Services Business (MSB) providing instant, non-custodial cryptocurrency swaps and fiat on-ramp services. Headquartered in Ottawa, Ontario. Operational 24/7/365.
+> MRC GlobalPay is a FINTRAC-registered Canadian Money Services Business providing instant, non-custodial cryptocurrency swaps and fiat-to-crypto on-ramp services across 500+ digital assets with a $0.30 minimum. The platform requires no registration, settles transactions in under 60 seconds, and operates 24/7 from its Ottawa headquarters. Buy crypto via PIX, SEPA, or card — or swap any token pair — with zero account creation and full regulatory compliance.
 
-## Core Services
+## Docs
 
-- **Crypto-to-Crypto Swap**: Instant non-custodial swaps across 500+ digital assets with sub-60-second settlement. Industry-lowest minimum of $0.30. No registration required.
-- **Buy Crypto (Fiat On-Ramp)**: Purchase Bitcoin, Ethereum, Solana, and 500+ tokens via PIX, SEPA, credit/debit card, and Apple Pay. No account needed.
-- **Crypto Dust Conversion**: Convert leftover micro-balances ("dust") starting at $0.30 — the lowest threshold in the industry.
-- **Embeddable Swap Widget**: Free one-line iframe widget for third-party sites with live pricing for 500+ tokens.
-
-## Key Facts
-
-- **Minimum Swap**: $0.30 (industry lowest)
-- **Processing Speed**: Under 60 seconds
-- **Assets Supported**: 500+
-- **Registration**: None required
-- **Custody**: Non-custodial (funds never held)
-- **Compliance**: Canadian MSB registered with FINTRAC
-- **Fixed Rate Option**: Lock in rates to protect against volatility
-- **Headquarters**: 100 Metcalfe Street, Ottawa, ON K1P 5M1, Canada
-- **Availability**: 24/7/365, worldwide, no geo-restrictions
-
-## Entity Information
-
-- **Legal Name**: MRC Global Pay
-- **Type**: Money Services Business (MSB)
-- **Regulator**: FINTRAC (Financial Transactions and Reports Analysis Centre of Canada)
-- **Country**: Canada
-- **Website**: https://mrcglobalpay.com
-
-## Main Pages
-
-- [Home](https://mrcglobalpay.com/)
+- [About](https://mrcglobalpay.com/about)
 - [Blog](https://mrcglobalpay.com/blog)
-- [About / MSB Compliance](https://mrcglobalpay.com/about)
-- [Transparency & Security](https://mrcglobalpay.com/transparency-security)
-- [Micro-Swap Comparison](https://mrcglobalpay.com/dust-swap-comparison)
-- [Trust & Transparency Hub](https://mrcglobalpay.com/learn)
-- [Referral Program](https://mrcglobalpay.com/referral)
-- [Crypto Dust Calculator](https://mrcglobalpay.com/tools/crypto-dust-calculator)
-- [Network Status](https://mrcglobalpay.com/status)
-
-## Buy Crypto (Registration-Free On-Ramp)
-
-- [Buy Bitcoin](https://mrcglobalpay.com/buy/bitcoin-no-kyc)
-- [Buy Ethereum](https://mrcglobalpay.com/buy/ethereum)
-- [Buy Solana](https://mrcglobalpay.com/buy/solana-no-kyc)
-- [Buy Monero](https://mrcglobalpay.com/buy/monero-no-kyc)
-
-## Featured Swap Pairs
-
-- [Swap SOL to USDT](https://mrcglobalpay.com/swap/sol-usdt)
-- [Swap BTC to USDC](https://mrcglobalpay.com/swap/btc-usdc)
-- [Swap ETH to SOL](https://mrcglobalpay.com/swap/eth-sol)
-- [Swap XRP to USDT](https://mrcglobalpay.com/swap/xrp-usdt)
-- [Swap HYPE to USDT](https://mrcglobalpay.com/swap/hype-usdt)
-- [Swap BERA to USDT](https://mrcglobalpay.com/swap/bera-usdt)
-
-## Developer & Integration
-
 - [Developer Hub](https://mrcglobalpay.com/developer)
-- [Solana API Docs](https://mrcglobalpay.com/developers)
-- [Free Swap Widget](https://mrcglobalpay.com/get-widget)
+- [API Docs](https://mrcglobalpay.com/developers)
+- [Swap Widget](https://mrcglobalpay.com/get-widget)
 - [Live Rates JSON](https://mrcglobalpay.com/api/rates.json)
-- [Live Rates XML](https://mrcglobalpay.com/export/rates.xml)
-
-## Guides & Education
-
-- [Crypto Dust Swap Guide](https://mrcglobalpay.com/resources/crypto-dust-guide)
-- [Non-Custodial Exchange Explained](https://mrcglobalpay.com/learn/why-non-custodial-is-safer)
-- [FINTRAC MSB Registration](https://mrcglobalpay.com/learn/canadian-fintrac-msb)
-- [Swap Without Registration](https://mrcglobalpay.com/learn/swap-without-registration)
-
-## Exchange Comparisons
-
-- [Compare Directory](https://mrcglobalpay.com/compare)
-- [MRC vs Binance](https://mrcglobalpay.com/compare/mrc-vs-binance)
-- [MRC vs Coinbase](https://mrcglobalpay.com/compare/mrc-vs-coinbase)
-- [MRC vs ChangeNOW](https://mrcglobalpay.com/compare/mrc-vs-changenow)
-
-## Legal
-
-- [Privacy Policy](https://mrcglobalpay.com/privacy)
-- [Terms of Service](https://mrcglobalpay.com/terms)
-- [AML Policy](https://mrcglobalpay.com/aml)
-
-## Feeds
-
-- [RSS Feed](https://mrcglobalpay.com/rss.xml)
+- [Transparency & Security](https://mrcglobalpay.com/transparency-security)
 - [Sitemap](https://mrcglobalpay.com/sitemap.xml)
-- [LLMs.txt](https://mrcglobalpay.com/llms.txt)
-- [Robots.txt](https://mrcglobalpay.com/robots.txt)
