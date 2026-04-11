@@ -54,6 +54,10 @@ function escapeXml(str: string): string {
 }
 
 function hreflangBlock(path: string): string {
+  // Only generate hreflang for base (non-lang-prefixed) paths
+  const isLangPrefixed = LANGS.some(l => path === `/${l}` || path.startsWith(`/${l}/`));
+  if (isLangPrefixed) return "";
+  
   const enUrl = `${SITE}${path}`;
   const links = [
     `    <xhtml:link rel="alternate" hreflang="en" href="${enUrl}" />`,
