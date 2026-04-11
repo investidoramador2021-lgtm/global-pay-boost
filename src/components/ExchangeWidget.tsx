@@ -311,6 +311,53 @@ const ExchangeWidget = () => {
   const gEstimateRequestIdRef = useRef(0);
   const [gPaymentOpened, setGPaymentOpened] = useState(false);
 
+  const getGuardarianDefaults = useCallback((
+    direction: FiatFlow,
+    fiatOptions: GuardarianCurrency[],
+    cryptoOptions: GuardarianCurrency[],
+    preferredFiatTicker?: string,
+    preferredCryptoTicker?: string,
+  ) => {
+    const fallbackFiatTicker = direction === "sell" ? "EUR" : "USD";
+    const fiatSelection = fiatOptions.find((c) => c.ticker === preferredFiatTicker)
+      || fiatOptions.find((c) => c.ticker === fallbackFiatTicker)
+      || fiatOptions.find((c) => c.ticker === "EUR")
+      || fiatOptions[0]
+      || null;
+    const cryptoSelection = cryptoOptions.find((c) => c.ticker === preferredCryptoTicker)
+      || cryptoOptions.find((c) => c.ticker === "BTC")
+      || cryptoOptions[0]
+      || null;
+
+    return direction === "sell"
+      ? { from: cryptoSelection, to: fiatSelection, amount: "0.01" }
+      : { from: fiatSelection, to: cryptoSelection, amount: "100" };
+  }, []);
+
+  const applyGuardarianDefaults = useCallback((
+    direction: FiatFlow,
+    options?: {
+      fiatOptions?: GuardarianCurrency[];
+      cryptoOptions?: GuardarianCurrency[];
+      preferredFiatTicker?: string;
+      preferredCryptoTicker?: string;
+    },
+  ) => {
+    const fiatOptions = options?.fiatOptions || guardarianFiat;
+    const cryptoOptions = options?.cryptoOptions || guardarianCrypto;
+    const defaults = getGuardarianDefaults(
+      direction,
+      fiatOptions,
+      cryptoOptions,
+      options?.preferredFiatTicker,
+      options?.preferredCryptoTicker,
+    );
+
+    setGFromCurrency(defaults.from);
+    setGToCurrency(defaults.to);
+    setGSendAmount(defaults.amount);
+  }, [guardarianFiat, guardarianCrypto, getGuardarianDefaults]);
+
   // Sell-flow: dynamic bank detail fields
   const [gBankFields, setGBankFields] = useState<Record<string, string>>({});
   const gPayoutFieldDefs = gTradeDirection === "sell" && gToCurrency?.currency_type === "FIAT"
@@ -697,21 +744,16 @@ const ExchangeWidget = () => {
       const dlFiat = dlParams.get("fiat")?.toUpperCase();
       const dlCrypto = dlParams.get("crypto")?.toUpperCase();
       const dlTab = dlParams.get("tab")?.toLowerCase();
-      const isSellMode = dlTab === "sell";
-      
-      const selectedFiat = fiat.find((c: GuardarianCurrency) => c.ticker === (dlFiat || (isSellMode ? "EUR" : "USD"))) || fiat.find((c: GuardarianCurrency) => c.ticker === "EUR") || fiat[0] || null;
-      const selectedCrypto = crypto.find((c: GuardarianCurrency) => c.ticker === (dlCrypto || "BTC")) || crypto[0] || null;
-      
-      if (isSellMode) {
-        // Sell: from=crypto, to=fiat
-        setGFromCurrency(selectedCrypto);
-        setGToCurrency(selectedFiat);
-        setGSendAmount("0.01"); // Sensible default for crypto sell
-      } else {
-        // Buy: from=fiat, to=crypto
-        setGFromCurrency(selectedFiat);
-        setGToCurrency(selectedCrypto);
-      }
+      const initialDirection: FiatFlow = dlTab === "sell"
+        ? "sell"
+        : dlTab === "buy"
+          ? "buy"
+          : gTradeDirection;
+
+      const defaults = getGuardarianDefaults(initialDirection, fiat, crypto, dlFiat, dlCrypto);
+      setGFromCurrency(defaults.from);
+      setGToCurrency(defaults.to);
+      setGSendAmount(defaults.amount);
       setGuardarianLoaded(true);
       setGCurrencyRetryCount(0);
     } catch (err) {
@@ -725,12 +767,32 @@ const ExchangeWidget = () => {
     } finally {
       setGuardarianLoading(false);
     }
-  }, []);
+  }, [gTradeDirection, getGuardarianDefaults]);
 
   useEffect(() => {
     if (widgetMode !== "buysell" || guardarianLoaded) return;
     loadGuardarianCurrencies();
   }, [widgetMode, guardarianLoaded, loadGuardarianCurrencies]);
+
+  useEffect(() => {
+    if (widgetMode !== "buysell" || !guardarianLoaded) return;
+
+    const sellMismatch = gTradeDirection === "sell"
+      && (gFromCurrency?.currency_type !== "CRYPTO" || gToCurrency?.currency_type !== "FIAT");
+    const buyMismatch = gTradeDirection === "buy"
+      && (gFromCurrency?.currency_type !== "FIAT" || gToCurrency?.currency_type !== "CRYPTO");
+
+    if (sellMismatch || buyMismatch) {
+      applyGuardarianDefaults(gTradeDirection);
+    }
+  }, [
+    widgetMode,
+    guardarianLoaded,
+    gTradeDirection,
+    gFromCurrency?.currency_type,
+    gToCurrency?.currency_type,
+    applyGuardarianDefaults,
+  ]);
 
   const collectGuardarianPaymentMethods = useCallback((currency: GuardarianCurrency | null) => {
     if (!currency) return [] as GuardarianPaymentMethod[];
@@ -1539,12 +1601,8 @@ const ExchangeWidget = () => {
                     setGBankFields({});
                     setGSepaIban("");
                     setGSepaBic("");
-                    setGSendAmount("100"); // Sensible default for fiat buy (USD)
-                    if (guardarianFiat.length) {
-                      setGFromCurrency(guardarianFiat.find((c) => c.ticker === "USD") || guardarianFiat[0] || null);
-                    }
-                    if (guardarianCrypto.length) {
-                      setGToCurrency(guardarianCrypto.find((c) => c.ticker === "BTC") || guardarianCrypto[0] || null);
+                    if (guardarianFiat.length || guardarianCrypto.length) {
+                      applyGuardarianDefaults("buy");
                     }
                   }}
                   className={`flex items-center justify-center gap-1.5 rounded-lg px-3 py-2 font-display text-sm font-semibold transition-all ${
@@ -1569,12 +1627,8 @@ const ExchangeWidget = () => {
                     setGBankFields({});
                     setGSepaIban("");
                     setGSepaBic("");
-                    setGSendAmount("0.01"); // Sensible default for crypto sell (BTC)
-                    if (guardarianCrypto.length) {
-                      setGFromCurrency(guardarianCrypto.find((c) => c.ticker === "BTC") || guardarianCrypto[0] || null);
-                    }
-                    if (guardarianFiat.length) {
-                      setGToCurrency(guardarianFiat.find((c) => c.ticker === "EUR") || guardarianFiat[0] || null);
+                    if (guardarianFiat.length || guardarianCrypto.length) {
+                      applyGuardarianDefaults("sell");
                     }
                   }}
                   className={`flex items-center justify-center gap-1.5 rounded-lg px-3 py-2 font-display text-sm font-semibold transition-all ${
