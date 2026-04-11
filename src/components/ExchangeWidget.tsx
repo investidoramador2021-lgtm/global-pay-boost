@@ -692,12 +692,25 @@ const ExchangeWidget = () => {
       const crypto = (data.crypto_currencies || []).filter((c: GuardarianCurrency) => c.enabled && c.is_available !== false);
       setGuardarianFiat(fiat);
       setGuardarianCrypto(crypto);
-      // Deep-link pre-selection: check URL params
+      // Deep-link pre-selection: check URL params and trade direction
       const dlParams = new URLSearchParams(window.location.search);
       const dlFiat = dlParams.get("fiat")?.toUpperCase();
       const dlCrypto = dlParams.get("crypto")?.toUpperCase();
-      setGFromCurrency(fiat.find((c: GuardarianCurrency) => c.ticker === (dlFiat || "USD")) || fiat.find((c: GuardarianCurrency) => c.ticker === "EUR") || fiat[0] || null);
-      setGToCurrency(crypto.find((c: GuardarianCurrency) => c.ticker === (dlCrypto || "BTC")) || crypto[0] || null);
+      const dlTab = dlParams.get("tab")?.toLowerCase();
+      const isSellMode = dlTab === "sell";
+      
+      const selectedFiat = fiat.find((c: GuardarianCurrency) => c.ticker === (dlFiat || (isSellMode ? "EUR" : "USD"))) || fiat.find((c: GuardarianCurrency) => c.ticker === "EUR") || fiat[0] || null;
+      const selectedCrypto = crypto.find((c: GuardarianCurrency) => c.ticker === (dlCrypto || "BTC")) || crypto[0] || null;
+      
+      if (isSellMode) {
+        // Sell: from=crypto, to=fiat
+        setGFromCurrency(selectedCrypto);
+        setGToCurrency(selectedFiat);
+      } else {
+        // Buy: from=fiat, to=crypto
+        setGFromCurrency(selectedFiat);
+        setGToCurrency(selectedCrypto);
+      }
       setGuardarianLoaded(true);
       setGCurrencyRetryCount(0);
     } catch (err) {
