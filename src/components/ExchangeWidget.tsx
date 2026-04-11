@@ -229,6 +229,21 @@ function networkLabel(c: { ticker: string; name: string }): string | null {
   return null;
 }
 
+function getPreferredGuardarianNetworkCode(currency: GuardarianCurrency | null): string | undefined {
+  if (!currency || currency.currency_type === "FIAT") return undefined;
+
+  const ticker = currency.ticker.trim().toUpperCase();
+  const currencyName = currency.name.trim().toUpperCase();
+  const preferredNetwork = currency.networks?.find((network) => {
+    const networkCode = network.network?.trim().toUpperCase();
+    const networkName = network.name?.trim().toUpperCase();
+
+    return networkCode === ticker || networkName === currencyName;
+  });
+
+  return preferredNetwork?.network?.trim() || currency.networks?.[0]?.network?.trim();
+}
+
 type Step = "exchange" | "address" | "deposit" | "status";
 
 // Chain detection helpers
@@ -955,7 +970,8 @@ const ExchangeWidget = () => {
   // Sell flow must keep same-ticker networks too, e.g. BTC -> from_network=BTC.
   const getNetworkParam = (currency: GuardarianCurrency | null, options?: { forceTickerFallback?: boolean }): string | undefined => {
     if (!currency || currency.currency_type === "FIAT") return undefined;
-    const network = currency.networks?.[0]?.network?.trim();
+
+    const network = getPreferredGuardarianNetworkCode(currency);
     if (network) return network;
     if (options?.forceTickerFallback) return currency.ticker.toUpperCase();
     return undefined;
