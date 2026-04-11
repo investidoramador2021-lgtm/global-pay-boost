@@ -42,6 +42,18 @@ const PermanentBridge = () => {
           Generate a reusable deposit address for recurring crypto conversions. No registration, no data stored.
         </p>
         <ExchangeWidget />
+
+        <div className="mt-10 rounded-xl border border-amber-500/20 bg-card p-5 text-center">
+          <p className="font-body text-sm text-muted-foreground">
+            Learn how Stateless Address Persistence powers institutional settlement rails.
+          </p>
+          <a
+            href="/permanent-bridge/whitepaper"
+            className="mt-3 inline-flex items-center gap-2 font-display text-sm font-semibold text-primary hover:text-primary/80 transition-colors"
+          >
+            Read the Whitepaper <span aria-hidden>→</span>
+          </a>
+        </div>
       </main>
       <SiteFooter />
     </div>
