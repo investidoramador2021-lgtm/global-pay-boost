@@ -10,7 +10,7 @@ export const TRANSLATED_DUST_POSTS: Record<string, BlogPost> = {
     title: "Cómo Convertir Polvo Cripto en Stablecoins en 2026: Guía para Limpiar Tu Wallet",
     metaTitle: "Convertir Polvo Cripto a USDT/USDC en 2026 – Mínimo $0.30",
     metaDescription: "Aprende a consolidar saldos pequeños e intransferibles (polvo cripto) en USDT o USDC con el servicio sin registro de MRC GlobalPay. Desde solo $0.30.",
-    excerpt: "¿Tienes saldos diminutos dispersos en varias cadenas? Esta guía te muestra cómo barrer el polvo cripto hacia stablecoins como USDT o USDC — desde solo $0.30, sin necesidad de registro.",
+    excerpt: "Tienes saldos diminutos dispersos en varias cadenas? Esta guía te muestra cómo barrer el polvo cripto hacia stablecoins como USDT o USDC — desde solo $0.30, sin necesidad de registro.",
     author: seedAuthors.elenaVolkova,
     publishedAt: "2026-04-02",
     updatedAt: "2026-04-03",
@@ -23,7 +23,7 @@ Esto es polvo cripto. Y en 2026, la mayoría lo ignora.
 
 Eso es un error. Esos fragmentos se suman — y con la herramienta correcta, puedes barrerlos hacia stablecoins en menos de dos minutos.
 
-## ¿Qué es el polvo cripto y por qué importa?
+## Qué es el polvo cripto y por qué importa?
 
 El polvo cripto se refiere a saldos pequeños de tokens — típicamente menos de $5 — que permanecen inactivos en tus wallets. Se acumulan por:
 
@@ -34,7 +34,7 @@ El polvo cripto se refiere a saldos pequeños de tokens — típicamente menos d
 
 La mayoría de los exchanges centralizados establecen mínimos de intercambio entre $5 y $10. Eso significa que tu polvo está efectivamente atrapado.
 
-## ¿Por qué 2026 es el año para limpiar tu wallet?
+## Por qué 2026 es el año para limpiar tu wallet?
 
 Tres cosas cambiaron este año:
 
@@ -42,7 +42,7 @@ Tres cosas cambiaron este año:
 2. **El enrutamiento multi-cadena mejoró.** Los agregadores modernos obtienen liquidez de más de 700 pares de trading.
 3. **Los costos de gas se normalizaron.** La mayoría de las redes L1 y L2 ahora ofrecen transacciones predecibles y de bajo costo.
 
-## ¿Cómo barrer el polvo hacia stablecoins paso a paso?
+## Cómo barrer el polvo hacia stablecoins paso a paso?
 
 ### Paso 1: Audita tus wallets
 
@@ -68,11 +68,11 @@ El proceso completo es **sin registro** y **no custodial**. No necesitas crear u
 
 Trabaja sistemáticamente en cada wallet. La mayoría de los intercambios se completan en 2-15 minutos.
 
-## ¿Qué tokens de polvo puedes intercambiar?
+## Qué tokens de polvo puedes intercambiar?
 
 MRC GlobalPay soporta más de 500 monedas. Consulta nuestra [página completa de pares de intercambio](/swap) para la lista completa.
 
-## ¿Es seguro intercambiar polvo a través de un agregador?
+## Es seguro intercambiar polvo a través de un agregador?
 
 Sí, siempre que uses un servicio **no custodial**:
 
@@ -81,7 +81,7 @@ Sí, siempre que uses un servicio **no custodial**:
 - Mantienes **control total** de tus claves privadas
 - El servicio es operado por un **MSB canadiense registrado**
 
-## ¿La conclusión?
+## La conclusión?
 
 El polvo cripto no es inútil — solo es inconveniente. En 2026, herramientas como MRC GlobalPay han eliminado la fricción. Con un mínimo de $0.30, acceso sin registro y soporte para más de 500 tokens, no hay razón para dejar valor inactivo.
 

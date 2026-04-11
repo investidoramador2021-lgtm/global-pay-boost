@@ -215,9 +215,9 @@ Pronto para começar? [Compre crypto com PIX agora](/#exchange).
 
   es: {
     slug: PIX_SLUG,
-    title: "Cómo Comprar Crypto Instantáneamente con PIX en Brasil (Guía 2026)",
-    metaTitle: "Cómo Comprar Crypto con PIX — Liquidación Instantánea | MRC GlobalPay",
-    metaDescription: "¿Cómo compran crypto los brasileños instantáneamente con PIX? MRC GlobalPay liquida compras de BTC, ETH y SOL en menos de 60 segundos vía PIX. Sin registro.",
+    title: "Como Comprar Crypto al Instante con PIX en Brasil (Guia 2026)",
+    metaTitle: "Como Comprar Crypto con PIX — Liquidacion Instantanea | MRC GlobalPay",
+    metaDescription: "Como compran crypto los brasileños al instante con PIX? MRC GlobalPay liquida compras de BTC, ETH y SOL en menos de 60 segundos via PIX. Sin registro.",
     excerpt: "PIX es la forma más rápida de entrar al mercado cripto desde Brasil. Esta guía explica cómo comprar Bitcoin, Ethereum y más de 500 tokens instantáneamente usando PIX en MRC GlobalPay — sin registro y con liquidación en menos de 60 segundos.",
     author: seedAuthors.sophiaRamirez,
     publishedAt: "2026-04-11",
@@ -229,7 +229,7 @@ Pronto para começar? [Compre crypto com PIX agora](/#exchange).
 
 PIX — el sistema de pago instantáneo del Banco Central de Brasil — liquida transacciones en segundos, las 24 horas del día, los 365 días del año. Cuando se combina con un on-ramp no custodia como [MRC GlobalPay](/), se convierte en el camino más rápido del Real Brasileño (BRL) a crypto en todo el mundo.
 
-## ¿Por qué PIX es el método preferido para comprar crypto en Brasil?
+## Por que PIX es el metodo preferido para comprar crypto en Brasil?
 
 Tres factores hacen de PIX el método de pago dominante para compras de crypto en Brasil:
 
@@ -263,7 +263,7 @@ Selecciona PIX como método de pago. Recibirás un código QR PIX o clave para c
 
 Una vez que tu pago PIX se confirme (normalmente menos de 10 segundos), MRC GlobalPay procesa tu orden y envía crypto directamente a tu billetera. Liquidación total: menos de 60 segundos.
 
-## ¿Cuáles son los montos mínimos y máximos para compras con PIX?
+## Cuales son los montos minimos y maximos para compras con PIX?
 
 MRC GlobalPay soporta el mínimo de compra más bajo de la industria:
 
@@ -275,7 +275,7 @@ MRC GlobalPay soporta el mínimo de compra más bajo de la industria:
 | **Registro requerido** | No |
 | **Activos soportados** | 500+ tokens en todas las principales blockchains |
 
-## ¿Es seguro comprar crypto con PIX?
+## Es seguro comprar crypto con PIX?
 
 Sí. El modelo de seguridad funciona en múltiples capas:
 
@@ -284,7 +284,7 @@ Sí. El modelo de seguridad funciona en múltiples capas:
 - **Cumplimiento FINTRAC**: MRC GlobalPay es un Money Services Business registrado en Canadá, proporcionando responsabilidad regulatoria.
 - **Sin retención de datos**: Sin creación de cuenta significa sin datos personales almacenados que puedan ser comprometidos.
 
-## ¿Qué criptomonedas puedo comprar con PIX?
+## Que criptomonedas puedo comprar con PIX?
 
 Todos los más de 500 activos soportados por MRC GlobalPay están disponibles para compras vía PIX. Las opciones más populares para compradores brasileños incluyen:
 
@@ -306,7 +306,7 @@ Todos los más de 500 activos soportados por MRC GlobalPay están disponibles pa
 
 PIX se ha convertido en el estándar de oro para el on-ramping crypto en Brasil. Combinado con el modelo sin registro y no custodia de MRC GlobalPay, representa la forma más rápida y accesible para que los brasileños ingresen al ecosistema de activos digitales en 2026.
 
-¿Listo para empezar? [Compra crypto con PIX ahora](/#exchange).
+Listo para empezar? [Compra crypto con PIX ahora](/#exchange).
 `,
   },
 };
