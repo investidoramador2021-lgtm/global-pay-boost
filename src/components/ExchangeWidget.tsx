@@ -804,12 +804,13 @@ const ExchangeWidget = () => {
 
         if (cancelled) return;
 
-        // Inject synthetic preferred methods for BOTH buy and sell directions
-        const syntheticPreferredMethods = [
+        // Inject synthetic preferred methods only for BUY direction (deposit)
+        // For SELL, rely solely on API-reported withdrawal_enabled methods
+        const syntheticPreferredMethods = gTradeDirection === "buy" ? [
           ...(fiatCurrency.ticker === "BRL" ? [{ type: "PIX", payment_category: "BANK_TRANSFER", deposit_enabled: true, withdrawal_enabled: false }] : []),
-          ...(fiatCurrency.ticker === "EUR" ? [{ type: "SEPA", payment_category: "BANK_TRANSFER", deposit_enabled: true, withdrawal_enabled: true }] : []),
-          ...(fiatCurrency.ticker === "GBP" ? [{ type: "FASTER_PAYMENTS", payment_category: "BANK_TRANSFER", deposit_enabled: true, withdrawal_enabled: true }] : []),
-        ];
+          ...(fiatCurrency.ticker === "EUR" ? [{ type: "SEPA", payment_category: "BANK_TRANSFER", deposit_enabled: true, withdrawal_enabled: false }] : []),
+          ...(fiatCurrency.ticker === "GBP" ? [{ type: "FASTER_PAYMENTS", payment_category: "BANK_TRANSFER", deposit_enabled: true, withdrawal_enabled: false }] : []),
+        ] : [];
         const mergedPreferredMethods = [
           ...syntheticPreferredMethods.filter((pm) => !eligibleMethods.some((existing) => existing.type === pm.type)),
           ...eligibleMethods,
@@ -824,14 +825,13 @@ const ExchangeWidget = () => {
         });
       } catch {
         if (cancelled) return;
-        const finalMethods = fallbackMethods.length
-          ? [
+        const syntheticFallback = gTradeDirection === "buy" ? [
               ...(!fallbackMethods.some((pm) => pm.type === "PIX") && fiatCurrency.ticker === "BRL" ? [{ type: "PIX", payment_category: "BANK_TRANSFER", deposit_enabled: true, withdrawal_enabled: false }] : []),
-              ...(!fallbackMethods.some((pm) => pm.type === "SEPA") && fiatCurrency.ticker === "EUR" ? [{ type: "SEPA", payment_category: "BANK_TRANSFER", deposit_enabled: true, withdrawal_enabled: true }] : []),
-              ...(!fallbackMethods.some((pm) => pm.type === "FASTER_PAYMENTS") && fiatCurrency.ticker === "GBP" ? [{ type: "FASTER_PAYMENTS", payment_category: "BANK_TRANSFER", deposit_enabled: true, withdrawal_enabled: true }] : []),
+              ...(!fallbackMethods.some((pm) => pm.type === "SEPA") && fiatCurrency.ticker === "EUR" ? [{ type: "SEPA", payment_category: "BANK_TRANSFER", deposit_enabled: true, withdrawal_enabled: false }] : []),
+              ...(!fallbackMethods.some((pm) => pm.type === "FASTER_PAYMENTS") && fiatCurrency.ticker === "GBP" ? [{ type: "FASTER_PAYMENTS", payment_category: "BANK_TRANSFER", deposit_enabled: true, withdrawal_enabled: false }] : []),
               ...fallbackMethods,
-            ]
-          : [];
+            ] : fallbackMethods;
+        const finalMethods = syntheticFallback.length ? syntheticFallback : [];
         setGPaymentMethods(finalMethods);
         setGSelectedPaymentMethod(resolveGuardarianPaymentMethod(fiatCurrency.ticker, finalMethods, "", gTradeDirection));
       }
@@ -919,9 +919,8 @@ const ExchangeWidget = () => {
         gSelectedPaymentMethod,
         gTradeDirection,
       );
-      if (gTradeDirection === "sell" && gToCurrency.ticker === "EUR" && !effectivePaymentMethod) {
-        effectivePaymentMethod = "SEPA";
-      }
+      // For sell: don't force a synthetic payment method — let the API use its default
+      // Only use a payment method if it was actually confirmed by the API as withdrawal-enabled
 
       const minMaxParams: Parameters<typeof getGuardarianMinMax>[0] = {
         from_currency: gFromCurrency.ticker,
@@ -961,8 +960,15 @@ const ExchangeWidget = () => {
         const rangeMax = Number(minMax.max) || 999999;
         if (rangeMin > 0 && rangeMax < 999999 && (amt < rangeMin || amt > rangeMax)) {
           setGEstimateError("");
+        } else if (gTradeDirection === "sell" && gPaymentMethods.length === 0) {
+          // No withdrawal-enabled payment methods exist for this fiat currency
+          setGEstimateError(
+            `Sell to ${gToCurrency.ticker} is not currently available. Please select a different payout currency.`
+          );
         } else if ((finalEstimate as any)?.fallback) {
-          setGEstimateError("This corridor is temporarily unavailable. Please try again in a moment.");
+          setGEstimateError(
+            `Estimate unavailable for ${gFromCurrency.ticker} → ${gToCurrency.ticker}. Try a different amount or currency pair.`
+          );
         } else {
           setGEstimateError(
             `Estimate unavailable for ${gFromCurrency.ticker} → ${gToCurrency.ticker}. Try a different amount or currency pair.`
