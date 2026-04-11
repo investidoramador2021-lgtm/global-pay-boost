@@ -2601,7 +2601,6 @@ const ExchangeWidget = ({ onTabChange }: ExchangeWidgetProps = {}) => {
                     <span className="flex-1 font-display text-2xl font-bold text-foreground">
                       {estimating ? <Loader2 className="h-6 w-6 animate-spin text-muted-foreground" /> : estimatedAmount === "syncing" ? <span className="text-sm font-medium text-muted-foreground animate-pulse">Syncing with Global Liquidity Rails…</span> : `≈ ${estimatedAmount || "—"}`}
                     </span>
-                    </span>
                     <button onClick={() => setShowToPicker(true)} className="flex items-center gap-2 rounded-lg bg-trust/10 px-4 py-2.5 transition-colors hover:bg-trust/20 touch-target">
                       {toCurrency?.image && <img src={toCurrency.image} alt="" className="h-5 w-5 rounded-full" />}
                       <span className="font-display text-sm font-semibold uppercase text-trust">{toCurrency ? displayTicker(toCurrency) : t("widget.select")}</span>
