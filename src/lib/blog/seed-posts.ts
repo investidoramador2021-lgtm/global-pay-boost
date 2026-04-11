@@ -174,6 +174,7 @@ Users optimizing for headline rate instead of realized output. The best executio
 
 ## Related Reading
 
+- [How to send crypto privately with shielded routing](/blog/how-to-privately-transfer-crypto)
 - [How liquidity aggregation works in crypto swaps](/blog/understanding-crypto-liquidity-aggregation)
 - [Crypto security best practices for active traders](/blog/crypto-security-best-practices-2026)
 - [March 2026 high-volume pair analysis](/blog/top-crypto-trading-pairs-march-2026)
