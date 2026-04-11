@@ -303,5 +303,58 @@
     "pdfBridgeId": "Bridge ID",
     "pdfExtraId": "Extra ID / Memo",
     "pdfFooter": "Quyền riêng tư: MRC GlobalPay không giữ tài sản. Thông tin này không được lưu trên máy chủ."
+  },
+  "explainer": {
+    "buysell": {
+      "heading": "Cổng Fiat-Crypto Toàn Cầu",
+      "subtitle": "Mua crypto ngay lập tức với phương thức ưa thích — Visa, Mastercard, Apple Pay, PIX, SEPA và hơn thế.",
+      "step1": {
+        "title": "Chọn Phương Thức",
+        "description": "Chọn đồng tiền địa phương và phương thức thanh toán ưa thích."
+      },
+      "step2": {
+        "title": "Xác Minh Tức Thì",
+        "description": "Hoàn tất thanh toán nhanh chóng và an toàn qua đối tác tích hợp."
+      },
+      "step3": {
+        "title": "Giao Hàng Trực Tiếp",
+        "description": "Crypto được gửi trực tiếp đến ví của bạn. Không phí ẩn."
+      },
+      "cta": "Mua Ngay"
+    },
+    "bridge": {
+      "heading": "Cầu Thanh Khoản Vĩnh Viễn",
+      "subtitle": "Tạo địa chỉ nạp tiền tái sử dụng cho chuyển đổi crypto tự động và định kỳ.",
+      "step1": {
+        "title": "Thiết Lập Một Lần",
+        "description": "Liên kết cặp nguồn và đích. Tạo một địa chỉ vĩnh viễn."
+      },
+      "step2": {
+        "title": "Luồng Tự Động",
+        "description": "Sử dụng cùng một địa chỉ cho tất cả các giao dịch trong tương lai."
+      },
+      "step3": {
+        "title": "Thanh Toán Dễ Dàng",
+        "description": "Tiền được tự động chuyển đổi và giao mỗi khi đến cầu."
+      },
+      "cta": "Tạo Cầu"
+    },
+    "private": {
+      "heading": "Quyền Riêng Tư Cho Chuyển Tiền",
+      "subtitle": "Phá vỡ liên kết on-chain giữa các ví với định tuyến được bảo vệ.",
+      "step1": {
+        "title": "Bảo Vệ Ví",
+        "description": "Tránh lộ địa chỉ cá nhân trên sổ cái công khai trong giao dịch thường ngày."
+      },
+      "step2": {
+        "title": "Định Tuyến Riêng Tư",
+        "description": "Tiền được định tuyến qua các đường thanh khoản được bảo vệ."
+      },
+      "step3": {
+        "title": "Giao Hàng Sạch",
+        "description": "Người nhận nhận tiền với lịch sử sạch, bảo vệ quyền riêng tư tài chính."
+      },
+      "cta": "Gửi Riêng Tư"
+    }
   }
 }

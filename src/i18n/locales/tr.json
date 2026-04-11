@@ -303,5 +303,58 @@
     "pdfBridgeId": "Bridge ID",
     "pdfExtraId": "Extra ID / Memo",
     "pdfFooter": "Gizlilik Önceliğimiz: MRC GlobalPay saklama hizmeti sunmaz. Bu bilgiler sunucularımızda saklanmaz."
+  },
+  "explainer": {
+    "buysell": {
+      "heading": "Küresel Fiat-Kripto Rampa",
+      "subtitle": "Visa, Mastercard, Apple Pay, PIX, SEPA ve daha fazlasıyla anında kripto satın alın.",
+      "step1": {
+        "title": "Yönteminizi Seçin",
+        "description": "Yerel para biriminizi ve tercih ettiğiniz ödeme yöntemini seçin."
+      },
+      "step2": {
+        "title": "Anında Doğrulama",
+        "description": "Entegre ödeme ortaklarımız aracılığıyla hızlı ve güvenli ödeme yapın."
+      },
+      "step3": {
+        "title": "Doğrudan Teslimat",
+        "description": "Kriptonuz doğrudan cüzdanınıza gönderilir. Gizli ücret yok."
+      },
+      "cta": "Şimdi Satın Al"
+    },
+    "bridge": {
+      "heading": "Kalıcı Likidite Köprüsü",
+      "subtitle": "Otomatik ve tekrarlayan kripto dönüşümleri için yeniden kullanılabilir depozito adresi oluşturun.",
+      "step1": {
+        "title": "Tek Seferlik Kurulum",
+        "description": "Kaynak ve hedef çiftini bağlayın. Kalıcı adres oluşturun."
+      },
+      "step2": {
+        "title": "Otomatik Akış",
+        "description": "Gelecekteki tüm transferler için aynı adresi kullanın."
+      },
+      "step3": {
+        "title": "Zahmetsiz Takas",
+        "description": "Köprüye ulaşan fonlar otomatik olarak takas edilir ve teslim edilir."
+      },
+      "cta": "Köprü Oluştur"
+    },
+    "private": {
+      "heading": "Günlük Transferler İçin Gizlilik",
+      "subtitle": "Korumalı yönlendirme ile cüzdanlarınız arasındaki zincir üstü bağlantıyı kırın.",
+      "step1": {
+        "title": "Cüzdanınızı Koruyun",
+        "description": "Rutin transferler sırasında kişisel adresinizi herkese açık kayıtlarda ifşa etmekten kaçının."
+      },
+      "step2": {
+        "title": "Özel Yönlendirme",
+        "description": "Fonlar, gönderici ve alıcı arasındaki bağlantıyı kırmak için korumalı likidite yollarından yönlendirilir."
+      },
+      "step3": {
+        "title": "Temiz Teslimat",
+        "description": "Alıcınız temiz bir geçmişle fonları alır."
+      },
+      "cta": "Özel Gönder"
+    }
   }
 }

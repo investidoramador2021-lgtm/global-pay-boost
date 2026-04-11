@@ -303,5 +303,58 @@
     "pdfBridgeId": "ID du Bridge",
     "pdfExtraId": "Extra ID / Memo",
     "pdfFooter": "Confidentialité d'abord : MRC GlobalPay est non-custodial. Ces informations ne sont pas stockées sur nos serveurs. Conservez ce reçu."
+  },
+  "explainer": {
+    "buysell": {
+      "heading": "Rampe Fiat-Crypto Mondiale",
+      "subtitle": "Achetez des cryptos instantanément avec votre méthode préférée — Visa, Mastercard, Apple Pay, PIX, SEPA et plus.",
+      "step1": {
+        "title": "Choisissez Votre Méthode",
+        "description": "Sélectionnez votre devise locale et votre méthode de paiement préférée."
+      },
+      "step2": {
+        "title": "Vérification Instantanée",
+        "description": "Finalisez un paiement rapide et sécurisé via nos partenaires intégrés."
+      },
+      "step3": {
+        "title": "Livraison Directe",
+        "description": "Votre crypto est envoyée directement à votre portefeuille. Sans frais cachés."
+      },
+      "cta": "Acheter"
+    },
+    "bridge": {
+      "heading": "Pont de Liquidité Permanent",
+      "subtitle": "Générez une adresse de dépôt réutilisable pour des conversions crypto automatiques et récurrentes.",
+      "step1": {
+        "title": "Configuration Unique",
+        "description": "Liez une paire source et destination. Générez une adresse permanente."
+      },
+      "step2": {
+        "title": "Flux Automatisé",
+        "description": "Utilisez la même adresse pour tous vos futurs transferts."
+      },
+      "step3": {
+        "title": "Règlement Sans Effort",
+        "description": "Les fonds sont automatiquement convertis et livrés à chaque dépôt."
+      },
+      "cta": "Générer le Pont"
+    },
+    "private": {
+      "heading": "Confidentialité pour Vos Transferts",
+      "subtitle": "Brisez la traçabilité on-chain entre vos portefeuilles grâce au routage blindé.",
+      "step1": {
+        "title": "Protégez Votre Portefeuille",
+        "description": "Évitez d'exposer votre adresse personnelle sur les registres publics."
+      },
+      "step2": {
+        "title": "Routage Privé",
+        "description": "Les fonds sont acheminés par des chemins de liquidité blindés."
+      },
+      "step3": {
+        "title": "Livraison Propre",
+        "description": "Votre destinataire reçoit les fonds avec un historique propre."
+      },
+      "cta": "Envoyer en Privé"
+    }
   }
 }
