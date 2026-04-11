@@ -1797,7 +1797,7 @@ const ExchangeWidget = () => {
                           {gEstimating ? (
                             <Loader2 className="h-6 w-6 animate-spin text-muted-foreground" />
                           ) : gEstimateError ? (
-                            "Unavailable"
+                            <span className="text-destructive text-base">Check error above</span>
                           ) : gEstimatedAmount && parseFloat(gEstimatedAmount) <= 0 ? (
                             <span className="text-destructive text-base">Minimum amount not met</span>
                           ) : (
