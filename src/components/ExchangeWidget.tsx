@@ -261,19 +261,31 @@ function getChainType(currency: Currency | null): "evm" | "solana" | "other" {
   return "other";
 }
 
-const STATUS_LABELS: Record<string, { label: string; color: string; icon: React.ReactNode }> = {
-  waiting: { label: "Waiting for deposit", color: "text-muted-foreground", icon: <Clock className="h-5 w-5" /> },
-  confirming: { label: "Confirming transaction", color: "text-primary", icon: <Loader2 className="h-5 w-5 animate-spin" /> },
-  exchanging: { label: "Exchanging", color: "text-primary", icon: <Loader2 className="h-5 w-5 animate-spin" /> },
-  sending: { label: "Sending to your wallet", color: "text-trust", icon: <Loader2 className="h-5 w-5 animate-spin" /> },
-  finished: { label: "Exchange complete!", color: "text-trust", icon: <CheckCircle2 className="h-5 w-5" /> },
-  failed: { label: "Exchange failed", color: "text-destructive", icon: <AlertCircle className="h-5 w-5" /> },
-  refunded: { label: "Refunded", color: "text-muted-foreground", icon: <AlertCircle className="h-5 w-5" /> },
-  overdue: { label: "Overdue", color: "text-destructive", icon: <AlertCircle className="h-5 w-5" /> },
+const STATUS_ICONS: Record<string, { color: string; icon: React.ReactNode }> = {
+  waiting: { color: "text-muted-foreground", icon: <Clock className="h-5 w-5" /> },
+  confirming: { color: "text-primary", icon: <Loader2 className="h-5 w-5 animate-spin" /> },
+  exchanging: { color: "text-primary", icon: <Loader2 className="h-5 w-5 animate-spin" /> },
+  sending: { color: "text-trust", icon: <Loader2 className="h-5 w-5 animate-spin" /> },
+  finished: { color: "text-trust", icon: <CheckCircle2 className="h-5 w-5" /> },
+  failed: { color: "text-destructive", icon: <AlertCircle className="h-5 w-5" /> },
+  refunded: { color: "text-muted-foreground", icon: <AlertCircle className="h-5 w-5" /> },
+  overdue: { color: "text-destructive", icon: <AlertCircle className="h-5 w-5" /> },
+};
+
+const STATUS_LABEL_KEYS: Record<string, string> = {
+  waiting: "widget.statusWaiting",
+  confirming: "widget.statusConfirming",
+  exchanging: "widget.statusExchanging",
+  sending: "widget.statusSending",
+  finished: "widget.statusFinished",
+  failed: "widget.statusFailed",
+  refunded: "widget.statusRefunded",
+  overdue: "widget.statusOverdue",
 };
 
 const ExchangeWidget = () => {
   const { toast } = useToast();
+  const { t } = useTranslation();
   const { subscribe: subscribePush, supported: pushSupported } = usePushNotifications();
   const pushSubscribedRef = useRef(false);
   const [currencies, setCurrencies] = useState<Currency[]>([]);
@@ -1526,7 +1538,7 @@ const ExchangeWidget = () => {
             <Search className="h-4 w-4 text-muted-foreground" />
             <input
               autoFocus
-              placeholder="Search currency..."
+              placeholder={t("widget.searchCurrency")}
               className="flex-1 bg-transparent font-body text-sm text-foreground outline-none placeholder:text-muted-foreground"
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
@@ -1603,7 +1615,7 @@ const ExchangeWidget = () => {
                       : "text-muted-foreground hover:text-foreground hover:bg-background"
                   }`}
                 >
-                  <Repeat className="h-4 w-4" /> Exchange
+                  <Repeat className="h-4 w-4" /> {t("widget.tabs.exchange")}
                 </button>
                 <button
                   onClick={() => {
@@ -1629,7 +1641,7 @@ const ExchangeWidget = () => {
                       : "text-muted-foreground hover:text-foreground hover:bg-background"
                   }`}
                 >
-                  <CreditCard className="h-4 w-4" /> Buy
+                  <CreditCard className="h-4 w-4" /> {t("widget.tabs.buy")}
                 </button>
                 <button
                   onClick={() => { setWidgetMode("private"); }}
@@ -1639,7 +1651,7 @@ const ExchangeWidget = () => {
                       : "text-muted-foreground hover:text-foreground hover:bg-background"
                   }`}
                 >
-                  <EyeOff className="h-4 w-4" /> Private
+                  <EyeOff className="h-4 w-4" /> {t("widget.tabs.private")}
                 </button>
               </div>
               <span className="hidden min-[481px]:flex items-center gap-1.5 rounded-full border border-trust/30 bg-trust/10 px-2.5 py-1 font-body text-[10px] font-semibold uppercase tracking-wider text-trust">
@@ -1647,7 +1659,7 @@ const ExchangeWidget = () => {
                   <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-trust opacity-75"></span>
                   <span className="relative inline-flex h-2 w-2 rounded-full bg-trust"></span>
                 </span>
-                Online
+                {t("widget.online")}
               </span>
             </div>
 
@@ -1658,15 +1670,15 @@ const ExchangeWidget = () => {
                   <div className="flex h-60 flex-col items-center justify-center gap-3">
                     <Loader2 className="h-8 w-8 animate-spin text-primary" />
                     <span className="text-sm text-muted-foreground animate-pulse">
-                      {gCurrencyRetryCount > 0 ? `Retrying… (${gCurrencyRetryCount}/3)` : "Loading currencies…"}
+                      {gCurrencyRetryCount > 0 ? `${t("widget.retrying")} (${gCurrencyRetryCount}/3)` : t("widget.loadingCurrencies")}
                     </span>
                   </div>
                 ) : gCurrencyError ? (
                   <div className="flex h-60 flex-col items-center justify-center gap-3 text-center">
                     <AlertCircle className="h-8 w-8 text-destructive" />
-                    <p className="text-sm text-muted-foreground">Could not load currencies. Please try again.</p>
+                    <p className="text-sm text-muted-foreground">{t("widget.couldNotLoad")}</p>
                     <Button variant="outline" size="sm" onClick={() => loadGuardarianCurrencies(0)}>
-                      <RefreshCw className="mr-1.5 h-3.5 w-3.5" /> Retry
+                      <RefreshCw className="mr-1.5 h-3.5 w-3.5" /> {t("widget.retry")}
                     </Button>
                   </div>
                 ) : (
@@ -1676,7 +1688,7 @@ const ExchangeWidget = () => {
                     {/* You Pay */}
                     <div className="relative">
                       <label className="mb-1.5 block font-body text-xs font-medium uppercase tracking-wider text-muted-foreground">
-                        {gTradeDirection === "buy" ? "You Pay (Fiat)" : "You Pay (Crypto)"}
+                        {gTradeDirection === "buy" ? t("widget.youPayFiat") : t("widget.youPayCrypto")}
                       </label>
                       <div className="flex items-center gap-3 rounded-xl border border-border bg-accent p-4">
                         <Input
@@ -1693,7 +1705,7 @@ const ExchangeWidget = () => {
                               ? <img src={fiatFlagUrl(gFromCurrency.ticker)} alt="" className="h-5 w-5 rounded-full object-cover" />
                               : gTradeDirection === "sell" && <GuardarianAssetIcon currency={gFromCurrency} />
                           )}
-                          <span className="font-display text-sm font-semibold uppercase text-primary">{gFromCurrency?.ticker || "Select"}</span>
+                          <span className="font-display text-sm font-semibold uppercase text-primary">{gFromCurrency?.ticker || t("widget.select")}</span>
                           <ChevronDown className="h-3.5 w-3.5 text-primary/60" />
                         </button>
                       </div>
@@ -1705,7 +1717,7 @@ const ExchangeWidget = () => {
                       )}
                       {parseFloat(gSendAmount) > 0 && gMaxAmount < 999999 && parseFloat(gSendAmount) > gMaxAmount && (
                         <p className="mt-1 font-body text-xs text-destructive">
-                          Maximum: {gMaxAmount} {gFromCurrency?.ticker}
+                          {t("widget.maximum")} {gMaxAmount} {gFromCurrency?.ticker}
                         </p>
                       )}
 
@@ -1776,16 +1788,16 @@ const ExchangeWidget = () => {
                     {/* You Get (Crypto) */}
                     <div className="relative">
                       <label className="mb-1.5 block font-body text-xs font-medium uppercase tracking-wider text-muted-foreground">
-                        {gTradeDirection === "buy" ? "You Receive (Crypto)" : "You Get (Fiat)"}
+                        {gTradeDirection === "buy" ? t("widget.youReceiveCrypto") : t("widget.youGetFiat")}
                       </label>
                       <div className="flex items-center gap-3 rounded-xl border border-border bg-accent p-4">
                         <span className="flex-1 font-display text-2xl font-bold text-foreground">
                           {gEstimating ? (
                             <Loader2 className="h-6 w-6 animate-spin text-muted-foreground" />
                           ) : gEstimateError ? (
-                            <span className="text-destructive text-base">Check error above</span>
+                            <span className="text-destructive text-base">{t("widget.checkErrorAbove")}</span>
                           ) : gEstimatedAmount && parseFloat(gEstimatedAmount) <= 0 ? (
-                            <span className="text-destructive text-base">Minimum amount not met</span>
+                            <span className="text-destructive text-base">{t("widget.minNotMet")}</span>
                           ) : (
                             (() => {
                               if (!gEstimatedAmount) return "≈ —";
@@ -1803,7 +1815,7 @@ const ExchangeWidget = () => {
                               ? <img src={fiatFlagUrl(gToCurrency.ticker)} alt="" className="h-5 w-5 rounded-full object-cover" />
                               : gTradeDirection === "buy" && <GuardarianAssetIcon currency={gToCurrency} />
                           )}
-                          <span className="font-display text-sm font-semibold uppercase text-trust">{gToCurrency?.ticker || "Select"}</span>
+                          <span className="font-display text-sm font-semibold uppercase text-trust">{gToCurrency?.ticker || t("widget.select")}</span>
                           <ChevronDown className="h-3.5 w-3.5 text-trust/60" />
                         </button>
                       </div>
@@ -1816,7 +1828,7 @@ const ExchangeWidget = () => {
                               <Search className="h-4 w-4 text-muted-foreground" />
                               <input
                                 autoFocus
-                                placeholder={gTradeDirection === "buy" ? "Search crypto..." : "Search fiat currency..."}
+                                placeholder={gTradeDirection === "buy" ? t("widget.searchCrypto") : t("widget.searchFiat")}
                                 className="flex-1 bg-transparent font-body text-sm text-foreground outline-none placeholder:text-muted-foreground"
                                 value={gSearchQuery}
                                 onChange={(e) => setGSearchQuery(e.target.value)}
@@ -1880,7 +1892,7 @@ const ExchangeWidget = () => {
                           <div className="mt-4">
                             <label className="mb-1.5 flex items-center gap-1.5 font-body text-xs font-medium uppercase tracking-wider text-muted-foreground">
                               <Wallet className="h-3 w-3" />
-                              Your {gToCurrency?.ticker || "crypto"} wallet
+                              {t("widget.yourWallet", { ticker: gToCurrency?.ticker || "crypto" })}
                             </label>
                             <DestinationAddressInput
                               value={gPayoutAddress}
@@ -1895,7 +1907,7 @@ const ExchangeWidget = () => {
                         {gTradeDirection === "sell" && gPayoutFieldDefs.length > 0 && (
                           <div className="mt-4 space-y-3">
                             <label className="mb-1 flex items-center gap-1.5 font-body text-xs font-medium uppercase tracking-wider text-muted-foreground">
-                              <Shield className="h-3 w-3" /> Payout Details ({gToCurrency?.ticker || "Fiat"})
+                              <Shield className="h-3 w-3" /> {t("widget.payoutDetails")} ({gToCurrency?.ticker || "Fiat"})
                             </label>
                             {gPayoutFieldDefs.map((field) => {
                               const val = gBankFields[field.key] || "";
@@ -1922,7 +1934,7 @@ const ExchangeWidget = () => {
                                   />
                                   {val && !isValid && (
                                     <p className="mt-0.5 font-body text-[10px] text-destructive">
-                                      Invalid format — please check and try again
+                                      {t("widget.invalidFormat")}
                                     </p>
                                   )}
                                 </div>
@@ -1934,7 +1946,7 @@ const ExchangeWidget = () => {
                         {/* Contact Email */}
                         <div className="mt-3">
                           <label className="mb-1.5 flex items-center gap-1.5 font-body text-xs font-medium uppercase tracking-wider text-muted-foreground">
-                            <Mail className="h-3 w-3" /> Contact Email
+                            <Mail className="h-3 w-3" /> {t("widget.contactEmail")}
                           </label>
                           <Input
                             type="email"
@@ -1985,24 +1997,24 @@ const ExchangeWidget = () => {
                           <div className="mt-3 space-y-1.5 rounded-xl border border-border bg-accent/40 px-4 py-3">
                             {gFullEstimate.service_fees?.map((fee, i) => (
                               <div key={i} className="flex items-center justify-between font-body text-[11px]">
-                                <span className="text-muted-foreground">Provider fee ({fee.percentage})</span>
+                                <span className="text-muted-foreground">{t("widget.providerFee")} ({fee.percentage})</span>
                                 <span className="font-medium text-foreground">{fee.amount} {fee.currency}</span>
                               </div>
                             ))}
                             {gFullEstimate.network_fee && (
                               <div className="flex items-center justify-between font-body text-[11px]">
-                                <span className="text-muted-foreground">Network fee</span>
+                                <span className="text-muted-foreground">{t("widget.networkFee")}</span>
                                 <span className="font-medium text-foreground">{parseFloat(gFullEstimate.network_fee.amount).toFixed(6)} {gFullEstimate.network_fee.currency}</span>
                               </div>
                             )}
                             <div className="flex items-center justify-between font-body text-[11px]">
-                              <span className="text-muted-foreground">MRC service fee (0.5%)</span>
+                              <span className="text-muted-foreground">{t("widget.mrcServiceFee")}</span>
                               <span className="font-medium text-foreground">
                                 {(parseFloat(gSendAmount) * 0.005).toFixed(2)} {gFromCurrency?.ticker}
                               </span>
                             </div>
                             <div className="flex items-center justify-between border-t border-border pt-1.5 font-body text-[11px] font-semibold">
-                              <span className="text-foreground">Total fees</span>
+                              <span className="text-foreground">{t("widget.totalFees")}</span>
                               <span className="text-foreground">
                                 {(() => {
                                   const providerFees = (gFullEstimate.service_fees || []).reduce((sum, f) => sum + parseFloat(f.amount || "0"), 0);
@@ -2018,7 +2030,7 @@ const ExchangeWidget = () => {
                               </span>
                             </div>
                             <div className="flex items-center justify-between border-t border-border pt-1.5 font-body text-[11px]">
-                              <span className="text-muted-foreground">Rate</span>
+                              <span className="text-muted-foreground">{t("widget.rate")}</span>
                               <span className="font-medium text-foreground">1 {gFromCurrency?.ticker} ≈ {gFullEstimate.estimated_exchange_rate} {gToCurrency?.ticker}</span>
                             </div>
                           </div>
@@ -2028,7 +2040,7 @@ const ExchangeWidget = () => {
                         {gPaymentMethods.length > 0 && (
                           <div className="mt-3">
                             <label className="mb-1.5 block font-body text-[10px] font-medium uppercase tracking-wider text-muted-foreground">
-                              {gTradeDirection === "sell" ? "Payout Method" : "Payment Method"}
+                              {gTradeDirection === "sell" ? t("widget.payoutMethod") : t("widget.paymentMethod")}
                             </label>
                             <div className="flex flex-wrap gap-1.5">
                               {gPaymentMethods.map((pm) => {
@@ -2066,18 +2078,18 @@ const ExchangeWidget = () => {
                           onClick={handleStartGuardarianCheckout}
                         >
                           {gCreatingTx ? (
-                            <><Loader2 className="mr-2 h-4 w-4 animate-spin" />Opening checkout…</>
+                            <><Loader2 className="mr-2 h-4 w-4 animate-spin" />{t("widget.openingCheckout")}</>
                           ) : gTradeDirection === "sell" ? (
-                            <><Wallet className="mr-2 h-4 w-4" />Sell {gFromCurrency?.ticker || "Crypto"}</>
+                            <><Wallet className="mr-2 h-4 w-4" />{t("widget.sellCrypto", { ticker: gFromCurrency?.ticker || "Crypto" })}</>
                           ) : (
-                            <><CreditCard className="mr-2 h-4 w-4" />Buy {gToCurrency?.ticker || "Crypto"}</>
+                            <><CreditCard className="mr-2 h-4 w-4" />{t("widget.buyCrypto", { ticker: gToCurrency?.ticker || "Crypto" })}</>
                           )}
                         </Button>
 
                         {/* Trust signals */}
                         <div className="mt-3 flex flex-wrap items-center justify-center gap-x-4 gap-y-1">
-                          <span className="flex items-center gap-1 font-body text-[10px] text-muted-foreground"><Shield className="h-3 w-3 text-primary" /> Regulated provider</span>
-                          <span className="flex items-center gap-1 font-body text-[10px] text-muted-foreground"><Lock className="h-3 w-3 text-primary" /> Secure checkout</span>
+                          <span className="flex items-center gap-1 font-body text-[10px] text-muted-foreground"><Shield className="h-3 w-3 text-primary" /> {t("widget.regulatedProvider")}</span>
+                          <span className="flex items-center gap-1 font-body text-[10px] text-muted-foreground"><Lock className="h-3 w-3 text-primary" /> {t("widget.secureCheckout")}</span>
                         </div>
                         <div className="mt-2 flex flex-wrap items-center justify-center gap-1.5">
                           {gPaymentMethods.length > 0 ? (
@@ -2115,7 +2127,7 @@ const ExchangeWidget = () => {
                           onClick={() => { setGCheckoutUrl(""); setGStep("form"); }}
                           className="flex items-center gap-1.5 font-body text-xs text-muted-foreground transition-colors hover:text-foreground"
                         >
-                          <ArrowLeft className="h-3.5 w-3.5" /> Back
+                          <ArrowLeft className="h-3.5 w-3.5" /> {t("widget.back")}
                         </button>
                         <div className="overflow-hidden rounded-[28px] border border-border bg-card shadow-elevated">
                           <div className="bg-hero-gradient p-4 text-primary-foreground sm:p-5">
@@ -2230,18 +2242,18 @@ const ExchangeWidget = () => {
                               <div className="rounded-2xl border border-border bg-accent/40 p-4 space-y-2">
                                 {gFullEstimate.service_fees?.map((fee, i) => (
                                   <div key={i} className="flex items-center justify-between gap-3 font-body text-[11px]">
-                                    <span className="text-muted-foreground">Service fee ({fee.percentage})</span>
+                                    <span className="text-muted-foreground">{t("widget.serviceFee")} ({fee.percentage})</span>
                                     <span className="font-medium text-foreground">{fee.amount} {fee.currency}</span>
                                   </div>
                                 ))}
                                 {gFullEstimate.network_fee && (
                                   <div className="flex items-center justify-between gap-3 font-body text-[11px]">
-                                    <span className="text-muted-foreground">Network fee</span>
+                                    <span className="text-muted-foreground">{t("widget.networkFee")}</span>
                                     <span className="font-medium text-foreground">{parseFloat(gFullEstimate.network_fee.amount).toFixed(8)} {gFullEstimate.network_fee.currency}</span>
                                   </div>
                                 )}
                                 <div className="flex items-center justify-between gap-3 border-t border-border pt-2 font-body text-[11px]">
-                                  <span className="text-muted-foreground">Rate</span>
+                                  <span className="text-muted-foreground">{t("widget.rate")}</span>
                                   <span className="font-medium text-foreground">{getGuardarianRateText()}</span>
                                 </div>
                               </div>
@@ -2272,7 +2284,7 @@ const ExchangeWidget = () => {
                           onClick={() => { setGCheckoutUrl(""); setGStep("form"); setGPaymentOpened(false); }}
                           className="flex items-center gap-1.5 font-body text-xs text-muted-foreground transition-colors hover:text-foreground"
                         >
-                          <ArrowLeft className="h-3.5 w-3.5" /> Start over
+                          <ArrowLeft className="h-3.5 w-3.5" /> {t("widget.startOver")}
                         </button>
 
                         {!gPaymentOpened ? (
@@ -2283,12 +2295,12 @@ const ExchangeWidget = () => {
                                 <Shield className="h-7 w-7 text-primary" />
                               </div>
                               <h3 className="font-display text-lg font-bold text-foreground">
-                                {gTradeDirection === "sell" ? "Payout Ready" : "Transaction Ready"}
+                                {gTradeDirection === "sell" ? t("widget.payoutReady") : t("widget.transactionReady")}
                               </h3>
                               <p className="mt-1 font-body text-xs text-muted-foreground">
                                 {gTradeDirection === "sell"
-                                  ? "Your sell order has been created. Click below to send your crypto and receive your payout."
-                                  : "Your order has been created. Click below to complete payment on the secure Guardarian gateway."}
+                                  ? "{t("widget.orderCreatedSell")}"
+                                  : "{t("widget.orderCreatedPay")}"}
                               </p>
                             </div>
 
@@ -2296,28 +2308,28 @@ const ExchangeWidget = () => {
                             <div className="space-y-3 p-5">
                               <div className="rounded-xl border border-border bg-accent/40 p-4 space-y-2">
                                 <div className="flex justify-between font-body text-sm">
-                                  <span className="text-muted-foreground">You pay</span>
+                                  <span className="text-muted-foreground">{t("widget.youPay")}</span>
                                   <span className="font-semibold text-foreground">{gSendAmount} {gFromCurrency?.ticker}</span>
                                 </div>
                                 <div className="flex justify-between font-body text-sm">
-                                  <span className="text-muted-foreground">You receive</span>
+                                  <span className="text-muted-foreground">{t("widget.youReceive")}</span>
                                   <span className="font-semibold text-primary">{gEstimatedAmount || "—"} {gToCurrency?.ticker}</span>
                                 </div>
                                 {gTradeDirection === "buy" && gPayoutAddress && (
                                   <div className="flex justify-between font-body text-sm">
-                                    <span className="text-muted-foreground">Wallet</span>
+                                    <span className="text-muted-foreground">{t("widget.wallet")}</span>
                                     <span className="max-w-[180px] truncate font-mono text-xs text-foreground">{gPayoutAddress}</span>
                                   </div>
                                 )}
                                 {gTradeDirection === "sell" && gPayoutFieldDefs.length > 0 && (
                                   <div className="flex justify-between font-body text-sm">
-                                    <span className="text-muted-foreground">Payout to</span>
+                                    <span className="text-muted-foreground">{t("widget.payoutTo")}</span>
                                     <span className="text-xs text-foreground">{gPayoutFieldDefs[0].label}</span>
                                   </div>
                                 )}
                                 {gPayoutEmail && (
                                   <div className="flex justify-between font-body text-sm">
-                                    <span className="text-muted-foreground">Email</span>
+                                    <span className="text-muted-foreground">{t("widget.email")}</span>
                                     <span className="text-foreground">{gPayoutEmail}</span>
                                   </div>
                                 )}
@@ -2328,7 +2340,7 @@ const ExchangeWidget = () => {
                                 <ProviderMark letter="G" />
                                 <div className="text-left">
                                   <p className="font-display text-sm font-bold text-foreground">Guardarian</p>
-                                  <p className="font-body text-[10px] text-muted-foreground">Regulated payment gateway</p>
+                                  <p className="font-body text-[10px] text-muted-foreground">{t("widget.regulatedPaymentGateway")}</p>
                                 </div>
                               </div>
 
@@ -2348,28 +2360,28 @@ const ExchangeWidget = () => {
                                 }}
                               >
                                 <Lock className="mr-2 h-4 w-4" />
-                                {gTradeDirection === "sell" ? "Proceed to Secure Payout" : "Proceed to Secure Payment"}
+                                {gTradeDirection === "sell" ? t("widget.proceedPayout") : t("widget.proceedPayment")}
                                 <ExternalLink className="ml-2 h-4 w-4" />
                               </Button>
 
                               {/* Fallback link */}
                               <p className="text-center font-body text-[11px] text-muted-foreground">
-                                Window didn't open?{" "}
+                                {t("widget.windowDidntOpen")}{" "}
                                 <a
                                   href={gCheckoutUrl}
                                   target="_blank"
                                   rel="noopener noreferrer"
                                   className="font-semibold text-primary hover:underline"
                                 >
-                                  Click here to open manually
+                                  {t("widget.clickOpenManually")}
                                 </a>
                               </p>
 
                               {/* Trust signals */}
                               <div className="flex flex-wrap items-center justify-center gap-x-4 gap-y-1 pt-2">
-                                <span className="flex items-center gap-1 font-body text-[10px] text-muted-foreground"><Shield className="h-3 w-3 text-primary" /> 256-bit encryption</span>
-                                <span className="flex items-center gap-1 font-body text-[10px] text-muted-foreground"><Lock className="h-3 w-3 text-primary" /> PCI DSS compliant</span>
-                                <span className="flex items-center gap-1 font-body text-[10px] text-muted-foreground"><CheckCircle2 className="h-3 w-3 text-primary" /> KYC verified</span>
+                                <span className="flex items-center gap-1 font-body text-[10px] text-muted-foreground"><Shield className="h-3 w-3 text-primary" /> {t("widget.encryption256")}</span>
+                                <span className="flex items-center gap-1 font-body text-[10px] text-muted-foreground"><Lock className="h-3 w-3 text-primary" /> {t("widget.pciCompliant")}</span>
+                                <span className="flex items-center gap-1 font-body text-[10px] text-muted-foreground"><CheckCircle2 className="h-3 w-3 text-primary" /> {t("widget.kycVerified")}</span>
                               </div>
                             </div>
                           </div>
@@ -2381,12 +2393,12 @@ const ExchangeWidget = () => {
                                 <Loader2 className="h-8 w-8 animate-spin text-primary" />
                               </div>
                               <h3 className="font-display text-lg font-bold text-foreground">
-                                {gTradeDirection === "sell" ? "Waiting for Crypto Deposit" : "Waiting for Payment"}
+                                {gTradeDirection === "sell" ? t("widget.waitingDeposit") : t("widget.waitingPayment")}
                               </h3>
                               <p className="font-body text-sm text-muted-foreground">
                                 {gTradeDirection === "sell"
-                                  ? `Send your crypto on the Guardarian tab. Once received, your payout will be sent to your bank account.`
-                                  : `Complete your payment on the Guardarian tab. Once finished, you'll receive a confirmation email at `}
+                                  ? `{t("widget.sendCryptoTab")}`
+                                  : `{t("widget.completePayment")} `}
                                 {gTradeDirection !== "sell" && <span className="font-semibold text-foreground">{gPayoutEmail || "your email"}</span>}
                                 {gTradeDirection !== "sell" && "."}
                               </p>
@@ -2396,7 +2408,7 @@ const ExchangeWidget = () => {
                                 <div className="flex gap-2">
                                   <Info className="mt-0.5 h-4 w-4 shrink-0 text-primary" />
                                   <p className="font-body text-xs text-foreground leading-relaxed">
-                                    <span className="font-bold">Bookmark this page!</span> You can return here anytime to check your transaction status live using the <span className="font-semibold text-primary">"Track an Existing Transfer"</span> feature below.
+                                    <span className="font-bold">{t("widget.bookmarkPage")}</span> {t("widget.returnAnytime")} <span className="font-semibold text-primary">{t("widget.trackFeature")}</span> {t("widget.featureBelow")}
                                   </p>
                                 </div>
                               </div>
@@ -2404,11 +2416,11 @@ const ExchangeWidget = () => {
                               {/* Order recap */}
                               <div className="mx-auto max-w-xs rounded-xl border border-border bg-accent/40 p-4 space-y-2 text-left">
                                 <div className="flex justify-between font-body text-sm">
-                                  <span className="text-muted-foreground">Amount</span>
+                                  <span className="text-muted-foreground">{t("widget.amount")}</span>
                                   <span className="font-semibold text-foreground">{gSendAmount} {gFromCurrency?.ticker}</span>
                                 </div>
                                 <div className="flex justify-between font-body text-sm">
-                                  <span className="text-muted-foreground">Receiving</span>
+                                  <span className="text-muted-foreground">{t("widget.youReceive")}</span>
                                   <span className="font-semibold text-primary">{gEstimatedAmount || "—"} {gToCurrency?.ticker}</span>
                                 </div>
                               </div>
@@ -2422,7 +2434,7 @@ const ExchangeWidget = () => {
                                 }}
                               >
                                 <ExternalLink className="mr-2 h-4 w-4" />
-                                Re-open Payment Tab
+                                {t("widget.reopenTab")}
                               </Button>
 
                               {/* Return to dashboard */}
@@ -2435,7 +2447,7 @@ const ExchangeWidget = () => {
                                   setGPaymentOpened(false);
                                 }}
                               >
-                                Return to Dashboard
+                                {t("widget.returnDashboard")}
                               </Button>
                             </div>
                           </div>
@@ -2465,9 +2477,9 @@ const ExchangeWidget = () => {
                         : "border-border bg-accent text-muted-foreground hover:border-primary/40"
                     }`}
                   >
-                    <Lock className="me-1 inline h-3 w-3" /> Fixed Rate
+                    <Lock className="me-1 inline h-3 w-3" /> {t("widget.fixedRate")}
                     <span className="ms-1.5 inline-flex rounded bg-primary/20 px-1.5 py-0.5 font-body text-[9px] font-bold uppercase tracking-wider text-primary">
-                      Recommended
+                      {t("widget.recommended")}
                     </span>
                   </button>
                   <button
@@ -2478,13 +2490,13 @@ const ExchangeWidget = () => {
                         : "border-border bg-accent text-muted-foreground hover:border-primary/40"
                     }`}
                   >
-                    Expected Rate
+                    {t("widget.expectedRate")}
                   </button>
                 </div>
 
                 {/* Popular Assets Quick Select */}
                 <div className="mb-4 flex items-center gap-2">
-                  <span className="font-body text-[10px] font-medium uppercase tracking-wider text-muted-foreground">Popular:</span>
+                  <span className="font-body text-[10px] font-medium uppercase tracking-wider text-muted-foreground">{t("widget.popular")}</span>
                   {["btc", "eth", "usdt", "sol"].map((ticker) => {
                     const c = currencies.find((cur) => cur.ticker === ticker);
                     if (!c) return null;
@@ -2506,7 +2518,7 @@ const ExchangeWidget = () => {
                 </div>
 
                 <div className="relative">
-                  <label className="mb-1.5 block font-body text-xs font-medium uppercase tracking-wider text-muted-foreground">You Send</label>
+                  <label className="mb-1.5 block font-body text-xs font-medium uppercase tracking-wider text-muted-foreground">{t("widget.youSend")}</label>
                   <div className="flex items-center gap-3 rounded-xl border border-border bg-accent p-4 sm:p-4">
                     <Input
                       type="number"
@@ -2518,7 +2530,7 @@ const ExchangeWidget = () => {
                     />
                     <button onClick={() => setShowFromPicker(true)} className="flex items-center gap-2 rounded-lg bg-primary/10 px-4 py-2.5 transition-colors hover:bg-primary/20 touch-target">
                       {fromCurrency?.image && <img src={fromCurrency.image} alt="" className="h-5 w-5 rounded-full" />}
-                      <span className="font-display text-sm font-semibold uppercase text-primary">{fromCurrency ? displayTicker(fromCurrency) : "Select"}</span>
+                      <span className="font-display text-sm font-semibold uppercase text-primary">{fromCurrency ? displayTicker(fromCurrency) : t("widget.select")}</span>
                       {fromCurrency && networkLabel(fromCurrency) && (
                         <span className="rounded bg-primary/20 px-1 py-0.5 font-body text-[9px] uppercase text-primary">{networkLabel(fromCurrency)}</span>
                       )}
@@ -2526,7 +2538,7 @@ const ExchangeWidget = () => {
                   </div>
                   {belowMin && (
                     <p className="mt-1 font-body text-xs text-destructive">
-                      Minimum amount: {minAmount} {fromCurrency ? displayTicker(fromCurrency) : ""}
+                      {t("widget.minimumAmount")} {minAmount} {fromCurrency ? displayTicker(fromCurrency) : ""}
                     </p>
                   )}
                   <CurrencyPicker show={showFromPicker} onSelect={setFromCurrency} onClose={() => setShowFromPicker(false)} exclude={toCurrency?.ticker} />
@@ -2536,7 +2548,7 @@ const ExchangeWidget = () => {
                 <div className="my-3 flex items-center justify-between gap-2">
                   <div className="flex flex-wrap items-center gap-1.5 sm:gap-3">
                     <span className="flex items-center gap-1 rounded-md border border-trust/20 bg-trust/5 px-2 py-1 font-body text-[10px] font-medium text-trust sm:text-[11px]">
-                      <CheckCircle2 className="h-3 w-3" /> All fees included
+                      <CheckCircle2 className="h-3 w-3" /> {t("widget.allFeesIncluded")}
                     </span>
                     {fromCurrency && toCurrency && estimatedAmount && estimatedAmount !== "—" && parseFloat(sendAmount) > 0 && (
                       <span className="font-body text-[10px] text-muted-foreground sm:text-[11px]">
@@ -2551,7 +2563,7 @@ const ExchangeWidget = () => {
 
                 <div className="relative">
                   <label className="mb-1.5 block font-body text-xs font-medium uppercase tracking-wider text-muted-foreground">
-                    You Get {fixedRate ? <span className="text-trust font-bold">(GUARANTEED)</span> : "(estimated)"}
+                    {t("widget.youGet")} {fixedRate ? <span className="text-trust font-bold">{t("widget.guaranteed")}</span> : t("widget.estimated")}
                   </label>
                   <div className="flex items-center gap-3 rounded-xl border border-border bg-accent p-4 sm:p-4">
                     <span className="flex-1 font-display text-2xl font-bold text-foreground">
@@ -2559,7 +2571,7 @@ const ExchangeWidget = () => {
                     </span>
                     <button onClick={() => setShowToPicker(true)} className="flex items-center gap-2 rounded-lg bg-trust/10 px-4 py-2.5 transition-colors hover:bg-trust/20 touch-target">
                       {toCurrency?.image && <img src={toCurrency.image} alt="" className="h-5 w-5 rounded-full" />}
-                      <span className="font-display text-sm font-semibold uppercase text-trust">{toCurrency ? displayTicker(toCurrency) : "Select"}</span>
+                      <span className="font-display text-sm font-semibold uppercase text-trust">{toCurrency ? displayTicker(toCurrency) : t("widget.select")}</span>
                       {toCurrency && networkLabel(toCurrency) && (
                         <span className="rounded bg-trust/20 px-1 py-0.5 font-body text-[9px] uppercase text-trust">{networkLabel(toCurrency)}</span>
                       )}
@@ -2569,11 +2581,11 @@ const ExchangeWidget = () => {
                 </div>
 
                 <Button className="mt-5 w-full min-h-[52px] bg-primary text-primary-foreground hover:bg-primary/90 hover:shadow-neon shadow-card text-base font-bold transition-shadow duration-300" size="lg" disabled={!estimatedAmount || estimatedAmount === "—" || belowMin} onClick={handleExchangeNow}>
-                  Exchange Now
+                  {t("widget.exchangeNow")}
                 </Button>
                 <p className="mt-1.5 flex items-center justify-center gap-1.5 font-body text-[11px] text-muted-foreground">
                   <Shield className="h-3 w-3 text-primary" />
-                  Secure Swap via Registered MSB
+                  {t("widget.secureSwap")}
                 </p>
               </>
             )}
@@ -2582,19 +2594,19 @@ const ExchangeWidget = () => {
             <div className="mt-2 grid grid-cols-3 gap-2">
               <div className="flex flex-col items-center gap-1 rounded-lg border border-border bg-accent/50 p-2.5 text-center">
                 <Shield className="h-4 w-4 text-primary" />
-                <span className="font-body text-[10px] font-medium text-muted-foreground">Reliable Exchange</span>
+                <span className="font-body text-[10px] font-medium text-muted-foreground">{t("widget.reliableExchange")}</span>
               </div>
               <div className="flex flex-col items-center gap-1 rounded-lg border border-border bg-accent/50 p-2.5 text-center">
                 <Lock className="h-4 w-4 text-primary" />
-                <span className="font-body text-[10px] font-medium text-muted-foreground">Highest Protection</span>
+                <span className="font-body text-[10px] font-medium text-muted-foreground">{t("widget.highestProtection")}</span>
               </div>
               <div className="flex flex-col items-center gap-1 rounded-lg border border-border bg-accent/50 p-2.5 text-center">
                 <CheckCircle2 className="h-4 w-4 text-primary" />
-                <span className="font-body text-[10px] font-medium text-muted-foreground">Complete Anonymity</span>
+                <span className="font-body text-[10px] font-medium text-muted-foreground">{t("widget.completeAnonymity")}</span>
               </div>
             </div>
             <div className="mt-3 flex items-center justify-center gap-3">
-              <p className="font-body text-xs text-muted-foreground">No hidden fees · No account required · Permissionless</p>
+              <p className="font-body text-xs text-muted-foreground">{t("widget.noHiddenFees")}</p>
               {speedForecast && (
                 <span className="flex items-center gap-1 font-body text-xs text-primary">
                   <Clock className="h-3 w-3" /> ~{speedForecast}
@@ -2609,7 +2621,7 @@ const ExchangeWidget = () => {
                 className="group flex w-full items-center justify-center gap-2.5 rounded-xl border border-primary/25 bg-primary/[0.06] px-4 py-3 font-body text-sm font-medium text-primary transition-all hover:bg-primary/[0.12] hover:border-primary/40 hover:shadow-[0_0_20px_-4px_hsl(var(--primary)/0.15)]"
               >
                 <Search className="h-4 w-4 transition-transform group-hover:scale-110" />
-                Track an Existing Transfer
+                {t("widget.trackTransfer")}
                 <ChevronDown className={`h-3.5 w-3.5 opacity-60 transition-transform duration-200 ${showTracker ? "rotate-180" : ""}`} />
               </button>
               {showTracker && (
@@ -2621,13 +2633,13 @@ const ExchangeWidget = () => {
                         <Search className="h-3.5 w-3.5 text-primary" />
                       </div>
                       <div>
-                        <p className="font-display text-sm font-semibold text-foreground">Find Your Transfer</p>
-                        <p className="font-body text-[11px] text-muted-foreground">Enter a wallet address or transaction ID</p>
+                        <p className="font-display text-sm font-semibold text-foreground">{t("widget.findTransfer")}</p>
+                        <p className="font-body text-[11px] text-muted-foreground">{t("widget.findTransferDesc")}</p>
                       </div>
                     </div>
                     <div className="flex gap-2">
                       <Input
-                        placeholder="Wallet address or Transaction ID"
+                        placeholder={t("widget.walletOrTxId")}
                         value={trackInput}
                         onChange={(e) => setTrackInput(e.target.value)}
                         className="flex-1 font-body text-sm border-border/80 bg-background/60 placeholder:text-muted-foreground/50 focus-visible:ring-primary/30"
@@ -2639,7 +2651,7 @@ const ExchangeWidget = () => {
                         className="shrink-0 bg-primary text-primary-foreground hover:bg-primary/90 font-semibold px-5 shadow-sm"
                       >
                         {trackLoading ? <Loader2 className="h-4 w-4 animate-spin" /> : (
-                          <span className="flex items-center gap-1.5"><Search className="h-3.5 w-3.5" /> Find</span>
+                          <span className="flex items-center gap-1.5"><Search className="h-3.5 w-3.5" /> {t("widget.find")}</span>
                         )}
                       </Button>
                     </div>
@@ -2664,7 +2676,7 @@ const ExchangeWidget = () => {
                           <CheckCircle2 className="h-3.5 w-3.5 text-trust" />
                         </div>
                         <p className="font-display text-sm font-semibold text-foreground">
-                          {walletResults.length} transfer{walletResults.length > 1 ? "s" : ""} found
+                          {walletResults.length} {walletResults.length} {t("widget.transfersFound")}
                         </p>
                       </div>
                       <div className="space-y-2 max-h-48 overflow-y-auto">
@@ -2702,7 +2714,7 @@ const ExchangeWidget = () => {
                     return (
                       <div className="rounded-xl border border-border/80 bg-accent/30 p-4 shadow-sm">
                         <p className="mb-2.5 font-display text-xs font-semibold text-muted-foreground flex items-center gap-1.5">
-                          <Clock className="h-3 w-3 text-primary/70" /> Recent transfers on this device
+                          <Clock className="h-3 w-3 text-primary/70" /> {t("widget.recentTransfers")}
                         </p>
                         <div className="space-y-1.5 max-h-32 overflow-y-auto">
                           {recent.map((tx) => (
@@ -2738,14 +2750,14 @@ const ExchangeWidget = () => {
         {step === "address" && (
           <motion.div key="address" initial={{ opacity: 0, x: 20 }} animate={{ opacity: 1, x: 0 }} exit={{ opacity: 0, x: -20 }}>
             <button onClick={() => setStep("exchange")} className="mb-4 flex items-center gap-1.5 font-body text-sm text-muted-foreground transition-colors hover:text-foreground">
-              <ArrowLeft className="h-4 w-4" /> Back
+              <ArrowLeft className="h-4 w-4" /> {t("widget.back")}
             </button>
 
             <h2 className="mb-2 font-display text-lg font-semibold text-foreground">
-              Enter your {toCurrency?.ticker?.toUpperCase()} Recipient Address
+              {t("widget.enterRecipientAddress", { ticker: toCurrency?.ticker?.toUpperCase() })}
             </h2>
             <p className="mb-4 font-body text-sm text-muted-foreground">
-              Your <span className="font-semibold uppercase text-foreground">{toCurrency?.ticker}</span> will be sent to this address.
+              {t("widget.sentToAddress", { ticker: toCurrency?.ticker?.toUpperCase() })}
             </p>
 
             {/* Wallet Connect Buttons */}
@@ -2755,7 +2767,7 @@ const ExchangeWidget = () => {
               return (
                 <div className="mb-4 space-y-2">
                   <label className="block font-body text-xs font-medium uppercase tracking-wider text-muted-foreground">
-                    Connect Wallet
+                    {t("widget.connectWallet")}
                   </label>
                   <div className="flex gap-2">
                     {chainType === "evm" && (
@@ -2812,7 +2824,7 @@ const ExchangeWidget = () => {
                       onClick={() => { setConnectedWallet(null); setRecipientAddress(""); }}
                       className="font-body text-xs text-muted-foreground hover:text-foreground transition-colors"
                     >
-                      Disconnect wallet
+                      {t("widget.disconnectWallet")}
                     </button>
                   )}
                 </div>
@@ -2823,7 +2835,7 @@ const ExchangeWidget = () => {
             {getChainType(toCurrency) !== "other" && (
               <div className="mb-4 flex items-center gap-3">
                 <div className="h-px flex-1 bg-border" />
-                <span className="font-body text-xs text-muted-foreground">or enter manually</span>
+                <span className="font-body text-xs text-muted-foreground">{t("widget.orEnterManually")}</span>
                 <div className="h-px flex-1 bg-border" />
               </div>
             )}
@@ -2831,7 +2843,7 @@ const ExchangeWidget = () => {
             <div className="space-y-4">
               <div>
                 <label className="mb-1.5 block font-body text-xs font-medium uppercase tracking-wider text-muted-foreground">
-                  {toCurrency?.ticker?.toUpperCase()} Wallet Address *
+                  {t("widget.walletAddress", { ticker: toCurrency?.ticker?.toUpperCase() })}
                 </label>
                 <DestinationAddressInput
                   value={recipientAddress}
@@ -2846,10 +2858,10 @@ const ExchangeWidget = () => {
               {toCurrency?.hasExternalId && (
                 <div>
                   <label className="mb-1.5 block font-body text-xs font-medium uppercase tracking-wider text-muted-foreground">
-                    Memo / Extra ID (if required)
+                    {t("widget.memoExtraId")}
                   </label>
                   <Input
-                    placeholder="Memo, tag, or extra ID"
+                    placeholder={t("widget.memoPlaceholder")}
                     value={extraId}
                     onChange={(e) => setExtraId(e.target.value)}
                     className="font-body text-sm"
@@ -2861,14 +2873,14 @@ const ExchangeWidget = () => {
 
             {/* Summary */}
             <div className="mt-6 rounded-xl border border-border bg-accent p-4">
-              <h3 className="mb-3 font-display text-sm font-semibold text-foreground">Exchange Summary</h3>
+              <h3 className="mb-3 font-display text-sm font-semibold text-foreground">{t("widget.exchangeSummary")}</h3>
               <div className="space-y-2 font-body text-sm">
                 <div className="flex justify-between">
-                  <span className="text-muted-foreground">You send</span>
+                  <span className="text-muted-foreground">{t("widget.youSendLabel")}</span>
                   <span className="font-semibold text-foreground">{sendAmount} {fromCurrency?.ticker?.toUpperCase()}</span>
                 </div>
                 <div className="flex justify-between">
-                  <span className="text-muted-foreground">You get (est.)</span>
+                  <span className="text-muted-foreground">{t("widget.youGetEst")}</span>
                   <span className={`font-semibold transition-opacity ${rateExpired ? "text-muted-foreground opacity-50" : "text-foreground"}`}>
                     {refreshingRate ? <Loader2 className="inline h-3.5 w-3.5 animate-spin" /> : <>≈ {estimatedAmount}</>} {toCurrency?.ticker?.toUpperCase()}
                   </span>
@@ -2885,17 +2897,17 @@ const ExchangeWidget = () => {
                 className="mt-0.5 h-5 w-5 shrink-0 rounded border-border accent-trust"
               />
               <span className="font-body text-xs text-muted-foreground leading-relaxed">
-                I've read and agree to the{" "}
+                {t("widget.termsAgree")}{" "}
                 <a href="/terms" target="_blank" rel="noopener noreferrer" className="font-semibold text-primary hover:underline">
-                  Terms of Use
+                  {t("widget.termsOfUse")}
                 </a>
                 ,{" "}
                 <a href="/privacy" target="_blank" rel="noopener noreferrer" className="font-semibold text-primary hover:underline">
-                  Privacy Policy
+                  {t("widget.privacyPolicy")}
                 </a>
-                {" "}and{" "}
+                {" "}{t("widget.and")}{" "}
                 <a href="/aml" target="_blank" rel="noopener noreferrer" className="font-semibold text-primary hover:underline">
-                  AML Policy
+                  {t("widget.amlPolicy")}
                 </a>
               </span>
             </label>
@@ -2930,10 +2942,10 @@ const ExchangeWidget = () => {
                     }`}
                   >
                     {rateExpired ? (
-                      <>Rate expired.</>
+                      <>{t("widget.rateExpired")}</>
                     ) : (
                       <>
-                        Rate locked for{" "}
+                        {t("widget.rateLockedFor")}{" "}
                         <span style={{ fontFamily: "'Roboto Mono', monospace" }} className="font-semibold">
                           {String(Math.floor(rateLockSeconds / 60)).padStart(2, "0")}:{String(rateLockSeconds % 60).padStart(2, "0")}
                         </span>
@@ -2960,7 +2972,7 @@ const ExchangeWidget = () => {
               disabled={!addressValid || !termsAccepted || creatingTx || rateExpired}
               onClick={handleCreateTransaction}
             >
-              {creatingTx ? <><Loader2 className="me-2 h-4 w-4 animate-spin" /> Creating Exchange...</> : "Confirm & Create Exchange"}
+              {creatingTx ? <><Loader2 className="me-2 h-4 w-4 animate-spin" /> {t("widget.creatingExchange")}</> : t("widget.confirmCreateExchange")}
             </Button>
           </motion.div>
         )}
@@ -2972,7 +2984,7 @@ const ExchangeWidget = () => {
               <div className="mx-auto mb-3 flex h-12 w-12 items-center justify-center rounded-full bg-trust/10">
                 <CheckCircle2 className="h-6 w-6 text-trust" />
               </div>
-              <h2 className="font-display text-lg font-semibold text-foreground">Please send the funds you would like to exchange</h2>
+              <h2 className="font-display text-lg font-semibold text-foreground">{t("widget.sendFunds")}</h2>
             </div>
 
             <div className="space-y-4">
@@ -2980,11 +2992,11 @@ const ExchangeWidget = () => {
               <div className="rounded-xl border border-border bg-accent p-4">
                 <div className="flex items-start justify-between gap-4">
                   <div className="flex-1">
-                    <label className="mb-1 block font-body text-xs text-muted-foreground">Amount</label>
+                    <label className="mb-1 block font-body text-xs text-muted-foreground">{t("widget.amount")}</label>
                     <p className="font-display text-xl font-bold text-foreground">
                       {sendAmount} {fromCurrency?.ticker?.toUpperCase()}
                     </p>
-                    <label className="mb-1 mt-3 block font-body text-xs text-muted-foreground">To this address</label>
+                    <label className="mb-1 mt-3 block font-body text-xs text-muted-foreground">{t("widget.toThisAddress")}</label>
                     <div className="flex items-center gap-2">
                       <code id="deposit-address-display" className="break-all font-body text-sm font-semibold text-foreground">
                         {transaction.payinAddress}
@@ -2993,7 +3005,7 @@ const ExchangeWidget = () => {
                     </div>
                     {transaction.payinExtraId && (
                       <div className="mt-2">
-                        <label className="mb-0.5 block font-body text-xs text-muted-foreground">Memo / Extra ID</label>
+                        <label className="mb-0.5 block font-body text-xs text-muted-foreground">{t("widget.extraIdMemo")}</label>
                         <div className="flex items-center gap-2">
                           <code className="break-all font-body text-sm font-semibold text-foreground">
                             {transaction.payinExtraId}
@@ -3032,7 +3044,7 @@ const ExchangeWidget = () => {
               {/* Warning */}
               <div className="rounded-lg border border-amber-500/20 bg-amber-500/5 p-3">
                 <p className="font-body text-xs text-amber-600 dark:text-amber-400">
-                  ⚠ Please be careful not to deposit your {fromCurrency?.ticker?.toUpperCase()} from a smart contract.
+                  ⚠ {t("widget.depositWarning", { ticker: fromCurrency?.ticker?.toUpperCase() })}
                 </p>
               </div>
 
@@ -3085,7 +3097,7 @@ const ExchangeWidget = () => {
 
                 return (
                   <div className="space-y-2">
-                    <label className="block font-body text-xs font-medium text-muted-foreground">Deposit with</label>
+                    <label className="block font-body text-xs font-medium text-muted-foreground">{t("widget.depositWith")}</label>
                     <button
                       onClick={handleMetaMask}
                       className="flex w-full items-center gap-3 rounded-xl border border-border bg-card p-3 transition-all hover:border-orange-400/50 hover:shadow-card active:scale-[0.99]"
@@ -3093,7 +3105,7 @@ const ExchangeWidget = () => {
                       <div className="flex h-9 w-9 items-center justify-center rounded-lg bg-orange-500/10">
                         <Wallet className="h-5 w-5 text-orange-500" />
                       </div>
-                      <span className="font-display text-sm font-semibold text-foreground">Pay with MetaMask</span>
+                      <span className="font-display text-sm font-semibold text-foreground">{t("widget.payWithMetaMask")}</span>
                     </button>
                     <button
                       onClick={() => {
@@ -3105,7 +3117,7 @@ const ExchangeWidget = () => {
                       <div className="flex h-9 w-9 items-center justify-center rounded-lg bg-blue-500/10">
                         <QrCode className="h-5 w-5 text-blue-500" />
                       </div>
-                      <span className="font-display text-sm font-semibold text-foreground">Copy for Wallet App</span>
+                      <span className="font-display text-sm font-semibold text-foreground">{t("widget.copyForWallet")}</span>
                     </button>
                   </div>
                 );
@@ -3113,7 +3125,7 @@ const ExchangeWidget = () => {
 
               {/* Transaction ID */}
               <div className="rounded-xl border border-border bg-accent p-4">
-                <label className="mb-1 block font-body text-xs font-medium uppercase tracking-wider text-muted-foreground">Transaction ID</label>
+                <label className="mb-1 block font-body text-xs font-medium uppercase tracking-wider text-muted-foreground">{t("widget.transactionId")}</label>
                 <div className="flex items-center gap-2">
                   <code className="flex-1 break-all font-body text-sm text-foreground">{transaction.id}</code>
                   <CopyButton text={transaction.id} label="txid" />
@@ -3124,11 +3136,11 @@ const ExchangeWidget = () => {
               <div className="rounded-xl border border-border bg-accent p-4">
                 <div className="space-y-2 font-body text-sm">
                   <div className="flex justify-between">
-                    <span className="text-muted-foreground">Sending</span>
+                    <span className="text-muted-foreground">{t("widget.sending")}</span>
                     <span className="font-semibold text-foreground">{sendAmount} {fromCurrency?.ticker?.toUpperCase()}</span>
                   </div>
                   <div className="flex justify-between">
-                    <span className="text-muted-foreground">Receiving to</span>
+                    <span className="text-muted-foreground">{t("widget.receivingTo")}</span>
                     <span className="max-w-[200px] truncate font-semibold text-foreground">{transaction.payoutAddress}</span>
                   </div>
                 </div>
@@ -3136,16 +3148,16 @@ const ExchangeWidget = () => {
 
               {/* Useful tips */}
               <div className="rounded-xl border border-border bg-card p-5 space-y-5">
-                <h3 className="font-display text-base font-semibold text-foreground">Useful tips to know</h3>
+                <h3 className="font-display text-base font-semibold text-foreground">{t("widget.usefulTips")}</h3>
 
                 <div>
-                  <p className="font-display text-sm font-semibold text-foreground mb-2">We will process your transaction even if you:</p>
+                  <p className="font-display text-sm font-semibold text-foreground mb-2">{t("widget.weWillProcess")}</p>
                   <ul className="space-y-2">
                     {[
-                      "Send a deposit in the wrong network, if this asset is supported on our service",
-                      "Create a transaction with a wrong coin",
-                      "Send more than one deposit for the same transaction",
-                      "Send a deposit long after the exchange was created or completed",
+                      t("widget.tip1"),
+                      t("widget.tip2"),
+                      t("widget.tip3"),
+                      t("widget.tip4"),
                     ].map((tip) => (
                       <li key={tip} className="flex items-start gap-2 font-body text-sm text-muted-foreground">
                         <CheckCircle2 className="mt-0.5 h-4 w-4 shrink-0 text-trust" />
@@ -3156,11 +3168,11 @@ const ExchangeWidget = () => {
                 </div>
 
                 <div className="border-t border-border pt-4">
-                  <p className="font-display text-sm font-semibold text-foreground mb-2">We will not be able to proceed on the initial terms if you:</p>
+                  <p className="font-display text-sm font-semibold text-foreground mb-2">{t("widget.weWillNot")}</p>
                   <ul className="space-y-2">
                     {[
-                      "Send a deposit for a fixed-rate exchange after the rate expires, provided that the rate declines over this timeframe",
-                      "Make a transaction using the wrong contract address",
+                      t("widget.tipBad1"),
+                      t("widget.tipBad2"),
                     ].map((tip) => (
                       <li key={tip} className="flex items-start gap-2 font-body text-sm text-muted-foreground">
                         <XCircle className="mt-0.5 h-4 w-4 shrink-0 text-destructive" />
@@ -3170,17 +3182,17 @@ const ExchangeWidget = () => {
                   </ul>
                   <div className="mt-3 rounded-lg border border-border bg-accent p-3">
                     <p className="font-body text-xs text-muted-foreground">
-                      In these cases, we encourage you to contact our <a href="mailto:support@globalpayboost.com" className="font-semibold text-trust hover:underline">support team</a>. The exchange can be continued from there, or alternatively, you are free to request a refund.
+                      {t("widget.contactSupport")} <a href="mailto:support@globalpayboost.com" className="font-semibold text-trust hover:underline">support team</a>. The exchange can be continued from there, or alternatively, you are free to request a refund.
                     </p>
                   </div>
                 </div>
 
                 <div className="border-t border-border pt-4">
-                  <p className="font-display text-sm font-semibold text-foreground mb-2">How to cancel an exchange:</p>
+                  <p className="font-display text-sm font-semibold text-foreground mb-2">{t("widget.howToCancel")}</p>
                   <ul className="space-y-2">
                     {[
-                      "If you didn't send any funds yet, there is no need to cancel the transaction, you can simply create a new one",
-                      "If you have already sent the funds for the exchange, immediately contact our support team for assistance",
+                      t("widget.cancel1"),
+                      t("widget.cancel2"),
                     ].map((tip) => (
                       <li key={tip} className="flex items-start gap-2 font-body text-sm text-muted-foreground">
                         <Info className="mt-0.5 h-4 w-4 shrink-0 text-blue-500" />
@@ -3200,18 +3212,18 @@ const ExchangeWidget = () => {
                 </div>
                 <div className="flex-1">
                   <p className="mb-3 font-display text-sm font-semibold text-foreground">
-                    Want to get status on your email?
+                    {t("widget.wantEmailStatus")}
                   </p>
                   {emailSubmitted ? (
                     <div className="flex items-center gap-2 rounded-lg border border-trust/20 bg-trust/5 p-3">
                       <CheckCircle2 className="h-4 w-4 text-trust" />
-                      <span className="font-body text-sm text-trust">Subscribed! We'll notify you of updates.</span>
+                      <span className="font-body text-sm text-trust">{t("widget.subscribed")}</span>
                     </div>
                   ) : (
                     <div className="flex gap-2">
                       <Input
                         type="email"
-                        placeholder="Enter your email"
+                        placeholder={t("widget.enterEmail")}
                         value={notifyEmail}
                         onChange={(e) => setNotifyEmail(e.target.value)}
                         className="flex-1 font-body text-sm"
@@ -3222,7 +3234,7 @@ const ExchangeWidget = () => {
                         disabled={!notifyEmail.trim() || emailSubmitting}
                         className="shrink-0 bg-primary text-primary-foreground hover:bg-primary/90 font-semibold"
                       >
-                        {emailSubmitting ? <Loader2 className="h-4 w-4 animate-spin" /> : "Confirm"}
+                        {emailSubmitting ? <Loader2 className="h-4 w-4 animate-spin" /> : t("widget.confirm")}
                       </Button>
                     </div>
                   )}
@@ -3231,7 +3243,7 @@ const ExchangeWidget = () => {
             </div>
 
             <Button className="mt-6 w-full bg-primary text-primary-foreground hover:bg-primary/90" size="lg" onClick={handleProceedToStatus}>
-              I've Sent the Deposit — Track Status
+              {t("widget.sentDeposit")}
             </Button>
           </motion.div>
         )}
@@ -3239,13 +3251,13 @@ const ExchangeWidget = () => {
         {/* ===== STEP 4: Transaction Status ===== */}
         {step === "status" && transaction && (
           <motion.div key="status" initial={{ opacity: 0, x: 20 }} animate={{ opacity: 1, x: 0 }} exit={{ opacity: 0, x: -20 }}>
-            <h2 className="mb-6 font-display text-lg font-semibold text-foreground">Transaction Status</h2>
+            <h2 className="mb-6 font-display text-lg font-semibold text-foreground">{t("widget.transactionStatus")}</h2>
 
             {/* Status indicator */}
             {txStatus && (
               <div className="mb-6">
                 {(() => {
-                  const s = STATUS_LABELS[txStatus.status] || { label: txStatus.status, color: "text-muted-foreground", icon: <Clock className="h-5 w-5" /> };
+                  const s = { ...(STATUS_ICONS[txStatus.status] || { color: "text-muted-foreground", icon: <Clock className="h-5 w-5" /> }), label: t(STATUS_LABEL_KEYS[txStatus.status] || "widget.statusWaiting") };
                   return (
                     <div className={`flex items-center gap-3 rounded-xl border border-border bg-accent p-4 ${s.color}`}>
                       {s.icon}
@@ -3280,7 +3292,7 @@ const ExchangeWidget = () => {
                     </div>
                     <div className="pb-6">
                       <p className={`font-body text-sm ${isDone || isCurrent ? "font-semibold text-foreground" : "text-muted-foreground"}`}>
-                        {STATUS_LABELS[statusKey]?.label || statusKey}
+                        {t(STATUS_LABEL_KEYS[statusKey] || "widget.statusWaiting")}
                       </p>
                     </div>
                   </div>
@@ -3293,19 +3305,19 @@ const ExchangeWidget = () => {
               <div className="space-y-3">
                 {txStatus.amountSend && (
                   <div className="flex justify-between font-body text-sm">
-                    <span className="text-muted-foreground">Amount sent</span>
+                    <span className="text-muted-foreground">{t("widget.amountSent")}</span>
                     <span className="font-semibold text-foreground">{txStatus.amountSend} {txStatus.fromCurrency.toUpperCase()}</span>
                   </div>
                 )}
                 {txStatus.amountReceive && (
                   <div className="flex justify-between font-body text-sm">
-                    <span className="text-muted-foreground">Amount received</span>
+                    <span className="text-muted-foreground">{t("widget.amountReceived")}</span>
                     <span className="font-semibold text-trust">{txStatus.amountReceive} {txStatus.toCurrency.toUpperCase()}</span>
                   </div>
                 )}
                 {txStatus.payinHash && (
                   <div className="font-body text-sm">
-                    <span className="text-muted-foreground">Deposit hash</span>
+                    <span className="text-muted-foreground">{t("widget.payinHash")}</span>
                     <div className="mt-1 flex items-center gap-2">
                       <code className="flex-1 break-all rounded-lg border border-border bg-background px-3 py-2 font-body text-xs text-foreground">
                         {txStatus.payinHash}
@@ -3316,7 +3328,7 @@ const ExchangeWidget = () => {
                 )}
                 {txStatus.payoutHash && (
                   <div className="font-body text-sm">
-                    <span className="text-muted-foreground">Payout hash</span>
+                    <span className="text-muted-foreground">{t("widget.payoutHash")}</span>
                     <div className="mt-1 flex items-center gap-2">
                       <code className="flex-1 break-all rounded-lg border border-border bg-background px-3 py-2 font-body text-xs text-foreground">
                         {txStatus.payoutHash}
@@ -3331,15 +3343,15 @@ const ExchangeWidget = () => {
             {txStatus?.status === "finished" && (
               <div className="mt-6 space-y-3">
                 <div className="flex flex-col items-center gap-2 rounded-xl border border-primary/20 bg-primary/[0.06] p-4 text-center">
-                  <span className="text-sm font-medium text-foreground">How was your experience?</span>
-                  <p className="text-xs text-muted-foreground">Your feedback helps us improve and helps others find us</p>
+                  <span className="text-sm font-medium text-foreground">{t("widget.howWasExperience")}</span>
+                  <p className="text-xs text-muted-foreground">{t("widget.feedbackHelps")}</p>
                   <a
                     href="https://www.trustpilot.com/evaluate/mrcglobalpay.com"
                     target="_blank"
                     rel="noopener noreferrer"
                     className="mt-1 inline-flex items-center gap-2 rounded-lg bg-[#00b67a] px-5 py-2.5 text-sm font-bold text-white transition-opacity hover:opacity-90"
                   >
-                    Leave us a review ⭐
+                    {t("widget.leaveReview")}
                   </a>
                 </div>
                 <div className="flex gap-2">
@@ -3348,7 +3360,7 @@ const ExchangeWidget = () => {
                     size="lg"
                     onClick={handleNewExchange}
                   >
-                    Start New Exchange
+                    {t("widget.startNewExchange")}
                   </Button>
                   {typeof navigator !== "undefined" && !!navigator.share && (
                     <Button
@@ -3376,12 +3388,12 @@ const ExchangeWidget = () => {
             )}
             {txStatus?.status === "failed" && (
               <Button className="mt-6 w-full" size="lg" variant="destructive" onClick={handleNewExchange}>
-                Try Again
+                {t("widget.tryAgain")}
               </Button>
             )}
             {!["finished", "failed", "refunded"].includes(txStatus?.status || "") && (
               <p className="mt-4 text-center font-body text-xs text-muted-foreground">
-                Status refreshes automatically every 15 seconds
+                {t("widget.statusRefreshes")}
               </p>
             )}
           </motion.div>
@@ -3399,7 +3411,7 @@ const ExchangeWidget = () => {
             onClick={(e) => e.stopPropagation()}
           >
             <h3 className="font-display text-lg font-bold text-foreground">
-              {gTradeDirection === "sell" ? "Review your payout" : "Review your order"}
+              {gTradeDirection === "sell" ? t("widget.reviewPayout") : t("widget.reviewOrder")}
             </h3>
             <p className="mt-1 font-body text-xs text-muted-foreground">
               {gTradeDirection === "sell"
@@ -3409,11 +3421,11 @@ const ExchangeWidget = () => {
 
             <div className="mt-5 space-y-3 rounded-xl border border-border bg-accent/50 p-4">
               <div className="flex items-center justify-between font-body text-sm">
-                <span className="text-muted-foreground">{gTradeDirection === "sell" ? "You send" : "You pay"}</span>
+                <span className="text-muted-foreground">{gTradeDirection === "sell" ? t("widget.youSendLabel") : t("widget.youPay")}</span>
                 <span className="font-semibold text-foreground">{gSendAmount} {gFromCurrency?.ticker}</span>
               </div>
               <div className="flex items-center justify-between font-body text-sm">
-                <span className="text-muted-foreground">{gTradeDirection === "sell" ? "You receive (est.)" : "You receive (est.)"}</span>
+                <span className="text-muted-foreground">{gTradeDirection === "sell" ? t("widget.youGetEst") : t("widget.youGetEst")}</span>
                 <span className="font-semibold text-foreground">≈ {(() => {
                   const raw = parseFloat(gEstimatedAmount || "0");
                   if (!Number.isFinite(raw) || raw <= 0) return gEstimatedAmount;
@@ -3422,31 +3434,31 @@ const ExchangeWidget = () => {
               </div>
               {gFullEstimate?.estimated_exchange_rate && (
                 <div className="flex items-center justify-between font-body text-xs">
-                  <span className="text-muted-foreground">Exchange rate</span>
+                  <span className="text-muted-foreground">{t("widget.exchangeRate")}</span>
                   <span className="text-foreground">{getGuardarianRateText()}</span>
                 </div>
               )}
               {gFullEstimate?.network_fee && (
                 <div className="flex items-center justify-between font-body text-xs">
-                  <span className="text-muted-foreground">Network fee</span>
+                  <span className="text-muted-foreground">{t("widget.networkFee")}</span>
                   <span className="text-foreground">{parseFloat(gFullEstimate.network_fee.amount).toFixed(6)} {gFullEstimate.network_fee.currency}</span>
                 </div>
               )}
               {gFullEstimate?.service_fees?.map((fee, i) => (
                 <div key={i} className="flex items-center justify-between font-body text-xs">
-                  <span className="text-muted-foreground">Service fee ({fee.percentage})</span>
+                  <span className="text-muted-foreground">{t("widget.serviceFee")} ({fee.percentage})</span>
                   <span className="text-foreground">{fee.amount} {fee.currency}</span>
                 </div>
               ))}
               {/* MRC service fee in review */}
               <div className="flex items-center justify-between font-body text-xs">
-                <span className="text-muted-foreground">MRC service fee (0.5%)</span>
+                <span className="text-muted-foreground">{t("widget.mrcServiceFee")}</span>
                 <span className="text-foreground">{(parseFloat(gSendAmount) * 0.005).toFixed(2)} {gFromCurrency?.ticker}</span>
               </div>
               {gTradeDirection === "buy" && gPayoutAddress && (
                 <div className="border-t border-border pt-2">
                   <div className="flex items-start justify-between font-body text-xs">
-                    <span className="text-muted-foreground">Wallet</span>
+                    <span className="text-muted-foreground">{t("widget.wallet")}</span>
                     <span className="max-w-[200px] break-all text-right font-mono text-foreground">{gPayoutAddress}</span>
                   </div>
                 </div>
@@ -3465,7 +3477,7 @@ const ExchangeWidget = () => {
               )}
               {gSelectedPaymentMethod && (
                 <div className="flex items-center justify-between font-body text-xs">
-                  <span className="text-muted-foreground">{gTradeDirection === "sell" ? "Payout method" : "Payment method"}</span>
+                  <span className="text-muted-foreground">{gTradeDirection === "sell" ? t("widget.payoutMethod") : t("widget.paymentMethod")}</span>
                   <span className="text-foreground">{resolvePaymentMethodDisplay(gSelectedPaymentMethod).label}</span>
                 </div>
               )}
@@ -3481,14 +3493,14 @@ const ExchangeWidget = () => {
             </div>
 
             <div className="mt-5 flex gap-3">
-              <Button variant="outline" className="flex-1" onClick={() => setGShowReview(false)}>Cancel</Button>
+              <Button variant="outline" className="flex-1" onClick={() => setGShowReview(false)}>{t("widget.cancel")}</Button>
               <Button
                 className="flex-1 min-h-[44px]"
                 disabled={gCreatingTx}
                 onClick={handleConfirmGuardarianCheckout}
               >
                 {gCreatingTx ? <Loader2 className="mr-2 h-4 w-4 animate-spin" /> : gTradeDirection === "sell" ? <Lock className="mr-2 h-4 w-4" /> : <CreditCard className="mr-2 h-4 w-4" />}
-                {gTradeDirection === "sell" ? "Confirm & Sell" : "Confirm & Pay"}
+                {gTradeDirection === "sell" ? t("widget.confirmSell") : t("widget.confirmPay")}
               </Button>
             </div>
           </motion.div>
