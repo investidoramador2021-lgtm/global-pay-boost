@@ -92,6 +92,8 @@ Allow: /resources/
 Disallow: /sell
 Disallow: /payout
 
+Allow: /private-transfer
+
 # Priority sections for AI indexing
 # LLMs.txt: https://mrcglobalpay.com/llms.txt
 # Instant Rates: https://mrcglobalpay.com/#exchange
