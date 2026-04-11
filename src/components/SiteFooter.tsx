@@ -156,6 +156,8 @@ const FooterLinkList = ({ title, links }: { title: string; links: FooterLink[] }
 import { useTranslation } from "react-i18next";
 import { useLocation } from "react-router-dom";
 import { getLangFromPath, langPath } from "@/i18n";
+import { useState } from "react";
+import { Shield, ExternalLink, X } from "lucide-react";
 import GetTheAppBadges from "@/components/GetTheAppBadges";
 
 const SiteFooter = () => {
@@ -306,26 +308,122 @@ const SiteFooter = () => {
           <div className="mb-4 rounded-lg border border-border bg-muted/30 px-4 py-3">
             <p className="font-body text-[11px] leading-relaxed text-muted-foreground">
               <strong className="text-foreground/70">Technical content by</strong>{" "}
-              <a href="/about" className="text-foreground/80 underline decoration-foreground/20 underline-offset-2 hover:decoration-foreground/50">MRC GlobalPay Technical Architecture Team</a> — FINTRAC-registered MSB (M23225638) specializing in non-custodial cross-chain settlement infrastructure.
+              <a href="/about" className="text-foreground/80 underline decoration-foreground/20 underline-offset-2 hover:decoration-foreground/50">MRC GlobalPay Technical Architecture Team</a> — FINTRAC-registered MSB (C100000015) specializing in non-custodial cross-chain settlement infrastructure.
             </p>
           </div>
-          <div className="flex flex-col items-center justify-between gap-4 sm:flex-row">
-            <p className="font-body text-sm font-medium text-foreground/80">
-              © {new Date().getFullYear()} MRC Global Pay.{" "}
-              <a
-                href="https://www10.fintrac-canafe.gc.ca/msb-esm/public/detailed-information/bns-new/7b226d7362526567697374726174696f6e4e756d626572223a224d3233323235363338227d"
-                target="_blank"
-                rel="noopener noreferrer"
-                title="Verify MRC GlobalPay FINTRAC MSB Registration (M23225638)"
-                className="text-primary underline decoration-primary/30 underline-offset-2 hover:decoration-primary/70 transition-colors"
-              >
-                Registered MSB — Canada
-              </a>
-            </p>
-          </div>
+
+          {/* FINTRAC MSB Registration */}
+          <FintracFooterBlock />
         </div>
       </div>
     </footer>
+  );
+};
+
+const FINTRAC_REGISTRY_URL = "https://fintrac-canafe.canada.ca/msb-esm/reg-eng";
+
+const FintracFooterBlock = () => {
+  const [showVerify, setShowVerify] = useState(false);
+
+  return (
+    <>
+      <div className="flex flex-col items-center justify-between gap-4 sm:flex-row">
+        <div className="flex flex-wrap items-center justify-center gap-x-3 gap-y-2 sm:justify-start">
+          <Shield className="h-4 w-4 text-primary" />
+          <p className="font-body text-sm font-medium text-foreground/80">
+            © {new Date().getFullYear()} MRC Global Pay.{" "}
+            <a
+              href={FINTRAC_REGISTRY_URL}
+              target="_blank"
+              rel="noopener noreferrer"
+              title="Verify MRC GlobalPay on the official FINTRAC MSB Registry"
+              className="text-primary underline decoration-primary/30 underline-offset-2 hover:decoration-primary/70 transition-colors"
+            >
+              Registered Money Services Business (MSB): C100000015
+            </a>
+          </p>
+          <button
+            onClick={() => setShowVerify(true)}
+            className="inline-flex items-center gap-1 rounded-md border border-primary/20 bg-primary/10 px-2.5 py-1 font-display text-[10px] font-bold uppercase tracking-wider text-primary transition-colors hover:bg-primary/20"
+          >
+            <Shield className="h-3 w-3" />
+            Verify
+          </button>
+        </div>
+      </div>
+
+      {/* FINTRAC Badge */}
+      <div className="mt-4 flex items-center justify-center gap-2 sm:justify-start">
+        <div className="inline-flex items-center gap-1.5 rounded-full border border-primary/20 bg-primary/5 px-3 py-1">
+          <Shield className="h-3.5 w-3.5 text-primary" />
+          <span className="font-display text-[10px] font-bold uppercase tracking-wider text-primary">FINTRAC Registered</span>
+        </div>
+      </div>
+
+      {/* Verify Modal */}
+      {showVerify && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/60 backdrop-blur-sm p-4" onClick={() => setShowVerify(false)}>
+          <div
+            className="relative w-full max-w-md rounded-2xl border border-border bg-card p-6 shadow-2xl sm:p-8"
+            onClick={(e) => e.stopPropagation()}
+          >
+            <button
+              onClick={() => setShowVerify(false)}
+              className="absolute right-3 top-3 rounded-full p-1 text-muted-foreground transition-colors hover:bg-accent hover:text-foreground"
+            >
+              <X className="h-5 w-5" />
+            </button>
+
+            <div className="flex items-center gap-3">
+              <div className="flex h-10 w-10 items-center justify-center rounded-full bg-primary/10">
+                <Shield className="h-5 w-5 text-primary" />
+              </div>
+              <h3 className="font-display text-lg font-bold text-foreground">Verify our Registration</h3>
+            </div>
+
+            <ol className="mt-5 space-y-3 font-body text-sm text-muted-foreground">
+              <li className="flex gap-3">
+                <span className="flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-primary/10 font-display text-xs font-bold text-primary">1</span>
+                <span>
+                  Visit the{" "}
+                  <a
+                    href={FINTRAC_REGISTRY_URL}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="text-primary underline underline-offset-2"
+                  >
+                    Official FINTRAC Registry
+                  </a>
+                  .
+                </span>
+              </li>
+              <li className="flex gap-3">
+                <span className="flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-primary/10 font-display text-xs font-bold text-primary">2</span>
+                <span>
+                  Enter our Registration Number: <strong className="text-foreground">C100000015</strong> in the search field.
+                </span>
+              </li>
+              <li className="flex gap-3">
+                <span className="flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-primary/10 font-display text-xs font-bold text-primary">3</span>
+                <span>
+                  Click <strong className="text-foreground">Search</strong> to confirm our active status and compliance with the PCMLTFA.
+                </span>
+              </li>
+            </ol>
+
+            <a
+              href={FINTRAC_REGISTRY_URL}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="mt-6 flex w-full items-center justify-center gap-2 rounded-lg bg-primary px-4 py-2.5 font-display text-sm font-bold text-primary-foreground transition-colors hover:bg-primary/90"
+            >
+              <ExternalLink className="h-4 w-4" />
+              Open FINTRAC Registry
+            </a>
+          </div>
+        </div>
+      )}
+    </>
   );
 };
 
