@@ -284,7 +284,11 @@ const STATUS_LABEL_KEYS: Record<string, string> = {
   overdue: "widget.statusOverdue",
 };
 
-const ExchangeWidget = () => {
+interface ExchangeWidgetProps {
+  onTabChange?: (tab: "exchange" | "buysell" | "private" | "bridge") => void;
+}
+
+const ExchangeWidget = ({ onTabChange }: ExchangeWidgetProps = {}) => {
   const { toast } = useToast();
   const { t } = useTranslation();
   const { subscribe: subscribePush, supported: pushSupported } = usePushNotifications();
@@ -975,6 +979,11 @@ const ExchangeWidget = () => {
       setWidgetMode("bridge");
     }
   }, []);
+
+  // Notify parent of tab changes
+  useEffect(() => {
+    onTabChange?.(widgetMode);
+  }, [widgetMode, onTabChange]);
 
   // Reset bank fields when fiat currency changes in sell mode
   useEffect(() => {

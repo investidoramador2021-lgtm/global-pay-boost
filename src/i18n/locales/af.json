@@ -303,5 +303,58 @@
     "pdfBridgeId": "Bridge ID",
     "pdfExtraId": "Extra ID / Memo",
     "pdfFooter": "Privaatheid Eerste: MRC GlobalPay is nie-bewaarnemend. Hierdie inligting word nie op ons bedieners gestoor nie."
+  },
+  "explainer": {
+    "buysell": {
+      "heading": "Globale Fiat-Kripto Aanboord",
+      "subtitle": "Koop kripto onmiddellik met jou voorkeurmetode — Visa, Mastercard, Apple Pay, PIX, SEPA en meer.",
+      "step1": {
+        "title": "Kies Jou Metode",
+        "description": "Kies jou plaaslike geldeenheid en voorkeur betaalmetode."
+      },
+      "step2": {
+        "title": "Onmiddellike Verifikasie",
+        "description": "Voltooi 'n vinnige, veilige betaling via ons geïntegreerde vennote."
+      },
+      "step3": {
+        "title": "Direkte Aflewering",
+        "description": "Jou kripto word direk na jou beursie gestuur. Geen verborge fooie nie."
+      },
+      "cta": "Koop Nou"
+    },
+    "bridge": {
+      "heading": "Permanente Likiditeits Brug",
+      "subtitle": "Genereer 'n herbruikbare deposito-adres vir outomatiese kripto-omskakelings.",
+      "step1": {
+        "title": "Eenmalige Opstelling",
+        "description": "Koppel 'n bron- en bestemmingspaar. Genereer een permanente adres."
+      },
+      "step2": {
+        "title": "Outomatiese Vloei",
+        "description": "Gebruik dieselfde adres vir alle toekomstige oordragte."
+      },
+      "step3": {
+        "title": "Moeitelose Verrekening",
+        "description": "Fondse word outomaties omgeskakel en afgelewer."
+      },
+      "cta": "Genereer Brug"
+    },
+    "private": {
+      "heading": "Praktiese Privaatheid vir Oordragte",
+      "subtitle": "Breek die on-chain skakel tussen jou beursies met beskermde roering.",
+      "step1": {
+        "title": "Beskerm Jou Beursie",
+        "description": "Vermy om jou persoonlike adres op openbare grootboeke bloot te stel."
+      },
+      "step2": {
+        "title": "Private Roering",
+        "description": "Fondse word deur beskermde likiditeitsroetes gestuur."
+      },
+      "step3": {
+        "title": "Skoon Aflewering",
+        "description": "Jou ontvanger ontvang fondse met 'n skoon geskiedenis."
+      },
+      "cta": "Stuur Privaat"
+    }
   }
 }

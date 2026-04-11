@@ -303,5 +303,58 @@
     "pdfBridgeId": "ID de Bridge",
     "pdfExtraId": "Extra ID / Memo",
     "pdfFooter": "Privacidad Primero: MRC GlobalPay es no custodial. Esta información no se almacena en nuestros servidores. Guarde este recibo."
+  },
+  "explainer": {
+    "buysell": {
+      "heading": "Rampa Global Fiat-Cripto",
+      "subtitle": "Compra cripto al instante con tu método preferido — Visa, Mastercard, Apple Pay, PIX, SEPA y más.",
+      "step1": {
+        "title": "Elige Tu Método",
+        "description": "Selecciona tu moneda local (USD, EUR, BRL, etc.) y tu método de pago preferido."
+      },
+      "step2": {
+        "title": "Verificación Instantánea",
+        "description": "Completa un checkout rápido y seguro con nuestros socios integrados."
+      },
+      "step3": {
+        "title": "Entrega Directa",
+        "description": "Tu cripto se envía directamente a tu billetera. Sin comisiones ocultas."
+      },
+      "cta": "Comprar Ahora"
+    },
+    "bridge": {
+      "heading": "Puente de Liquidez Permanente",
+      "subtitle": "Genera una dirección de depósito reutilizable para conversiones cripto automáticas y recurrentes.",
+      "step1": {
+        "title": "Configuración Única",
+        "description": "Vincula un par de origen y destino. Genera una dirección permanente."
+      },
+      "step2": {
+        "title": "Flujo Automatizado",
+        "description": "Usa la misma dirección para todas las transferencias futuras."
+      },
+      "step3": {
+        "title": "Liquidación Sin Esfuerzo",
+        "description": "Los fondos se convierten y entregan automáticamente cada vez que llegan al puente."
+      },
+      "cta": "Generar Puente"
+    },
+    "private": {
+      "heading": "Privacidad Práctica para Transferencias",
+      "subtitle": "Rompe la trazabilidad on-chain entre tus billeteras con enrutamiento blindado.",
+      "step1": {
+        "title": "Protege Tu Billetera",
+        "description": "Evita exponer tu dirección personal en registros públicos durante transferencias rutinarias."
+      },
+      "step2": {
+        "title": "Enrutamiento Privado",
+        "description": "Los fondos se enrutan por caminos de liquidez blindados para romper el vínculo on-chain."
+      },
+      "step3": {
+        "title": "Entrega Limpia",
+        "description": "Tu destinatario recibe los fondos con historial limpio, manteniendo tu privacidad financiera."
+      },
+      "cta": "Enviar Privadamente"
+    }
   }
 }
