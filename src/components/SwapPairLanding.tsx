@@ -311,8 +311,43 @@ const SwapPairLanding = ({
           </div>
         </section>
 
+        {/* Related Swaps */}
+        <section className="bg-background py-10 sm:py-14">
+          <div className="container mx-auto px-4">
+            <div className="mx-auto max-w-3xl">
+              <h2 className="font-display text-xl font-bold tracking-tight text-foreground text-center sm:text-2xl">
+                Related Swaps
+              </h2>
+              <div className="mt-6 grid grid-cols-2 gap-3 sm:grid-cols-3 lg:grid-cols-4">
+                {[
+                  { from: "BTC", to: "ETH", slug: "btc-usdc" },
+                  { from: "ETH", to: "SOL", slug: "eth-sol" },
+                  { from: "SOL", to: "USDT", slug: "sol-usdt" },
+                  { from: "XRP", to: "USDT", slug: "xrp-usdt" },
+                  { from: "BNB", to: "USDC", slug: "bnb-usdc" },
+                  { from: "HYPE", to: "USDT", slug: "hype-usdt" },
+                  { from: "BERA", to: "USDT", slug: "bera-usdt" },
+                  { from: "TIA", to: "USDT", slug: "tia-usdt" },
+                ]
+                  .filter((p) => !(p.from === assetA && p.to === assetB))
+                  .slice(0, 6)
+                  .map((p) => (
+                    <a
+                      key={p.slug}
+                      href={`/swap/${p.slug}`}
+                      title={`Swap ${p.from} to ${p.to} instantly`}
+                      className="flex items-center justify-center gap-1.5 rounded-xl border border-border bg-card px-3 py-3 font-display text-sm font-semibold text-foreground shadow-card transition-colors hover:border-primary/30 hover:bg-primary/5"
+                    >
+                      {p.from} → {p.to}
+                    </a>
+                  ))}
+              </div>
+            </div>
+          </div>
+        </section>
+
         {/* CTA */}
-        <section className="bg-background py-12 sm:py-16">
+        <section className="bg-accent py-12 sm:py-16">
           <div className="container mx-auto px-4 text-center">
             <h2 className="font-display text-xl font-bold text-foreground sm:text-2xl lg:text-3xl">
               Ready to Swap {assetA} to {assetB}?

@@ -311,7 +311,16 @@ const SiteFooter = () => {
           </div>
           <div className="flex flex-col items-center justify-between gap-4 sm:flex-row">
             <p className="font-body text-sm font-medium text-foreground/80">
-              © {new Date().getFullYear()} MRC Global Pay. Registered MSB — Canada.
+              © {new Date().getFullYear()} MRC Global Pay.{" "}
+              <a
+                href="https://www10.fintrac-canafe.gc.ca/msb-esm/public/detailed-information/bns-new/7b226d7362526567697374726174696f6e4e756d626572223a224d3233323235363338227d"
+                target="_blank"
+                rel="noopener noreferrer"
+                title="Verify MRC GlobalPay FINTRAC MSB Registration (M23225638)"
+                className="text-primary underline decoration-primary/30 underline-offset-2 hover:decoration-primary/70 transition-colors"
+              >
+                Registered MSB — Canada
+              </a>
             </p>
           </div>
         </div>
