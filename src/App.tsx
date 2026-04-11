@@ -107,6 +107,7 @@ const AppRoutes = () => (
     <Route path="about" element={<About />} />
     <Route path="private-transfer" element={<PrivateTransfer />} />
     <Route path="permanent-bridge" element={<PermanentBridge />} />
+    <Route path="permanent-bridge/whitepaper" element={<BridgeWhitepaper />} />
     <Route path="unsubscribe" element={<Unsubscribe />} />
   </>
 );
