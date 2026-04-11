@@ -1,4 +1,4 @@
-import { useSyncExternalStore } from "react";
+import { useSyncExternalStore, useCallback } from "react";
 
 export interface ExchangeSyncOption {
   ticker: string;
@@ -7,74 +7,67 @@ export interface ExchangeSyncOption {
 
 type ExchangeSubmitHandler = (() => void) | null;
 
-interface ExchangeSyncState {
+/* ── Reactive state (drives re-renders via useSyncExternalStore) ── */
+interface ExchangeSyncSnapshot {
   fromTicker: string;
   toTicker: string;
   options: ExchangeSyncOption[];
   isReady: boolean;
   canSubmit: boolean;
   isSubmitting: boolean;
-  submitHandler: ExchangeSubmitHandler;
 }
 
 const listeners = new Set<() => void>();
 
-let state: ExchangeSyncState = {
+let snapshot: ExchangeSyncSnapshot = {
   fromTicker: "",
   toTicker: "",
   options: [],
   isReady: false,
   canSubmit: false,
   isSubmitting: false,
-  submitHandler: null,
 };
 
-const subscribe = (listener: () => void) => {
-  listeners.add(listener);
-  return () => listeners.delete(listener);
+/* ── Non-reactive ref (never triggers re-render) ── */
+let _submitHandler: ExchangeSubmitHandler = null;
+
+const subscribe = (l: () => void) => {
+  listeners.add(l);
+  return () => listeners.delete(l);
 };
+const getSnapshot = () => snapshot;
 
-const getSnapshot = () => state;
+const emit = () => listeners.forEach((l) => l());
 
-const emit = () => {
-  listeners.forEach((listener) => listener());
-};
-
-const updateState = (patch: Partial<ExchangeSyncState>) => {
-  // Skip equality check for function values (they're new every render)
-  const hasChanged = Object.entries(patch).some(([key, value]) => {
-    if (typeof value === "function") return false;
-    return state[key as keyof ExchangeSyncState] !== value;
-  });
-  if (!hasChanged && !("submitHandler" in patch)) return;
-  state = { ...state, ...patch };
-  // Don't notify listeners for submitHandler-only updates to avoid infinite loops
-  if ("submitHandler" in patch && Object.keys(patch).length === 1) {
-    return;
-  }
+const updateSnapshot = (patch: Partial<ExchangeSyncSnapshot>) => {
+  const changed = Object.entries(patch).some(
+    ([k, v]) => snapshot[k as keyof ExchangeSyncSnapshot] !== v,
+  );
+  if (!changed) return;
+  snapshot = { ...snapshot, ...patch };
   emit();
 };
 
 const actions = {
-  setFromTicker: (ticker: string) => updateState({ fromTicker: ticker.toLowerCase() }),
-  setToTicker: (ticker: string) => updateState({ toTicker: ticker.toLowerCase() }),
-  setOptions: (options: ExchangeSyncOption[]) => updateState({ options }),
-  setReady: (isReady: boolean) => updateState({ isReady }),
-  setCanSubmit: (canSubmit: boolean) => updateState({ canSubmit }),
-  registerSubmitHandler: (submitHandler: ExchangeSubmitHandler) => updateState({ submitHandler }),
-  resetSubmitting: () => updateState({ isSubmitting: false }),
+  setFromTicker: (t: string) => updateSnapshot({ fromTicker: t.toLowerCase() }),
+  setToTicker: (t: string) => updateSnapshot({ toTicker: t.toLowerCase() }),
+  setOptions: (o: ExchangeSyncOption[]) => updateSnapshot({ options: o }),
+  setReady: (r: boolean) => updateSnapshot({ isReady: r }),
+  setCanSubmit: (c: boolean) => updateSnapshot({ canSubmit: c }),
+  /** Store the handler WITHOUT emitting — avoids infinite re-render loop */
+  registerSubmitHandler: (h: ExchangeSubmitHandler) => {
+    _submitHandler = h;
+  },
+  resetSubmitting: () => updateSnapshot({ isSubmitting: false }),
   requestSubmit: () => {
-    if (!state.submitHandler || !state.canSubmit || state.isSubmitting) return false;
-    updateState({ isSubmitting: true });
-    state.submitHandler();
+    if (!_submitHandler || !snapshot.canSubmit || snapshot.isSubmitting) return false;
+    updateSnapshot({ isSubmitting: true });
+    _submitHandler();
     return true;
   },
 };
 
 export function useExchangeSync() {
-  const snapshot = useSyncExternalStore(subscribe, getSnapshot, getSnapshot);
-  return {
-    ...snapshot,
-    ...actions,
-  };
+  const snap = useSyncExternalStore(subscribe, getSnapshot, getSnapshot);
+  return { ...snap, ...actions };
 }
