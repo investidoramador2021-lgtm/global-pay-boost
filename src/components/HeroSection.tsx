@@ -11,7 +11,8 @@ const trustKeys = ["trustNoAccount", "trustNonCustodial", "trustSettlement"] as 
 
 type WidgetMode = "exchange" | "buysell" | "private" | "bridge";
 
-/* Stagger container + child variants */
+const SPRING = { type: "spring" as const, stiffness: 100, damping: 20 };
+
 const staggerContainer = {
   hidden: {},
   show: { transition: { staggerChildren: 0.15 } },
@@ -19,17 +20,17 @@ const staggerContainer = {
 
 const fadeUp = {
   hidden: { opacity: 0, y: 24 },
-  show: { opacity: 1, y: 0, transition: { duration: 0.6, ease: "easeOut" as const } },
+  show: { opacity: 1, y: 0, transition: { ...SPRING } },
 };
 
 const widgetEntrance = {
   hidden: { opacity: 0, y: 20, scale: 0.98 },
-  show: { opacity: 1, y: 0, scale: 1, transition: { duration: 0.8, ease: "easeOut" as const } },
+  show: { opacity: 1, y: 0, scale: 1, transition: { ...SPRING, delay: 0.1 } },
 };
 
 const trustCard = {
   hidden: { opacity: 0, y: 20 },
-  show: { opacity: 1, y: 0, transition: { duration: 0.5, ease: "easeOut" as const } },
+  show: { opacity: 1, y: 0, transition: { ...SPRING } },
 };
 
 const HeroSection = () => {
@@ -37,7 +38,6 @@ const HeroSection = () => {
   const [activeTab, setActiveTab] = useState<WidgetMode>("exchange");
   const isMobile = useIsMobile();
 
-  /* Scroll-driven 3D tilt for the widget (desktop only) */
   const { scrollY } = useScroll();
   const rotateX = useTransform(scrollY, [0, 600], [0, isMobile ? 0 : -4]);
   const rotateY = useTransform(scrollY, [0, 600], [0, isMobile ? 0 : 3]);
@@ -55,12 +55,12 @@ const HeroSection = () => {
         {/* Parallax gold orbs */}
         <motion.div
           style={{ y: orbY1 }}
-          className="pointer-events-none absolute -left-32 top-20 h-72 w-72 rounded-full bg-[#D4AF37]/[0.04] blur-3xl"
+          className="pointer-events-none absolute -left-32 top-20 h-72 w-72 rounded-full bg-[#D4AF37]/[0.04] blur-3xl will-change-transform"
           aria-hidden="true"
         />
         <motion.div
           style={{ y: orbY2 }}
-          className="pointer-events-none absolute -right-24 top-64 h-56 w-56 rounded-full bg-[#D4AF37]/[0.03] blur-3xl"
+          className="pointer-events-none absolute -right-24 top-64 h-56 w-56 rounded-full bg-[#D4AF37]/[0.03] blur-3xl will-change-transform"
           aria-hidden="true"
         />
 
@@ -96,7 +96,8 @@ const HeroSection = () => {
                     <motion.div
                       key={key}
                       variants={trustCard}
-                      className="flex flex-col items-center gap-2 rounded-xl border border-border bg-card p-4 text-center shadow-card transform-gpu backface-hidden hover:shadow-elevated hover:-translate-y-1"
+                      className="flex flex-col items-center gap-2 rounded-xl border border-border bg-card p-4 text-center shadow-card transform-gpu will-change-transform hover:shadow-elevated hover:-translate-y-1"
+                      style={{ backfaceVisibility: "hidden" }}
                     >
                       <div className="flex h-10 w-10 items-center justify-center rounded-full bg-primary/10 hover:scale-110 hover:bg-primary/20">
                         <Icon className="h-5 w-5 text-primary" />
@@ -120,9 +121,9 @@ const HeroSection = () => {
               </motion.div>
             </motion.div>
 
-            {/* Widget with 3D tilt on scroll */}
+            {/* Widget with 3D scroll tilt + hover tilt (desktop only) */}
             <motion.div
-              className="order-1 lg:order-2 transform-gpu"
+              className="order-1 lg:order-2 transform-gpu will-change-transform"
               variants={widgetEntrance}
               initial="hidden"
               animate="show"
@@ -132,6 +133,11 @@ const HeroSection = () => {
                 rotateY,
                 backfaceVisibility: "hidden",
               }}
+              whileHover={
+                isMobile
+                  ? undefined
+                  : { rotateX: 2, rotateY: 2, scale: 1.01, transition: SPRING }
+              }
             >
               <ExchangeWidget onTabChange={setActiveTab} />
             </motion.div>

@@ -5,14 +5,16 @@ import { motion } from "framer-motion";
 const featureKeys = ["speed", "fees", "noAccount", "assets", "global", "support"] as const;
 const featureIcons = [Zap, Shield, Lock, ArrowLeftRight, Globe, HeadphonesIcon];
 
+const SPRING = { type: "spring" as const, stiffness: 100, damping: 20 };
+
 const gridContainer = {
   hidden: {},
-  show: { transition: { staggerChildren: 0.12 } },
+  show: { transition: { staggerChildren: 0.1 } },
 };
 
 const cardVariant = {
-  hidden: { opacity: 0, y: 32 },
-  show: { opacity: 1, y: 0, transition: { duration: 0.5, ease: "easeOut" as const } },
+  hidden: { opacity: 0, y: 30 },
+  show: { opacity: 1, y: 0, transition: { ...SPRING } },
 };
 
 const FeaturesSection = () => {
@@ -26,7 +28,7 @@ const FeaturesSection = () => {
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, amount: 0.3 }}
-          transition={{ duration: 0.5, ease: "easeOut" }}
+          transition={SPRING}
         >
           <h2 className="font-display text-2xl font-bold tracking-tight text-foreground sm:text-3xl lg:text-4xl">
             {t("features.heading")}
@@ -49,7 +51,8 @@ const FeaturesSection = () => {
               <motion.div
                 key={key}
                 variants={cardVariant}
-                className="rounded-xl border border-border bg-card p-5 shadow-card transform-gpu backface-hidden hover:shadow-elevated hover:-translate-y-1 sm:rounded-2xl sm:p-8"
+                className="rounded-xl border border-border bg-card p-5 shadow-card transform-gpu will-change-transform hover:shadow-elevated hover:-translate-y-1 sm:rounded-2xl sm:p-8"
+                style={{ backfaceVisibility: "hidden" }}
               >
                 <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-primary/10 hover:scale-110 hover:bg-primary/20 sm:h-12 sm:w-12 sm:rounded-xl">
                   <Icon className="h-5 w-5 text-primary sm:h-6 sm:w-6" />
