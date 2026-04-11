@@ -2446,6 +2446,11 @@ const ExchangeWidget = () => {
               </div>
             )}
 
+            {/* ===== PRIVATE TRANSFER MODE ===== */}
+            {widgetMode === "private" && (
+              <PrivateTransferTab />
+            )}
+
             {/* ===== EXCHANGE MODE (ChangeNOW) ===== */}
             {widgetMode === "exchange" && (
               <>
