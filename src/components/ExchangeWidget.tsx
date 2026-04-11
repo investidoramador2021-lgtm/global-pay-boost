@@ -855,15 +855,25 @@ const ExchangeWidget = () => {
     && hasValidGuardarianPayoutDetails
     && (gTradeDirection === "buy" ? Boolean(gPayoutAddress.trim()) : true);
 
-  // Deep-link: ?tab=buy&crypto=SOL&fiat=USD activates Buy tab automatically
+  // Deep-link: ?tab=buy|sell&crypto=SOL&fiat=USD activates Buy/Sell tab automatically
   useEffect(() => {
     const params = new URLSearchParams(window.location.search);
     const tab = params.get("tab")?.toLowerCase();
     if (tab === "buy" || tab === "buysell") {
       setWidgetMode("buysell");
       setGTradeDirection("buy");
+    } else if (tab === "sell") {
+      setWidgetMode("buysell");
+      setGTradeDirection("sell");
     }
   }, []);
+
+  // Reset bank fields when fiat currency changes in sell mode
+  useEffect(() => {
+    if (gTradeDirection === "sell") {
+      setGBankFields({});
+    }
+  }, [gToCurrency?.ticker, gTradeDirection]);
 
   // Helper: only pass network for crypto currencies, skip for fiat
   const getNetworkParam = (currency: GuardarianCurrency | null): string | undefined => {
