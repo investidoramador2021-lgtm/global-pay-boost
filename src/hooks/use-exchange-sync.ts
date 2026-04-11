@@ -41,9 +41,17 @@ const emit = () => {
 };
 
 const updateState = (patch: Partial<ExchangeSyncState>) => {
-  const hasChanged = Object.entries(patch).some(([key, value]) => state[key as keyof ExchangeSyncState] !== value);
-  if (!hasChanged) return;
+  // Skip equality check for function values (they're new every render)
+  const hasChanged = Object.entries(patch).some(([key, value]) => {
+    if (typeof value === "function") return false;
+    return state[key as keyof ExchangeSyncState] !== value;
+  });
+  if (!hasChanged && !("submitHandler" in patch)) return;
   state = { ...state, ...patch };
+  // Don't notify listeners for submitHandler-only updates to avoid infinite loops
+  if ("submitHandler" in patch && Object.keys(patch).length === 1) {
+    return;
+  }
   emit();
 };
 
