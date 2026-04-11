@@ -1,4 +1,5 @@
 import { useState, useEffect, useCallback, useRef } from "react";
+import { useTranslation } from "react-i18next";
 import { motion } from "framer-motion";
 import { Loader2, Lock, Shield, CheckCircle2, ArrowDownUp, Copy, Check, Clock, AlertCircle, ExternalLink, QrCode, Mail, Search, ArrowLeft, RefreshCw, Share2 } from "lucide-react";
 import { Button } from "@/components/ui/button";
