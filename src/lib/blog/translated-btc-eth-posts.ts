@@ -21,7 +21,7 @@ En 2026, esa mentalidad es costosa.
 
 La calidad de ejecución ahora determina si tu rotación es limpia o frustrante. La diferencia entre una buena ruta y una mediocre puede erosionar silenciosamente una parte significativa del rendimiento esperado.
 
-## ¿Por qué las rotaciones BTC a ETH están de vuelta?
+## Por qué las rotaciones BTC a ETH están de vuelta?
 
 La relación BTC/ETH es cíclica, pero los impulsores cambiaron en 2026.
 
@@ -100,11 +100,11 @@ Pega tu dirección ETH y valida manualmente los primeros/últimos caracteres. To
 
 ### Paso 3: Evalúa el realismo de la ruta
 
-En este punto, no preguntes "¿es la tasa titular más alta?" Pregunta:
+En este punto, no preguntes "es la tasa titular más alta?" Pregunta:
 
-- ¿El output es competitivo después de comisiones?
-- ¿La ruta sigue siendo válida para la volatilidad actual?
-- ¿El tiempo de liquidación es aceptable para mi propósito?
+- El output es competitivo después de comisiones?
+- La ruta sigue siendo válida para la volatilidad actual?
+- El tiempo de liquidación es aceptable para mi propósito?
 
 Si sí, continúa. Si no, re-cotiza.
 
@@ -155,19 +155,19 @@ La buena ejecución es principalmente disciplina, no sofisticación.
 
 ## Preguntas Frecuentes
 
-### ¿Por qué no usar simplemente un exchange centralizado para BTC a ETH?
+### Por qué no usar simplemente un exchange centralizado para BTC a ETH?
 
 Las rutas CEX pueden estar bien, pero a menudo agregan fricción (depósitos, esperas, colas de retiro, restricciones de cuenta). Para usuarios que priorizan velocidad y liquidación directa a billetera, el enrutamiento instantáneo es operacionalmente más limpio.
 
-### ¿Dividir un intercambio siempre es mejor que uno grande?
+### Dividir un intercambio siempre es mejor que uno grande?
 
 No siempre. Ayuda cuando la profundidad del mercado es delgada relativa a tu tamaño. Si los libros son profundos y la calidad de cotización es estable, una ejecución limpia puede ser mejor.
 
-### ¿Cuál es un objetivo de liquidación aceptable en 2026?
+### Cuál es un objetivo de liquidación aceptable en 2026?
 
 Para pares líquidos mainstream, completar en menos de 2 minutos es un benchmark realista para enrutamiento de calidad. Los valores atípicos ocurren durante picos de volatilidad.
 
-### ¿Cuál es el error más común que aún ves?
+### Cuál es el error más común que aún ves?
 
 Usuarios optimizando para tasa titular en lugar de output realizado. La mejor ejecución es la que deposita más ETH utilizable en tu billetera después de cada costo.
 
