@@ -27,7 +27,7 @@ const BridgeWhitepaper = () => {
   const canonicalUrl = usePageUrl("/permanent-bridge/whitepaper");
   const { pathname } = useLocation();
   const lang = getLangFromPath(pathname);
-  const bridgeCta = langPath(lang, "/permanent-bridge");
+  const bridgeCta = langPath(lang, "/permanent-bridge") + "?tab=bridge";
 
   const wp = (key: string) => t(`whitepaper.${key}`);
 
