@@ -257,8 +257,8 @@ Deno.serve(async (req) => {
           tried.add(path);
 
           const result = await fetchGuardarianJson(path, headers, {
-           const result = await fetchGuardarianJson(path, estimateHeaders, {
            retryWithoutForwardedFor: resolvedSide !== 'sell',
+++ deleted duplicate
            attempts: 2,
            retryDelayMs: 250,
           });
