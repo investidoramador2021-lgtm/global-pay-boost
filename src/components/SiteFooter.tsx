@@ -305,8 +305,8 @@ const SiteFooter = () => {
           {/* Author / Expertise Attribution */}
           <div className="mb-4 rounded-lg border border-border bg-muted/30 px-4 py-3">
             <p className="font-body text-[11px] leading-relaxed text-muted-foreground">
-              <strong className="text-foreground/70">Technical content authored by</strong>{" "}
-              <span className="text-foreground/80">Vanguard Talent Advisory</span> — institutional fintech consultancy specializing in cross-chain settlement infrastructure, regulatory compliance engineering, and digital asset architecture.
+              <strong className="text-foreground/70">Technical content by</strong>{" "}
+              <a href="/about" className="text-foreground/80 underline decoration-foreground/20 underline-offset-2 hover:decoration-foreground/50">MRC GlobalPay Technical Architecture Team</a> — FINTRAC-registered MSB (M23225638) specializing in non-custodial cross-chain settlement infrastructure.
             </p>
           </div>
           <div className="flex flex-col items-center justify-between gap-4 sm:flex-row">
