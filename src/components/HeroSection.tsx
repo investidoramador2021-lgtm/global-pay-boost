@@ -67,14 +67,15 @@ const HeroSection = () => {
               <motion.div variants={fadeUp} className="mt-6 grid grid-cols-3 gap-3 sm:mt-8 sm:gap-4">
                 {trustKeys.map((key, idx) => {
                   const Icon = trustIcons[idx];
+                  const altTexts = ["No-account crypto swap icon", "Non-custodial security shield", "Instant settlement indicator"];
                   return (
                     <motion.div
                       key={key}
                       variants={fadeUp}
                       className="flex flex-col items-center gap-2 rounded-xl border border-border bg-card p-4 text-center shadow-card hover:shadow-elevated hover:-translate-y-1 transition-transform"
                     >
-                      <div className="flex h-10 w-10 items-center justify-center rounded-full bg-primary/10">
-                        <Icon className="h-5 w-5 text-primary" />
+                      <div className="flex h-10 w-10 items-center justify-center rounded-full bg-primary/10" role="img" aria-label={altTexts[idx]}>
+                        <Icon className="h-5 w-5 text-primary" aria-hidden="true" />
                       </div>
                       <span className="font-display text-xs font-semibold text-foreground sm:text-sm">
                         {t(`hero.${key}`)}

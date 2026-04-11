@@ -1,8 +1,8 @@
 {
   "meta": {
-    "title": "How to Swap Crypto Instantly from $0.30 | MRC GlobalPay",
-    "description": "How do you swap 500+ cryptocurrencies with no registration? MRC GlobalPay settles in under 60 seconds, non-custodial, from $0.30. Canadian MSB licensed.",
-    "ogTitle": "How to Buy & Swap Crypto from $0.30 — No Account Needed | MRC GlobalPay"
+    "title": "MRC GlobalPay | Registration-Free Crypto Swap from $0.30",
+    "description": "How do you swap 500+ cryptocurrencies with no registration? MRC GlobalPay is a non-custodial crypto exchange with no minimum swap — settled in under 60 seconds. Registered Canadian MSB.",
+    "ogTitle": "Non-Custodial Crypto Exchange — No Minimum Swap from $0.30 | MRC GlobalPay"
   },
   "footer": {
     "legal": "Legal",
@@ -20,14 +20,14 @@
     "startSwap": "Start Swap"
   },
   "hero": {
-    "heading": "Instant Crypto Swap.",
-    "headingAccent": "No Registration. From $0.30.",
-    "subtitle": "Fast, secure, and private. Direct wallet-to-wallet swaps from $0.30.",
+    "heading": "Non-Custodial Crypto Exchange.",
+    "headingAccent": "No Minimum Swap. From $0.30.",
+    "subtitle": "Swap 500+ assets instantly. **Zero onboarding**, **direct settlement**, wallet-to-wallet. Registered Canadian MSB — trusted by thousands worldwide.",
     "trustNoAccount": "No Account Required",
     "trustNonCustodial": "Non-Custodial",
-    "trustSettlement": "Direct Settlement",
-    "dustTitle": "🧹 Clean Your Wallet",
-    "dustDescription": "Tired of \"unspendable\" dust? Most platforms have high minimums. We support micro-swaps starting at $0.30. Convert leftover balances from 500+ tokens instantly with zero onboarding."
+    "trustSettlement": "Instant Settlement",
+    "dustTitle": "🧹 No Minimum Swap — Clean Your Wallet",
+    "dustDescription": "Most platforms have high minimums. MRC GlobalPay supports **micro-swaps starting at $0.30**. Convert leftover dust from 500+ tokens instantly. **Zero onboarding** required."
   },
   "howItWorks": {
     "heading": "How It Works",
@@ -46,19 +46,19 @@
     }
   },
   "features": {
-    "heading": "Built for Speed. Engineered for Trust.",
-    "subtitle": "Every component is optimized for instant execution and zero friction.",
+    "heading": "Built for Speed. Registered Canadian MSB.",
+    "subtitle": "Every component is optimized for **instant settlement** and **zero friction**.",
     "speed": {
       "title": "Sub-60s Settlement",
-      "description": "Automated liquidity rails execute swaps in under 60 seconds. No manual processing, no queues."
+      "description": "Automated liquidity rails execute swaps in under 60 seconds. No manual processing. No queues."
     },
     "fees": {
       "title": "Zero Hidden Fees",
-      "description": "All costs are transparent in the displayed rate. What you see is what you get — guaranteed."
+      "description": "All costs are transparent in the displayed rate. What you see is what you get — **guaranteed**."
     },
     "noAccount": {
       "title": "No Account Required",
-      "description": "Permissionless access — start swapping immediately. No sign-ups, no personal data, no onboarding friction."
+      "description": "Permissionless access — start swapping immediately. No sign-ups. No personal data. **Zero onboarding** friction."
     },
     "assets": {
       "title": "500+ Crypto Assets",
@@ -66,7 +66,7 @@
     },
     "global": {
       "title": "Global, Always-On",
-      "description": "Available worldwide 24/7/365. No geo-restrictions, no downtime, no maintenance windows."
+      "description": "Available worldwide 24/7/365. No geo-restrictions. No downtime. No maintenance windows."
     },
     "support": {
       "title": "24/7 Support",
