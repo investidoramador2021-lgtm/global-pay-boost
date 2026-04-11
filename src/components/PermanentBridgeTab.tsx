@@ -330,8 +330,8 @@ const PermanentBridgeTab = () => {
             <DestinationAddressInput
               value={destAddress}
               onChange={setDestAddress}
-              ticker={toCurrency?.ticker || ""}
-              addressType={tickerToAddressType(toCurrency?.ticker || "")}
+              currencyTicker={toCurrency?.ticker || ""}
+              expectedNetworkType={tickerToAddressType(toCurrency?.ticker || "")}
               className="mb-4"
             />
 
