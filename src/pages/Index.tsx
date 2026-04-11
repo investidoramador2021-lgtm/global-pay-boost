@@ -170,6 +170,25 @@ const Index = () => {
     },
   };
 
+  const serviceChannelJsonLd = {
+    "@context": "https://schema.org",
+    "@type": "ServiceChannel",
+    serviceUrl: "https://mrcglobalpay.com/#exchange",
+    serviceType: "Cryptocurrency Exchange",
+    availableLanguage: ["en", "fr", "es", "pt", "ja", "hi", "vi", "tr", "uk", "af", "fa", "ur", "he"],
+    servicePhone: "+1-613-555-0100",
+    providesService: {
+      "@type": "FinancialProduct",
+      name: "Non-Custodial Crypto Swap",
+      provider: {
+        "@type": "FinancialService",
+        name: "MRC GlobalPay",
+        identifier: "C100000015",
+        legalName: "MRC GlobalPay",
+      },
+    },
+  };
+
   const liveBlogJsonLd = {
     "@context": "https://schema.org",
     "@type": "LiveBlogPosting",
@@ -217,6 +236,7 @@ const Index = () => {
         <script type="application/ld+json">{JSON.stringify(productJsonLd)}</script>
         <script type="application/ld+json">{JSON.stringify(homeFaqJsonLd)}</script>
         <script type="application/ld+json">{JSON.stringify(exchangeRateJsonLd)}</script>
+        <script type="application/ld+json">{JSON.stringify(serviceChannelJsonLd)}</script>
         <script type="application/ld+json">{JSON.stringify(liveBlogJsonLd)}</script>
       </Helmet>
 

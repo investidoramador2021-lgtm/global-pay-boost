@@ -138,6 +138,7 @@ Allow: /uk/
 # Widget pages
 Allow: /get-widget
 Allow: /embed/widget
+Allow: /trading-bot-manifest.json
 
 # Directories
 Allow: /compare
