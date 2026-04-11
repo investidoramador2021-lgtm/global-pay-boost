@@ -93,6 +93,7 @@ Disallow: /sell
 Disallow: /payout
 
 Allow: /private-transfer
+Allow: /permanent-bridge
 
 # Priority sections for AI indexing
 # LLMs.txt: https://mrcglobalpay.com/llms.txt
