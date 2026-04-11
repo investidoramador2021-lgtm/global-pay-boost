@@ -186,10 +186,12 @@ Deno.serve(async (req) => {
       }
 
       case 'create-transaction': {
-        const { from_amount, from_currency, to_currency, from_network, to_network, payout_address, bank_details, deposit_address, email, payment_method } = body;
+        const { from_amount, from_currency, to_currency, from_network, to_network, payout_address, bank_details, deposit_address, email, payment_method, trade_direction } = body;
         if (!from_currency || !to_currency) {
           return badRequest('Missing required transaction fields', origin);
         }
+
+        const isSell = trade_direction === 'sell';
 
         // Lead capture — save to customers table using service_role
         if (email) {
@@ -199,12 +201,13 @@ Deno.serve(async (req) => {
             const sb = createClient(sbUrl, sbKey);
             await sb.rpc('upsert_customer_capture', {
               p_email: String(email).trim().toLowerCase(),
-              p_latest_trade_direction: 'buy',
+              p_latest_trade_direction: isSell ? 'sell' : 'buy',
               p_latest_from_currency: from_currency ? String(from_currency) : null,
               p_latest_to_currency: to_currency ? String(to_currency) : null,
               p_latest_payment_method: payment_method ? String(payment_method) : null,
               p_metadata: {
                 wallet_address: payout_address ? String(payout_address).trim() : undefined,
+                bank_details: bank_details ? JSON.stringify(bank_details) : undefined,
                 amount: from_amount != null ? String(from_amount) : undefined,
                 timestamp: new Date().toISOString(),
               },
@@ -220,7 +223,7 @@ Deno.serve(async (req) => {
           to_currency: String(to_currency).toUpperCase(),
           payout_currency: String(to_currency).toUpperCase(),
           deposit_currency: String(from_currency).toUpperCase(),
-          skip_choose_payout_address: !!(payout_address),
+          skip_choose_payout_address: !!(payout_address || (bank_details && Object.keys(bank_details).length > 0)),
           skip_choose_payment_category: false,
           redirects: {
             successful: SUCCESS_URL,
@@ -232,7 +235,9 @@ Deno.serve(async (req) => {
         if (from_network) txBody.from_network = from_network;
         if (to_network) txBody.to_network = to_network;
         if (payout_address) txBody.payout_address = payout_address;
-        if (bank_details) txBody.bank_details = bank_details;
+        if (bank_details && typeof bank_details === 'object' && Object.keys(bank_details).length > 0) {
+          txBody.bank_details = bank_details;
+        }
         if (deposit_address) txBody.deposit_address = deposit_address;
         if (email) txBody.email = email;
         if (payment_method) txBody.payment_method = payment_method;

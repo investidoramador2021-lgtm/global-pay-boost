@@ -74,8 +74,139 @@ export interface GuardarianPaymentMethod {
 }
 
 export interface GuardarianBankDetails {
-  receiver_iban: string;
-  receiver_bic: string;
+  receiver_iban?: string;
+  receiver_bic?: string;
+  pix_key?: string;
+  clabe?: string;
+  account_number?: string;
+  sort_code?: string;
+  [key: string]: string | undefined;
+}
+
+// Dynamic payout field definitions per fiat currency for the Sell flow
+export interface PayoutFieldDef {
+  key: string;
+  label: string;
+  placeholder: string;
+  validate: (value: string) => boolean;
+  sanitize?: (value: string) => string;
+  maxLength?: number;
+  inputMode?: "text" | "numeric" | "email" | "tel";
+}
+
+function stripNonAlphanumeric(v: string): string {
+  return v.replace(/[^a-zA-Z0-9]/g, "").toUpperCase();
+}
+
+function stripNonDigits(v: string): string {
+  return v.replace(/\D/g, "");
+}
+
+// Detect PIX key format and validate accordingly
+function isValidPixKey(raw: string): boolean {
+  const v = raw.replace(/[\s.\-]/g, "");
+  if (!v) return false;
+  // Email
+  if (v.includes("@")) return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v);
+  // Phone (+55...)
+  if (v.startsWith("+")) return /^\+\d{10,15}$/.test(v);
+  // CPF (11 digits)
+  if (/^\d{11}$/.test(v)) return true;
+  // CNPJ (14 digits)
+  if (/^\d{14}$/.test(v)) return true;
+  // Random key (UUID)
+  if (/^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i.test(v)) return true;
+  return false;
+}
+
+function sanitizePixKey(raw: string): string {
+  const v = raw.trim();
+  // If it's a CPF/CNPJ (digits only after stripping), remove formatting
+  const digits = v.replace(/[\s.\-/]/g, "");
+  if (/^\d{11}$/.test(digits) || /^\d{14}$/.test(digits)) return digits;
+  return v;
+}
+
+export function getPayoutFieldsForCurrency(ticker: string): PayoutFieldDef[] {
+  switch (ticker.toUpperCase()) {
+    case "EUR":
+      return [
+        {
+          key: "receiver_iban",
+          label: "IBAN",
+          placeholder: "DE89 3704 0044 0532 0130 00",
+          validate: (v) => {
+            const n = stripNonAlphanumeric(v);
+            return n.length >= 15 && n.length <= 34 && /^[A-Z]{2}\d{2}[A-Z0-9]+$/.test(n);
+          },
+          sanitize: stripNonAlphanumeric,
+          maxLength: 42,
+        },
+        {
+          key: "receiver_bic",
+          label: "BIC / SWIFT",
+          placeholder: "COBADEFFXXX",
+          validate: (v) => /^[A-Z]{6}[A-Z0-9]{2}([A-Z0-9]{3})?$/.test(stripNonAlphanumeric(v)),
+          sanitize: stripNonAlphanumeric,
+          maxLength: 11,
+        },
+      ];
+    case "BRL":
+      return [
+        {
+          key: "pix_key",
+          label: "PIX Key (Email, Phone, or CPF)",
+          placeholder: "123.456.789-09 or email@example.com",
+          validate: isValidPixKey,
+          sanitize: sanitizePixKey,
+          maxLength: 100,
+        },
+      ];
+    case "MXN":
+      return [
+        {
+          key: "clabe",
+          label: "18-digit CLABE Number",
+          placeholder: "012345678901234567",
+          validate: (v) => /^\d{18}$/.test(stripNonDigits(v)),
+          sanitize: stripNonDigits,
+          maxLength: 18,
+          inputMode: "numeric",
+        },
+      ];
+    case "GBP":
+      return [
+        {
+          key: "account_number",
+          label: "Account Number",
+          placeholder: "12345678",
+          validate: (v) => /^\d{8}$/.test(stripNonDigits(v)),
+          sanitize: stripNonDigits,
+          maxLength: 8,
+          inputMode: "numeric",
+        },
+        {
+          key: "sort_code",
+          label: "Sort Code",
+          placeholder: "12-34-56",
+          validate: (v) => /^\d{6}$/.test(stripNonDigits(v)),
+          sanitize: stripNonDigits,
+          maxLength: 8,
+          inputMode: "numeric",
+        },
+      ];
+    default:
+      // For other fiat currencies, ask for IBAN as a fallback — Guardarian handles routing
+      return [
+        {
+          key: "receiver_iban",
+          label: "Bank Account / IBAN",
+          placeholder: "Your bank account number or IBAN",
+          validate: (v) => v.trim().length >= 8,
+          maxLength: 42,
+        },
+      ];
+  }
 }
 
 async function callGuardarian(body: Record<string, unknown>) {
@@ -131,6 +262,7 @@ export async function createGuardarianTransaction(params: {
   deposit_address?: string;
   email?: string;
   payment_method?: string;
+  trade_direction?: "buy" | "sell";
 }) {
   return callGuardarian({ action: 'create-transaction', ...params });
 }
