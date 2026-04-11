@@ -306,53 +306,53 @@
   },
   "explainer": {
     "buysell": {
-      "heading": "Global Fiat-to-Crypto On-Ramp",
-      "subtitle": "Buy crypto instantly with your preferred payment method — Visa, Mastercard, Apple Pay, PIX, SEPA, and more. Direct to your wallet, no custodial delays.",
+      "heading": "Instant Fiat-to-Crypto On-Ramp.",
+      "subtitle": "Purchase crypto in seconds using your preferred local payment method. Visa, Mastercard, Apple Pay, PIX, SEPA — all supported. Direct to your self-custody wallet.",
       "step1": {
-        "title": "Choose Your Method",
-        "description": "Select your local currency (USD, EUR, BRL, etc.) and your preferred payment method."
+        "title": "Select Method",
+        "description": "Choose your local currency and payment rail — Visa, PIX, SEPA, or bank transfer."
       },
       "step2": {
-        "title": "Instant Verification",
-        "description": "Complete a quick, secure checkout via our integrated payment partners."
+        "title": "Secure Checkout",
+        "description": "Complete a fast, encrypted checkout through our regulated payment partners."
       },
       "step3": {
-        "title": "Direct Delivery",
-        "description": "Your crypto is sent directly to your designated wallet. No hidden fees, no custodial delays."
+        "title": "Direct Wallet Delivery",
+        "description": "Crypto arrives directly in your self-custody wallet. No intermediary holds, no hidden fees."
       },
       "cta": "Buy Now"
     },
     "bridge": {
-      "heading": "Permanent Liquidity Bridge",
-      "subtitle": "Generate one reusable deposit address for automated, recurring crypto conversions — perfect for miners and corporate payouts.",
+      "heading": "Permanent Automated Liquidity.",
+      "subtitle": "Generate one reusable deposit address for automated, recurring crypto conversions. Ideal for miners, DAOs, and corporate treasury operations.",
       "step1": {
-        "title": "One-Time Setup",
-        "description": "Link a source and destination pair. Generate one permanent address."
+        "title": "Map Pair",
+        "description": "Select your source and destination assets. Configure the conversion pair once."
       },
       "step2": {
-        "title": "Automated Flow",
-        "description": "Use the same address for all future transfers — perfect for miners and corporate payouts."
+        "title": "Whitelist Address",
+        "description": "Generate a permanent deposit address. Use it for all future transfers — no reconfiguration needed."
       },
       "step3": {
-        "title": "Effortless Settlement",
-        "description": "Funds are automatically swapped and delivered every time they hit the bridge."
+        "title": "Automated Settlement",
+        "description": "Every deposit is automatically swapped and delivered to your destination wallet in real-time."
       },
       "cta": "Generate Bridge"
     },
     "private": {
-      "heading": "Practical Privacy for Everyday Transfers",
-      "subtitle": "Break on-chain linkability between your wallets with shielded routing. Your recipient receives funds with a clean history.",
+      "heading": "Shielded Transaction Routing.",
+      "subtitle": "Break the on-chain link between sender and receiver. Your funds are routed through shielded liquidity paths for clean, private delivery.",
       "step1": {
-        "title": "Shield Your Wallet",
-        "description": "Avoid exposing your personal address on public ledgers during routine transfers."
+        "title": "Initiate",
+        "description": "Enter your transfer details. Select the asset pair and destination address."
       },
       "step2": {
-        "title": "Private Routing",
-        "description": "Funds are routed through shielded liquidity paths to break the on-chain link between sender and receiver."
+        "title": "Shield",
+        "description": "Your transaction is routed through shielded liquidity pools, masking the direct wallet-to-wallet connection."
       },
       "step3": {
-        "title": "Clean Delivery",
-        "description": "Your recipient receives the funds with a clean history, maintaining your financial privacy."
+        "title": "Private Arrival",
+        "description": "The recipient receives funds with a clean on-chain history. No direct link to your operational wallet."
       },
       "cta": "Send Privately"
     }
