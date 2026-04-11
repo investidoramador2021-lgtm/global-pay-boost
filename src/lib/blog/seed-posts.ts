@@ -348,6 +348,7 @@ Absolutely. Use fixed trade sizes, repeated tests over multiple sessions, and co
 
 ## Related Reading
 
+- [How to send crypto privately with shielded routing](/blog/how-to-privately-transfer-crypto)
 - [How to swap BTC to ETH with better execution discipline](/blog/how-to-swap-bitcoin-to-ethereum-2026)
 - [Practical crypto security controls for active traders](/blog/crypto-security-best-practices-2026)
 - [Top crypto trading pairs in March 2026](/blog/top-crypto-trading-pairs-march-2026)
@@ -532,6 +533,7 @@ Not inherently. Security depends on your operational controls: domain verificati
 
 ## Related Reading
 
+- [How to send crypto privately — breaking on-chain linkability](/blog/how-to-privately-transfer-crypto)
 - [How liquidity routing impacts execution quality](/blog/understanding-crypto-liquidity-aggregation)
 - [Top pair rotations and execution opportunities](/blog/top-crypto-trading-pairs-march-2026)
 - [Step-by-step BTC to ETH swap execution](/blog/how-to-swap-bitcoin-to-ethereum-2026)
