@@ -47,6 +47,7 @@ const NetworkStatus = lazy(() => import("./pages/NetworkStatus.tsx"));
 const Referral = lazy(() => import("./pages/Referral.tsx"));
 const About = lazy(() => import("./pages/About.tsx"));
 const Unsubscribe = lazy(() => import("./pages/Unsubscribe.tsx"));
+const PrivateTransfer = lazy(() => import("./pages/PrivateTransfer.tsx"));
 const NotFound = lazy(() => import("./pages/NotFound.tsx"));
 
 const queryClient = new QueryClient();
@@ -102,6 +103,7 @@ const AppRoutes = () => (
     <Route path="status" element={<NetworkStatus />} />
     <Route path="referral" element={<Referral />} />
     <Route path="about" element={<About />} />
+    <Route path="private-transfer" element={<PrivateTransfer />} />
     <Route path="unsubscribe" element={<Unsubscribe />} />
   </>
 );

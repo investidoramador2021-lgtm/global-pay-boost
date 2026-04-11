@@ -51,6 +51,18 @@ const shadowFaqs = [
     q: "Is SEPA a safe way to purchase cryptocurrency?",
     a: "SEPA is regulated by the European Payments Council and protected by EU banking standards. MRC GlobalPay adds a non-custodial layer — we never hold your funds or crypto. Tokens go directly to your personal wallet. The platform is a FINTRAC-registered Canadian MSB with full regulatory compliance.",
   },
+  {
+    q: "Can I send crypto privately without exposing my wallet?",
+    a: "Yes. MRC GlobalPay's Private Transfer uses shielded routing through aggregated liquidity pools. Your deposit address is unique and one-time — the recipient sees no connection to your original wallet in their on-chain transaction history. Fixed-rate guaranteed, no registration required.",
+  },
+  {
+    q: "How does shielded crypto routing work?",
+    a: "When you initiate a Private Transfer, your funds are sent to a one-time deposit address. They are then pooled and routed through aggregated liquidity before delivery to the recipient from a different address. This breaks the on-chain link between sender and receiver.",
+  },
+  {
+    q: "Are private crypto transfers more expensive?",
+    a: "No. Private transfers on MRC GlobalPay use the same competitive exchange rates as standard swaps. There are no additional fees for shielded routing. The recipient receives the exact guaranteed amount shown at checkout.",
+  },
 ];
 
 export { shadowFaqs };
