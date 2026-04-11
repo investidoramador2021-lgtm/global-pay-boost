@@ -1310,11 +1310,13 @@ const ExchangeWidget = () => {
       if (checkoutUrl) {
         setGCheckoutUrl(checkoutUrl);
         setGStep("checkout");
+        const openedWindow = window.open(checkoutUrl, "_blank", "noopener,noreferrer");
+        setGPaymentOpened(Boolean(openedWindow));
         toast({
           title: "Transaction created",
           description: gTradeDirection === "sell"
-            ? "Click 'Proceed to Secure Payout' to complete your sale."
-            : "Click 'Proceed to Secure Payment' to complete your purchase.",
+            ? "Your payout window has been opened in a new tab."
+            : "Your payment window has been opened in a new tab.",
         });
         return;
       }
