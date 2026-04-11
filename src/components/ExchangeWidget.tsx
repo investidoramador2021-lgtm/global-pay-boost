@@ -889,12 +889,20 @@ const ExchangeWidget = () => {
     }
   }, [gToCurrency?.ticker, gTradeDirection]);
 
-  // Helper: only pass network for crypto currencies, skip for fiat
-  const getNetworkParam = (currency: GuardarianCurrency | null): string | undefined => {
+  // Helper: only pass network for crypto currencies, skip for fiat.
+  // Sell flow must keep same-ticker networks too, e.g. BTC -> from_network=BTC.
+  const getNetworkParam = (currency: GuardarianCurrency | null, options?: { forceTickerFallback?: boolean }): string | undefined => {
     if (!currency || currency.currency_type === "FIAT") return undefined;
-    const net = currency.networks?.[0]?.network;
-    return net && net.toUpperCase() !== currency.ticker.toUpperCase() ? net : undefined;
+    const network = currency.networks?.[0]?.network?.trim();
+    if (network) return network;
+    if (options?.forceTickerFallback) return currency.ticker.toUpperCase();
+    return undefined;
   };
+
+  const sanitizeBankFieldValue = useCallback((field: PayoutFieldDef, value: string) => {
+    if (field.sanitize) return field.sanitize(value);
+    return value.trim().replace(/[\s.-]/g, "");
+  }, []);
 
   const getGuardarianRateText = () => {
     if (!gFullEstimate?.estimated_exchange_rate || !gFromCurrency || !gToCurrency) return "";
@@ -917,12 +925,13 @@ const ExchangeWidget = () => {
     setGFullEstimate(null);
     setGEstimateError("");
     try {
-      const fromNetwork = getNetworkParam(gFromCurrency);
+      const fromNetwork = getNetworkParam(gFromCurrency, { forceTickerFallback: gTradeDirection === "sell" });
       const toNetwork = getNetworkParam(gToCurrency);
       const baseEstimateParams: Parameters<typeof getGuardarianEstimate>[0] = {
         from_currency: gFromCurrency.ticker,
         to_currency: gToCurrency.ticker,
         from_amount: gSendAmount,
+        ...(gTradeDirection === "sell" ? { side: "sell" as const } : {}),
       };
       if (fromNetwork) baseEstimateParams.from_network = fromNetwork;
       if (toNetwork) baseEstimateParams.to_network = toNetwork;
@@ -933,9 +942,7 @@ const ExchangeWidget = () => {
         gSelectedPaymentMethod,
         gTradeDirection,
       );
-      const requestPaymentMethod = gTradeDirection === "buy" ? effectivePaymentMethod : undefined;
-      // Off-ramp quotes are more reliable when Guardarian selects the payout rail
-      // from the fiat currency + bank details instead of us forcing the raw method code.
+      const requestPaymentMethod = effectivePaymentMethod;
 
       const minMaxParams: Parameters<typeof getGuardarianMinMax>[0] = {
         from_currency: gFromCurrency.ticker,
@@ -976,14 +983,12 @@ const ExchangeWidget = () => {
         const isOutOfRange = rangeMin > 0 && rangeMax < 999999 && (amt < rangeMin || amt > rangeMax);
         const providerDetails = String((finalEstimate as any)?.details?.message || "").toLowerCase();
 
+        const rawProviderMessage = (finalEstimate as any)?.details?.message || (finalEstimate as any)?.error || "Estimate unavailable";
+
         if (isOutOfRange) {
           setGEstimateError("");
-        } else if (gTradeDirection === "sell" && gPaymentMethods.length === 0) {
-          setGEstimateError(`Sell to ${gToCurrency.ticker} is not currently available. Please select a different payout currency.`);
-        } else if (providerDetails.includes("payout methods")) {
-          setGEstimateError(`Sell to ${gToCurrency.ticker} is not currently available. Please select a different payout currency.`);
         } else {
-          setGEstimateError(`Estimate unavailable for ${gFromCurrency.ticker} → ${gToCurrency.ticker}. Try again in a moment.`);
+          setGEstimateError(String(rawProviderMessage));
         }
         return;
       }
@@ -1264,7 +1269,7 @@ const ExchangeWidget = () => {
     setGCreatingTx(true);
 
     try {
-      const fromNet = getNetworkParam(gFromCurrency);
+      const fromNet = getNetworkParam(gFromCurrency, { forceTickerFallback: gTradeDirection === "sell" });
       const toNet = getNetworkParam(gToCurrency);
       const emailParam = gPayoutEmail.trim() || undefined;
       const fiatCurrency = gTradeDirection === "buy" ? gFromCurrency : gToCurrency;
@@ -1274,7 +1279,7 @@ const ExchangeWidget = () => {
         gSelectedPaymentMethod,
         gTradeDirection,
       );
-      const requestPaymentMethod = gTradeDirection === "buy" ? effectivePaymentMethod : undefined;
+      const requestPaymentMethod = effectivePaymentMethod;
 
       // Build bank_details for sell flow
       let bankDetails: GuardarianBankDetails | undefined;
@@ -1282,7 +1287,7 @@ const ExchangeWidget = () => {
         bankDetails = {};
         for (const field of gPayoutFieldDefs) {
           const raw = gBankFields[field.key] || "";
-          bankDetails[field.key] = field.sanitize ? field.sanitize(raw) : raw.trim();
+            bankDetails[field.key] = sanitizeBankFieldValue(field, raw);
         }
       }
 
@@ -1297,6 +1302,7 @@ const ExchangeWidget = () => {
         ...(bankDetails ? { bank_details: bankDetails } : {}),
         email: emailParam,
         ...(requestPaymentMethod ? { payment_method: requestPaymentMethod } : {}),
+        ...(gTradeDirection === "sell" ? { side: "sell" as const } : {}),
         trade_direction: gTradeDirection,
       });
 
@@ -1304,18 +1310,20 @@ const ExchangeWidget = () => {
       if (checkoutUrl) {
         setGCheckoutUrl(checkoutUrl);
         setGStep("checkout");
+        const openedWindow = window.open(checkoutUrl, "_blank", "noopener,noreferrer");
+        setGPaymentOpened(Boolean(openedWindow));
         toast({
           title: "Transaction created",
           description: gTradeDirection === "sell"
-            ? "Click 'Proceed to Secure Payout' to complete your sale."
-            : "Click 'Proceed to Secure Payment' to complete your purchase.",
+            ? "Your payout window has been opened in a new tab."
+            : "Your payment window has been opened in a new tab.",
         });
         return;
       }
 
       toast({ title: "Service Temporarily Unavailable", description: "Could not initialize checkout. Please try again.", variant: "destructive" });
     } catch (err: any) {
-      const msg = err?.message || "Transaction creation failed";
+      const msg = err?.details?.message || err?.message || "Transaction creation failed";
       toast({ title: "Service Temporarily Unavailable", description: msg, variant: "destructive" });
     } finally {
       setGCreatingTx(false);

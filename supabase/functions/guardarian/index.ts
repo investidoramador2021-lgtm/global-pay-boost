@@ -172,7 +172,7 @@ Deno.serve(async (req) => {
       }
 
       case 'estimate': {
-        const { from_currency, from_network, to_currency, to_network, from_amount, to_amount, payment_method } = body;
+        const { from_currency, from_network, to_currency, to_network, from_amount, to_amount, payment_method, side, trade_direction } = body;
         if (!from_currency || !to_currency) return badRequest('Missing from_currency/to_currency', origin);
         if (!from_amount && !to_amount) return badRequest('Missing from_amount or to_amount', origin);
 
@@ -182,6 +182,8 @@ Deno.serve(async (req) => {
         if (from_network) params.set('from_network', String(from_network));
         if (to_network) params.set('to_network', String(to_network));
         if (payment_method) params.set('payment_method', String(payment_method));
+        const resolvedSide = side || trade_direction;
+        if (resolvedSide) params.set('side', String(resolvedSide));
         if (from_amount) params.set('from_amount', String(from_amount));
         if (to_amount) {
           params.set('to_amount', String(to_amount));
@@ -224,12 +226,13 @@ Deno.serve(async (req) => {
       }
 
       case 'create-transaction': {
-        const { from_amount, from_currency, to_currency, from_network, to_network, payout_address, bank_details, deposit_address, email, payment_method, trade_direction } = body;
+        const { from_amount, from_currency, to_currency, from_network, to_network, payout_address, bank_details, deposit_address, email, payment_method, trade_direction, side } = body;
         if (!from_currency || !to_currency) {
           return badRequest('Missing required transaction fields', origin);
         }
 
-        const isSell = trade_direction === 'sell';
+        const resolvedSide = side || trade_direction;
+        const isSell = resolvedSide === 'sell';
 
         // Lead capture — save to customers table using service_role
         if (email) {
@@ -279,6 +282,7 @@ Deno.serve(async (req) => {
         if (deposit_address) txBody.deposit_address = deposit_address;
         if (email) txBody.email = email;
         if (payment_method) txBody.payment_method = payment_method;
+        if (resolvedSide) txBody.side = resolvedSide;
 
         const resp = await fetch(`${GUARDARIAN_BASE}/transaction`, {
           method: 'POST',
