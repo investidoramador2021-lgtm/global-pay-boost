@@ -284,7 +284,11 @@ const STATUS_LABEL_KEYS: Record<string, string> = {
   overdue: "widget.statusOverdue",
 };
 
-const ExchangeWidget = () => {
+interface ExchangeWidgetProps {
+  onTabChange?: (tab: "exchange" | "buysell" | "private" | "bridge") => void;
+}
+
+const ExchangeWidget = ({ onTabChange }: ExchangeWidgetProps = {}) => {
   const { toast } = useToast();
   const { t } = useTranslation();
   const { subscribe: subscribePush, supported: pushSupported } = usePushNotifications();
