@@ -155,6 +155,10 @@ const Index = () => {
           <PopularPairsSection />
           <SwapPairsQA />
           <TrendingEcosystems />
+          <BentoSpecsSection />
+          <div className="flex justify-center py-6">
+            <LiveNetworkBadge />
+          </div>
           <FAQSection />
         </main>
         <MsbTrustBar />
