@@ -56,19 +56,31 @@ function networkLabel(c: { ticker: string; name: string }): string | null {
 
 type Step = "form" | "address" | "deposit" | "status";
 
-const STATUS_LABELS: Record<string, { label: string; color: string; icon: React.ReactNode }> = {
-  waiting: { label: "Waiting for deposit", color: "text-muted-foreground", icon: <Clock className="h-5 w-5" /> },
-  confirming: { label: "Confirming transaction", color: "text-primary", icon: <Loader2 className="h-5 w-5 animate-spin" /> },
-  exchanging: { label: "Processing through shielded route", color: "text-primary", icon: <Loader2 className="h-5 w-5 animate-spin" /> },
-  sending: { label: "Sending to recipient", color: "text-trust", icon: <Loader2 className="h-5 w-5 animate-spin" /> },
-  finished: { label: "Private transfer complete!", color: "text-trust", icon: <CheckCircle2 className="h-5 w-5" /> },
-  failed: { label: "Transfer failed", color: "text-destructive", icon: <AlertCircle className="h-5 w-5" /> },
-  refunded: { label: "Refunded", color: "text-muted-foreground", icon: <AlertCircle className="h-5 w-5" /> },
-  overdue: { label: "Overdue", color: "text-destructive", icon: <AlertCircle className="h-5 w-5" /> },
+const STATUS_ICONS: Record<string, { color: string; icon: React.ReactNode }> = {
+  waiting: { color: "text-muted-foreground", icon: <Clock className="h-5 w-5" /> },
+  confirming: { color: "text-primary", icon: <Loader2 className="h-5 w-5 animate-spin" /> },
+  exchanging: { color: "text-primary", icon: <Loader2 className="h-5 w-5 animate-spin" /> },
+  sending: { color: "text-trust", icon: <Loader2 className="h-5 w-5 animate-spin" /> },
+  finished: { color: "text-trust", icon: <CheckCircle2 className="h-5 w-5" /> },
+  failed: { color: "text-destructive", icon: <AlertCircle className="h-5 w-5" /> },
+  refunded: { color: "text-muted-foreground", icon: <AlertCircle className="h-5 w-5" /> },
+  overdue: { color: "text-destructive", icon: <AlertCircle className="h-5 w-5" /> },
+};
+
+const STATUS_LABEL_KEYS: Record<string, string> = {
+  waiting: "widget.statusWaiting",
+  confirming: "widget.statusConfirming",
+  exchanging: "widget.statusProcessingShielded",
+  sending: "widget.statusSendingRecipient",
+  finished: "widget.statusPrivateComplete",
+  failed: "widget.statusTransferFailed",
+  refunded: "widget.statusRefunded",
+  overdue: "widget.statusOverdue",
 };
 
 const PrivateTransferTab = () => {
   const { toast } = useToast();
+  const { t } = useTranslation();
   const { subscribe: subscribePush, supported: pushSupported } = usePushNotifications();
   const pushSubscribedRef = useRef(false);
 
@@ -322,8 +334,8 @@ const PrivateTransferTab = () => {
         <div className="w-full max-w-md rounded-2xl border border-border bg-card shadow-elevated" onClick={(e) => e.stopPropagation()}>
           <div className="flex items-center gap-2 border-b border-border p-4">
             <Search className="h-4 w-4 text-muted-foreground" />
-            <input autoFocus placeholder="Search currency..." className="flex-1 bg-transparent font-body text-sm text-foreground outline-none placeholder:text-muted-foreground" value={searchQuery} onChange={(e) => setSearchQuery(e.target.value)} />
-            <button onClick={() => { onClose(); setSearchQuery(""); }} className="font-body text-xs text-muted-foreground hover:text-foreground">Cancel</button>
+            <input autoFocus placeholder={t("widget.searchCurrency")} className="flex-1 bg-transparent font-body text-sm text-foreground outline-none placeholder:text-muted-foreground" value={searchQuery} onChange={(e) => setSearchQuery(e.target.value)} />
+            <button onClick={() => { onClose(); setSearchQuery(""); }} className="font-body text-xs text-muted-foreground hover:text-foreground">{t("widget.cancel")}</button>
           </div>
           <div className="flex gap-2 border-b border-border px-4 pb-3">
             {["btc", "eth", "sol", "usdc"].map((ticker) => {
@@ -360,7 +372,7 @@ const PrivateTransferTab = () => {
     return (
       <div className="flex h-60 flex-col items-center justify-center gap-3">
         <Loader2 className="h-8 w-8 animate-spin text-primary" />
-        <span className="text-sm text-muted-foreground animate-pulse">Loading currencies…</span>
+        <span className="text-sm text-muted-foreground animate-pulse">{t("widget.loadingCurrencies")}</span>
       </div>
     );
   }
@@ -373,9 +385,9 @@ const PrivateTransferTab = () => {
         <div className="mb-4 flex items-start gap-3 rounded-xl border border-primary/20 bg-primary/[0.06] p-3.5">
           <Shield className="mt-0.5 h-5 w-5 shrink-0 text-primary" />
           <div>
-            <p className="font-display text-sm font-semibold text-foreground">Shielded Routing Active</p>
+            <p className="font-display text-sm font-semibold text-foreground">{t("widget.shieldedRoutingActive")}</p>
             <p className="mt-0.5 font-body text-xs text-muted-foreground leading-relaxed">
-              Send crypto without exposing your wallet or transaction history. Professional, shielded routing for every transfer.
+              {t("widget.shieldedRoutingDesc")}
             </p>
           </div>
         </div>
@@ -383,14 +395,14 @@ const PrivateTransferTab = () => {
         {/* Trustpilot badge */}
         <div className="mb-4 flex items-center justify-center gap-2 rounded-lg border border-border bg-accent/50 px-3 py-2">
           <span className="font-body text-xs font-semibold text-foreground">★★★★★</span>
-          <span className="font-body text-[11px] text-muted-foreground">4.6 on Trustpilot</span>
+          <span className="font-body text-[11px] text-muted-foreground">{t("widget.trustpilotRating")}</span>
           <span className="text-[10px] text-muted-foreground">|</span>
           <span className="flex items-center gap-1 font-body text-[10px] text-trust"><Lock className="h-3 w-3" /> Fixed-Rate Guaranteed</span>
         </div>
 
         {/* Popular assets */}
         <div className="mb-4 flex items-center gap-2">
-          <span className="font-body text-[10px] font-medium uppercase tracking-wider text-muted-foreground">Popular:</span>
+          <span className="font-body text-[10px] font-medium uppercase tracking-wider text-muted-foreground">{t("widget.popular")}</span>
           {["btc", "eth", "usdt", "sol"].map((ticker) => {
             const c = currencies.find((cur) => cur.ticker === ticker);
             if (!c) return null;
@@ -405,16 +417,16 @@ const PrivateTransferTab = () => {
 
         {/* You Send */}
         <div className="relative">
-          <label className="mb-1.5 block font-body text-xs font-medium uppercase tracking-wider text-muted-foreground">You Send</label>
+          <label className="mb-1.5 block font-body text-xs font-medium uppercase tracking-wider text-muted-foreground">{t("widget.youSend")}</label>
           <div className="flex items-center gap-3 rounded-xl border border-border bg-accent p-4">
             <Input type="number" value={sendAmount} onChange={(e) => setSendAmount(e.target.value)} className="flex-1 border-none bg-transparent p-0 font-display text-2xl font-bold text-foreground shadow-none focus-visible:ring-0" min={0} step="any" />
             <button onClick={() => setShowFromPicker(true)} className="flex items-center gap-2 rounded-lg bg-primary/10 px-4 py-2.5 transition-colors hover:bg-primary/20">
               {fromCurrency?.image && <img src={fromCurrency.image} alt="" className="h-5 w-5 rounded-full" />}
-              <span className="font-display text-sm font-semibold uppercase text-primary">{fromCurrency ? displayTicker(fromCurrency) : "Select"}</span>
+              <span className="font-display text-sm font-semibold uppercase text-primary">{fromCurrency ? displayTicker(fromCurrency) : t("widget.select")}</span>
               {fromCurrency && networkLabel(fromCurrency) && <span className="rounded bg-primary/20 px-1 py-0.5 font-body text-[9px] uppercase text-primary">{networkLabel(fromCurrency)}</span>}
             </button>
           </div>
-          {belowMin && <p className="mt-1 font-body text-xs text-destructive">Minimum amount: {minAmount} {fromCurrency ? displayTicker(fromCurrency) : ""}</p>}
+          {belowMin && <p className="mt-1 font-body text-xs text-destructive">{t("widget.minimumAmount")} {minAmount} {fromCurrency ? displayTicker(fromCurrency) : ""}</p>}
           <CurrencyPicker show={showFromPicker} onSelect={setFromCurrency} onClose={() => setShowFromPicker(false)} exclude={toCurrency?.ticker} />
         </div>
 
@@ -422,7 +434,7 @@ const PrivateTransferTab = () => {
         <div className="my-3 flex items-center justify-between gap-2">
           <div className="flex flex-wrap items-center gap-1.5">
             <span className="flex items-center gap-1 rounded-md border border-trust/20 bg-trust/5 px-2 py-1 font-body text-[10px] font-medium text-trust">
-              <Lock className="h-3 w-3" /> Fixed rate locked
+              <Lock className="h-3 w-3" /> {t("widget.fixedRateLocked")}
             </span>
             {fromCurrency && toCurrency && estimatedAmount && estimatedAmount !== "—" && parseFloat(sendAmount) > 0 && (
               <span className="font-body text-[10px] text-muted-foreground">
@@ -438,7 +450,7 @@ const PrivateTransferTab = () => {
         {/* Recipient Gets */}
         <div className="relative">
           <label className="mb-1.5 block font-body text-xs font-medium uppercase tracking-wider text-muted-foreground">
-            Recipient Gets <span className="text-trust font-bold">(GUARANTEED)</span>
+            {t("widget.recipientGets")} <span className="text-trust font-bold">{t("widget.guaranteed")}</span>
           </label>
           <div className="flex items-center gap-3 rounded-xl border border-border bg-accent p-4">
             <span className="flex-1 font-display text-2xl font-bold text-foreground">
@@ -446,7 +458,7 @@ const PrivateTransferTab = () => {
             </span>
             <button onClick={() => setShowToPicker(true)} className="flex items-center gap-2 rounded-lg bg-trust/10 px-4 py-2.5 transition-colors hover:bg-trust/20">
               {toCurrency?.image && <img src={toCurrency.image} alt="" className="h-5 w-5 rounded-full" />}
-              <span className="font-display text-sm font-semibold uppercase text-trust">{toCurrency ? displayTicker(toCurrency) : "Select"}</span>
+              <span className="font-display text-sm font-semibold uppercase text-trust">{toCurrency ? displayTicker(toCurrency) : t("widget.select")}</span>
               {toCurrency && networkLabel(toCurrency) && <span className="rounded bg-trust/20 px-1 py-0.5 font-body text-[9px] uppercase text-trust">{networkLabel(toCurrency)}</span>}
             </button>
           </div>
@@ -456,7 +468,7 @@ const PrivateTransferTab = () => {
         {/* Recipient wallet address */}
         <div className="mt-4">
           <label className="mb-1.5 flex items-center gap-1.5 font-body text-xs font-medium uppercase tracking-wider text-muted-foreground">
-            <Shield className="h-3 w-3" /> Recipient Wallet Address
+            <Shield className="h-3 w-3" /> {t("widget.recipientWalletAddress")}
           </label>
           <DestinationAddressInput
             value={recipientAddress}
@@ -478,26 +490,26 @@ const PrivateTransferTab = () => {
           disabled={!estimatedAmount || estimatedAmount === "—" || belowMin || !addressValid}
           onClick={() => setStep("address")}
         >
-          <Shield className="mr-2 h-4 w-4" /> Start Private Transfer
+          <Shield className="mr-2 h-4 w-4" /> {t("widget.startPrivateTransfer")}
         </Button>
 
         {/* Trust signals */}
         <div className="mt-3 grid grid-cols-3 gap-2">
           <div className="flex flex-col items-center gap-1 rounded-lg border border-border bg-accent/50 p-2.5 text-center">
             <Shield className="h-4 w-4 text-primary" />
-            <span className="font-body text-[10px] font-medium text-muted-foreground">Shielded Route</span>
+            <span className="font-body text-[10px] font-medium text-muted-foreground">{t("widget.shieldedRoute")}</span>
           </div>
           <div className="flex flex-col items-center gap-1 rounded-lg border border-border bg-accent/50 p-2.5 text-center">
             <Lock className="h-4 w-4 text-primary" />
-            <span className="font-body text-[10px] font-medium text-muted-foreground">Fixed Rate</span>
+            <span className="font-body text-[10px] font-medium text-muted-foreground">{t("widget.fixedRate")}</span>
           </div>
           <div className="flex flex-col items-center gap-1 rounded-lg border border-border bg-accent/50 p-2.5 text-center">
             <CheckCircle2 className="h-4 w-4 text-primary" />
-            <span className="font-body text-[10px] font-medium text-muted-foreground">No Trail</span>
+            <span className="font-body text-[10px] font-medium text-muted-foreground">{t("widget.noTrail")}</span>
           </div>
         </div>
         <p className="mt-2 text-center font-body text-xs text-muted-foreground">
-          No hidden fees · No account required · Permissionless
+          {t("widget.noHiddenFees")}
         </p>
       </div>
     );
@@ -508,29 +520,29 @@ const PrivateTransferTab = () => {
     return (
       <motion.div key="pt-address" initial={{ opacity: 0, x: 20 }} animate={{ opacity: 1, x: 0 }} exit={{ opacity: 0, x: -20 }}>
         <button onClick={() => setStep("form")} className="mb-4 flex items-center gap-1.5 font-body text-sm text-muted-foreground transition-colors hover:text-foreground">
-          <ArrowLeft className="h-4 w-4" /> Back
+          <ArrowLeft className="h-4 w-4" /> {t("widget.back")}
         </button>
 
-        <h2 className="mb-2 font-display text-lg font-semibold text-foreground">Confirm Private Transfer</h2>
+        <h2 className="mb-2 font-display text-lg font-semibold text-foreground">{t("widget.confirmPrivateTransfer")}</h2>
         <p className="mb-4 font-body text-sm text-muted-foreground">
-          Review your shielded transfer details before proceeding.
+          {t("widget.reviewShieldedDetails")}
         </p>
 
         <div className="rounded-xl border border-border bg-accent/40 p-4 space-y-3">
-          <div className="flex justify-between font-body text-sm"><span className="text-muted-foreground">You send</span><span className="font-semibold text-foreground">{sendAmount} {fromCurrency ? displayTicker(fromCurrency) : ""}</span></div>
-          <div className="flex justify-between font-body text-sm"><span className="text-muted-foreground">Recipient gets (guaranteed)</span><span className="font-semibold text-trust">≈ {estimatedAmount} {toCurrency ? displayTicker(toCurrency) : ""}</span></div>
-          <div className="border-t border-border pt-2"><div className="flex items-start justify-between font-body text-xs"><span className="text-muted-foreground">Recipient address</span><span className="max-w-[200px] break-all text-right font-mono text-foreground">{recipientAddress}</span></div></div>
+          <div className="flex justify-between font-body text-sm"><span className="text-muted-foreground">{t("widget.youSendLabel")}</span><span className="font-semibold text-foreground">{sendAmount} {fromCurrency ? displayTicker(fromCurrency) : ""}</span></div>
+          <div className="flex justify-between font-body text-sm"><span className="text-muted-foreground">{t("widget.recipientGetsGuaranteed")}</span><span className="font-semibold text-trust">≈ {estimatedAmount} {toCurrency ? displayTicker(toCurrency) : ""}</span></div>
+          <div className="border-t border-border pt-2"><div className="flex items-start justify-between font-body text-xs"><span className="text-muted-foreground">{t("widget.recipientAddress")}</span><span className="max-w-[200px] break-all text-right font-mono text-foreground">{recipientAddress}</span></div></div>
         </div>
 
         {/* Rate lock */}
         {!rateExpired ? (
           <div className="mt-3 flex items-center justify-center gap-2 font-body text-xs text-muted-foreground">
             <Lock className="h-3 w-3 text-trust" />
-            Rate locked for <span className="font-semibold text-trust">{rateLockSeconds}s</span>
+            {t("widget.rateLockedFor")} <span className="font-semibold text-trust">{rateLockSeconds}s</span>
           </div>
         ) : (
           <div className="mt-3 flex flex-col items-center gap-2">
-            <p className="font-body text-xs text-destructive">Rate expired. Please refresh.</p>
+            <p className="font-body text-xs text-destructive">{t("widget.rateExpired")}</p>
             <Button variant="outline" size="sm" onClick={handleRefreshRate} disabled={refreshingRate}>
               {refreshingRate ? <Loader2 className="mr-1.5 h-3.5 w-3.5 animate-spin" /> : <RefreshCw className="mr-1.5 h-3.5 w-3.5" />}
               Refresh Rate
@@ -541,7 +553,7 @@ const PrivateTransferTab = () => {
         <div className="mt-4 flex items-center gap-2 rounded-lg border border-primary/20 bg-primary/5 p-3">
           <Shield className="h-4 w-4 shrink-0 text-primary" />
           <p className="font-body text-[11px] text-muted-foreground">
-            Your transfer will be routed through a liquidity pool to shield the sender's wallet address from the recipient's transaction history.
+            {t("widget.shieldedRouteExplanation")}
           </p>
         </div>
 
@@ -551,7 +563,7 @@ const PrivateTransferTab = () => {
           disabled={creatingTx || rateExpired}
           onClick={handleCreateTransaction}
         >
-          {creatingTx ? <><Loader2 className="mr-2 h-4 w-4 animate-spin" />Creating transfer…</> : <><Lock className="mr-2 h-4 w-4" />Confirm & Generate Deposit Address</>}
+          {creatingTx ? <><Loader2 className="mr-2 h-4 w-4 animate-spin" />{t("widget.creatingTransfer")}</> : <><Lock className="mr-2 h-4 w-4" />{t("widget.confirmGenerateDeposit")}</>}
         </Button>
       </motion.div>
     );
@@ -564,7 +576,7 @@ const PrivateTransferTab = () => {
         <div className="mb-4 flex items-center gap-2">
           <div className="flex h-8 w-8 items-center justify-center rounded-full bg-primary/10"><Shield className="h-4 w-4 text-primary" /></div>
           <div>
-            <h3 className="font-display text-base font-bold text-foreground">Deposit to Shielded Address</h3>
+            <h3 className="font-display text-base font-bold text-foreground">{t("widget.depositToShielded")}</h3>
             <p className="font-body text-[11px] text-muted-foreground">Send exactly <span className="font-semibold text-foreground">{transaction.amount} {transaction.fromCurrency?.toUpperCase()}</span> to the address below</p>
           </div>
         </div>
@@ -576,7 +588,7 @@ const PrivateTransferTab = () => {
         </div>
 
         <div className="font-body text-sm">
-          <span className="text-muted-foreground">Shielded deposit address</span>
+          <span className="text-muted-foreground">{t("widget.shieldedDepositAddress")}</span>
           <div className="mt-1 flex items-center gap-2">
             <code className="flex-1 break-all rounded-lg border border-border bg-background px-3 py-2 font-body text-xs text-foreground">{transaction.payinAddress}</code>
             <CopyButton text={transaction.payinAddress} label="payin" />
@@ -584,7 +596,7 @@ const PrivateTransferTab = () => {
         </div>
         {transaction.payinExtraId && (
           <div className="mt-3 font-body text-sm">
-            <span className="text-muted-foreground">Extra ID / Memo</span>
+            <span className="text-muted-foreground">{t("widget.extraIdMemo")}</span>
             <div className="mt-1 flex items-center gap-2">
               <code className="flex-1 break-all rounded-lg border border-border bg-background px-3 py-2 font-body text-xs text-foreground">{transaction.payinExtraId}</code>
               <CopyButton text={transaction.payinExtraId} label="extra-id" />
@@ -595,23 +607,23 @@ const PrivateTransferTab = () => {
         <div className="mt-3 flex items-center gap-2 rounded-lg border border-primary/20 bg-primary/5 p-3">
           <Shield className="h-4 w-4 shrink-0 text-primary" />
           <p className="font-body text-[11px] text-muted-foreground">
-            Funds deposited here will be routed through shielded liquidity pools, masking your original wallet address before delivery to the recipient.
+            {t("widget.shieldedDepositExplanation")}
           </p>
         </div>
 
         {/* Email notification */}
         {!emailSubmitted ? (
           <div className="mt-4 space-y-2">
-            <label className="font-body text-xs font-medium text-muted-foreground flex items-center gap-1"><Mail className="h-3 w-3" /> Get notified when complete</label>
+            <label className="font-body text-xs font-medium text-muted-foreground flex items-center gap-1"><Mail className="h-3 w-3" /> {t("widget.getNotifiedComplete")}</label>
             <div className="flex gap-2">
               <Input type="email" placeholder="your@email.com" value={notifyEmail} onChange={(e) => setNotifyEmail(e.target.value)} className="flex-1 font-body text-sm" />
               <Button size="sm" onClick={handleEmailSubscribe} disabled={emailSubmitting || !notifyEmail.trim()}>
-                {emailSubmitting ? <Loader2 className="h-4 w-4 animate-spin" /> : "Notify Me"}
+                {emailSubmitting ? <Loader2 className="h-4 w-4 animate-spin" /> : t("widget.notifyMe")}
               </Button>
             </div>
           </div>
         ) : (
-          <div className="mt-3 flex items-center gap-2 font-body text-xs text-trust"><CheckCircle2 className="h-4 w-4" /> You'll be notified at {notifyEmail}</div>
+          <div className="mt-3 flex items-center gap-2 font-body text-xs text-trust"><CheckCircle2 className="h-4 w-4" /> {t("widget.notifiedAt")} {notifyEmail}</div>
         )}
 
         <Button className="mt-5 w-full min-h-[48px]" size="lg" onClick={() => { setStep("status"); }}>
@@ -623,7 +635,7 @@ const PrivateTransferTab = () => {
 
   // ===== STATUS STEP =====
   if (step === "status" && transaction) {
-    const statusInfo = STATUS_LABELS[txStatus?.status || "waiting"] || STATUS_LABELS.waiting;
+    const statusInfo = { ...(STATUS_ICONS[txStatus?.status || "waiting"] || STATUS_ICONS.waiting), label: t(STATUS_LABEL_KEYS[txStatus?.status || "waiting"] || "widget.statusWaiting") };
     return (
       <motion.div key="pt-status" initial={{ opacity: 0, x: 20 }} animate={{ opacity: 1, x: 0 }} exit={{ opacity: 0, x: -20 }}>
         <div className="mb-4 flex flex-col items-center gap-3 text-center">
@@ -632,46 +644,46 @@ const PrivateTransferTab = () => {
           </div>
           <div>
             <h3 className={`font-display text-lg font-bold ${statusInfo.color}`}>{statusInfo.label}</h3>
-            <p className="mt-1 font-body text-xs text-muted-foreground">Transfer ID: {transaction.id}</p>
+            <p className="mt-1 font-body text-xs text-muted-foreground">{t("widget.transferId")}: {transaction.id}</p>
           </div>
         </div>
 
         <div className="rounded-xl border border-border bg-accent/40 p-4 space-y-3">
-          <div className="flex justify-between font-body text-sm"><span className="text-muted-foreground">Sending</span><span className="font-semibold">{txStatus?.amountSend || transaction.amount} {transaction.fromCurrency?.toUpperCase()}</span></div>
-          {txStatus?.amountReceive && <div className="flex justify-between font-body text-sm"><span className="text-muted-foreground">Recipient receives</span><span className="font-semibold text-trust">{txStatus.amountReceive} {transaction.toCurrency?.toUpperCase()}</span></div>}
+          <div className="flex justify-between font-body text-sm"><span className="text-muted-foreground">{t("widget.sending")}</span><span className="font-semibold">{txStatus?.amountSend || transaction.amount} {transaction.fromCurrency?.toUpperCase()}</span></div>
+          {txStatus?.amountReceive && <div className="flex justify-between font-body text-sm"><span className="text-muted-foreground">{t("widget.recipientReceives")}</span><span className="font-semibold text-trust">{txStatus.amountReceive} {transaction.toCurrency?.toUpperCase()}</span></div>}
           {txStatus?.payinHash && (
-            <div className="border-t border-border pt-2"><span className="font-body text-xs text-muted-foreground">Deposit hash</span><div className="mt-1 flex items-center gap-2"><code className="flex-1 break-all rounded-lg border border-border bg-background px-3 py-2 font-body text-xs">{txStatus.payinHash}</code><CopyButton text={txStatus.payinHash} label="payin-hash" /></div></div>
+            <div className="border-t border-border pt-2"><span className="font-body text-xs text-muted-foreground">{t("widget.depositHash")}</span><div className="mt-1 flex items-center gap-2"><code className="flex-1 break-all rounded-lg border border-border bg-background px-3 py-2 font-body text-xs">{txStatus.payinHash}</code><CopyButton text={txStatus.payinHash} label="payin-hash" /></div></div>
           )}
           {txStatus?.payoutHash && (
-            <div><span className="font-body text-xs text-muted-foreground">Payout hash</span><div className="mt-1 flex items-center gap-2"><code className="flex-1 break-all rounded-lg border border-border bg-background px-3 py-2 font-body text-xs">{txStatus.payoutHash}</code><CopyButton text={txStatus.payoutHash} label="payout-hash" /></div></div>
+            <div><span className="font-body text-xs text-muted-foreground">{t("widget.payoutHash")}</span><div className="mt-1 flex items-center gap-2"><code className="flex-1 break-all rounded-lg border border-border bg-background px-3 py-2 font-body text-xs">{txStatus.payoutHash}</code><CopyButton text={txStatus.payoutHash} label="payout-hash" /></div></div>
           )}
         </div>
 
         {txStatus?.status === "finished" && (
           <div className="mt-6 space-y-3">
             <div className="flex flex-col items-center gap-2 rounded-xl border border-primary/20 bg-primary/[0.06] p-4 text-center">
-              <span className="text-sm font-medium text-foreground">How was your experience?</span>
+              <span className="text-sm font-medium text-foreground">{t("widget.howWasExperience")}</span>
               <a href="https://www.trustpilot.com/evaluate/mrcglobalpay.com" target="_blank" rel="noopener noreferrer" className="mt-1 inline-flex items-center gap-2 rounded-lg bg-[#00b67a] px-5 py-2.5 text-sm font-bold text-white transition-opacity hover:opacity-90">
                 Leave us a review ⭐
               </a>
             </div>
             <div className="flex gap-2">
-              <Button className="flex-1 bg-trust text-trust-foreground hover:bg-trust/90" size="lg" onClick={handleNewTransfer}>New Transfer</Button>
+              <Button className="flex-1 bg-trust text-trust-foreground hover:bg-trust/90" size="lg" onClick={handleNewTransfer}>{t("widget.newTransfer")}</Button>
               {typeof navigator !== "undefined" && !!navigator.share && (
                 <Button variant="outline" size="lg" className="shrink-0" onClick={async () => {
                   try { await navigator.share({ title: "Private Transfer Complete — MRC GlobalPay", text: `Shielded ${txStatus.fromCurrency?.toUpperCase()} → ${txStatus.toCurrency?.toUpperCase()} transfer completed on MRC GlobalPay.`, url: "https://mrcglobalpay.com/private-transfer" }); } catch {}
                 }}>
-                  <Share2 className="h-4 w-4 mr-1.5" /> Share
+                  <Share2 className="h-4 w-4 mr-1.5" /> {t("widget.share")}
                 </Button>
               )}
             </div>
           </div>
         )}
         {txStatus?.status === "failed" && (
-          <Button className="mt-6 w-full" size="lg" variant="destructive" onClick={handleNewTransfer}>Try Again</Button>
+          <Button className="mt-6 w-full" size="lg" variant="destructive" onClick={handleNewTransfer}>{t("widget.tryAgain")}</Button>
         )}
         {!["finished", "failed", "refunded"].includes(txStatus?.status || "") && (
-          <p className="mt-4 text-center font-body text-xs text-muted-foreground">Status refreshes automatically every 15 seconds</p>
+          <p className="mt-4 text-center font-body text-xs text-muted-foreground">{t("widget.statusRefreshes")}</p>
         )}
       </motion.div>
     );
