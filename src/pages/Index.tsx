@@ -18,6 +18,8 @@ import PullToRefresh from "@/components/PullToRefresh";
 import ShadowSeoFaq from "@/components/ShadowSeoFaq";
 import TrendingEcosystems from "@/components/TrendingEcosystems";
 import GetTheAppBadges from "@/components/GetTheAppBadges";
+import BentoSpecsSection from "@/components/BentoSpecsSection";
+import LiveNetworkBadge from "@/components/LiveNetworkBadge";
 import { Helmet } from "react-helmet-async";
 
 const Index = () => {
@@ -153,6 +155,10 @@ const Index = () => {
           <PopularPairsSection />
           <SwapPairsQA />
           <TrendingEcosystems />
+          <BentoSpecsSection />
+          <div className="flex justify-center py-6">
+            <LiveNetworkBadge />
+          </div>
           <FAQSection />
         </main>
         <MsbTrustBar />
