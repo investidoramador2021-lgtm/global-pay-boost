@@ -2188,10 +2188,18 @@ const ExchangeWidget = () => {
                                   <span className="text-muted-foreground">You receive</span>
                                   <span className="font-semibold text-primary">{gEstimatedAmount || "—"} {gToCurrency?.ticker}</span>
                                 </div>
-                                <div className="flex justify-between font-body text-sm">
-                                  <span className="text-muted-foreground">Wallet</span>
-                                  <span className="max-w-[180px] truncate font-mono text-xs text-foreground">{gPayoutAddress}</span>
-                                </div>
+                                {gTradeDirection === "buy" && gPayoutAddress && (
+                                  <div className="flex justify-between font-body text-sm">
+                                    <span className="text-muted-foreground">Wallet</span>
+                                    <span className="max-w-[180px] truncate font-mono text-xs text-foreground">{gPayoutAddress}</span>
+                                  </div>
+                                )}
+                                {gTradeDirection === "sell" && gPayoutFieldDefs.length > 0 && (
+                                  <div className="flex justify-between font-body text-sm">
+                                    <span className="text-muted-foreground">Payout to</span>
+                                    <span className="text-xs text-foreground">{gPayoutFieldDefs[0].label}</span>
+                                  </div>
+                                )}
                                 {gPayoutEmail && (
                                   <div className="flex justify-between font-body text-sm">
                                     <span className="text-muted-foreground">Email</span>
