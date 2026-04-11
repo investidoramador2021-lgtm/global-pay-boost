@@ -188,5 +188,14 @@
       <pubDate>Mon, 07 Apr 2026 00:00:00 GMT</pubDate>
       <category>Infrastructure</category>
     </item>
+    <item>
+      <title>Private Crypto Transfer — Shielded Routing for Every Wallet</title>
+      <link>https://mrcglobalpay.com/private-transfer</link>
+      <guid isPermaLink="true">https://mrcglobalpay.com/private-transfer</guid>
+      <description>Send crypto without exposing your wallet. MRC GlobalPay's Private Transfer uses shielded routing through liquidity pools. Fixed-rate, no registration, 500+ tokens.</description>
+      <dc:creator>MRC GlobalPay Team</dc:creator>
+      <pubDate>Fri, 11 Apr 2026 00:00:00 GMT</pubDate>
+      <category>Tools</category>
+    </item>
   </channel>
 </rss>

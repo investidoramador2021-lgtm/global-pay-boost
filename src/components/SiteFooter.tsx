@@ -108,6 +108,7 @@ const walletReviews = [
 ];
 
 const expertiseLinks = [
+  { label: "Private Transfer", href: "/private-transfer", title: "Send crypto with shielded routing — no wallet exposure" },
   { label: "How UTXOs Work", href: "/resources/crypto-dust-guide#what-is-crypto-dust", title: "Understanding UTXO model and crypto dust" },
   { label: "Why $0.30 Is Our Minimum", href: "/dust-swap-comparison", title: "Why our minimum swap is only $0.30" },
   { label: "Non-Custodial Swaps", href: "/transparency-security", title: "How non-custodial crypto swaps work" },
