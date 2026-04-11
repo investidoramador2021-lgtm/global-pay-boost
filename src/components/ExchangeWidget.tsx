@@ -1654,6 +1654,16 @@ const ExchangeWidget = () => {
                 >
                   <EyeOff className="h-4 w-4" /> {t("widget.tabs.private")}
                 </button>
+                <button
+                  onClick={() => { setWidgetMode("bridge"); }}
+                  className={`flex items-center justify-center gap-1.5 rounded-lg px-3 py-2 font-display text-sm font-semibold transition-all ${
+                    widgetMode === "bridge"
+                      ? "bg-primary text-primary-foreground shadow-card"
+                      : "text-muted-foreground hover:text-foreground hover:bg-background"
+                  }`}
+                >
+                  <Link2 className="h-4 w-4" /> {t("widget.tabs.bridge")}
+                </button>
               </div>
               <span className="hidden min-[481px]:flex items-center gap-1.5 rounded-full border border-trust/30 bg-trust/10 px-2.5 py-1 font-body text-[10px] font-semibold uppercase tracking-wider text-trust">
                 <span className="relative flex h-2 w-2">
