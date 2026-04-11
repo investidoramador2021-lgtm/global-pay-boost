@@ -752,8 +752,9 @@ const ExchangeWidget = ({ onTabChange }: ExchangeWidgetProps = {}) => {
             setRetrying(true);
             setTimeout(loadCurrencies, 3000 * retryCount);
           } else {
-            setRetrying(false);
-            toast({ title: "Connection issue", description: "Could not load currencies. Please refresh the page.", variant: "destructive" });
+            setRetrying(true);
+            // Silent retry — no red error toast; keep showing "Refreshing Rates…"
+            setTimeout(loadCurrencies, 5000);
           }
         })
         .finally(() => setLoading(false));
