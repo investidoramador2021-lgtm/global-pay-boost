@@ -1,0 +1,29 @@
+{
+  "name": "MRC GlobalPay — Trading Bot Manifest",
+  "version": "1.0.0",
+  "description": "Top 10 dust-swap pairs with approximate rates and minimum thresholds. Updated periodically.",
+  "provider": {
+    "name": "MRC GlobalPay",
+    "msb": "C100000015",
+    "jurisdiction": "Canada (FINTRAC)",
+    "url": "https://mrcglobalpay.com",
+    "api": "https://mrcglobalpay.com/api/v1/rates"
+  },
+  "min_swap_usd": "0.30",
+  "pairs": [
+    { "from": "BTC", "to": "ETH", "min_amount": "0.0000045 BTC", "approx_rate": "20.5" },
+    { "from": "ETH", "to": "USDT", "min_amount": "0.00015 ETH", "approx_rate": "2550" },
+    { "from": "SOL", "to": "USDT", "min_amount": "0.002 SOL", "approx_rate": "145" },
+    { "from": "DOGE", "to": "USDT", "min_amount": "2.5 DOGE", "approx_rate": "0.12" },
+    { "from": "SHIB", "to": "USDT", "min_amount": "25000 SHIB", "approx_rate": "0.000012" },
+    { "from": "PEPE", "to": "SOL", "min_amount": "50000 PEPE", "approx_rate": "0.0000000065" },
+    { "from": "XRP", "to": "USDT", "min_amount": "0.15 XRP", "approx_rate": "2.10" },
+    { "from": "TRX", "to": "USDT", "min_amount": "1.5 TRX", "approx_rate": "0.22" },
+    { "from": "BNB", "to": "USDC", "min_amount": "0.0005 BNB", "approx_rate": "610" },
+    { "from": "LTC", "to": "USDT", "min_amount": "0.004 LTC", "approx_rate": "85" }
+  ],
+  "live_rates_endpoint": "https://mrcglobalpay.com/api/v1/rates",
+  "health_endpoint": "https://mrcglobalpay.com/api/v1/health",
+  "feed_endpoint": "https://mrcglobalpay.com/feed.xml",
+  "timestamp": "2026-04-11T00:00:00Z"
+}

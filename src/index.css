@@ -190,3 +190,9 @@ html[lang='he'] body { font-family: 'Heebo', 'Inter', sans-serif; }
 html[lang='ja'] body { font-family: 'Noto Sans JP', 'Inter', sans-serif; }
 html[lang='ur'] body { font-family: 'Noto Nastaliq Urdu', 'Inter', sans-serif; }
 html[lang='fa'] body { font-family: 'Vazirmatn', 'Inter', sans-serif; }
+
+/* GPU-friendly content-visibility for long sections below the fold */
+.cv-auto {
+  content-visibility: auto;
+  contain-intrinsic-size: auto 600px;
+}

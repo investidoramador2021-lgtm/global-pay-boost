@@ -68,6 +68,7 @@ const Index = () => {
       opens: "00:00",
       closes: "23:59",
     },
+    feesAndCommissionsSpecification: "Transparent, zero-hidden fees. All costs built into displayed rate.",
     potentialAction: {
       "@type": "TradeAction",
       target: "https://mrcglobalpay.com/#exchange",
@@ -234,14 +235,14 @@ const Index = () => {
           <div className="container mx-auto px-4 py-4">
             <GetTheAppBadges />
           </div>
-          <PopularPairsSection />
-          <SwapPairsQA />
-          <TrendingEcosystems />
-          <BentoSpecsSection />
+          <div className="cv-auto"><PopularPairsSection /></div>
+          <div className="cv-auto"><SwapPairsQA /></div>
+          <div className="cv-auto"><TrendingEcosystems /></div>
+          <div className="cv-auto"><BentoSpecsSection /></div>
           <div className="flex justify-center py-6">
             <LiveNetworkBadge />
           </div>
-          <FAQSection />
+          <div className="cv-auto"><FAQSection /></div>
         </main>
         <MsbTrustBar />
         <SiteFooter />
