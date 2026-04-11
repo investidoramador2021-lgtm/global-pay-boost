@@ -2233,7 +2233,7 @@ const ExchangeWidget = () => {
                                 }}
                               >
                                 <Lock className="mr-2 h-4 w-4" />
-                                Proceed to Secure Payment
+                                {gTradeDirection === "sell" ? "Proceed to Secure Payout" : "Proceed to Secure Payment"}
                                 <ExternalLink className="ml-2 h-4 w-4" />
                               </Button>
 
