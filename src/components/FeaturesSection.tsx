@@ -4,6 +4,14 @@ import { motion } from "framer-motion";
 
 const featureKeys = ["speed", "fees", "noAccount", "assets", "global", "support"] as const;
 const featureIcons = [Zap, Shield, Lock, ArrowLeftRight, Globe, HeadphonesIcon];
+const featureAlts = [
+  "Sub-60-second crypto settlement icon",
+  "Zero hidden fees guarantee badge",
+  "No-account-required crypto swap shield",
+  "500+ supported crypto assets icon",
+  "Global always-on exchange indicator",
+  "24/7 customer support headset icon",
+];
 
 const SPRING = { type: "spring" as const, stiffness: 100, damping: 20 };
 
@@ -54,8 +62,8 @@ const FeaturesSection = () => {
                 className="rounded-xl border border-border bg-card p-5 shadow-card transform-gpu will-change-transform hover:shadow-elevated hover:-translate-y-1 sm:rounded-2xl sm:p-8"
                 style={{ backfaceVisibility: "hidden" }}
               >
-                <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-primary/10 hover:scale-110 hover:bg-primary/20 sm:h-12 sm:w-12 sm:rounded-xl">
-                  <Icon className="h-5 w-5 text-primary sm:h-6 sm:w-6" />
+                <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-primary/10 hover:scale-110 hover:bg-primary/20 sm:h-12 sm:w-12 sm:rounded-xl" role="img" aria-label={featureAlts[idx]}>
+                  <Icon className="h-5 w-5 text-primary sm:h-6 sm:w-6" aria-hidden="true" />
                 </div>
                 <h3 className="mt-4 font-display text-base font-semibold text-foreground sm:mt-5 sm:text-lg">
                   {t(`features.${key}.title`)}
