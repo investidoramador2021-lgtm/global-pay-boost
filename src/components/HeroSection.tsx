@@ -17,21 +17,19 @@ const staggerContainer = {
   show: { transition: { staggerChildren: 0.15 } },
 };
 
-const EASE = [0.22, 1, 0.36, 1] as const;
-
 const fadeUp = {
   hidden: { opacity: 0, y: 24 },
-  show: { opacity: 1, y: 0, transition: { duration: 0.6, ease: EASE as unknown as number[] } },
+  show: { opacity: 1, y: 0, transition: { duration: 0.6, ease: "easeOut" as const } },
 };
 
 const widgetEntrance = {
   hidden: { opacity: 0, y: 20, scale: 0.98 },
-  show: { opacity: 1, y: 0, scale: 1, transition: { duration: 0.8, ease: EASE as unknown as number[] } },
+  show: { opacity: 1, y: 0, scale: 1, transition: { duration: 0.8, ease: "easeOut" as const } },
 };
 
 const trustCard = {
   hidden: { opacity: 0, y: 20 },
-  show: { opacity: 1, y: 0, transition: { duration: 0.5, ease: EASE as unknown as number[] } },
+  show: { opacity: 1, y: 0, transition: { duration: 0.5, ease: "easeOut" as const } },
 };
 
 const HeroSection = () => {
