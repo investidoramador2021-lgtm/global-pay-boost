@@ -1,7 +1,7 @@
 import { useState, useRef, useEffect } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
 import { useTranslation } from "react-i18next";
-import { Globe, Search, Check } from "lucide-react";
+import { Search, Check } from "lucide-react";
 import {
   supportedLanguages,
   languageMeta,
@@ -10,6 +10,16 @@ import {
   langPath,
   type SupportedLanguage,
 } from "@/i18n";
+
+const LANG_TO_COUNTRY: Record<string, string> = {
+  en: "us", es: "es", pt: "br", fr: "fr", ja: "jp", fa: "ir",
+  ur: "pk", he: "il", af: "za", hi: "in", vi: "vn", tr: "tr", uk: "ua",
+};
+
+function flagUrl(lang: string, size = 40): string {
+  const code = LANG_TO_COUNTRY[lang] || lang;
+  return `https://flagcdn.com/w${size}/${code}.png`;
+}
 
 const LanguageSwitcher = () => {
   const { i18n } = useTranslation();
@@ -74,7 +84,7 @@ const LanguageSwitcher = () => {
         aria-label="Switch language"
         title="Switch language"
       >
-        <Globe className="h-4 w-4" />
+        <img src={flagUrl(currentLang)} alt="" className="h-5 w-5 rounded-full object-cover" />
         <span className="hidden text-xs font-medium sm:inline">{currentMeta.native}</span>
       </button>
 
@@ -113,9 +123,7 @@ const LanguageSwitcher = () => {
                     isActive ? "bg-primary/5" : ""
                   }`}
                 >
-                  <span className="min-w-[28px] text-xs font-mono uppercase text-muted-foreground">
-                    {lang}
-                  </span>
+                  <img src={flagUrl(lang)} alt="" className="h-5 w-5 rounded-full object-cover shrink-0" />
                   <span className="flex-1">
                     <span className={`text-sm font-medium ${isActive ? "text-primary" : "text-foreground"}`}>
                       {meta.native}
