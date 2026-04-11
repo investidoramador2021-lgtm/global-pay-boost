@@ -70,7 +70,8 @@ export async function fetchPostBySlug(slug: string, lang = "en"): Promise<BlogPo
 
   if (data) return dbRowToPost(data);
 
-  return SEED_POSTS.find((post) => post.slug === slug);
+  const allSeed = [...SEED_POSTS, PIX_POST_EN];
+  return allSeed.find((post) => post.slug === slug);
 }
 
 export async function fetchRelatedPosts(currentSlug: string, count = 3): Promise<BlogPost[]> {
