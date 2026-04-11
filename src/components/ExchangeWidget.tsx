@@ -1806,9 +1806,9 @@ const ExchangeWidget = ({ onTabChange }: ExchangeWidgetProps = {}) => {
                       )}
                     </div>
                     {gEstimateError && (
-                      <div className="mb-3 flex items-center gap-2 rounded-lg border border-destructive/20 bg-destructive/5 px-3 py-2 font-body text-[11px] text-destructive">
-                        <AlertCircle className="h-3.5 w-3.5 shrink-0" />
-                        <span>{gEstimateError}</span>
+                      <div className="mb-3 flex items-center gap-2 rounded-lg border border-border bg-accent px-3 py-2 font-body text-[11px] text-muted-foreground">
+                        <RefreshCw className="h-3.5 w-3.5 shrink-0 animate-spin" />
+                        <span>Syncing with Global Liquidity Rails…</span>
                       </div>
                     )}
 
@@ -2582,7 +2582,7 @@ const ExchangeWidget = ({ onTabChange }: ExchangeWidgetProps = {}) => {
                     <span className="flex items-center gap-1 rounded-md border border-trust/20 bg-trust/5 px-2 py-1 font-body text-[10px] font-medium text-trust sm:text-[11px]">
                       <CheckCircle2 className="h-3 w-3" /> {t("widget.allFeesIncluded")}
                     </span>
-                    {fromCurrency && toCurrency && estimatedAmount && estimatedAmount !== "—" && parseFloat(sendAmount) > 0 && (
+                    {fromCurrency && toCurrency && estimatedAmount && estimatedAmount !== "—" && estimatedAmount !== "syncing" && parseFloat(sendAmount) > 0 && (
                       <span className="font-body text-[10px] text-muted-foreground sm:text-[11px]">
                         1 {displayTicker(fromCurrency)} ≈ {(parseFloat(estimatedAmount) / parseFloat(sendAmount)).toFixed(6)} {displayTicker(toCurrency)}
                       </span>
@@ -2599,7 +2599,8 @@ const ExchangeWidget = ({ onTabChange }: ExchangeWidgetProps = {}) => {
                   </label>
                   <div className="flex items-center gap-3 rounded-xl border border-border bg-accent p-4 sm:p-4">
                     <span className="flex-1 font-display text-2xl font-bold text-foreground">
-                      {estimating ? <Loader2 className="h-6 w-6 animate-spin text-muted-foreground" /> : `≈ ${estimatedAmount || "—"}`}
+                      {estimating ? <Loader2 className="h-6 w-6 animate-spin text-muted-foreground" /> : estimatedAmount === "syncing" ? <span className="text-sm font-medium text-muted-foreground animate-pulse">Syncing with Global Liquidity Rails…</span> : `≈ ${estimatedAmount || "—"}`}
+                    </span>
                     </span>
                     <button onClick={() => setShowToPicker(true)} className="flex items-center gap-2 rounded-lg bg-trust/10 px-4 py-2.5 transition-colors hover:bg-trust/20 touch-target">
                       {toCurrency?.image && <img src={toCurrency.image} alt="" className="h-5 w-5 rounded-full" />}
