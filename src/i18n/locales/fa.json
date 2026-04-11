@@ -77,7 +77,8 @@
     "tabs": {
       "exchange": "تبدیل",
       "buy": "خرید",
-      "private": "خصوصی"
+      "private": "خصوصی",
+      "bridge": "بریج"
     },
     "online": "آنلاین",
     "fixedRate": "نرخ ثابت",
@@ -278,5 +279,29 @@
     "providerFee": "Provider fee",
     "invalidFormat": "Invalid format — please check and try again",
     "regulatedPaymentGateway": "Regulated payment gateway"
+  },
+  "bridge": {
+    "trustNotice": "ما داده‌های شما را ذخیره نمی‌کنیم. این رسید تنها سابقه شماست.",
+    "fromCurrency": "از (مبدا)",
+    "toCurrency": "به (مقصد)",
+    "destWallet": "آدرس کیف پول مقصد",
+    "noStorageNotice": "ما داده‌های شما را ذخیره نمی‌کنیم.",
+    "generating": "در حال تولید…",
+    "generateBtn": "تولید آدرس دائمی",
+    "addressCreated": "آدرس دائمی ایجاد شد",
+    "depositAddress": "آدرس واریز دائمی",
+    "bridgeId": "شناسه تراکنش Bridge",
+    "downloadReceipt": "دانلود رسید",
+    "pdfDownloaded": "رسید دانلود شد ✓",
+    "newBridge": "ایجاد Bridge جدید",
+    "errorTitle": "خطای Bridge",
+    "errorGeneric": "آدرس ایجاد نشد. دوباره تلاش کنید.",
+    "receiptTitle": "رسید Bridge دائمی",
+    "pdfPair": "جفت ارز",
+    "pdfDepositAddress": "آدرس واریز",
+    "pdfDestWallet": "کیف پول مقصد",
+    "pdfBridgeId": "شناسه Bridge",
+    "pdfExtraId": "شناسه اضافی / یادداشت",
+    "pdfFooter": "حریم خصوصی اول: MRC GlobalPay غیرامانی است. این اطلاعات در سرورهای ما ذخیره نمی‌شود."
   }
 }

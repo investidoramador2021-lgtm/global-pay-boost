@@ -160,6 +160,27 @@ Deno.serve(async (req) => {
         apiUrl = `${CHANGENOW_BASE}/transactions/${id}/${apiKey}`;
         break;
       }
+      case 'fixed-address': {
+        if (!postBody) return badRequest('POST body required');
+        const { from, to, address } = postBody as Record<string, string>;
+        if (!from || !to || !address) return badRequest('Missing from/to/address');
+        if (!isValidTicker(from as string) || !isValidTicker(to as string)) return badRequest('Invalid ticker');
+        const response = await fetch(`${CHANGENOW_BASE}/transactions/fixed-rate/${apiKey}`, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ from, to, address }),
+        });
+        const parsed = await parseJsonResponse(response);
+        if (!parsed.isJson) {
+          console.error('ChangeNow fixed-address non-JSON:', parsed.text);
+          return jsonResponse({ error: 'Service unavailable.' }, 502);
+        }
+        if (!response.ok) {
+          console.error('ChangeNow fixed-address error:', JSON.stringify(parsed.data));
+          return jsonResponse({ error: parsed.data?.message || 'Service error.' }, response.status);
+        }
+        return jsonResponse(parsed.data);
+      }
       default:
         return badRequest(`Invalid action: ${action}`);
     }

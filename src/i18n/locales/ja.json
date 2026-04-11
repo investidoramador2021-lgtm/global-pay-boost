@@ -77,7 +77,8 @@
     "tabs": {
       "exchange": "交換",
       "buy": "購入",
-      "private": "プライベート"
+      "private": "プライベート",
+      "bridge": "ブリッジ"
     },
     "online": "オンライン",
     "fixedRate": "固定レート",
@@ -278,5 +279,29 @@
     "providerFee": "プロバイダー手数料",
     "invalidFormat": "形式が無効です — 確認して再試行してください",
     "regulatedPaymentGateway": "規制された決済ゲートウェイ"
+  },
+  "bridge": {
+    "trustNotice": "データは保存されません。この領収書が唯一の記録です。",
+    "fromCurrency": "送信元",
+    "toCurrency": "送信先",
+    "destWallet": "送信先ウォレットアドレス",
+    "noStorageNotice": "データは保存されません。この領収書が唯一の記録です。",
+    "generating": "生成中…",
+    "generateBtn": "永久アドレスを生成",
+    "addressCreated": "永久アドレスが作成されました",
+    "depositAddress": "永久入金アドレス",
+    "bridgeId": "ブリッジ取引ID",
+    "downloadReceipt": "領収書をダウンロード",
+    "pdfDownloaded": "ダウンロード完了 ✓",
+    "newBridge": "新しいブリッジを作成",
+    "errorTitle": "ブリッジエラー",
+    "errorGeneric": "アドレスを作成できませんでした。再試行してください。",
+    "receiptTitle": "永久ブリッジ領収書",
+    "pdfPair": "通貨ペア",
+    "pdfDepositAddress": "入金アドレス",
+    "pdfDestWallet": "送信先ウォレット",
+    "pdfBridgeId": "ブリッジID",
+    "pdfExtraId": "メモ / Extra ID",
+    "pdfFooter": "プライバシー優先：MRC GlobalPayはノンカストディアルです。この情報は当社のサーバーに保存されません。この領収書を保管してください。"
   }
 }

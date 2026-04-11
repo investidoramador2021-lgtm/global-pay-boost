@@ -77,7 +77,8 @@
     "tabs": {
       "exchange": "Exchange",
       "buy": "Buy",
-      "private": "Private"
+      "private": "Private",
+      "bridge": "Bridge"
     },
     "online": "Online",
     "fixedRate": "Fixed Rate",
@@ -278,5 +279,29 @@
     "providerFee": "Provider fee",
     "invalidFormat": "Invalid format — please check and try again",
     "regulatedPaymentGateway": "Regulated payment gateway"
+  },
+  "bridge": {
+    "trustNotice": "We do not store your data. This receipt is your only record.",
+    "fromCurrency": "From (Source)",
+    "toCurrency": "To (Destination)",
+    "destWallet": "Destination Wallet Address",
+    "noStorageNotice": "We do not store your data. This receipt is your only record.",
+    "generating": "Generating…",
+    "generateBtn": "Generate Permanent Address",
+    "addressCreated": "Permanent Address Created",
+    "depositAddress": "Permanent Deposit Address",
+    "bridgeId": "Bridge Transaction ID",
+    "downloadReceipt": "Download Receipt",
+    "pdfDownloaded": "Receipt Downloaded ✓",
+    "newBridge": "Create New Bridge",
+    "errorTitle": "Bridge Error",
+    "errorGeneric": "Could not create permanent address. Please try again.",
+    "receiptTitle": "Permanent Bridge Receipt",
+    "pdfPair": "Currency Pair",
+    "pdfDepositAddress": "Deposit Address",
+    "pdfDestWallet": "Destination Wallet",
+    "pdfBridgeId": "Bridge ID",
+    "pdfExtraId": "Extra ID / Memo",
+    "pdfFooter": "Privacy First: MRC GlobalPay is non-custodial. This information is not stored on our servers. Please save this for your records."
   }
 }

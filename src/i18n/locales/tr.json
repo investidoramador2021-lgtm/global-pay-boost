@@ -77,7 +77,8 @@
     "tabs": {
       "exchange": "Takas",
       "buy": "Satin Al",
-      "private": "Gizli"
+      "private": "Gizli",
+      "bridge": "Bridge"
     },
     "online": "Cevrimici",
     "fixedRate": "Sabit Oran",
@@ -278,5 +279,29 @@
     "providerFee": "Sağlayıcı ücreti",
     "invalidFormat": "Geçersiz format — kontrol edip tekrar deneyin",
     "regulatedPaymentGateway": "Düzenlenmiş ödeme ağ geçidi"
+  },
+  "bridge": {
+    "trustNotice": "Verilerinizi saklamıyoruz. Bu makbuz tek kaydınızdır.",
+    "fromCurrency": "Kaynak",
+    "toCurrency": "Hedef",
+    "destWallet": "Hedef Cüzdan Adresi",
+    "noStorageNotice": "Verilerinizi saklamıyoruz. Bu makbuz tek kaydınızdır.",
+    "generating": "Oluşturuluyor…",
+    "generateBtn": "Kalıcı Adres Oluştur",
+    "addressCreated": "Kalıcı Adres Oluşturuldu",
+    "depositAddress": "Kalıcı Yatırma Adresi",
+    "bridgeId": "Bridge İşlem ID",
+    "downloadReceipt": "Makbuzu İndir",
+    "pdfDownloaded": "Makbuz İndirildi ✓",
+    "newBridge": "Yeni Bridge Oluştur",
+    "errorTitle": "Bridge Hatası",
+    "errorGeneric": "Adres oluşturulamadı. Tekrar deneyin.",
+    "receiptTitle": "Kalıcı Bridge Makbuzu",
+    "pdfPair": "Döviz Çifti",
+    "pdfDepositAddress": "Yatırma Adresi",
+    "pdfDestWallet": "Hedef Cüzdan",
+    "pdfBridgeId": "Bridge ID",
+    "pdfExtraId": "Extra ID / Memo",
+    "pdfFooter": "Gizlilik Önceliğimiz: MRC GlobalPay saklama hizmeti sunmaz. Bu bilgiler sunucularımızda saklanmaz."
   }
 }

@@ -77,7 +77,8 @@
     "tabs": {
       "exchange": "Intercambio",
       "buy": "Comprar",
-      "private": "Privado"
+      "private": "Privado",
+      "bridge": "Bridge"
     },
     "online": "En linea",
     "fixedRate": "Tasa Fija",
@@ -278,5 +279,29 @@
     "providerFee": "Comisión del proveedor",
     "invalidFormat": "Formato inválido — revisa e intenta de nuevo",
     "regulatedPaymentGateway": "Pasarela de pago regulada"
+  },
+  "bridge": {
+    "trustNotice": "No almacenamos sus datos. Este recibo es su único registro.",
+    "fromCurrency": "Desde (Origen)",
+    "toCurrency": "Hacia (Destino)",
+    "destWallet": "Dirección de Billetera Destino",
+    "noStorageNotice": "No almacenamos sus datos. Este recibo es su único registro.",
+    "generating": "Generando…",
+    "generateBtn": "Generar Dirección Permanente",
+    "addressCreated": "Dirección Permanente Creada",
+    "depositAddress": "Dirección de Depósito Permanente",
+    "bridgeId": "ID de Transacción Bridge",
+    "downloadReceipt": "Descargar Recibo",
+    "pdfDownloaded": "Recibo Descargado ✓",
+    "newBridge": "Crear Nuevo Bridge",
+    "errorTitle": "Error de Bridge",
+    "errorGeneric": "No se pudo crear la dirección. Inténtalo de nuevo.",
+    "receiptTitle": "Recibo de Bridge Permanente",
+    "pdfPair": "Par de Monedas",
+    "pdfDepositAddress": "Dirección de Depósito",
+    "pdfDestWallet": "Billetera Destino",
+    "pdfBridgeId": "ID de Bridge",
+    "pdfExtraId": "Extra ID / Memo",
+    "pdfFooter": "Privacidad Primero: MRC GlobalPay es no custodial. Esta información no se almacena en nuestros servidores. Guarde este recibo."
   }
 }

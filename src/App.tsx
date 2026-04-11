@@ -48,6 +48,7 @@ const Referral = lazy(() => import("./pages/Referral.tsx"));
 const About = lazy(() => import("./pages/About.tsx"));
 const Unsubscribe = lazy(() => import("./pages/Unsubscribe.tsx"));
 const PrivateTransfer = lazy(() => import("./pages/PrivateTransfer.tsx"));
+const PermanentBridge = lazy(() => import("./pages/PermanentBridge.tsx"));
 const NotFound = lazy(() => import("./pages/NotFound.tsx"));
 
 const queryClient = new QueryClient();
@@ -104,6 +105,7 @@ const AppRoutes = () => (
     <Route path="referral" element={<Referral />} />
     <Route path="about" element={<About />} />
     <Route path="private-transfer" element={<PrivateTransfer />} />
+    <Route path="permanent-bridge" element={<PermanentBridge />} />
     <Route path="unsubscribe" element={<Unsubscribe />} />
   </>
 );

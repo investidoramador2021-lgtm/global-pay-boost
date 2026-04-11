@@ -1,0 +1,51 @@
+import { Helmet } from "react-helmet-async";
+import { useTranslation } from "react-i18next";
+import { usePageUrl } from "@/hooks/use-page-url";
+import SiteHeader from "@/components/SiteHeader";
+import SiteFooter from "@/components/SiteFooter";
+import ExchangeWidget from "@/components/ExchangeWidget";
+
+const PermanentBridge = () => {
+  const { t } = useTranslation();
+  const canonicalUrl = usePageUrl("/permanent-bridge");
+
+  return (
+    <div className="min-h-screen bg-background">
+      <Helmet>
+        <title>Permanent Crypto Bridge — Reusable Deposit Address | MRC GlobalPay</title>
+        <meta name="description" content="Generate a permanent deposit address for recurring crypto conversions. No registration, no data stored. Download your receipt as a PDF." />
+        <link rel="canonical" href={canonicalUrl} />
+        <meta name="robots" content="index, follow" />
+        <script type="application/ld+json">
+          {JSON.stringify({
+            "@context": "https://schema.org",
+            "@type": "WebApplication",
+            "name": "MRC GlobalPay Permanent Bridge",
+            "url": canonicalUrl,
+            "applicationCategory": "FinanceApplication",
+            "operatingSystem": "All",
+            "description": "Generate permanent deposit addresses for recurring crypto-to-crypto conversions with zero data storage.",
+            "provider": {
+              "@type": "FinancialService",
+              "name": "MRC GlobalPay",
+              "url": "https://mrcglobalpay.com"
+            }
+          })}
+        </script>
+      </Helmet>
+      <SiteHeader />
+      <main className="container mx-auto max-w-2xl px-4 py-12">
+        <h1 className="mb-2 text-center font-display text-3xl font-black text-foreground md:text-4xl">
+          Permanent Crypto Bridge
+        </h1>
+        <p className="mb-8 text-center font-body text-muted-foreground">
+          Generate a reusable deposit address for recurring crypto conversions. No registration, no data stored.
+        </p>
+        <ExchangeWidget />
+      </main>
+      <SiteFooter />
+    </div>
+  );
+};
+
+export default PermanentBridge;

@@ -96,3 +96,21 @@ export async function createTransaction(params: CreateTransactionParams): Promis
 export async function getTransactionStatus(id: string): Promise<TransactionStatus> {
   return callChangeNow({ action: 'tx-status', id });
 }
+
+export interface FixedAddressParams {
+  from: string;
+  to: string;
+  address: string;
+}
+
+export interface FixedAddressResult {
+  id: string;
+  payinAddress: string;
+  payinExtraId?: string;
+  fromCurrency: string;
+  toCurrency: string;
+}
+
+export async function createFixedAddress(params: FixedAddressParams): Promise<FixedAddressResult> {
+  return callChangeNow({ action: 'fixed-address' }, 'POST', params);
+}
