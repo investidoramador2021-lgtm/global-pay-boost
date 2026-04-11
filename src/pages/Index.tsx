@@ -68,6 +68,7 @@ const Index = () => {
       opens: "00:00",
       closes: "23:59",
     },
+    feesAndCommissionsSpecification: "Transparent, zero-hidden fees. All costs built into displayed rate.",
     potentialAction: {
       "@type": "TradeAction",
       target: "https://mrcglobalpay.com/#exchange",
