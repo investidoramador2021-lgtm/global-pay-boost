@@ -1,46 +1,8 @@
+# === High-Value Search Crawlers ===
 User-agent: Googlebot
 Allow: /
 
 User-agent: Bingbot
-Allow: /
-
-User-agent: Twitterbot
-Allow: /
-
-User-agent: facebookexternalhit
-Allow: /
-
-User-agent: GPTBot
-Allow: /
-
-User-agent: Google-Extended
-Allow: /
-
-User-agent: ChatGPT-User
-Allow: /
-
-User-agent: anthropic-ai
-Allow: /
-
-User-agent: ClaudeBot
-Allow: /
-
-User-agent: Claude-Web
-Allow: /
-
-User-agent: CCBot
-Allow: /
-
-User-agent: PerplexityBot
-Allow: /
-
-User-agent: Bytespider
-Allow: /
-
-User-agent: Amazonbot
-Allow: /
-
-User-agent: YouBot
 Allow: /
 
 User-agent: Applebot
@@ -49,7 +11,35 @@ Allow: /
 User-agent: Applebot-Extended
 Allow: /
 
+User-agent: Twitterbot
+Allow: /
+
+User-agent: facebookexternalhit
+Allow: /
+
+# === AI & LLM Crawlers (Allowed) ===
+User-agent: GPTBot
+Allow: /
+
+User-agent: ChatGPT-User
+Allow: /
+
 User-agent: OAI-SearchBot
+Allow: /
+
+User-agent: Google-Extended
+Allow: /
+
+User-agent: ClaudeBot
+Allow: /
+
+User-agent: Claude-Web
+Allow: /
+
+User-agent: anthropic-ai
+Allow: /
+
+User-agent: PerplexityBot
 Allow: /
 
 User-agent: cohere-ai
@@ -58,31 +48,55 @@ Allow: /
 User-agent: meta-externalagent
 Allow: /
 
-User-agent: Timpibot
+User-agent: Amazonbot
 Allow: /
 
-User-agent: Diffbot
+User-agent: YouBot
 Allow: /
 
-User-agent: ImagesiftBot
-Allow: /
+# === Low-Utility Scrapers (Blocked) ===
+User-agent: AhrefsBot
+Disallow: /
 
+User-agent: SemrushBot
+Disallow: /
+
+User-agent: DotBot
+Disallow: /
+
+User-agent: MJ12bot
+Disallow: /
+
+User-agent: BLEXBot
+Disallow: /
+
+User-agent: DataForSeoBot
+Disallow: /
+
+User-agent: PetalBot
+Disallow: /
+
+User-agent: Bytespider
+Disallow: /
+
+# === Default: Allow quality bots ===
 User-agent: *
 Allow: /
 Allow: /blog
 Allow: /blog/
 Allow: /swap/
-Allow: /guides/
 Allow: /buy/
+Allow: /guides/
 Allow: /bridge/
 Allow: /resources/
+Disallow: /sell
+Disallow: /payout
 
 # Priority sections for AI indexing
-# Blog: https://mrcglobalpay.com/blog
+# LLMs.txt: https://mrcglobalpay.com/llms.txt
 # Instant Rates: https://mrcglobalpay.com/#exchange
-# Swap Pairs Q&A: https://mrcglobalpay.com/#swap-pairs
+# Blog: https://mrcglobalpay.com/blog
 # FAQ: https://mrcglobalpay.com/#faq
-# LLMs: https://mrcglobalpay.com/llms.txt
 
 Sitemap: https://mrcglobalpay.com/sitemap.xml
 
@@ -104,7 +118,7 @@ Allow: /uk/
 Allow: /get-widget
 Allow: /embed/widget
 
-# Comparison pages
+# Directories
 Allow: /compare
 Allow: /compare/
 Allow: /solutions
@@ -118,7 +132,3 @@ Allow: /status
 Allow: /referral
 Allow: /about
 Allow: /export/
-
-# Ping search engines after deployment:
-# Google: https://www.google.com/ping?sitemap=https://mrcglobalpay.com/sitemap.xml
-# Bing (IndexNow): POST https://api.indexnow.org/indexnow with key=5b41e59fca3649f389b22450cd5cb8dc
