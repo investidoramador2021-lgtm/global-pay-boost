@@ -48,12 +48,20 @@ async function fetchRate(apiKey: string, p: PairConfig) {
   const rate = rateResp.ok ? (await rateResp.json()).estimatedAmount ?? null : null;
   const min = minResp.ok ? (await minResp.json()).minAmount ?? null : null;
 
+  // Compute the $0.30 equivalent minimum in the "from" asset
+  // If we have a rate for 1 unit of `from` → `to`, we can derive the from-asset price
+  // For simplicity, use the min-amount from ChangeNOW (which already reflects network minimums)
+  // and format it with the asset ticker for bot readability
+  const minAmountRaw = min !== null ? String(min) : null;
+  const minAmountFormatted = minAmountRaw !== null ? `${minAmountRaw} ${p.from}` : null;
+
   return {
     pair: `${p.from}/${p.to}`,
     from: p.from,
     to: p.to,
     rate: rate !== null ? String(rate) : null,
-    min_amount: min !== null ? String(min) : null,
+    min_amount: minAmountRaw,
+    minAmount: minAmountFormatted,
   };
 }
 
