@@ -27,6 +27,18 @@ const shadowFaqs = [
     q: "What is the minimum amount to buy crypto with PIX?",
     a: "The minimum purchase via PIX on MRC GlobalPay is just $0.30 USD equivalent in BRL — the lowest in the industry. There is no account creation or identity verification required.",
   },
+  {
+    q: "Can I buy crypto with a SEPA bank transfer in Europe?",
+    a: "Yes. MRC GlobalPay accepts SEPA Instant and standard SEPA transfers for buying Bitcoin, Ethereum, Solana, and 500+ other cryptocurrencies. SEPA payments typically settle in seconds (Instant) or within one business day (standard), and your crypto is delivered directly to your personal wallet. No account required.",
+  },
+  {
+    q: "What are the fees for buying crypto with SEPA?",
+    a: "SEPA transfers to MRC GlobalPay carry no deposit fee from our side. The exchange rate you see on screen is exactly what you receive — there are no hidden charges. Your bank may apply a small SEPA transfer fee (usually under 0.20 EUR), but many European banks offer SEPA transfers for free.",
+  },
+  {
+    q: "Is SEPA a safe way to purchase cryptocurrency?",
+    a: "SEPA is regulated by the European Payments Council and protected by EU banking standards. MRC GlobalPay adds a non-custodial layer — we never hold your funds or crypto. Tokens go directly to your personal wallet. The platform is a FINTRAC-registered Canadian MSB with full regulatory compliance.",
+  },
 ];
 
 export { shadowFaqs };
