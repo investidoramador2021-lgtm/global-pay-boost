@@ -289,7 +289,7 @@ const ExchangeWidget = () => {
   const debounceRef = useRef<ReturnType<typeof setTimeout>>();
 
   // ===== Dual-tab mode: "exchange" (ChangeNOW) vs "buysell" (Guardarian) =====
-  type WidgetMode = "exchange" | "buysell";
+  type WidgetMode = "exchange" | "buysell" | "private";
   type FiatFlow = "buy" | "sell";
   const [widgetMode, setWidgetMode] = useState<WidgetMode>("exchange");
   const [gTradeDirection, setGTradeDirection] = useState<FiatFlow>("buy");
@@ -1629,6 +1629,16 @@ const ExchangeWidget = () => {
                   }`}
                 >
                   <CreditCard className="h-4 w-4" /> Buy
+                </button>
+                <button
+                  onClick={() => { setWidgetMode("private"); }}
+                  className={`flex items-center justify-center gap-1.5 rounded-lg px-3 py-2 font-display text-sm font-semibold transition-all ${
+                    widgetMode === "private"
+                      ? "bg-primary text-primary-foreground shadow-card"
+                      : "text-muted-foreground hover:text-foreground hover:bg-background"
+                  }`}
+                >
+                  <EyeOff className="h-4 w-4" /> Private
                 </button>
               </div>
               <span className="hidden min-[481px]:flex items-center gap-1.5 rounded-full border border-trust/30 bg-trust/10 px-2.5 py-1 font-body text-[10px] font-semibold uppercase tracking-wider text-trust">
