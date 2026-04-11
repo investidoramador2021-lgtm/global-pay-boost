@@ -397,7 +397,7 @@ const PrivateTransferTab = () => {
           <span className="font-body text-xs font-semibold text-foreground">★★★★★</span>
           <span className="font-body text-[11px] text-muted-foreground">{t("widget.trustpilotRating")}</span>
           <span className="text-[10px] text-muted-foreground">|</span>
-          <span className="flex items-center gap-1 font-body text-[10px] text-trust"><Lock className="h-3 w-3" /> Fixed-Rate Guaranteed</span>
+          <span className="flex items-center gap-1 font-body text-[10px] text-trust"><Lock className="h-3 w-3" /> {t("widget.fixedRateGuaranteed")}</span>
         </div>
 
         {/* Popular assets */}
@@ -545,7 +545,7 @@ const PrivateTransferTab = () => {
             <p className="font-body text-xs text-destructive">{t("widget.rateExpired")}</p>
             <Button variant="outline" size="sm" onClick={handleRefreshRate} disabled={refreshingRate}>
               {refreshingRate ? <Loader2 className="mr-1.5 h-3.5 w-3.5 animate-spin" /> : <RefreshCw className="mr-1.5 h-3.5 w-3.5" />}
-              Refresh Rate
+              {t("widget.refreshRate")}
             </Button>
           </div>
         )}
@@ -627,7 +627,7 @@ const PrivateTransferTab = () => {
         )}
 
         <Button className="mt-5 w-full min-h-[48px]" size="lg" onClick={() => { setStep("status"); }}>
-          I've Sent the Deposit →
+          {t("widget.sentDepositTrack")}
         </Button>
       </motion.div>
     );
@@ -664,7 +664,7 @@ const PrivateTransferTab = () => {
             <div className="flex flex-col items-center gap-2 rounded-xl border border-primary/20 bg-primary/[0.06] p-4 text-center">
               <span className="text-sm font-medium text-foreground">{t("widget.howWasExperience")}</span>
               <a href="https://www.trustpilot.com/evaluate/mrcglobalpay.com" target="_blank" rel="noopener noreferrer" className="mt-1 inline-flex items-center gap-2 rounded-lg bg-[#00b67a] px-5 py-2.5 text-sm font-bold text-white transition-opacity hover:opacity-90">
-                Leave us a review ⭐
+                {t("widget.leaveReview")}
               </a>
             </div>
             <div className="flex gap-2">
