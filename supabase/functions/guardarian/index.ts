@@ -68,11 +68,32 @@ function normalizePaymentMethodsFromCurrency(currency: any) {
   return methods;
 }
 
-async function fetchGuardarianJson(path: string, headers: Record<string, string>) {
-  const resp = await fetch(`${GUARDARIAN_BASE}${path}`, { headers });
-  const text = await resp.text();
-  const data = text ? JSON.parse(text) : null;
-  return { resp, text, data };
+async function fetchGuardarianJson(
+  path: string,
+  headers: Record<string, string>,
+  options?: { retryWithoutForwardedFor?: boolean },
+) {
+  const run = async (requestHeaders: Record<string, string>) => {
+    const resp = await fetch(`${GUARDARIAN_BASE}${path}`, { headers: requestHeaders });
+    const text = await resp.text();
+    const data = text ? JSON.parse(text) : null;
+    return { resp, text, data };
+  };
+
+  const first = await run(headers);
+  if (first.resp.ok || !options?.retryWithoutForwardedFor || !headers['x-forwarded-for']) {
+    return first;
+  }
+
+  const retryHeaders = { ...headers };
+  delete retryHeaders['x-forwarded-for'];
+  const retry = await run(retryHeaders);
+  if (retry.resp.ok) {
+    console.warn('Guardarian request recovered after retrying without x-forwarded-for:', path);
+    return retry;
+  }
+
+  return first;
 }
 
 Deno.serve(async (req) => {
@@ -124,7 +145,7 @@ Deno.serve(async (req) => {
         if (!currency) return badRequest('Missing currency', origin);
 
         const endpoint = currencyType === 'CRYPTO' ? '/currencies/crypto' : '/currencies/fiat';
-        const { resp, text, data } = await fetchGuardarianJson(endpoint, headers);
+        const { resp, text, data } = await fetchGuardarianJson(endpoint, headers, { retryWithoutForwardedFor: true });
         if (!resp.ok) {
           console.error('Guardarian payment-methods source error:', text);
           return containedError('Payment methods unavailable', true, { payment_methods: [] }, origin);
@@ -154,7 +175,7 @@ Deno.serve(async (req) => {
           params.set('type', 'reverse');
         }
 
-        const { resp, text, data } = await fetchGuardarianJson(`/estimate?${params.toString()}`, headers);
+        const { resp, text, data } = await fetchGuardarianJson(`/estimate?${params.toString()}`, headers, { retryWithoutForwardedFor: true });
         if (!resp.ok) {
           console.error('Guardarian estimate error:', text);
           return containedError('Estimate unavailable', true, { value: null }, origin);
@@ -176,7 +197,7 @@ Deno.serve(async (req) => {
           pair += `-${String(to_network).toLowerCase()}`;
         }
 
-        const { resp, text, data } = await fetchGuardarianJson(`/market-info/min-max-range/${pair}`, headers);
+        const { resp, text, data } = await fetchGuardarianJson(`/market-info/min-max-range/${pair}`, headers, { retryWithoutForwardedFor: true });
         if (!resp.ok) {
           console.error('Guardarian min-max error:', text);
           return containedError('Min/max unavailable', true, { min: 0, max: 999999 }, origin);
