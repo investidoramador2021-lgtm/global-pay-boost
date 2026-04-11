@@ -71,7 +71,7 @@ function normalizePaymentMethodsFromCurrency(currency: any) {
 async function fetchGuardarianJson(
   path: string,
   headers: Record<string, string>,
-  options?: { retryWithoutForwardedFor?: boolean },
+  options?: { retryWithoutForwardedFor?: boolean; attempts?: number; retryDelayMs?: number },
 ) {
   const run = async (requestHeaders: Record<string, string>) => {
     const resp = await fetch(`${GUARDARIAN_BASE}${path}`, { headers: requestHeaders });
@@ -80,20 +80,33 @@ async function fetchGuardarianJson(
     return { resp, text, data };
   };
 
-  const first = await run(headers);
-  if (first.resp.ok || !options?.retryWithoutForwardedFor || !headers['x-forwarded-for']) {
-    return first;
+  const attempts = Math.max(1, options?.attempts ?? 1);
+  const retryDelayMs = Math.max(0, options?.retryDelayMs ?? 250);
+  let requestHeaders = { ...headers };
+  let lastResult: Awaited<ReturnType<typeof run>> | null = null;
+
+  for (let attempt = 1; attempt <= attempts; attempt++) {
+    const result = await run(requestHeaders);
+    lastResult = result;
+
+    if (result.resp.ok) {
+      return result;
+    }
+
+    const canRetryWithoutForwardedFor =
+      options?.retryWithoutForwardedFor &&
+      Boolean(requestHeaders['x-forwarded-for']);
+
+    if (canRetryWithoutForwardedFor) {
+      delete requestHeaders['x-forwarded-for'];
+    }
+
+    if (attempt < attempts) {
+      await new Promise((resolve) => setTimeout(resolve, retryDelayMs * attempt));
+    }
   }
 
-  const retryHeaders = { ...headers };
-  delete retryHeaders['x-forwarded-for'];
-  const retry = await run(retryHeaders);
-  if (retry.resp.ok) {
-    console.warn('Guardarian request recovered after retrying without x-forwarded-for:', path);
-    return retry;
-  }
-
-  return first;
+  return lastResult!;
 }
 
 Deno.serve(async (req) => {
@@ -175,10 +188,14 @@ Deno.serve(async (req) => {
           params.set('type', 'reverse');
         }
 
-        const { resp, text, data } = await fetchGuardarianJson(`/estimate?${params.toString()}`, headers, { retryWithoutForwardedFor: true });
+        const { resp, text, data } = await fetchGuardarianJson(`/estimate?${params.toString()}`, headers, {
+          retryWithoutForwardedFor: true,
+          attempts: 3,
+          retryDelayMs: 300,
+        });
         if (!resp.ok) {
           console.error('Guardarian estimate error:', text);
-          return containedError('Estimate unavailable', true, { value: null }, origin);
+          return containedError('Estimate unavailable', true, { value: null, details: data }, origin);
         }
 
         return jsonResponse(data, 200, origin);
