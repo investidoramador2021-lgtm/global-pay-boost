@@ -1532,6 +1532,7 @@ const ExchangeWidget = () => {
                     setGBankFields({});
                     setGSepaIban("");
                     setGSepaBic("");
+                    setGSendAmount("100"); // Sensible default for fiat buy (USD)
                     if (guardarianFiat.length) {
                       setGFromCurrency(guardarianFiat.find((c) => c.ticker === "USD") || guardarianFiat[0] || null);
                     }
@@ -1561,6 +1562,7 @@ const ExchangeWidget = () => {
                     setGBankFields({});
                     setGSepaIban("");
                     setGSepaBic("");
+                    setGSendAmount("0.01"); // Sensible default for crypto sell (BTC)
                     if (guardarianCrypto.length) {
                       setGFromCurrency(guardarianCrypto.find((c) => c.ticker === "BTC") || guardarianCrypto[0] || null);
                     }
