@@ -84,7 +84,7 @@ const LanguageSwitcher = () => {
         aria-label="Switch language"
         title="Switch language"
       >
-        <Globe className="h-4 w-4" />
+        <img src={flagUrl(currentLang)} alt="" className="h-5 w-5 rounded-full object-cover" />
         <span className="hidden text-xs font-medium sm:inline">{currentMeta.native}</span>
       </button>
 
@@ -123,9 +123,7 @@ const LanguageSwitcher = () => {
                     isActive ? "bg-primary/5" : ""
                   }`}
                 >
-                  <span className="min-w-[28px] text-xs font-mono uppercase text-muted-foreground">
-                    {lang}
-                  </span>
+                  <img src={flagUrl(lang)} alt="" className="h-5 w-5 rounded-full object-cover shrink-0" />
                   <span className="flex-1">
                     <span className={`text-sm font-medium ${isActive ? "text-primary" : "text-foreground"}`}>
                       {meta.native}
