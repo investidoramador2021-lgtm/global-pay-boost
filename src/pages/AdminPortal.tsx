@@ -81,7 +81,14 @@ const AdminPortal = () => {
         .eq("user_id", user.id);
 
       const isAdmin = roles?.some((r: any) => r.role === "admin");
-      if (!isAdmin) { navigate("/"); return; }
+      if (!isAdmin) {
+        // Sign out non-admin user and show login form
+        await supabase.auth.signOut();
+        setStage("login");
+        setLoading(false);
+        toast({ title: "Access Denied", description: "Admin credentials required.", variant: "destructive" });
+        return;
+      }
 
       // Check MFA - is AAL2 achieved?
       const { data: aalData } = await supabase.auth.mfa.getAuthenticatorAssuranceLevel();
