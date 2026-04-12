@@ -15,6 +15,9 @@ interface InvoiceRequesterConfirmationProps {
   fiatCurrency?: string
   cryptoAmount?: string
   cryptoTicker?: string
+  serviceFeePercent?: string
+  serviceFeeAmount?: string
+  netCryptoAmount?: string
   invoiceId?: string
   statusUrl?: string
   expiresAt?: string
@@ -29,6 +32,9 @@ const InvoiceRequesterConfirmationEmail = ({
   fiatCurrency = 'USD',
   cryptoAmount = '0',
   cryptoTicker = 'BTC',
+  serviceFeePercent = '1.5',
+  serviceFeeAmount = '0',
+  netCryptoAmount = '0',
   invoiceId = '',
   statusUrl = '',
   expiresAt = '',
@@ -59,10 +65,21 @@ const InvoiceRequesterConfirmationEmail = ({
 
           <Hr style={divider} />
 
-          <Text style={detailLabel}>Amount</Text>
+          <Text style={detailLabel}>Requested Amount</Text>
           <Text style={detailValue}>
             {fiatAmount} {fiatCurrency} ≈ {cryptoAmount} {cryptoTicker}
           </Text>
+
+          <Hr style={divider} />
+
+          <Text style={detailLabel}>Service Fee ({serviceFeePercent}%)</Text>
+          <Text style={feeValue}>−{serviceFeeAmount} {cryptoTicker}</Text>
+          <Text style={feeNote}>Deducted from final settlement</Text>
+
+          <Hr style={divider} />
+
+          <Text style={detailLabel}>You Receive</Text>
+          <Text style={netValue}>{netCryptoAmount} {cryptoTicker}</Text>
 
           <Hr style={divider} />
 
@@ -79,6 +96,12 @@ const InvoiceRequesterConfirmationEmail = ({
           <Text style={trackingText}>
             Track this invoice:{' '}
             <Link href={statusUrl} style={trackingLink}>View Status</Link>
+          </Text>
+        </Section>
+
+        <Section style={taxSection}>
+          <Text style={taxText}>
+            MRC GlobalPay does not withhold taxes. Local tax liabilities are the sole responsibility of the client.
           </Text>
         </Section>
 
@@ -110,6 +133,9 @@ export const template = {
     fiatCurrency: 'USD',
     cryptoAmount: '0.00512',
     cryptoTicker: 'BTC',
+    serviceFeePercent: '1.5',
+    serviceFeeAmount: '0.0000768',
+    netCryptoAmount: '0.0050432',
     invoiceId: 'INV-M1X2Y3-AB4C',
     statusUrl: 'https://mrcglobalpay.com/status/abc123',
     expiresAt: 'January 20, 2026',
@@ -126,11 +152,16 @@ const text = { fontSize: '15px', color: '#4a4a5a', lineHeight: '1.6', margin: '0
 const detailsCard = { backgroundColor: '#f8faf9', borderRadius: '12px', padding: '20px 24px', border: '1px solid #e8ece9', marginBottom: '24px' }
 const detailLabel = { fontSize: '12px', fontWeight: '600' as const, color: '#7a7a8a', textTransform: 'uppercase' as const, letterSpacing: '0.5px', margin: '0 0 4px' }
 const detailValue = { fontSize: '16px', fontWeight: '600' as const, color: '#1a1a2e', margin: '0' }
+const feeValue = { fontSize: '14px', fontWeight: '600' as const, color: '#c0392b', margin: '0' }
+const feeNote = { fontSize: '11px', color: '#999', fontStyle: 'italic' as const, margin: '2px 0 0' }
+const netValue = { fontSize: '16px', fontWeight: '700' as const, color: '#0fa968', margin: '0' }
 const expiryValue = { fontSize: '14px', fontWeight: '600' as const, color: '#b8860b', margin: '0' }
 const divider = { borderColor: '#e8ece9', margin: '14px 0' }
 const trackingSection = { textAlign: 'center' as const, marginBottom: '24px' }
 const trackingText = { fontSize: '13px', color: '#7a7a8a', margin: '0' }
 const trackingLink = { color: '#0fa968', textDecoration: 'underline' }
+const taxSection = { backgroundColor: '#f5f5f5', borderRadius: '8px', padding: '12px 16px', marginBottom: '24px' }
+const taxText = { fontSize: '11px', color: '#888', margin: '0', fontStyle: 'italic' as const, textAlign: 'center' as const }
 const footerDivider = { borderColor: '#e8ece9', margin: '24px 0' }
 const footer = { fontSize: '12px', color: '#999999', lineHeight: '1.5', margin: '0 0 8px', textAlign: 'center' as const }
 const footerLink = { color: '#0fa968', textDecoration: 'underline' }
