@@ -12,6 +12,7 @@ import { useToast } from "@/hooks/use-toast";
 import { Shield, Users, Bitcoin, TrendingUp, Check, LogOut, Lock } from "lucide-react";
 import SiteHeader from "@/components/SiteHeader";
 import SiteFooter from "@/components/SiteFooter";
+import ExchangeTracker from "@/components/ExchangeTracker";
 
 interface Partner {
   id: string;
