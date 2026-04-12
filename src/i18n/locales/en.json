@@ -81,7 +81,7 @@
       "buy": "Buy",
       "private": "Private",
       "bridge": "Bridge",
-      "request": "Request"
+      "invoice": "Invoice"
     },
     "online": "Online",
     "fixedRate": "Fixed Rate",
