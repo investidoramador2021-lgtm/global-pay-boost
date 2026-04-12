@@ -63,6 +63,8 @@ const VerifyUpdate = lazy(() => import("./pages/VerifyUpdate.tsx"));
 const VerifyEmail = lazy(() => import("./pages/VerifyEmail.tsx"));
 const AuditInspector = lazy(() => import("./pages/AuditInspector.tsx"));
 const RegulatoryReport = lazy(() => import("./pages/RegulatoryReport.tsx"));
+const InvoicePay = lazy(() => import("./pages/InvoicePay.tsx"));
+const InvoiceStatus = lazy(() => import("./pages/InvoiceStatus.tsx"));
 const NotFound = lazy(() => import("./pages/NotFound.tsx"));
 
 const queryClient = new QueryClient();
@@ -158,6 +160,9 @@ const App = () => (
                   ))}
                   {/* Standalone embed widget (no header/footer/nav) */}
                   <Route path="/embed/widget" element={<EmbedWidget />} />
+                  {/* Invoice public pages — no auth required */}
+                  <Route path="/pay/:token" element={<InvoicePay />} />
+                  <Route path="/status/:token" element={<InvoiceStatus />} />
                   {/* Admin Inspector — MFA-protected, hidden */}
                   <Route path="/admin/audit-inspector" element={<AuditInspector />} />
                   {/* Regulatory Report — read-only printable page */}

@@ -10,7 +10,11 @@ export interface TemplateEntry {
 }
 
 import { template as swapConfirmation } from './swap-confirmation.tsx'
+import { template as invoiceToPayer } from './invoice-to-payer.tsx'
+import { template as invoiceRequesterConfirmation } from './invoice-requester-confirmation.tsx'
 
 export const TEMPLATES: Record<string, TemplateEntry> = {
   'swap-confirmation': swapConfirmation,
+  'invoice-to-payer': invoiceToPayer,
+  'invoice-requester-confirmation': invoiceRequesterConfirmation,
 }
