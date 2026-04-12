@@ -234,7 +234,7 @@ async function sendViaSMTP(opts: {
   })
 
   const message: Record<string, unknown> = {
-    from: `${opts.fromName} <${opts.from}>`,
+    from: `${opts.fromName} <${smtpUser}>`,
     to: opts.to,
     subject: opts.subject,
     attachment: [{ data: opts.html, alternative: true }],
@@ -291,14 +291,14 @@ Deno.serve(async (req) => {
 
     let html: string
     let subject: string
-    let persona: { from: string; name: string }
+    let personaName: string
     let bcc: string | undefined
     const l = getLang(lang)
 
     switch (type) {
       case 'receipt': {
         if (!recipientEmail) throw new Error('recipientEmail required for receipts')
-        persona = PERSONAS['no-reply']
+        personaName = getPersona(type).name
         subject = `${l.receiptTitle} — MRC GlobalPay`
         html = renderReceipt({
           transactionId, fromAmount, fromCurrency, toCurrency,
@@ -308,7 +308,7 @@ Deno.serve(async (req) => {
       }
 
       case 'compliance': {
-        persona = PERSONAS.compliance
+        personaName = getPersona(type).name
         subject = l.complianceSubject
         html = renderComplianceAlert({
           transactionId, fromAmount, fromCurrency, toCurrency,
@@ -320,7 +320,7 @@ Deno.serve(async (req) => {
       }
 
       case 'system-error': {
-        persona = PERSONAS.support
+        personaName = getPersona(type).name
         subject = l.errorSubject
         html = renderSystemError({
           transactionId: transactionId || 'N/A',
@@ -343,8 +343,8 @@ Deno.serve(async (req) => {
         : recipientEmail
 
     await sendViaSMTP({
-      from: persona.from,
-      fromName: persona.name,
+      from: Deno.env.get('SMTP_USER')!,
+      fromName: personaName,
       to: toAddress,
       subject,
       html,
