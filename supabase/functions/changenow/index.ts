@@ -167,11 +167,30 @@ Deno.serve(async (req) => {
         const dateFrom = params.dateFrom || '';
         const dateTo = params.dateTo || '';
         const status = params.status || '';
-        let txUrl = `${CHANGENOW_BASE}/transactions/${privateKey}?limit=${limit}&offset=${offset}`;
+        const from = params.from || '';
+        const to = params.to || '';
+
+        // Try v2 API first (header-based auth)
+        let txUrl = `https://api.changenow.io/v2/exchanges?limit=${limit}&offset=${offset}`;
         if (dateFrom) txUrl += `&dateFrom=${dateFrom}`;
         if (dateTo) txUrl += `&dateTo=${dateTo}`;
         if (status) txUrl += `&status=${status}`;
-        const txResp = await fetch(txUrl);
+        if (from) txUrl += `&fromCurrency=${from}`;
+        if (to) txUrl += `&toCurrency=${to}`;
+
+        let txResp = await fetch(txUrl, {
+          headers: { 'x-changenow-api-key': privateKey! },
+        });
+
+        // Fallback to v1 with private key if v2 fails
+        if (!txResp.ok) {
+          let v1Url = `${CHANGENOW_BASE}/transactions/${privateKey}?limit=${limit}&offset=${offset}`;
+          if (dateFrom) v1Url += `&dateFrom=${dateFrom}`;
+          if (dateTo) v1Url += `&dateTo=${dateTo}`;
+          if (status) v1Url += `&status=${status}`;
+          txResp = await fetch(v1Url);
+        }
+
         const txParsed = await parseJsonResponse(txResp);
         if (!txParsed.isJson) {
           console.error('ChangeNow list-transactions non-JSON:', txParsed.text);
