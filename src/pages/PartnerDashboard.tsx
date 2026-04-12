@@ -43,9 +43,21 @@ interface PartnerProfile {
   referral_code: string;
 }
 
+interface PartnerTx {
+  id: string;
+  partner_id: string;
+  asset: string;
+  volume: number;
+  commission_btc: number;
+  completed_at: string;
+  is_paid: boolean;
+  paid_at: string | null;
+}
+
 const PartnerDashboard = () => {
   const [profile, setProfile] = useState<PartnerProfile | null>(null);
   const [swaps, setSwaps] = useState<SwapRow[]>([]);
+  const [commissions, setCommissions] = useState<PartnerTx[]>([]);
   const [loading, setLoading] = useState(true);
   const [statusLoading, setStatusLoading] = useState(false);
   const [newPassword, setNewPassword] = useState("");
@@ -127,6 +139,15 @@ const PartnerDashboard = () => {
 
       const rows = (swapData || []) as SwapRow[];
       setSwaps(rows);
+
+      // Load commission records for this partner
+      const { data: commData } = await supabase
+        .from("partner_transactions")
+        .select("*")
+        .eq("partner_id", (p as PartnerProfile).id)
+        .order("completed_at", { ascending: false });
+      setCommissions((commData || []) as PartnerTx[]);
+
       setLoading(false);
       fetchLiveStatuses(rows);
     };
