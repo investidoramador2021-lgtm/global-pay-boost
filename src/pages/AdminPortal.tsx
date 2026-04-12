@@ -607,8 +607,8 @@ const AdminPortal = () => {
                   <CardContent className="p-5 flex items-center gap-3">
                     <DollarSign className="w-5 h-5 text-primary" />
                     <div>
-                      <p className="text-xs text-muted-foreground">Est. Profit (0.5%)</p>
-                      <p className="text-2xl font-bold text-foreground">${totalProfit.toLocaleString("en-US", { minimumFractionDigits: 2 })}</p>
+                      <p className="text-xs text-muted-foreground">Commission (0.1%)</p>
+                      <p className="text-2xl font-bold text-foreground">${totalCommission.toLocaleString("en-US", { minimumFractionDigits: 2 })}</p>
                     </div>
                   </CardContent>
                 </Card>
