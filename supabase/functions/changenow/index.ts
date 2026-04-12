@@ -160,6 +160,28 @@ Deno.serve(async (req) => {
         apiUrl = `${CHANGENOW_BASE}/transactions/${id}/${apiKey}`;
         break;
       }
+      case 'list-transactions': {
+        const limit = params.limit || '100';
+        const offset = params.offset || '0';
+        const dateFrom = params.dateFrom || '';
+        const dateTo = params.dateTo || '';
+        const status = params.status || '';
+        let txUrl = `${CHANGENOW_BASE}/transactions/${apiKey}?limit=${limit}&offset=${offset}`;
+        if (dateFrom) txUrl += `&dateFrom=${dateFrom}`;
+        if (dateTo) txUrl += `&dateTo=${dateTo}`;
+        if (status) txUrl += `&status=${status}`;
+        const txResp = await fetch(txUrl);
+        const txParsed = await parseJsonResponse(txResp);
+        if (!txParsed.isJson) {
+          console.error('ChangeNow list-transactions non-JSON:', txParsed.text);
+          return jsonResponse({ error: 'Service unavailable.' }, 502);
+        }
+        if (!txResp.ok) {
+          console.error('ChangeNow list-transactions error:', JSON.stringify(txParsed.data));
+          return jsonResponse({ error: txParsed.data?.message || 'Service error.' }, txResp.status);
+        }
+        return jsonResponse(txParsed.data);
+      }
       case 'fixed-address': {
         if (!postBody) return badRequest('POST body required');
         const { from, to, address } = postBody as Record<string, string>;
