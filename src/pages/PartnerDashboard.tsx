@@ -305,10 +305,7 @@ const PartnerDashboard = () => {
               <CardHeader><CardTitle className="text-lg">Support</CardTitle></CardHeader>
               <CardContent>
                 <p className="text-sm text-muted-foreground">
-                  To update your payout wallet, contact our desk at:{" "}
-                  <a href="mailto:partners@mrc-pay.com" className="text-primary hover:underline font-medium">
-                    partners@mrc-pay.com
-                  </a>
+                  To update your payout wallet, contact our support desk through your partner dashboard or reply to any partner correspondence.
                 </p>
               </CardContent>
             </Card>

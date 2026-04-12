@@ -55,7 +55,7 @@ const features = [
   {
     title: "Dedicated Support",
     description:
-      "Wallet updates are handled manually via partners@mrc-pay.com for maximum security.",
+      "Wallet updates are handled manually via our secure support channel for maximum security.",
     gradient: "from-emerald-500/20 to-teal-500/20",
     icon: (
       <svg className="w-5 h-5 text-foreground" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor">
