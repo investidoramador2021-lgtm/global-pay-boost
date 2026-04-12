@@ -72,7 +72,7 @@ const lineStyles = [
 
 const DynamicExplainer = ({ activeTab, onCtaClick }: Props) => {
   const { t } = useTranslation();
-  const mode: DisplayMode = activeTab === "exchange" || activeTab === "request" ? "bridge" : activeTab;
+  const mode: DisplayMode = (activeTab === "exchange" || activeTab === "request") ? "bridge" : activeTab;
   const [activeStep, setActiveStep] = useState(0);
 
   const config = modeConfig[mode];
@@ -87,6 +87,9 @@ const DynamicExplainer = ({ activeTab, onCtaClick }: Props) => {
       })),
     [prefix, t]
   );
+
+  // Hide entirely for exchange and request tabs
+  if (activeTab === "exchange" || activeTab === "request") return null;
 
   return (
     <section className="relative overflow-hidden bg-background pb-16 pt-4 sm:pb-24 sm:pt-8 lg:pb-28">
