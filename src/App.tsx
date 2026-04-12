@@ -1,5 +1,6 @@
 import { lazy, Suspense } from "react";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+import SupportChatWidget from "@/components/SupportChatWidget";
 import { BrowserRouter, Route, Routes, Navigate } from "react-router-dom";
 import { HelmetProvider } from "react-helmet-async";
 import { Toaster as Sonner } from "@/components/ui/sonner";
@@ -163,6 +164,7 @@ const App = () => (
               </Suspense>
             </div>
             <MobileBottomNav />
+            <SupportChatWidget />
           </BrowserRouter>
         </TooltipProvider>
       </QueryClientProvider>

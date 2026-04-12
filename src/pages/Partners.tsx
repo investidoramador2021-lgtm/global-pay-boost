@@ -282,27 +282,27 @@ const Partners = () => {
 
                     <Button
                       type="submit"
-                      className="w-full gap-2.5 h-14 text-base font-bold rounded-xl mt-3 bg-gradient-to-r from-primary to-primary/80 hover:from-primary/90 hover:to-primary shadow-[0_4px_20px_-4px_hsl(var(--primary)/0.5)] hover:shadow-[0_6px_28px_-4px_hsl(var(--primary)/0.6)] transition-all duration-200"
                       size="lg"
                       disabled={loading || !canSubmit}
+                      className="w-full gap-2.5 h-14 text-lg font-bold rounded-xl mt-4 border-0 text-primary-foreground bg-primary hover:bg-primary/90 shadow-[0_6px_24px_-4px_hsl(var(--primary)/0.55)] hover:shadow-[0_8px_32px_-4px_hsl(var(--primary)/0.7)] transition-all duration-200 uppercase tracking-wide"
                     >
-                      {loading ? "Processing…" : isLogin ? "Sign In to Dashboard" : "Create Partner Account"}
-                      <ArrowRight className="w-5 h-5" />
+                      {loading ? "Processing…" : isLogin ? "→ Sign In to Dashboard" : "→ Create Partner Account"}
                     </Button>
                   </form>
 
-                  {/* Toggle login / register */}
-                  <div className="mt-6 pt-5 border-t border-border/30 text-center space-y-2">
-                    <p className="text-xs text-muted-foreground/60">
+                  {/* Toggle login / register — highly visible */}
+                  <div className="mt-6 pt-5 border-t border-border/30 text-center space-y-3">
+                    <p className="text-sm text-muted-foreground">
                       {isLogin ? "Don't have a partner account yet?" : "Already registered as a partner?"}
                     </p>
-                    <button
+                    <Button
                       type="button"
+                      variant="outline"
                       onClick={() => setIsLogin(!isLogin)}
-                      className="inline-flex items-center gap-1.5 text-sm font-semibold text-primary hover:text-primary/80 transition-colors"
+                      className="w-full h-12 text-base font-semibold rounded-xl border-primary/40 text-primary hover:bg-primary/10 hover:border-primary/60 transition-all"
                     >
-                      {isLogin ? "Register as a New Partner →" : "Sign In to Your Dashboard →"}
-                    </button>
+                      {isLogin ? "Register as a New Partner" : "Sign In to Your Dashboard"}
+                    </Button>
                   </div>
                 </div>
               </div>

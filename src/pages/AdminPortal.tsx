@@ -9,7 +9,7 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { useToast } from "@/hooks/use-toast";
-import { Shield, Users, Bitcoin, TrendingUp, Check, LogOut, Lock } from "lucide-react";
+import { Shield, Users, Bitcoin, TrendingUp, Check, LogOut, Lock, MessageCircle } from "lucide-react";
 import SiteHeader from "@/components/SiteHeader";
 import SiteFooter from "@/components/SiteFooter";
 import ExchangeTracker from "@/components/ExchangeTracker";
@@ -36,6 +36,16 @@ interface Tx {
 
 type Stage = "login" | "mfa-enroll" | "mfa-verify" | "dashboard";
 
+interface ChatLog {
+  id: string;
+  session_id: string;
+  persona_name: string;
+  user_message: string;
+  ai_response: string;
+  page_url: string | null;
+  created_at: string;
+}
+
 const AdminPortal = () => {
   // Auth state
   const [stage, setStage] = useState<Stage>("login");
@@ -55,7 +65,8 @@ const AdminPortal = () => {
   const [partners, setPartners] = useState<Partner[]>([]);
   const [transactions, setTransactions] = useState<Tx[]>([]);
   const [tab, setTab] = useState("current");
-  const [adminTab, setAdminTab] = useState<"partners" | "exchanges">("exchanges");
+  const [adminTab, setAdminTab] = useState<"partners" | "exchanges" | "support">("exchanges");
+  const [chatLogs, setChatLogs] = useState<ChatLog[]>([]);
   const navigate = useNavigate();
   const { toast } = useToast();
 
@@ -68,6 +79,14 @@ const AdminPortal = () => {
       .select("*")
       .order("completed_at", { ascending: false });
     setTransactions((txs || []) as Tx[]);
+
+    const { data: logs } = await supabase
+      .from("support_chat_logs" as any)
+      .select("*")
+      .order("created_at", { ascending: false })
+      .limit(200);
+    setChatLogs((logs as unknown as ChatLog[]) || []);
+
     setLoading(false);
   }, []);
 
@@ -521,6 +540,9 @@ const AdminPortal = () => {
               <TabsTrigger value="partners" className="gap-2 data-[state=active]:bg-primary/10">
                 <Users className="w-4 h-4" /> Partner Management
               </TabsTrigger>
+              <TabsTrigger value="support" className="gap-2 data-[state=active]:bg-primary/10">
+                <MessageCircle className="w-4 h-4" /> Support Logs ({chatLogs.length})
+              </TabsTrigger>
             </TabsList>
 
             <TabsContent value="exchanges" className="mt-6">
@@ -631,6 +653,88 @@ const AdminPortal = () => {
                       )}
                     </TabsContent>
                   </Tabs>
+                </CardContent>
+              </Card>
+            </TabsContent>
+
+            <TabsContent value="support" className="mt-6 space-y-6">
+              <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
+                <Card className="border-border/40 bg-card/40 backdrop-blur-sm">
+                  <CardContent className="p-5 flex items-center gap-3">
+                    <MessageCircle className="w-5 h-5 text-primary" />
+                    <div>
+                      <p className="text-xs text-muted-foreground">Total Questions</p>
+                      <p className="text-2xl font-bold text-foreground">{chatLogs.length}</p>
+                    </div>
+                  </CardContent>
+                </Card>
+                <Card className="border-border/40 bg-card/40 backdrop-blur-sm">
+                  <CardContent className="p-5 flex items-center gap-3">
+                    <Users className="w-5 h-5 text-primary" />
+                    <div>
+                      <p className="text-xs text-muted-foreground">Unique Sessions</p>
+                      <p className="text-2xl font-bold text-foreground">
+                        {new Set(chatLogs.map((l) => l.session_id)).size}
+                      </p>
+                    </div>
+                  </CardContent>
+                </Card>
+                <Card className="border-border/40 bg-card/40 backdrop-blur-sm">
+                  <CardContent className="p-5 flex items-center gap-3">
+                    <TrendingUp className="w-5 h-5 text-primary" />
+                    <div>
+                      <p className="text-xs text-muted-foreground">Today</p>
+                      <p className="text-2xl font-bold text-foreground">
+                        {chatLogs.filter((l) => new Date(l.created_at).toDateString() === new Date().toDateString()).length}
+                      </p>
+                    </div>
+                  </CardContent>
+                </Card>
+              </div>
+
+              <Card className="border-border/40 bg-card/40 backdrop-blur-sm">
+                <CardHeader>
+                  <CardTitle className="text-lg flex items-center gap-2">
+                    <MessageCircle className="w-5 h-5" /> Customer Questions
+                  </CardTitle>
+                </CardHeader>
+                <CardContent>
+                  <Table>
+                    <TableHeader>
+                      <TableRow>
+                        <TableHead>Time</TableHead>
+                        <TableHead>Agent</TableHead>
+                        <TableHead>Customer Question</TableHead>
+                        <TableHead>AI Response</TableHead>
+                        <TableHead>Page</TableHead>
+                      </TableRow>
+                    </TableHeader>
+                    <TableBody>
+                      {chatLogs.length === 0 ? (
+                        <TableRow>
+                          <TableCell colSpan={5} className="text-center text-muted-foreground py-8">
+                            No support conversations yet.
+                          </TableCell>
+                        </TableRow>
+                      ) : (
+                        chatLogs.map((log) => (
+                          <TableRow key={log.id}>
+                            <TableCell className="text-xs text-muted-foreground whitespace-nowrap">
+                              {new Date(log.created_at).toLocaleString()}
+                            </TableCell>
+                            <TableCell className="text-sm whitespace-nowrap">{log.persona_name}</TableCell>
+                            <TableCell className="max-w-[250px]">
+                              <p className="text-sm truncate" title={log.user_message}>{log.user_message}</p>
+                            </TableCell>
+                            <TableCell className="max-w-[300px]">
+                              <p className="text-xs text-muted-foreground truncate" title={log.ai_response}>{log.ai_response}</p>
+                            </TableCell>
+                            <TableCell className="text-xs text-muted-foreground">{log.page_url || "/"}</TableCell>
+                          </TableRow>
+                        ))
+                      )}
+                    </TableBody>
+                  </Table>
                 </CardContent>
               </Card>
             </TabsContent>
