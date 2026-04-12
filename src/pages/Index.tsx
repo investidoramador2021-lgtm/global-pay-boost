@@ -1,4 +1,4 @@
-import { useCallback } from "react";
+import { useCallback, useState } from "react";
 import { usePartnerRef } from "@/hooks/use-partner-ref";
 import { useTranslation } from "react-i18next";
 import { useLocation } from "react-router-dom";
@@ -31,6 +31,7 @@ const Index = () => {
   const lang = getLangFromPath(pathname);
   const homeUrl = `https://mrcglobalpay.com${langPath(lang, "/")}`;
   const { t } = useTranslation();
+  const [activeWidgetTab, setActiveWidgetTab] = useState<string>("exchange");
   usePartnerRef();
   const financialServiceJsonLd = {
     "@context": "https://schema.org",
