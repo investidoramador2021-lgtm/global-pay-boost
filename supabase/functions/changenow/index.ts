@@ -8,6 +8,27 @@ const corsHeaders = {
 
 const CHANGENOW_BASE = 'https://api.changenow.io/v1';
 
+// Fire-and-forget Telegram notification
+async function notifyTelegram(type: 'swap' | 'alert' | 'error', message: string) {
+  try {
+    const botToken = Deno.env.get('TELEGRAM_BOT_TOKEN');
+    const chatId = Deno.env.get('TELEGRAM_CHAT_ID');
+    if (!botToken || !chatId) return;
+    await fetch(`https://api.telegram.org/bot${botToken}/sendMessage`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        chat_id: chatId,
+        text: message,
+        parse_mode: 'HTML',
+        disable_notification: type === 'swap',
+      }),
+    });
+  } catch (e) {
+    console.error('Telegram notify failed:', e);
+  }
+}
+
 // Validation helpers
 const TICKER_RE = /^[a-z0-9]{1,20}$/i;
 const TX_ID_RE = /^[a-zA-Z0-9_-]{1,64}$/;
@@ -152,6 +173,19 @@ Deno.serve(async (req) => {
           console.error('ChangeNow transaction error:', JSON.stringify(parsed.data));
           return jsonResponse({ error: 'Exchange service error. Please try again.' }, response.status);
         }
+        // Notify Telegram
+        const txData = parsed.data;
+        const amount = postBody?.amount || txData?.amount || '?';
+        const fromC = (postBody?.from as string || txData?.fromCurrency || '?').toUpperCase();
+        const toC = (postBody?.to as string || txData?.toCurrency || '?').toUpperCase();
+        const amountNum = Number(amount);
+        const isHighValue = amountNum >= 10000;
+        const telegramMsg = `[MRC GlobalPay] ✅ New Swap: ${amount} ${fromC} ➔ ${toC}\nStatus: ChangeNOW Forensic Verified\nID: ${txData?.id || 'N/A'}`;
+        notifyTelegram(isHighValue ? 'alert' : 'swap', isHighValue
+          ? `🚨 HIGH VALUE\n${telegramMsg}`
+          : telegramMsg
+        );
+
         return jsonResponse(parsed.data);
       }
       case 'tx-status': {
@@ -262,6 +296,7 @@ Deno.serve(async (req) => {
   } catch (error: unknown) {
     const msg = error instanceof Error ? error.message : 'Unknown error';
     console.error('ChangeNow API error:', msg);
+    notifyTelegram('error', `🚨 [MRC GlobalPay] API Error\n${msg}`);
     return new Response(JSON.stringify({ error: msg }), {
       status: 500,
       headers: { ...corsHeaders, 'Content-Type': 'application/json' },
