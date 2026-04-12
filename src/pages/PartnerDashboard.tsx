@@ -8,7 +8,10 @@ import { Label } from "@/components/ui/label";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
 import { useToast } from "@/hooks/use-toast";
-import { Shield, Copy, LogOut, Bitcoin, TrendingUp } from "lucide-react";
+import { Copy, LogOut, Bitcoin, TrendingUp } from "lucide-react";
+import SiteHeader from "@/components/SiteHeader";
+import SiteFooter from "@/components/SiteFooter";
+import MobileBottomNav from "@/components/MobileBottomNav";
 
 interface PartnerProfile {
   id: string;
@@ -86,7 +89,13 @@ const PartnerDashboard = () => {
     navigate("/partners");
   };
 
-  if (loading) return <div className="min-h-screen bg-background flex items-center justify-center text-muted-foreground">Loading…</div>;
+  if (loading) {
+    return (
+      <div className="min-h-screen bg-background flex items-center justify-center text-muted-foreground">
+        Loading…
+      </div>
+    );
+  }
 
   return (
     <>
@@ -94,38 +103,46 @@ const PartnerDashboard = () => {
         <title>Partner Dashboard | MRC GlobalPay</title>
         <meta name="robots" content="noindex" />
       </Helmet>
-      <div className="min-h-screen bg-background">
-        {/* Header */}
-        <header className="border-b border-border/50 px-4 py-4">
-          <div className="max-w-5xl mx-auto flex items-center justify-between">
-            <div className="flex items-center gap-3">
-              <Shield className="w-5 h-5 text-primary" />
-              <div>
-                <p className="font-semibold text-foreground">{profile?.first_name} {profile?.last_name}</p>
-                <p className="text-xs text-muted-foreground">{userEmail}</p>
-              </div>
+
+      <SiteHeader />
+
+      <div className="relative min-h-screen bg-background overflow-hidden">
+        {/* Ambient blurs */}
+        <div className="pointer-events-none absolute inset-0">
+          <div className="absolute -top-40 -left-40 w-[500px] h-[500px] rounded-full bg-primary/8 blur-[120px]" />
+          <div className="absolute bottom-0 right-0 w-[400px] h-[400px] rounded-full bg-primary/5 blur-[100px]" />
+        </div>
+
+        <main className="relative z-10 max-w-5xl mx-auto px-4 sm:px-6 pt-28 pb-20 space-y-8">
+          {/* Profile header */}
+          <div className="flex items-center justify-between">
+            <div>
+              <h1 className="text-2xl font-bold text-foreground">
+                {profile?.first_name} {profile?.last_name}
+              </h1>
+              <p className="text-sm text-muted-foreground">{userEmail}</p>
             </div>
             <Button variant="ghost" size="sm" onClick={handleLogout} className="gap-2">
               <LogOut className="w-4 h-4" /> Sign Out
             </Button>
           </div>
-        </header>
 
-        <main className="max-w-5xl mx-auto px-4 py-8 space-y-8">
           {/* Stats */}
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-            <Card className="border-border/50">
+            <Card className="border-border/40 bg-card/40 backdrop-blur-sm">
               <CardContent className="p-6 flex items-center gap-4">
                 <div className="w-12 h-12 rounded-xl bg-primary/10 flex items-center justify-center">
                   <TrendingUp className="w-6 h-6 text-primary" />
                 </div>
                 <div>
                   <p className="text-sm text-muted-foreground">Total Volume Referred</p>
-                  <p className="text-3xl font-bold text-foreground">${totalVolume.toLocaleString("en-US", { minimumFractionDigits: 2 })}</p>
+                  <p className="text-3xl font-bold text-foreground">
+                    ${totalVolume.toLocaleString("en-US", { minimumFractionDigits: 2 })}
+                  </p>
                 </div>
               </CardContent>
             </Card>
-            <Card className="border-border/50">
+            <Card className="border-border/40 bg-card/40 backdrop-blur-sm">
               <CardContent className="p-6 flex items-center gap-4">
                 <div className="w-12 h-12 rounded-xl bg-primary/10 flex items-center justify-center">
                   <Bitcoin className="w-6 h-6 text-primary" />
@@ -139,13 +156,13 @@ const PartnerDashboard = () => {
           </div>
 
           {/* Account Details */}
-          <Card className="border-border/50">
+          <Card className="border-border/40 bg-card/40 backdrop-blur-sm">
             <CardHeader><CardTitle className="text-lg">Account Details</CardTitle></CardHeader>
             <CardContent className="space-y-4">
               <div>
                 <Label className="text-muted-foreground text-xs">Unique Referral Link</Label>
                 <div className="flex items-center gap-2 mt-1">
-                  <Input value={referralLink} readOnly className="font-mono text-sm" />
+                  <Input value={referralLink} readOnly className="font-mono text-sm bg-background/50 border-border/50" />
                   <Button variant="outline" size="icon" onClick={copyLink}><Copy className="w-4 h-4" /></Button>
                 </div>
               </div>
@@ -156,18 +173,19 @@ const PartnerDashboard = () => {
             </CardContent>
           </Card>
 
-          {/* Transactions */}
-          <Card className="border-border/50">
+          {/* Completed Transactions */}
+          <Card className="border-border/40 bg-card/40 backdrop-blur-sm">
             <CardHeader><CardTitle className="text-lg">Completed Transactions</CardTitle></CardHeader>
             <CardContent>
               {transactions.length === 0 ? (
-                <p className="text-sm text-muted-foreground py-8 text-center">No transactions yet. Share your referral link to start earning.</p>
+                <p className="text-sm text-muted-foreground py-8 text-center">
+                  No transactions yet. Share your referral link to start earning.
+                </p>
               ) : (
                 <Table>
                   <TableHeader>
                     <TableRow>
                       <TableHead>Date</TableHead>
-                      <TableHead>Asset</TableHead>
                       <TableHead className="text-right">Volume</TableHead>
                       <TableHead className="text-right">BTC Earned</TableHead>
                     </TableRow>
@@ -175,10 +193,15 @@ const PartnerDashboard = () => {
                   <TableBody>
                     {transactions.map((tx) => (
                       <TableRow key={tx.id}>
-                        <TableCell className="text-muted-foreground">{new Date(tx.completed_at).toLocaleDateString()}</TableCell>
-                        <TableCell className="font-medium">{tx.asset}</TableCell>
-                        <TableCell className="text-right">${Number(tx.volume).toLocaleString("en-US", { minimumFractionDigits: 2 })}</TableCell>
-                        <TableCell className="text-right font-mono">{Number(tx.commission_btc).toFixed(8)}</TableCell>
+                        <TableCell className="text-muted-foreground">
+                          {new Date(tx.completed_at).toLocaleDateString()}
+                        </TableCell>
+                        <TableCell className="text-right">
+                          ${Number(tx.volume).toLocaleString("en-US", { minimumFractionDigits: 2 })}
+                        </TableCell>
+                        <TableCell className="text-right font-mono">
+                          {Number(tx.commission_btc).toFixed(8)}
+                        </TableCell>
                       </TableRow>
                     ))}
                   </TableBody>
@@ -189,27 +212,42 @@ const PartnerDashboard = () => {
 
           {/* Security & Support */}
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-            <Card className="border-border/50">
+            <Card className="border-border/40 bg-card/40 backdrop-blur-sm">
               <CardHeader><CardTitle className="text-lg">Change Password</CardTitle></CardHeader>
               <CardContent>
                 <form onSubmit={handleChangePassword} className="space-y-3">
-                  <Input type="password" placeholder="New password" value={newPassword} onChange={(e) => setNewPassword(e.target.value)} required minLength={8} />
-                  <Button type="submit" disabled={changingPw} className="w-full">{changingPw ? "Updating…" : "Update Password"}</Button>
+                  <Input
+                    type="password"
+                    placeholder="New password"
+                    value={newPassword}
+                    onChange={(e) => setNewPassword(e.target.value)}
+                    required
+                    minLength={8}
+                    className="bg-background/50 border-border/50"
+                  />
+                  <Button type="submit" disabled={changingPw} className="w-full">
+                    {changingPw ? "Updating…" : "Update Password"}
+                  </Button>
                 </form>
               </CardContent>
             </Card>
-            <Card className="border-border/50">
+            <Card className="border-border/40 bg-card/40 backdrop-blur-sm">
               <CardHeader><CardTitle className="text-lg">Support</CardTitle></CardHeader>
               <CardContent>
                 <p className="text-sm text-muted-foreground">
-                  To update your wallet address, contact our desk at:{" "}
-                  <a href="mailto:partners@mrc-pay.com" className="text-primary hover:underline font-medium">partners@mrc-pay.com</a>
+                  To update your payout wallet, contact our desk at:{" "}
+                  <a href="mailto:partners@mrc-pay.com" className="text-primary hover:underline font-medium">
+                    partners@mrc-pay.com
+                  </a>
                 </p>
               </CardContent>
             </Card>
           </div>
         </main>
       </div>
+
+      <SiteFooter />
+      <MobileBottomNav />
     </>
   );
 };
