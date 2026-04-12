@@ -546,5 +546,18 @@
       "step3Title": "Precise Settlement",
       "step3Desc": "Your client pays in crypto; our engine delivers the exact fiat-equivalent to your wallet. Both parties receive signed digital receipts."
     }
+  },
+  "address": {
+    "placeholder": "Paste your {{ticker}} destination address",
+    "placeholderGeneric": "Paste your destination address",
+    "paste": "Paste",
+    "validAddress": "Valid {{network}} address",
+    "invalidAddress": "Invalid address format for this network",
+    "mismatchError": "This is a {{detected}} address. Please provide a valid {{expected}} address to avoid loss of funds.",
+    "networkEvm": "Ethereum / EVM",
+    "networkBtc": "Bitcoin",
+    "networkSol": "Solana",
+    "networkTron": "TRON (TRC20)",
+    "networkUnknown": "this network"
   }
 }
