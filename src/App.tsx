@@ -61,6 +61,8 @@ const PartnerDashboard = lazy(() => import("./pages/PartnerDashboard.tsx"));
 const AdminPortal = lazy(() => import("./pages/AdminPortal.tsx"));
 const VerifyUpdate = lazy(() => import("./pages/VerifyUpdate.tsx"));
 const VerifyEmail = lazy(() => import("./pages/VerifyEmail.tsx"));
+const ComplianceVault = lazy(() => import("./pages/ComplianceVault.tsx"));
+const AuditReport = lazy(() => import("./pages/AuditReport.tsx"));
 const NotFound = lazy(() => import("./pages/NotFound.tsx"));
 
 const queryClient = new QueryClient();
@@ -156,6 +158,10 @@ const App = () => (
                   ))}
                   {/* Standalone embed widget (no header/footer/nav) */}
                   <Route path="/embed/widget" element={<EmbedWidget />} />
+                  {/* Compliance Vault — MFA-protected */}
+                  <Route path="/admin/compliance-vault" element={<ComplianceVault />} />
+                  {/* Audit Report — read-only printable page */}
+                  <Route path="/audit-report/:token" element={<AuditReport />} />
                   {/* Redirect legacy sell/payout and old WordPress URLs to home */}
                   <Route path="/sell" element={<Navigate to="/" replace />} />
                   <Route path="/sell/*" element={<Navigate to="/" replace />} />
