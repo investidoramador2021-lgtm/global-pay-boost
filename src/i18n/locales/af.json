@@ -373,6 +373,23 @@
         "description": "Voer die transaksie onmiddellik uit en ontvang fondse direk na jou nie-bewaarbare beursie."
       },
       "cta": "Begin Ruil"
+    },
+    "invoice": {
+      "heading": "Professionele Kripto-Fakturering.",
+      "subtitle": "Versoek kripto-betalings van enigiemand — individue of maatskappye. Koerse word vasgestel by skepping en vereffening is gewaarborg.",
+      "step1": {
+        "title": "Identifiseer & Uitreik",
+        "description": "Voer verpligte Betaler- en Versoeker-besonderhede in. Stel jou presiese faktureringsbedrag in jou voorkeur-fiatgeldeenheid."
+      },
+      "step2": {
+        "title": "Outomatiese Aflewering",
+        "description": "Ons e-pos 'n professionele, veilige betalingskakel direk aan jou kliënt. Die faktuur en koers bly gesluit vir 168 uur (7 dae)."
+      },
+      "step3": {
+        "title": "Presiese Vereffening",
+        "description": "Jou kliënt betaal in kripto; ons enjin lewer die presiese fiat-ekwivalent na jou beursie. Beide partye ontvang getekende digitale kwitansies."
+      },
+      "cta": "Skep Faktuur"
     }
   },
   "whitepaper": {
