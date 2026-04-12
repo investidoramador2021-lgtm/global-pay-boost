@@ -12,6 +12,11 @@ import {
 const POPULAR_TICKERS = ["btc", "eth", "usdt", "usdttrc20", "sol", "xrp", "usdc", "bnb", "ltc", "trx"];
 const FIAT_OPTIONS = ["USD", "EUR", "GBP", "CAD", "AUD", "JPY", "BRL"] as const;
 
+// Approximate fiat-to-USD multipliers for cross-rate conversion
+const FIAT_TO_USD: Record<string, number> = {
+  USD: 1, EUR: 1.08, GBP: 1.27, CAD: 0.73, AUD: 0.65, JPY: 0.0064, BRL: 0.19,
+};
+
 const DISPLAY_TICKER_MAP: Record<string, string> = {
   usdterc20: "USDT", usdttrc20: "USDT", usdtbsc: "USDT", usdtsol: "USDT",
   usdcsol: "USDC", usdcmatic: "USDC", usdcbsc: "USDC", usdcbase: "USDC",
