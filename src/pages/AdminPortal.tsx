@@ -318,7 +318,8 @@ const AdminPortal = () => {
   const totalVolume = currentMonthTxs.reduce((s, t) => s + Number(t.volume), 0);
   const totalUnpaid = unpaidTxs.reduce((s, t) => s + Number(t.commission_btc), 0);
   const totalPaid = transactions.filter((t) => t.is_paid).reduce((s, t) => s + Number(t.commission_btc), 0);
-  const totalCommission = transactions.reduce((s, t) => s + Number(t.volume) * 0.001, 0); // 0.1% partner commission
+  const totalProfit = transactions.reduce((s, t) => s + Number(t.volume) * 0.005, 0); // 0.5% platform spread profit
+  const totalPartnerCommission = transactions.reduce((s, t) => s + Number(t.commission_btc), 0);
 
   const getPartnerName = (pid: string) => {
     const p = partners.find((x) => x.id === pid);
@@ -377,8 +378,8 @@ const AdminPortal = () => {
           <TableHead>Partner</TableHead>
           <TableHead>Asset</TableHead>
           <TableHead className="text-right">Volume</TableHead>
-          <TableHead className="text-right">Commission (0.1%)</TableHead>
-          <TableHead className="text-right">BTC Commission</TableHead>
+          <TableHead className="text-right">Profit (0.5%)</TableHead>
+          <TableHead className="text-right">Partner Commission (0.1%)</TableHead>
           <TableHead>Status</TableHead>
           {showPay && <TableHead />}
         </TableRow>
@@ -390,15 +391,16 @@ const AdminPortal = () => {
           </TableRow>
         ) : (
           txs.map((tx) => {
-            const commission = Number(tx.volume) * 0.001;
+            const profit = Number(tx.volume) * 0.005;
+            const partnerComm = Number(tx.volume) * 0.001;
             return (
               <TableRow key={tx.id}>
                 <TableCell className="text-muted-foreground">{new Date(tx.completed_at).toLocaleDateString()}</TableCell>
                 <TableCell>{getPartnerName(tx.partner_id)}</TableCell>
                 <TableCell className="uppercase">{tx.asset}</TableCell>
                 <TableCell className="text-right">${Number(tx.volume).toLocaleString("en-US", { minimumFractionDigits: 2 })}</TableCell>
-                <TableCell className="text-right text-primary font-mono">${commission.toLocaleString("en-US", { minimumFractionDigits: 2 })}</TableCell>
-                <TableCell className="text-right font-mono">{Number(tx.commission_btc).toFixed(8)}</TableCell>
+                <TableCell className="text-right text-primary font-mono">${profit.toLocaleString("en-US", { minimumFractionDigits: 2 })}</TableCell>
+                <TableCell className="text-right font-mono">${partnerComm.toLocaleString("en-US", { minimumFractionDigits: 2 })}</TableCell>
                 <TableCell>
                   {tx.is_paid ? (
                     <span className="text-xs text-primary flex items-center gap-1">
@@ -634,8 +636,8 @@ const AdminPortal = () => {
                   <CardContent className="p-5 flex items-center gap-3">
                     <DollarSign className="w-5 h-5 text-primary" />
                     <div>
-                      <p className="text-xs text-muted-foreground">Commission (0.1%)</p>
-                      <p className="text-2xl font-bold text-foreground">${totalCommission.toLocaleString("en-US", { minimumFractionDigits: 2 })}</p>
+                      <p className="text-xs text-muted-foreground">Profit (0.5%)</p>
+                      <p className="text-2xl font-bold text-foreground">${totalProfit.toLocaleString("en-US", { minimumFractionDigits: 2 })}</p>
                     </div>
                   </CardContent>
                 </Card>

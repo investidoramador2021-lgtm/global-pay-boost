@@ -360,7 +360,7 @@ const PartnerDashboard = () => {
                       <TableHead>Date</TableHead>
                       <TableHead>Asset</TableHead>
                       <TableHead className="text-right">Volume</TableHead>
-                      <TableHead className="text-right">BTC Commission</TableHead>
+                      <TableHead className="text-right">Commission (0.1%)</TableHead>
                       <TableHead>Status</TableHead>
                     </TableRow>
                   </TableHeader>
