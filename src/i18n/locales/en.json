@@ -80,7 +80,8 @@
       "exchange": "Exchange",
       "buy": "Buy",
       "private": "Private",
-      "bridge": "Bridge"
+      "bridge": "Bridge",
+      "request": "Request"
     },
     "online": "Online",
     "fixedRate": "Fixed Rate",
