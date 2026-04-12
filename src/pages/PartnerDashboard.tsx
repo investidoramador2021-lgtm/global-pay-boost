@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useMemo } from "react";
 import { useNavigate } from "react-router-dom";
 import { Helmet } from "react-helmet-async";
 import { supabase } from "@/integrations/supabase/client";
@@ -7,8 +7,9 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { useToast } from "@/hooks/use-toast";
-import { Copy, LogOut, Bitcoin, TrendingUp } from "lucide-react";
+import { Copy, LogOut, Bitcoin, TrendingUp, Check } from "lucide-react";
 import SiteHeader from "@/components/SiteHeader";
 import SiteFooter from "@/components/SiteFooter";
 import MobileBottomNav from "@/components/MobileBottomNav";
@@ -27,6 +28,8 @@ interface PartnerTransaction {
   volume: number;
   commission_btc: number;
   completed_at: string;
+  is_paid: boolean;
+  paid_at: string | null;
 }
 
 const PartnerDashboard = () => {
@@ -36,6 +39,7 @@ const PartnerDashboard = () => {
   const [newPassword, setNewPassword] = useState("");
   const [changingPw, setChangingPw] = useState(false);
   const [userEmail, setUserEmail] = useState("");
+  const [tab, setTab] = useState("current");
   const navigate = useNavigate();
   const { toast } = useToast();
 
@@ -66,8 +70,37 @@ const PartnerDashboard = () => {
     load();
   }, [navigate]);
 
-  const totalVolume = transactions.reduce((s, t) => s + Number(t.volume), 0);
-  const totalBtc = transactions.reduce((s, t) => s + Number(t.commission_btc), 0);
+  const now = new Date();
+  const currentMonth = now.getMonth();
+  const currentYear = now.getFullYear();
+
+  const currentMonthTxs = useMemo(() =>
+    transactions.filter((t) => {
+      const d = new Date(t.completed_at);
+      return d.getMonth() === currentMonth && d.getFullYear() === currentYear;
+    }), [transactions, currentMonth, currentYear]);
+
+  const historyTxs = useMemo(() =>
+    transactions.filter((t) => {
+      const d = new Date(t.completed_at);
+      return !(d.getMonth() === currentMonth && d.getFullYear() === currentYear);
+    }), [transactions, currentMonth, currentYear]);
+
+  const historyGrouped = useMemo(() => {
+    const groups: Record<string, PartnerTransaction[]> = {};
+    historyTxs.forEach((t) => {
+      const d = new Date(t.completed_at);
+      const key = `${d.toLocaleString("en-US", { month: "long" })} ${d.getFullYear()}`;
+      if (!groups[key]) groups[key] = [];
+      groups[key].push(t);
+    });
+    return groups;
+  }, [historyTxs]);
+
+  const monthVolume = currentMonthTxs.reduce((s, t) => s + Number(t.volume), 0);
+  const monthBtc = currentMonthTxs.reduce((s, t) => s + Number(t.commission_btc), 0);
+  const unpaidBtc = transactions.filter((t) => !t.is_paid).reduce((s, t) => s + Number(t.commission_btc), 0);
+  const lifetimePaid = transactions.filter((t) => t.is_paid).reduce((s, t) => s + Number(t.commission_btc), 0);
   const referralLink = profile ? `https://mrcglobalpay.com/?ref=${profile.referral_code}` : "";
 
   const copyLink = () => {
@@ -90,12 +123,47 @@ const PartnerDashboard = () => {
   };
 
   if (loading) {
-    return (
-      <div className="min-h-screen bg-background flex items-center justify-center text-muted-foreground">
-        Loading…
-      </div>
-    );
+    return <div className="min-h-screen bg-background flex items-center justify-center text-muted-foreground">Loading…</div>;
   }
+
+  const TxTable = ({ txs }: { txs: PartnerTransaction[] }) => (
+    <Table>
+      <TableHeader>
+        <TableRow>
+          <TableHead>Date</TableHead>
+          <TableHead className="text-right">Volume</TableHead>
+          <TableHead className="text-right">BTC Earned</TableHead>
+          <TableHead>Payment Status</TableHead>
+        </TableRow>
+      </TableHeader>
+      <TableBody>
+        {txs.length === 0 ? (
+          <TableRow>
+            <TableCell colSpan={4} className="text-center text-muted-foreground py-8">
+              No transactions found.
+            </TableCell>
+          </TableRow>
+        ) : (
+          txs.map((tx) => (
+            <TableRow key={tx.id}>
+              <TableCell className="text-muted-foreground">{new Date(tx.completed_at).toLocaleDateString()}</TableCell>
+              <TableCell className="text-right">${Number(tx.volume).toLocaleString("en-US", { minimumFractionDigits: 2 })}</TableCell>
+              <TableCell className="text-right font-mono">{Number(tx.commission_btc).toFixed(8)}</TableCell>
+              <TableCell>
+                {tx.is_paid ? (
+                  <span className="text-xs text-primary flex items-center gap-1">
+                    <Check className="w-3 h-3" /> Paid {tx.paid_at ? `· ${new Date(tx.paid_at).toLocaleDateString()}` : ""}
+                  </span>
+                ) : (
+                  <span className="text-xs text-amber-400">Pending</span>
+                )}
+              </TableCell>
+            </TableRow>
+          ))
+        )}
+      </TableBody>
+    </Table>
+  );
 
   return (
     <>
@@ -107,7 +175,6 @@ const PartnerDashboard = () => {
       <SiteHeader />
 
       <div className="relative min-h-screen bg-background overflow-hidden">
-        {/* Ambient blurs */}
         <div className="pointer-events-none absolute inset-0">
           <div className="absolute -top-40 -left-40 w-[500px] h-[500px] rounded-full bg-primary/8 blur-[120px]" />
           <div className="absolute bottom-0 right-0 w-[400px] h-[400px] rounded-full bg-primary/5 blur-[100px]" />
@@ -128,28 +195,40 @@ const PartnerDashboard = () => {
           </div>
 
           {/* Stats */}
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
             <Card className="border-border/40 bg-card/40 backdrop-blur-sm">
-              <CardContent className="p-6 flex items-center gap-4">
-                <div className="w-12 h-12 rounded-xl bg-primary/10 flex items-center justify-center">
-                  <TrendingUp className="w-6 h-6 text-primary" />
-                </div>
+              <CardContent className="p-5 flex items-center gap-3">
+                <TrendingUp className="w-5 h-5 text-primary" />
                 <div>
-                  <p className="text-sm text-muted-foreground">Total Volume Referred</p>
-                  <p className="text-3xl font-bold text-foreground">
-                    ${totalVolume.toLocaleString("en-US", { minimumFractionDigits: 2 })}
-                  </p>
+                  <p className="text-xs text-muted-foreground">Month Volume</p>
+                  <p className="text-xl font-bold text-foreground">${monthVolume.toLocaleString("en-US", { minimumFractionDigits: 2 })}</p>
                 </div>
               </CardContent>
             </Card>
             <Card className="border-border/40 bg-card/40 backdrop-blur-sm">
-              <CardContent className="p-6 flex items-center gap-4">
-                <div className="w-12 h-12 rounded-xl bg-primary/10 flex items-center justify-center">
-                  <Bitcoin className="w-6 h-6 text-primary" />
-                </div>
+              <CardContent className="p-5 flex items-center gap-3">
+                <Bitcoin className="w-5 h-5 text-primary" />
                 <div>
-                  <p className="text-sm text-muted-foreground">Total BTC Earned</p>
-                  <p className="text-3xl font-bold text-foreground">{totalBtc.toFixed(8)} BTC</p>
+                  <p className="text-xs text-muted-foreground">Month BTC Earned</p>
+                  <p className="text-xl font-bold text-foreground">{monthBtc.toFixed(8)}</p>
+                </div>
+              </CardContent>
+            </Card>
+            <Card className="border-border/40 bg-card/40 backdrop-blur-sm">
+              <CardContent className="p-5 flex items-center gap-3">
+                <Bitcoin className="w-5 h-5 text-amber-400" />
+                <div>
+                  <p className="text-xs text-muted-foreground">Unpaid Balance</p>
+                  <p className="text-xl font-bold text-foreground">{unpaidBtc.toFixed(8)}</p>
+                </div>
+              </CardContent>
+            </Card>
+            <Card className="border-border/40 bg-card/40 backdrop-blur-sm">
+              <CardContent className="p-5 flex items-center gap-3">
+                <Check className="w-5 h-5 text-primary" />
+                <div>
+                  <p className="text-xs text-muted-foreground">Lifetime Paid</p>
+                  <p className="text-xl font-bold text-foreground">{lifetimePaid.toFixed(8)}</p>
                 </div>
               </CardContent>
             </Card>
@@ -173,40 +252,31 @@ const PartnerDashboard = () => {
             </CardContent>
           </Card>
 
-          {/* Completed Transactions */}
+          {/* Transactions with monthly tabs */}
           <Card className="border-border/40 bg-card/40 backdrop-blur-sm">
-            <CardHeader><CardTitle className="text-lg">Completed Transactions</CardTitle></CardHeader>
+            <CardHeader><CardTitle className="text-lg">Transactions</CardTitle></CardHeader>
             <CardContent>
-              {transactions.length === 0 ? (
-                <p className="text-sm text-muted-foreground py-8 text-center">
-                  No transactions yet. Share your referral link to start earning.
-                </p>
-              ) : (
-                <Table>
-                  <TableHeader>
-                    <TableRow>
-                      <TableHead>Date</TableHead>
-                      <TableHead className="text-right">Volume</TableHead>
-                      <TableHead className="text-right">BTC Earned</TableHead>
-                    </TableRow>
-                  </TableHeader>
-                  <TableBody>
-                    {transactions.map((tx) => (
-                      <TableRow key={tx.id}>
-                        <TableCell className="text-muted-foreground">
-                          {new Date(tx.completed_at).toLocaleDateString()}
-                        </TableCell>
-                        <TableCell className="text-right">
-                          ${Number(tx.volume).toLocaleString("en-US", { minimumFractionDigits: 2 })}
-                        </TableCell>
-                        <TableCell className="text-right font-mono">
-                          {Number(tx.commission_btc).toFixed(8)}
-                        </TableCell>
-                      </TableRow>
-                    ))}
-                  </TableBody>
-                </Table>
-              )}
+              <Tabs value={tab} onValueChange={setTab}>
+                <TabsList className="mb-4">
+                  <TabsTrigger value="current">Current Month</TabsTrigger>
+                  <TabsTrigger value="history">History</TabsTrigger>
+                </TabsList>
+                <TabsContent value="current">
+                  <TxTable txs={currentMonthTxs} />
+                </TabsContent>
+                <TabsContent value="history">
+                  {Object.keys(historyGrouped).length === 0 ? (
+                    <p className="text-sm text-muted-foreground text-center py-8">No historical transactions.</p>
+                  ) : (
+                    Object.entries(historyGrouped).map(([month, txs]) => (
+                      <div key={month} className="mb-6">
+                        <h3 className="font-semibold text-foreground mb-2">{month}</h3>
+                        <TxTable txs={txs} />
+                      </div>
+                    ))
+                  )}
+                </TabsContent>
+              </Tabs>
             </CardContent>
           </Card>
 

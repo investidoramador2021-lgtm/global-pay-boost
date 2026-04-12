@@ -56,6 +56,7 @@ const Compliance = lazy(() => import("./pages/Compliance.tsx"));
 const CryptoDustManifesto = lazy(() => import("./pages/CryptoDustManifesto.tsx"));
 const Partners = lazy(() => import("./pages/Partners.tsx"));
 const PartnerDashboard = lazy(() => import("./pages/PartnerDashboard.tsx"));
+const AdminPortal = lazy(() => import("./pages/AdminPortal.tsx"));
 const NotFound = lazy(() => import("./pages/NotFound.tsx"));
 
 const queryClient = new QueryClient();
@@ -121,6 +122,7 @@ const AppRoutes = () => (
     <Route path="unsubscribe" element={<Unsubscribe />} />
     <Route path="partners" element={<Partners />} />
     <Route path="dashboard" element={<PartnerDashboard />} />
+    <Route path="admin-portal-mrc" element={<AdminPortal />} />
   </>
 );
 

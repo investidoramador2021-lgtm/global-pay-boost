@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { Menu, X, Zap, Sun, Moon } from "lucide-react";
+import { Menu, X, Zap, Sun, Moon, UserPlus, LogIn } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { useTheme } from "@/hooks/use-theme";
 import { useTranslation } from "react-i18next";
@@ -75,7 +75,23 @@ const SiteHeader = () => {
             {theme === "dark" ? <Sun className="h-4 w-4" /> : <Moon className="h-4 w-4" />}
           </button>
 
-          <div className="hidden lg:block">
+          <div className="hidden lg:flex items-center gap-1.5">
+            <a
+              href="/partners"
+              className="flex h-9 w-9 items-center justify-center rounded-lg border border-border text-muted-foreground transition-colors hover:bg-accent hover:text-foreground"
+              aria-label="Partner Login"
+              title="Partner Login"
+            >
+              <LogIn className="h-4 w-4" />
+            </a>
+            <a
+              href="/partners"
+              className="flex h-9 w-9 items-center justify-center rounded-lg border border-border text-muted-foreground transition-colors hover:bg-accent hover:text-foreground"
+              aria-label="Join Partner Program"
+              title="Join Partner Program"
+            >
+              <UserPlus className="h-4 w-4" />
+            </a>
             <Button className="shadow-neon" size="sm" asChild>
               <a href="/#exchange">
                 <Zap className="me-1 h-4 w-4" />
