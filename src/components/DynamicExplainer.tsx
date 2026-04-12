@@ -13,7 +13,7 @@ import googlePayLogo from "@/assets/logo-googlepay.png";
 import pixLogo from "@/assets/logo-pix.png";
 import sepaLogo from "@/assets/logo-sepa.png";
 
-type WidgetMode = "exchange" | "buysell" | "private" | "bridge";
+type WidgetMode = "exchange" | "buysell" | "private" | "bridge" | "request";
 
 interface Props {
   activeTab: WidgetMode;
