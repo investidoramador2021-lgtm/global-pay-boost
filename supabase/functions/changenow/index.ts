@@ -170,7 +170,6 @@ Deno.serve(async (req) => {
         const from = params.from || '';
         const to = params.to || '';
 
-        // Try v2 API first (header-based auth)
         let txUrl = `https://api.changenow.io/v2/exchanges?limit=${limit}&offset=${offset}`;
         if (dateFrom) txUrl += `&dateFrom=${dateFrom}`;
         if (dateTo) txUrl += `&dateTo=${dateTo}`;
@@ -178,27 +177,39 @@ Deno.serve(async (req) => {
         if (from) txUrl += `&fromCurrency=${from}`;
         if (to) txUrl += `&toCurrency=${to}`;
 
-        let txResp = await fetch(txUrl, {
-          headers: { 'x-changenow-api-key': privateKey! },
-        });
+        // Try both keys with v2 header-based auth
+        const keysToTry = [privateKey!, apiKey!].filter((k, i, a) => a.indexOf(k) === i);
+        let txResp: Response | null = null;
+        let txParsed: { isJson: boolean; data: any; text: string } | null = null;
 
-        // Fallback to v1 with private key if v2 fails
-        if (!txResp.ok) {
-          let v1Url = `${CHANGENOW_BASE}/transactions/${privateKey}?limit=${limit}&offset=${offset}`;
-          if (dateFrom) v1Url += `&dateFrom=${dateFrom}`;
-          if (dateTo) v1Url += `&dateTo=${dateTo}`;
-          if (status) v1Url += `&status=${status}`;
-          txResp = await fetch(v1Url);
+        for (const key of keysToTry) {
+          txResp = await fetch(txUrl, {
+            headers: { 'x-changenow-api-key': key },
+          });
+          txParsed = await parseJsonResponse(txResp);
+          if (txResp.ok) break;
+          console.error(`ChangeNow v2 list-txs key attempt failed:`, txParsed?.isJson ? JSON.stringify(txParsed.data) : txParsed?.text);
         }
 
-        const txParsed = await parseJsonResponse(txResp);
-        if (!txParsed.isJson) {
-          console.error('ChangeNow list-transactions non-JSON:', txParsed.text);
+        // Fallback to v1
+        if (!txResp?.ok) {
+          for (const key of keysToTry) {
+            let v1Url = `${CHANGENOW_BASE}/transactions/${key}?limit=${limit}&offset=${offset}`;
+            if (dateFrom) v1Url += `&dateFrom=${dateFrom}`;
+            if (dateTo) v1Url += `&dateTo=${dateTo}`;
+            if (status) v1Url += `&status=${status}`;
+            txResp = await fetch(v1Url);
+            txParsed = await parseJsonResponse(txResp!);
+            if (txResp.ok) break;
+            console.error(`ChangeNow v1 list-txs key attempt failed:`, txParsed?.isJson ? JSON.stringify(txParsed.data) : txParsed?.text);
+          }
+        }
+
+        if (!txParsed?.isJson) {
           return jsonResponse({ error: 'Service unavailable.' }, 502);
         }
-        if (!txResp.ok) {
-          console.error('ChangeNow list-transactions error:', JSON.stringify(txParsed.data));
-          return jsonResponse({ error: txParsed.data?.message || 'Service error.' }, txResp.status);
+        if (!txResp?.ok) {
+          return jsonResponse({ error: txParsed.data?.message || 'Private API key required. Check your ChangeNOW affiliate dashboard for the correct key.' }, txResp?.status || 401);
         }
         return jsonResponse(txParsed.data);
       }
