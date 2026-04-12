@@ -4,11 +4,12 @@ import { Button } from "@/components/ui/button";
 import { supabase } from "@/integrations/supabase/client";
 import ReactMarkdown from "react-markdown";
 import { useTranslation } from "react-i18next";
+import { useLocation } from "react-router-dom";
 import sarahImg from "@/assets/support-agent-sarah.jpg";
 import jamesImg from "@/assets/support-agent-james.jpg";
 import priyaImg from "@/assets/support-agent-priya.jpg";
 
-/* ── 3 Support Personas — rotate based on 8-hour shifts ── */
+/* ── 3 Concierge Personas — rotate based on 8-hour shifts ── */
 const PERSONAS = [
   { name: "Sarah Mitchell", role: "Concierge", img: sarahImg, hours: [0, 8] },
   { name: "James Chen", role: "Concierge", img: jamesImg, hours: [8, 16] },
@@ -22,7 +23,6 @@ function getCurrentPersona() {
 
 type Msg = { role: "user" | "assistant"; content: string };
 
-/* ── Human-like typing pace: drip tokens with random delays ── */
 function randomDelay(min: number, max: number) {
   return new Promise<void>((r) => setTimeout(r, min + Math.random() * (max - min)));
 }
@@ -32,6 +32,57 @@ const CHAT_URL = `${import.meta.env.VITE_SUPABASE_URL}/functions/v1/support-chat
 function genSessionId() {
   return `chat_${Date.now()}_${Math.random().toString(36).slice(2, 8)}`;
 }
+
+/* ── Seed phrase / private key detection ── */
+const SEED_PHRASE_PATTERNS = [
+  /\b(?:abandon|ability|able|about|above|absent|absorb|abstract|absurd|abuse|access|accident|account|accuse|achieve|acid|acoustic|acquire|across|act|action|actual|adapt|add|addict|address|adjust|admit|adult|advance|advice|aerobic|affair|afford|afraid|again|age|agent|agree|ahead|aim|air|airport|aisle|alarm|album|alcohol|alert|alien|all|alley|allow|almost|alone|alpha|already|also|alter|always|amateur|amazing|among|amount|amused|analyst|anchor|ancient|anger|angle|angry|animal|ankle|announce|annual|another|answer|antenna|antique|anxiety|any|apart|apology|appear|apple|approve|april|arch|arctic|area|arena|argue|arm|armed|armor|army|around|arrange|arrest|arrive|arrow|art|artefact|artist|artwork|ask|aspect|assault|asset|assist|assume|asthma|athlete|atom|attack|attend|attitude|attract|auction|audit|august|aunt|author|auto|autumn|average|avocado|avoid|awake|aware|awesome|awful|awkward|axis)\b/gi,
+];
+
+function looksLikeSeedPhrase(text: string): boolean {
+  const words = text.trim().split(/\s+/);
+  if (words.length >= 12 && words.length <= 24) {
+    const bip39Match = text.match(SEED_PHRASE_PATTERNS[0]);
+    if (bip39Match && bip39Match.length >= 10) return true;
+  }
+  // Detect hex private keys (64 hex chars)
+  if (/^(0x)?[0-9a-fA-F]{64}$/.test(text.trim())) return true;
+  // WIF private keys
+  if (/^[5KL][1-9A-HJ-NP-Za-km-z]{50,51}$/.test(text.trim())) return true;
+  return false;
+}
+
+const SEED_WARNINGS: Record<string, string> = {
+  en: "⚠️ **STOP** — Never share your private keys or seed phrases with anyone, including support. Your funds could be stolen. Please secure your wallet immediately. This message has been removed for your safety.",
+  es: "⚠️ **ALTO** — Nunca comparta sus claves privadas o frases semilla con nadie, incluido el soporte. Sus fondos podrían ser robados. Asegure su billetera de inmediato. Este mensaje fue eliminado por su seguridad.",
+  pt: "⚠️ **PARE** — Nunca compartilhe suas chaves privadas ou frases de recuperação com ninguém, incluindo suporte. Seus fundos podem ser roubados. Proteja sua carteira imediatamente. Esta mensagem foi removida por segurança.",
+  fr: "⚠️ **ARRÊTEZ** — Ne partagez jamais vos clés privées ou phrases de récupération avec quiconque, y compris le support. Vos fonds pourraient être volés. Sécurisez votre portefeuille immédiatement.",
+  ja: "⚠️ **停止** — 秘密鍵やシードフレーズは絶対に誰にも共有しないでください。資金が盗まれる可能性があります。直ちにウォレットを保護してください。",
+  tr: "⚠️ **DURUN** — Özel anahtarlarınızı veya tohum ifadelerinizi destek dahil kimseyle paylaşmayın. Fonlarınız çalınabilir.",
+  hi: "⚠️ **रुकें** — अपनी निजी कुंजी या सीड फ्रेज़ किसी के साथ साझा न करें। आपके फंड चुराए जा सकते हैं।",
+  vi: "⚠️ **DỪNG LẠI** — Không bao giờ chia sẻ khóa riêng hoặc cụm từ hạt giống của bạn với bất kỳ ai.",
+  af: "⚠️ **STOP** — Moet nooit u private sleutels of saadfrases met enigiemand deel nie.",
+  fa: "⚠️ **توقف** — هرگز کلیدهای خصوصی یا عبارات بازیابی خود را با کسی به اشتراک نگذارید.",
+  ur: "⚠️ **رکیں** — اپنی نجی کلیدیں یا سیڈ فریز کبھی کسی کے ساتھ شیئر نہ کریں۔",
+  he: "⚠️ **עצור** — לעולם אל תשתף את המפתחות הפרטיים או ביטויי הזרע שלך עם אף אחד.",
+  uk: "⚠️ **СТОП** — Ніколи не діліться приватними ключами або сід-фразами з будь-ким.",
+};
+
+/* ── Proactive engagement messages ── */
+const PROACTIVE_MESSAGES: Record<string, (name: string) => string> = {
+  en: (n) => `Hey! I'm ${n}. I can help set things up for you — just tell me what you'd like to do (e.g., "swap 1 ETH to BTC") or paste a wallet address, and I'll handle the rest.`,
+  es: (n) => `¡Hola! Soy ${n}. Puedo ayudarle a configurar todo — solo dígame qué desea hacer (ej., "cambiar 1 ETH a BTC") o pegue una dirección de wallet.`,
+  pt: (n) => `Olá! Sou ${n}. Posso configurar tudo para você — basta me dizer o que deseja fazer (ex., "trocar 1 ETH por BTC") ou cole um endereço de carteira.`,
+  fr: (n) => `Bonjour ! Je suis ${n}. Je peux tout configurer pour vous — dites-moi ce que vous souhaitez faire (ex., "échanger 1 ETH en BTC") ou collez une adresse de portefeuille.`,
+  ja: (n) => `こんにちは！${n}です。設定をお手伝いします — やりたいことを教えてください（例：「1 ETHをBTCに交換」）、またはウォレットアドレスを貼り付けてください。`,
+  tr: (n) => `Merhaba! Ben ${n}. Size yardımcı olabilirim — ne yapmak istediğinizi söyleyin (ör., "1 ETH'yi BTC'ye çevir") veya bir cüzdan adresi yapıştırın.`,
+  hi: (n) => `नमस्ते! मैं ${n} हूँ। मैं आपके लिए सब कुछ सेट कर सकता/सकती हूँ — बस बताएं क्या करना है (जैसे, "1 ETH को BTC में बदलें")।`,
+  vi: (n) => `Xin chào! Tôi là ${n}. Tôi có thể giúp bạn thiết lập — chỉ cần cho tôi biết bạn muốn làm gì (ví dụ: "đổi 1 ETH sang BTC").`,
+  af: (n) => `Hallo! Ek is ${n}. Ek kan dit vir jou opstel — vertel my net wat jy wil doen (bv., "verruil 1 ETH vir BTC").`,
+  fa: (n) => `سلام! من ${n} هستم. می‌توانم همه چیز را برایتان تنظیم کنم — فقط بگویید چه کاری می‌خواهید انجام دهید.`,
+  ur: (n) => `السلام علیکم! میں ${n} ہوں۔ میں آپ کے لیے سب کچھ سیٹ اپ کر سکتا/سکتی ہوں — بس بتائیں کیا کرنا ہے۔`,
+  he: (n) => `שלום! אני ${n}. אני יכול/ה להגדיר הכל בשבילך — רק ספר/י לי מה ברצונך לעשות.`,
+  uk: (n) => `Привіт! Я ${n}. Можу все налаштувати для вас — просто скажіть, що хочете зробити (наприклад, "обміняти 1 ETH на BTC").`,
+};
 
 const WELCOME_MESSAGES: Record<string, (name: string) => string> = {
   en: (n) => `Welcome to MRC GlobalPay. I'm ${n}, your personal concierge. How can I assist you today?`,
@@ -49,16 +100,23 @@ const WELCOME_MESSAGES: Record<string, (name: string) => string> = {
   uk: (n) => `Ласкаво просимо до MRC GlobalPay. Я ${n}, ваш персональний консьєрж. Чим можу допомогти?`,
 };
 
+/* ── Pages that trigger proactive popup ── */
+const TOOL_PAGES = ["/", "/bridge", "/private-transfer"];
+
 const SupportChatWidget = () => {
   const { i18n } = useTranslation();
+  const location = useLocation();
   const [open, setOpen] = useState(false);
   const [messages, setMessages] = useState<Msg[]>([]);
   const [input, setInput] = useState("");
   const [loading, setLoading] = useState(false);
   const [sessionId] = useState(genSessionId);
+  const [proactiveShown, setProactiveShown] = useState(false);
+  const [proactiveDismissed, setProactiveDismissed] = useState(false);
   const persona = useRef(getCurrentPersona());
   const scrollRef = useRef<HTMLDivElement>(null);
   const inputRef = useRef<HTMLTextAreaElement>(null);
+  const proactiveTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
   const lang = i18n.language?.split("-")[0] || "en";
 
   // Auto-scroll
@@ -74,6 +132,35 @@ const SupportChatWidget = () => {
       setMessages([{ role: "assistant", content: greet(p.name) }]);
     }
   }, [open, lang]);
+
+  /* ── Proactive 10-second popup on tool pages ── */
+  useEffect(() => {
+    if (open || proactiveDismissed || proactiveShown) return;
+
+    const isToolPage = TOOL_PAGES.some((p) => location.pathname === p || location.pathname.startsWith(`/${lang}${p === "/" ? "" : p}`));
+    if (!isToolPage) return;
+
+    proactiveTimer.current = setTimeout(() => {
+      if (!open && !proactiveDismissed) {
+        setProactiveShown(true);
+      }
+    }, 10000);
+
+    return () => {
+      if (proactiveTimer.current) clearTimeout(proactiveTimer.current);
+    };
+  }, [location.pathname, open, proactiveDismissed, proactiveShown, lang]);
+
+  const handleProactiveAccept = () => {
+    setProactiveShown(false);
+    setProactiveDismissed(true);
+    setOpen(true);
+  };
+
+  const handleProactiveDismiss = () => {
+    setProactiveShown(false);
+    setProactiveDismissed(true);
+  };
 
   const saveLog = useCallback(
     async (userMsg: string, aiMsg: string) => {
@@ -106,6 +193,14 @@ const SupportChatWidget = () => {
     const text = input.trim();
     if (!text || loading) return;
     setInput("");
+
+    // ── SEED PHRASE / PRIVATE KEY GUARDRAIL ──
+    if (looksLikeSeedPhrase(text)) {
+      const warning = SEED_WARNINGS[lang] || SEED_WARNINGS.en;
+      setMessages((prev) => [...prev, { role: "assistant", content: warning }]);
+      return; // Do NOT send to AI, do NOT log the seed phrase
+    }
+
     const userMsg: Msg = { role: "user", content: text };
     setMessages((prev) => [...prev, userMsg]);
     setLoading(true);
@@ -113,7 +208,6 @@ const SupportChatWidget = () => {
     const allMessages = [...messages, userMsg].filter((m) => m.role === "user" || m.role === "assistant");
 
     try {
-      // Simulate initial "reading & typing" delay (0.8–2s) like a real person
       await randomDelay(800, 2000);
 
       const resp = await fetch(CHAT_URL, {
@@ -134,7 +228,6 @@ const SupportChatWidget = () => {
       let streamDone = false;
       let fullResponse = "";
 
-      // Producer: read SSE stream and push tokens into queue
       const readStream = async () => {
         // eslint-disable-next-line no-constant-condition
         while (true) {
@@ -162,36 +255,32 @@ const SupportChatWidget = () => {
         }
       };
 
-      // Consumer: drip tokens at human-like pace
       const drip = async () => {
         let displayed = "";
         while (!streamDone || tokenQueue.length > 0) {
           if (tokenQueue.length > 0) {
             const chunk = tokenQueue.shift()!;
-            // Drip character by character for short chunks, word-by-word for longer
             const chars = chunk.split("");
             for (const char of chars) {
               displayed += char;
               fullResponse = displayed;
               updateAssistant(displayed);
-              // Vary speed: pause longer on punctuation, shorter on regular chars
               if (".!?".includes(char)) {
-                await randomDelay(120, 350); // pause on sentence end
+                await randomDelay(120, 350);
               } else if (char === ",") {
                 await randomDelay(60, 150);
               } else if (char === "\n") {
                 await randomDelay(100, 250);
               } else {
-                await randomDelay(15, 45); // ~25-40 WPM typing speed
+                await randomDelay(15, 45);
               }
             }
           } else {
-            await randomDelay(30, 60); // wait for more tokens
+            await randomDelay(30, 60);
           }
         }
       };
 
-      // Run producer and consumer concurrently
       await Promise.all([readStream(), drip()]);
 
       if (fullResponse) saveLog(text, fullResponse);
@@ -214,10 +303,43 @@ const SupportChatWidget = () => {
 
   return (
     <>
+      {/* ── Proactive popup bubble ── */}
+      {proactiveShown && !open && (
+        <div className="fixed bottom-36 right-4 z-50 md:bottom-24 md:right-6 w-[calc(100vw-32px)] max-w-[340px] animate-in slide-in-from-bottom-4 fade-in duration-500">
+          <div className="relative rounded-2xl border border-border/60 bg-card/95 backdrop-blur-xl shadow-[0_8px_40px_-12px_rgba(0,0,0,0.5)] p-4">
+            {/* Arrow pointing to chat button */}
+            <div className="absolute -bottom-2 right-6 w-4 h-4 rotate-45 bg-card/95 border-r border-b border-border/60" />
+            <div className="flex items-start gap-3">
+              <img
+                src={p.img}
+                alt={p.name}
+                className="w-10 h-10 rounded-full object-cover ring-2 ring-primary/30 flex-shrink-0"
+                width={40}
+                height={40}
+              />
+              <div className="flex-1 min-w-0">
+                <p className="text-xs font-semibold text-foreground mb-1">{p.name} · <span className="text-primary">{p.role}</span></p>
+                <p className="text-sm text-muted-foreground leading-relaxed">
+                  {(PROACTIVE_MESSAGES[lang] || PROACTIVE_MESSAGES.en)(p.name)}
+                </p>
+              </div>
+            </div>
+            <div className="flex gap-2 mt-3">
+              <Button size="sm" onClick={handleProactiveAccept} className="flex-1 rounded-xl text-xs h-8">
+                Chat Now
+              </Button>
+              <Button size="sm" variant="ghost" onClick={handleProactiveDismiss} className="rounded-xl text-xs h-8 text-muted-foreground">
+                Dismiss
+              </Button>
+            </div>
+          </div>
+        </div>
+      )}
+
       {/* Floating button */}
       {!open && (
         <button
-          onClick={() => setOpen(true)}
+          onClick={() => { setOpen(true); setProactiveShown(false); setProactiveDismissed(true); }}
           className="fixed bottom-20 right-4 z-50 md:bottom-6 md:right-6 w-14 h-14 rounded-full bg-primary text-primary-foreground shadow-[0_4px_24px_-4px_hsl(var(--primary)/0.5)] flex items-center justify-center hover:scale-105 transition-transform"
           aria-label="Open support chat"
         >
@@ -238,7 +360,7 @@ const SupportChatWidget = () => {
                 width={40}
                 height={40}
               />
-              <div className="absolute -bottom-0.5 -right-0.5 w-3 h-3 rounded-full bg-emerald-500 ring-2 ring-background" />
+              <div className="absolute -bottom-0.5 -right-0.5 w-3 h-3 rounded-full bg-primary ring-2 ring-background" />
             </div>
             <div className="flex-1 min-w-0">
               <p className="text-sm font-semibold text-foreground truncate">{p.name}</p>
