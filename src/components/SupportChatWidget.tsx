@@ -33,7 +33,24 @@ function genSessionId() {
   return `chat_${Date.now()}_${Math.random().toString(36).slice(2, 8)}`;
 }
 
+const WELCOME_MESSAGES: Record<string, (name: string) => string> = {
+  en: (n) => `Hi! I'm ${n} from MRC GlobalPay support. How can I help you today? 😊`,
+  es: (n) => `¡Hola! Soy ${n} del equipo de soporte de MRC GlobalPay. ¿En qué puedo ayudarte? 😊`,
+  pt: (n) => `Olá! Sou ${n} do suporte MRC GlobalPay. Como posso ajudar? 😊`,
+  fr: (n) => `Bonjour ! Je suis ${n} du support MRC GlobalPay. Comment puis-je vous aider ? 😊`,
+  ja: (n) => `こんにちは！MRC GlobalPayサポートの${n}です。何かお手伝いできますか？😊`,
+  tr: (n) => `Merhaba! MRC GlobalPay destek ekibinden ${n}. Size nasıl yardımcı olabilirim? 😊`,
+  hi: (n) => `नमस्ते! मैं MRC GlobalPay सपोर्ट से ${n} हूँ। मैं आपकी कैसे मदद कर सकता/सकती हूँ? 😊`,
+  vi: (n) => `Xin chào! Tôi là ${n} từ bộ phận hỗ trợ MRC GlobalPay. Tôi có thể giúp gì cho bạn? 😊`,
+  af: (n) => `Hallo! Ek is ${n} van MRC GlobalPay ondersteuning. Hoe kan ek jou help? 😊`,
+  fa: (n) => `سلام! من ${n} از تیم پشتیبانی MRC GlobalPay هستم. چطور می‌تونم کمکتون کنم؟ 😊`,
+  ur: (n) => `السلام علیکم! میں MRC GlobalPay سپورٹ سے ${n} ہوں۔ میں آپ کی کیسے مدد کر سکتا/سکتی ہوں؟ 😊`,
+  he: (n) => `שלום! אני ${n} מצוות התמיכה של MRC GlobalPay. איך אוכל לעזור? 😊`,
+  uk: (n) => `Вітаю! Я ${n} з підтримки MRC GlobalPay. Чим можу допомогти? 😊`,
+};
+
 const SupportChatWidget = () => {
+  const { i18n } = useTranslation();
   const [open, setOpen] = useState(false);
   const [messages, setMessages] = useState<Msg[]>([]);
   const [input, setInput] = useState("");
@@ -42,24 +59,21 @@ const SupportChatWidget = () => {
   const persona = useRef(getCurrentPersona());
   const scrollRef = useRef<HTMLDivElement>(null);
   const inputRef = useRef<HTMLTextAreaElement>(null);
+  const lang = i18n.language?.split("-")[0] || "en";
 
   // Auto-scroll
   useEffect(() => {
     scrollRef.current?.scrollTo({ top: scrollRef.current.scrollHeight, behavior: "smooth" });
   }, [messages]);
 
-  // Welcome message
+  // Welcome message in the user's language
   useEffect(() => {
     if (open && messages.length === 0) {
       const p = persona.current;
-      setMessages([
-        {
-          role: "assistant",
-          content: `Hi! I'm ${p.name} from MRC GlobalPay support. How can I help you today? 😊`,
-        },
-      ]);
+      const greet = WELCOME_MESSAGES[lang] || WELCOME_MESSAGES.en;
+      setMessages([{ role: "assistant", content: greet(p.name) }]);
     }
-  }, [open]);
+  }, [open, lang]);
 
   const saveLog = useCallback(
     async (userMsg: string, aiMsg: string) => {
