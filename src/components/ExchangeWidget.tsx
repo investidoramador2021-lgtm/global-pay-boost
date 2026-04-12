@@ -1638,19 +1638,10 @@ const ExchangeWidget = ({ onTabChange }: ExchangeWidgetProps = {}) => {
           <motion.div key="exchange" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}>
             {/* ===== MODE TABS: Exchange | Buy/Sell ===== */}
             <div className="mb-5 flex items-center justify-between gap-2">
-              <div className="flex rounded-xl border border-border bg-accent p-1 gap-1 max-[480px]:w-full max-[480px]:overflow-x-auto max-[480px]:scrollbar-none">
-                <button
-                  onClick={() => { setWidgetMode("exchange"); setGStep("form"); setGCheckoutUrl(""); }}
-                  className={`flex shrink-0 items-center justify-center gap-1.5 rounded-lg px-3 py-2 font-display text-xs sm:text-sm font-semibold whitespace-nowrap ${
-                    widgetMode === "exchange"
-                      ? "bg-primary text-primary-foreground shadow-card"
-                      : "text-muted-foreground hover:text-foreground hover:bg-background"
-                  }`}
-                >
-                  <Repeat className="h-4 w-4" /> {t("widget.tabs.exchange")}
-                </button>
-                <button
-                  onClick={() => {
+              <div className="flex w-full rounded-xl border border-border bg-accent p-1 gap-0.5 sm:gap-1 sm:w-auto">
+                {([
+                  { mode: "exchange" as WidgetMode, icon: Repeat, labelKey: "widget.tabs.exchange", onClick: () => { setWidgetMode("exchange"); setGStep("form"); setGCheckoutUrl(""); } },
+                  { mode: "buysell" as WidgetMode, icon: CreditCard, labelKey: "widget.tabs.buy", onClick: () => {
                     setWidgetMode("buysell");
                     setGTradeDirection("buy");
                     setGStep("form");
@@ -1666,45 +1657,30 @@ const ExchangeWidget = ({ onTabChange }: ExchangeWidgetProps = {}) => {
                     if (guardarianFiat.length || guardarianCrypto.length) {
                       applyGuardarianDefaults("buy");
                     }
-                  }}
-                  className={`flex shrink-0 items-center justify-center gap-1.5 rounded-lg px-3 py-2 font-display text-xs sm:text-sm font-semibold whitespace-nowrap ${
-                    widgetMode === "buysell" && gTradeDirection === "buy"
-                      ? "bg-primary text-primary-foreground shadow-card"
-                      : "text-muted-foreground hover:text-foreground hover:bg-background"
-                  }`}
-                >
-                  <CreditCard className="h-4 w-4" /> {t("widget.tabs.buy")}
-                </button>
-                <button
-                  onClick={() => { setWidgetMode("private"); }}
-                  className={`flex shrink-0 items-center justify-center gap-1.5 rounded-lg px-3 py-2 font-display text-xs sm:text-sm font-semibold whitespace-nowrap ${
-                    widgetMode === "private"
-                      ? "bg-primary text-primary-foreground shadow-card"
-                      : "text-muted-foreground hover:text-foreground hover:bg-background"
-                  }`}
-                >
-                  <EyeOff className="h-4 w-4" /> {t("widget.tabs.private")}
-                </button>
-                <button
-                  onClick={() => { setWidgetMode("bridge"); }}
-                  className={`flex shrink-0 items-center justify-center gap-1.5 rounded-lg px-3 py-2 font-display text-xs sm:text-sm font-semibold whitespace-nowrap ${
-                    widgetMode === "bridge"
-                      ? "bg-primary text-primary-foreground shadow-card"
-                      : "text-muted-foreground hover:text-foreground hover:bg-background"
-                  }`}
-                >
-                  <Link2 className="h-4 w-4" /> {t("widget.tabs.bridge")}
-                </button>
-                <button
-                  onClick={() => { setWidgetMode("request"); }}
-                  className={`flex shrink-0 items-center justify-center gap-1.5 rounded-lg px-3 py-2 font-display text-xs sm:text-sm font-semibold whitespace-nowrap ${
-                    widgetMode === "request"
-                      ? "bg-primary text-primary-foreground shadow-card"
-                      : "text-muted-foreground hover:text-foreground hover:bg-background"
-                  }`}
-                >
-                  <FileText className="h-4 w-4" /> {t("widget.tabs.invoice")}
-                </button>
+                  }},
+                  { mode: "private" as WidgetMode, icon: EyeOff, labelKey: "widget.tabs.private", onClick: () => { setWidgetMode("private"); } },
+                  { mode: "bridge" as WidgetMode, icon: Link2, labelKey: "widget.tabs.bridge", onClick: () => { setWidgetMode("bridge"); } },
+                  { mode: "request" as WidgetMode, icon: FileText, labelKey: "widget.tabs.invoice", onClick: () => { setWidgetMode("request"); } },
+                ] as const).map((tab) => {
+                  const isActive = tab.mode === "buysell"
+                    ? widgetMode === "buysell" && gTradeDirection === "buy"
+                    : widgetMode === tab.mode;
+                  const TabIcon = tab.icon;
+                  return (
+                    <button
+                      key={tab.mode}
+                      onClick={tab.onClick}
+                      className={`flex flex-1 sm:flex-none items-center justify-center gap-1 rounded-lg px-2 sm:px-3 py-2 font-display text-[11px] sm:text-sm font-semibold whitespace-nowrap transition-colors ${
+                        isActive
+                          ? "bg-primary text-primary-foreground shadow-card"
+                          : "text-muted-foreground hover:text-foreground hover:bg-background"
+                      }`}
+                    >
+                      <TabIcon className="hidden sm:block h-4 w-4" />
+                      {t(tab.labelKey)}
+                    </button>
+                  );
+                })}
               </div>
               <span className="hidden min-[481px]:flex items-center gap-1.5 rounded-full border border-trust/30 bg-trust/10 px-2.5 py-1 font-body text-[10px] font-semibold uppercase tracking-wider text-trust">
                 <span className="relative flex h-2 w-2">
