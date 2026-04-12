@@ -742,10 +742,15 @@ const AdminPortal = () => {
               </div>
 
               <Card className="border-border/40 bg-card/40 backdrop-blur-sm">
-                <CardHeader>
+                <CardHeader className="flex flex-row items-center justify-between">
                   <CardTitle className="text-lg flex items-center gap-2">
                     <MessageCircle className="w-5 h-5" /> Customer Questions
                   </CardTitle>
+                  {chatLogs.length > 0 && (
+                    <Button size="sm" variant="destructive" onClick={deleteAllChatLogs} className="gap-1 text-xs">
+                      <Trash2 className="w-3 h-3" /> Clear All
+                    </Button>
+                  )}
                 </CardHeader>
                 <CardContent>
                   <Table>
@@ -756,12 +761,13 @@ const AdminPortal = () => {
                         <TableHead>Customer Question</TableHead>
                         <TableHead>AI Response</TableHead>
                         <TableHead>Page</TableHead>
+                        <TableHead />
                       </TableRow>
                     </TableHeader>
                     <TableBody>
                       {chatLogs.length === 0 ? (
                         <TableRow>
-                          <TableCell colSpan={5} className="text-center text-muted-foreground py-8">
+                          <TableCell colSpan={6} className="text-center text-muted-foreground py-8">
                             No support conversations yet.
                           </TableCell>
                         </TableRow>
@@ -779,6 +785,11 @@ const AdminPortal = () => {
                               <p className="text-xs text-muted-foreground truncate" title={log.ai_response}>{log.ai_response}</p>
                             </TableCell>
                             <TableCell className="text-xs text-muted-foreground">{log.page_url || "/"}</TableCell>
+                            <TableCell>
+                              <button onClick={() => deleteChatLog(log.id)} className="p-1.5 rounded-lg hover:bg-destructive/20 text-muted-foreground hover:text-destructive transition-colors" title="Delete">
+                                <Trash2 className="w-3.5 h-3.5" />
+                              </button>
+                            </TableCell>
                           </TableRow>
                         ))
                       )}
