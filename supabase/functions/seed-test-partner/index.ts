@@ -7,20 +7,22 @@ Deno.serve(async (req) => {
     });
   }
 
+  // Accept CRON_SECRET or service_role key
   const authHeader = req.headers.get("authorization") ?? "";
   const cronSecret = Deno.env.get("CRON_SECRET");
-  if (!cronSecret || authHeader !== `Bearer ${cronSecret}`) {
+  const serviceKey = Deno.env.get("SUPABASE_SERVICE_ROLE_KEY")!;
+  const token = authHeader.replace("Bearer ", "");
+  
+  if (token !== cronSecret && token !== serviceKey) {
     return new Response("Unauthorized", { status: 401 });
   }
 
   const supabaseUrl = Deno.env.get("SUPABASE_URL")!;
-  const serviceKey = Deno.env.get("SUPABASE_SERVICE_ROLE_KEY")!;
   const admin = createClient(supabaseUrl, serviceKey, { auth: { autoRefreshToken: false, persistSession: false } });
 
   const email = "test@mrc-pay.com";
   const password = "GlobalPay2026!";
 
-  // Check if user already exists
   const { data: existingUsers } = await admin.auth.admin.listUsers();
   const existing = existingUsers?.users?.find((u: any) => u.email === email);
 
@@ -28,7 +30,6 @@ Deno.serve(async (req) => {
 
   if (existing) {
     userId = existing.id;
-    // Update password in case it changed
     await admin.auth.admin.updateUserById(userId, { password });
   } else {
     const { data, error } = await admin.auth.admin.createUser({
@@ -40,7 +41,6 @@ Deno.serve(async (req) => {
     userId = data.user.id;
   }
 
-  // Check if partner profile exists
   const { data: profile } = await admin
     .from("partner_profiles")
     .select("id")
