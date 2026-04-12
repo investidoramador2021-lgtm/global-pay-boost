@@ -579,7 +579,7 @@ const AdminPortal = () => {
 
             <TabsContent value="partners" className="mt-6 space-y-6">
               {/* Partner stat cards */}
-              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-4">
                 <Card className="border-border/40 bg-card/40 backdrop-blur-sm">
                   <CardContent className="p-5 flex items-center gap-3">
                     <Users className="w-5 h-5 text-primary" />
@@ -595,6 +595,15 @@ const AdminPortal = () => {
                     <div>
                       <p className="text-xs text-muted-foreground">Month Volume</p>
                       <p className="text-2xl font-bold text-foreground">${totalVolume.toLocaleString("en-US", { minimumFractionDigits: 2 })}</p>
+                    </div>
+                  </CardContent>
+                </Card>
+                <Card className="border-border/40 bg-card/40 backdrop-blur-sm">
+                  <CardContent className="p-5 flex items-center gap-3">
+                    <DollarSign className="w-5 h-5 text-primary" />
+                    <div>
+                      <p className="text-xs text-muted-foreground">Est. Profit (0.5%)</p>
+                      <p className="text-2xl font-bold text-foreground">${totalProfit.toLocaleString("en-US", { minimumFractionDigits: 2 })}</p>
                     </div>
                   </CardContent>
                 </Card>
@@ -644,7 +653,14 @@ const AdminPortal = () => {
                           <TableRow key={p.id}>
                             <TableCell className="font-medium">{p.first_name} {p.last_name}</TableCell>
                             <TableCell className="font-mono text-sm text-muted-foreground">{p.referral_code}</TableCell>
-                            <TableCell className="font-mono text-xs text-muted-foreground break-all max-w-[200px] truncate">{p.btc_wallet}</TableCell>
+                            <TableCell className="font-mono text-xs text-muted-foreground max-w-[300px]">
+                              <div className="flex items-center gap-1">
+                                <span className="break-all">{p.btc_wallet}</span>
+                                <button onClick={() => copyWallet(p.btc_wallet)} className="flex-shrink-0 p-1 rounded hover:bg-muted/50 transition-colors" title="Copy wallet">
+                                  <Copy className="w-3 h-3" />
+                                </button>
+                              </div>
+                            </TableCell>
                             <TableCell className="text-right">${pVolume.toLocaleString("en-US", { minimumFractionDigits: 2 })}</TableCell>
                             <TableCell className="text-right font-mono">{pEarned.toFixed(8)}</TableCell>
                             <TableCell className="text-right font-mono text-amber-400">{pUnpaid.toFixed(8)}</TableCell>
