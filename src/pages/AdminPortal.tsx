@@ -600,6 +600,9 @@ const AdminPortal = () => {
               <TabsTrigger value="exchanges" className="gap-2 data-[state=active]:bg-primary/10">
                 <TrendingUp className="w-4 h-4" /> Exchange Monitor
               </TabsTrigger>
+              <TabsTrigger value="invoices" className="gap-2 data-[state=active]:bg-primary/10">
+                <FileText className="w-4 h-4" /> Invoices
+              </TabsTrigger>
               <TabsTrigger value="partners" className="gap-2 data-[state=active]:bg-primary/10">
                 <Users className="w-4 h-4" /> Partner Management
               </TabsTrigger>
@@ -610,6 +613,10 @@ const AdminPortal = () => {
 
             <TabsContent value="exchanges" className="mt-6">
               <ExchangeTracker />
+            </TabsContent>
+
+            <TabsContent value="invoices" className="mt-6">
+              <InvoiceManager />
             </TabsContent>
 
             <TabsContent value="partners" className="mt-6 space-y-6">
