@@ -1,4 +1,4 @@
-import { useState, useMemo } from "react";
+import { useState, useMemo, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { Helmet } from "react-helmet-async";
 import { supabase } from "@/integrations/supabase/client";
@@ -73,7 +73,10 @@ const Partners = () => {
   const [confirmPassword, setConfirmPassword] = useState("");
   const [btcWallet, setBtcWallet] = useState("");
   const [loading, setLoading] = useState(false);
-  const [isLogin, setIsLogin] = useState(false);
+  const [isLogin, setIsLogin] = useState(() => {
+    const params = new URLSearchParams(window.location.search);
+    return params.get("mode") === "login";
+  });
   const navigate = useNavigate();
   const { toast } = useToast();
 

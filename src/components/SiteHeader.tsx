@@ -77,7 +77,7 @@ const SiteHeader = () => {
 
           <div className="hidden lg:flex items-center gap-1.5">
             <a
-              href="/partners"
+              href="/partners?mode=login"
               className="flex h-9 w-9 items-center justify-center rounded-lg border border-border text-muted-foreground transition-colors hover:bg-accent hover:text-foreground"
               aria-label="Partner Login"
               title="Partner Login"
@@ -126,7 +126,7 @@ const SiteHeader = () => {
           {/* Partner actions */}
           <div className="flex items-center gap-2 py-3 border-t border-border/50 mt-1">
             <a
-              href="/partners"
+              href="/partners?mode=login"
               onClick={() => setMobileOpen(false)}
               className="flex-1 flex items-center justify-center gap-2 h-10 rounded-xl border border-border bg-card/50 text-sm font-medium text-muted-foreground transition-colors active:bg-accent active:text-foreground"
             >
