@@ -356,6 +356,23 @@
         "description": "Alıcınız temiz bir geçmişle fonları alır."
       },
       "cta": "Özel Gönder"
+    },
+    "exchange": {
+      "heading": "Saklama Dışı Kripto Takası.",
+      "subtitle": "500'den fazla varlığı kayıt olmadan anında takas edin. Şeffaf oranlar ve gizli ücret olmadan cüzdandan cüzdana doğrudan uzlaşma.",
+      "step1": {
+        "title": "Varlık Seçin",
+        "description": "BTC, ETH ve stablecoin'ler dahil Tier-1 likidite çiftlerimizden seçin."
+      },
+      "step2": {
+        "title": "Anında Teklif",
+        "description": "Gizli ücret olmadan gerçek zamanlı, şeffaf oranlar alın."
+      },
+      "step3": {
+        "title": "Güvenli Takas",
+        "description": "İşlemi anında gerçekleştirin ve fonları doğrudan saklama dışı cüzdanınıza alın."
+      },
+      "cta": "Takası Başlat"
     }
   },
   "whitepaper": {

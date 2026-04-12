@@ -356,6 +356,23 @@
         "description": "Seu destinatário recebe os fundos com histórico limpo, mantendo sua privacidade financeira."
       },
       "cta": "Enviar Privadamente"
+    },
+    "exchange": {
+      "heading": "Swap Cripto Não Custodial.",
+      "subtitle": "Troque mais de 500 ativos instantaneamente sem registro. Liquidação direta carteira a carteira com taxas transparentes e sem taxas ocultas.",
+      "step1": {
+        "title": "Selecionar Ativos",
+        "description": "Escolha entre nossos pares de liquidez Tier-1 incluindo BTC, ETH e stablecoins."
+      },
+      "step2": {
+        "title": "Cotação Instantânea",
+        "description": "Obtenha taxas em tempo real, transparentes e sem taxas ocultas."
+      },
+      "step3": {
+        "title": "Swap Seguro",
+        "description": "Execute a transação instantaneamente e receba fundos diretamente na sua carteira não custodial."
+      },
+      "cta": "Iniciar Swap"
     }
   },
   "whitepaper": {

@@ -356,6 +356,23 @@
         "description": "Người nhận nhận tiền với lịch sử sạch, bảo vệ quyền riêng tư tài chính."
       },
       "cta": "Gửi Riêng Tư"
+    },
+    "exchange": {
+      "heading": "Trao Đổi Crypto Không Giữ Hộ.",
+      "subtitle": "Trao đổi hơn 500 tài sản ngay lập tức mà không cần đăng ký. Thanh toán trực tiếp ví-ví với tỷ giá minh bạch và không phí ẩn.",
+      "step1": {
+        "title": "Chọn Tài Sản",
+        "description": "Chọn từ các cặp thanh khoản Tier-1 bao gồm BTC, ETH và stablecoin."
+      },
+      "step2": {
+        "title": "Báo Giá Tức Thì",
+        "description": "Nhận tỷ giá thời gian thực, minh bạch và không phí ẩn."
+      },
+      "step3": {
+        "title": "Trao Đổi An Toàn",
+        "description": "Thực hiện giao dịch ngay lập tức và nhận tiền trực tiếp vào ví không giữ hộ của bạn."
+      },
+      "cta": "Bắt Đầu Trao Đổi"
     }
   },
   "whitepaper": {

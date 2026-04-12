@@ -308,6 +308,23 @@
     "pdfFooter": "Privacy First: MRC GlobalPay is non-custodial. This information is not stored on our servers. Please save this for your records."
   },
   "explainer": {
+    "exchange": {
+      "heading": "Non-Custodial Crypto Swap.",
+      "subtitle": "Swap 500+ assets instantly with zero registration. Direct wallet-to-wallet settlement with transparent rates and no hidden fees.",
+      "step1": {
+        "title": "Select Assets",
+        "description": "Choose from our Tier-1 liquidity pairs including BTC, ETH, and stablecoins."
+      },
+      "step2": {
+        "title": "Instant Quote",
+        "description": "Get real-time, transparent rates with zero hidden fees."
+      },
+      "step3": {
+        "title": "Secure Swap",
+        "description": "Execute the transaction instantly and receive funds directly to your non-custodial wallet."
+      },
+      "cta": "Start Swap"
+    },
     "buysell": {
       "heading": "Instant Fiat-to-Crypto On-Ramp.",
       "subtitle": "Purchase crypto in seconds using your preferred local payment method. Visa, Mastercard, Apple Pay, PIX, SEPA — all supported. Direct to your self-custody wallet.",

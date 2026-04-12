@@ -356,6 +356,23 @@
         "description": "Tu destinatario recibe los fondos con historial limpio, manteniendo tu privacidad financiera."
       },
       "cta": "Enviar Privadamente"
+    },
+    "exchange": {
+      "heading": "Intercambio Cripto No Custodial.",
+      "subtitle": "Intercambia más de 500 activos al instante sin registro. Liquidación directa billetera a billetera con tasas transparentes y sin comisiones ocultas.",
+      "step1": {
+        "title": "Seleccionar Activos",
+        "description": "Elige entre nuestros pares de liquidez Tier-1 incluyendo BTC, ETH y stablecoins."
+      },
+      "step2": {
+        "title": "Cotización Instantánea",
+        "description": "Obtén tasas en tiempo real, transparentes y sin comisiones ocultas."
+      },
+      "step3": {
+        "title": "Intercambio Seguro",
+        "description": "Ejecuta la transacción al instante y recibe fondos directamente en tu billetera no custodial."
+      },
+      "cta": "Iniciar Intercambio"
     }
   },
   "whitepaper": {

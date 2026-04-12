@@ -356,6 +356,23 @@
         "description": "Votre destinataire reçoit les fonds avec un historique propre."
       },
       "cta": "Envoyer en Privé"
+    },
+    "exchange": {
+      "heading": "Échange Crypto Non-Custodial.",
+      "subtitle": "Échangez plus de 500 actifs instantanément sans inscription. Règlement direct portefeuille à portefeuille avec des taux transparents et sans frais cachés.",
+      "step1": {
+        "title": "Sélectionner les Actifs",
+        "description": "Choisissez parmi nos paires de liquidité Tier-1 incluant BTC, ETH et stablecoins."
+      },
+      "step2": {
+        "title": "Devis Instantané",
+        "description": "Obtenez des taux en temps réel, transparents et sans frais cachés."
+      },
+      "step3": {
+        "title": "Échange Sécurisé",
+        "description": "Exécutez la transaction instantanément et recevez les fonds directement dans votre portefeuille non-custodial."
+      },
+      "cta": "Commencer l'Échange"
     }
   },
   "whitepaper": {

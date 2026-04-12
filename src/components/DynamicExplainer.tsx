@@ -3,6 +3,7 @@ import { useTranslation } from "react-i18next";
 import { AnimatePresence, motion } from "framer-motion";
 import { ArrowRight } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import explainerExchange from "@/assets/explainer-exchange-masked.png";
 import explainerBuy from "@/assets/explainer-buy-masked-v2.png";
 import explainerBridge from "@/assets/explainer-bridge-masked.png";
 import explainerPrivate from "@/assets/explainer-private-masked.png";
@@ -20,7 +21,7 @@ interface Props {
   onCtaClick?: (tab: WidgetMode) => void;
 }
 
-type DisplayMode = "buysell" | "private" | "bridge";
+type DisplayMode = "exchange" | "buysell" | "private" | "bridge";
 
 const logos = [
   { src: visaLogo, alt: "Visa" },
@@ -32,6 +33,12 @@ const logos = [
 ];
 
 const modeConfig: Record<DisplayMode, { accent: string; label: string; image: string; glow: string }> = {
+  exchange: {
+    accent: "142 76% 46%",
+    label: "EXCHANGE",
+    image: explainerExchange,
+    glow: "0 0 70px hsl(142 76% 46% / 0.28), 0 0 140px hsl(142 76% 46% / 0.12)",
+  },
   buysell: {
     accent: "200 100% 62%",
     label: "BUY FLOW",
@@ -72,7 +79,7 @@ const lineStyles = [
 
 const DynamicExplainer = ({ activeTab, onCtaClick }: Props) => {
   const { t } = useTranslation();
-  const mode: DisplayMode = (activeTab === "exchange" || activeTab === "request") ? "bridge" : activeTab;
+  const mode: DisplayMode = activeTab === "request" ? "exchange" : (activeTab === "exchange" ? "exchange" : activeTab as DisplayMode);
   const [activeStep, setActiveStep] = useState(0);
 
   const config = modeConfig[mode];
@@ -88,7 +95,7 @@ const DynamicExplainer = ({ activeTab, onCtaClick }: Props) => {
     [prefix, t]
   );
 
-  // Keep invoice hidden; default exchange view uses the approved bridge explainer visual
+  // Hide for request/invoice — handled by InvoiceHowItWorks in Index.tsx
   if (activeTab === "request") return null;
 
   return (

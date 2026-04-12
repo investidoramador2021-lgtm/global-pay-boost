@@ -356,6 +356,23 @@
         "description": "Jou ontvanger ontvang fondse met 'n skoon geskiedenis."
       },
       "cta": "Stuur Privaat"
+    },
+    "exchange": {
+      "heading": "Nie-Bewaarbare Kripto-Ruil.",
+      "subtitle": "Ruil 500+ bates onmiddellik sonder registrasie. Direkte beursie-tot-beursie-vereffening met deursigtige koerse en geen verborge fooie.",
+      "step1": {
+        "title": "Kies Bates",
+        "description": "Kies uit ons Vlak-1 likiditeitspaare insluitend BTC, ETH en stablecoins."
+      },
+      "step2": {
+        "title": "Onmiddellike Kwotasie",
+        "description": "Kry intydse, deursigtige koerse met nul verborge fooie."
+      },
+      "step3": {
+        "title": "Veilige Ruil",
+        "description": "Voer die transaksie onmiddellik uit en ontvang fondse direk na jou nie-bewaarbare beursie."
+      },
+      "cta": "Begin Ruil"
     }
   },
   "whitepaper": {
