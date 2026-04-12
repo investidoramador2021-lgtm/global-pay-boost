@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import { Helmet } from "react-helmet-async";
 import { Link, useLocation } from "react-router-dom";
-import { Calendar, Clock, ArrowRight, FileText, Shield, Landmark } from "lucide-react";
+import { Calendar, Clock, ArrowRight, FileText, Shield, Landmark, Zap } from "lucide-react";
 import SiteHeader from "@/components/SiteHeader";
 import SiteFooter from "@/components/SiteFooter";
 import { fetchAllPosts, type BlogPost } from "@/lib/blog-data";
@@ -27,6 +27,16 @@ const WHITEPAPERS = [
     accent: "272 100% 68%",
     category: "Institutional Whitepaper",
     tags: ["Shielded Routing", "Privacy", "M&A Confidentiality", "Executive Payroll"],
+  },
+  {
+    title: "Q2 2026 Liquidity Expansion: Non-Custodial Cross-Chain Settlement",
+    subtitle: "New Asset Integrations",
+    excerpt: "USDC on ZkSync Era, USDS (Sky), edgeX (EDGE), and PancakeSwap CAKE on Aptos. Layer-2 powerhouses and next-gen stablecoins reducing transaction friction globally.",
+    path: "/liquidity-expansion",
+    icon: Zap,
+    accent: "190 100% 55%",
+    category: "Institutional Whitepaper",
+    tags: ["ZkSync", "Aptos", "Layer-2", "Stablecoins"],
   },
 ];
 
