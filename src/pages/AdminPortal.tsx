@@ -85,7 +85,7 @@ const AdminPortal = () => {
       .select("*")
       .order("created_at", { ascending: false })
       .limit(200);
-    setChatLogs((logs || []) as ChatLog[]);
+    setChatLogs((logs as unknown as ChatLog[]) || []);
 
     setLoading(false);
   }, []);
