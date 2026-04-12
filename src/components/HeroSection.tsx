@@ -8,7 +8,7 @@ import DynamicExplainer from "@/components/DynamicExplainer";
 const trustIcons = [Shield, Lock, Server];
 const trustKeys = ["trustNoAccount", "trustNonCustodial", "trustSettlement"] as const;
 
-type WidgetMode = "exchange" | "buysell" | "private" | "bridge";
+type WidgetMode = "exchange" | "buysell" | "private" | "bridge" | "request";
 
 const staggerContainer = {
   hidden: {},
