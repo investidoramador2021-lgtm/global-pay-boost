@@ -32,7 +32,7 @@ const Index = () => {
   const lang = getLangFromPath(pathname);
   const homeUrl = `https://mrcglobalpay.com${langPath(lang, "/")}`;
   const { t } = useTranslation();
-  const [activeWidgetTab, setActiveWidgetTab] = useState<string>("exchange");
+  const [activeWidgetTab, setActiveWidgetTab] = useState<"exchange" | "buysell" | "private" | "bridge" | "request">("exchange");
   usePartnerRef();
   const financialServiceJsonLd = {
     "@context": "https://schema.org",
