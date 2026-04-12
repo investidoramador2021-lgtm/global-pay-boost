@@ -12,6 +12,7 @@ import { useToast } from "@/hooks/use-toast";
 import { Shield, Users, Bitcoin, TrendingUp, Check, LogOut, Lock } from "lucide-react";
 import SiteHeader from "@/components/SiteHeader";
 import SiteFooter from "@/components/SiteFooter";
+import ExchangeTracker from "@/components/ExchangeTracker";
 
 interface Partner {
   id: string;
@@ -54,6 +55,7 @@ const AdminPortal = () => {
   const [partners, setPartners] = useState<Partner[]>([]);
   const [transactions, setTransactions] = useState<Tx[]>([]);
   const [tab, setTab] = useState("current");
+  const [adminTab, setAdminTab] = useState<"partners" | "exchanges">("exchanges");
   const navigate = useNavigate();
   const { toast } = useToast();
 
@@ -510,95 +512,114 @@ const AdminPortal = () => {
             </Button>
           </div>
 
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
-            <Card className="border-border/40 bg-card/40 backdrop-blur-sm">
-              <CardContent className="p-5 flex items-center gap-3">
-                <Users className="w-5 h-5 text-primary" />
-                <div>
-                  <p className="text-xs text-muted-foreground">Total Partners</p>
-                  <p className="text-2xl font-bold text-foreground">{partners.length}</p>
-                </div>
-              </CardContent>
-            </Card>
-            <Card className="border-border/40 bg-card/40 backdrop-blur-sm">
-              <CardContent className="p-5 flex items-center gap-3">
-                <TrendingUp className="w-5 h-5 text-primary" />
-                <div>
-                  <p className="text-xs text-muted-foreground">Month Volume</p>
-                  <p className="text-2xl font-bold text-foreground">${totalVolume.toLocaleString("en-US", { minimumFractionDigits: 2 })}</p>
-                </div>
-              </CardContent>
-            </Card>
-            <Card className="border-border/40 bg-card/40 backdrop-blur-sm">
-              <CardContent className="p-5 flex items-center gap-3">
-                <Bitcoin className="w-5 h-5 text-amber-400" />
-                <div>
-                  <p className="text-xs text-muted-foreground">Unpaid BTC</p>
-                  <p className="text-2xl font-bold text-foreground">{totalUnpaid.toFixed(8)}</p>
-                </div>
-              </CardContent>
-            </Card>
-            <Card className="border-border/40 bg-card/40 backdrop-blur-sm">
-              <CardContent className="p-5 flex items-center gap-3">
-                <Check className="w-5 h-5 text-primary" />
-                <div>
-                  <p className="text-xs text-muted-foreground">Lifetime Paid</p>
-                  <p className="text-2xl font-bold text-foreground">{totalPaid.toFixed(8)}</p>
-                </div>
-              </CardContent>
-            </Card>
-          </div>
+          {/* Top-level admin tabs */}
+          <Tabs value={adminTab} onValueChange={(v) => setAdminTab(v as any)}>
+            <TabsList className="bg-card/60 backdrop-blur-sm border border-border/40">
+              <TabsTrigger value="exchanges" className="gap-2 data-[state=active]:bg-primary/10">
+                <TrendingUp className="w-4 h-4" /> Exchange Monitor
+              </TabsTrigger>
+              <TabsTrigger value="partners" className="gap-2 data-[state=active]:bg-primary/10">
+                <Users className="w-4 h-4" /> Partner Management
+              </TabsTrigger>
+            </TabsList>
 
-          <Card className="border-border/40 bg-card/40 backdrop-blur-sm">
-            <CardHeader><CardTitle className="text-lg flex items-center gap-2"><Users className="w-5 h-5" /> Partner Directory</CardTitle></CardHeader>
-            <CardContent>
-              <Table>
-                <TableHeader>
-                  <TableRow>
-                    <TableHead>Name</TableHead>
-                    <TableHead>Referral Code</TableHead>
-                    <TableHead>BTC Wallet</TableHead>
-                  </TableRow>
-                </TableHeader>
-                <TableBody>
-                  {partners.map((p) => (
-                    <TableRow key={p.id}>
-                      <TableCell className="font-medium">{p.first_name} {p.last_name}</TableCell>
-                      <TableCell className="font-mono text-sm text-muted-foreground">{p.referral_code}</TableCell>
-                      <TableCell className="font-mono text-xs text-muted-foreground break-all">{p.btc_wallet}</TableCell>
-                    </TableRow>
-                  ))}
-                </TableBody>
-              </Table>
-            </CardContent>
-          </Card>
+            <TabsContent value="exchanges" className="mt-6">
+              <ExchangeTracker />
+            </TabsContent>
 
-          <Card className="border-border/40 bg-card/40 backdrop-blur-sm">
-            <CardHeader><CardTitle className="text-lg">Transactions & Payouts</CardTitle></CardHeader>
-            <CardContent>
-              <Tabs value={tab} onValueChange={setTab}>
-                <TabsList className="mb-4">
-                  <TabsTrigger value="current">Current Month</TabsTrigger>
-                  <TabsTrigger value="unpaid">Unpaid ({unpaidTxs.length})</TabsTrigger>
-                  <TabsTrigger value="history">History</TabsTrigger>
-                </TabsList>
-                <TabsContent value="current"><TxTable txs={currentMonthTxs} showPay /></TabsContent>
-                <TabsContent value="unpaid"><TxTable txs={unpaidTxs} showPay /></TabsContent>
-                <TabsContent value="history">
-                  {Object.keys(historyGrouped).length === 0 ? (
-                    <p className="text-sm text-muted-foreground text-center py-8">No historical transactions.</p>
-                  ) : (
-                    Object.entries(historyGrouped).map(([month, txs]) => (
-                      <div key={month} className="mb-6">
-                        <h3 className="font-semibold text-foreground mb-2">{month}</h3>
-                        <TxTable txs={txs} />
-                      </div>
-                    ))
-                  )}
-                </TabsContent>
-              </Tabs>
-            </CardContent>
-          </Card>
+            <TabsContent value="partners" className="mt-6 space-y-6">
+              {/* Partner stat cards */}
+              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+                <Card className="border-border/40 bg-card/40 backdrop-blur-sm">
+                  <CardContent className="p-5 flex items-center gap-3">
+                    <Users className="w-5 h-5 text-primary" />
+                    <div>
+                      <p className="text-xs text-muted-foreground">Total Partners</p>
+                      <p className="text-2xl font-bold text-foreground">{partners.length}</p>
+                    </div>
+                  </CardContent>
+                </Card>
+                <Card className="border-border/40 bg-card/40 backdrop-blur-sm">
+                  <CardContent className="p-5 flex items-center gap-3">
+                    <TrendingUp className="w-5 h-5 text-primary" />
+                    <div>
+                      <p className="text-xs text-muted-foreground">Month Volume</p>
+                      <p className="text-2xl font-bold text-foreground">${totalVolume.toLocaleString("en-US", { minimumFractionDigits: 2 })}</p>
+                    </div>
+                  </CardContent>
+                </Card>
+                <Card className="border-border/40 bg-card/40 backdrop-blur-sm">
+                  <CardContent className="p-5 flex items-center gap-3">
+                    <Bitcoin className="w-5 h-5 text-amber-400" />
+                    <div>
+                      <p className="text-xs text-muted-foreground">Unpaid BTC</p>
+                      <p className="text-2xl font-bold text-foreground">{totalUnpaid.toFixed(8)}</p>
+                    </div>
+                  </CardContent>
+                </Card>
+                <Card className="border-border/40 bg-card/40 backdrop-blur-sm">
+                  <CardContent className="p-5 flex items-center gap-3">
+                    <Check className="w-5 h-5 text-primary" />
+                    <div>
+                      <p className="text-xs text-muted-foreground">Lifetime Paid</p>
+                      <p className="text-2xl font-bold text-foreground">{totalPaid.toFixed(8)}</p>
+                    </div>
+                  </CardContent>
+                </Card>
+              </div>
+
+              <Card className="border-border/40 bg-card/40 backdrop-blur-sm">
+                <CardHeader><CardTitle className="text-lg flex items-center gap-2"><Users className="w-5 h-5" /> Partner Directory</CardTitle></CardHeader>
+                <CardContent>
+                  <Table>
+                    <TableHeader>
+                      <TableRow>
+                        <TableHead>Name</TableHead>
+                        <TableHead>Referral Code</TableHead>
+                        <TableHead>BTC Wallet</TableHead>
+                      </TableRow>
+                    </TableHeader>
+                    <TableBody>
+                      {partners.map((p) => (
+                        <TableRow key={p.id}>
+                          <TableCell className="font-medium">{p.first_name} {p.last_name}</TableCell>
+                          <TableCell className="font-mono text-sm text-muted-foreground">{p.referral_code}</TableCell>
+                          <TableCell className="font-mono text-xs text-muted-foreground break-all">{p.btc_wallet}</TableCell>
+                        </TableRow>
+                      ))}
+                    </TableBody>
+                  </Table>
+                </CardContent>
+              </Card>
+
+              <Card className="border-border/40 bg-card/40 backdrop-blur-sm">
+                <CardHeader><CardTitle className="text-lg">Transactions & Payouts</CardTitle></CardHeader>
+                <CardContent>
+                  <Tabs value={tab} onValueChange={setTab}>
+                    <TabsList className="mb-4">
+                      <TabsTrigger value="current">Current Month</TabsTrigger>
+                      <TabsTrigger value="unpaid">Unpaid ({unpaidTxs.length})</TabsTrigger>
+                      <TabsTrigger value="history">History</TabsTrigger>
+                    </TabsList>
+                    <TabsContent value="current"><TxTable txs={currentMonthTxs} showPay /></TabsContent>
+                    <TabsContent value="unpaid"><TxTable txs={unpaidTxs} showPay /></TabsContent>
+                    <TabsContent value="history">
+                      {Object.keys(historyGrouped).length === 0 ? (
+                        <p className="text-sm text-muted-foreground text-center py-8">No historical transactions.</p>
+                      ) : (
+                        Object.entries(historyGrouped).map(([month, txs]) => (
+                          <div key={month} className="mb-6">
+                            <h3 className="font-semibold text-foreground mb-2">{month}</h3>
+                            <TxTable txs={txs} />
+                          </div>
+                        ))
+                      )}
+                    </TabsContent>
+                  </Tabs>
+                </CardContent>
+              </Card>
+            </TabsContent>
+          </Tabs>
         </main>
       </div>
 
