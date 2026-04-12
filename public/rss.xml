@@ -260,5 +260,14 @@
       <pubDate>Sat, 12 Apr 2026 00:00:00 GMT</pubDate>
       <category>Partnership</category>
     </item>
+    <item>
+      <title>Q2 2026 Liquidity Expansion — New Asset Integrations</title>
+      <link>https://mrcglobalpay.com/liquidity-expansion</link>
+      <guid isPermaLink="true">https://mrcglobalpay.com/liquidity-expansion</guid>
+      <description>MRC GlobalPay integrates USDC (ZkSync Era), USDS (Sky), edgeX (EDGE), and PancakeSwap CAKE (Aptos). Non-custodial cross-chain settlement from $0.30. WETH (Polygon) and Perle (Solana) coming soon.</description>
+      <dc:creator>MRC GlobalPay Team</dc:creator>
+      <pubDate>Sat, 12 Apr 2026 00:00:00 GMT</pubDate>
+      <category>Whitepaper</category>
+    </item>
   </channel>
 </rss>

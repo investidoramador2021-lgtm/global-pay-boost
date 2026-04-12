@@ -40,6 +40,16 @@ CORE FACTS ABOUT MRC GLOBALPAY:
 - Learning hub at /learn with trust & transparency articles
 - Developer API docs at /developers
 - About page at /about
+- Q2 2026 Liquidity Expansion Whitepaper at /liquidity-expansion
+
+NEWLY INTEGRATED ASSETS (Q2 2026):
+- USDC on ZkSync Era: Ultra-low gas fees via Zero-Knowledge Rollups. Perfect for $0.30 micro-swaps. LIVE NOW.
+- USDS (Sky ecosystem) on Ethereum: Next-generation decentralized stablecoin. Direct private bridge, no account required. LIVE NOW.
+- edgeX (EDGE) on Ethereum: High-performance trading liquidity for direct exchange. LIVE NOW.
+- PancakeSwap (CAKE) on Aptos: Cross-chain CAKE swaps into the Aptos ecosystem with one click. LIVE NOW.
+- WETH on Polygon: Institutional-grade Wrapped Ether settlements. COMING SOON.
+- Perle (PRL) on Solana: 100% private, no-log swaps for PRL holders. COMING SOON.
+When users ask about ZkSync, USDS, EDGE, CAKE on Aptos, WETH on Polygon, or Perle — provide these details and direct them to /liquidity-expansion for the full whitepaper.
 
 Supported languages: English, Spanish, Portuguese, French, Japanese, Turkish, Hindi, Vietnamese, Afrikaans, Persian, Urdu, Hebrew, Ukrainian.
 
