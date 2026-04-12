@@ -21,6 +21,11 @@ function getCurrentPersona() {
 
 type Msg = { role: "user" | "assistant"; content: string };
 
+/* ── Human-like typing pace: drip tokens with random delays ── */
+function randomDelay(min: number, max: number) {
+  return new Promise<void>((r) => setTimeout(r, min + Math.random() * (max - min)));
+}
+
 const CHAT_URL = `${import.meta.env.VITE_SUPABASE_URL}/functions/v1/support-chat`;
 
 function genSessionId() {
@@ -72,6 +77,16 @@ const SupportChatWidget = () => {
     [sessionId]
   );
 
+  const updateAssistant = (text: string) => {
+    setMessages((prev) => {
+      const last = prev[prev.length - 1];
+      if (last?.role === "assistant" && prev.length > 1 && prev[prev.length - 2]?.role === "user") {
+        return prev.map((m, i) => (i === prev.length - 1 ? { ...m, content: text } : m));
+      }
+      return [...prev, { role: "assistant", content: text }];
+    });
+  };
+
   const send = async () => {
     const text = input.trim();
     if (!text || loading) return;
@@ -80,10 +95,12 @@ const SupportChatWidget = () => {
     setMessages((prev) => [...prev, userMsg]);
     setLoading(true);
 
-    let assistantSoFar = "";
     const allMessages = [...messages, userMsg].filter((m) => m.role === "user" || m.role === "assistant");
 
     try {
+      // Simulate initial "reading & typing" delay (0.8–2s) like a real person
+      await randomDelay(800, 2000);
+
       const resp = await fetch(CHAT_URL, {
         method: "POST",
         headers: {
@@ -97,44 +114,72 @@ const SupportChatWidget = () => {
 
       const reader = resp.body.getReader();
       const decoder = new TextDecoder();
-      let buffer = "";
+      let sseBuffer = "";
+      const tokenQueue: string[] = [];
+      let streamDone = false;
+      let fullResponse = "";
 
-      // eslint-disable-next-line no-constant-condition
-      while (true) {
-        const { done, value } = await reader.read();
-        if (done) break;
-        buffer += decoder.decode(value, { stream: true });
+      // Producer: read SSE stream and push tokens into queue
+      const readStream = async () => {
+        // eslint-disable-next-line no-constant-condition
+        while (true) {
+          const { done, value } = await reader.read();
+          if (done) { streamDone = true; break; }
+          sseBuffer += decoder.decode(value, { stream: true });
 
-        let idx: number;
-        while ((idx = buffer.indexOf("\n")) !== -1) {
-          let line = buffer.slice(0, idx);
-          buffer = buffer.slice(idx + 1);
-          if (line.endsWith("\r")) line = line.slice(0, -1);
-          if (!line.startsWith("data: ")) continue;
-          const json = line.slice(6).trim();
-          if (json === "[DONE]") break;
-          try {
-            const parsed = JSON.parse(json);
-            const content = parsed.choices?.[0]?.delta?.content;
-            if (content) {
-              assistantSoFar += content;
-              setMessages((prev) => {
-                const last = prev[prev.length - 1];
-                if (last?.role === "assistant" && prev.length > 1 && prev[prev.length - 2]?.role === "user") {
-                  return prev.map((m, i) => (i === prev.length - 1 ? { ...m, content: assistantSoFar } : m));
-                }
-                return [...prev, { role: "assistant", content: assistantSoFar }];
-              });
+          let idx: number;
+          while ((idx = sseBuffer.indexOf("\n")) !== -1) {
+            let line = sseBuffer.slice(0, idx);
+            sseBuffer = sseBuffer.slice(idx + 1);
+            if (line.endsWith("\r")) line = line.slice(0, -1);
+            if (!line.startsWith("data: ")) continue;
+            const json = line.slice(6).trim();
+            if (json === "[DONE]") { streamDone = true; return; }
+            try {
+              const parsed = JSON.parse(json);
+              const content = parsed.choices?.[0]?.delta?.content;
+              if (content) tokenQueue.push(content);
+            } catch {
+              sseBuffer = line + "\n" + sseBuffer;
+              break;
             }
-          } catch {
-            buffer = line + "\n" + buffer;
-            break;
           }
         }
-      }
+      };
 
-      // Save to DB
-      if (assistantSoFar) saveLog(text, assistantSoFar);
+      // Consumer: drip tokens at human-like pace
+      const drip = async () => {
+        let displayed = "";
+        while (!streamDone || tokenQueue.length > 0) {
+          if (tokenQueue.length > 0) {
+            const chunk = tokenQueue.shift()!;
+            // Drip character by character for short chunks, word-by-word for longer
+            const chars = chunk.split("");
+            for (const char of chars) {
+              displayed += char;
+              fullResponse = displayed;
+              updateAssistant(displayed);
+              // Vary speed: pause longer on punctuation, shorter on regular chars
+              if (".!?".includes(char)) {
+                await randomDelay(120, 350); // pause on sentence end
+              } else if (char === ",") {
+                await randomDelay(60, 150);
+              } else if (char === "\n") {
+                await randomDelay(100, 250);
+              } else {
+                await randomDelay(15, 45); // ~25-40 WPM typing speed
+              }
+            }
+          } else {
+            await randomDelay(30, 60); // wait for more tokens
+          }
+        }
+      };
+
+      // Run producer and consumer concurrently
+      await Promise.all([readStream(), drip()]);
+
+      if (fullResponse) saveLog(text, fullResponse);
     } catch {
       const fallback = "I'm sorry, I'm having trouble connecting right now. Please try again or email support@mrc-pay.com.";
       setMessages((prev) => [...prev, { role: "assistant", content: fallback }]);
