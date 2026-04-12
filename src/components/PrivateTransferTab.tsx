@@ -248,6 +248,7 @@ const PrivateTransferTab = () => {
       localStorage.setItem("mrc_recent_txs", JSON.stringify(stored.slice(0, 10)));
     } catch {}
     try {
+      const refCode = sessionStorage.getItem("mrc_partner_ref") || null;
       await supabase.from("swap_transactions").insert({
         transaction_id: tx.id,
         recipient_address: recipientAddr.trim().toLowerCase(),
@@ -255,6 +256,7 @@ const PrivateTransferTab = () => {
         from_currency: tx.fromCurrency,
         to_currency: tx.toCurrency,
         amount: tx.amount,
+        ref_code: refCode,
       });
     } catch {}
   };
