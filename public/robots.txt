@@ -116,6 +116,8 @@ Disallow: /sell
 Disallow: /payout
 Disallow: /admin-portal-mrc
 Disallow: /dashboard
+Disallow: /pay/
+Disallow: /status/
 
 Allow: /private-transfer
 Allow: /permanent-bridge

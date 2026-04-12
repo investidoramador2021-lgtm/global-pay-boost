@@ -33,6 +33,18 @@ const PermanentBridge = () => {
                 "https://www.linkedin.com/company/mrc-globalpay",
                 "https://www10.fintrac-canafe.gc.ca/msb-esm/public/detailed-information/bns-new/7b226d7362526567697374726174696f6e4e756d626572223a224d3233323235363338227d"
               ]
+            },
+            "offers": {
+              "@type": "Offer",
+              "name": "Permanent Crypto Bridge",
+              "description": "Reusable deposit address with 0.5% inclusive service fee and zero session timeouts",
+              "priceSpecification": {
+                "@type": "UnitPriceSpecification",
+                "price": "0.5",
+                "priceCurrency": "USD",
+                "unitCode": "P1",
+                "description": "0.5% inclusive service fee"
+              }
             }
           })}
         </script>
