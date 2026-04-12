@@ -27,6 +27,10 @@ export const SWAP_SOLUTIONS: SwapSolution[] = [
   { from_token: "SOL", to_token: "ONDO", slug: "sol-to-ondo", use_case: "RWA Yield Access", min_amount_usd: "0.30", network_advantage: "Instant access to tokenized US Treasury yields on Solana" },
   { from_token: "SOL", to_token: "NOS", slug: "sol-to-nos", use_case: "AI GPU Compute", min_amount_usd: "0.30", network_advantage: "Swap into decentralized GPU inference on Solana from $0.30" },
   { from_token: "SOL", to_token: "JUPSOL", slug: "sol-to-jupsol", use_case: "Liquid Staking", min_amount_usd: "0.30", network_advantage: "Earn staking yield with full liquidity via Jupiter LST" },
+  { from_token: "USDC", to_token: "USDT", slug: "usdc-zksync-to-usdt", use_case: "ZkSync Micro-Swap", min_amount_usd: "0.30", network_advantage: "Near-instant settlement via ZK Rollups with negligible gas" },
+  { from_token: "USDS", to_token: "USDC", slug: "usds-to-usdc", use_case: "Stablecoin Bridge", min_amount_usd: "0.30", network_advantage: "Sky ecosystem stable directly bridged to USDC" },
+  { from_token: "CAKE", to_token: "USDT", slug: "cake-aptos-to-usdt", use_case: "Aptos Cross-Chain", min_amount_usd: "0.30", network_advantage: "One-click CAKE exit from Aptos to stablecoins" },
+  { from_token: "EDGE", to_token: "ETH", slug: "edge-to-eth", use_case: "Trading Liquidity", min_amount_usd: "0.30", network_advantage: "Direct edgeX-to-ETH settlement on Ethereum" },
 ];
 
 export function getSolutionBySlug(slug: string): SwapSolution | undefined {
