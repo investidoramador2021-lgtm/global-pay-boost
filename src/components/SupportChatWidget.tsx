@@ -10,9 +10,9 @@ import priyaImg from "@/assets/support-agent-priya.jpg";
 
 /* ── 3 Support Personas — rotate based on 8-hour shifts ── */
 const PERSONAS = [
-  { name: "Sarah Mitchell", role: "Customer Support", img: sarahImg, hours: [0, 8] },
-  { name: "James Chen", role: "Customer Support", img: jamesImg, hours: [8, 16] },
-  { name: "Priya Sharma", role: "Customer Support", img: priyaImg, hours: [16, 24] },
+  { name: "Sarah Mitchell", role: "Concierge", img: sarahImg, hours: [0, 8] },
+  { name: "James Chen", role: "Concierge", img: jamesImg, hours: [8, 16] },
+  { name: "Priya Sharma", role: "Concierge", img: priyaImg, hours: [16, 24] },
 ];
 
 function getCurrentPersona() {
@@ -34,19 +34,19 @@ function genSessionId() {
 }
 
 const WELCOME_MESSAGES: Record<string, (name: string) => string> = {
-  en: (n) => `Hi! I'm ${n} from MRC GlobalPay support. How can I help you today? 😊`,
-  es: (n) => `¡Hola! Soy ${n} del equipo de soporte de MRC GlobalPay. ¿En qué puedo ayudarte? 😊`,
-  pt: (n) => `Olá! Sou ${n} do suporte MRC GlobalPay. Como posso ajudar? 😊`,
-  fr: (n) => `Bonjour ! Je suis ${n} du support MRC GlobalPay. Comment puis-je vous aider ? 😊`,
-  ja: (n) => `こんにちは！MRC GlobalPayサポートの${n}です。何かお手伝いできますか？😊`,
-  tr: (n) => `Merhaba! MRC GlobalPay destek ekibinden ${n}. Size nasıl yardımcı olabilirim? 😊`,
-  hi: (n) => `नमस्ते! मैं MRC GlobalPay सपोर्ट से ${n} हूँ। मैं आपकी कैसे मदद कर सकता/सकती हूँ? 😊`,
-  vi: (n) => `Xin chào! Tôi là ${n} từ bộ phận hỗ trợ MRC GlobalPay. Tôi có thể giúp gì cho bạn? 😊`,
-  af: (n) => `Hallo! Ek is ${n} van MRC GlobalPay ondersteuning. Hoe kan ek jou help? 😊`,
-  fa: (n) => `سلام! من ${n} از تیم پشتیبانی MRC GlobalPay هستم. چطور می‌تونم کمکتون کنم؟ 😊`,
-  ur: (n) => `السلام علیکم! میں MRC GlobalPay سپورٹ سے ${n} ہوں۔ میں آپ کی کیسے مدد کر سکتا/سکتی ہوں؟ 😊`,
-  he: (n) => `שלום! אני ${n} מצוות התמיכה של MRC GlobalPay. איך אוכל לעזור? 😊`,
-  uk: (n) => `Вітаю! Я ${n} з підтримки MRC GlobalPay. Чим можу допомогти? 😊`,
+  en: (n) => `Welcome to MRC GlobalPay. I'm ${n}, your personal concierge. How can I assist you today?`,
+  es: (n) => `Bienvenido a MRC GlobalPay. Soy ${n}, su concierge personal. ¿En qué puedo asistirle?`,
+  pt: (n) => `Bem-vindo ao MRC GlobalPay. Sou ${n}, seu concierge pessoal. Como posso ajudá-lo?`,
+  fr: (n) => `Bienvenue chez MRC GlobalPay. Je suis ${n}, votre concierge personnel. Comment puis-je vous assister ?`,
+  ja: (n) => `MRC GlobalPayへようこそ。${n}と申します。パーソナルコンシェルジュとしてお手伝いいたします。`,
+  tr: (n) => `MRC GlobalPay'e hoş geldiniz. Ben ${n}, kişisel danışmanınız. Size nasıl yardımcı olabilirim?`,
+  hi: (n) => `MRC GlobalPay में आपका स्वागत है। मैं ${n}, आपका व्यक्तिगत कंसीयज हूँ। मैं आपकी कैसे सहायता कर सकता/सकती हूँ?`,
+  vi: (n) => `Chào mừng đến MRC GlobalPay. Tôi là ${n}, trợ lý cá nhân của bạn. Tôi có thể giúp gì cho bạn?`,
+  af: (n) => `Welkom by MRC GlobalPay. Ek is ${n}, jou persoonlike konsierge. Hoe kan ek jou help?`,
+  fa: (n) => `به MRC GlobalPay خوش آمدید. من ${n} هستم، دستیار شخصی شما. چطور می‌توانم کمکتان کنم؟`,
+  ur: (n) => `MRC GlobalPay میں خوش آمدید۔ میں ${n} ہوں، آپ کا ذاتی کنسیئرج۔ میں آپ کی کیسے مدد کر سکتا/سکتی ہوں؟`,
+  he: (n) => `ברוכים הבאים ל-MRC GlobalPay. אני ${n}, הקונסיירז' האישי שלך. כיצד אוכל לסייע לך?`,
+  uk: (n) => `Ласкаво просимо до MRC GlobalPay. Я ${n}, ваш персональний консьєрж. Чим можу допомогти?`,
 };
 
 const SupportChatWidget = () => {
@@ -313,7 +313,7 @@ const SupportChatWidget = () => {
               </Button>
             </div>
             <p className="text-[10px] text-muted-foreground/50 mt-1.5 text-center">
-              Powered by MRC GlobalPay AI · Available 24/7
+              MRC GlobalPay Concierge · Available 24/7
             </p>
           </div>
         </div>
