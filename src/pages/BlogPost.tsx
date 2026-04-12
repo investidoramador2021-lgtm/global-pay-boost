@@ -5,9 +5,11 @@ import { Calendar, Clock, ArrowLeft, ArrowRight, Zap } from "lucide-react";
 import SiteHeader from "@/components/SiteHeader";
 import SiteFooter from "@/components/SiteFooter";
 import BlogMarkdown from "@/components/blog/BlogMarkdown";
+import BlogLanguageToggle from "@/components/blog/BlogLanguageToggle";
 import TableOfContents, { extractHeadings } from "@/components/blog/TableOfContents";
 import { fetchPostBySlug, fetchRelatedPosts, type BlogPost } from "@/lib/blog-data";
 import { getLangFromPath, langPath, supportedLanguages } from "@/i18n";
+import { TRANSLATED_BEGINNERS_GUIDE_POSTS } from "@/lib/blog/translated-beginners-guide-posts";
 
 const BlogPostPage = () => {
   const { slug } = useParams<{ slug: string }>();
@@ -232,6 +234,13 @@ const BlogPostPage = () => {
                   <li className="flex items-center gap-2"><span className="text-primary">•</span> By {post.author.name}, {post.author.role}</li>
                 </ul>
               </div>
+
+              {slug === "beginners-guide-digital-assets-wallet-to-swap" && (
+                <BlogLanguageToggle
+                  availableLanguages={new Set(Object.keys(TRANSLATED_BEGINNERS_GUIDE_POSTS))}
+                  slug={slug}
+                />
+              )}
 
               <TableOfContents markdown={post.content} />
               <BlogMarkdown content={post.content} />
