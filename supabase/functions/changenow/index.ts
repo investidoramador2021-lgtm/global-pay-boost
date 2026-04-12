@@ -8,6 +8,27 @@ const corsHeaders = {
 
 const CHANGENOW_BASE = 'https://api.changenow.io/v1';
 
+// Fire-and-forget Telegram notification
+async function notifyTelegram(type: 'swap' | 'alert' | 'error', message: string) {
+  try {
+    const botToken = Deno.env.get('TELEGRAM_BOT_TOKEN');
+    const chatId = Deno.env.get('TELEGRAM_CHAT_ID');
+    if (!botToken || !chatId) return;
+    await fetch(`https://api.telegram.org/bot${botToken}/sendMessage`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        chat_id: chatId,
+        text: message,
+        parse_mode: 'HTML',
+        disable_notification: type === 'swap',
+      }),
+    });
+  } catch (e) {
+    console.error('Telegram notify failed:', e);
+  }
+}
+
 // Validation helpers
 const TICKER_RE = /^[a-z0-9]{1,20}$/i;
 const TX_ID_RE = /^[a-zA-Z0-9_-]{1,64}$/;
