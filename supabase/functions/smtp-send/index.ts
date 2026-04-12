@@ -7,10 +7,13 @@ const corsHeaders = {
 }
 
 // ── Persona routing ──
-const PERSONAS: Record<string, { from: string; name: string }> = {
-  'no-reply':    { from: 'no-reply@mrc-pay.com',    name: 'MRC GlobalPay' },
-  'support':     { from: 'support@mrc-pay.com',      name: 'MRC GlobalPay Support' },
-  'compliance':  { from: 'compliance@mrc-pay.com',   name: 'MRC GlobalPay Compliance' },
+// Persona routing — display name changes, from address uses SMTP_USER
+function getPersona(type: string): { name: string } {
+  switch (type) {
+    case 'compliance': return { name: 'MRC GlobalPay Compliance' }
+    case 'system-error': return { name: 'MRC GlobalPay Support' }
+    default: return { name: 'MRC GlobalPay' }
+  }
 }
 
 // ── Data masking utility ──
