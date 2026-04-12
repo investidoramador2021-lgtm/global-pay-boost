@@ -1703,7 +1703,7 @@ const ExchangeWidget = ({ onTabChange }: ExchangeWidgetProps = {}) => {
                       : "text-muted-foreground hover:text-foreground hover:bg-background"
                   }`}
                 >
-                  <FileText className="h-4 w-4" /> {t("widget.tabs.request")}
+                  <FileText className="h-4 w-4" /> {t("widget.tabs.invoice")}
                 </button>
               </div>
               <span className="hidden min-[481px]:flex items-center gap-1.5 rounded-full border border-trust/30 bg-trust/10 px-2.5 py-1 font-body text-[10px] font-semibold uppercase tracking-wider text-trust">
