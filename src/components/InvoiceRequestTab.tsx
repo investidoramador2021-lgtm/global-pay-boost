@@ -2,11 +2,9 @@ import { useState, useEffect, useRef, useMemo } from "react";
 import { Loader2, ChevronDown, X, Copy, Check, FileText, Mail, Clock, Lock, QrCode } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import DestinationAddressInput, { tickerToAddressType } from "@/components/DestinationAddressInput";
+import DestinationAddressInput from "@/components/DestinationAddressInput";
 import {
   getCurrencies,
-  getEstimate,
-  getMinAmount,
   type Currency,
 } from "@/lib/changenow";
 
