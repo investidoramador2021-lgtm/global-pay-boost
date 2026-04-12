@@ -113,7 +113,16 @@ export function tickerToAddressType(ticker?: string, network?: string): AddressN
   return "unknown";
 }
 
-export function addressTypeLabel(type: AddressNetworkType): string {
+export function addressTypeLabel(type: AddressNetworkType, t?: (key: string) => string): string {
+  if (t) {
+    switch (type) {
+      case "evm": return t("address.networkEvm");
+      case "btc": return t("address.networkBtc");
+      case "sol": return t("address.networkSol");
+      case "tron": return t("address.networkTron");
+      default: return t("address.networkUnknown");
+    }
+  }
   switch (type) {
     case "evm": return "Ethereum / EVM";
     case "btc": return "Bitcoin";
@@ -147,6 +156,7 @@ const DestinationAddressInput = ({
   className,
   disabled,
 }: DestinationAddressInputProps) => {
+  const { t } = useTranslation();
   const [focused, setFocused] = useState(false);
   const [pasting, setPasting] = useState(false);
   const inputRef = useRef<HTMLInputElement>(null);
@@ -214,8 +224,8 @@ const DestinationAddressInput = ({
           spellCheck={false}
           placeholder={
             currencyTicker
-              ? `Paste your ${currencyTicker.toUpperCase()} destination address`
-              : "Paste your destination address"
+              ? t("address.placeholder", { ticker: currencyTicker.toUpperCase() })
+              : t("address.placeholderGeneric")
           }
           value={value}
           onChange={handleChange}
@@ -287,7 +297,7 @@ const DestinationAddressInput = ({
           ) : (
             <Clipboard className="h-3.5 w-3.5" />
           )}
-          <span className="hidden sm:inline">Paste</span>
+          <span className="hidden sm:inline">{t("address.paste")}</span>
         </button>
       </div>
 
@@ -302,7 +312,7 @@ const DestinationAddressInput = ({
             className="mt-2 flex items-center gap-1.5 font-body text-xs text-trust"
           >
             <CheckCircle2 className="h-3.5 w-3.5" />
-            ✓ This is a valid {detectedNetwork.name} address.
+            ✓ {t("address.validAddress", { network: detectedNetwork.name })}
           </motion.p>
         )}
         {isMismatch && detectedNetwork && expectedNetworkType && (
@@ -316,8 +326,10 @@ const DestinationAddressInput = ({
             <p className="flex items-start gap-2 font-body text-xs font-medium text-destructive">
               <ShieldAlert className="mt-0.5 h-4 w-4 shrink-0" />
               <span>
-                <strong>Error:</strong> This is a {detectedNetwork.name} address. Please provide a valid{" "}
-                <strong>{addressTypeLabel(expectedNetworkType)}</strong> address to avoid loss of funds.
+                {t("address.mismatchError", {
+                  detected: detectedNetwork.name,
+                  expected: addressTypeLabel(expectedNetworkType, t),
+                })}
               </span>
             </p>
           </motion.div>
@@ -331,7 +343,7 @@ const DestinationAddressInput = ({
             className="mt-2 flex items-center gap-1.5 font-body text-xs text-destructive"
           >
             <AlertCircle className="h-3.5 w-3.5" />
-            Invalid address format for this network.
+            {t("address.invalidAddress")}
           </motion.p>
         )}
       </AnimatePresence>
