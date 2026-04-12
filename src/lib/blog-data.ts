@@ -7,6 +7,7 @@ import { SEPA_POST_EN, TRANSLATED_SEPA_POSTS } from "@/lib/blog/translated-sepa-
 import { CARD_POST_EN, TRANSLATED_CARD_POSTS } from "@/lib/blog/translated-card-posts";
 import { PRIVATE_TRANSFER_POST_EN, TRANSLATED_PRIVATE_TRANSFER_POSTS } from "@/lib/blog/translated-private-transfer-posts";
 import { BEGINNERS_GUIDE_EN, TRANSLATED_BEGINNERS_GUIDE_POSTS } from "@/lib/blog/translated-beginners-guide-posts";
+import { INVOICE_POST_EN, TRANSLATED_INVOICE_POSTS } from "@/lib/blog/translated-invoice-posts";
 import type { BlogPost, BlogAuthor } from "@/lib/blog/types";
 
 export type { BlogPost, BlogAuthor } from "@/lib/blog/types";
@@ -47,7 +48,7 @@ export async function fetchAllPosts(): Promise<BlogPost[]> {
 
   const dbPosts = (data || []).map(dbRowToPost);
   const dbSlugs = new Set(dbPosts.map((post) => post.slug));
-  const allSeedPosts = [...SEED_POSTS, PIX_POST_EN, SEPA_POST_EN, CARD_POST_EN, PRIVATE_TRANSFER_POST_EN, BEGINNERS_GUIDE_EN];
+  const allSeedPosts = [...SEED_POSTS, PIX_POST_EN, SEPA_POST_EN, CARD_POST_EN, PRIVATE_TRANSFER_POST_EN, BEGINNERS_GUIDE_EN, INVOICE_POST_EN];
   const uniqueSeedPosts = allSeedPosts.filter((post) => !dbSlugs.has(post.slug));
 
   return [...dbPosts, ...uniqueSeedPosts];
@@ -56,7 +57,7 @@ export async function fetchAllPosts(): Promise<BlogPost[]> {
 export async function fetchPostBySlug(slug: string, lang = "en"): Promise<BlogPost | undefined> {
   // For non-English languages, check all translated post collections
   if (lang !== "en") {
-    const translatedCollections = [TRANSLATED_BTC_ETH_POSTS, TRANSLATED_DUST_POSTS, TRANSLATED_PIX_POSTS, TRANSLATED_SEPA_POSTS, TRANSLATED_CARD_POSTS, TRANSLATED_PRIVATE_TRANSFER_POSTS, TRANSLATED_BEGINNERS_GUIDE_POSTS];
+    const translatedCollections = [TRANSLATED_BTC_ETH_POSTS, TRANSLATED_DUST_POSTS, TRANSLATED_PIX_POSTS, TRANSLATED_SEPA_POSTS, TRANSLATED_CARD_POSTS, TRANSLATED_PRIVATE_TRANSFER_POSTS, TRANSLATED_BEGINNERS_GUIDE_POSTS, TRANSLATED_INVOICE_POSTS];
     for (const collection of translatedCollections) {
       const translated = collection[lang];
       if (translated && translated.slug === slug) {
@@ -74,7 +75,7 @@ export async function fetchPostBySlug(slug: string, lang = "en"): Promise<BlogPo
 
   if (data) return dbRowToPost(data);
 
-  const allSeed = [...SEED_POSTS, PIX_POST_EN, SEPA_POST_EN, CARD_POST_EN, PRIVATE_TRANSFER_POST_EN, BEGINNERS_GUIDE_EN];
+  const allSeed = [...SEED_POSTS, PIX_POST_EN, SEPA_POST_EN, CARD_POST_EN, PRIVATE_TRANSFER_POST_EN, BEGINNERS_GUIDE_EN, INVOICE_POST_EN];
   return allSeed.find((post) => post.slug === slug);
 }
 
