@@ -296,6 +296,7 @@ Deno.serve(async (req) => {
   } catch (error: unknown) {
     const msg = error instanceof Error ? error.message : 'Unknown error';
     console.error('ChangeNow API error:', msg);
+    notifyTelegram('error', `🚨 [MRC GlobalPay] API Error\n${msg}`);
     return new Response(JSON.stringify({ error: msg }), {
       status: 500,
       headers: { ...corsHeaders, 'Content-Type': 'application/json' },
