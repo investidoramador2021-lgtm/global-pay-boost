@@ -300,6 +300,17 @@ const ExchangeWidget = ({ onTabChange }: ExchangeWidgetProps = {}) => {
   const [sendAmount, setSendAmount] = useState("1");
   const [estimatedAmount, setEstimatedAmount] = useState<string>("");
   const [minAmount, setMinAmount] = useState<number>(0);
+  const [sendBoxHighlight, setSendBoxHighlight] = useState(false);
+
+  // Listen for proactive bot popup to highlight the YOU SEND box
+  useEffect(() => {
+    const handler = () => {
+      setSendBoxHighlight(true);
+      setTimeout(() => setSendBoxHighlight(false), 6000);
+    };
+    window.addEventListener("mrc-highlight-send-box", handler);
+    return () => window.removeEventListener("mrc-highlight-send-box", handler);
+  }, []);
   const [loading, setLoading] = useState(false);
   const [estimating, setEstimating] = useState(false);
   const [showFromPicker, setShowFromPicker] = useState(false);
