@@ -305,14 +305,15 @@ Deno.serve(async (req) => {
 
     let html: string
     let subject: string
-    let personaName: string
     let bcc: string | undefined
     const l = getLang(lang)
+
+    // Resolve the correct SMTP account for this email type
+    const account = getSmtpAccount(type)
 
     switch (type) {
       case 'receipt': {
         if (!recipientEmail) throw new Error('recipientEmail required for receipts')
-        personaName = getPersona(type).name
         subject = `${l.receiptTitle} — MRC GlobalPay`
         html = renderReceipt({
           transactionId, fromAmount, fromCurrency, toCurrency,
@@ -322,19 +323,16 @@ Deno.serve(async (req) => {
       }
 
       case 'compliance': {
-        personaName = getPersona(type).name
         subject = l.complianceSubject
         html = renderComplianceAlert({
           transactionId, fromAmount, fromCurrency, toCurrency,
           recipientAddress, lang,
         })
-        // Always send to compliance
         bcc = 'compliance@mrc-pay.com'
         break
       }
 
       case 'system-error': {
-        personaName = getPersona(type).name
         subject = l.errorSubject
         html = renderSystemError({
           transactionId: transactionId || 'N/A',
@@ -357,8 +355,7 @@ Deno.serve(async (req) => {
         : recipientEmail
 
     await sendViaSMTP({
-      from: Deno.env.get('SMTP_USER')!,
-      fromName: personaName,
+      account,
       to: toAddress,
       subject,
       html,
