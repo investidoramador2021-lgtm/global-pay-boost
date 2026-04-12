@@ -291,7 +291,7 @@ const AdminPortal = () => {
   const totalVolume = currentMonthTxs.reduce((s, t) => s + Number(t.volume), 0);
   const totalUnpaid = unpaidTxs.reduce((s, t) => s + Number(t.commission_btc), 0);
   const totalPaid = transactions.filter((t) => t.is_paid).reduce((s, t) => s + Number(t.commission_btc), 0);
-  const totalProfit = transactions.reduce((s, t) => s + Number(t.volume) * 0.005, 0); // ~0.5% avg spread profit
+  const totalCommission = transactions.reduce((s, t) => s + Number(t.volume) * 0.001, 0); // 0.1% partner commission
 
   const getPartnerName = (pid: string) => {
     const p = partners.find((x) => x.id === pid);
@@ -350,7 +350,7 @@ const AdminPortal = () => {
           <TableHead>Partner</TableHead>
           <TableHead>Asset</TableHead>
           <TableHead className="text-right">Volume</TableHead>
-          <TableHead className="text-right">Est. Profit</TableHead>
+          <TableHead className="text-right">Commission (0.1%)</TableHead>
           <TableHead className="text-right">BTC Commission</TableHead>
           <TableHead>Status</TableHead>
           {showPay && <TableHead />}
@@ -363,14 +363,14 @@ const AdminPortal = () => {
           </TableRow>
         ) : (
           txs.map((tx) => {
-            const estProfit = Number(tx.volume) * 0.005;
+            const commission = Number(tx.volume) * 0.001;
             return (
               <TableRow key={tx.id}>
                 <TableCell className="text-muted-foreground">{new Date(tx.completed_at).toLocaleDateString()}</TableCell>
                 <TableCell>{getPartnerName(tx.partner_id)}</TableCell>
                 <TableCell className="uppercase">{tx.asset}</TableCell>
                 <TableCell className="text-right">${Number(tx.volume).toLocaleString("en-US", { minimumFractionDigits: 2 })}</TableCell>
-                <TableCell className="text-right text-primary font-mono">${estProfit.toLocaleString("en-US", { minimumFractionDigits: 2 })}</TableCell>
+                <TableCell className="text-right text-primary font-mono">${commission.toLocaleString("en-US", { minimumFractionDigits: 2 })}</TableCell>
                 <TableCell className="text-right font-mono">{Number(tx.commission_btc).toFixed(8)}</TableCell>
                 <TableCell>
                   {tx.is_paid ? (
