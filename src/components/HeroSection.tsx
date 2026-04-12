@@ -60,7 +60,9 @@ const HeroSection = () => {
                 variants={fadeUp}
                 className="mt-4 max-w-lg font-body text-base leading-relaxed text-muted-foreground sm:mt-6 sm:text-lg"
               >
-                {t("hero.subtitle")}
+                {t("hero.subtitle")}{" "}
+                <span className="font-semibold text-primary">{t("hero.subtitleMsb")}</span>{" "}
+                {t("hero.subtitleEnd")}
               </motion.p>
 
               {/* Trust Bar */}
