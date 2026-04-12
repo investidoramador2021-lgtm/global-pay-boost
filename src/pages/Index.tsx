@@ -256,6 +256,7 @@ const Index = () => {
             <LiveSwapTicker />
           </div>
           <FeaturesSection />
+          <DynamicExplainer activeTab={activeWidgetTab} />
           <NoLimitsSection />
           {activeWidgetTab !== "request" && <HowItWorksSection />}
           {activeWidgetTab === "request" && <InvoiceHowItWorks />}
