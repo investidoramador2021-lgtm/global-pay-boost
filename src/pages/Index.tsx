@@ -22,6 +22,7 @@ import TrendingEcosystems from "@/components/TrendingEcosystems";
 import GetTheAppBadges from "@/components/GetTheAppBadges";
 import BentoSpecsSection from "@/components/BentoSpecsSection";
 import LiveNetworkBadge from "@/components/LiveNetworkBadge";
+import DynamicExplainer from "@/components/DynamicExplainer";
 import PartnerProtocolCTA from "@/components/PartnerProtocolCTA";
 
 import { Helmet } from "react-helmet-async";
@@ -31,7 +32,7 @@ const Index = () => {
   const lang = getLangFromPath(pathname);
   const homeUrl = `https://mrcglobalpay.com${langPath(lang, "/")}`;
   const { t } = useTranslation();
-  const [activeWidgetTab, setActiveWidgetTab] = useState<string>("exchange");
+  const [activeWidgetTab, setActiveWidgetTab] = useState<"exchange" | "buysell" | "private" | "bridge" | "request">("exchange");
   usePartnerRef();
   const financialServiceJsonLd = {
     "@context": "https://schema.org",
@@ -255,6 +256,7 @@ const Index = () => {
             <LiveSwapTicker />
           </div>
           <FeaturesSection />
+          <DynamicExplainer activeTab={activeWidgetTab} />
           <NoLimitsSection />
           {activeWidgetTab !== "request" && <HowItWorksSection />}
           {activeWidgetTab === "request" && <InvoiceHowItWorks />}
