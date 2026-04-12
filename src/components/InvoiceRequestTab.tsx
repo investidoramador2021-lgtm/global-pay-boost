@@ -135,6 +135,18 @@ const InvoiceRequestTab = () => {
     && parseFloat(cryptoAmount) > 0 && walletAddress.trim() && addressValid
     && isEmailValid(requesterEmail) && isEmailValid(payerEmail);
 
+  const serviceFeeAmount = useMemo(() => {
+    const crypto = parseFloat(cryptoAmount);
+    if (isNaN(crypto) || crypto <= 0) return 0;
+    return parseFloat((crypto * SERVICE_FEE_PERCENT / 100).toFixed(8));
+  }, [cryptoAmount]);
+
+  const netCryptoAmount = useMemo(() => {
+    const crypto = parseFloat(cryptoAmount);
+    if (isNaN(crypto) || crypto <= 0) return 0;
+    return parseFloat((crypto - serviceFeeAmount).toFixed(8));
+  }, [cryptoAmount, serviceFeeAmount]);
+
   const handleIssueInvoice = async () => {
     if (!canSubmit) return;
     const id = `INV-${Date.now().toString(36).toUpperCase()}-${Math.random().toString(36).slice(2, 6).toUpperCase()}`;
@@ -156,6 +168,9 @@ const InvoiceRequestTab = () => {
           crypto_ticker: receiveCurrency ? receiveCurrency.ticker : "btc",
           wallet_address: walletAddress.trim(),
           language: i18n.language || "en",
+          service_fee_percent: SERVICE_FEE_PERCENT,
+          service_fee_amount: serviceFeeAmount,
+          net_crypto_amount: netCryptoAmount,
         })
         .select("token, expires_at")
         .single();
@@ -171,6 +186,7 @@ const InvoiceRequestTab = () => {
       const payUrl = `${siteUrl}/pay/${token}`;
       const statusUrl = `${siteUrl}/status/${token}`;
       const expiresAt = new Date(invoiceRow.expires_at).toLocaleDateString();
+      const tickerDisplay = receiveCurrency ? displayTicker(receiveCurrency) : "BTC";
 
       // 2. Send invoice email to payer
       await supabase.functions.invoke("send-transactional-email", {
@@ -184,7 +200,10 @@ const InvoiceRequestTab = () => {
             fiatAmount: fiatAmount,
             fiatCurrency,
             cryptoAmount,
-            cryptoTicker: receiveCurrency ? displayTicker(receiveCurrency) : "BTC",
+            cryptoTicker: tickerDisplay,
+            serviceFeePercent: String(SERVICE_FEE_PERCENT),
+            serviceFeeAmount: String(serviceFeeAmount),
+            netCryptoAmount: String(netCryptoAmount),
             invoiceId: id,
             payUrl,
             statusUrl,
@@ -207,7 +226,10 @@ const InvoiceRequestTab = () => {
             fiatAmount: fiatAmount,
             fiatCurrency,
             cryptoAmount,
-            cryptoTicker: receiveCurrency ? displayTicker(receiveCurrency) : "BTC",
+            cryptoTicker: tickerDisplay,
+            serviceFeePercent: String(SERVICE_FEE_PERCENT),
+            serviceFeeAmount: String(serviceFeeAmount),
+            netCryptoAmount: String(netCryptoAmount),
             invoiceId: id,
             statusUrl,
             expiresAt,
@@ -220,7 +242,7 @@ const InvoiceRequestTab = () => {
       await supabase.functions.invoke("telegram-notify", {
         body: {
           type: "swap",
-          message: `[MRC GlobalPay] 📄 Invoice Issued\nID: ${id}\nAmount: ${cryptoAmount} ${receiveCurrency ? displayTicker(receiveCurrency) : ""} (${fiatAmount} ${fiatCurrency})\nPayer: ${payerName}\nIssuer: ${requesterName}\nExpiry: ${INVOICE_EXPIRY_HOURS}h`,
+          message: `[MRC GlobalPay] 📄 Invoice Issued\nID: ${id}\nGross: ${cryptoAmount} ${tickerDisplay} (${fiatAmount} ${fiatCurrency})\nFee: ${serviceFeeAmount} ${tickerDisplay} (${SERVICE_FEE_PERCENT}%)\nNet: ${netCryptoAmount} ${tickerDisplay}\nPayer: ${payerName}\nIssuer: ${requesterName}\nExpiry: ${INVOICE_EXPIRY_HOURS}h`,
         },
       });
     } catch (err) {
