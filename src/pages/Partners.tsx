@@ -8,6 +8,9 @@ import { Label } from "@/components/ui/label";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { useToast } from "@/hooks/use-toast";
 import { Shield, ArrowRight, Bitcoin, TrendingUp, BarChart3, Wallet } from "lucide-react";
+import SiteHeader from "@/components/SiteHeader";
+import SiteFooter from "@/components/SiteFooter";
+import MobileBottomNav from "@/components/MobileBottomNav";
 
 const infoItems = [
   {
@@ -103,7 +106,8 @@ const Partners = () => {
         <meta name="description" content="Join the MRC GlobalPay Partner Program. Earn BTC rewards on every settlement processed through your referral network." />
       </Helmet>
 
-      <div className="min-h-screen bg-background flex flex-col lg:flex-row">
+      <SiteHeader />
+      <div className="min-h-screen bg-background flex flex-col lg:flex-row pt-20">
         {/* Left – Information */}
         <div className="flex-1 flex flex-col justify-center px-6 py-12 lg:px-16 lg:py-0">
           <div className="max-w-lg mx-auto lg:mx-0 space-y-8">
@@ -213,6 +217,8 @@ const Partners = () => {
           </Card>
         </div>
       </div>
+      <SiteFooter />
+      <MobileBottomNav />
     </>
   );
 };
