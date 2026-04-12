@@ -9,7 +9,7 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { useToast } from "@/hooks/use-toast";
-import { Copy, LogOut, Bitcoin, TrendingUp, Check, RefreshCw, Clock, CheckCircle2, XCircle, ArrowRightLeft, AlertTriangle, Wallet } from "lucide-react";
+import { Copy, LogOut, Bitcoin, TrendingUp, Check, RefreshCw, Clock, CheckCircle2, XCircle, ArrowRightLeft, AlertTriangle, Wallet, Lock } from "lucide-react";
 import SiteHeader from "@/components/SiteHeader";
 import SiteFooter from "@/components/SiteFooter";
 import MobileBottomNav from "@/components/MobileBottomNav";

@@ -324,6 +324,7 @@ export type Database = {
           created_at: string
           expires_at: string
           id: string
+          purpose: string
           token: string
           used_at: string | null
           user_id: string
@@ -332,6 +333,7 @@ export type Database = {
           created_at?: string
           expires_at: string
           id?: string
+          purpose?: string
           token: string
           used_at?: string | null
           user_id: string
@@ -340,6 +342,7 @@ export type Database = {
           created_at?: string
           expires_at?: string
           id?: string
+          purpose?: string
           token?: string
           used_at?: string | null
           user_id?: string
