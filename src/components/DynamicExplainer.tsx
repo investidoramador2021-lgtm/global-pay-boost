@@ -7,6 +7,7 @@ import explainerExchange from "@/assets/explainer-exchange-masked.png";
 import explainerBuy from "@/assets/explainer-buy-masked-v2.png";
 import explainerBridge from "@/assets/explainer-bridge-masked.png";
 import explainerPrivate from "@/assets/explainer-private-masked.png";
+import explainerInvoice from "@/assets/invoice-3d-hero.png";
 import visaLogo from "@/assets/logo-visa.png";
 import mastercardLogo from "@/assets/logo-mastercard.png";
 import applePayLogo from "@/assets/logo-applepay.png";
@@ -21,7 +22,7 @@ interface Props {
   onCtaClick?: (tab: WidgetMode) => void;
 }
 
-type DisplayMode = "exchange" | "buysell" | "private" | "bridge";
+type DisplayMode = "exchange" | "buysell" | "private" | "bridge" | "invoice";
 
 const logos = [
   { src: visaLogo, alt: "Visa" },
@@ -57,6 +58,12 @@ const modeConfig: Record<DisplayMode, { accent: string; label: string; image: st
     image: explainerPrivate,
     glow: "0 0 70px hsl(272 100% 68% / 0.28), 0 0 140px hsl(272 100% 68% / 0.12)",
   },
+  invoice: {
+    accent: "38 92% 50%",
+    label: "INVOICE",
+    image: explainerInvoice,
+    glow: "0 0 70px hsl(38 92% 50% / 0.28), 0 0 140px hsl(38 92% 50% / 0.12)",
+  },
 };
 
 const labelPositions = [
@@ -79,7 +86,7 @@ const lineStyles = [
 
 const DynamicExplainer = ({ activeTab, onCtaClick }: Props) => {
   const { t } = useTranslation();
-  const mode: DisplayMode = activeTab === "request" ? "exchange" : (activeTab === "exchange" ? "exchange" : activeTab as DisplayMode);
+  const mode: DisplayMode = activeTab === "request" ? "invoice" : (activeTab as DisplayMode);
   const [activeStep, setActiveStep] = useState(0);
 
   const config = modeConfig[mode];
@@ -94,9 +101,6 @@ const DynamicExplainer = ({ activeTab, onCtaClick }: Props) => {
       })),
     [prefix, t]
   );
-
-  // Hide for request/invoice — handled by InvoiceHowItWorks in Index.tsx
-  if (activeTab === "request") return null;
 
   return (
     <section className="relative overflow-hidden bg-background pb-16 pt-4 sm:pb-24 sm:pt-8 lg:pb-28">
