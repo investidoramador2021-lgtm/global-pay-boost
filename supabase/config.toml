@@ -44,3 +44,6 @@ verify_jwt = false
 
 [functions.guardarian]
 verify_jwt = false
+
+[functions.smtp-send]
+verify_jwt = false
