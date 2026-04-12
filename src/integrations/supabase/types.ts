@@ -767,6 +767,38 @@ export type Database = {
         Args: { payload: Json; queue_name: string }
         Returns: number
       }
+      get_invoice_by_token: {
+        Args: { p_token: string }
+        Returns: {
+          created_at: string
+          crypto_amount: number
+          crypto_ticker: string
+          expires_at: string
+          fiat_amount: number
+          fiat_currency: string
+          id: string
+          invoice_id: string
+          language: string
+          net_crypto_amount: number
+          payer_email: string
+          payer_name: string
+          rate_locked_at: string
+          requester_email: string
+          requester_name: string
+          service_fee_amount: number
+          service_fee_percent: number
+          status: string
+          token: string
+          updated_at: string
+          wallet_address: string
+        }[]
+        SetofOptions: {
+          from: "*"
+          to: "invoices"
+          isOneToOne: false
+          isSetofReturn: true
+        }
+      }
       has_role: {
         Args: {
           _role: Database["public"]["Enums"]["app_role"]
