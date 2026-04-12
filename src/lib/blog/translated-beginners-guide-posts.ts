@@ -47,7 +47,7 @@ Every asset has a unique **"Account Number"** (called an Address). You need this
 
 - On the main screen of the app, tap the coin you want (e.g., **Bitcoin** or **USDT**)
 - Tap the big **[RECEIVE]** button
-- You will see a long code of letters and numbers (Example: `0x71C...`)
+- You will see a long code of letters and numbers (Example: 0x71C...)
 - Tap the **[COPY]** button
 
 **CEO Tip:** Never type this code by hand. Always use the **[COPY]** and **[PASTE]** buttons. One wrong letter means the money is lost forever.
