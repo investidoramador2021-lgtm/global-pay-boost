@@ -1,14 +1,15 @@
-import { useEffect, useState, useMemo } from "react";
+import { useEffect, useState, useMemo, useCallback } from "react";
 import { useNavigate } from "react-router-dom";
 import { Helmet } from "react-helmet-async";
 import { supabase } from "@/integrations/supabase/client";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { useToast } from "@/hooks/use-toast";
-import { Shield, Users, Bitcoin, TrendingUp, Check, LogOut } from "lucide-react";
+import { Shield, Users, Bitcoin, TrendingUp, Check, LogOut, Lock } from "lucide-react";
 import SiteHeader from "@/components/SiteHeader";
 import SiteFooter from "@/components/SiteFooter";
 
@@ -32,20 +33,46 @@ interface Tx {
   paid_at: string | null;
 }
 
+type Stage = "login" | "mfa-enroll" | "mfa-verify" | "dashboard";
+
 const AdminPortal = () => {
-  const [authed, setAuthed] = useState(false);
+  // Auth state
+  const [stage, setStage] = useState<Stage>("login");
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [loginLoading, setLoginLoading] = useState(false);
+
+  // MFA state
+  const [qrUri, setQrUri] = useState("");
+  const [mfaFactorId, setMfaFactorId] = useState("");
+  const [totpCode, setTotpCode] = useState("");
+  const [mfaLoading, setMfaLoading] = useState(false);
+  const [challengeId, setChallengeId] = useState("");
+
+  // Dashboard state
   const [loading, setLoading] = useState(true);
   const [partners, setPartners] = useState<Partner[]>([]);
   const [transactions, setTransactions] = useState<Tx[]>([]);
-  const [partnerEmails, setPartnerEmails] = useState<Record<string, string>>({});
   const [tab, setTab] = useState("current");
   const navigate = useNavigate();
   const { toast } = useToast();
 
+  const loadDashboard = useCallback(async () => {
+    const { data: p } = await supabase.from("partner_profiles").select("*");
+    setPartners((p || []) as Partner[]);
+
+    const { data: txs } = await supabase
+      .from("partner_transactions")
+      .select("*")
+      .order("completed_at", { ascending: false });
+    setTransactions((txs || []) as Tx[]);
+    setLoading(false);
+  }, []);
+
   useEffect(() => {
-    const check = async () => {
+    const checkSession = async () => {
       const { data: { user } } = await supabase.auth.getUser();
-      if (!user) { navigate("/partners"); return; }
+      if (!user) { setStage("login"); setLoading(false); return; }
 
       // Check admin role
       const { data: roles } = await supabase
@@ -56,24 +83,155 @@ const AdminPortal = () => {
       const isAdmin = roles?.some((r: any) => r.role === "admin");
       if (!isAdmin) { navigate("/"); return; }
 
-      setAuthed(true);
+      // Check MFA - is AAL2 achieved?
+      const { data: aalData } = await supabase.auth.mfa.getAuthenticatorAssuranceLevel();
+      if (aalData?.currentLevel === "aal2") {
+        setStage("dashboard");
+        loadDashboard();
+        return;
+      }
 
-      // Load partners
-      const { data: p } = await supabase.from("partner_profiles").select("*");
-      setPartners((p || []) as Partner[]);
+      // Has factors enrolled?
+      const { data: factors } = await supabase.auth.mfa.listFactors();
+      const totpFactors = factors?.totp || [];
 
-      // Load all transactions
-      const { data: txs } = await supabase
-        .from("partner_transactions")
-        .select("*")
-        .order("completed_at", { ascending: false });
-      setTransactions((txs || []) as Tx[]);
-
+      if (totpFactors.length > 0) {
+        // Need to verify
+        const verified = totpFactors.find((f: any) => f.status === "verified");
+        if (verified) {
+          setMfaFactorId(verified.id);
+          const { data: challenge, error } = await supabase.auth.mfa.challenge({ factorId: verified.id });
+          if (!error && challenge) setChallengeId(challenge.id);
+          setStage("mfa-verify");
+        } else {
+          // Unverified factor exists, remove and re-enroll
+          setStage("mfa-enroll");
+          await startEnrollment();
+        }
+      } else {
+        // No factors — enroll
+        setStage("mfa-enroll");
+        await startEnrollment();
+      }
       setLoading(false);
     };
-    check();
-  }, [navigate]);
+    checkSession();
+  }, [navigate, loadDashboard]);
 
+  const startEnrollment = async () => {
+    const { data, error } = await supabase.auth.mfa.enroll({ factorType: "totp", friendlyName: "MRC Admin Auth" });
+    if (error) {
+      toast({ title: "MFA Error", description: error.message, variant: "destructive" });
+      return;
+    }
+    if (data) {
+      setMfaFactorId(data.id);
+      setQrUri(data.totp.uri);
+    }
+  };
+
+  const handleLogin = async (e: React.FormEvent) => {
+    e.preventDefault();
+    setLoginLoading(true);
+    try {
+      const { error } = await supabase.auth.signInWithPassword({ email, password });
+      if (error) throw error;
+
+      // Check admin
+      const { data: { user } } = await supabase.auth.getUser();
+      if (!user) throw new Error("Auth failed");
+
+      const { data: roles } = await supabase
+        .from("user_roles")
+        .select("role")
+        .eq("user_id", user.id);
+
+      const isAdmin = roles?.some((r: any) => r.role === "admin");
+      if (!isAdmin) {
+        await supabase.auth.signOut();
+        throw new Error("Access denied. Admin only.");
+      }
+
+      // Check MFA factors
+      const { data: factors } = await supabase.auth.mfa.listFactors();
+      const totpFactors = factors?.totp || [];
+
+      if (totpFactors.length > 0) {
+        const verified = totpFactors.find((f: any) => f.status === "verified");
+        if (verified) {
+          setMfaFactorId(verified.id);
+          const { data: challenge } = await supabase.auth.mfa.challenge({ factorId: verified.id });
+          if (challenge) setChallengeId(challenge.id);
+          setStage("mfa-verify");
+        } else {
+          await startEnrollment();
+          setStage("mfa-enroll");
+        }
+      } else {
+        await startEnrollment();
+        setStage("mfa-enroll");
+      }
+    } catch (err: any) {
+      toast({ title: "Error", description: err.message, variant: "destructive" });
+    } finally {
+      setLoginLoading(false);
+    }
+  };
+
+  const handleEnrollVerify = async (e: React.FormEvent) => {
+    e.preventDefault();
+    setMfaLoading(true);
+    try {
+      const { data: challenge, error: chalErr } = await supabase.auth.mfa.challenge({ factorId: mfaFactorId });
+      if (chalErr) throw chalErr;
+
+      const { error: verErr } = await supabase.auth.mfa.verify({
+        factorId: mfaFactorId,
+        challengeId: challenge.id,
+        code: totpCode,
+      });
+      if (verErr) throw verErr;
+
+      toast({ title: "MFA Enabled", description: "Authenticator registered successfully." });
+      setStage("dashboard");
+      loadDashboard();
+    } catch (err: any) {
+      toast({ title: "Verification Failed", description: err.message, variant: "destructive" });
+    } finally {
+      setMfaLoading(false);
+      setTotpCode("");
+    }
+  };
+
+  const handleMfaVerify = async (e: React.FormEvent) => {
+    e.preventDefault();
+    setMfaLoading(true);
+    try {
+      const { error } = await supabase.auth.mfa.verify({
+        factorId: mfaFactorId,
+        challengeId,
+        code: totpCode,
+      });
+      if (error) throw error;
+
+      setStage("dashboard");
+      loadDashboard();
+    } catch (err: any) {
+      toast({ title: "Invalid Code", description: err.message, variant: "destructive" });
+    } finally {
+      setMfaLoading(false);
+      setTotpCode("");
+    }
+  };
+
+  const handleLogout = async () => {
+    await supabase.auth.signOut();
+    setStage("login");
+    setPartners([]);
+    setTransactions([]);
+  };
+
+  /* ═══ Computed data ═══ */
   const now = new Date();
   const currentMonth = now.getMonth();
   const currentYear = now.getFullYear();
@@ -90,7 +248,6 @@ const AdminPortal = () => {
       return !(d.getMonth() === currentMonth && d.getFullYear() === currentYear);
     }), [transactions, currentMonth, currentYear]);
 
-  // Group history by month
   const historyGrouped = useMemo(() => {
     const groups: Record<string, Tx[]> = {};
     historyTxs.forEach((t) => {
@@ -104,7 +261,6 @@ const AdminPortal = () => {
 
   const unpaidTxs = transactions.filter((t) => !t.is_paid);
   const totalVolume = currentMonthTxs.reduce((s, t) => s + Number(t.volume), 0);
-  const totalBtcEarned = currentMonthTxs.reduce((s, t) => s + Number(t.commission_btc), 0);
   const totalUnpaid = unpaidTxs.reduce((s, t) => s + Number(t.commission_btc), 0);
   const totalPaid = transactions.filter((t) => t.is_paid).reduce((s, t) => s + Number(t.commission_btc), 0);
 
@@ -123,24 +279,13 @@ const AdminPortal = () => {
       toast({ title: "Error", description: error.message, variant: "destructive" });
       return;
     }
-
     setTransactions((prev) =>
       prev.map((t) => (t.id === txId ? { ...t, is_paid: true, paid_at: new Date().toISOString() } : t))
     );
     toast({ title: "Marked as Paid" });
   };
 
-  const handleLogout = async () => {
-    await supabase.auth.signOut();
-    navigate("/partners");
-  };
-
-  if (loading) {
-    return <div className="min-h-screen bg-background flex items-center justify-center text-muted-foreground">Loading…</div>;
-  }
-
-  if (!authed) return null;
-
+  /* ═══ Sub-components ═══ */
   const TxTable = ({ txs, showPay = false }: { txs: Tx[]; showPay?: boolean }) => (
     <Table>
       <TableHeader>
@@ -157,9 +302,7 @@ const AdminPortal = () => {
       <TableBody>
         {txs.length === 0 ? (
           <TableRow>
-            <TableCell colSpan={showPay ? 7 : 6} className="text-center text-muted-foreground py-8">
-              No transactions found.
-            </TableCell>
+            <TableCell colSpan={showPay ? 7 : 6} className="text-center text-muted-foreground py-8">No transactions found.</TableCell>
           </TableRow>
         ) : (
           txs.map((tx) => (
@@ -181,9 +324,7 @@ const AdminPortal = () => {
               {showPay && (
                 <TableCell>
                   {!tx.is_paid && (
-                    <Button size="sm" variant="outline" onClick={() => markAsPaid(tx.id)} className="text-xs">
-                      Mark Paid
-                    </Button>
+                    <Button size="sm" variant="outline" onClick={() => markAsPaid(tx.id)} className="text-xs">Mark Paid</Button>
                   )}
                 </TableCell>
               )}
@@ -194,6 +335,143 @@ const AdminPortal = () => {
     </Table>
   );
 
+  /* ═══ Auth screens ═══ */
+  const inputClass = "bg-background/50 border-border/50 focus:border-primary/60 focus:ring-primary/20 h-11";
+
+  if (stage === "login") {
+    return (
+      <>
+        <Helmet><title>Admin Login | MRC GlobalPay</title><meta name="robots" content="noindex, nofollow" /></Helmet>
+        <SiteHeader />
+        <div className="relative min-h-screen bg-background flex items-center justify-center overflow-hidden">
+          <div className="pointer-events-none absolute inset-0">
+            <div className="absolute -top-40 -left-40 w-[500px] h-[500px] rounded-full bg-primary/8 blur-[120px]" />
+          </div>
+          <div className="relative z-10 w-full max-w-md px-4">
+            <div className="rounded-3xl border border-border/40 bg-card/30 backdrop-blur-xl p-8 shadow-[0_0_60px_-15px_hsl(var(--primary)/0.15)]">
+              <div className="absolute -top-px left-10 right-10 h-px bg-gradient-to-r from-transparent via-primary/40 to-transparent" />
+              <div className="text-center mb-6">
+                <div className="w-12 h-12 rounded-xl bg-primary/10 flex items-center justify-center mx-auto mb-3">
+                  <Shield className="w-6 h-6 text-primary" />
+                </div>
+                <h1 className="text-xl font-bold text-foreground">Admin Portal</h1>
+                <p className="text-sm text-muted-foreground">Restricted access</p>
+              </div>
+              <form onSubmit={handleLogin} className="space-y-4">
+                <div className="space-y-1.5">
+                  <Label className="text-xs text-muted-foreground">Email</Label>
+                  <Input type="email" value={email} onChange={(e) => setEmail(e.target.value)} required className={inputClass} />
+                </div>
+                <div className="space-y-1.5">
+                  <Label className="text-xs text-muted-foreground">Password</Label>
+                  <Input type="password" value={password} onChange={(e) => setPassword(e.target.value)} required className={inputClass} />
+                </div>
+                <Button type="submit" className="w-full h-11" disabled={loginLoading}>
+                  {loginLoading ? "Authenticating…" : "Sign In"}
+                </Button>
+              </form>
+            </div>
+          </div>
+        </div>
+        <SiteFooter />
+      </>
+    );
+  }
+
+  if (stage === "mfa-enroll") {
+    return (
+      <>
+        <Helmet><title>Setup 2FA | MRC GlobalPay</title><meta name="robots" content="noindex, nofollow" /></Helmet>
+        <SiteHeader />
+        <div className="relative min-h-screen bg-background flex items-center justify-center overflow-hidden">
+          <div className="pointer-events-none absolute inset-0">
+            <div className="absolute -top-40 -left-40 w-[500px] h-[500px] rounded-full bg-primary/8 blur-[120px]" />
+          </div>
+          <div className="relative z-10 w-full max-w-md px-4">
+            <div className="rounded-3xl border border-border/40 bg-card/30 backdrop-blur-xl p-8 shadow-[0_0_60px_-15px_hsl(var(--primary)/0.15)]">
+              <div className="text-center mb-6">
+                <div className="w-12 h-12 rounded-xl bg-primary/10 flex items-center justify-center mx-auto mb-3">
+                  <Lock className="w-6 h-6 text-primary" />
+                </div>
+                <h1 className="text-xl font-bold text-foreground">Setup Authenticator</h1>
+                <p className="text-sm text-muted-foreground">Scan the QR code with your authenticator app (Google Authenticator, Authy, etc.)</p>
+              </div>
+              {qrUri && (
+                <div className="flex justify-center mb-6">
+                  <img
+                    src={`https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=${encodeURIComponent(qrUri)}`}
+                    alt="MFA QR Code"
+                    className="rounded-xl border border-border/40"
+                    width={200}
+                    height={200}
+                  />
+                </div>
+              )}
+              <form onSubmit={handleEnrollVerify} className="space-y-4">
+                <div className="space-y-1.5">
+                  <Label className="text-xs text-muted-foreground">Enter 6-digit code from your app</Label>
+                  <Input
+                    value={totpCode}
+                    onChange={(e) => setTotpCode(e.target.value.replace(/\D/g, "").slice(0, 6))}
+                    placeholder="000000"
+                    className={`${inputClass} text-center text-2xl tracking-[0.5em] font-mono`}
+                    maxLength={6}
+                    required
+                  />
+                </div>
+                <Button type="submit" className="w-full h-11" disabled={mfaLoading || totpCode.length !== 6}>
+                  {mfaLoading ? "Verifying…" : "Activate 2FA"}
+                </Button>
+              </form>
+            </div>
+          </div>
+        </div>
+        <SiteFooter />
+      </>
+    );
+  }
+
+  if (stage === "mfa-verify") {
+    return (
+      <>
+        <Helmet><title>2FA Verification | MRC GlobalPay</title><meta name="robots" content="noindex, nofollow" /></Helmet>
+        <SiteHeader />
+        <div className="relative min-h-screen bg-background flex items-center justify-center overflow-hidden">
+          <div className="pointer-events-none absolute inset-0">
+            <div className="absolute -top-40 -left-40 w-[500px] h-[500px] rounded-full bg-primary/8 blur-[120px]" />
+          </div>
+          <div className="relative z-10 w-full max-w-md px-4">
+            <div className="rounded-3xl border border-border/40 bg-card/30 backdrop-blur-xl p-8 shadow-[0_0_60px_-15px_hsl(var(--primary)/0.15)]">
+              <div className="text-center mb-6">
+                <div className="w-12 h-12 rounded-xl bg-primary/10 flex items-center justify-center mx-auto mb-3">
+                  <Lock className="w-6 h-6 text-primary" />
+                </div>
+                <h1 className="text-xl font-bold text-foreground">Two-Factor Authentication</h1>
+                <p className="text-sm text-muted-foreground">Enter the code from your authenticator app</p>
+              </div>
+              <form onSubmit={handleMfaVerify} className="space-y-4">
+                <Input
+                  value={totpCode}
+                  onChange={(e) => setTotpCode(e.target.value.replace(/\D/g, "").slice(0, 6))}
+                  placeholder="000000"
+                  className={`${inputClass} text-center text-2xl tracking-[0.5em] font-mono`}
+                  maxLength={6}
+                  required
+                  autoFocus
+                />
+                <Button type="submit" className="w-full h-11" disabled={mfaLoading || totpCode.length !== 6}>
+                  {mfaLoading ? "Verifying…" : "Verify & Continue"}
+                </Button>
+              </form>
+            </div>
+          </div>
+        </div>
+        <SiteFooter />
+      </>
+    );
+  }
+
+  /* ═══ Dashboard ═══ */
   return (
     <>
       <Helmet>
@@ -210,7 +488,6 @@ const AdminPortal = () => {
         </div>
 
         <main className="relative z-10 max-w-6xl mx-auto px-4 sm:px-6 pt-28 pb-20 space-y-8">
-          {/* Header */}
           <div className="flex items-center justify-between">
             <div className="flex items-center gap-3">
               <div className="w-10 h-10 rounded-xl bg-primary/10 flex items-center justify-center">
@@ -226,7 +503,6 @@ const AdminPortal = () => {
             </Button>
           </div>
 
-          {/* Stats */}
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
             <Card className="border-border/40 bg-card/40 backdrop-blur-sm">
               <CardContent className="p-5 flex items-center gap-3">
@@ -266,7 +542,6 @@ const AdminPortal = () => {
             </Card>
           </div>
 
-          {/* Partners List */}
           <Card className="border-border/40 bg-card/40 backdrop-blur-sm">
             <CardHeader><CardTitle className="text-lg flex items-center gap-2"><Users className="w-5 h-5" /> Partner Directory</CardTitle></CardHeader>
             <CardContent>
@@ -291,11 +566,8 @@ const AdminPortal = () => {
             </CardContent>
           </Card>
 
-          {/* Transactions with tabs */}
           <Card className="border-border/40 bg-card/40 backdrop-blur-sm">
-            <CardHeader>
-              <CardTitle className="text-lg">Transactions & Payouts</CardTitle>
-            </CardHeader>
+            <CardHeader><CardTitle className="text-lg">Transactions & Payouts</CardTitle></CardHeader>
             <CardContent>
               <Tabs value={tab} onValueChange={setTab}>
                 <TabsList className="mb-4">
@@ -303,12 +575,8 @@ const AdminPortal = () => {
                   <TabsTrigger value="unpaid">Unpaid ({unpaidTxs.length})</TabsTrigger>
                   <TabsTrigger value="history">History</TabsTrigger>
                 </TabsList>
-                <TabsContent value="current">
-                  <TxTable txs={currentMonthTxs} showPay />
-                </TabsContent>
-                <TabsContent value="unpaid">
-                  <TxTable txs={unpaidTxs} showPay />
-                </TabsContent>
+                <TabsContent value="current"><TxTable txs={currentMonthTxs} showPay /></TabsContent>
+                <TabsContent value="unpaid"><TxTable txs={unpaidTxs} showPay /></TabsContent>
                 <TabsContent value="history">
                   {Object.keys(historyGrouped).length === 0 ? (
                     <p className="text-sm text-muted-foreground text-center py-8">No historical transactions.</p>
