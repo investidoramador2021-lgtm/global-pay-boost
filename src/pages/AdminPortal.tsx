@@ -1,4 +1,4 @@
-import { useEffect, useState, useMemo, useCallback } from "react";
+import { useEffect, useState, useMemo, useCallback, useRef } from "react";
 import { useNavigate } from "react-router-dom";
 import { Helmet } from "react-helmet-async";
 import { supabase } from "@/integrations/supabase/client";
@@ -69,6 +69,33 @@ const AdminPortal = () => {
   const [chatLogs, setChatLogs] = useState<ChatLog[]>([]);
   const navigate = useNavigate();
   const { toast } = useToast();
+  const activityTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
+
+  const INACTIVITY_MS = 24 * 60 * 60 * 1000; // 24 hours
+
+  const resetInactivityTimer = useCallback(() => {
+    if (activityTimer.current) clearTimeout(activityTimer.current);
+    activityTimer.current = setTimeout(async () => {
+      await supabase.auth.signOut();
+      setStage("login");
+      setPartners([]);
+      setTransactions([]);
+      toast({ title: "Session Expired", description: "You've been logged out due to inactivity." });
+    }, INACTIVITY_MS);
+  }, [toast]);
+
+  // Track user activity when on dashboard
+  useEffect(() => {
+    if (stage !== "dashboard") return;
+    resetInactivityTimer();
+    const events = ["mousedown", "keydown", "scroll", "touchstart"];
+    const handler = () => resetInactivityTimer();
+    events.forEach((e) => window.addEventListener(e, handler, { passive: true }));
+    return () => {
+      events.forEach((e) => window.removeEventListener(e, handler));
+      if (activityTimer.current) clearTimeout(activityTimer.current);
+    };
+  }, [stage, resetInactivityTimer]);
 
   const loadDashboard = useCallback(async () => {
     const { data: p } = await supabase.from("partner_profiles").select("*");
@@ -291,7 +318,7 @@ const AdminPortal = () => {
   const totalVolume = currentMonthTxs.reduce((s, t) => s + Number(t.volume), 0);
   const totalUnpaid = unpaidTxs.reduce((s, t) => s + Number(t.commission_btc), 0);
   const totalPaid = transactions.filter((t) => t.is_paid).reduce((s, t) => s + Number(t.commission_btc), 0);
-  const totalProfit = transactions.reduce((s, t) => s + Number(t.volume) * 0.005, 0); // ~0.5% avg spread profit
+  const totalCommission = transactions.reduce((s, t) => s + Number(t.volume) * 0.001, 0); // 0.1% partner commission
 
   const getPartnerName = (pid: string) => {
     const p = partners.find((x) => x.id === pid);
@@ -350,7 +377,7 @@ const AdminPortal = () => {
           <TableHead>Partner</TableHead>
           <TableHead>Asset</TableHead>
           <TableHead className="text-right">Volume</TableHead>
-          <TableHead className="text-right">Est. Profit</TableHead>
+          <TableHead className="text-right">Commission (0.1%)</TableHead>
           <TableHead className="text-right">BTC Commission</TableHead>
           <TableHead>Status</TableHead>
           {showPay && <TableHead />}
@@ -363,14 +390,14 @@ const AdminPortal = () => {
           </TableRow>
         ) : (
           txs.map((tx) => {
-            const estProfit = Number(tx.volume) * 0.005;
+            const commission = Number(tx.volume) * 0.001;
             return (
               <TableRow key={tx.id}>
                 <TableCell className="text-muted-foreground">{new Date(tx.completed_at).toLocaleDateString()}</TableCell>
                 <TableCell>{getPartnerName(tx.partner_id)}</TableCell>
                 <TableCell className="uppercase">{tx.asset}</TableCell>
                 <TableCell className="text-right">${Number(tx.volume).toLocaleString("en-US", { minimumFractionDigits: 2 })}</TableCell>
-                <TableCell className="text-right text-primary font-mono">${estProfit.toLocaleString("en-US", { minimumFractionDigits: 2 })}</TableCell>
+                <TableCell className="text-right text-primary font-mono">${commission.toLocaleString("en-US", { minimumFractionDigits: 2 })}</TableCell>
                 <TableCell className="text-right font-mono">{Number(tx.commission_btc).toFixed(8)}</TableCell>
                 <TableCell>
                   {tx.is_paid ? (
@@ -607,8 +634,8 @@ const AdminPortal = () => {
                   <CardContent className="p-5 flex items-center gap-3">
                     <DollarSign className="w-5 h-5 text-primary" />
                     <div>
-                      <p className="text-xs text-muted-foreground">Est. Profit (0.5%)</p>
-                      <p className="text-2xl font-bold text-foreground">${totalProfit.toLocaleString("en-US", { minimumFractionDigits: 2 })}</p>
+                      <p className="text-xs text-muted-foreground">Commission (0.1%)</p>
+                      <p className="text-2xl font-bold text-foreground">${totalCommission.toLocaleString("en-US", { minimumFractionDigits: 2 })}</p>
                     </div>
                   </CardContent>
                 </Card>
