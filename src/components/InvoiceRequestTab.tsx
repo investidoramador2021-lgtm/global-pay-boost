@@ -74,17 +74,20 @@ const InvoiceRequestTab = () => {
     return () => { cancelled = true; };
   }, []);
 
-  // Fetch fiat→crypto rate from CoinGecko via edge function
+  // Fetch fiat→crypto rate from CoinGecko via edge function (USD only, then convert)
   const fetchRate = useCallback(async (ticker: string, fiat: string) => {
     if (!ticker) return;
     setRateLoading(true);
     try {
       const coinId = mapTickerToCoinGeckoId(ticker);
       const { data } = await supabase.functions.invoke("coingecko-prices", {
-        body: { ids: coinId, vs_currencies: fiat.toLowerCase() },
+        body: { ids: [coinId] },
       });
-      if (data?.[coinId]?.[fiat.toLowerCase()]) {
-        setFiatRate(data[coinId][fiat.toLowerCase()]);
+      const usdPrice = data?.[coinId]?.usd;
+      if (usdPrice) {
+        // Convert USD price to target fiat using approximate cross-rates
+        const fiatMultiplier = FIAT_TO_USD[fiat] || 1;
+        setFiatRate(usdPrice * fiatMultiplier);
       }
     } catch {
       // silent
