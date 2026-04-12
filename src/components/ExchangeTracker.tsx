@@ -1,34 +1,46 @@
-import { useState, useEffect, useMemo, useCallback } from "react";
+import { useState, useEffect, useMemo, useCallback, useRef } from "react";
 import { supabase } from "@/integrations/supabase/client";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { useToast } from "@/hooks/use-toast";
-import { RefreshCw, ArrowRightLeft, Clock, CheckCircle2, XCircle, AlertTriangle, Search, ChevronLeft, ChevronRight, TrendingUp, DollarSign, Bitcoin } from "lucide-react";
+import {
+  RefreshCw, ArrowRightLeft, Clock, CheckCircle2, XCircle,
+  AlertTriangle, Search, ChevronLeft, ChevronRight, Eye, Copy, ExternalLink,
+} from "lucide-react";
+import {
+  Dialog, DialogContent, DialogHeader, DialogTitle,
+} from "@/components/ui/dialog";
 
-interface CNExchange {
+/* ── Types ── */
+interface SwapRow {
   id: string;
-  status: string;
-  fromCurrency: string;
-  fromNetwork: string;
-  toCurrency: string;
-  toNetwork: string;
-  expectedAmountFrom: number | null;
-  expectedAmountTo: number | null;
-  amountFrom: number | null;
-  amountTo: number | null;
-  payinAddress: string;
-  payoutAddress: string;
-  payinHash: string | null;
-  payoutHash: string | null;
-  createdAt: string;
-  updatedAt: string;
-  depositReceivedAt: string | null;
-  flow: string;
+  transaction_id: string;
+  from_currency: string;
+  to_currency: string;
+  amount: number;
+  recipient_address: string;
+  payin_address: string;
+  created_at: string;
 }
 
+interface LiveStatus {
+  status: string;
+  amountSend: number | null;
+  amountReceive: number | null;
+  payinHash: string | null;
+  payoutHash: string | null;
+  payinAddress: string;
+  payoutAddress: string;
+}
+
+interface EnrichedSwap extends SwapRow {
+  live?: LiveStatus;
+  liveLoading?: boolean;
+}
+
+/* ── Status visuals ── */
 const STATUS_MAP: Record<string, { label: string; color: string; icon: React.ReactNode }> = {
   new: { label: "New", color: "text-muted-foreground", icon: <Clock className="w-3.5 h-3.5" /> },
   waiting: { label: "Waiting", color: "text-amber-400", icon: <Clock className="w-3.5 h-3.5" /> },
@@ -44,88 +56,155 @@ const STATUS_MAP: Record<string, { label: string; color: string; icon: React.Rea
 const PAGE_SIZE = 50;
 
 const ExchangeTracker = () => {
-  const [exchanges, setExchanges] = useState<CNExchange[]>([]);
+  const [swaps, setSwaps] = useState<EnrichedSwap[]>([]);
   const [loading, setLoading] = useState(false);
-  const [error, setError] = useState<string | null>(null);
-  const [offset, setOffset] = useState(0);
-  const [hasMore, setHasMore] = useState(true);
-  const [statusFilter, setStatusFilter] = useState("all");
+  const [statusLoading, setStatusLoading] = useState(false);
   const [searchQuery, setSearchQuery] = useState("");
+  const [statusFilter, setStatusFilter] = useState("all");
   const [dateRange, setDateRange] = useState<"today" | "7d" | "30d" | "all">("30d");
+  const [page, setPage] = useState(0);
+  const [total, setTotal] = useState(0);
+  const [detail, setDetail] = useState<EnrichedSwap | null>(null);
   const { toast } = useToast();
+  const fetchIdRef = useRef(0);
 
-  const getDateFrom = useCallback(() => {
-    const now = new Date();
-    switch (dateRange) {
-      case "today": return new Date(now.getFullYear(), now.getMonth(), now.getDate()).toISOString();
-      case "7d": { const d = new Date(now); d.setDate(d.getDate() - 7); return d.toISOString(); }
-      case "30d": { const d = new Date(now); d.setDate(d.getDate() - 30); return d.toISOString(); }
-      default: return "";
-    }
-  }, [dateRange]);
-
-  const fetchExchanges = useCallback(async (newOffset = 0) => {
+  /* ── Load swaps from our own database ── */
+  const fetchSwaps = useCallback(async (newPage = 0) => {
+    const id = ++fetchIdRef.current;
     setLoading(true);
-    setError(null);
     try {
-      const params: Record<string, string> = {
-        _get: "true",
-        action: "list-transactions",
-        limit: String(PAGE_SIZE),
-        offset: String(newOffset),
-      };
-      const dateFrom = getDateFrom();
-      if (dateFrom) params.dateFrom = dateFrom;
-      if (statusFilter !== "all") params.status = statusFilter;
+      let query = supabase
+        .from("swap_transactions")
+        .select("*", { count: "exact" })
+        .order("created_at", { ascending: false })
+        .range(newPage * PAGE_SIZE, (newPage + 1) * PAGE_SIZE - 1);
 
-      const { data, error: fnError } = await supabase.functions.invoke("changenow", {
-        method: "POST",
-        body: params,
+      // Date filter
+      if (dateRange !== "all") {
+        const now = new Date();
+        let from: Date;
+        if (dateRange === "today") from = new Date(now.getFullYear(), now.getMonth(), now.getDate());
+        else if (dateRange === "7d") { from = new Date(now); from.setDate(from.getDate() - 7); }
+        else { from = new Date(now); from.setDate(from.getDate() - 30); }
+        query = query.gte("created_at", from.toISOString());
+      }
+
+      const { data, count, error } = await query;
+      if (id !== fetchIdRef.current) return; // stale
+      if (error) throw error;
+
+      const rows: EnrichedSwap[] = (data || []) as EnrichedSwap[];
+      setSwaps(rows);
+      setTotal(count || 0);
+      setPage(newPage);
+
+      // Auto-fetch live statuses
+      fetchLiveStatuses(rows);
+    } catch (err: any) {
+      if (id === fetchIdRef.current) {
+        toast({ title: "Database Error", description: err.message, variant: "destructive" });
+      }
+    } finally {
+      if (id === fetchIdRef.current) setLoading(false);
+    }
+  }, [dateRange, toast]);
+
+  /* ── Fetch live status from ChangeNOW for each tx ── */
+  const fetchLiveStatuses = useCallback(async (rows: EnrichedSwap[]) => {
+    if (rows.length === 0) return;
+    setStatusLoading(true);
+
+    // Process in batches of 5 to avoid hammering the API
+    const BATCH = 5;
+    const updated = [...rows];
+
+    for (let i = 0; i < rows.length; i += BATCH) {
+      const batch = rows.slice(i, i + BATCH);
+      const results = await Promise.allSettled(
+        batch.map(async (row) => {
+          const { data } = await supabase.functions.invoke("changenow", {
+            method: "POST",
+            body: { _get: true, action: "tx-status", id: row.transaction_id },
+          });
+          return { txId: row.transaction_id, data };
+        })
+      );
+
+      results.forEach((r) => {
+        if (r.status === "fulfilled" && r.value.data && !r.value.data.error) {
+          const idx = updated.findIndex((s) => s.transaction_id === r.value.txId);
+          if (idx !== -1) {
+            updated[idx] = {
+              ...updated[idx],
+              live: {
+                status: r.value.data.status,
+                amountSend: r.value.data.amountSend,
+                amountReceive: r.value.data.amountReceive,
+                payinHash: r.value.data.payinHash,
+                payoutHash: r.value.data.payoutHash,
+                payinAddress: r.value.data.payinAddress,
+                payoutAddress: r.value.data.payoutAddress,
+              },
+            };
+          }
+        }
       });
 
-      if (fnError) throw new Error(fnError.message);
-      if (data?.error) throw new Error(data.error);
-
-      const items = Array.isArray(data) ? data : [];
-      setExchanges(items);
-      setHasMore(items.length === PAGE_SIZE);
-      setOffset(newOffset);
-    } catch (err: any) {
-      setError(err.message);
-      toast({ title: "Exchange Tracker Error", description: err.message, variant: "destructive" });
-    } finally {
-      setLoading(false);
+      // Update incrementally so user sees results coming in
+      setSwaps([...updated]);
     }
-  }, [getDateFrom, statusFilter, toast]);
+
+    setStatusLoading(false);
+  }, []);
 
   useEffect(() => {
-    fetchExchanges(0);
-  }, [fetchExchanges]);
+    fetchSwaps(0);
+  }, [fetchSwaps]);
 
+  /* ── Filtering ── */
   const filtered = useMemo(() => {
-    if (!searchQuery.trim()) return exchanges;
-    const q = searchQuery.toLowerCase();
-    return exchanges.filter(
-      (e) =>
-        e.id?.toLowerCase().includes(q) ||
-        e.fromCurrency?.toLowerCase().includes(q) ||
-        e.toCurrency?.toLowerCase().includes(q) ||
-        e.payinAddress?.toLowerCase().includes(q) ||
-        e.payoutAddress?.toLowerCase().includes(q) ||
-        e.payinHash?.toLowerCase().includes(q) ||
-        e.payoutHash?.toLowerCase().includes(q)
-    );
-  }, [exchanges, searchQuery]);
+    let list = swaps;
+
+    // Status filter (uses live status)
+    if (statusFilter !== "all") {
+      const activeStatuses = statusFilter === "waiting"
+        ? ["new", "waiting", "confirming", "exchanging", "sending"]
+        : [statusFilter];
+      list = list.filter((s) => s.live && activeStatuses.includes(s.live.status));
+    }
+
+    // Search
+    if (searchQuery.trim()) {
+      const q = searchQuery.toLowerCase();
+      list = list.filter(
+        (s) =>
+          s.transaction_id?.toLowerCase().includes(q) ||
+          s.from_currency?.toLowerCase().includes(q) ||
+          s.to_currency?.toLowerCase().includes(q) ||
+          s.recipient_address?.toLowerCase().includes(q) ||
+          s.payin_address?.toLowerCase().includes(q) ||
+          s.live?.payinHash?.toLowerCase().includes(q) ||
+          s.live?.payoutHash?.toLowerCase().includes(q)
+      );
+    }
+
+    return list;
+  }, [swaps, statusFilter, searchQuery]);
 
   /* ── Stats ── */
   const stats = useMemo(() => {
-    const finished = exchanges.filter((e) => e.status === "finished");
-    const failed = exchanges.filter((e) => e.status === "failed");
-    const waiting = exchanges.filter((e) => ["waiting", "new", "confirming", "exchanging", "sending"].includes(e.status));
-    return { total: exchanges.length, finished: finished.length, failed: failed.length, waiting: waiting.length };
-  }, [exchanges]);
+    const withStatus = swaps.filter((s) => s.live);
+    const finished = withStatus.filter((s) => s.live!.status === "finished").length;
+    const failed = withStatus.filter((s) => s.live!.status === "failed").length;
+    const active = withStatus.filter((s) =>
+      ["waiting", "new", "confirming", "exchanging", "sending"].includes(s.live!.status)
+    ).length;
+    return { total: swaps.length, finished, failed, active };
+  }, [swaps]);
 
-  const statusBadge = (status: string) => {
+  /* ── Helpers ── */
+  const statusBadge = (status?: string) => {
+    if (!status) return <span className="text-xs text-muted-foreground">Loading…</span>;
     const s = STATUS_MAP[status] || { label: status, color: "text-muted-foreground", icon: null };
     return (
       <span className={`inline-flex items-center gap-1.5 text-xs font-medium ${s.color}`}>
@@ -141,10 +220,17 @@ const ExchangeTracker = () => {
     return `${date.toLocaleDateString("en-GB", { day: "2-digit", month: "2-digit", year: "numeric" })} ${date.toLocaleTimeString("en-GB", { hour: "2-digit", minute: "2-digit" })}`;
   };
 
-  const formatAmount = (amount: number | null, currency: string) => {
+  const formatAmount = (amount: number | null | undefined, currency: string) => {
     if (amount === null || amount === undefined) return "—";
     return `${Number(amount).toLocaleString("en-US", { maximumFractionDigits: 8 })} ${currency.toUpperCase()}`;
   };
+
+  const copyText = (text: string) => {
+    navigator.clipboard.writeText(text);
+    toast({ title: "Copied", description: text.slice(0, 30) + "…" });
+  };
+
+  const hasMore = total > (page + 1) * PAGE_SIZE;
 
   return (
     <div className="space-y-6">
@@ -172,8 +258,8 @@ const ExchangeTracker = () => {
           <CardContent className="p-4 flex items-center gap-3">
             <Clock className="w-5 h-5 text-amber-400" />
             <div>
-              <p className="text-xs text-muted-foreground">Waiting</p>
-              <p className="text-xl font-bold text-foreground">{stats.waiting}</p>
+              <p className="text-xs text-muted-foreground">Active</p>
+              <p className="text-xl font-bold text-foreground">{stats.active}</p>
             </div>
           </CardContent>
         </Card>
@@ -188,15 +274,16 @@ const ExchangeTracker = () => {
         </Card>
       </div>
 
-      {/* Filters & Controls */}
+      {/* Main Table */}
       <Card className="border-border/40 bg-card/40 backdrop-blur-sm">
         <CardHeader className="pb-3">
           <CardTitle className="text-lg flex items-center gap-2">
-            <ArrowRightLeft className="w-5 h-5" /> ChangeNOW Exchange Monitor
+            <ArrowRightLeft className="w-5 h-5" /> Exchange Monitor
+            {statusLoading && <RefreshCw className="w-4 h-4 animate-spin text-muted-foreground" />}
           </CardTitle>
         </CardHeader>
         <CardContent className="space-y-4">
-          {/* Top filters row */}
+          {/* Filters */}
           <div className="flex flex-col sm:flex-row gap-3 items-start sm:items-center">
             <div className="relative flex-1 min-w-0">
               <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-muted-foreground" />
@@ -210,7 +297,7 @@ const ExchangeTracker = () => {
             <Button
               variant="outline"
               size="sm"
-              onClick={() => fetchExchanges(0)}
+              onClick={() => fetchSwaps(page)}
               disabled={loading}
               className="gap-2 h-10 shrink-0"
             >
@@ -219,7 +306,6 @@ const ExchangeTracker = () => {
             </Button>
           </div>
 
-          {/* Date range & status tabs */}
           <div className="flex flex-col sm:flex-row gap-3 items-start sm:items-center justify-between">
             <div className="flex gap-1.5">
               {(["today", "7d", "30d", "all"] as const).map((range) => (
@@ -227,7 +313,7 @@ const ExchangeTracker = () => {
                   key={range}
                   variant={dateRange === range ? "default" : "ghost"}
                   size="sm"
-                  onClick={() => { setDateRange(range); }}
+                  onClick={() => setDateRange(range)}
                   className="text-xs h-8 px-3"
                 >
                   {range === "today" ? "Today" : range === "7d" ? "7 Days" : range === "30d" ? "30 Days" : "All Time"}
@@ -249,70 +335,61 @@ const ExchangeTracker = () => {
             </div>
           </div>
 
-          {/* Error state */}
-          {error && (
-            <div className="rounded-lg border border-destructive/30 bg-destructive/5 p-4 text-sm text-destructive">
-              <p className="font-medium mb-1">API Error</p>
-              <p className="text-xs text-destructive/80">{error}</p>
-              <p className="text-xs text-muted-foreground mt-2">
-                Make sure the <code className="bg-muted px-1 rounded">CHANGENOW_PRIVATE_KEY</code> secret is set to your ChangeNOW affiliate <strong>private</strong> API key (not the standard/public key).
-              </p>
-            </div>
-          )}
-
-          {/* Exchange Table */}
+          {/* Table */}
           <div className="overflow-x-auto -mx-6 px-6">
             <Table>
               <TableHeader>
                 <TableRow>
                   <TableHead className="w-[100px]">Status</TableHead>
-                  <TableHead>Flow</TableHead>
                   <TableHead>Created</TableHead>
                   <TableHead>From</TableHead>
                   <TableHead>To</TableHead>
+                  <TableHead>Received</TableHead>
                   <TableHead>TX ID</TableHead>
+                  <TableHead className="w-[60px]" />
                 </TableRow>
               </TableHeader>
               <TableBody>
                 {loading && filtered.length === 0 ? (
                   <TableRow>
-                    <TableCell colSpan={6} className="text-center py-12 text-muted-foreground">
+                    <TableCell colSpan={7} className="text-center py-12 text-muted-foreground">
                       <RefreshCw className="w-5 h-5 animate-spin mx-auto mb-2" />
                       Loading exchanges…
                     </TableCell>
                   </TableRow>
                 ) : filtered.length === 0 ? (
                   <TableRow>
-                    <TableCell colSpan={6} className="text-center py-12 text-muted-foreground">
-                      {error ? "Could not load exchanges." : "No exchanges found."}
+                    <TableCell colSpan={7} className="text-center py-12 text-muted-foreground">
+                      No exchanges found.
                     </TableCell>
                   </TableRow>
                 ) : (
-                  filtered.map((ex) => (
-                    <TableRow key={ex.id} className="group">
-                      <TableCell>{statusBadge(ex.status)}</TableCell>
-                      <TableCell className="capitalize text-xs text-muted-foreground">{ex.flow || "Standard"}</TableCell>
-                      <TableCell className="text-xs text-muted-foreground whitespace-nowrap">{formatDate(ex.createdAt)}</TableCell>
+                  filtered.map((sw) => (
+                    <TableRow key={sw.id} className="group cursor-pointer" onClick={() => setDetail(sw)}>
+                      <TableCell>{statusBadge(sw.live?.status)}</TableCell>
+                      <TableCell className="text-xs text-muted-foreground whitespace-nowrap">{formatDate(sw.created_at)}</TableCell>
                       <TableCell>
-                        <div className="text-sm font-medium">
-                          {formatAmount(ex.amountFrom || ex.expectedAmountFrom, ex.fromCurrency)}
-                        </div>
-                        {ex.fromNetwork && ex.fromNetwork !== ex.fromCurrency && (
-                          <span className="text-[10px] text-muted-foreground uppercase">{ex.fromNetwork}</span>
-                        )}
+                        <span className="text-sm font-medium">
+                          {formatAmount(sw.live?.amountSend ?? sw.amount, sw.from_currency)}
+                        </span>
                       </TableCell>
                       <TableCell>
-                        <div className="text-sm font-medium">
-                          {formatAmount(ex.amountTo || ex.expectedAmountTo, ex.toCurrency)}
-                        </div>
-                        {ex.toNetwork && ex.toNetwork !== ex.toCurrency && (
-                          <span className="text-[10px] text-muted-foreground uppercase">{ex.toNetwork}</span>
-                        )}
+                        <span className="text-sm font-medium">
+                          {formatAmount(sw.live?.amountReceive, sw.to_currency)}
+                        </span>
+                      </TableCell>
+                      <TableCell className="text-xs text-muted-foreground">
+                        {sw.live?.amountReceive
+                          ? formatAmount(sw.live.amountReceive, sw.to_currency)
+                          : "—"}
                       </TableCell>
                       <TableCell>
                         <span className="font-mono text-[11px] text-muted-foreground">
-                          {ex.id?.slice(0, 12)}…
+                          {sw.transaction_id?.slice(0, 12)}…
                         </span>
+                      </TableCell>
+                      <TableCell>
+                        <Eye className="w-4 h-4 text-muted-foreground opacity-0 group-hover:opacity-100 transition-opacity" />
                       </TableCell>
                     </TableRow>
                   ))
@@ -322,28 +399,16 @@ const ExchangeTracker = () => {
           </div>
 
           {/* Pagination */}
-          {(offset > 0 || hasMore) && (
+          {(page > 0 || hasMore) && (
             <div className="flex items-center justify-between pt-2 border-t border-border/30">
               <p className="text-xs text-muted-foreground">
-                Showing {offset + 1}–{offset + filtered.length}
+                Showing {page * PAGE_SIZE + 1}–{Math.min((page + 1) * PAGE_SIZE, total)} of {total}
               </p>
               <div className="flex gap-2">
-                <Button
-                  variant="ghost"
-                  size="sm"
-                  onClick={() => fetchExchanges(Math.max(0, offset - PAGE_SIZE))}
-                  disabled={offset === 0 || loading}
-                  className="gap-1 text-xs"
-                >
+                <Button variant="ghost" size="sm" onClick={() => fetchSwaps(page - 1)} disabled={page === 0 || loading} className="gap-1 text-xs">
                   <ChevronLeft className="w-4 h-4" /> Previous
                 </Button>
-                <Button
-                  variant="ghost"
-                  size="sm"
-                  onClick={() => fetchExchanges(offset + PAGE_SIZE)}
-                  disabled={!hasMore || loading}
-                  className="gap-1 text-xs"
-                >
+                <Button variant="ghost" size="sm" onClick={() => fetchSwaps(page + 1)} disabled={!hasMore || loading} className="gap-1 text-xs">
                   Next <ChevronRight className="w-4 h-4" />
                 </Button>
               </div>
@@ -351,6 +416,81 @@ const ExchangeTracker = () => {
           )}
         </CardContent>
       </Card>
+
+      {/* Detail Dialog */}
+      <Dialog open={!!detail} onOpenChange={() => setDetail(null)}>
+        <DialogContent className="max-w-lg bg-card border-border/40">
+          <DialogHeader>
+            <DialogTitle className="flex items-center gap-2 text-base">
+              Exchange Details {detail?.live && statusBadge(detail.live.status)}
+            </DialogTitle>
+          </DialogHeader>
+          {detail && (
+            <div className="space-y-4 text-sm">
+              <div className="grid grid-cols-2 gap-3">
+                <div>
+                  <p className="text-xs text-muted-foreground mb-1">TX ID</p>
+                  <button onClick={() => copyText(detail.transaction_id)} className="font-mono text-xs text-foreground flex items-center gap-1 hover:text-primary transition-colors">
+                    {detail.transaction_id} <Copy className="w-3 h-3" />
+                  </button>
+                </div>
+                <div>
+                  <p className="text-xs text-muted-foreground mb-1">Created</p>
+                  <p className="text-xs text-foreground">{formatDate(detail.created_at)}</p>
+                </div>
+              </div>
+
+              <div className="grid grid-cols-2 gap-3">
+                <div>
+                  <p className="text-xs text-muted-foreground mb-1">Sent</p>
+                  <p className="font-medium">{formatAmount(detail.live?.amountSend ?? detail.amount, detail.from_currency)}</p>
+                </div>
+                <div>
+                  <p className="text-xs text-muted-foreground mb-1">Received</p>
+                  <p className="font-medium">{formatAmount(detail.live?.amountReceive, detail.to_currency)}</p>
+                </div>
+              </div>
+
+              <div>
+                <p className="text-xs text-muted-foreground mb-1">Deposit Address</p>
+                <button onClick={() => copyText(detail.live?.payinAddress || detail.payin_address)} className="font-mono text-[11px] text-foreground break-all flex items-center gap-1 hover:text-primary transition-colors">
+                  {detail.live?.payinAddress || detail.payin_address || "—"} <Copy className="w-3 h-3 shrink-0" />
+                </button>
+              </div>
+
+              <div>
+                <p className="text-xs text-muted-foreground mb-1">Recipient Address</p>
+                <button onClick={() => copyText(detail.recipient_address)} className="font-mono text-[11px] text-foreground break-all flex items-center gap-1 hover:text-primary transition-colors">
+                  {detail.recipient_address} <Copy className="w-3 h-3 shrink-0" />
+                </button>
+              </div>
+
+              {detail.live?.payinHash && (
+                <div>
+                  <p className="text-xs text-muted-foreground mb-1">Deposit TX Hash</p>
+                  <p className="font-mono text-[11px] text-foreground break-all">{detail.live.payinHash}</p>
+                </div>
+              )}
+
+              {detail.live?.payoutHash && (
+                <div>
+                  <p className="text-xs text-muted-foreground mb-1">Payout TX Hash</p>
+                  <p className="font-mono text-[11px] text-foreground break-all">{detail.live.payoutHash}</p>
+                </div>
+              )}
+
+              <a
+                href={`https://changenow.io/exchange/txs/${detail.transaction_id}`}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex items-center gap-1.5 text-xs text-primary hover:underline"
+              >
+                <ExternalLink className="w-3.5 h-3.5" /> View on ChangeNOW
+              </a>
+            </div>
+          )}
+        </DialogContent>
+      </Dialog>
     </div>
   );
 };
