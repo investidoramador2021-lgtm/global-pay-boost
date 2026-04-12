@@ -41,6 +41,7 @@ interface PartnerProfile {
   last_name: string;
   btc_wallet: string;
   referral_code: string;
+  verification_status: string;
 }
 
 interface PartnerTx {
@@ -126,6 +127,12 @@ const PartnerDashboard = () => {
         .eq("user_id", user.id)
         .maybeSingle();
       if (!p) { navigate("/partners"); return; }
+      if ((p as PartnerProfile).verification_status !== 'active') {
+        toast({ title: "Account not verified", description: "Please check your email and verify your account first.", variant: "destructive" });
+        await supabase.auth.signOut();
+        navigate("/partners?mode=login");
+        return;
+      }
       setProfile(p as PartnerProfile);
 
       // Load swaps referred by this partner's code
@@ -378,10 +385,24 @@ const PartnerDashboard = () => {
             </CardContent>
           </Card>
 
-          {/* Account Details */}
+          {/* Account Details — Identity fields are read-only */}
           <Card className="border-border/40 bg-card/40 backdrop-blur-sm">
             <CardHeader><CardTitle className="text-lg">Account Details</CardTitle></CardHeader>
             <CardContent className="space-y-4">
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                <div>
+                  <Label className="text-muted-foreground text-xs flex items-center gap-1"><Lock className="w-3 h-3" /> First Name</Label>
+                  <p className="text-sm text-foreground mt-1 font-medium">{profile?.first_name}</p>
+                </div>
+                <div>
+                  <Label className="text-muted-foreground text-xs flex items-center gap-1"><Lock className="w-3 h-3" /> Last Name</Label>
+                  <p className="text-sm text-foreground mt-1 font-medium">{profile?.last_name}</p>
+                </div>
+              </div>
+              <div>
+                <Label className="text-muted-foreground text-xs flex items-center gap-1"><Lock className="w-3 h-3" /> Email Address</Label>
+                <p className="text-sm text-foreground mt-1">{userEmail}</p>
+              </div>
               <div>
                 <Label className="text-muted-foreground text-xs">Unique Referral Link</Label>
                 <div className="flex items-center gap-2 mt-1">
@@ -396,6 +417,9 @@ const PartnerDashboard = () => {
                   {profile?.btc_wallet}
                 </p>
               </div>
+              <p className="text-xs text-muted-foreground/60 mt-2">
+                🔒 Name and email are permanently locked for security. They cannot be changed.
+              </p>
             </CardContent>
           </Card>
 

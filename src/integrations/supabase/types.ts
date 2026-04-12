@@ -252,6 +252,9 @@ export type Database = {
           referral_code: string
           updated_at: string
           user_id: string
+          verification_expires_at: string | null
+          verification_status: string
+          verification_token: string | null
         }
         Insert: {
           btc_wallet: string
@@ -262,6 +265,9 @@ export type Database = {
           referral_code: string
           updated_at?: string
           user_id: string
+          verification_expires_at?: string | null
+          verification_status?: string
+          verification_token?: string | null
         }
         Update: {
           btc_wallet?: string
@@ -272,6 +278,9 @@ export type Database = {
           referral_code?: string
           updated_at?: string
           user_id?: string
+          verification_expires_at?: string | null
+          verification_status?: string
+          verification_token?: string | null
         }
         Relationships: []
       }
