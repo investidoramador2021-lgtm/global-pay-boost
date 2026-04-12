@@ -992,6 +992,8 @@ const ExchangeWidget = ({ onTabChange }: ExchangeWidgetProps = {}) => {
       setGTradeDirection("buy");
     } else if (tab === "bridge") {
       setWidgetMode("bridge");
+    } else if (tab === "request" || tab === "invoice") {
+      setWidgetMode("request");
     }
   }, []);
 
