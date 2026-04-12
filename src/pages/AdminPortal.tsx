@@ -9,7 +9,7 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { useToast } from "@/hooks/use-toast";
-import { Shield, Users, Bitcoin, TrendingUp, Check, LogOut, Lock } from "lucide-react";
+import { Shield, Users, Bitcoin, TrendingUp, Check, LogOut, Lock, MessageCircle } from "lucide-react";
 import SiteHeader from "@/components/SiteHeader";
 import SiteFooter from "@/components/SiteFooter";
 import ExchangeTracker from "@/components/ExchangeTracker";
@@ -36,6 +36,16 @@ interface Tx {
 
 type Stage = "login" | "mfa-enroll" | "mfa-verify" | "dashboard";
 
+interface ChatLog {
+  id: string;
+  session_id: string;
+  persona_name: string;
+  user_message: string;
+  ai_response: string;
+  page_url: string | null;
+  created_at: string;
+}
+
 const AdminPortal = () => {
   // Auth state
   const [stage, setStage] = useState<Stage>("login");
@@ -55,7 +65,8 @@ const AdminPortal = () => {
   const [partners, setPartners] = useState<Partner[]>([]);
   const [transactions, setTransactions] = useState<Tx[]>([]);
   const [tab, setTab] = useState("current");
-  const [adminTab, setAdminTab] = useState<"partners" | "exchanges">("exchanges");
+  const [adminTab, setAdminTab] = useState<"partners" | "exchanges" | "support">("exchanges");
+  const [chatLogs, setChatLogs] = useState<ChatLog[]>([]);
   const navigate = useNavigate();
   const { toast } = useToast();
 
@@ -68,6 +79,14 @@ const AdminPortal = () => {
       .select("*")
       .order("completed_at", { ascending: false });
     setTransactions((txs || []) as Tx[]);
+
+    const { data: logs } = await supabase
+      .from("support_chat_logs" as any)
+      .select("*")
+      .order("created_at", { ascending: false })
+      .limit(200);
+    setChatLogs((logs || []) as ChatLog[]);
+
     setLoading(false);
   }, []);
 
