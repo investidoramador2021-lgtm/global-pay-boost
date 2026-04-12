@@ -1,4 +1,5 @@
 import { useState, useEffect, useRef, useMemo, useCallback } from "react";
+import { useTranslation } from "react-i18next";
 import { Loader2, ChevronDown, X, Copy, Check, FileText, Mail, Clock, Lock } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -9,10 +10,10 @@ import {
   type Currency,
 } from "@/lib/changenow";
 
-const POPULAR_TICKERS = ["btc", "eth", "usdt", "usdttrc20", "sol", "xrp", "usdc", "bnb", "ltc", "trx"];
+// Tier-1 assets only for Invoice tab
+const TIER1_TICKERS = ["btc", "eth", "usdc", "usdttrc20", "ltc", "doge"];
 const FIAT_OPTIONS = ["USD", "EUR", "GBP", "CAD", "AUD", "JPY", "BRL"] as const;
 
-// Approximate fiat-to-USD multipliers for cross-rate conversion
 const FIAT_TO_USD: Record<string, number> = {
   USD: 1, EUR: 1.08, GBP: 1.27, CAD: 0.73, AUD: 0.65, JPY: 0.0064, BRL: 0.19,
 };
@@ -41,10 +42,10 @@ function networkLabel(c: { ticker: string; name: string }): string | null {
 const INVOICE_EXPIRY_HOURS = 168; // 7 days
 
 const InvoiceRequestTab = () => {
+  const { t } = useTranslation();
   const [currencies, setCurrencies] = useState<Currency[]>([]);
   const [loading, setLoading] = useState(true);
 
-  // Fiat/crypto dual input
   const [fiatCurrency, setFiatCurrency] = useState<typeof FIAT_OPTIONS[number]>("USD");
   const [fiatAmount, setFiatAmount] = useState("");
   const [cryptoAmount, setCryptoAmount] = useState("");
@@ -52,7 +53,6 @@ const InvoiceRequestTab = () => {
   const [fiatRate, setFiatRate] = useState<number | null>(null);
   const [rateLoading, setRateLoading] = useState(false);
 
-  // Form fields
   const [payerName, setPayerName] = useState("");
   const [requesterName, setRequesterName] = useState("");
   const [receiveCurrency, setReceiveCurrency] = useState<Currency | null>(null);
@@ -63,7 +63,6 @@ const InvoiceRequestTab = () => {
   const [showPicker, setShowPicker] = useState(false);
   const [searchQuery, setSearchQuery] = useState("");
 
-  // Generated invoice state
   const [invoiceGenerated, setInvoiceGenerated] = useState(false);
   const [invoiceId, setInvoiceId] = useState("");
   const [copied, setCopied] = useState(false);
@@ -72,14 +71,15 @@ const InvoiceRequestTab = () => {
     let cancelled = false;
     getCurrencies().then((data) => {
       if (cancelled || !Array.isArray(data)) return;
-      setCurrencies(data);
-      const btc = data.find((c) => c.ticker === "btc");
+      // Filter to Tier-1 assets only
+      const tier1 = data.filter((c) => TIER1_TICKERS.includes(c.ticker.toLowerCase()));
+      setCurrencies(tier1);
+      const btc = tier1.find((c) => c.ticker === "btc");
       if (btc) setReceiveCurrency(btc);
     }).finally(() => { if (!cancelled) setLoading(false); });
     return () => { cancelled = true; };
   }, []);
 
-  // Fetch fiat→crypto rate from CoinGecko via edge function (USD only, then convert)
   const fetchRate = useCallback(async (ticker: string, fiat: string) => {
     if (!ticker) return;
     setRateLoading(true);
@@ -90,7 +90,6 @@ const InvoiceRequestTab = () => {
       });
       const usdPrice = data?.[coinId]?.usd;
       if (usdPrice) {
-        // Convert USD price to target fiat using approximate cross-rates
         const fiatMultiplier = FIAT_TO_USD[fiat] || 1;
         setFiatRate(usdPrice * fiatMultiplier);
       }
@@ -105,7 +104,6 @@ const InvoiceRequestTab = () => {
     if (receiveCurrency) fetchRate(receiveCurrency.ticker, fiatCurrency);
   }, [receiveCurrency, fiatCurrency, fetchRate]);
 
-  // Sync fiat↔crypto
   useEffect(() => {
     if (!fiatRate) return;
     if (lastEdited === "fiat" && fiatAmount) {
@@ -123,11 +121,11 @@ const InvoiceRequestTab = () => {
   }, [cryptoAmount, fiatRate, lastEdited]);
 
   const filteredCurrencies = useMemo(() => {
-    if (!searchQuery.trim()) return currencies.slice(0, 50);
+    if (!searchQuery.trim()) return currencies;
     const q = searchQuery.toLowerCase();
     return currencies.filter(
       (c) => c.ticker.toLowerCase().includes(q) || c.name.toLowerCase().includes(q)
-    ).slice(0, 50);
+    );
   }, [currencies, searchQuery]);
 
   const isEmailValid = (email: string) => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
@@ -142,7 +140,6 @@ const InvoiceRequestTab = () => {
     setInvoiceId(id);
     setInvoiceGenerated(true);
 
-    // Fire Telegram notification (silent)
     try {
       await supabase.functions.invoke("telegram-notify", {
         body: {
@@ -185,7 +182,7 @@ const InvoiceRequestTab = () => {
     return (
       <div className="flex h-60 flex-col items-center justify-center gap-3">
         <Loader2 className="h-8 w-8 animate-spin text-primary" />
-        <span className="font-body text-sm text-muted-foreground">Loading assets…</span>
+        <span className="font-body text-sm text-muted-foreground">{t("invoice.loadingAssets")}</span>
       </div>
     );
   }
@@ -198,42 +195,42 @@ const InvoiceRequestTab = () => {
           <div className="mx-auto mb-3 flex h-12 w-12 items-center justify-center rounded-full bg-trust/20">
             <Check className="h-6 w-6 text-trust" />
           </div>
-          <h3 className="font-display text-lg font-bold text-foreground">Invoice Issued</h3>
+          <h3 className="font-display text-lg font-bold text-foreground">{t("invoice.invoiceIssued")}</h3>
           <p className="mt-1 font-body text-xs text-muted-foreground">
-            Sent to <span className="font-semibold text-foreground">{payerEmail}</span>
+            {t("invoice.sentTo")} <span className="font-semibold text-foreground">{payerEmail}</span>
           </p>
         </div>
 
         <div className="rounded-xl border border-border bg-accent/50 p-4 space-y-3">
           <div className="flex items-center justify-between">
-            <span className="font-body text-[10px] uppercase tracking-wider text-muted-foreground">Invoice ID</span>
+            <span className="font-body text-[10px] uppercase tracking-wider text-muted-foreground">{t("invoice.invoiceIdLabel")}</span>
             <span className="font-mono text-xs font-semibold text-foreground">{invoiceId}</span>
           </div>
           <div className="flex items-center justify-between">
-            <span className="font-body text-[10px] uppercase tracking-wider text-muted-foreground">Amount</span>
+            <span className="font-body text-[10px] uppercase tracking-wider text-muted-foreground">{t("invoice.amountLabel")}</span>
             <span className="font-display text-sm font-bold text-foreground">
               {cryptoAmount} {receiveCurrency && displayTicker(receiveCurrency)}
               <span className="ml-1 text-xs font-normal text-muted-foreground">≈ {fiatAmount} {fiatCurrency}</span>
             </span>
           </div>
           <div className="flex items-center justify-between">
-            <span className="font-body text-[10px] uppercase tracking-wider text-muted-foreground">Payer</span>
+            <span className="font-body text-[10px] uppercase tracking-wider text-muted-foreground">{t("invoice.payerLabel")}</span>
             <span className="font-body text-xs text-foreground">{payerName}</span>
           </div>
           <div className="flex items-center justify-between">
-            <span className="font-body text-[10px] uppercase tracking-wider text-muted-foreground">Expires</span>
+            <span className="font-body text-[10px] uppercase tracking-wider text-muted-foreground">{t("invoice.expiresLabel")}</span>
             <span className="font-body text-xs text-amber-400 flex items-center gap-1">
-              <Clock className="h-3 w-3" /> {expiresAt.toLocaleDateString()} ({INVOICE_EXPIRY_HOURS / 24} Days)
+              <Clock className="h-3 w-3" /> {expiresAt.toLocaleDateString()} ({INVOICE_EXPIRY_HOURS / 24} {t("invoice.daysLabel")})
             </span>
           </div>
         </div>
 
         <Button onClick={handleCopyLink} variant="outline" className="w-full gap-2">
           {copied ? <Check className="h-4 w-4" /> : <Copy className="h-4 w-4" />}
-          {copied ? "Copied!" : "Copy Invoice Link"}
+          {copied ? t("invoice.copied") : t("invoice.copyLink")}
         </Button>
         <Button onClick={handleNewInvoice} className="w-full gap-2">
-          <FileText className="h-4 w-4" /> Create Another Invoice
+          <FileText className="h-4 w-4" /> {t("invoice.createAnother")}
         </Button>
       </div>
     );
@@ -247,8 +244,8 @@ const InvoiceRequestTab = () => {
           <FileText className="h-4 w-4 text-primary" />
         </div>
         <div>
-          <h3 className="font-display text-sm font-bold text-foreground">Professional Invoice</h3>
-          <p className="font-body text-[10px] text-muted-foreground">Request crypto payments with locked rates</p>
+          <h3 className="font-display text-sm font-bold text-foreground">{t("invoice.header")}</h3>
+          <p className="font-body text-[10px] text-muted-foreground">{t("invoice.headerDesc")}</p>
         </div>
       </div>
 
@@ -256,10 +253,10 @@ const InvoiceRequestTab = () => {
       <div className="space-y-2">
         <div>
           <label className="mb-1 block font-body text-[10px] font-semibold uppercase tracking-wider text-muted-foreground">
-            Payer / Company Name <span className="text-destructive">*</span>
+            {t("invoice.payerName")} <span className="text-destructive">*</span>
           </label>
           <Input
-            placeholder="Enter payer or company name"
+            placeholder={t("invoice.payerNamePlaceholder")}
             value={payerName}
             onChange={(e) => setPayerName(e.target.value)}
             className="h-10 bg-accent/50 border-border font-body text-sm"
@@ -267,10 +264,10 @@ const InvoiceRequestTab = () => {
         </div>
         <div>
           <label className="mb-1 block font-body text-[10px] font-semibold uppercase tracking-wider text-muted-foreground">
-            Your Name / Company <span className="text-destructive">*</span>
+            {t("invoice.requesterName")} <span className="text-destructive">*</span>
           </label>
           <Input
-            placeholder="Enter your name or company"
+            placeholder={t("invoice.requesterNamePlaceholder")}
             value={requesterName}
             onChange={(e) => setRequesterName(e.target.value)}
             className="h-10 bg-accent/50 border-border font-body text-sm"
@@ -281,7 +278,7 @@ const InvoiceRequestTab = () => {
       {/* Asset Selector */}
       <div>
         <label className="mb-1 block font-body text-[10px] font-semibold uppercase tracking-wider text-muted-foreground">
-          Receive Asset <span className="text-destructive">*</span>
+          {t("invoice.receiveAsset")} <span className="text-destructive">*</span>
         </label>
         <button
           type="button"
@@ -291,7 +288,7 @@ const InvoiceRequestTab = () => {
           {receiveCurrency?.image && (
             <img src={receiveCurrency.image} alt="" className="h-5 w-5 rounded-full" />
           )}
-          <span>{receiveCurrency ? displayTicker(receiveCurrency) : "Select"}</span>
+          <span>{receiveCurrency ? displayTicker(receiveCurrency) : t("widget.select")}</span>
           {receiveCurrency && networkLabel(receiveCurrency) && (
             <span className="text-[9px] text-muted-foreground">{networkLabel(receiveCurrency)}</span>
           )}
@@ -302,10 +299,9 @@ const InvoiceRequestTab = () => {
       {/* Dual Amount Input: Fiat ↔ Crypto */}
       <div>
         <label className="mb-1 block font-body text-[10px] font-semibold uppercase tracking-wider text-muted-foreground">
-          You Receive <span className="text-destructive">*</span>
+          {t("invoice.youReceive")} <span className="text-destructive">*</span>
         </label>
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
-          {/* Fiat input */}
           <div className="relative">
             <select
               value={fiatCurrency}
@@ -325,7 +321,6 @@ const InvoiceRequestTab = () => {
               className="h-10 bg-accent/50 border-border font-display text-lg font-bold text-right pl-16"
             />
           </div>
-          {/* Crypto input */}
           <div className="relative">
             <span className="absolute left-2 top-1/2 -translate-y-1/2 text-xs font-bold text-muted-foreground pointer-events-none">
               {receiveCurrency ? displayTicker(receiveCurrency) : "—"}
@@ -342,7 +337,7 @@ const InvoiceRequestTab = () => {
         </div>
         {rateLoading && (
           <p className="mt-1 font-body text-[10px] text-muted-foreground flex items-center gap-1">
-            <Loader2 className="h-3 w-3 animate-spin" /> Fetching rate…
+            <Loader2 className="h-3 w-3 animate-spin" /> {t("invoice.fetchingRate")}
           </p>
         )}
         {fiatRate && !rateLoading && (
@@ -355,7 +350,7 @@ const InvoiceRequestTab = () => {
       {/* Wallet Address */}
       <div>
         <label className="mb-1 block font-body text-[10px] font-semibold uppercase tracking-wider text-muted-foreground">
-          Your Wallet Address <span className="text-destructive">*</span>
+          {t("invoice.yourWallet")} <span className="text-destructive">*</span>
         </label>
         <DestinationAddressInput
           value={walletAddress}
@@ -369,7 +364,7 @@ const InvoiceRequestTab = () => {
       <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
         <div>
           <label className="mb-1 block font-body text-[10px] font-semibold uppercase tracking-wider text-muted-foreground">
-            Your Email <span className="text-destructive">*</span>
+            {t("invoice.yourEmail")} <span className="text-destructive">*</span>
           </label>
           <Input
             type="email"
@@ -381,7 +376,7 @@ const InvoiceRequestTab = () => {
         </div>
         <div>
           <label className="mb-1 block font-body text-[10px] font-semibold uppercase tracking-wider text-muted-foreground">
-            Payer Email <span className="text-destructive">*</span>
+            {t("invoice.payerEmail")} <span className="text-destructive">*</span>
           </label>
           <Input
             type="email"
@@ -396,9 +391,9 @@ const InvoiceRequestTab = () => {
       {/* Info banner */}
       <div className="flex items-start gap-2 rounded-lg border border-primary/20 bg-primary/5 px-3 py-2">
         <Lock className="mt-0.5 h-3.5 w-3.5 shrink-0 text-primary" />
-        <p className="font-body text-[10px] leading-relaxed text-muted-foreground">
-          The receive amount is <span className="font-semibold text-foreground">rate-locked</span>. Your client selects their payment asset and we handle conversion. Invoice expires in <span className="font-semibold text-foreground">{INVOICE_EXPIRY_HOURS / 24} days</span> ({INVOICE_EXPIRY_HOURS} hours).
-        </p>
+        <p className="font-body text-[10px] leading-relaxed text-muted-foreground"
+           dangerouslySetInnerHTML={{ __html: t("invoice.rateLockInfo", { days: INVOICE_EXPIRY_HOURS / 24, hours: INVOICE_EXPIRY_HOURS }) }}
+        />
       </div>
 
       {/* Submit */}
@@ -407,20 +402,20 @@ const InvoiceRequestTab = () => {
         disabled={!canSubmit}
         className="w-full min-h-[48px] gap-2 font-display text-sm font-bold uppercase tracking-wider"
       >
-        <Mail className="h-4 w-4" /> Issue Professional Invoice
+        <Mail className="h-4 w-4" /> {t("invoice.issueInvoice")}
       </Button>
 
       {/* Asset Picker Overlay */}
       {showPicker && (
         <div className="absolute inset-0 z-50 flex flex-col rounded-2xl bg-background/98 p-4 backdrop-blur-xl border border-border">
           <div className="mb-3 flex items-center justify-between">
-            <h4 className="font-display text-sm font-bold text-foreground">Select Receive Asset</h4>
+            <h4 className="font-display text-sm font-bold text-foreground">{t("invoice.selectAsset")}</h4>
             <button onClick={() => setShowPicker(false)} className="rounded-full p-1.5 hover:bg-accent">
               <X className="h-4 w-4 text-muted-foreground" />
             </button>
           </div>
           <Input
-            placeholder="Search assets…"
+            placeholder={t("invoice.searchAssets")}
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
             className="mb-3 h-9 bg-accent/50 border-border text-sm"
@@ -448,7 +443,6 @@ const InvoiceRequestTab = () => {
   );
 };
 
-/** Map common tickers to CoinGecko IDs */
 function mapTickerToCoinGeckoId(ticker: string): string {
   const map: Record<string, string> = {
     btc: "bitcoin", eth: "ethereum", sol: "solana", xrp: "ripple",
