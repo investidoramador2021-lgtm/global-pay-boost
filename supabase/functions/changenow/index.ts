@@ -173,6 +173,19 @@ Deno.serve(async (req) => {
           console.error('ChangeNow transaction error:', JSON.stringify(parsed.data));
           return jsonResponse({ error: 'Exchange service error. Please try again.' }, response.status);
         }
+        // Notify Telegram
+        const txData = parsed.data;
+        const amount = postBody?.amount || txData?.amount || '?';
+        const fromC = (postBody?.from as string || txData?.fromCurrency || '?').toUpperCase();
+        const toC = (postBody?.to as string || txData?.toCurrency || '?').toUpperCase();
+        const amountNum = Number(amount);
+        const isHighValue = amountNum >= 10000;
+        const telegramMsg = `[MRC GlobalPay] ✅ New Swap: ${amount} ${fromC} ➔ ${toC}\nStatus: ChangeNOW Forensic Verified\nID: ${txData?.id || 'N/A'}`;
+        notifyTelegram(isHighValue ? 'alert' : 'swap', isHighValue
+          ? `🚨 HIGH VALUE\n${telegramMsg}`
+          : telegramMsg
+        );
+
         return jsonResponse(parsed.data);
       }
       case 'tx-status': {
