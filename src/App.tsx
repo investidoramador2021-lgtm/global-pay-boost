@@ -127,6 +127,7 @@ const AppRoutes = () => (
     <Route path="partners" element={<Partners />} />
     <Route path="dashboard" element={<PartnerDashboard />} />
     <Route path="admin-portal-mrc" element={<AdminPortal />} />
+    <Route path="verify-update" element={<VerifyUpdate />} />
   </>
 );
 
