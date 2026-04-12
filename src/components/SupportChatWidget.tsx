@@ -443,9 +443,7 @@ const SupportChatWidget = () => {
                 onKeyDown={handleKeyDown}
                 placeholder="Type your message…"
                 rows={1}
-                className={`flex-1 resize-none bg-muted/40 border rounded-xl px-3 py-2.5 text-sm text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-1 focus:ring-primary/40 max-h-24 transition-all duration-500 ${
-                  messages.length <= 1 ? "border-primary/60 ring-2 ring-primary/30 shadow-[0_0_12px_-2px_hsl(var(--primary)/0.4)]" : "border-border/40"
-                }`}
+                className="flex-1 resize-none bg-muted/40 border border-border/40 rounded-xl px-3 py-2.5 text-sm text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-1 focus:ring-primary/40 max-h-24"
               />
               <Button
                 size="icon"
