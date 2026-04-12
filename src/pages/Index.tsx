@@ -30,6 +30,7 @@ const Index = () => {
   const lang = getLangFromPath(pathname);
   const homeUrl = `https://mrcglobalpay.com${langPath(lang, "/")}`;
   const { t } = useTranslation();
+  usePartnerRef();
   const financialServiceJsonLd = {
     "@context": "https://schema.org",
     "@type": "FinancialService",

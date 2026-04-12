@@ -75,7 +75,7 @@ const Partners = () => {
             <CardDescription className="text-muted-foreground">
               {isLogin
                 ? "Sign in to access your dashboard."
-                : "Rewards are based on completed transaction volume and settled in BTC."}
+                : "BTC rewards based on completed transaction volume."}
             </CardDescription>
           </CardHeader>
           <CardContent>
