@@ -36,10 +36,11 @@ const InvoiceStatus = () => {
     const fetchInvoice = async () => {
       const { data, error: err } = await supabase
         .rpc("get_invoice_by_token", { p_token: token });
-      if (err || !data) {
+      const row = Array.isArray(data) ? data[0] : data;
+      if (err || !row) {
         setError(t("invoice.statusPageNotFound"));
       } else {
-        setInvoice(data as Invoice);
+        setInvoice(row as Invoice);
       }
       setLoading(false);
     };
