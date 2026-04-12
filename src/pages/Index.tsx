@@ -249,15 +249,15 @@ const Index = () => {
         <SiteHeader />
         
         <main>
-          <HeroSection />
+          <HeroSection onTabChange={setActiveWidgetTab} />
           <TrustBanner />
           <div id="live-swaps">
             <LiveSwapTicker />
           </div>
           <FeaturesSection />
           <NoLimitsSection />
-          <HowItWorksSection />
-          <InvoiceHowItWorks />
+          {activeWidgetTab !== "request" && <HowItWorksSection />}
+          {activeWidgetTab === "request" && <InvoiceHowItWorks />}
           <div className="container mx-auto px-4 py-4">
             <GetTheAppBadges />
           </div>
