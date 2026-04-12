@@ -106,8 +106,19 @@ const Partners = () => {
 
     try {
       if (isLogin) {
-        const { error } = await supabase.auth.signInWithPassword({ email, password });
+        const { data: loginData, error } = await supabase.auth.signInWithPassword({ email, password });
         if (error) throw error;
+        // Check verification status
+        const { data: profile } = await supabase
+          .from("partner_profiles")
+          .select("verification_status")
+          .eq("user_id", loginData.user.id)
+          .maybeSingle();
+        if (profile && profile.verification_status !== "active") {
+          await supabase.auth.signOut();
+          toast({ title: "Email not verified", description: "Please check your inbox and verify your email before logging in.", variant: "destructive" });
+          return;
+        }
         navigate("/dashboard");
         return;
       }
