@@ -316,6 +316,20 @@ const InvoiceRequestTab = () => {
             </span>
           </div>
           <div className="flex items-center justify-between">
+            <span className="font-body text-[10px] uppercase tracking-wider text-muted-foreground">
+              {t("invoice.serviceFeeLabel", { percent: SERVICE_FEE_PERCENT })}
+            </span>
+            <span className="font-mono text-xs text-destructive">
+              −{serviceFeeAmount} {receiveCurrency && displayTicker(receiveCurrency)}
+            </span>
+          </div>
+          <div className="flex items-center justify-between border-t border-border pt-2">
+            <span className="font-body text-[10px] uppercase tracking-wider font-bold text-primary">{t("invoice.receiverGetsLabel")}</span>
+            <span className="font-display text-sm font-bold text-primary">
+              {netCryptoAmount} {receiveCurrency && displayTicker(receiveCurrency)}
+            </span>
+          </div>
+          <div className="flex items-center justify-between">
             <span className="font-body text-[10px] uppercase tracking-wider text-muted-foreground">{t("invoice.payerLabel")}</span>
             <span className="font-body text-xs text-foreground">{payerName}</span>
           </div>
@@ -326,6 +340,10 @@ const InvoiceRequestTab = () => {
             </span>
           </div>
         </div>
+
+        <p className="text-[9px] text-center text-muted-foreground italic px-2">
+          {t("invoice.taxDisclaimer")}
+        </p>
 
         <Button onClick={handleCopyLink} variant="outline" className="w-full gap-2">
           {copied ? <Check className="h-4 w-4" /> : <Copy className="h-4 w-4" />}

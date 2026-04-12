@@ -23,6 +23,9 @@ interface Invoice {
   status: string;
   expires_at: string;
   created_at: string;
+  service_fee_percent: number;
+  service_fee_amount: number;
+  net_crypto_amount: number;
 }
 
 const InvoicePay = () => {
@@ -41,21 +44,22 @@ const InvoicePay = () => {
         .eq("token", token)
         .maybeSingle();
       if (err || !data) {
-        setError("Invoice not found or invalid link.");
+        setError(t("invoice.payPageNotFound"));
       } else {
         setInvoice(data as Invoice);
       }
       setLoading(false);
     };
     fetchInvoice();
-  }, [token]);
+  }, [token, t]);
 
   const isExpired = invoice ? new Date(invoice.expires_at) < new Date() : false;
+  const ticker = invoice?.crypto_ticker?.toUpperCase() || "";
 
   return (
     <>
       <Helmet>
-        <title>Pay Invoice — MRC Global Pay</title>
+        <title>{t("invoice.payPageTitle")} — MRC Global Pay</title>
         <meta name="robots" content="noindex, nofollow" />
       </Helmet>
       <SiteHeader />
@@ -64,14 +68,14 @@ const InvoicePay = () => {
           {loading && (
             <div className="flex flex-col items-center justify-center gap-3 py-20">
               <Loader2 className="h-8 w-8 animate-spin text-primary" />
-              <span className="text-sm text-muted-foreground">Loading invoice…</span>
+              <span className="text-sm text-muted-foreground">{t("invoice.payPageLoading")}</span>
             </div>
           )}
 
           {error && !loading && (
             <div className="rounded-xl border border-destructive/30 bg-destructive/5 p-8 text-center">
               <AlertTriangle className="mx-auto mb-3 h-10 w-10 text-destructive" />
-              <h2 className="font-display text-lg font-bold text-foreground">Invoice Not Found</h2>
+              <h2 className="font-display text-lg font-bold text-foreground">{t("invoice.payPageNotFound")}</h2>
               <p className="mt-2 text-sm text-muted-foreground">{error}</p>
             </div>
           )}
@@ -85,42 +89,64 @@ const InvoicePay = () => {
                   </div>
                   <div>
                     <h1 className="font-display text-xl font-bold text-foreground">Invoice #{invoice.invoice_id}</h1>
-                    <p className="text-xs text-muted-foreground">From {invoice.requester_name}</p>
+                    <p className="text-xs text-muted-foreground">{t("invoice.statusPageRequester")}: {invoice.requester_name}</p>
                   </div>
                 </div>
 
                 <div className="space-y-3 rounded-xl bg-accent/50 p-4">
                   <div className="flex justify-between">
-                    <span className="text-[10px] font-semibold uppercase tracking-wider text-muted-foreground">Billed To</span>
+                    <span className="text-[10px] font-semibold uppercase tracking-wider text-muted-foreground">{t("invoice.payPageBilledTo")}</span>
                     <span className="text-sm font-semibold text-foreground">{invoice.payer_name}</span>
                   </div>
+
+                  {/* Fee Breakdown */}
+                  <div className="rounded-lg border border-border bg-background/50 p-3 space-y-2">
+                    <p className="text-[10px] font-bold uppercase tracking-wider text-muted-foreground">{t("invoice.feeBreakdownTitle")}</p>
+                    <div className="flex justify-between">
+                      <span className="text-[10px] text-muted-foreground">{t("invoice.payPageRequestedAmount")}</span>
+                      <span className="font-mono text-sm font-semibold text-foreground">
+                        {Number(invoice.crypto_amount)} {ticker}
+                      </span>
+                    </div>
+                    <div className="flex justify-between">
+                      <span className="text-[10px] text-muted-foreground">
+                        {t("invoice.payPageServiceFee")} ({invoice.service_fee_percent}%)
+                      </span>
+                      <span className="font-mono text-xs text-destructive">
+                        −{Number(invoice.service_fee_amount)} {ticker}
+                      </span>
+                    </div>
+                    <p className="text-[9px] text-muted-foreground italic">{t("invoice.payPageFeeDeducted")}</p>
+                    <div className="flex justify-between border-t border-border pt-2">
+                      <span className="text-[10px] font-bold text-primary">{t("invoice.payPageReceiverGets")}</span>
+                      <span className="font-display text-sm font-bold text-primary">
+                        {Number(invoice.net_crypto_amount)} {ticker}
+                      </span>
+                    </div>
+                  </div>
+
                   <div className="flex justify-between">
-                    <span className="text-[10px] font-semibold uppercase tracking-wider text-muted-foreground">Amount</span>
+                    <span className="text-[10px] font-semibold uppercase tracking-wider text-muted-foreground">{t("invoice.amountLabel")} ({invoice.fiat_currency})</span>
                     <span className="font-display text-lg font-bold text-foreground">
                       {Number(invoice.fiat_amount).toLocaleString()} {invoice.fiat_currency}
                     </span>
                   </div>
+
                   <div className="flex justify-between">
-                    <span className="text-[10px] font-semibold uppercase tracking-wider text-muted-foreground">Crypto Equivalent</span>
-                    <span className="font-mono text-sm font-semibold text-foreground">
-                      {Number(invoice.crypto_amount)} {invoice.crypto_ticker.toUpperCase()}
-                    </span>
-                  </div>
-                  <div className="flex justify-between">
-                    <span className="text-[10px] font-semibold uppercase tracking-wider text-muted-foreground">Status</span>
+                    <span className="text-[10px] font-semibold uppercase tracking-wider text-muted-foreground">{t("invoice.payPageStatus")}</span>
                     <span className={`text-xs font-bold uppercase ${
                       invoice.status === 'paid' ? 'text-trust' :
                       invoice.status === 'expired' ? 'text-destructive' :
                       'text-amber-400'
                     }`}>
-                      {invoice.status === 'pending' ? 'Awaiting Payment' : invoice.status.toUpperCase()}
+                      {invoice.status === 'pending' ? t("invoice.payPageAwaitingPayment") : invoice.status.toUpperCase()}
                     </span>
                   </div>
                   <div className="flex justify-between items-center">
-                    <span className="text-[10px] font-semibold uppercase tracking-wider text-muted-foreground">Rate Lock Expires</span>
+                    <span className="text-[10px] font-semibold uppercase tracking-wider text-muted-foreground">{t("invoice.payPageRateLockExpires")}</span>
                     <span className="text-xs text-amber-400 flex items-center gap-1">
                       <Clock className="h-3 w-3" />
-                      {new Date(invoice.expires_at).toLocaleDateString()} ({Math.ceil((new Date(invoice.expires_at).getTime() - Date.now()) / 3600000)}h)
+                      {new Date(invoice.expires_at).toLocaleDateString()} ({Math.max(0, Math.ceil((new Date(invoice.expires_at).getTime() - Date.now()) / 3600000))}h)
                     </span>
                   </div>
                 </div>
@@ -128,24 +154,29 @@ const InvoicePay = () => {
                 {isExpired ? (
                   <div className="mt-4 rounded-lg border border-destructive/30 bg-destructive/5 p-3 text-center">
                     <AlertTriangle className="mx-auto mb-1 h-5 w-5 text-destructive" />
-                    <p className="text-sm font-semibold text-destructive">This invoice has expired.</p>
-                    <p className="text-xs text-muted-foreground">Please contact the requester for a new invoice.</p>
+                    <p className="text-sm font-semibold text-destructive">{t("invoice.payPageExpired")}</p>
+                    <p className="text-xs text-muted-foreground">{t("invoice.payPageExpiredSub")}</p>
                   </div>
                 ) : invoice.status === 'paid' ? (
                   <div className="mt-4 rounded-lg border border-trust/30 bg-trust/5 p-3 text-center">
-                    <p className="text-sm font-semibold text-trust">This invoice has been paid.</p>
+                    <p className="text-sm font-semibold text-trust">{t("invoice.payPagePaid")}</p>
                   </div>
                 ) : (
                   <div className="mt-4 space-y-3">
                     <div className="rounded-lg border border-border bg-background p-3">
-                      <p className="text-[10px] font-semibold uppercase tracking-wider text-muted-foreground mb-1">Send exactly to this wallet:</p>
+                      <p className="text-[10px] font-semibold uppercase tracking-wider text-muted-foreground mb-1">{t("invoice.payPageSendExactly")}</p>
                       <p className="font-mono text-xs break-all text-foreground">{invoice.wallet_address}</p>
                     </div>
-                    <p className="text-[10px] text-muted-foreground text-center">
-                      Send exactly <span className="font-semibold text-foreground">{Number(invoice.crypto_amount)} {invoice.crypto_ticker.toUpperCase()}</span> to the address above. The payment will be confirmed automatically.
-                    </p>
+                    <p className="text-[10px] text-muted-foreground text-center"
+                       dangerouslySetInnerHTML={{ __html: t("invoice.payPageSendInstruction", { amount: Number(invoice.crypto_amount), ticker }) }}
+                    />
                   </div>
                 )}
+
+                {/* Tax Disclaimer */}
+                <p className="mt-4 text-[9px] text-center text-muted-foreground italic">
+                  {t("invoice.taxDisclaimer")}
+                </p>
               </div>
 
               <Button
@@ -153,7 +184,7 @@ const InvoicePay = () => {
                 className="w-full gap-2"
                 onClick={() => window.open(`${window.location.origin}/status/${token}`, '_blank')}
               >
-                <ExternalLink className="h-4 w-4" /> Track Payment Status
+                <ExternalLink className="h-4 w-4" /> {t("invoice.payPageTrackStatus")}
               </Button>
             </div>
           )}

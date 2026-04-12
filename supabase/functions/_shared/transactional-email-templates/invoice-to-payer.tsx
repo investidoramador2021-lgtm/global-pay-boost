@@ -14,6 +14,9 @@ interface InvoiceToPayerProps {
   fiatCurrency?: string
   cryptoAmount?: string
   cryptoTicker?: string
+  serviceFeePercent?: string
+  serviceFeeAmount?: string
+  netCryptoAmount?: string
   invoiceId?: string
   payUrl?: string
   statusUrl?: string
@@ -28,6 +31,9 @@ const InvoiceToPayerEmail = ({
   fiatCurrency = 'USD',
   cryptoAmount = '0',
   cryptoTicker = 'BTC',
+  serviceFeePercent = '1.5',
+  serviceFeeAmount = '0',
+  netCryptoAmount = '0',
   invoiceId = '',
   payUrl = '',
   statusUrl = '',
@@ -59,10 +65,21 @@ const InvoiceToPayerEmail = ({
 
           <Hr style={divider} />
 
-          <Text style={detailLabel}>Amount Due</Text>
+          <Text style={detailLabel}>Requested Amount</Text>
           <Text style={detailValue}>
             {fiatAmount} {fiatCurrency} ≈ {cryptoAmount} {cryptoTicker}
           </Text>
+
+          <Hr style={divider} />
+
+          <Text style={detailLabel}>Service Fee ({serviceFeePercent}%)</Text>
+          <Text style={feeValue}>−{serviceFeeAmount} {cryptoTicker}</Text>
+          <Text style={feeNote}>Deducted from final settlement</Text>
+
+          <Hr style={divider} />
+
+          <Text style={detailLabel}>Receiver Gets</Text>
+          <Text style={netValue}>{netCryptoAmount} {cryptoTicker}</Text>
 
           <Hr style={divider} />
 
@@ -98,6 +115,12 @@ const InvoiceToPayerEmail = ({
           </Text>
         </Section>
 
+        <Section style={taxSection}>
+          <Text style={taxText}>
+            MRC GlobalPay does not withhold taxes. Local tax liabilities are the sole responsibility of the client.
+          </Text>
+        </Section>
+
         <Hr style={footerDivider} />
 
         <Text style={footer}>
@@ -125,6 +148,9 @@ export const template = {
     fiatCurrency: 'USD',
     cryptoAmount: '0.00512',
     cryptoTicker: 'BTC',
+    serviceFeePercent: '1.5',
+    serviceFeeAmount: '0.0000768',
+    netCryptoAmount: '0.0050432',
     invoiceId: 'INV-M1X2Y3-AB4C',
     payUrl: 'https://mrcglobalpay.com/pay/abc123',
     statusUrl: 'https://mrcglobalpay.com/status/abc123',
@@ -142,6 +168,9 @@ const text = { fontSize: '15px', color: '#4a4a5a', lineHeight: '1.6', margin: '0
 const detailsCard = { backgroundColor: '#f8faf9', borderRadius: '12px', padding: '20px 24px', border: '1px solid #e8ece9', marginBottom: '24px' }
 const detailLabel = { fontSize: '12px', fontWeight: '600' as const, color: '#7a7a8a', textTransform: 'uppercase' as const, letterSpacing: '0.5px', margin: '0 0 4px' }
 const detailValue = { fontSize: '16px', fontWeight: '600' as const, color: '#1a1a2e', margin: '0' }
+const feeValue = { fontSize: '14px', fontWeight: '600' as const, color: '#c0392b', margin: '0' }
+const feeNote = { fontSize: '11px', color: '#999', fontStyle: 'italic' as const, margin: '2px 0 0' }
+const netValue = { fontSize: '16px', fontWeight: '700' as const, color: '#0fa968', margin: '0' }
 const expiryValue = { fontSize: '14px', fontWeight: '600' as const, color: '#b8860b', margin: '0' }
 const divider = { borderColor: '#e8ece9', margin: '14px 0' }
 const ctaSection = { textAlign: 'center' as const, marginBottom: '20px' }
@@ -149,9 +178,11 @@ const payButton = { backgroundColor: '#0fa968', color: '#ffffff', fontSize: '16p
 const trackingSection = { textAlign: 'center' as const, marginBottom: '24px' }
 const trackingText = { fontSize: '13px', color: '#7a7a8a', margin: '0' }
 const trackingLink = { color: '#0fa968', textDecoration: 'underline' }
-const noticeSection = { backgroundColor: '#fffbf0', borderRadius: '10px', padding: '16px 20px', border: '1px solid #f0e6cc', marginBottom: '24px' }
+const noticeSection = { backgroundColor: '#fffbf0', borderRadius: '10px', padding: '16px 20px', border: '1px solid #f0e6cc', marginBottom: '16px' }
 const noticeTitle = { fontSize: '14px', fontWeight: '600' as const, color: '#8a6d20', margin: '0 0 8px' }
 const noticeText = { fontSize: '13px', color: '#6b5a2a', lineHeight: '1.7', margin: '0', whiteSpace: 'pre-line' as const }
+const taxSection = { backgroundColor: '#f5f5f5', borderRadius: '8px', padding: '12px 16px', marginBottom: '24px' }
+const taxText = { fontSize: '11px', color: '#888', margin: '0', fontStyle: 'italic' as const, textAlign: 'center' as const }
 const footerDivider = { borderColor: '#e8ece9', margin: '24px 0' }
 const footer = { fontSize: '12px', color: '#999999', lineHeight: '1.5', margin: '0 0 8px', textAlign: 'center' as const }
 const footerLink = { color: '#0fa968', textDecoration: 'underline' }
