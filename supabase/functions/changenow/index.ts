@@ -167,7 +167,7 @@ Deno.serve(async (req) => {
         const dateFrom = params.dateFrom || '';
         const dateTo = params.dateTo || '';
         const status = params.status || '';
-        let txUrl = `${CHANGENOW_BASE}/transactions/${apiKey}?limit=${limit}&offset=${offset}`;
+        let txUrl = `${CHANGENOW_BASE}/transactions/${privateKey}?limit=${limit}&offset=${offset}`;
         if (dateFrom) txUrl += `&dateFrom=${dateFrom}`;
         if (dateTo) txUrl += `&dateTo=${dateTo}`;
         if (status) txUrl += `&status=${status}`;
