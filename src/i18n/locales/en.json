@@ -473,11 +473,11 @@
       "heading": "How Invoicing Works",
       "subtitle": "Request crypto payments from anyone — individuals or companies. Rates are locked at creation and settlement is guaranteed.",
       "step1Title": "Identify & Issue",
-      "step1Desc": "Enter mandatory company or individual details and set your exact billing amount in your preferred local currency.",
+      "step1Desc": "Enter mandatory Payer and Requester details. Set your precise billing amount in your preferred fiat currency.",
       "step2Title": "Automated Delivery",
-      "step2Desc": "We email the secure invoice link directly to your client. Links remain rate-locked for 7 days.",
+      "step2Desc": "We email a professional, secure payment link directly to your client. The invoice and rate remain locked for 168 hours (7 days).",
       "step3Title": "Precise Settlement",
-      "step3Desc": "Your client pays in crypto; we deliver the exact fiat-equivalent to your wallet. Both parties receive digital receipts."
+      "step3Desc": "Your client pays in crypto; our engine delivers the exact fiat-equivalent to your wallet. Both parties receive signed digital receipts."
     }
   }
 }
