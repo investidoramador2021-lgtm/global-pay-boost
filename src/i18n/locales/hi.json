@@ -543,7 +543,10 @@
     "statusPageLoading": "स्थिति लोड हो रहा है…",
     "statusPageAwaiting": "भुगतान की प्रतीक्षा",
     "statusPageSettled": "निपटान हो गया",
-    "statusPageExpired": "समाप्त"
+    "statusPageExpired": "समाप्त",
+    "allFeesIncludedNote": "All fees included in the final settlement amount.",
+    "requesterEmailPlaceholder": "you@email.com",
+    "payerEmailPlaceholder": "payer@email.com"
   },
   "address": {
     "placeholder": "अपना {{ticker}} गंतव्य पता चिपकाएँ",

@@ -543,7 +543,10 @@
     "statusPageLoading": "Завантаження статусу…",
     "statusPageAwaiting": "Очікування Оплати",
     "statusPageSettled": "Розраховано",
-    "statusPageExpired": "Прострочено"
+    "statusPageExpired": "Прострочено",
+    "allFeesIncludedNote": "All fees included in the final settlement amount.",
+    "requesterEmailPlaceholder": "you@email.com",
+    "payerEmailPlaceholder": "payer@email.com"
   },
   "address": {
     "placeholder": "Вставте вашу {{ticker}} адресу призначення",

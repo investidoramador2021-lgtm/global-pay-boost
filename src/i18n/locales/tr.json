@@ -543,7 +543,10 @@
     "statusPageLoading": "Durum yükleniyor…",
     "statusPageAwaiting": "Ödeme Bekleniyor",
     "statusPageSettled": "Tamamlandı",
-    "statusPageExpired": "Süresi Doldu"
+    "statusPageExpired": "Süresi Doldu",
+    "allFeesIncludedNote": "All fees included in the final settlement amount.",
+    "requesterEmailPlaceholder": "you@email.com",
+    "payerEmailPlaceholder": "payer@email.com"
   },
   "address": {
     "placeholder": "{{ticker}} hedef adresinizi yapıştırın",

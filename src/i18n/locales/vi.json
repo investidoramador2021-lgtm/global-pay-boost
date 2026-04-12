@@ -543,7 +543,10 @@
     "statusPageLoading": "Đang tải trạng thái…",
     "statusPageAwaiting": "Chờ Thanh Toán",
     "statusPageSettled": "Đã Thanh Toán",
-    "statusPageExpired": "Hết Hạn"
+    "statusPageExpired": "Hết Hạn",
+    "allFeesIncludedNote": "All fees included in the final settlement amount.",
+    "requesterEmailPlaceholder": "you@email.com",
+    "payerEmailPlaceholder": "payer@email.com"
   },
   "address": {
     "placeholder": "Dán địa chỉ đích {{ticker}} của bạn",

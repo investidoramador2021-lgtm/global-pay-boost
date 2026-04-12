@@ -543,7 +543,10 @@
     "statusPageLoading": "حالت لوڈ ہو رہی ہے…",
     "statusPageAwaiting": "ادائیگی کا انتظار",
     "statusPageSettled": "تصفیہ ہو گیا",
-    "statusPageExpired": "ختم"
+    "statusPageExpired": "ختم",
+    "allFeesIncludedNote": "All fees included in the final settlement amount.",
+    "requesterEmailPlaceholder": "you@email.com",
+    "payerEmailPlaceholder": "payer@email.com"
   },
   "address": {
     "placeholder": "اپنا {{ticker}} منزل کا پتہ چسپاں کریں",
