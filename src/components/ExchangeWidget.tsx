@@ -1641,7 +1641,7 @@ const ExchangeWidget = ({ onTabChange }: ExchangeWidgetProps = {}) => {
               <div className="flex rounded-xl border border-border bg-accent p-1 gap-1 max-[480px]:w-full max-[480px]:overflow-x-auto max-[480px]:scrollbar-none">
                 <button
                   onClick={() => { setWidgetMode("exchange"); setGStep("form"); setGCheckoutUrl(""); }}
-                  className={`flex items-center justify-center gap-1.5 rounded-lg px-3 py-2 font-display text-sm font-semibold ${
+                  className={`flex shrink-0 items-center justify-center gap-1.5 rounded-lg px-3 py-2 font-display text-xs sm:text-sm font-semibold whitespace-nowrap ${
                     widgetMode === "exchange"
                       ? "bg-primary text-primary-foreground shadow-card"
                       : "text-muted-foreground hover:text-foreground hover:bg-background"
@@ -1667,7 +1667,7 @@ const ExchangeWidget = ({ onTabChange }: ExchangeWidgetProps = {}) => {
                       applyGuardarianDefaults("buy");
                     }
                   }}
-                  className={`flex items-center justify-center gap-1.5 rounded-lg px-3 py-2 font-display text-sm font-semibold ${
+                  className={`flex shrink-0 items-center justify-center gap-1.5 rounded-lg px-3 py-2 font-display text-xs sm:text-sm font-semibold whitespace-nowrap ${
                     widgetMode === "buysell" && gTradeDirection === "buy"
                       ? "bg-primary text-primary-foreground shadow-card"
                       : "text-muted-foreground hover:text-foreground hover:bg-background"
@@ -1677,7 +1677,7 @@ const ExchangeWidget = ({ onTabChange }: ExchangeWidgetProps = {}) => {
                 </button>
                 <button
                   onClick={() => { setWidgetMode("private"); }}
-                  className={`flex items-center justify-center gap-1.5 rounded-lg px-3 py-2 font-display text-sm font-semibold ${
+                  className={`flex shrink-0 items-center justify-center gap-1.5 rounded-lg px-3 py-2 font-display text-xs sm:text-sm font-semibold whitespace-nowrap ${
                     widgetMode === "private"
                       ? "bg-primary text-primary-foreground shadow-card"
                       : "text-muted-foreground hover:text-foreground hover:bg-background"
@@ -1687,7 +1687,7 @@ const ExchangeWidget = ({ onTabChange }: ExchangeWidgetProps = {}) => {
                 </button>
                 <button
                   onClick={() => { setWidgetMode("bridge"); }}
-                  className={`flex items-center justify-center gap-1.5 rounded-lg px-3 py-2 font-display text-sm font-semibold ${
+                  className={`flex shrink-0 items-center justify-center gap-1.5 rounded-lg px-3 py-2 font-display text-xs sm:text-sm font-semibold whitespace-nowrap ${
                     widgetMode === "bridge"
                       ? "bg-primary text-primary-foreground shadow-card"
                       : "text-muted-foreground hover:text-foreground hover:bg-background"
@@ -1697,7 +1697,7 @@ const ExchangeWidget = ({ onTabChange }: ExchangeWidgetProps = {}) => {
                 </button>
                 <button
                   onClick={() => { setWidgetMode("request"); }}
-                  className={`flex items-center justify-center gap-1.5 rounded-lg px-3 py-2 font-display text-sm font-semibold ${
+                  className={`flex shrink-0 items-center justify-center gap-1.5 rounded-lg px-3 py-2 font-display text-xs sm:text-sm font-semibold whitespace-nowrap ${
                     widgetMode === "request"
                       ? "bg-primary text-primary-foreground shadow-card"
                       : "text-muted-foreground hover:text-foreground hover:bg-background"
