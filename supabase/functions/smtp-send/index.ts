@@ -319,7 +319,7 @@ Deno.serve(async (req) => {
 
     switch (type) {
       case 'receipt': {
-        if (!recipientEmail) throw new Error('recipientEmail required for receipts')
+        if (!toEmail) throw new Error('recipientEmail required for receipts')
         subject = `${l.receiptTitle} — MRC GlobalPay`
         html = renderReceipt({
           transactionId, fromAmount, fromCurrency, toCurrency,
