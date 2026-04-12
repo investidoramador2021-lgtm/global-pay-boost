@@ -22,6 +22,7 @@ import TrendingEcosystems from "@/components/TrendingEcosystems";
 import GetTheAppBadges from "@/components/GetTheAppBadges";
 import BentoSpecsSection from "@/components/BentoSpecsSection";
 import LiveNetworkBadge from "@/components/LiveNetworkBadge";
+import DynamicExplainer from "@/components/DynamicExplainer";
 import PartnerProtocolCTA from "@/components/PartnerProtocolCTA";
 
 import { Helmet } from "react-helmet-async";
