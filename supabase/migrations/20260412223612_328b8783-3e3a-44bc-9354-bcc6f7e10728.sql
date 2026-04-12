@@ -1,0 +1,1 @@
+ALTER TABLE public.invoices ALTER COLUMN service_fee_percent SET DEFAULT 0.5;
