@@ -163,6 +163,7 @@ const SupportChatWidget = () => {
     proactiveTimer.current = setTimeout(() => {
       if (!open && !proactiveDismissed) {
         setProactiveShown(true);
+        window.dispatchEvent(new CustomEvent("mrc-highlight-send-box"));
       }
     }, 10000);
 
