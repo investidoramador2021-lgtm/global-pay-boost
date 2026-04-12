@@ -190,6 +190,12 @@ const PartnerDashboard = () => {
   const activeSwaps = swaps.filter((s) => s.live && ["waiting", "new", "confirming", "exchanging", "sending"].includes(s.live.status)).length;
   const referralLink = profile ? `https://mrcglobalpay.com/?ref=${profile.referral_code}` : "";
 
+  // Commission calculations from partner_transactions
+  const totalEarned = commissions.reduce((s, t) => s + Number(t.commission_btc), 0);
+  const totalPaid = commissions.filter((t) => t.is_paid).reduce((s, t) => s + Number(t.commission_btc), 0);
+  const totalUnpaid = commissions.filter((t) => !t.is_paid).reduce((s, t) => s + Number(t.commission_btc), 0);
+  const commissionVolume = commissions.reduce((s, t) => s + Number(t.volume), 0);
+
   const copyLink = () => {
     navigator.clipboard.writeText(referralLink);
     toast({ title: "Copied", description: "Referral link copied to clipboard." });
