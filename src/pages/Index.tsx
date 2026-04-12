@@ -48,6 +48,51 @@ const Index = () => {
     description: t("meta.description"),
     areaServed: "Worldwide",
     serviceType: "Cryptocurrency Exchange",
+    knowsAbout: ["Cryptocurrency Exchange", "Non-Custodial Swap", "Crypto Invoice Settlement"],
+    hasOfferCatalog: {
+      "@type": "OfferCatalog",
+      name: "Crypto Exchange Services",
+      itemListElement: [
+        {
+          "@type": "Offer",
+          name: "Instant Crypto Swap",
+          description: "Non-custodial crypto-to-crypto swap from $0.30 with 0.5% inclusive service fee",
+          priceSpecification: {
+            "@type": "UnitPriceSpecification",
+            price: "0.5",
+            priceCurrency: "USD",
+            unitCode: "P1",
+            description: "0.5% inclusive service fee — no hidden charges"
+          }
+        },
+        {
+          "@type": "Offer",
+          name: "Professional Crypto Invoice",
+          description: "Issue crypto invoices with 168-hour rate lock guarantee and 0.5% settlement fee",
+          priceSpecification: {
+            "@type": "UnitPriceSpecification",
+            price: "0.5",
+            priceCurrency: "USD",
+            unitCode: "P1",
+            description: "0.5% service fee deducted from final settlement"
+          }
+        }
+      ]
+    }
+  };
+
+  const currencyConversionJsonLd = {
+    "@context": "https://schema.org",
+    "@type": "Service",
+    "@id": `${homeUrl}#currency-conversion`,
+    name: "MRC GlobalPay Currency Conversion",
+    provider: { "@type": "FinancialService", name: "MRC GlobalPay", url: homeUrl },
+    serviceType: "CurrencyConversionService",
+    description: "Instant non-custodial cryptocurrency conversion with 0.5% inclusive fee and 168-hour rate lock on invoices",
+    areaServed: "Worldwide",
+    termsOfService: "https://mrcglobalpay.com/terms",
+    additionalType: "https://schema.org/FinancialProduct",
+    "slogan": "Registration-Free Crypto Swap from $0.30"
   };
 
   return (
@@ -59,6 +104,7 @@ const Index = () => {
         <meta property="og:description" content={t("meta.description")} />
         <link rel="canonical" href={homeUrl} />
         <script type="application/ld+json">{JSON.stringify(financialServiceJsonLd)}</script>
+        <script type="application/ld+json">{JSON.stringify(currencyConversionJsonLd)}</script>
       </Helmet>
 
       <PullToRefresh onRefresh={handleRefresh}>
