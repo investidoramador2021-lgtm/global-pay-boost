@@ -543,7 +543,10 @@
     "statusPageLoading": "Laai status…",
     "statusPageAwaiting": "Wag vir Betaling",
     "statusPageSettled": "Verreken",
-    "statusPageExpired": "Verval"
+    "statusPageExpired": "Verval",
+    "allFeesIncludedNote": "All fees included in the final settlement amount.",
+    "requesterEmailPlaceholder": "you@email.com",
+    "payerEmailPlaceholder": "payer@email.com"
   },
   "address": {
     "placeholder": "Plak jou {{ticker}} bestemmingsadres",

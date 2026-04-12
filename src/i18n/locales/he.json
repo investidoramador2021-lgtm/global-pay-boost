@@ -543,7 +543,10 @@
     "statusPageLoading": "טוען סטטוס…",
     "statusPageAwaiting": "ממתין לתשלום",
     "statusPageSettled": "סולק",
-    "statusPageExpired": "פג תוקף"
+    "statusPageExpired": "פג תוקף",
+    "allFeesIncludedNote": "All fees included in the final settlement amount.",
+    "requesterEmailPlaceholder": "you@email.com",
+    "payerEmailPlaceholder": "payer@email.com"
   },
   "address": {
     "placeholder": "הדבק את כתובת היעד {{ticker}} שלך",

@@ -543,7 +543,10 @@
     "statusPageLoading": "Chargement du statut…",
     "statusPageAwaiting": "En Attente de Paiement",
     "statusPageSettled": "Réglée",
-    "statusPageExpired": "Expirée"
+    "statusPageExpired": "Expirée",
+    "allFeesIncludedNote": "All fees included in the final settlement amount.",
+    "requesterEmailPlaceholder": "you@email.com",
+    "payerEmailPlaceholder": "payer@email.com"
   },
   "address": {
     "placeholder": "Collez votre adresse de destination {{ticker}}",

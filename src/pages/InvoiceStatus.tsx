@@ -107,21 +107,12 @@ const InvoiceStatus = () => {
                   </span>
                 </div>
 
-                {/* Fee Breakdown */}
-                <div className="rounded-lg border border-border bg-background/50 p-3 space-y-2">
-                  <p className="text-[10px] font-bold uppercase tracking-wider text-muted-foreground">{t("invoice.feeBreakdownTitle")}</p>
-                  <div className="flex justify-between">
-                    <span className="text-[10px] text-muted-foreground">{t("invoice.payPageRequestedAmount")}</span>
-                    <span className="font-mono text-sm text-foreground">{Number(invoice.crypto_amount)} {ticker}</span>
-                  </div>
-                  <div className="flex justify-between">
-                    <span className="text-[10px] text-muted-foreground">{t("invoice.payPageServiceFee")} ({invoice.service_fee_percent}%)</span>
-                    <span className="font-mono text-xs text-destructive">−{Number(invoice.service_fee_amount)} {ticker}</span>
-                  </div>
-                  <div className="flex justify-between border-t border-border pt-2">
-                    <span className="text-[10px] font-bold text-primary">{t("invoice.payPageReceiverGets")}</span>
-                    <span className="font-display text-sm font-bold text-primary">{Number(invoice.net_crypto_amount)} {ticker}</span>
-                  </div>
+                {/* Total Amount Only - Client View */}
+                <div className="flex justify-between">
+                  <span className="text-[10px] font-semibold uppercase tracking-wider text-muted-foreground">{t("invoice.amountLabel")} ({ticker})</span>
+                  <span className="font-display text-lg font-bold text-foreground">
+                    {Number(invoice.crypto_amount)} {ticker}
+                  </span>
                 </div>
 
                 <div className="flex justify-between items-center">
@@ -137,6 +128,9 @@ const InvoiceStatus = () => {
                 </div>
               </div>
 
+              <p className="text-[9px] text-center text-muted-foreground italic">
+                {t("invoice.allFeesIncludedNote")}
+              </p>
               <p className="text-[9px] text-center text-muted-foreground italic">
                 {t("invoice.taxDisclaimer")}
               </p>

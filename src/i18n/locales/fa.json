@@ -543,7 +543,10 @@
     "statusPageLoading": "بارگذاری وضعیت…",
     "statusPageAwaiting": "در انتظار پرداخت",
     "statusPageSettled": "تسویه شده",
-    "statusPageExpired": "منقضی"
+    "statusPageExpired": "منقضی",
+    "allFeesIncludedNote": "All fees included in the final settlement amount.",
+    "requesterEmailPlaceholder": "you@email.com",
+    "payerEmailPlaceholder": "payer@email.com"
   },
   "address": {
     "placeholder": "آدرس مقصد {{ticker}} خود را بچسبانید",

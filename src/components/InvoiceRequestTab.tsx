@@ -488,7 +488,7 @@ const InvoiceRequestTab = () => {
           </label>
           <Input
             type="email"
-            placeholder="you@email.com"
+            placeholder={t("invoice.requesterEmailPlaceholder")}
             value={requesterEmail}
             onChange={(e) => setRequesterEmail(e.target.value)}
             className="h-10 bg-accent/50 border-border font-body text-xs"
@@ -500,7 +500,7 @@ const InvoiceRequestTab = () => {
           </label>
           <Input
             type="email"
-            placeholder="payer@email.com"
+            placeholder={t("invoice.payerEmailPlaceholder")}
             value={payerEmail}
             onChange={(e) => setPayerEmail(e.target.value)}
             className="h-10 bg-accent/50 border-border font-body text-xs"

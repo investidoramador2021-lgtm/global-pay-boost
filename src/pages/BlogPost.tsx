@@ -127,6 +127,27 @@ const BlogPostPage = () => {
       }
     : null;
 
+  const isInvoicePost = post.slug === "streamlined-global-settlement-mrc-invoicing";
+  const financialServiceJsonLd = isInvoicePost
+    ? {
+        "@context": "https://schema.org",
+        "@type": "FinancialService",
+        name: "MRC GlobalPay Crypto Invoicing",
+        description: "Professional crypto invoicing with all-in pricing and 168-hour rate lock guarantee.",
+        url: "https://mrcglobalpay.com/?tab=request",
+        provider: { "@type": "Organization", name: "MRC GlobalPay", url: "https://mrcglobalpay.com" },
+        serviceType: "CurrencyConversionService",
+        hasOfferCatalog: {
+          "@type": "OfferCatalog",
+          name: "Invoicing Features",
+          itemListElement: [
+            { "@type": "Offer", name: "All-In Pricing", description: "All service fees included in the quoted exchange rate. No hidden deductions." },
+            { "@type": "Offer", name: "168-Hour Rate Lock", description: "Exchange rate guaranteed for 7 days from invoice creation." },
+          ],
+        },
+      }
+    : null;
+
   return (
     <>
       <Helmet>
@@ -154,6 +175,7 @@ const BlogPostPage = () => {
         <script type="application/ld+json">{JSON.stringify(jsonLd)}</script>
         <script type="application/ld+json">{JSON.stringify(breadcrumbJsonLd)}</script>
         {faqJsonLd && <script type="application/ld+json">{JSON.stringify(faqJsonLd)}</script>}
+        {financialServiceJsonLd && <script type="application/ld+json">{JSON.stringify(financialServiceJsonLd)}</script>}
       </Helmet>
 
       <SiteHeader />
