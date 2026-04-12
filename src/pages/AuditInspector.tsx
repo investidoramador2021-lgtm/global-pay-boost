@@ -13,9 +13,9 @@ import SiteHeader from "@/components/SiteHeader";
 import SiteFooter from "@/components/SiteFooter";
 import jsPDF from "jspdf";
 
-type Stage = "login" | "mfa-enroll" | "mfa-verify" | "vault";
+type Stage = "login" | "mfa-enroll" | "mfa-verify" | "dashboard";
 
-interface ComplianceAlert {
+interface AlertRecord {
   id: string;
   partner_id: string | null;
   transaction_ref: string;
@@ -34,7 +34,7 @@ interface ComplianceAlert {
   created_at: string;
 }
 
-interface AuditLink {
+interface InspectionLink {
   id: string;
   alert_id: string;
   token: string;
@@ -42,7 +42,7 @@ interface AuditLink {
   created_at: string;
 }
 
-const ComplianceVault = () => {
+const AuditInspector = () => {
   const [stage, setStage] = useState<Stage>("login");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -54,7 +54,7 @@ const ComplianceVault = () => {
   const [challengeId, setChallengeId] = useState("");
 
   const [loading, setLoading] = useState(true);
-  const [alerts, setAlerts] = useState<ComplianceAlert[]>([]);
+  const [records, setRecords] = useState<AlertRecord[]>([]);
   const [filter, setFilter] = useState("");
   const [statusFilter, setStatusFilter] = useState("all");
 
@@ -73,7 +73,7 @@ const ComplianceVault = () => {
   }, [toast]);
 
   useEffect(() => {
-    if (stage !== "vault") return;
+    if (stage !== "dashboard") return;
     resetInactivityTimer();
     const events = ["mousedown", "keydown", "scroll", "touchstart"];
     const handler = () => resetInactivityTimer();
@@ -84,17 +84,17 @@ const ComplianceVault = () => {
     };
   }, [stage, resetInactivityTimer]);
 
-  const loadAlerts = useCallback(async () => {
+  const loadRecords = useCallback(async () => {
     const { data } = await supabase
       .from("compliance_alerts")
       .select("*")
       .order("created_at", { ascending: false });
-    setAlerts((data as unknown as ComplianceAlert[]) || []);
+    setRecords((data as unknown as AlertRecord[]) || []);
     setLoading(false);
   }, []);
 
   const startEnrollment = async () => {
-    const { data, error } = await supabase.auth.mfa.enroll({ factorType: "totp", friendlyName: "MRC Compliance Vault" });
+    const { data, error } = await supabase.auth.mfa.enroll({ factorType: "totp", friendlyName: "MRC Admin Inspector" });
     if (error) { toast({ title: "MFA Error", description: error.message, variant: "destructive" }); return; }
     if (data) { setMfaFactorId(data.id); setQrUri(data.totp.uri); }
   };
@@ -114,7 +114,7 @@ const ComplianceVault = () => {
       }
 
       const { data: aalData } = await supabase.auth.mfa.getAuthenticatorAssuranceLevel();
-      if (aalData?.currentLevel === "aal2") { setStage("vault"); loadAlerts(); return; }
+      if (aalData?.currentLevel === "aal2") { setStage("dashboard"); loadRecords(); return; }
 
       const { data: factors } = await supabase.auth.mfa.listFactors();
       const totpFactors = factors?.totp || [];
@@ -130,7 +130,7 @@ const ComplianceVault = () => {
       setLoading(false);
     };
     checkSession();
-  }, [loadAlerts]);
+  }, [loadRecords]);
 
   const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -146,7 +146,7 @@ const ComplianceVault = () => {
         throw new Error("Not an admin");
       }
       const { data: aalData } = await supabase.auth.mfa.getAuthenticatorAssuranceLevel();
-      if (aalData?.currentLevel === "aal2") { setStage("vault"); loadAlerts(); setLoginLoading(false); return; }
+      if (aalData?.currentLevel === "aal2") { setStage("dashboard"); loadRecords(); setLoginLoading(false); return; }
       const { data: factors } = await supabase.auth.mfa.listFactors();
       const totpFactors = factors?.totp || [];
       if (totpFactors.length > 0) {
@@ -171,8 +171,8 @@ const ComplianceVault = () => {
       if (cErr || !challenge) throw cErr || new Error("Challenge failed");
       const { error: vErr } = await supabase.auth.mfa.verify({ factorId: mfaFactorId, challengeId: challenge.id, code: totpCode });
       if (vErr) throw vErr;
-      setStage("vault");
-      loadAlerts();
+      setStage("dashboard");
+      loadRecords();
     } catch (err: any) {
       toast({ title: "Verification Failed", description: err.message, variant: "destructive" });
     }
@@ -190,21 +190,21 @@ const ComplianceVault = () => {
       if (!cid) throw new Error("Challenge failed");
       const { error } = await supabase.auth.mfa.verify({ factorId: mfaFactorId, challengeId: cid, code: totpCode });
       if (error) throw error;
-      setStage("vault");
-      loadAlerts();
+      setStage("dashboard");
+      loadRecords();
     } catch (err: any) {
       toast({ title: "Verification Failed", description: err.message, variant: "destructive" });
     }
     setMfaLoading(false);
   };
 
-  const generateAuditLink = async (alert: ComplianceAlert) => {
+  const generateInspectionLink = async (record: AlertRecord) => {
     const { data: { user } } = await supabase.auth.getUser();
     if (!user) return;
 
     const { data, error } = await supabase
       .from("audit_links")
-      .insert({ alert_id: alert.id, created_by: user.id })
+      .insert({ alert_id: record.id, created_by: user.id })
       .select()
       .single();
 
@@ -212,24 +212,24 @@ const ComplianceVault = () => {
       toast({ title: "Error", description: error.message, variant: "destructive" });
       return;
     }
-    const link = `${window.location.origin}/audit-report/${(data as unknown as AuditLink).token}`;
+    const link = `${window.location.origin}/regulatory-report/${(data as unknown as InspectionLink).token}`;
     await navigator.clipboard.writeText(link);
-    toast({ title: "Audit Link Generated", description: "Link copied to clipboard. Valid for 30 days." });
+    toast({ title: "Inspection Link Generated", description: "Link copied to clipboard. Valid for 30 days." });
   };
 
   const exportCSV = () => {
-    const rows = filteredAlerts.map(a => [
+    const rows = filteredRecords.map(a => [
       a.msb_reference, a.transaction_ref, a.partner_legal_name, a.partner_email,
       a.amount, a.from_currency, a.to_currency, a.source_wallet, a.destination_wallet,
       a.exchange_rate, a.alert_type, a.status, a.created_at
     ]);
-    const header = ["MSB Reference", "Transaction Ref", "Legal Name", "Email", "Amount", "From", "To", "Source Wallet", "Dest Wallet", "Exchange Rate", "Alert Type", "Status", "Timestamp"];
+    const header = ["MSB Reference", "Transaction Ref", "Legal Name", "Email", "Amount", "From", "To", "Source Wallet", "Dest Wallet", "Exchange Rate", "Type", "Status", "Timestamp"];
     const csv = [header, ...rows].map(r => r.map(c => `"${c}"`).join(",")).join("\n");
     const blob = new Blob([csv], { type: "text/csv" });
     const url = URL.createObjectURL(blob);
     const a = document.createElement("a");
     a.href = url;
-    a.download = `FINTRAC_Compliance_Report_${new Date().toISOString().split("T")[0]}.csv`;
+    a.download = `FINTRAC_Report_${new Date().toISOString().split("T")[0]}.csv`;
     a.click();
     URL.revokeObjectURL(url);
   };
@@ -237,7 +237,7 @@ const ComplianceVault = () => {
   const exportPDF = () => {
     const doc = new jsPDF({ orientation: "landscape" });
     doc.setFontSize(16);
-    doc.text("MRC GlobalPay — FINTRAC Compliance Report", 14, 20);
+    doc.text("MRC GlobalPay — FINTRAC Transaction Report", 14, 20);
     doc.setFontSize(8);
     doc.text(`MSB Registration: C100000015 | Generated: ${new Date().toISOString()}`, 14, 28);
     doc.setFontSize(7);
@@ -248,7 +248,7 @@ const ComplianceVault = () => {
     cols.forEach((c, i) => doc.text(c, colX[i], y));
     y += 6;
 
-    filteredAlerts.forEach(a => {
+    filteredRecords.forEach(a => {
       if (y > 190) { doc.addPage(); y = 20; }
       const row = [a.msb_reference, a.transaction_ref.slice(0, 12), a.partner_legal_name.slice(0, 14), a.partner_email.slice(0, 18),
         String(a.amount), `${a.from_currency}/${a.to_currency}`, a.source_wallet.slice(0, 16), a.destination_wallet.slice(0, 16),
@@ -257,10 +257,10 @@ const ComplianceVault = () => {
       y += 5;
     });
 
-    doc.save(`FINTRAC_Compliance_Report_${new Date().toISOString().split("T")[0]}.pdf`);
+    doc.save(`FINTRAC_Report_${new Date().toISOString().split("T")[0]}.pdf`);
   };
 
-  const filteredAlerts = alerts.filter(a => {
+  const filteredRecords = records.filter(a => {
     const matchesText = !filter || a.transaction_ref.toLowerCase().includes(filter.toLowerCase()) ||
       a.partner_legal_name.toLowerCase().includes(filter.toLowerCase()) ||
       a.msb_reference.toLowerCase().includes(filter.toLowerCase());
@@ -272,12 +272,12 @@ const ComplianceVault = () => {
   if (stage === "login") {
     return (
       <div className="min-h-screen flex items-center justify-center bg-background p-4">
-        <Helmet><title>Compliance Vault | MRC GlobalPay</title></Helmet>
+        <Helmet><title>Admin Inspector | MRC GlobalPay</title></Helmet>
         <Card className="w-full max-w-md border-primary/20">
           <CardHeader className="text-center">
             <Shield className="mx-auto h-10 w-10 text-primary mb-2" />
-            <CardTitle className="text-xl">Compliance Audit Vault</CardTitle>
-            <p className="text-sm text-muted-foreground">MFA-protected access for authorized compliance officers only.</p>
+            <CardTitle className="text-xl">Secure Admin Access</CardTitle>
+            <p className="text-sm text-muted-foreground">MFA-protected access for authorized administrators only.</p>
           </CardHeader>
           <CardContent>
             <form onSubmit={handleLogin} className="space-y-4">
@@ -303,7 +303,7 @@ const ComplianceVault = () => {
           <CardContent className="space-y-4">
             {qrUri && <div className="flex justify-center"><img src={`https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=${encodeURIComponent(qrUri)}`} alt="MFA QR" className="rounded-lg" /></div>}
             <div><Label>Enter 6-digit code</Label><Input maxLength={6} value={totpCode} onChange={e => setTotpCode(e.target.value.replace(/\D/g, ""))} /></div>
-            <Button className="w-full" onClick={handleMfaEnrollVerify} disabled={mfaLoading || totpCode.length !== 6}>{mfaLoading ? "Verifying…" : "Verify & Enter Vault"}</Button>
+            <Button className="w-full" onClick={handleMfaEnrollVerify} disabled={mfaLoading || totpCode.length !== 6}>{mfaLoading ? "Verifying…" : "Verify & Continue"}</Button>
           </CardContent>
         </Card>
       </div>
@@ -321,17 +321,17 @@ const ComplianceVault = () => {
           </CardHeader>
           <CardContent className="space-y-4">
             <div><Label>6-digit code</Label><Input maxLength={6} value={totpCode} onChange={e => setTotpCode(e.target.value.replace(/\D/g, ""))} /></div>
-            <Button className="w-full" onClick={handleMfaVerify} disabled={mfaLoading || totpCode.length !== 6}>{mfaLoading ? "Verifying…" : "Enter Vault"}</Button>
+            <Button className="w-full" onClick={handleMfaVerify} disabled={mfaLoading || totpCode.length !== 6}>{mfaLoading ? "Verifying…" : "Continue"}</Button>
           </CardContent>
         </Card>
       </div>
     );
   }
 
-  // ── Vault Dashboard ──
+  // ── Inspector Dashboard ──
   return (
     <>
-      <Helmet><title>Compliance Audit Vault | MRC GlobalPay</title></Helmet>
+      <Helmet><title>Transaction Inspector | MRC GlobalPay</title></Helmet>
       <SiteHeader />
       <main className="min-h-screen bg-background pt-20 pb-12 px-4">
         <div className="max-w-7xl mx-auto">
@@ -339,8 +339,8 @@ const ComplianceVault = () => {
             <div className="flex items-center gap-3">
               <Shield className="h-8 w-8 text-primary" />
               <div>
-                <h1 className="text-2xl font-bold text-foreground">Compliance Audit Vault</h1>
-                <p className="text-sm text-muted-foreground">FINTRAC MSB # C100000015 — Secure Transaction Audit System</p>
+                <h1 className="text-2xl font-bold text-foreground">Transaction Inspector</h1>
+                <p className="text-sm text-muted-foreground">FINTRAC MSB # C100000015 — Secure Internal Review</p>
               </div>
             </div>
             <Button variant="outline" onClick={async () => { await supabase.auth.signOut(); setStage("login"); }}>
@@ -374,16 +374,16 @@ const ComplianceVault = () => {
             </CardContent>
           </Card>
 
-          {/* Alerts Table */}
+          {/* Records Table */}
           <Card className="border-primary/10">
             <CardHeader>
-              <CardTitle className="text-lg">Compliance Alerts ({filteredAlerts.length})</CardTitle>
+              <CardTitle className="text-lg">Transaction Records ({filteredRecords.length})</CardTitle>
             </CardHeader>
             <CardContent>
               {loading ? (
                 <p className="text-muted-foreground text-center py-8">Loading…</p>
-              ) : filteredAlerts.length === 0 ? (
-                <p className="text-muted-foreground text-center py-8">No compliance alerts found.</p>
+              ) : filteredRecords.length === 0 ? (
+                <p className="text-muted-foreground text-center py-8">No records found.</p>
               ) : (
                 <div className="overflow-x-auto">
                   <Table>
@@ -400,7 +400,7 @@ const ComplianceVault = () => {
                       </TableRow>
                     </TableHeader>
                     <TableBody>
-                      {filteredAlerts.map(a => (
+                      {filteredRecords.map(a => (
                         <TableRow key={a.id}>
                           <TableCell className="font-mono text-xs">{a.msb_reference}</TableCell>
                           <TableCell className="font-mono text-xs">{a.transaction_ref.slice(0, 16)}…</TableCell>
@@ -418,10 +418,10 @@ const ComplianceVault = () => {
                           <TableCell className="text-xs">{new Date(a.created_at).toLocaleDateString()}</TableCell>
                           <TableCell>
                             <div className="flex gap-1">
-                              <Button size="sm" variant="outline" onClick={() => generateAuditLink(a)} title="Generate Audit Link">
+                              <Button size="sm" variant="outline" onClick={() => generateInspectionLink(a)} title="Generate Report Link">
                                 <Link2 className="h-3 w-3" />
                               </Button>
-                              <Button size="sm" variant="ghost" onClick={() => navigate(`/audit-report/preview/${a.id}`)} title="Preview Report">
+                              <Button size="sm" variant="ghost" onClick={() => navigate(`/regulatory-report/preview/${a.id}`)} title="View Report">
                                 <Eye className="h-3 w-3" />
                               </Button>
                             </div>
@@ -441,4 +441,4 @@ const ComplianceVault = () => {
   );
 };
 
-export default ComplianceVault;
+export default AuditInspector;
