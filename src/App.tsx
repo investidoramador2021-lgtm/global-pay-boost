@@ -61,8 +61,8 @@ const PartnerDashboard = lazy(() => import("./pages/PartnerDashboard.tsx"));
 const AdminPortal = lazy(() => import("./pages/AdminPortal.tsx"));
 const VerifyUpdate = lazy(() => import("./pages/VerifyUpdate.tsx"));
 const VerifyEmail = lazy(() => import("./pages/VerifyEmail.tsx"));
-const ComplianceVault = lazy(() => import("./pages/ComplianceVault.tsx"));
-const AuditReport = lazy(() => import("./pages/AuditReport.tsx"));
+const AuditInspector = lazy(() => import("./pages/AuditInspector.tsx"));
+const RegulatoryReport = lazy(() => import("./pages/RegulatoryReport.tsx"));
 const NotFound = lazy(() => import("./pages/NotFound.tsx"));
 
 const queryClient = new QueryClient();
@@ -158,10 +158,13 @@ const App = () => (
                   ))}
                   {/* Standalone embed widget (no header/footer/nav) */}
                   <Route path="/embed/widget" element={<EmbedWidget />} />
-                  {/* Compliance Vault — MFA-protected */}
-                  <Route path="/admin/compliance-vault" element={<ComplianceVault />} />
-                  {/* Audit Report — read-only printable page */}
-                  <Route path="/audit-report/:token" element={<AuditReport />} />
+                  {/* Admin Inspector — MFA-protected, hidden */}
+                  <Route path="/admin/audit-inspector" element={<AuditInspector />} />
+                  {/* Regulatory Report — read-only printable page */}
+                  <Route path="/regulatory-report/:token" element={<RegulatoryReport />} />
+                  {/* Legacy route redirect */}
+                  <Route path="/admin/compliance-vault" element={<Navigate to="/admin/audit-inspector" replace />} />
+                  <Route path="/audit-report/:token" element={<Navigate to="/admin/audit-inspector" replace />} />
                   {/* Redirect legacy sell/payout and old WordPress URLs to home */}
                   <Route path="/sell" element={<Navigate to="/" replace />} />
                   <Route path="/sell/*" element={<Navigate to="/" replace />} />
