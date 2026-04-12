@@ -1,8 +1,9 @@
 import { useState, useRef, useEffect, useCallback } from "react";
-import { MessageCircle, X, Send, Minimize2 } from "lucide-react";
+import { MessageCircle, X, Send } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { supabase } from "@/integrations/supabase/client";
 import ReactMarkdown from "react-markdown";
+import { useTranslation } from "react-i18next";
 import sarahImg from "@/assets/support-agent-sarah.jpg";
 import jamesImg from "@/assets/support-agent-james.jpg";
 import priyaImg from "@/assets/support-agent-priya.jpg";
