@@ -9,7 +9,7 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { useToast } from "@/hooks/use-toast";
-import { Copy, LogOut, Bitcoin, TrendingUp, Check, RefreshCw, Clock, CheckCircle2, XCircle, ArrowRightLeft, AlertTriangle, Wallet } from "lucide-react";
+import { Copy, LogOut, Bitcoin, TrendingUp, Check, RefreshCw, Clock, CheckCircle2, XCircle, ArrowRightLeft, AlertTriangle, Wallet, Lock } from "lucide-react";
 import SiteHeader from "@/components/SiteHeader";
 import SiteFooter from "@/components/SiteFooter";
 import MobileBottomNav from "@/components/MobileBottomNav";
@@ -437,37 +437,58 @@ const PartnerDashboard = () => {
           </Card>
 
           {/* Security & Account Update */}
-          <Card className="border-border/40 bg-card/40 backdrop-blur-sm">
-            <CardHeader><CardTitle className="text-lg">Security &amp; Account Updates</CardTitle></CardHeader>
-            <CardContent className="space-y-4">
-              <p className="text-sm text-muted-foreground">
-                For your protection, password and wallet changes require email verification. Click below and we'll send a secure, time-limited link to your registered email.
-              </p>
-              <Button
-                onClick={async () => {
-                  const lang = localStorage.getItem("user-lang") || navigator.language?.slice(0, 2) || "en";
-                  toast({ title: "Sending secure link…", description: "Check your email inbox." });
-                  try {
-                    const { data } = await supabase.functions.invoke("partner-update-token", {
-                      body: { action: "generate", lang },
-                    });
-                    if (data?.success) {
-                      toast({ title: "Secure link sent!", description: "Check your inbox. The link expires in 15 minutes." });
-                    } else {
-                      toast({ title: "Error", description: "Could not generate link. Try again.", variant: "destructive" });
-                    }
-                  } catch {
-                    toast({ title: "Error", description: "Something went wrong.", variant: "destructive" });
-                  }
-                }}
-                className="w-full sm:w-auto gap-2"
-                variant="outline"
-              >
-                <Wallet className="w-4 h-4" />
-                Request Secure Update
-              </Button>
-            </CardContent>
-          </Card>
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <Card className="border-border/40 bg-card/40 backdrop-blur-sm">
+              <CardHeader><CardTitle className="text-lg flex items-center gap-2"><Lock className="w-5 h-5" /> Change Password</CardTitle></CardHeader>
+              <CardContent className="space-y-3">
+                <p className="text-sm text-muted-foreground">
+                  We'll email you a secure, time-limited link to set a new password.
+                </p>
+                <Button
+                  onClick={async () => {
+                    const lang = localStorage.getItem("user-lang") || navigator.language?.slice(0, 2) || "en";
+                    toast({ title: "Sending secure link…" });
+                    try {
+                      const { data } = await supabase.functions.invoke("partner-update-token", {
+                        body: { action: "generate", purpose: "password", lang },
+                      });
+                      if (data?.success) toast({ title: "Link sent!", description: "Check your inbox — expires in 15 min." });
+                      else toast({ title: "Error", description: "Could not send link.", variant: "destructive" });
+                    } catch { toast({ title: "Error", variant: "destructive" }); }
+                  }}
+                  variant="outline"
+                  className="w-full gap-2"
+                >
+                  <Lock className="w-4 h-4" /> Change Password
+                </Button>
+              </CardContent>
+            </Card>
+            <Card className="border-border/40 bg-card/40 backdrop-blur-sm">
+              <CardHeader><CardTitle className="text-lg flex items-center gap-2"><Wallet className="w-5 h-5" /> Settlement Wallet</CardTitle></CardHeader>
+              <CardContent className="space-y-3">
+                <p className="text-sm text-muted-foreground">
+                  We'll email you a secure link to update your BTC payout address.
+                </p>
+                <Button
+                  onClick={async () => {
+                    const lang = localStorage.getItem("user-lang") || navigator.language?.slice(0, 2) || "en";
+                    toast({ title: "Sending secure link…" });
+                    try {
+                      const { data } = await supabase.functions.invoke("partner-update-token", {
+                        body: { action: "generate", purpose: "wallet", lang },
+                      });
+                      if (data?.success) toast({ title: "Link sent!", description: "Check your inbox — expires in 15 min." });
+                      else toast({ title: "Error", description: "Could not send link.", variant: "destructive" });
+                    } catch { toast({ title: "Error", variant: "destructive" }); }
+                  }}
+                  variant="outline"
+                  className="w-full gap-2"
+                >
+                  <Wallet className="w-4 h-4" /> Update Wallet
+                </Button>
+              </CardContent>
+            </Card>
+          </div>
         </main>
       </div>
 
