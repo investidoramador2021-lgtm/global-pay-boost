@@ -1,0 +1,372 @@
+import { createClient } from 'npm:@supabase/supabase-js@2'
+import { SMTPClient } from 'npm:emailjs@4.0.3'
+
+const corsHeaders = {
+  'Access-Control-Allow-Origin': '*',
+  'Access-Control-Allow-Headers': 'authorization, x-client-info, apikey, content-type',
+}
+
+// ── Persona routing ──
+const PERSONAS: Record<string, { from: string; name: string }> = {
+  'no-reply':    { from: 'no-reply@mrc-pay.com',    name: 'MRC GlobalPay' },
+  'support':     { from: 'support@mrc-pay.com',      name: 'MRC GlobalPay Support' },
+  'compliance':  { from: 'compliance@mrc-pay.com',   name: 'MRC GlobalPay Compliance' },
+}
+
+// ── Data masking utility ──
+function maskAddress(addr: string): string {
+  if (!addr || addr.length < 10) return addr || '—'
+  return `${addr.slice(0, 6)}····${addr.slice(-4)}`
+}
+
+function maskTxHash(hash: string): string {
+  if (!hash || hash.length < 12) return hash || '—'
+  return `${hash.slice(0, 6)}····${hash.slice(-6)}`
+}
+
+// ── Language map ──
+const LANG_STRINGS: Record<string, {
+  greeting: string; receiptTitle: string; pairLabel: string;
+  depositLabel: string; recipientLabel: string; trackBtn: string;
+  footer: string; complianceSubject: string; errorSubject: string;
+}> = {
+  en: { greeting: 'Hello', receiptTitle: 'Exchange Receipt', pairLabel: 'Exchange Pair', depositLabel: 'Deposit Address', recipientLabel: 'Recipient Address', trackBtn: 'Track Your Exchange', footer: 'MRC GlobalPay is a Registered Canadian MSB. Non-custodial service — we never hold your keys.', complianceSubject: 'Compliance Alert: High-Value Transaction', errorSubject: 'System Alert: Settlement Delay' },
+  es: { greeting: 'Hola', receiptTitle: 'Recibo de Intercambio', pairLabel: 'Par de Intercambio', depositLabel: 'Dirección de Depósito', recipientLabel: 'Dirección del Destinatario', trackBtn: 'Seguir tu Intercambio', footer: 'MRC GlobalPay es una MSB registrada en Canadá. Servicio no custodial — nunca mantenemos tus claves.', complianceSubject: 'Alerta de Cumplimiento: Transacción de Alto Valor', errorSubject: 'Alerta del Sistema: Retraso de Liquidación' },
+  pt: { greeting: 'Olá', receiptTitle: 'Recibo de Troca', pairLabel: 'Par de Troca', depositLabel: 'Endereço de Depósito', recipientLabel: 'Endereço do Destinatário', trackBtn: 'Rastrear sua Troca', footer: 'MRC GlobalPay é um MSB registrado no Canadá. Serviço não custodial — nunca guardamos suas chaves.', complianceSubject: 'Alerta de Conformidade: Transação de Alto Valor', errorSubject: 'Alerta do Sistema: Atraso de Liquidação' },
+  fr: { greeting: 'Bonjour', receiptTitle: 'Reçu d\'Échange', pairLabel: 'Paire d\'Échange', depositLabel: 'Adresse de Dépôt', recipientLabel: 'Adresse du Destinataire', trackBtn: 'Suivre votre Échange', footer: 'MRC GlobalPay est un MSB enregistré au Canada. Service non-dépositaire — nous ne détenons jamais vos clés.', complianceSubject: 'Alerte Conformité: Transaction de Haute Valeur', errorSubject: 'Alerte Système: Délai de Règlement' },
+  ja: { greeting: 'こんにちは', receiptTitle: '交換レシート', pairLabel: '交換ペア', depositLabel: '入金アドレス', recipientLabel: '受取アドレス', trackBtn: '交換を追跡', footer: 'MRC GlobalPayはカナダ登録MSBです。ノンカストディアルサービス — お客様の鍵を保持しません。', complianceSubject: 'コンプライアンスアラート: 高額取引', errorSubject: 'システムアラート: 決済遅延' },
+  tr: { greeting: 'Merhaba', receiptTitle: 'Değişim Makbuzu', pairLabel: 'Değişim Çifti', depositLabel: 'Depozit Adresi', recipientLabel: 'Alıcı Adresi', trackBtn: 'Değişiminizi Takip Edin', footer: 'MRC GlobalPay, Kanada kayıtlı bir MSB\'dir. Emanetçi olmayan hizmet — anahtarlarınızı asla tutmuyoruz.', complianceSubject: 'Uyumluluk Uyarısı: Yüksek Değerli İşlem', errorSubject: 'Sistem Uyarısı: Uzlaşma Gecikmesi' },
+  hi: { greeting: 'नमस्ते', receiptTitle: 'एक्सचेंज रसीद', pairLabel: 'एक्सचेंज जोड़ी', depositLabel: 'जमा पता', recipientLabel: 'प्राप्तकर्ता पता', trackBtn: 'अपना एक्सचेंज ट्रैक करें', footer: 'MRC GlobalPay एक कनाडा पंजीकृत MSB है। नॉन-कस्टोडियल सेवा — हम कभी आपकी कुंजी नहीं रखते।', complianceSubject: 'अनुपालन चेतावनी: उच्च मूल्य लेनदेन', errorSubject: 'सिस्टम चेतावनी: निपटान विलंब' },
+  vi: { greeting: 'Xin chào', receiptTitle: 'Biên Lai Giao Dịch', pairLabel: 'Cặp Giao Dịch', depositLabel: 'Địa Chỉ Nạp', recipientLabel: 'Địa Chỉ Nhận', trackBtn: 'Theo Dõi Giao Dịch', footer: 'MRC GlobalPay là MSB đã đăng ký tại Canada. Dịch vụ phi lưu ký — chúng tôi không bao giờ giữ chìa khóa của bạn.', complianceSubject: 'Cảnh Báo Tuân Thủ: Giao Dịch Giá Trị Cao', errorSubject: 'Cảnh Báo Hệ Thống: Trì Hoãn Thanh Toán' },
+  af: { greeting: 'Hallo', receiptTitle: 'Ruil Kwitansie', pairLabel: 'Ruil Paar', depositLabel: 'Deposito Adres', recipientLabel: 'Ontvanger Adres', trackBtn: 'Volg Jou Ruil', footer: 'MRC GlobalPay is \'n Kanada-geregistreerde MSB. Nie-bewarende diens — ons hou nooit jou sleutels nie.', complianceSubject: 'Nakomings Waarskuwing: Hoë-Waarde Transaksie', errorSubject: 'Stelsel Waarskuwing: Vestigingsvertraging' },
+  fa: { greeting: 'سلام', receiptTitle: 'رسید مبادله', pairLabel: 'جفت مبادله', depositLabel: 'آدرس واریز', recipientLabel: 'آدرس گیرنده', trackBtn: 'پیگیری مبادله', footer: 'MRC GlobalPay یک MSB ثبت شده کانادا است. خدمات غیرامانی — ما هرگز کلیدهای شما را نگه نمی‌داریم.', complianceSubject: 'هشدار انطباق: تراکنش با ارزش بالا', errorSubject: 'هشدار سیستم: تأخیر تسویه' },
+  ur: { greeting: 'السلام علیکم', receiptTitle: 'تبادلہ رسید', pairLabel: 'تبادلہ جوڑا', depositLabel: 'جمع ایڈریس', recipientLabel: 'وصول کنندہ ایڈریس', trackBtn: 'اپنا تبادلہ ٹریک کریں', footer: 'MRC GlobalPay کینیڈا میں رجسٹرڈ MSB ہے۔ نان-کسٹوڈیل سروس — ہم کبھی آپ کی چابیاں نہیں رکھتے۔', complianceSubject: 'تعمیل الرٹ: اعلی قیمت لین دین', errorSubject: 'سسٹم الرٹ: تصفیہ تاخیر' },
+  he: { greeting: 'שלום', receiptTitle: 'קבלת המרה', pairLabel: 'זוג המרה', depositLabel: 'כתובת הפקדה', recipientLabel: 'כתובת מקבל', trackBtn: 'עקוב אחרי ההמרה שלך', footer: 'MRC GlobalPay הוא MSB רשום בקנדה. שירות ללא משמורת — אנחנו אף פעם לא מחזיקים במפתחות שלך.', complianceSubject: 'התראת ציות: עסקה בערך גבוה', errorSubject: 'התראת מערכת: עיכוב סליקה' },
+  uk: { greeting: 'Привіт', receiptTitle: 'Квитанція Обміну', pairLabel: 'Пара Обміну', depositLabel: 'Адреса Депозиту', recipientLabel: 'Адреса Отримувача', trackBtn: 'Відстежити Ваш Обмін', footer: 'MRC GlobalPay — зареєстрований канадський MSB. Некастодіальний сервіс — ми ніколи не зберігаємо ваші ключі.', complianceSubject: 'Сповіщення про відповідність: транзакція високої вартості', errorSubject: 'Системне сповіщення: затримка розрахунків' },
+}
+
+function getLang(lang?: string) {
+  const key = (lang || 'en').toLowerCase().slice(0, 2)
+  return LANG_STRINGS[key] || LANG_STRINGS.en
+}
+
+// ── RTL detection ──
+const RTL_LANGS = ['fa', 'ur', 'he']
+function isRtl(lang: string): boolean {
+  return RTL_LANGS.includes((lang || 'en').toLowerCase().slice(0, 2))
+}
+
+// ── Premium Dark Template ──
+function renderReceipt(data: {
+  transactionId: string; fromAmount: string; fromCurrency: string;
+  toCurrency: string; depositAddress: string; recipientAddress: string;
+  lang?: string;
+}): string {
+  const l = getLang(data.lang)
+  const dir = isRtl(data.lang || 'en') ? 'rtl' : 'ltr'
+
+  return `<!DOCTYPE html>
+<html lang="${(data.lang || 'en').slice(0, 2)}" dir="${dir}">
+<head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"></head>
+<body style="margin:0;padding:0;background:#0f172a;font-family:'Inter','Helvetica Neue',Arial,sans-serif;">
+<table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="background:#0f172a;">
+<tr><td align="center" style="padding:40px 16px;">
+<table role="presentation" width="580" cellpadding="0" cellspacing="0" style="background:#1e293b;border-radius:16px;overflow:hidden;border:1px solid #334155;">
+
+<!-- Header -->
+<tr><td style="padding:32px 32px 24px;text-align:center;border-bottom:1px solid #334155;">
+  <div style="font-size:24px;font-weight:700;color:#38bdf8;letter-spacing:-0.3px;">MRC GlobalPay</div>
+</td></tr>
+
+<!-- Title -->
+<tr><td style="padding:28px 32px 8px;text-align:center;">
+  <div style="font-size:22px;font-weight:700;color:#f1f5f9;">${l.receiptTitle}</div>
+</td></tr>
+
+<!-- Transaction ID -->
+<tr><td style="padding:16px 32px;">
+  <table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="background:#0f172a;border-radius:10px;border:1px solid #334155;">
+  <tr><td style="padding:16px 20px;">
+    <div style="font-size:11px;font-weight:600;color:#64748b;text-transform:uppercase;letter-spacing:0.8px;margin-bottom:6px;">Transaction ID</div>
+    <div style="font-size:14px;font-weight:600;color:#38bdf8;font-family:'Roboto Mono',monospace;word-break:break-all;">${maskTxHash(data.transactionId)}</div>
+  </td></tr>
+  </table>
+</td></tr>
+
+<!-- Exchange Pair -->
+<tr><td style="padding:8px 32px;">
+  <table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="background:#0f172a;border-radius:10px;border:1px solid #334155;">
+  <tr><td style="padding:16px 20px;">
+    <div style="font-size:11px;font-weight:600;color:#64748b;text-transform:uppercase;letter-spacing:0.8px;margin-bottom:6px;">${l.pairLabel}</div>
+    <div style="font-size:18px;font-weight:700;color:#f1f5f9;">${data.fromAmount} ${(data.fromCurrency || '').toUpperCase()} <span style="color:#38bdf8;">→</span> ${(data.toCurrency || '').toUpperCase()}</div>
+  </td></tr>
+  </table>
+</td></tr>
+
+<!-- Deposit Address -->
+<tr><td style="padding:8px 32px;">
+  <table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="background:#0f172a;border-radius:10px;border:1px solid #334155;">
+  <tr><td style="padding:16px 20px;">
+    <div style="font-size:11px;font-weight:600;color:#64748b;text-transform:uppercase;letter-spacing:0.8px;margin-bottom:6px;">${l.depositLabel}</div>
+    <div style="font-size:13px;font-weight:500;color:#94a3b8;font-family:'Roboto Mono',monospace;word-break:break-all;">${maskAddress(data.depositAddress)}</div>
+  </td></tr>
+  </table>
+</td></tr>
+
+<!-- Recipient Address -->
+<tr><td style="padding:8px 32px;">
+  <table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="background:#0f172a;border-radius:10px;border:1px solid #334155;">
+  <tr><td style="padding:16px 20px;">
+    <div style="font-size:11px;font-weight:600;color:#64748b;text-transform:uppercase;letter-spacing:0.8px;margin-bottom:6px;">${l.recipientLabel}</div>
+    <div style="font-size:13px;font-weight:500;color:#94a3b8;font-family:'Roboto Mono',monospace;word-break:break-all;">${maskAddress(data.recipientAddress)}</div>
+  </td></tr>
+  </table>
+</td></tr>
+
+<!-- CTA -->
+<tr><td style="padding:24px 32px;text-align:center;">
+  <a href="https://mrcglobalpay.com" style="display:inline-block;background:linear-gradient(135deg,#0ea5e9,#38bdf8);color:#0f172a;font-size:15px;font-weight:700;padding:14px 36px;border-radius:10px;text-decoration:none;">${l.trackBtn}</a>
+</td></tr>
+
+<!-- Footer -->
+<tr><td style="padding:20px 32px 32px;text-align:center;border-top:1px solid #334155;">
+  <div style="font-size:11px;color:#64748b;line-height:1.6;">${l.footer}</div>
+  <div style="font-size:10px;color:#475569;margin-top:8px;">© ${new Date().getFullYear()} MRC GlobalPay. All rights reserved.</div>
+</td></tr>
+
+</table>
+</td></tr></table>
+</body></html>`
+}
+
+// ── Compliance alert template ──
+function renderComplianceAlert(data: {
+  transactionId: string; fromAmount: string; fromCurrency: string;
+  toCurrency: string; recipientAddress: string; lang?: string;
+}): string {
+  return `<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"></head>
+<body style="margin:0;padding:0;background:#0f172a;font-family:'Inter','Helvetica Neue',Arial,sans-serif;">
+<table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="background:#0f172a;">
+<tr><td align="center" style="padding:40px 16px;">
+<table role="presentation" width="580" cellpadding="0" cellspacing="0" style="background:#1e293b;border-radius:16px;overflow:hidden;border:1px solid #dc2626;">
+
+<tr><td style="padding:32px;text-align:center;border-bottom:1px solid #334155;">
+  <div style="font-size:24px;font-weight:700;color:#f87171;">⚠ Compliance Alert</div>
+</td></tr>
+
+<tr><td style="padding:24px 32px;">
+  <div style="color:#f1f5f9;font-size:15px;line-height:1.7;">
+    <p>A transaction exceeding <strong style="color:#fbbf24;">$10,000 USD</strong> equivalent has been processed. This notification is required for MSB record-keeping under FINTRAC regulations.</p>
+  </div>
+  <table role="presentation" width="100%" style="margin:16px 0;background:#0f172a;border-radius:10px;border:1px solid #334155;">
+  <tr><td style="padding:16px 20px;">
+    <div style="font-size:11px;font-weight:600;color:#64748b;text-transform:uppercase;letter-spacing:0.8px;">Transaction ID</div>
+    <div style="font-size:14px;font-weight:600;color:#38bdf8;font-family:'Roboto Mono',monospace;margin-top:4px;">${maskTxHash(data.transactionId)}</div>
+    <div style="font-size:11px;font-weight:600;color:#64748b;text-transform:uppercase;letter-spacing:0.8px;margin-top:12px;">Amount</div>
+    <div style="font-size:16px;font-weight:700;color:#fbbf24;margin-top:4px;">${data.fromAmount} ${(data.fromCurrency || '').toUpperCase()} → ${(data.toCurrency || '').toUpperCase()}</div>
+    <div style="font-size:11px;font-weight:600;color:#64748b;text-transform:uppercase;letter-spacing:0.8px;margin-top:12px;">Recipient</div>
+    <div style="font-size:13px;color:#94a3b8;font-family:'Roboto Mono',monospace;margin-top:4px;">${maskAddress(data.recipientAddress)}</div>
+  </td></tr>
+  </table>
+</td></tr>
+
+<tr><td style="padding:16px 32px 32px;text-align:center;border-top:1px solid #334155;">
+  <div style="font-size:10px;color:#64748b;">This is an automated compliance notification. FINTRAC MSB C100000015.</div>
+</td></tr>
+
+</table></td></tr></table></body></html>`
+}
+
+// ── System error template ──
+function renderSystemError(data: { transactionId: string; message: string }): string {
+  return `<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"></head>
+<body style="margin:0;padding:0;background:#0f172a;font-family:'Inter','Helvetica Neue',Arial,sans-serif;">
+<table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="background:#0f172a;">
+<tr><td align="center" style="padding:40px 16px;">
+<table role="presentation" width="580" cellpadding="0" cellspacing="0" style="background:#1e293b;border-radius:16px;overflow:hidden;border:1px solid #f59e0b;">
+
+<tr><td style="padding:32px;text-align:center;border-bottom:1px solid #334155;">
+  <div style="font-size:24px;font-weight:700;color:#fbbf24;">🔧 System Alert</div>
+</td></tr>
+
+<tr><td style="padding:24px 32px;">
+  <div style="color:#f1f5f9;font-size:15px;line-height:1.7;">
+    <p>${data.message}</p>
+  </div>
+  <table role="presentation" width="100%" style="margin:16px 0;background:#0f172a;border-radius:10px;border:1px solid #334155;">
+  <tr><td style="padding:16px 20px;">
+    <div style="font-size:11px;font-weight:600;color:#64748b;text-transform:uppercase;">Transaction ID</div>
+    <div style="font-size:14px;font-weight:600;color:#38bdf8;font-family:'Roboto Mono',monospace;margin-top:4px;">${maskTxHash(data.transactionId)}</div>
+    <div style="font-size:11px;font-weight:600;color:#64748b;text-transform:uppercase;margin-top:12px;">Timestamp</div>
+    <div style="font-size:13px;color:#94a3b8;margin-top:4px;">${new Date().toISOString()}</div>
+  </td></tr>
+  </table>
+</td></tr>
+
+<tr><td style="padding:16px 32px 32px;text-align:center;border-top:1px solid #334155;">
+  <div style="font-size:10px;color:#64748b;">Automated system monitoring — MRC GlobalPay Infrastructure.</div>
+</td></tr>
+
+</table></td></tr></table></body></html>`
+}
+
+// ── SMTP send function ──
+async function sendViaSMTP(opts: {
+  from: string; fromName: string; to: string; subject: string;
+  html: string; bcc?: string;
+}) {
+  const smtpUser = Deno.env.get('SMTP_USER')
+  const smtpPass = Deno.env.get('SMTP_PASS')
+  if (!smtpUser || !smtpPass) throw new Error('SMTP credentials not configured')
+
+  const client = new SMTPClient({
+    user: smtpUser,
+    password: smtpPass,
+    host: 'smtp.hostinger.com',
+    ssl: true,
+  })
+
+  const message: Record<string, unknown> = {
+    from: `${opts.fromName} <${opts.from}>`,
+    to: opts.to,
+    subject: opts.subject,
+    attachment: [{ data: opts.html, alternative: true }],
+  }
+  if (opts.bcc) message.bcc = opts.bcc
+
+  await client.sendAsync(message as any)
+}
+
+// ── Main handler ──
+Deno.serve(async (req) => {
+  if (req.method === 'OPTIONS') {
+    return new Response(null, { headers: corsHeaders })
+  }
+
+  try {
+    const body = await req.json()
+    const {
+      type, // 'receipt' | 'compliance' | 'system-error'
+      recipientEmail,
+      transactionId,
+      fromAmount, fromCurrency, toCurrency,
+      depositAddress, recipientAddress,
+      message: errorMessage,
+      lang,
+    } = body
+
+    if (!type) {
+      return new Response(JSON.stringify({ error: 'type is required' }), {
+        status: 400,
+        headers: { ...corsHeaders, 'Content-Type': 'application/json' },
+      })
+    }
+
+    const supabase = createClient(
+      Deno.env.get('SUPABASE_URL')!,
+      Deno.env.get('SUPABASE_SERVICE_ROLE_KEY')!
+    )
+
+    // Check suppression
+    if (recipientEmail) {
+      const { data: suppressed } = await supabase
+        .from('suppressed_emails')
+        .select('id')
+        .eq('email', recipientEmail.toLowerCase())
+        .maybeSingle()
+      if (suppressed) {
+        return new Response(JSON.stringify({ success: false, reason: 'email_suppressed' }), {
+          status: 200,
+          headers: { ...corsHeaders, 'Content-Type': 'application/json' },
+        })
+      }
+    }
+
+    let html: string
+    let subject: string
+    let persona: { from: string; name: string }
+    let bcc: string | undefined
+    const l = getLang(lang)
+
+    switch (type) {
+      case 'receipt': {
+        if (!recipientEmail) throw new Error('recipientEmail required for receipts')
+        persona = PERSONAS['no-reply']
+        subject = `${l.receiptTitle} — MRC GlobalPay`
+        html = renderReceipt({
+          transactionId, fromAmount, fromCurrency, toCurrency,
+          depositAddress, recipientAddress, lang,
+        })
+        break
+      }
+
+      case 'compliance': {
+        persona = PERSONAS.compliance
+        subject = l.complianceSubject
+        html = renderComplianceAlert({
+          transactionId, fromAmount, fromCurrency, toCurrency,
+          recipientAddress, lang,
+        })
+        // Always send to compliance
+        bcc = 'compliance@mrc-pay.com'
+        break
+      }
+
+      case 'system-error': {
+        persona = PERSONAS.support
+        subject = l.errorSubject
+        html = renderSystemError({
+          transactionId: transactionId || 'N/A',
+          message: errorMessage || 'A bridge settlement has been delayed beyond the expected threshold.',
+        })
+        break
+      }
+
+      default:
+        return new Response(JSON.stringify({ error: `Unknown type: ${type}` }), {
+          status: 400,
+          headers: { ...corsHeaders, 'Content-Type': 'application/json' },
+        })
+    }
+
+    const toAddress = type === 'system-error'
+      ? 'support@mrc-pay.com'
+      : type === 'compliance'
+        ? 'compliance@mrc-pay.com'
+        : recipientEmail
+
+    await sendViaSMTP({
+      from: persona.from,
+      fromName: persona.name,
+      to: toAddress,
+      subject,
+      html,
+      bcc,
+    })
+
+    // Log the send
+    await supabase.from('email_send_log').insert({
+      message_id: crypto.randomUUID(),
+      template_name: `smtp-${type}`,
+      recipient_email: toAddress,
+      status: 'sent',
+    })
+
+    console.log(`SMTP email sent: type=${type}, to=${toAddress}`)
+
+    return new Response(JSON.stringify({ success: true }), {
+      status: 200,
+      headers: { ...corsHeaders, 'Content-Type': 'application/json' },
+    })
+  } catch (err) {
+    console.error('SMTP send error:', err)
+    return new Response(JSON.stringify({ error: err.message }), {
+      status: 500,
+      headers: { ...corsHeaders, 'Content-Type': 'application/json' },
+    })
+  }
+})
