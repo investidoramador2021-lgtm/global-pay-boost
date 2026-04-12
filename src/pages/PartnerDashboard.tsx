@@ -9,7 +9,7 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { useToast } from "@/hooks/use-toast";
-import { Copy, LogOut, Bitcoin, TrendingUp, Check, RefreshCw, Clock, CheckCircle2, XCircle, ArrowRightLeft, AlertTriangle } from "lucide-react";
+import { Copy, LogOut, Bitcoin, TrendingUp, Check, RefreshCw, Clock, CheckCircle2, XCircle, ArrowRightLeft, AlertTriangle, Wallet } from "lucide-react";
 import SiteHeader from "@/components/SiteHeader";
 import SiteFooter from "@/components/SiteFooter";
 import MobileBottomNav from "@/components/MobileBottomNav";
@@ -43,9 +43,21 @@ interface PartnerProfile {
   referral_code: string;
 }
 
+interface PartnerTx {
+  id: string;
+  partner_id: string;
+  asset: string;
+  volume: number;
+  commission_btc: number;
+  completed_at: string;
+  is_paid: boolean;
+  paid_at: string | null;
+}
+
 const PartnerDashboard = () => {
   const [profile, setProfile] = useState<PartnerProfile | null>(null);
   const [swaps, setSwaps] = useState<SwapRow[]>([]);
+  const [commissions, setCommissions] = useState<PartnerTx[]>([]);
   const [loading, setLoading] = useState(true);
   const [statusLoading, setStatusLoading] = useState(false);
   const [newPassword, setNewPassword] = useState("");
@@ -127,6 +139,15 @@ const PartnerDashboard = () => {
 
       const rows = (swapData || []) as SwapRow[];
       setSwaps(rows);
+
+      // Load commission records for this partner
+      const { data: commData } = await supabase
+        .from("partner_transactions")
+        .select("*")
+        .eq("partner_id", (p as PartnerProfile).id)
+        .order("completed_at", { ascending: false });
+      setCommissions((commData || []) as PartnerTx[]);
+
       setLoading(false);
       fetchLiveStatuses(rows);
     };
@@ -168,6 +189,12 @@ const PartnerDashboard = () => {
   const totalSwaps = finishedSwaps.length;
   const activeSwaps = swaps.filter((s) => s.live && ["waiting", "new", "confirming", "exchanging", "sending"].includes(s.live.status)).length;
   const referralLink = profile ? `https://mrcglobalpay.com/?ref=${profile.referral_code}` : "";
+
+  // Commission calculations from partner_transactions
+  const totalEarned = commissions.reduce((s, t) => s + Number(t.commission_btc), 0);
+  const totalPaid = commissions.filter((t) => t.is_paid).reduce((s, t) => s + Number(t.commission_btc), 0);
+  const totalUnpaid = commissions.filter((t) => !t.is_paid).reduce((s, t) => s + Number(t.commission_btc), 0);
+  const commissionVolume = commissions.reduce((s, t) => s + Number(t.volume), 0);
 
   const copyLink = () => {
     navigator.clipboard.writeText(referralLink);
@@ -308,6 +335,59 @@ const PartnerDashboard = () => {
             </Card>
           </div>
 
+          {/* Earnings Summary */}
+          <Card className="border-border/40 bg-card/40 backdrop-blur-sm">
+            <CardHeader><CardTitle className="text-lg flex items-center gap-2"><Bitcoin className="w-5 h-5" /> BTC Earnings</CardTitle></CardHeader>
+            <CardContent>
+              <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 mb-6">
+                <div className="rounded-xl border border-border/30 bg-background/30 p-4">
+                  <p className="text-xs text-muted-foreground">Total Earned</p>
+                  <p className="text-lg font-bold font-mono text-foreground">{totalEarned.toFixed(8)} <span className="text-xs text-muted-foreground">BTC</span></p>
+                </div>
+                <div className="rounded-xl border border-border/30 bg-background/30 p-4">
+                  <p className="text-xs text-muted-foreground">Paid Out</p>
+                  <p className="text-lg font-bold font-mono text-primary">{totalPaid.toFixed(8)} <span className="text-xs text-muted-foreground">BTC</span></p>
+                </div>
+                <div className="rounded-xl border border-border/30 bg-background/30 p-4">
+                  <p className="text-xs text-muted-foreground">Pending Payout</p>
+                  <p className="text-lg font-bold font-mono text-amber-400">{totalUnpaid.toFixed(8)} <span className="text-xs text-muted-foreground">BTC</span></p>
+                </div>
+              </div>
+              {commissions.length > 0 ? (
+                <Table>
+                  <TableHeader>
+                    <TableRow>
+                      <TableHead>Date</TableHead>
+                      <TableHead>Asset</TableHead>
+                      <TableHead className="text-right">Volume</TableHead>
+                      <TableHead className="text-right">BTC Commission</TableHead>
+                      <TableHead>Status</TableHead>
+                    </TableRow>
+                  </TableHeader>
+                  <TableBody>
+                    {commissions.map((c) => (
+                      <TableRow key={c.id}>
+                        <TableCell className="text-muted-foreground text-xs">{new Date(c.completed_at).toLocaleDateString()}</TableCell>
+                        <TableCell className="uppercase text-sm">{c.asset}</TableCell>
+                        <TableCell className="text-right text-sm">${Number(c.volume).toLocaleString("en-US", { minimumFractionDigits: 2 })}</TableCell>
+                        <TableCell className="text-right font-mono text-sm">{Number(c.commission_btc).toFixed(8)}</TableCell>
+                        <TableCell>
+                          {c.is_paid ? (
+                            <span className="text-xs text-primary flex items-center gap-1"><Check className="w-3 h-3" /> Paid</span>
+                          ) : (
+                            <span className="text-xs text-amber-400">Pending</span>
+                          )}
+                        </TableCell>
+                      </TableRow>
+                    ))}
+                  </TableBody>
+                </Table>
+              ) : (
+                <p className="text-sm text-muted-foreground text-center py-4">No commission records yet.</p>
+              )}
+            </CardContent>
+          </Card>
+
           {/* Account Details */}
           <Card className="border-border/40 bg-card/40 backdrop-blur-sm">
             <CardHeader><CardTitle className="text-lg">Account Details</CardTitle></CardHeader>
@@ -320,8 +400,11 @@ const PartnerDashboard = () => {
                 </div>
               </div>
               <div>
-                <Label className="text-muted-foreground text-xs">Registered BTC Wallet</Label>
-                <p className="font-mono text-sm text-foreground mt-1 break-all">{profile?.btc_wallet}</p>
+                <Label className="text-muted-foreground text-xs">Payout Wallet (BTC)</Label>
+                <p className="font-mono text-sm text-foreground mt-1 break-all flex items-center gap-2">
+                  <Wallet className="w-4 h-4 text-muted-foreground shrink-0" />
+                  {profile?.btc_wallet}
+                </p>
               </div>
             </CardContent>
           </Card>
