@@ -233,5 +233,32 @@
       <pubDate>Fri, 11 Apr 2026 00:00:00 GMT</pubDate>
       <category>Institutional</category>
     </item>
+    <item>
+      <title>Compliance — FINTRAC-Registered MSB</title>
+      <link>https://mrcglobalpay.com/compliance</link>
+      <guid isPermaLink="true">https://mrcglobalpay.com/compliance</guid>
+      <description>MRC GlobalPay operates as a FINTRAC-registered Canadian Money Services Business. Full AML/KYC compliance documentation and regulatory details.</description>
+      <dc:creator>MRC GlobalPay Team</dc:creator>
+      <pubDate>Sat, 12 Apr 2026 00:00:00 GMT</pubDate>
+      <category>Compliance</category>
+    </item>
+    <item>
+      <title>Crypto Dust Manifesto — The Case for Sub-Dollar Swaps</title>
+      <link>https://mrcglobalpay.com/guide/crypto-dust</link>
+      <guid isPermaLink="true">https://mrcglobalpay.com/guide/crypto-dust</guid>
+      <description>Why every wallet deserves liquidity. The manifesto behind MRC GlobalPay's $0.30 minimum swap and the fight against stranded crypto dust.</description>
+      <dc:creator>MRC GlobalPay Team</dc:creator>
+      <pubDate>Sat, 12 Apr 2026 00:00:00 GMT</pubDate>
+      <category>Guides</category>
+    </item>
+    <item>
+      <title>Partner Program — Earn BTC Commission on Referrals</title>
+      <link>https://mrcglobalpay.com/partners</link>
+      <guid isPermaLink="true">https://mrcglobalpay.com/partners</guid>
+      <description>Join the MRC GlobalPay Partner Program. Earn 0.1–0.2% BTC commission on all referred swap volume. Real-time settlement, private dashboard.</description>
+      <dc:creator>MRC GlobalPay Team</dc:creator>
+      <pubDate>Sat, 12 Apr 2026 00:00:00 GMT</pubDate>
+      <category>Partnership</category>
+    </item>
   </channel>
 </rss>
