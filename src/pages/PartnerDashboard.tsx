@@ -60,8 +60,6 @@ const PartnerDashboard = () => {
   const [commissions, setCommissions] = useState<PartnerTx[]>([]);
   const [loading, setLoading] = useState(true);
   const [statusLoading, setStatusLoading] = useState(false);
-  const [newPassword, setNewPassword] = useState("");
-  const [changingPw, setChangingPw] = useState(false);
   const [userEmail, setUserEmail] = useState("");
   const [tab, setTab] = useState("current");
   const navigate = useNavigate();
