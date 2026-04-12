@@ -2562,9 +2562,9 @@ const ExchangeWidget = ({ onTabChange }: ExchangeWidgetProps = {}) => {
                   })}
                 </div>
 
-                <div className="relative">
+                <div className="relative" id="you-send-box">
                   <label className="mb-1.5 block font-body text-xs font-medium uppercase tracking-wider text-muted-foreground">{t("widget.youSend")}</label>
-                  <div className="flex items-center gap-3 rounded-xl border border-border bg-accent p-4 sm:p-4">
+                  <div className={`flex items-center gap-3 rounded-xl border p-4 sm:p-4 transition-all duration-500 ${sendBoxHighlight ? "border-primary ring-2 ring-primary/40 shadow-[0_0_20px_-4px_hsl(var(--primary)/0.5)] bg-primary/5" : "border-border bg-accent"}`}>
                     <Input
                       type="number"
                       value={sendAmount}
