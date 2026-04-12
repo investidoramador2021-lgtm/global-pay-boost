@@ -235,8 +235,7 @@ const InvoiceRequestTab = () => {
           value={walletAddress}
           onChange={setWalletAddress}
           onValidChange={setAddressValid}
-          addressType={receiveCurrency ? tickerToAddressType(receiveCurrency.ticker) : "crypto"}
-          placeholder="Paste your wallet address"
+          currencyTicker={receiveCurrency?.ticker}
         />
       </div>
 
