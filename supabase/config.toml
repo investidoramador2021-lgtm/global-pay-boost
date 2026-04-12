@@ -44,3 +44,6 @@ verify_jwt = false
 
 [functions.guardarian]
 verify_jwt = false
+
+[functions.seed-test-partner]
+verify_jwt = false
