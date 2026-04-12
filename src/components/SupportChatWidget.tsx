@@ -19,7 +19,10 @@ function getCurrentPersona() {
   return PERSONAS.find((p) => hour >= p.hours[0] && hour < p.hours[1]) || PERSONAS[0];
 }
 
-type Msg = { role: "user" | "assistant"; content: string };
+/* ── Human-like typing pace: drip tokens with random delays ── */
+function randomDelay(min: number, max: number) {
+  return new Promise<void>((r) => setTimeout(r, min + Math.random() * (max - min)));
+}
 
 const CHAT_URL = `${import.meta.env.VITE_SUPABASE_URL}/functions/v1/support-chat`;
 
