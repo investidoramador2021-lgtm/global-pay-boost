@@ -1,4 +1,4 @@
-import { useEffect, useState, useMemo } from "react";
+import { useEffect, useState, useMemo, useCallback, useRef } from "react";
 import { useNavigate } from "react-router-dom";
 import { Helmet } from "react-helmet-async";
 import { supabase } from "@/integrations/supabase/client";
@@ -9,10 +9,31 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { useToast } from "@/hooks/use-toast";
-import { Copy, LogOut, Bitcoin, TrendingUp, Check } from "lucide-react";
+import { Copy, LogOut, Bitcoin, TrendingUp, Check, RefreshCw, Clock, CheckCircle2, XCircle, ArrowRightLeft, AlertTriangle } from "lucide-react";
 import SiteHeader from "@/components/SiteHeader";
 import SiteFooter from "@/components/SiteFooter";
 import MobileBottomNav from "@/components/MobileBottomNav";
+
+interface LiveStatus {
+  status: string;
+  amountSend: number | null;
+  amountReceive: number | null;
+  payinHash: string | null;
+  payoutHash: string | null;
+}
+
+interface SwapRow {
+  id: string;
+  transaction_id: string;
+  from_currency: string;
+  to_currency: string;
+  amount: number;
+  recipient_address: string;
+  payin_address: string;
+  created_at: string;
+  ref_code: string | null;
+  live?: LiveStatus;
+}
 
 interface PartnerProfile {
   id: string;
@@ -22,20 +43,11 @@ interface PartnerProfile {
   referral_code: string;
 }
 
-interface PartnerTransaction {
-  id: string;
-  asset: string;
-  volume: number;
-  commission_btc: number;
-  completed_at: string;
-  is_paid: boolean;
-  paid_at: string | null;
-}
-
 const PartnerDashboard = () => {
   const [profile, setProfile] = useState<PartnerProfile | null>(null);
-  const [transactions, setTransactions] = useState<PartnerTransaction[]>([]);
+  const [swaps, setSwaps] = useState<SwapRow[]>([]);
   const [loading, setLoading] = useState(true);
+  const [statusLoading, setStatusLoading] = useState(false);
   const [newPassword, setNewPassword] = useState("");
   const [changingPw, setChangingPw] = useState(false);
   const [userEmail, setUserEmail] = useState("");
@@ -43,53 +55,107 @@ const PartnerDashboard = () => {
   const navigate = useNavigate();
   const { toast } = useToast();
 
+  const STATUS_MAP: Record<string, { label: string; color: string; icon: React.ReactNode }> = {
+    new: { label: "New", color: "text-muted-foreground", icon: <Clock className="w-3.5 h-3.5" /> },
+    waiting: { label: "Waiting", color: "text-amber-400", icon: <Clock className="w-3.5 h-3.5" /> },
+    confirming: { label: "Confirming", color: "text-blue-400", icon: <RefreshCw className="w-3.5 h-3.5 animate-spin" /> },
+    exchanging: { label: "Exchanging", color: "text-blue-400", icon: <ArrowRightLeft className="w-3.5 h-3.5" /> },
+    sending: { label: "Sending", color: "text-blue-400", icon: <RefreshCw className="w-3.5 h-3.5" /> },
+    finished: { label: "Finished", color: "text-primary", icon: <CheckCircle2 className="w-3.5 h-3.5" /> },
+    failed: { label: "Failed", color: "text-destructive", icon: <XCircle className="w-3.5 h-3.5" /> },
+    refunded: { label: "Refunded", color: "text-orange-400", icon: <AlertTriangle className="w-3.5 h-3.5" /> },
+    expired: { label: "Expired", color: "text-muted-foreground", icon: <XCircle className="w-3.5 h-3.5" /> },
+  };
+
+  const fetchLiveStatuses = useCallback(async (rows: SwapRow[]) => {
+    if (rows.length === 0) return;
+    setStatusLoading(true);
+    const BATCH = 5;
+    const updated = [...rows];
+    for (let i = 0; i < rows.length; i += BATCH) {
+      const batch = rows.slice(i, i + BATCH);
+      const results = await Promise.allSettled(
+        batch.map(async (row) => {
+          const { data } = await supabase.functions.invoke("changenow", {
+            method: "POST",
+            body: { _get: true, action: "tx-status", id: row.transaction_id },
+          });
+          return { txId: row.transaction_id, data };
+        })
+      );
+      results.forEach((r) => {
+        if (r.status === "fulfilled" && r.value.data && !r.value.data.error) {
+          const idx = updated.findIndex((s) => s.transaction_id === r.value.txId);
+          if (idx !== -1) {
+            updated[idx] = {
+              ...updated[idx],
+              live: {
+                status: r.value.data.status,
+                amountSend: r.value.data.amountSend,
+                amountReceive: r.value.data.amountReceive,
+                payinHash: r.value.data.payinHash,
+                payoutHash: r.value.data.payoutHash,
+              },
+            };
+          }
+        }
+      });
+      setSwaps([...updated]);
+    }
+    setStatusLoading(false);
+  }, []);
+
   useEffect(() => {
     const load = async () => {
       const { data: { user } } = await supabase.auth.getUser();
       if (!user) { navigate("/partners"); return; }
       setUserEmail(user.email || "");
-
       const { data: p } = await supabase
         .from("partner_profiles")
         .select("*")
         .eq("user_id", user.id)
         .maybeSingle();
-
       if (!p) { navigate("/partners"); return; }
       setProfile(p as PartnerProfile);
 
-      const { data: txs } = await supabase
-        .from("partner_transactions")
+      // Load swaps referred by this partner's code
+      const { data: swapData } = await supabase
+        .from("swap_transactions")
         .select("*")
-        .eq("partner_id", p.id)
-        .order("completed_at", { ascending: false });
+        .eq("ref_code", (p as PartnerProfile).referral_code)
+        .order("created_at", { ascending: false });
 
-      setTransactions((txs || []) as PartnerTransaction[]);
+      const rows = (swapData || []) as SwapRow[];
+      setSwaps(rows);
       setLoading(false);
+      fetchLiveStatuses(rows);
     };
     load();
-  }, [navigate]);
+  }, [navigate, fetchLiveStatuses]);
 
   const now = new Date();
   const currentMonth = now.getMonth();
   const currentYear = now.getFullYear();
 
+  const finishedSwaps = useMemo(() =>
+    swaps.filter((s) => s.live?.status === "finished"), [swaps]);
+
   const currentMonthTxs = useMemo(() =>
-    transactions.filter((t) => {
-      const d = new Date(t.completed_at);
+    finishedSwaps.filter((s) => {
+      const d = new Date(s.created_at);
       return d.getMonth() === currentMonth && d.getFullYear() === currentYear;
-    }), [transactions, currentMonth, currentYear]);
+    }), [finishedSwaps, currentMonth, currentYear]);
 
   const historyTxs = useMemo(() =>
-    transactions.filter((t) => {
-      const d = new Date(t.completed_at);
+    finishedSwaps.filter((s) => {
+      const d = new Date(s.created_at);
       return !(d.getMonth() === currentMonth && d.getFullYear() === currentYear);
-    }), [transactions, currentMonth, currentYear]);
+    }), [finishedSwaps, currentMonth, currentYear]);
 
   const historyGrouped = useMemo(() => {
-    const groups: Record<string, PartnerTransaction[]> = {};
+    const groups: Record<string, SwapRow[]> = {};
     historyTxs.forEach((t) => {
-      const d = new Date(t.completed_at);
+      const d = new Date(t.created_at);
       const key = `${d.toLocaleString("en-US", { month: "long" })} ${d.getFullYear()}`;
       if (!groups[key]) groups[key] = [];
       groups[key].push(t);
@@ -97,10 +163,10 @@ const PartnerDashboard = () => {
     return groups;
   }, [historyTxs]);
 
-  const monthVolume = currentMonthTxs.reduce((s, t) => s + Number(t.volume), 0);
-  const monthBtc = currentMonthTxs.reduce((s, t) => s + Number(t.commission_btc), 0);
-  const unpaidBtc = transactions.filter((t) => !t.is_paid).reduce((s, t) => s + Number(t.commission_btc), 0);
-  const lifetimePaid = transactions.filter((t) => t.is_paid).reduce((s, t) => s + Number(t.commission_btc), 0);
+  // Volume = sum of amountSend (actual deposited) for finished swaps
+  const monthVolume = currentMonthTxs.reduce((s, t) => s + Number(t.live?.amountSend || t.amount || 0), 0);
+  const totalSwaps = finishedSwaps.length;
+  const activeSwaps = swaps.filter((s) => s.live && ["waiting", "new", "confirming", "exchanging", "sending"].includes(s.live.status)).length;
   const referralLink = profile ? `https://mrcglobalpay.com/?ref=${profile.referral_code}` : "";
 
   const copyLink = () => {
@@ -126,14 +192,30 @@ const PartnerDashboard = () => {
     return <div className="min-h-screen bg-background flex items-center justify-center text-muted-foreground">Loading…</div>;
   }
 
-  const TxTable = ({ txs }: { txs: PartnerTransaction[] }) => (
+  const statusBadge = (status?: string) => {
+    if (!status) return <span className="text-xs text-muted-foreground">Loading…</span>;
+    const s = STATUS_MAP[status] || { label: status, color: "text-muted-foreground", icon: null };
+    return (
+      <span className={`inline-flex items-center gap-1.5 text-xs font-medium ${s.color}`}>
+        {s.icon}
+        {s.label}
+      </span>
+    );
+  };
+
+  const formatAmount = (amount: number | null | undefined, currency: string) => {
+    if (amount === null || amount === undefined) return "—";
+    return `${Number(amount).toLocaleString("en-US", { maximumFractionDigits: 8 })} ${currency.toUpperCase()}`;
+  };
+
+  const TxTable = ({ txs }: { txs: SwapRow[] }) => (
     <Table>
       <TableHeader>
         <TableRow>
+          <TableHead>Status</TableHead>
           <TableHead>Date</TableHead>
-          <TableHead className="text-right">Volume</TableHead>
-          <TableHead className="text-right">BTC Earned</TableHead>
-          <TableHead>Payment Status</TableHead>
+          <TableHead>From</TableHead>
+          <TableHead>To</TableHead>
         </TableRow>
       </TableHeader>
       <TableBody>
@@ -146,18 +228,10 @@ const PartnerDashboard = () => {
         ) : (
           txs.map((tx) => (
             <TableRow key={tx.id}>
-              <TableCell className="text-muted-foreground">{new Date(tx.completed_at).toLocaleDateString()}</TableCell>
-              <TableCell className="text-right">${Number(tx.volume).toLocaleString("en-US", { minimumFractionDigits: 2 })}</TableCell>
-              <TableCell className="text-right font-mono">{Number(tx.commission_btc).toFixed(8)}</TableCell>
-              <TableCell>
-                {tx.is_paid ? (
-                  <span className="text-xs text-primary flex items-center gap-1">
-                    <Check className="w-3 h-3" /> Paid {tx.paid_at ? `· ${new Date(tx.paid_at).toLocaleDateString()}` : ""}
-                  </span>
-                ) : (
-                  <span className="text-xs text-amber-400">Pending</span>
-                )}
-              </TableCell>
+              <TableCell>{statusBadge(tx.live?.status)}</TableCell>
+              <TableCell className="text-muted-foreground text-xs whitespace-nowrap">{new Date(tx.created_at).toLocaleDateString()}</TableCell>
+              <TableCell className="text-sm font-medium">{formatAmount(tx.live?.amountSend ?? tx.amount, tx.from_currency)}</TableCell>
+              <TableCell className="text-sm font-medium">{formatAmount(tx.live?.amountReceive, tx.to_currency)}</TableCell>
             </TableRow>
           ))
         )}
@@ -198,37 +272,37 @@ const PartnerDashboard = () => {
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
             <Card className="border-border/40 bg-card/40 backdrop-blur-sm">
               <CardContent className="p-5 flex items-center gap-3">
+                <ArrowRightLeft className="w-5 h-5 text-primary" />
+                <div>
+                  <p className="text-xs text-muted-foreground">Total Referred Swaps</p>
+                  <p className="text-xl font-bold text-foreground">{swaps.length}</p>
+                </div>
+              </CardContent>
+            </Card>
+            <Card className="border-border/40 bg-card/40 backdrop-blur-sm">
+              <CardContent className="p-5 flex items-center gap-3">
+                <CheckCircle2 className="w-5 h-5 text-primary" />
+                <div>
+                  <p className="text-xs text-muted-foreground">Completed</p>
+                  <p className="text-xl font-bold text-foreground">{totalSwaps}</p>
+                </div>
+              </CardContent>
+            </Card>
+            <Card className="border-border/40 bg-card/40 backdrop-blur-sm">
+              <CardContent className="p-5 flex items-center gap-3">
+                <Clock className="w-5 h-5 text-amber-400" />
+                <div>
+                  <p className="text-xs text-muted-foreground">Active</p>
+                  <p className="text-xl font-bold text-foreground">{activeSwaps}</p>
+                </div>
+              </CardContent>
+            </Card>
+            <Card className="border-border/40 bg-card/40 backdrop-blur-sm">
+              <CardContent className="p-5 flex items-center gap-3">
                 <TrendingUp className="w-5 h-5 text-primary" />
                 <div>
                   <p className="text-xs text-muted-foreground">Month Volume</p>
-                  <p className="text-xl font-bold text-foreground">${monthVolume.toLocaleString("en-US", { minimumFractionDigits: 2 })}</p>
-                </div>
-              </CardContent>
-            </Card>
-            <Card className="border-border/40 bg-card/40 backdrop-blur-sm">
-              <CardContent className="p-5 flex items-center gap-3">
-                <Bitcoin className="w-5 h-5 text-primary" />
-                <div>
-                  <p className="text-xs text-muted-foreground">Month BTC Earned</p>
-                  <p className="text-xl font-bold text-foreground">{monthBtc.toFixed(8)}</p>
-                </div>
-              </CardContent>
-            </Card>
-            <Card className="border-border/40 bg-card/40 backdrop-blur-sm">
-              <CardContent className="p-5 flex items-center gap-3">
-                <Bitcoin className="w-5 h-5 text-amber-400" />
-                <div>
-                  <p className="text-xs text-muted-foreground">Unpaid Balance</p>
-                  <p className="text-xl font-bold text-foreground">{unpaidBtc.toFixed(8)}</p>
-                </div>
-              </CardContent>
-            </Card>
-            <Card className="border-border/40 bg-card/40 backdrop-blur-sm">
-              <CardContent className="p-5 flex items-center gap-3">
-                <Check className="w-5 h-5 text-primary" />
-                <div>
-                  <p className="text-xs text-muted-foreground">Lifetime Paid</p>
-                  <p className="text-xl font-bold text-foreground">{lifetimePaid.toFixed(8)}</p>
+                  <p className="text-xl font-bold text-foreground">{monthVolume > 0 ? monthVolume.toLocaleString("en-US", { maximumFractionDigits: 8 }) : "0"}</p>
                 </div>
               </CardContent>
             </Card>
@@ -254,13 +328,22 @@ const PartnerDashboard = () => {
 
           {/* Transactions with monthly tabs */}
           <Card className="border-border/40 bg-card/40 backdrop-blur-sm">
-            <CardHeader><CardTitle className="text-lg">Transactions</CardTitle></CardHeader>
+            <CardHeader>
+              <CardTitle className="text-lg flex items-center gap-2">
+                Referred Transactions
+                {statusLoading && <RefreshCw className="w-4 h-4 animate-spin text-muted-foreground" />}
+              </CardTitle>
+            </CardHeader>
             <CardContent>
               <Tabs value={tab} onValueChange={setTab}>
                 <TabsList className="mb-4">
-                  <TabsTrigger value="current">Current Month</TabsTrigger>
+                  <TabsTrigger value="all">All ({swaps.length})</TabsTrigger>
+                  <TabsTrigger value="current">This Month</TabsTrigger>
                   <TabsTrigger value="history">History</TabsTrigger>
                 </TabsList>
+                <TabsContent value="all">
+                  <TxTable txs={swaps} />
+                </TabsContent>
                 <TabsContent value="current">
                   <TxTable txs={currentMonthTxs} />
                 </TabsContent>

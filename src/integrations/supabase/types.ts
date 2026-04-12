@@ -378,6 +378,7 @@ export type Database = {
           id: string
           payin_address: string
           recipient_address: string
+          ref_code: string | null
           to_currency: string
           transaction_id: string
         }
@@ -388,6 +389,7 @@ export type Database = {
           id?: string
           payin_address?: string
           recipient_address: string
+          ref_code?: string | null
           to_currency: string
           transaction_id: string
         }
@@ -398,6 +400,7 @@ export type Database = {
           id?: string
           payin_address?: string
           recipient_address?: string
+          ref_code?: string | null
           to_currency?: string
           transaction_id?: string
         }

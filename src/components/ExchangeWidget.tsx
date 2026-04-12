@@ -530,6 +530,7 @@ const ExchangeWidget = ({ onTabChange }: ExchangeWidgetProps = {}) => {
       const addr = recipientAddr.trim().toLowerCase();
       const payinAddr = (tx.payinAddress || "").trim().toLowerCase();
       console.log("[MRC] Saving transaction to DB:", { id: tx.id, addr, payinAddr, from: tx.fromCurrency, to: tx.toCurrency, amount: tx.amount });
+      const refCode = sessionStorage.getItem("mrc_partner_ref") || null;
       const { error } = await supabase.from("swap_transactions").insert({
         transaction_id: tx.id,
         recipient_address: addr,
@@ -537,6 +538,7 @@ const ExchangeWidget = ({ onTabChange }: ExchangeWidgetProps = {}) => {
         from_currency: tx.fromCurrency,
         to_currency: tx.toCurrency,
         amount: tx.amount,
+        ref_code: refCode,
       });
       if (error) {
         console.error("[MRC] DB save error:", error);
