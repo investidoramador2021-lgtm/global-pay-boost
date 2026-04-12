@@ -347,6 +347,43 @@ Deno.serve(async (req) => {
         break
       }
 
+      case 'verification': {
+        if (!toEmail) throw new Error('to/recipientEmail required for verification')
+        if (!verificationToken) throw new Error('verificationToken required')
+        const deadline = expiresAt ? new Date(expiresAt).toLocaleString('en-US', { dateStyle: 'medium', timeStyle: 'short' }) : '48 hours'
+        const verifyLink = `https://mrcglobalpay.com/verify-email?token=${verificationToken}`
+        subject = l.verifySubject
+        const dir = RTL_LANGS.includes((lang || 'en').slice(0, 2)) ? 'rtl' : 'ltr'
+        html = `<!DOCTYPE html>
+<html lang="${(lang || 'en').slice(0,2)}" dir="${dir}">
+<head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"></head>
+<body style="margin:0;padding:0;background:#0f172a;font-family:'Inter','Helvetica Neue',Arial,sans-serif;">
+<table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="background:#0f172a;">
+<tr><td align="center" style="padding:40px 16px;">
+<table role="presentation" width="580" cellpadding="0" cellspacing="0" style="background:#1e293b;border-radius:16px;overflow:hidden;border:1px solid #334155;">
+<tr><td style="padding:32px 32px 24px;text-align:center;border-bottom:1px solid #334155;">
+  <div style="font-size:24px;font-weight:700;color:#38bdf8;">MRC GlobalPay</div>
+</td></tr>
+<tr><td style="padding:28px 32px 8px;text-align:center;">
+  <div style="font-size:22px;font-weight:700;color:#f1f5f9;">📧 ${l.verifyTitle}</div>
+</td></tr>
+<tr><td style="padding:16px 32px;">
+  <div style="font-size:15px;color:#94a3b8;line-height:1.7;text-align:center;">${l.verifyBody.replace('{deadline}', deadline)}</div>
+</td></tr>
+<tr><td style="padding:24px 32px;text-align:center;">
+  <a href="${verifyLink}" style="display:inline-block;background:linear-gradient(135deg,#0ea5e9,#38bdf8);color:#0f172a;font-size:15px;font-weight:700;padding:14px 36px;border-radius:10px;text-decoration:none;">${l.verifyBtn}</a>
+</td></tr>
+<tr><td style="padding:0 32px 8px;text-align:center;">
+  <div style="font-size:11px;color:#64748b;">⏱ 48h</div>
+</td></tr>
+<tr><td style="padding:20px 32px 32px;text-align:center;border-top:1px solid #334155;">
+  <div style="font-size:11px;color:#64748b;line-height:1.6;">${l.footer}</div>
+  <div style="font-size:10px;color:#475569;margin-top:8px;">© ${new Date().getFullYear()} MRC GlobalPay</div>
+</td></tr>
+</table></td></tr></table></body></html>`
+        break
+      }
+
       default:
         return new Response(JSON.stringify({ error: `Unknown type: ${type}` }), {
           status: 400,
@@ -358,7 +395,7 @@ Deno.serve(async (req) => {
       ? 'support@mrc-pay.com'
       : type === 'compliance'
         ? 'compliance@mrc-pay.com'
-        : recipientEmail
+        : toEmail
 
     await sendViaSMTP({
       account,
