@@ -577,16 +577,31 @@ const AdminPortal = () => {
                         <TableHead>Name</TableHead>
                         <TableHead>Referral Code</TableHead>
                         <TableHead>BTC Wallet</TableHead>
+                        <TableHead className="text-right">Total Volume</TableHead>
+                        <TableHead className="text-right">Earned BTC</TableHead>
+                        <TableHead className="text-right">Unpaid BTC</TableHead>
+                        <TableHead className="text-right">Paid BTC</TableHead>
                       </TableRow>
                     </TableHeader>
                     <TableBody>
-                      {partners.map((p) => (
-                        <TableRow key={p.id}>
-                          <TableCell className="font-medium">{p.first_name} {p.last_name}</TableCell>
-                          <TableCell className="font-mono text-sm text-muted-foreground">{p.referral_code}</TableCell>
-                          <TableCell className="font-mono text-xs text-muted-foreground break-all">{p.btc_wallet}</TableCell>
-                        </TableRow>
-                      ))}
+                      {partners.map((p) => {
+                        const ptxs = transactions.filter((t) => t.partner_id === p.id);
+                        const pVolume = ptxs.reduce((s, t) => s + Number(t.volume), 0);
+                        const pEarned = ptxs.reduce((s, t) => s + Number(t.commission_btc), 0);
+                        const pUnpaid = ptxs.filter((t) => !t.is_paid).reduce((s, t) => s + Number(t.commission_btc), 0);
+                        const pPaid = ptxs.filter((t) => t.is_paid).reduce((s, t) => s + Number(t.commission_btc), 0);
+                        return (
+                          <TableRow key={p.id}>
+                            <TableCell className="font-medium">{p.first_name} {p.last_name}</TableCell>
+                            <TableCell className="font-mono text-sm text-muted-foreground">{p.referral_code}</TableCell>
+                            <TableCell className="font-mono text-xs text-muted-foreground break-all max-w-[200px] truncate">{p.btc_wallet}</TableCell>
+                            <TableCell className="text-right">${pVolume.toLocaleString("en-US", { minimumFractionDigits: 2 })}</TableCell>
+                            <TableCell className="text-right font-mono">{pEarned.toFixed(8)}</TableCell>
+                            <TableCell className="text-right font-mono text-amber-400">{pUnpaid.toFixed(8)}</TableCell>
+                            <TableCell className="text-right font-mono text-primary">{pPaid.toFixed(8)}</TableCell>
+                          </TableRow>
+                        );
+                      })}
                     </TableBody>
                   </Table>
                 </CardContent>
