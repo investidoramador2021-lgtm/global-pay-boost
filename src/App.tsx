@@ -160,6 +160,9 @@ const App = () => (
                   ))}
                   {/* Standalone embed widget (no header/footer/nav) */}
                   <Route path="/embed/widget" element={<EmbedWidget />} />
+                  {/* Invoice public pages — no auth required */}
+                  <Route path="/pay/:token" element={<InvoicePay />} />
+                  <Route path="/status/:token" element={<InvoiceStatus />} />
                   {/* Admin Inspector — MFA-protected, hidden */}
                   <Route path="/admin/audit-inspector" element={<AuditInspector />} />
                   {/* Regulatory Report — read-only printable page */}
