@@ -5,19 +5,19 @@ const steps = [
     num: "01",
     icon: FileText,
     title: "Identify & Issue",
-    desc: "Enter the mandatory individual or company details to generate a secure, trackable digital invoice.",
+    desc: "Enter mandatory company or individual details and set your exact billing amount in your preferred local currency.",
   },
   {
     num: "02",
     icon: Mail,
     title: "Automated Delivery",
-    desc: "We email the payment link directly to your client. They have 7 days to settle the balance using their preferred cryptocurrency.",
+    desc: "We email the secure invoice link directly to your client. Links remain rate-locked for 7 days.",
   },
   {
     num: "03",
     icon: Shield,
-    title: "Guaranteed Settlement",
-    desc: "Funds are automatically swapped and delivered to your wallet at the locked rate. Both parties receive a signed digital receipt for their records.",
+    title: "Precise Settlement",
+    desc: "Your client pays in crypto; we deliver the exact fiat-equivalent to your wallet. Both parties receive digital receipts.",
   },
 ];
 
@@ -29,7 +29,7 @@ const InvoiceHowItWorks = () => (
           Professional Invoicing
         </span>
         <h2 className="font-display text-2xl font-black tracking-tight text-foreground sm:text-3xl">
-          How Invoice Requests Work
+          How Payment Requests Work
         </h2>
         <p className="mx-auto mt-2 max-w-lg font-body text-sm text-muted-foreground">
           Request crypto payments from anyone — individuals or companies. Rates are locked at creation and settlement is guaranteed.
@@ -42,7 +42,6 @@ const InvoiceHowItWorks = () => (
             key={s.num}
             className="group relative overflow-hidden rounded-2xl border border-border bg-card p-6 transition-all hover:border-primary/30 hover:shadow-card"
           >
-            {/* Gold number accent */}
             <span className="absolute -right-2 -top-3 font-display text-[64px] font-black leading-none text-primary/[0.06] select-none">
               {s.num}
             </span>
