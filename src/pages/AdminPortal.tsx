@@ -9,7 +9,7 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { useToast } from "@/hooks/use-toast";
-import { Shield, Users, Bitcoin, TrendingUp, Check, LogOut, Lock, MessageCircle } from "lucide-react";
+import { Shield, Users, Bitcoin, TrendingUp, Check, LogOut, Lock, MessageCircle, Trash2, DollarSign, Copy } from "lucide-react";
 import SiteHeader from "@/components/SiteHeader";
 import SiteFooter from "@/components/SiteFooter";
 import ExchangeTracker from "@/components/ExchangeTracker";
@@ -291,6 +291,7 @@ const AdminPortal = () => {
   const totalVolume = currentMonthTxs.reduce((s, t) => s + Number(t.volume), 0);
   const totalUnpaid = unpaidTxs.reduce((s, t) => s + Number(t.commission_btc), 0);
   const totalPaid = transactions.filter((t) => t.is_paid).reduce((s, t) => s + Number(t.commission_btc), 0);
+  const totalProfit = transactions.reduce((s, t) => s + Number(t.volume) * 0.005, 0); // ~0.5% avg spread profit
 
   const getPartnerName = (pid: string) => {
     const p = partners.find((x) => x.id === pid);
@@ -313,6 +314,33 @@ const AdminPortal = () => {
     toast({ title: "Marked as Paid" });
   };
 
+  const deleteChatLog = async (logId: string) => {
+    const { error } = await supabase.from("support_chat_logs" as any).delete().eq("id", logId);
+    if (error) {
+      toast({ title: "Error", description: error.message, variant: "destructive" });
+      return;
+    }
+    setChatLogs((prev) => prev.filter((l) => l.id !== logId));
+    toast({ title: "Log deleted" });
+  };
+
+  const deleteAllChatLogs = async () => {
+    const ids = chatLogs.map((l) => l.id);
+    if (ids.length === 0) return;
+    const { error } = await supabase.from("support_chat_logs" as any).delete().in("id", ids);
+    if (error) {
+      toast({ title: "Error", description: error.message, variant: "destructive" });
+      return;
+    }
+    setChatLogs([]);
+    toast({ title: "All logs cleared" });
+  };
+
+  const copyWallet = (wallet: string) => {
+    navigator.clipboard.writeText(wallet);
+    toast({ title: "Wallet copied" });
+  };
+
   /* ═══ Sub-components ═══ */
   const TxTable = ({ txs, showPay = false }: { txs: Tx[]; showPay?: boolean }) => (
     <Table>
@@ -322,6 +350,7 @@ const AdminPortal = () => {
           <TableHead>Partner</TableHead>
           <TableHead>Asset</TableHead>
           <TableHead className="text-right">Volume</TableHead>
+          <TableHead className="text-right">Est. Profit</TableHead>
           <TableHead className="text-right">BTC Commission</TableHead>
           <TableHead>Status</TableHead>
           {showPay && <TableHead />}
@@ -330,34 +359,38 @@ const AdminPortal = () => {
       <TableBody>
         {txs.length === 0 ? (
           <TableRow>
-            <TableCell colSpan={showPay ? 7 : 6} className="text-center text-muted-foreground py-8">No transactions found.</TableCell>
+            <TableCell colSpan={showPay ? 8 : 7} className="text-center text-muted-foreground py-8">No transactions found.</TableCell>
           </TableRow>
         ) : (
-          txs.map((tx) => (
-            <TableRow key={tx.id}>
-              <TableCell className="text-muted-foreground">{new Date(tx.completed_at).toLocaleDateString()}</TableCell>
-              <TableCell>{getPartnerName(tx.partner_id)}</TableCell>
-              <TableCell className="uppercase">{tx.asset}</TableCell>
-              <TableCell className="text-right">${Number(tx.volume).toLocaleString("en-US", { minimumFractionDigits: 2 })}</TableCell>
-              <TableCell className="text-right font-mono">{Number(tx.commission_btc).toFixed(8)}</TableCell>
-              <TableCell>
-                {tx.is_paid ? (
-                  <span className="text-xs text-primary flex items-center gap-1">
-                    <Check className="w-3 h-3" /> Paid {tx.paid_at ? new Date(tx.paid_at).toLocaleDateString() : ""}
-                  </span>
-                ) : (
-                  <span className="text-xs text-amber-400">Pending</span>
-                )}
-              </TableCell>
-              {showPay && (
+          txs.map((tx) => {
+            const estProfit = Number(tx.volume) * 0.005;
+            return (
+              <TableRow key={tx.id}>
+                <TableCell className="text-muted-foreground">{new Date(tx.completed_at).toLocaleDateString()}</TableCell>
+                <TableCell>{getPartnerName(tx.partner_id)}</TableCell>
+                <TableCell className="uppercase">{tx.asset}</TableCell>
+                <TableCell className="text-right">${Number(tx.volume).toLocaleString("en-US", { minimumFractionDigits: 2 })}</TableCell>
+                <TableCell className="text-right text-primary font-mono">${estProfit.toLocaleString("en-US", { minimumFractionDigits: 2 })}</TableCell>
+                <TableCell className="text-right font-mono">{Number(tx.commission_btc).toFixed(8)}</TableCell>
                 <TableCell>
-                  {!tx.is_paid && (
-                    <Button size="sm" variant="outline" onClick={() => markAsPaid(tx.id)} className="text-xs">Mark Paid</Button>
+                  {tx.is_paid ? (
+                    <span className="text-xs text-primary flex items-center gap-1">
+                      <Check className="w-3 h-3" /> Paid {tx.paid_at ? new Date(tx.paid_at).toLocaleDateString() : ""}
+                    </span>
+                  ) : (
+                    <span className="text-xs text-amber-400">Pending</span>
                   )}
                 </TableCell>
-              )}
-            </TableRow>
-          ))
+                {showPay && (
+                  <TableCell>
+                    {!tx.is_paid && (
+                      <Button size="sm" variant="outline" onClick={() => markAsPaid(tx.id)} className="text-xs">Mark Paid</Button>
+                    )}
+                  </TableCell>
+                )}
+              </TableRow>
+            );
+          })
         )}
       </TableBody>
     </Table>
@@ -551,7 +584,7 @@ const AdminPortal = () => {
 
             <TabsContent value="partners" className="mt-6 space-y-6">
               {/* Partner stat cards */}
-              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-4">
                 <Card className="border-border/40 bg-card/40 backdrop-blur-sm">
                   <CardContent className="p-5 flex items-center gap-3">
                     <Users className="w-5 h-5 text-primary" />
@@ -567,6 +600,15 @@ const AdminPortal = () => {
                     <div>
                       <p className="text-xs text-muted-foreground">Month Volume</p>
                       <p className="text-2xl font-bold text-foreground">${totalVolume.toLocaleString("en-US", { minimumFractionDigits: 2 })}</p>
+                    </div>
+                  </CardContent>
+                </Card>
+                <Card className="border-border/40 bg-card/40 backdrop-blur-sm">
+                  <CardContent className="p-5 flex items-center gap-3">
+                    <DollarSign className="w-5 h-5 text-primary" />
+                    <div>
+                      <p className="text-xs text-muted-foreground">Est. Profit (0.5%)</p>
+                      <p className="text-2xl font-bold text-foreground">${totalProfit.toLocaleString("en-US", { minimumFractionDigits: 2 })}</p>
                     </div>
                   </CardContent>
                 </Card>
@@ -616,7 +658,14 @@ const AdminPortal = () => {
                           <TableRow key={p.id}>
                             <TableCell className="font-medium">{p.first_name} {p.last_name}</TableCell>
                             <TableCell className="font-mono text-sm text-muted-foreground">{p.referral_code}</TableCell>
-                            <TableCell className="font-mono text-xs text-muted-foreground break-all max-w-[200px] truncate">{p.btc_wallet}</TableCell>
+                            <TableCell className="font-mono text-xs text-muted-foreground max-w-[300px]">
+                              <div className="flex items-center gap-1">
+                                <span className="break-all">{p.btc_wallet}</span>
+                                <button onClick={() => copyWallet(p.btc_wallet)} className="flex-shrink-0 p-1 rounded hover:bg-muted/50 transition-colors" title="Copy wallet">
+                                  <Copy className="w-3 h-3" />
+                                </button>
+                              </div>
+                            </TableCell>
                             <TableCell className="text-right">${pVolume.toLocaleString("en-US", { minimumFractionDigits: 2 })}</TableCell>
                             <TableCell className="text-right font-mono">{pEarned.toFixed(8)}</TableCell>
                             <TableCell className="text-right font-mono text-amber-400">{pUnpaid.toFixed(8)}</TableCell>
@@ -693,10 +742,15 @@ const AdminPortal = () => {
               </div>
 
               <Card className="border-border/40 bg-card/40 backdrop-blur-sm">
-                <CardHeader>
+                <CardHeader className="flex flex-row items-center justify-between">
                   <CardTitle className="text-lg flex items-center gap-2">
                     <MessageCircle className="w-5 h-5" /> Customer Questions
                   </CardTitle>
+                  {chatLogs.length > 0 && (
+                    <Button size="sm" variant="destructive" onClick={deleteAllChatLogs} className="gap-1 text-xs">
+                      <Trash2 className="w-3 h-3" /> Clear All
+                    </Button>
+                  )}
                 </CardHeader>
                 <CardContent>
                   <Table>
@@ -707,12 +761,13 @@ const AdminPortal = () => {
                         <TableHead>Customer Question</TableHead>
                         <TableHead>AI Response</TableHead>
                         <TableHead>Page</TableHead>
+                        <TableHead />
                       </TableRow>
                     </TableHeader>
                     <TableBody>
                       {chatLogs.length === 0 ? (
                         <TableRow>
-                          <TableCell colSpan={5} className="text-center text-muted-foreground py-8">
+                          <TableCell colSpan={6} className="text-center text-muted-foreground py-8">
                             No support conversations yet.
                           </TableCell>
                         </TableRow>
@@ -730,6 +785,11 @@ const AdminPortal = () => {
                               <p className="text-xs text-muted-foreground truncate" title={log.ai_response}>{log.ai_response}</p>
                             </TableCell>
                             <TableCell className="text-xs text-muted-foreground">{log.page_url || "/"}</TableCell>
+                            <TableCell>
+                              <button onClick={() => deleteChatLog(log.id)} className="p-1.5 rounded-lg hover:bg-destructive/20 text-muted-foreground hover:text-destructive transition-colors" title="Delete">
+                                <Trash2 className="w-3.5 h-3.5" />
+                              </button>
+                            </TableCell>
                           </TableRow>
                         ))
                       )}
