@@ -235,6 +235,13 @@ const BlogPostPage = () => {
                 </ul>
               </div>
 
+              {slug === "beginners-guide-digital-assets-wallet-to-swap" && (
+                <BlogLanguageToggle
+                  availableLanguages={new Set(Object.keys(TRANSLATED_BEGINNERS_GUIDE_POSTS))}
+                  slug={slug}
+                />
+              )}
+
               <TableOfContents markdown={post.content} />
               <BlogMarkdown content={post.content} />
 
