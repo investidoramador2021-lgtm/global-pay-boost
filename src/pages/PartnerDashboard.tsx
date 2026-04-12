@@ -199,14 +199,6 @@ const PartnerDashboard = () => {
     toast({ title: "Copied", description: "Referral link copied to clipboard." });
   };
 
-  const handleChangePassword = async (e: React.FormEvent) => {
-    e.preventDefault();
-    setChangingPw(true);
-    const { error } = await supabase.auth.updateUser({ password: newPassword });
-    if (error) toast({ title: "Error", description: error.message, variant: "destructive" });
-    else { toast({ title: "Password updated" }); setNewPassword(""); }
-    setChangingPw(false);
-  };
 
   const handleLogout = async () => {
     await supabase.auth.signOut();
