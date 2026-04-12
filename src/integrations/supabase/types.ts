@@ -14,6 +14,76 @@ export type Database = {
   }
   public: {
     Tables: {
+      audit_access_logs: {
+        Row: {
+          accessed_at: string
+          accessed_by: string
+          audit_link_id: string
+          id: string
+          ip_address: string | null
+          user_agent: string | null
+        }
+        Insert: {
+          accessed_at?: string
+          accessed_by: string
+          audit_link_id: string
+          id?: string
+          ip_address?: string | null
+          user_agent?: string | null
+        }
+        Update: {
+          accessed_at?: string
+          accessed_by?: string
+          audit_link_id?: string
+          id?: string
+          ip_address?: string | null
+          user_agent?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "audit_access_logs_audit_link_id_fkey"
+            columns: ["audit_link_id"]
+            isOneToOne: false
+            referencedRelation: "audit_links"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      audit_links: {
+        Row: {
+          alert_id: string
+          created_at: string
+          created_by: string
+          expires_at: string
+          id: string
+          token: string
+        }
+        Insert: {
+          alert_id: string
+          created_at?: string
+          created_by: string
+          expires_at?: string
+          id?: string
+          token?: string
+        }
+        Update: {
+          alert_id?: string
+          created_at?: string
+          created_by?: string
+          expires_at?: string
+          id?: string
+          token?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "audit_links_alert_id_fkey"
+            columns: ["alert_id"]
+            isOneToOne: false
+            referencedRelation: "compliance_alerts"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       blog_posts: {
         Row: {
           author_bio: string
@@ -118,6 +188,74 @@ export type Database = {
           updated_at?: string
         }
         Relationships: []
+      }
+      compliance_alerts: {
+        Row: {
+          alert_type: string
+          amount: number
+          created_at: string
+          destination_wallet: string
+          exchange_rate: number
+          from_currency: string
+          id: string
+          msb_reference: string
+          notes: string | null
+          partner_email: string
+          partner_id: string | null
+          partner_legal_name: string
+          source_wallet: string
+          status: string
+          to_currency: string
+          transaction_ref: string
+          updated_at: string
+        }
+        Insert: {
+          alert_type?: string
+          amount?: number
+          created_at?: string
+          destination_wallet?: string
+          exchange_rate?: number
+          from_currency?: string
+          id?: string
+          msb_reference?: string
+          notes?: string | null
+          partner_email?: string
+          partner_id?: string | null
+          partner_legal_name?: string
+          source_wallet?: string
+          status?: string
+          to_currency?: string
+          transaction_ref: string
+          updated_at?: string
+        }
+        Update: {
+          alert_type?: string
+          amount?: number
+          created_at?: string
+          destination_wallet?: string
+          exchange_rate?: number
+          from_currency?: string
+          id?: string
+          msb_reference?: string
+          notes?: string | null
+          partner_email?: string
+          partner_id?: string | null
+          partner_legal_name?: string
+          source_wallet?: string
+          status?: string
+          to_currency?: string
+          transaction_ref?: string
+          updated_at?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "compliance_alerts_partner_id_fkey"
+            columns: ["partner_id"]
+            isOneToOne: false
+            referencedRelation: "partner_profiles"
+            referencedColumns: ["id"]
+          },
+        ]
       }
       customers: {
         Row: {
