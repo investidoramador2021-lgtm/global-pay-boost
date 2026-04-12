@@ -391,11 +391,14 @@ export type Database = {
           id: string
           invoice_id: string
           language: string
+          net_crypto_amount: number
           payer_email: string
           payer_name: string
           rate_locked_at: string
           requester_email: string
           requester_name: string
+          service_fee_amount: number
+          service_fee_percent: number
           status: string
           token: string
           updated_at: string
@@ -411,11 +414,14 @@ export type Database = {
           id?: string
           invoice_id: string
           language?: string
+          net_crypto_amount?: number
           payer_email: string
           payer_name: string
           rate_locked_at?: string
           requester_email: string
           requester_name: string
+          service_fee_amount?: number
+          service_fee_percent?: number
           status?: string
           token?: string
           updated_at?: string
@@ -431,11 +437,14 @@ export type Database = {
           id?: string
           invoice_id?: string
           language?: string
+          net_crypto_amount?: number
           payer_email?: string
           payer_name?: string
           rate_locked_at?: string
           requester_email?: string
           requester_name?: string
+          service_fee_amount?: number
+          service_fee_percent?: number
           status?: string
           token?: string
           updated_at?: string
