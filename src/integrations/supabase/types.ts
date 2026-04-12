@@ -380,6 +380,69 @@ export type Database = {
         }
         Relationships: []
       }
+      invoices: {
+        Row: {
+          created_at: string
+          crypto_amount: number
+          crypto_ticker: string
+          expires_at: string
+          fiat_amount: number
+          fiat_currency: string
+          id: string
+          invoice_id: string
+          language: string
+          payer_email: string
+          payer_name: string
+          rate_locked_at: string
+          requester_email: string
+          requester_name: string
+          status: string
+          token: string
+          updated_at: string
+          wallet_address: string
+        }
+        Insert: {
+          created_at?: string
+          crypto_amount: number
+          crypto_ticker: string
+          expires_at?: string
+          fiat_amount: number
+          fiat_currency?: string
+          id?: string
+          invoice_id: string
+          language?: string
+          payer_email: string
+          payer_name: string
+          rate_locked_at?: string
+          requester_email: string
+          requester_name: string
+          status?: string
+          token?: string
+          updated_at?: string
+          wallet_address: string
+        }
+        Update: {
+          created_at?: string
+          crypto_amount?: number
+          crypto_ticker?: string
+          expires_at?: string
+          fiat_amount?: number
+          fiat_currency?: string
+          id?: string
+          invoice_id?: string
+          language?: string
+          payer_email?: string
+          payer_name?: string
+          rate_locked_at?: string
+          requester_email?: string
+          requester_name?: string
+          status?: string
+          token?: string
+          updated_at?: string
+          wallet_address?: string
+        }
+        Relationships: []
+      }
       partner_profiles: {
         Row: {
           btc_wallet: string
