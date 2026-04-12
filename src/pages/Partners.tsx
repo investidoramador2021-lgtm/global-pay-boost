@@ -280,19 +280,28 @@ const Partners = () => {
                       </div>
                     )}
 
-                    <Button type="submit" className="w-full gap-2 h-12 text-base font-semibold rounded-xl mt-2" size="lg" disabled={loading || !canSubmit}>
-                      {loading ? "Processing…" : isLogin ? "Sign In" : "Join Program"}
-                      <ArrowRight className="w-4 h-4" />
+                    <Button
+                      type="submit"
+                      className="w-full gap-2.5 h-14 text-base font-bold rounded-xl mt-3 bg-gradient-to-r from-primary to-primary/80 hover:from-primary/90 hover:to-primary shadow-[0_4px_20px_-4px_hsl(var(--primary)/0.5)] hover:shadow-[0_6px_28px_-4px_hsl(var(--primary)/0.6)] transition-all duration-200"
+                      size="lg"
+                      disabled={loading || !canSubmit}
+                    >
+                      {loading ? "Processing…" : isLogin ? "Sign In to Dashboard" : "Create Partner Account"}
+                      <ArrowRight className="w-5 h-5" />
                     </Button>
                   </form>
 
-                  <div className="mt-5 text-center">
+                  {/* Toggle login / register */}
+                  <div className="mt-6 pt-5 border-t border-border/30 text-center space-y-2">
+                    <p className="text-xs text-muted-foreground/60">
+                      {isLogin ? "Don't have a partner account yet?" : "Already registered as a partner?"}
+                    </p>
                     <button
                       type="button"
                       onClick={() => setIsLogin(!isLogin)}
-                      className="text-sm text-muted-foreground hover:text-primary transition-colors"
+                      className="inline-flex items-center gap-1.5 text-sm font-semibold text-primary hover:text-primary/80 transition-colors"
                     >
-                      {isLogin ? "Need an account? Register" : "Already a partner? Sign in"}
+                      {isLogin ? "Register as a New Partner →" : "Sign In to Your Dashboard →"}
                     </button>
                   </div>
                 </div>
