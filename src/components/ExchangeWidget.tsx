@@ -1,9 +1,10 @@
 import { useState, useEffect, useCallback, useRef, forwardRef } from "react";
 import { useTranslation } from "react-i18next";
 import { motion, AnimatePresence } from "framer-motion";
-import { ArrowDownUp, Loader2, Search, Copy, Check, ArrowLeft, ArrowRight, ArrowLeftRight, Clock, CheckCircle2, AlertCircle, ExternalLink, Wallet, QrCode, XCircle, Info, Mail, RefreshCw, Shield, Lock, ChevronDown, Share2, CreditCard, Repeat, EyeOff, Link2 } from "lucide-react";
+import { ArrowDownUp, Loader2, Search, Copy, Check, ArrowLeft, ArrowRight, ArrowLeftRight, Clock, CheckCircle2, AlertCircle, ExternalLink, Wallet, QrCode, XCircle, Info, Mail, RefreshCw, Shield, Lock, ChevronDown, Share2, CreditCard, Repeat, EyeOff, Link2, FileText } from "lucide-react";
 import PrivateTransferTab from "@/components/PrivateTransferTab";
 import PermanentBridgeTab from "@/components/PermanentBridgeTab";
+import InvoiceRequestTab from "@/components/InvoiceRequestTab";
 import DestinationAddressInput, { tickerToAddressType } from "@/components/DestinationAddressInput";
 import { supabase } from "@/integrations/supabase/client";
 import { Button } from "@/components/ui/button";
@@ -286,7 +287,7 @@ const STATUS_LABEL_KEYS: Record<string, string> = {
 };
 
 interface ExchangeWidgetProps {
-  onTabChange?: (tab: "exchange" | "buysell" | "private" | "bridge") => void;
+  onTabChange?: (tab: "exchange" | "buysell" | "private" | "bridge" | "request") => void;
 }
 
 const ExchangeWidget = ({ onTabChange }: ExchangeWidgetProps = {}) => {
@@ -319,7 +320,7 @@ const ExchangeWidget = ({ onTabChange }: ExchangeWidgetProps = {}) => {
   const debounceRef = useRef<ReturnType<typeof setTimeout>>();
 
   // ===== Dual-tab mode: "exchange" (ChangeNOW) vs "buysell" (Guardarian) =====
-  type WidgetMode = "exchange" | "buysell" | "private" | "bridge";
+  type WidgetMode = "exchange" | "buysell" | "private" | "bridge" | "request";
   type FiatFlow = "buy" | "sell";
   const [widgetMode, setWidgetMode] = useState<WidgetMode>("exchange");
   const [gTradeDirection, setGTradeDirection] = useState<FiatFlow>("buy");
@@ -991,6 +992,8 @@ const ExchangeWidget = ({ onTabChange }: ExchangeWidgetProps = {}) => {
       setGTradeDirection("buy");
     } else if (tab === "bridge") {
       setWidgetMode("bridge");
+    } else if (tab === "request" || tab === "invoice") {
+      setWidgetMode("request");
     }
   }, []);
 
@@ -1635,7 +1638,7 @@ const ExchangeWidget = ({ onTabChange }: ExchangeWidgetProps = {}) => {
           <motion.div key="exchange" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}>
             {/* ===== MODE TABS: Exchange | Buy/Sell ===== */}
             <div className="mb-5 flex items-center justify-between gap-2">
-              <div className="flex rounded-xl border border-border bg-accent p-1 gap-1 max-[480px]:w-full max-[480px]:grid max-[480px]:grid-cols-4">
+              <div className="flex rounded-xl border border-border bg-accent p-1 gap-1 max-[480px]:w-full max-[480px]:grid max-[480px]:grid-cols-5">
                 <button
                   onClick={() => { setWidgetMode("exchange"); setGStep("form"); setGCheckoutUrl(""); }}
                   className={`flex items-center justify-center gap-1.5 rounded-lg px-3 py-2 font-display text-sm font-semibold ${
@@ -1691,6 +1694,16 @@ const ExchangeWidget = ({ onTabChange }: ExchangeWidgetProps = {}) => {
                   }`}
                 >
                   <Link2 className="h-4 w-4" /> {t("widget.tabs.bridge")}
+                </button>
+                <button
+                  onClick={() => { setWidgetMode("request"); }}
+                  className={`flex items-center justify-center gap-1.5 rounded-lg px-3 py-2 font-display text-sm font-semibold ${
+                    widgetMode === "request"
+                      ? "bg-primary text-primary-foreground shadow-card"
+                      : "text-muted-foreground hover:text-foreground hover:bg-background"
+                  }`}
+                >
+                  <FileText className="h-4 w-4" /> {t("widget.tabs.request")}
                 </button>
               </div>
               <span className="hidden min-[481px]:flex items-center gap-1.5 rounded-full border border-trust/30 bg-trust/10 px-2.5 py-1 font-body text-[10px] font-semibold uppercase tracking-wider text-trust">
@@ -2506,6 +2519,11 @@ const ExchangeWidget = ({ onTabChange }: ExchangeWidgetProps = {}) => {
             {/* ===== PERMANENT BRIDGE MODE ===== */}
             {widgetMode === "bridge" && (
               <PermanentBridgeTab />
+            )}
+
+            {/* ===== INVOICE REQUEST MODE ===== */}
+            {widgetMode === "request" && (
+              <InvoiceRequestTab />
             )}
 
             {/* ===== EXCHANGE MODE (ChangeNOW) ===== */}

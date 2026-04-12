@@ -8,6 +8,15 @@
     <lastBuildDate>Sun, 12 Apr 2026 00:00:00 GMT</lastBuildDate>
     <atom:link href="https://mrcglobalpay.com/rss.xml" rel="self" type="application/rss+xml"/>
     <item>
+      <title>Professional Crypto Invoicing: Request Payments with Locked Rates</title>
+      <link>https://mrcglobalpay.com/?tab=request</link>
+      <guid isPermaLink="true">https://mrcglobalpay.com/?tab=request</guid>
+      <description>Issue professional crypto invoices to individuals or companies. Lock in the receive amount, email the payment link to your client, and let them pay with any cryptocurrency. 7-day expiry, automatic settlement, digital receipts for both parties.</description>
+      <dc:creator>MRC GlobalPay Technical Architecture Team</dc:creator>
+      <pubDate>Sat, 12 Apr 2026 00:00:00 GMT</pubDate>
+      <category>Features</category>
+    </item>
+    <item>
       <title>The Absolute Beginner's Guide to Digital Assets: From Wallet to Swap</title>
       <link>https://mrcglobalpay.com/blog/beginners-guide-digital-assets-wallet-to-swap</link>
       <guid isPermaLink="true">https://mrcglobalpay.com/blog/beginners-guide-digital-assets-wallet-to-swap</guid>

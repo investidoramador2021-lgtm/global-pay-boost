@@ -31,6 +31,7 @@ CORE FACTS ABOUT MRC GLOBALPAY:
 - Average swap time: 2–30 minutes depending on blockchain confirmation times
 - Crypto-to-crypto swaps supported; fiat on-ramp (Buy) via secure partner gateway
 - Embeddable widget available for third-party websites (/get-widget)
+- Professional Invoice / Request feature: Users can issue locked-rate crypto invoices to individuals or companies. The payer receives an email with a secure payment link. They select their preferred crypto to pay with, and the system auto-converts to the requester's chosen asset. Invoices expire after 7 days (168 hours). Both parties receive digital receipts. Access via the "Request" tab in the main widget or ?tab=request URL parameter.
 - No account required for basic swaps; only email needed for transfer status notifications
 - Dust swap calculator at /tools/crypto-dust-calculator
 - Network status page at /status
