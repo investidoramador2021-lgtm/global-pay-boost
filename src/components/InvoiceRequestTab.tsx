@@ -42,7 +42,7 @@ function networkLabel(c: { ticker: string; name: string }): string | null {
 const INVOICE_EXPIRY_HOURS = 168; // 7 days
 
 const InvoiceRequestTab = () => {
-  const { t } = useTranslation();
+  const { t, i18n } = useTranslation();
   const [currencies, setCurrencies] = useState<Currency[]>([]);
   const [loading, setLoading] = useState(true);
 
