@@ -1,6 +1,7 @@
 import { useState, useEffect, useCallback, useRef } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { CheckCircle2, AlertCircle, Clipboard, Loader2, ShieldAlert } from "lucide-react";
+import { useTranslation } from "react-i18next";
 
 // ── Network types ───────────────────────────────────────────────────
 
