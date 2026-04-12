@@ -2519,6 +2519,11 @@ const ExchangeWidget = ({ onTabChange }: ExchangeWidgetProps = {}) => {
               <PermanentBridgeTab />
             )}
 
+            {/* ===== INVOICE REQUEST MODE ===== */}
+            {widgetMode === "request" && (
+              <InvoiceRequestTab />
+            )}
+
             {/* ===== EXCHANGE MODE (ChangeNOW) ===== */}
             {widgetMode === "exchange" && (
               <>
