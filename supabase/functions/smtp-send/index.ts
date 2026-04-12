@@ -268,14 +268,19 @@ Deno.serve(async (req) => {
   try {
     const body = await req.json()
     const {
-      type, // 'receipt' | 'compliance' | 'system-error'
+      type, // 'receipt' | 'compliance' | 'system-error' | 'verification'
       recipientEmail,
       transactionId,
       fromAmount, fromCurrency, toCurrency,
       depositAddress, recipientAddress,
       message: errorMessage,
       lang,
+      to, // alias for recipientEmail (used by verification)
+      verificationToken,
+      expiresAt,
     } = body
+
+    const toEmail = recipientEmail || to
 
     if (!type) {
       return new Response(JSON.stringify({ error: 'type is required' }), {
@@ -290,11 +295,11 @@ Deno.serve(async (req) => {
     )
 
     // Check suppression
-    if (recipientEmail) {
+    if (toEmail) {
       const { data: suppressed } = await supabase
         .from('suppressed_emails')
         .select('id')
-        .eq('email', recipientEmail.toLowerCase())
+        .eq('email', toEmail.toLowerCase())
         .maybeSingle()
       if (suppressed) {
         return new Response(JSON.stringify({ success: false, reason: 'email_suppressed' }), {
