@@ -8,7 +8,6 @@ import HeroSection from "@/components/HeroSection";
 import TrustBanner from "@/components/TrustBanner";
 import FeaturesSection from "@/components/FeaturesSection";
 import HowItWorksSection from "@/components/HowItWorksSection";
-import InvoiceHowItWorks from "@/components/InvoiceHowItWorks";
 import SwapPairsQA from "@/components/SwapPairsQA";
 import PopularPairsSection from "@/components/PopularPairsSection";
 import LiveSwapTicker from "@/components/LiveSwapTicker";
@@ -73,8 +72,7 @@ const Index = () => {
           </div>
           <FeaturesSection />
           <NoLimitsSection />
-          {activeWidgetTab !== "request" && <HowItWorksSection />}
-          {activeWidgetTab === "request" && <InvoiceHowItWorks />}
+          <HowItWorksSection />
           <div className="container mx-auto px-4 py-4">
             <GetTheAppBadges />
           </div>
