@@ -346,6 +346,36 @@ export type Database = {
         }
         Relationships: []
       }
+      support_chat_logs: {
+        Row: {
+          ai_response: string
+          created_at: string
+          id: string
+          page_url: string | null
+          persona_name: string
+          session_id: string
+          user_message: string
+        }
+        Insert: {
+          ai_response: string
+          created_at?: string
+          id?: string
+          page_url?: string | null
+          persona_name: string
+          session_id: string
+          user_message: string
+        }
+        Update: {
+          ai_response?: string
+          created_at?: string
+          id?: string
+          page_url?: string | null
+          persona_name?: string
+          session_id?: string
+          user_message?: string
+        }
+        Relationships: []
+      }
       suppressed_emails: {
         Row: {
           created_at: string
