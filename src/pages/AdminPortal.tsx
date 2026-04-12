@@ -350,6 +350,7 @@ const AdminPortal = () => {
           <TableHead>Partner</TableHead>
           <TableHead>Asset</TableHead>
           <TableHead className="text-right">Volume</TableHead>
+          <TableHead className="text-right">Est. Profit</TableHead>
           <TableHead className="text-right">BTC Commission</TableHead>
           <TableHead>Status</TableHead>
           {showPay && <TableHead />}
@@ -358,34 +359,38 @@ const AdminPortal = () => {
       <TableBody>
         {txs.length === 0 ? (
           <TableRow>
-            <TableCell colSpan={showPay ? 7 : 6} className="text-center text-muted-foreground py-8">No transactions found.</TableCell>
+            <TableCell colSpan={showPay ? 8 : 7} className="text-center text-muted-foreground py-8">No transactions found.</TableCell>
           </TableRow>
         ) : (
-          txs.map((tx) => (
-            <TableRow key={tx.id}>
-              <TableCell className="text-muted-foreground">{new Date(tx.completed_at).toLocaleDateString()}</TableCell>
-              <TableCell>{getPartnerName(tx.partner_id)}</TableCell>
-              <TableCell className="uppercase">{tx.asset}</TableCell>
-              <TableCell className="text-right">${Number(tx.volume).toLocaleString("en-US", { minimumFractionDigits: 2 })}</TableCell>
-              <TableCell className="text-right font-mono">{Number(tx.commission_btc).toFixed(8)}</TableCell>
-              <TableCell>
-                {tx.is_paid ? (
-                  <span className="text-xs text-primary flex items-center gap-1">
-                    <Check className="w-3 h-3" /> Paid {tx.paid_at ? new Date(tx.paid_at).toLocaleDateString() : ""}
-                  </span>
-                ) : (
-                  <span className="text-xs text-amber-400">Pending</span>
-                )}
-              </TableCell>
-              {showPay && (
+          txs.map((tx) => {
+            const estProfit = Number(tx.volume) * 0.005;
+            return (
+              <TableRow key={tx.id}>
+                <TableCell className="text-muted-foreground">{new Date(tx.completed_at).toLocaleDateString()}</TableCell>
+                <TableCell>{getPartnerName(tx.partner_id)}</TableCell>
+                <TableCell className="uppercase">{tx.asset}</TableCell>
+                <TableCell className="text-right">${Number(tx.volume).toLocaleString("en-US", { minimumFractionDigits: 2 })}</TableCell>
+                <TableCell className="text-right text-primary font-mono">${estProfit.toLocaleString("en-US", { minimumFractionDigits: 2 })}</TableCell>
+                <TableCell className="text-right font-mono">{Number(tx.commission_btc).toFixed(8)}</TableCell>
                 <TableCell>
-                  {!tx.is_paid && (
-                    <Button size="sm" variant="outline" onClick={() => markAsPaid(tx.id)} className="text-xs">Mark Paid</Button>
+                  {tx.is_paid ? (
+                    <span className="text-xs text-primary flex items-center gap-1">
+                      <Check className="w-3 h-3" /> Paid {tx.paid_at ? new Date(tx.paid_at).toLocaleDateString() : ""}
+                    </span>
+                  ) : (
+                    <span className="text-xs text-amber-400">Pending</span>
                   )}
                 </TableCell>
-              )}
-            </TableRow>
-          ))
+                {showPay && (
+                  <TableCell>
+                    {!tx.is_paid && (
+                      <Button size="sm" variant="outline" onClick={() => markAsPaid(tx.id)} className="text-xs">Mark Paid</Button>
+                    )}
+                  </TableCell>
+                )}
+              </TableRow>
+            );
+          })
         )}
       </TableBody>
     </Table>
