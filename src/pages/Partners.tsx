@@ -116,18 +116,41 @@ const Partners = () => {
       if (error) throw error;
       if (!data.user) throw new Error("Registration failed");
 
+      // Generate verification token
+      const verificationToken = crypto.randomUUID() + '-' + crypto.randomUUID();
+      const expiresAt = new Date(Date.now() + 48 * 60 * 60 * 1000).toISOString();
+
       const { error: profileError } = await supabase.from("partner_profiles").insert({
         user_id: data.user.id,
         first_name: firstName.trim(),
         last_name: lastName.trim(),
         btc_wallet: btcWallet.trim(),
         referral_code: "temp",
+        verification_status: "pending_verification",
+        verification_token: verificationToken,
+        verification_expires_at: expiresAt,
       });
 
       if (profileError) throw profileError;
 
-      toast({ title: "Welcome to the Partner Program", description: "Your account has been created." });
-      navigate("/dashboard");
+      // Send verification email via smtp-send
+      const lang = localStorage.getItem("user-lang") || navigator.language?.slice(0, 2) || "en";
+      await supabase.functions.invoke("smtp-send", {
+        body: {
+          type: "verification",
+          to: email,
+          lang,
+          verificationToken,
+          expiresAt,
+        },
+      });
+
+      await supabase.auth.signOut();
+      toast({
+        title: "Check your inbox",
+        description: "A verification email has been sent. You must confirm within 48 hours or your account will be deleted.",
+      });
+      setIsLogin(true);
     } catch (err: any) {
       toast({ title: "Error", description: err.message, variant: "destructive" });
     } finally {
