@@ -40,7 +40,7 @@ const HeroSection = ({ onTabChange }: HeroSectionProps) => {
 
   return (
     <>
-      <section id="exchange" className="relative overflow-hidden bg-background py-6 sm:py-12 lg:py-20">
+      <section id="exchange" className="relative overflow-x-clip bg-background py-6 sm:py-12 lg:py-20">
         {/* Dot grid */}
         <div className="absolute inset-0 opacity-[0.03]" style={{ backgroundImage: 'radial-gradient(hsl(var(--neon)) 1px, transparent 1px)', backgroundSize: '32px 32px' }} />
 
