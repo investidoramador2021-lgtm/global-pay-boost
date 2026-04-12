@@ -40,7 +40,7 @@ function networkLabel(c: { ticker: string; name: string }): string | null {
 }
 
 const INVOICE_EXPIRY_HOURS = 168; // 7 days
-const SERVICE_FEE_PERCENT = 1.5;
+const SERVICE_FEE_PERCENT = 0.5;
 
 const InvoiceRequestTab = () => {
   const { t, i18n } = useTranslation();
