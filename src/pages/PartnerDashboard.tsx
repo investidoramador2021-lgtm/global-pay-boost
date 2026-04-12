@@ -41,6 +41,7 @@ interface PartnerProfile {
   last_name: string;
   btc_wallet: string;
   referral_code: string;
+  verification_status: string;
 }
 
 interface PartnerTx {
@@ -126,6 +127,12 @@ const PartnerDashboard = () => {
         .eq("user_id", user.id)
         .maybeSingle();
       if (!p) { navigate("/partners"); return; }
+      if ((p as PartnerProfile).verification_status !== 'active') {
+        toast({ title: "Account not verified", description: "Please check your email and verify your account first.", variant: "destructive" });
+        await supabase.auth.signOut();
+        navigate("/partners?mode=login");
+        return;
+      }
       setProfile(p as PartnerProfile);
 
       // Load swaps referred by this partner's code
