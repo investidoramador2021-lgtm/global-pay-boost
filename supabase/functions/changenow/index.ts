@@ -52,6 +52,7 @@ Deno.serve(async (req) => {
   }
 
   const apiKey = Deno.env.get('CHANGENOW_API_KEY');
+  const privateKey = Deno.env.get('CHANGENOW_PRIVATE_KEY') || apiKey;
   if (!apiKey) {
     return new Response(JSON.stringify({ error: 'CHANGENOW_API_KEY not configured' }), {
       status: 500,
