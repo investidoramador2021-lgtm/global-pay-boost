@@ -13,6 +13,7 @@ import { Shield, Users, Bitcoin, TrendingUp, Check, LogOut, Lock, MessageCircle,
 import SiteHeader from "@/components/SiteHeader";
 import SiteFooter from "@/components/SiteFooter";
 import ExchangeTracker from "@/components/ExchangeTracker";
+import InvoiceManager from "@/components/InvoiceManager";
 
 interface Partner {
   id: string;
