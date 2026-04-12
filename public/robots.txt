@@ -1,9 +1,13 @@
 # === High-Value Search Crawlers ===
 User-agent: Googlebot
 Allow: /
+Disallow: /admin-portal-mrc
+Disallow: /dashboard
 
 User-agent: Bingbot
 Allow: /
+Disallow: /admin-portal-mrc
+Disallow: /dashboard
 
 User-agent: Applebot
 Allow: /
@@ -22,22 +26,30 @@ User-agent: GPTBot
 Allow: /
 Allow: /guide/
 Allow: /blog/
+Disallow: /admin-portal-mrc
+Disallow: /dashboard
 
 User-agent: ChatGPT-User
 Allow: /
 Allow: /guide/
 Allow: /blog/
+Disallow: /admin-portal-mrc
+Disallow: /dashboard
 
 User-agent: OAI-SearchBot
 Allow: /
 Allow: /guide/
 Allow: /blog/
+Disallow: /admin-portal-mrc
+Disallow: /dashboard
 
 User-agent: Google-Extended
 Allow: /
 
 User-agent: ClaudeBot
 Allow: /
+Disallow: /admin-portal-mrc
+Disallow: /dashboard
 
 User-agent: Claude-Web
 Allow: /
@@ -49,6 +61,8 @@ User-agent: PerplexityBot
 Allow: /
 Allow: /guide/
 Allow: /blog/
+Disallow: /admin-portal-mrc
+Disallow: /dashboard
 
 User-agent: cohere-ai
 Allow: /
@@ -100,11 +114,17 @@ Allow: /bridge/
 Allow: /resources/
 Disallow: /sell
 Disallow: /payout
+Disallow: /admin-portal-mrc
+Disallow: /dashboard
 
 Allow: /private-transfer
 Allow: /permanent-bridge
 Allow: /permanent-bridge/whitepaper
 Allow: /private-transfer/whitepaper
+Allow: /compliance
+Allow: /partners
+Allow: /crypto-dust-solutions
+Allow: /guide/crypto-dust
 
 # Priority sections for AI indexing
 # LLMs.txt: https://mrcglobalpay.com/llms.txt
