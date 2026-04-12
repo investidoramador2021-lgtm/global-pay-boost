@@ -242,6 +242,77 @@ export type Database = {
         }
         Relationships: []
       }
+      partner_profiles: {
+        Row: {
+          btc_wallet: string
+          created_at: string
+          first_name: string
+          id: string
+          last_name: string
+          referral_code: string
+          updated_at: string
+          user_id: string
+        }
+        Insert: {
+          btc_wallet: string
+          created_at?: string
+          first_name: string
+          id?: string
+          last_name: string
+          referral_code: string
+          updated_at?: string
+          user_id: string
+        }
+        Update: {
+          btc_wallet?: string
+          created_at?: string
+          first_name?: string
+          id?: string
+          last_name?: string
+          referral_code?: string
+          updated_at?: string
+          user_id?: string
+        }
+        Relationships: []
+      }
+      partner_transactions: {
+        Row: {
+          asset: string
+          commission_btc: number
+          completed_at: string
+          created_at: string
+          id: string
+          partner_id: string
+          volume: number
+        }
+        Insert: {
+          asset: string
+          commission_btc?: number
+          completed_at?: string
+          created_at?: string
+          id?: string
+          partner_id: string
+          volume?: number
+        }
+        Update: {
+          asset?: string
+          commission_btc?: number
+          completed_at?: string
+          created_at?: string
+          id?: string
+          partner_id?: string
+          volume?: number
+        }
+        Relationships: [
+          {
+            foreignKeyName: "partner_transactions_partner_id_fkey"
+            columns: ["partner_id"]
+            isOneToOne: false
+            referencedRelation: "partner_profiles"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       push_subscriptions: {
         Row: {
           auth_key: string
