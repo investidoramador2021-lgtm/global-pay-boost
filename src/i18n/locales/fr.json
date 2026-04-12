@@ -373,6 +373,23 @@
         "description": "Exécutez la transaction instantanément et recevez les fonds directement dans votre portefeuille non-custodial."
       },
       "cta": "Commencer l'Échange"
+    },
+    "invoice": {
+      "heading": "Facturation Crypto Professionnelle.",
+      "subtitle": "Demandez des paiements crypto à quiconque — particuliers ou entreprises. Les taux sont verrouillés à la création et le règlement est garanti.",
+      "step1": {
+        "title": "Identifier et Émettre",
+        "description": "Saisissez les coordonnées obligatoires du Payeur et du Demandeur. Définissez votre montant exact dans votre devise fiat préférée."
+      },
+      "step2": {
+        "title": "Livraison Automatisée",
+        "description": "Nous envoyons un lien professionnel et sécurisé directement à votre client. La facture et le taux restent verrouillés pendant 168 heures (7 jours)."
+      },
+      "step3": {
+        "title": "Règlement Précis",
+        "description": "Votre client paie en crypto ; notre moteur livre l'équivalent exact en fiat à votre portefeuille. Les deux parties reçoivent des reçus numériques signés."
+      },
+      "cta": "Créer une Facture"
     }
   },
   "whitepaper": {

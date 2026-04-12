@@ -373,6 +373,23 @@
         "description": "Thực hiện giao dịch ngay lập tức và nhận tiền trực tiếp vào ví không giữ hộ của bạn."
       },
       "cta": "Bắt Đầu Trao Đổi"
+    },
+    "invoice": {
+      "heading": "Lập Hóa Đơn Crypto Chuyên Nghiệp.",
+      "subtitle": "Yêu cầu thanh toán crypto từ bất kỳ ai — cá nhân hoặc doanh nghiệp. Tỷ giá được khóa khi tạo và thanh toán được đảm bảo.",
+      "step1": {
+        "title": "Xác Định & Phát Hành",
+        "description": "Nhập thông tin bắt buộc của Người Thanh Toán và Người Yêu Cầu. Đặt số tiền chính xác bằng đồng fiat ưa thích."
+      },
+      "step2": {
+        "title": "Giao Hàng Tự Động",
+        "description": "Chúng tôi gửi email liên kết thanh toán chuyên nghiệp trực tiếp cho khách hàng. Hóa đơn và tỷ giá được khóa trong 168 giờ (7 ngày)."
+      },
+      "step3": {
+        "title": "Thanh Toán Chính Xác",
+        "description": "Khách hàng thanh toán bằng crypto; hệ thống giao chính xác giá trị fiat tương đương vào ví của bạn. Cả hai bên nhận biên lai số có chữ ký."
+      },
+      "cta": "Tạo Hóa Đơn"
     }
   },
   "whitepaper": {

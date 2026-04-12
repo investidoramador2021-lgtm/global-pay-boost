@@ -373,6 +373,23 @@
         "description": "Execute a transação instantaneamente e receba fundos diretamente na sua carteira não custodial."
       },
       "cta": "Iniciar Swap"
+    },
+    "invoice": {
+      "heading": "Faturamento Cripto Profissional.",
+      "subtitle": "Solicite pagamentos em cripto de qualquer pessoa — indivíduos ou empresas. As taxas são fixadas na criação e a liquidação é garantida.",
+      "step1": {
+        "title": "Identificar e Emitir",
+        "description": "Insira os dados obrigatórios do Pagador e Solicitante. Defina seu valor exato na sua moeda fiat preferida."
+      },
+      "step2": {
+        "title": "Entrega Automatizada",
+        "description": "Enviamos um link profissional e seguro diretamente ao seu cliente. A fatura e a taxa permanecem bloqueadas por 168 horas (7 dias)."
+      },
+      "step3": {
+        "title": "Liquidação Precisa",
+        "description": "Seu cliente paga em cripto; nosso motor entrega o equivalente exato em fiat para sua carteira. Ambas as partes recebem recibos digitais assinados."
+      },
+      "cta": "Criar Fatura"
     }
   },
   "whitepaper": {

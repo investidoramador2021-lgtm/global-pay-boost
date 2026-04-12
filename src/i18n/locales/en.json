@@ -375,6 +375,23 @@
         "description": "The recipient receives funds with a clean on-chain history. No direct link to your operational wallet."
       },
       "cta": "Send Privately"
+    },
+    "invoice": {
+      "heading": "Professional Crypto Invoicing.",
+      "subtitle": "Request crypto payments from anyone — individuals or companies. Rates are locked at creation and settlement is guaranteed.",
+      "step1": {
+        "title": "Identify & Issue",
+        "description": "Enter mandatory Payer and Requester details. Set your precise billing amount in your preferred fiat currency."
+      },
+      "step2": {
+        "title": "Automated Delivery",
+        "description": "We email a professional, secure payment link directly to your client. The invoice and rate remain locked for 168 hours (7 days)."
+      },
+      "step3": {
+        "title": "Precise Settlement",
+        "description": "Your client pays in crypto; our engine delivers the exact fiat-equivalent to your wallet. Both parties receive signed digital receipts."
+      },
+      "cta": "Create Invoice"
     }
   },
   "whitepaper": {

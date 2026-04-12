@@ -373,6 +373,23 @@
         "description": "İşlemi anında gerçekleştirin ve fonları doğrudan saklama dışı cüzdanınıza alın."
       },
       "cta": "Takası Başlat"
+    },
+    "invoice": {
+      "heading": "Profesyonel Kripto Faturalandırma.",
+      "subtitle": "Bireylerden veya şirketlerden kripto ödeme talep edin. Oranlar oluşturulduğunda kilitlenir ve uzlaşma garanti edilir.",
+      "step1": {
+        "title": "Tanımla ve Oluştur",
+        "description": "Zorunlu Ödeme Yapan ve Talep Eden bilgilerini girin. Tercih ettiğiniz fiat para biriminde kesin fatura tutarınızı belirleyin."
+      },
+      "step2": {
+        "title": "Otomatik Teslimat",
+        "description": "Müşterinize doğrudan profesyonel, güvenli bir ödeme bağlantısı gönderiyoruz. Fatura ve oran 168 saat (7 gün) boyunca kilitli kalır."
+      },
+      "step3": {
+        "title": "Hassas Uzlaşma",
+        "description": "Müşteriniz kripto ile öder; motorumuz tam fiat eşdeğerini cüzdanınıza teslim eder. Her iki taraf da imzalı dijital makbuz alır."
+      },
+      "cta": "Fatura Oluştur"
     }
   },
   "whitepaper": {
