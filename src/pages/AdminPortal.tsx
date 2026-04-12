@@ -656,6 +656,88 @@ const AdminPortal = () => {
                 </CardContent>
               </Card>
             </TabsContent>
+
+            <TabsContent value="support" className="mt-6 space-y-6">
+              <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
+                <Card className="border-border/40 bg-card/40 backdrop-blur-sm">
+                  <CardContent className="p-5 flex items-center gap-3">
+                    <MessageCircle className="w-5 h-5 text-primary" />
+                    <div>
+                      <p className="text-xs text-muted-foreground">Total Questions</p>
+                      <p className="text-2xl font-bold text-foreground">{chatLogs.length}</p>
+                    </div>
+                  </CardContent>
+                </Card>
+                <Card className="border-border/40 bg-card/40 backdrop-blur-sm">
+                  <CardContent className="p-5 flex items-center gap-3">
+                    <Users className="w-5 h-5 text-primary" />
+                    <div>
+                      <p className="text-xs text-muted-foreground">Unique Sessions</p>
+                      <p className="text-2xl font-bold text-foreground">
+                        {new Set(chatLogs.map((l) => l.session_id)).size}
+                      </p>
+                    </div>
+                  </CardContent>
+                </Card>
+                <Card className="border-border/40 bg-card/40 backdrop-blur-sm">
+                  <CardContent className="p-5 flex items-center gap-3">
+                    <TrendingUp className="w-5 h-5 text-primary" />
+                    <div>
+                      <p className="text-xs text-muted-foreground">Today</p>
+                      <p className="text-2xl font-bold text-foreground">
+                        {chatLogs.filter((l) => new Date(l.created_at).toDateString() === new Date().toDateString()).length}
+                      </p>
+                    </div>
+                  </CardContent>
+                </Card>
+              </div>
+
+              <Card className="border-border/40 bg-card/40 backdrop-blur-sm">
+                <CardHeader>
+                  <CardTitle className="text-lg flex items-center gap-2">
+                    <MessageCircle className="w-5 h-5" /> Customer Questions
+                  </CardTitle>
+                </CardHeader>
+                <CardContent>
+                  <Table>
+                    <TableHeader>
+                      <TableRow>
+                        <TableHead>Time</TableHead>
+                        <TableHead>Agent</TableHead>
+                        <TableHead>Customer Question</TableHead>
+                        <TableHead>AI Response</TableHead>
+                        <TableHead>Page</TableHead>
+                      </TableRow>
+                    </TableHeader>
+                    <TableBody>
+                      {chatLogs.length === 0 ? (
+                        <TableRow>
+                          <TableCell colSpan={5} className="text-center text-muted-foreground py-8">
+                            No support conversations yet.
+                          </TableCell>
+                        </TableRow>
+                      ) : (
+                        chatLogs.map((log) => (
+                          <TableRow key={log.id}>
+                            <TableCell className="text-xs text-muted-foreground whitespace-nowrap">
+                              {new Date(log.created_at).toLocaleString()}
+                            </TableCell>
+                            <TableCell className="text-sm whitespace-nowrap">{log.persona_name}</TableCell>
+                            <TableCell className="max-w-[250px]">
+                              <p className="text-sm truncate" title={log.user_message}>{log.user_message}</p>
+                            </TableCell>
+                            <TableCell className="max-w-[300px]">
+                              <p className="text-xs text-muted-foreground truncate" title={log.ai_response}>{log.ai_response}</p>
+                            </TableCell>
+                            <TableCell className="text-xs text-muted-foreground">{log.page_url || "/"}</TableCell>
+                          </TableRow>
+                        ))
+                      )}
+                    </TableBody>
+                  </Table>
+                </CardContent>
+              </Card>
+            </TabsContent>
           </Tabs>
         </main>
       </div>
