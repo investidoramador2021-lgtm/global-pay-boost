@@ -291,6 +291,7 @@ const AdminPortal = () => {
   const totalVolume = currentMonthTxs.reduce((s, t) => s + Number(t.volume), 0);
   const totalUnpaid = unpaidTxs.reduce((s, t) => s + Number(t.commission_btc), 0);
   const totalPaid = transactions.filter((t) => t.is_paid).reduce((s, t) => s + Number(t.commission_btc), 0);
+  const totalProfit = transactions.reduce((s, t) => s + Number(t.volume) * 0.005, 0); // ~0.5% avg spread profit
 
   const getPartnerName = (pid: string) => {
     const p = partners.find((x) => x.id === pid);
@@ -311,6 +312,33 @@ const AdminPortal = () => {
       prev.map((t) => (t.id === txId ? { ...t, is_paid: true, paid_at: new Date().toISOString() } : t))
     );
     toast({ title: "Marked as Paid" });
+  };
+
+  const deleteChatLog = async (logId: string) => {
+    const { error } = await supabase.from("support_chat_logs" as any).delete().eq("id", logId);
+    if (error) {
+      toast({ title: "Error", description: error.message, variant: "destructive" });
+      return;
+    }
+    setChatLogs((prev) => prev.filter((l) => l.id !== logId));
+    toast({ title: "Log deleted" });
+  };
+
+  const deleteAllChatLogs = async () => {
+    const ids = chatLogs.map((l) => l.id);
+    if (ids.length === 0) return;
+    const { error } = await supabase.from("support_chat_logs" as any).delete().in("id", ids);
+    if (error) {
+      toast({ title: "Error", description: error.message, variant: "destructive" });
+      return;
+    }
+    setChatLogs([]);
+    toast({ title: "All logs cleared" });
+  };
+
+  const copyWallet = (wallet: string) => {
+    navigator.clipboard.writeText(wallet);
+    toast({ title: "Wallet copied" });
   };
 
   /* ═══ Sub-components ═══ */
