@@ -72,7 +72,9 @@ const lineStyles = [
 
 const DynamicExplainer = ({ activeTab, onCtaClick }: Props) => {
   const { t } = useTranslation();
-  const mode: DisplayMode = activeTab === "exchange" || activeTab === "request" ? "bridge" : activeTab;
+  // Hide entirely for exchange and request tabs — they have their own explainers
+  if (activeTab === "exchange" || activeTab === "request") return null;
+  const mode: DisplayMode = activeTab as DisplayMode;
   const [activeStep, setActiveStep] = useState(0);
 
   const config = modeConfig[mode];
