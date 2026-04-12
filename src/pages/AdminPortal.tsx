@@ -55,6 +55,7 @@ const AdminPortal = () => {
   const [partners, setPartners] = useState<Partner[]>([]);
   const [transactions, setTransactions] = useState<Tx[]>([]);
   const [tab, setTab] = useState("current");
+  const [adminTab, setAdminTab] = useState<"partners" | "exchanges">("exchanges");
   const navigate = useNavigate();
   const { toast } = useToast();
 
