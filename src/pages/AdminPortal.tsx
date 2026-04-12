@@ -69,6 +69,33 @@ const AdminPortal = () => {
   const [chatLogs, setChatLogs] = useState<ChatLog[]>([]);
   const navigate = useNavigate();
   const { toast } = useToast();
+  const activityTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
+
+  const INACTIVITY_MS = 24 * 60 * 60 * 1000; // 24 hours
+
+  const resetInactivityTimer = useCallback(() => {
+    if (activityTimer.current) clearTimeout(activityTimer.current);
+    activityTimer.current = setTimeout(async () => {
+      await supabase.auth.signOut();
+      setStage("login");
+      setPartners([]);
+      setTransactions([]);
+      toast({ title: "Session Expired", description: "You've been logged out due to inactivity." });
+    }, INACTIVITY_MS);
+  }, [toast]);
+
+  // Track user activity when on dashboard
+  useEffect(() => {
+    if (stage !== "dashboard") return;
+    resetInactivityTimer();
+    const events = ["mousedown", "keydown", "scroll", "touchstart"];
+    const handler = () => resetInactivityTimer();
+    events.forEach((e) => window.addEventListener(e, handler, { passive: true }));
+    return () => {
+      events.forEach((e) => window.removeEventListener(e, handler));
+      if (activityTimer.current) clearTimeout(activityTimer.current);
+    };
+  }, [stage, resetInactivityTimer]);
 
   const loadDashboard = useCallback(async () => {
     const { data: p } = await supabase.from("partner_profiles").select("*");
