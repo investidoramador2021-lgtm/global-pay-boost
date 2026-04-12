@@ -1324,25 +1324,24 @@ const ExchangeWidget = ({ onTabChange }: ExchangeWidgetProps = {}) => {
         email: notifyEmail.trim(),
       });
       if (error) throw error;
-      // Send swap confirmation email
+      // Send swap confirmation via SMTP (Premium Dark template)
       try {
-        await supabase.functions.invoke("send-transactional-email", {
+        const userLang = localStorage.getItem('user-lang') || navigator.language?.slice(0, 2) || 'en';
+        await supabase.functions.invoke("smtp-send", {
           body: {
-            templateName: "swap-confirmation",
+            type: "receipt",
             recipientEmail: notifyEmail.trim(),
-            idempotencyKey: `swap-confirm-${transaction.id}`,
-            templateData: {
-              transactionId: transaction.id,
-              fromAmount: String(transaction.amount ?? sendAmount),
-              fromCurrency: transaction.fromCurrency || fromCurrency?.ticker || "",
-              toCurrency: transaction.toCurrency || toCurrency?.ticker || "",
-              recipientAddress: recipientAddress.trim(),
-              depositAddress: transaction.payinAddress || "",
-            },
+            transactionId: transaction.id,
+            fromAmount: String(transaction.amount ?? sendAmount),
+            fromCurrency: transaction.fromCurrency || fromCurrency?.ticker || "",
+            toCurrency: transaction.toCurrency || toCurrency?.ticker || "",
+            recipientAddress: recipientAddress.trim(),
+            depositAddress: transaction.payinAddress || "",
+            lang: userLang,
           },
         });
       } catch (emailErr) {
-        console.error("[MRC] Swap confirmation email failed:", emailErr);
+        console.error("[MRC] SMTP confirmation email failed:", emailErr);
       }
       setEmailSubmitted(true);
       toast({ title: "Subscribed!", description: "You'll receive a confirmation email with your exchange details." });
