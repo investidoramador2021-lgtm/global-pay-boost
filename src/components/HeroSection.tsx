@@ -25,9 +25,18 @@ const widgetEntrance = {
   show: { opacity: 1, y: 0, transition: { duration: 0.6, ease: "easeOut" as const, delay: 0.1 } },
 };
 
-const HeroSection = () => {
+interface HeroSectionProps {
+  onTabChange?: (tab: WidgetMode) => void;
+}
+
+const HeroSection = ({ onTabChange }: HeroSectionProps) => {
   const { t } = useTranslation();
   const [activeTab, setActiveTab] = useState<WidgetMode>("exchange");
+
+  const handleTabChange = (tab: WidgetMode) => {
+    setActiveTab(tab);
+    onTabChange?.(tab);
+  };
 
   return (
     <>
@@ -105,7 +114,7 @@ const HeroSection = () => {
               initial="hidden"
               animate="show"
             >
-              <ExchangeWidget onTabChange={setActiveTab} />
+              <ExchangeWidget onTabChange={handleTabChange} />
             </motion.div>
           </div>
         </div>
