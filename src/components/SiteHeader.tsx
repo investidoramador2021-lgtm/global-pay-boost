@@ -122,6 +122,25 @@ const SiteHeader = () => {
               {link.label}
             </a>
           ))}
+
+          {/* Partner actions */}
+          <div className="flex items-center gap-2 py-3 border-t border-border/50 mt-1">
+            <a
+              href="/partners"
+              onClick={() => setMobileOpen(false)}
+              className="flex-1 flex items-center justify-center gap-2 h-10 rounded-xl border border-border bg-card/50 text-sm font-medium text-muted-foreground transition-colors active:bg-accent active:text-foreground"
+            >
+              <LogIn className="h-4 w-4" /> Partner Login
+            </a>
+            <a
+              href="/partners"
+              onClick={() => setMobileOpen(false)}
+              className="flex-1 flex items-center justify-center gap-2 h-10 rounded-xl border border-primary/30 bg-primary/5 text-sm font-medium text-primary transition-colors active:bg-primary/10"
+            >
+              <UserPlus className="h-4 w-4" /> Join Program
+            </a>
+          </div>
+
           <div className="py-2">
             <GetTheAppBadges variant="inline" />
           </div>
