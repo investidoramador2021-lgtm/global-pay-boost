@@ -105,6 +105,14 @@ export default defineConfig(({ mode }) => ({
           {
             urlPattern: /^https:\/\/api\.changenow\.io\/.*/i,
             handler: "NetworkOnly",
+            options: {
+              backgroundSync: {
+                name: "swap-retry",
+                options: {
+                  maxRetentionTime: 24 * 60,
+                },
+              },
+            },
           },
           {
             urlPattern: /^https:\/\/.*\.supabase\.co\/.*/i,
