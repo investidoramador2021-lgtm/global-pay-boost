@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import { Helmet } from "react-helmet-async";
 import { Link, useLocation } from "react-router-dom";
-import { Calendar, Clock, ArrowRight, FileText, Shield, Landmark, Zap } from "lucide-react";
+import { Calendar, Clock, ArrowRight, FileText, Shield, Landmark, Zap, ScrollText } from "lucide-react";
 import SiteHeader from "@/components/SiteHeader";
 import SiteFooter from "@/components/SiteFooter";
 import { fetchAllPosts, type BlogPost } from "@/lib/blog-data";
@@ -37,6 +37,16 @@ const WHITEPAPERS = [
     accent: "190 100% 55%",
     category: "Institutional Whitepaper",
     tags: ["ZkSync", "Aptos", "Layer-2", "Stablecoins"],
+  },
+  {
+    title: "The Sovereign Settlement: Erasing the Friction of Global Commerce",
+    subtitle: "Stateless Invoicing Protocol",
+    excerpt: "How 168-hour rate locks, inclusive 0.5% pricing, and cross-chain bridge architecture replace correspondent banking with mathematical certainty for global settlement.",
+    path: "/sovereign-settlement",
+    icon: ScrollText,
+    accent: "32 100% 50%",
+    category: "Institutional Whitepaper",
+    tags: ["Rate Lock", "Inclusive Pricing", "Monero Privacy", "LTC Settlement"],
   },
 ];
 

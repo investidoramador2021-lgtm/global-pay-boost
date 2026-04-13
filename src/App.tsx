@@ -56,6 +56,7 @@ const CryptoDustSolutions = lazy(() => import("./pages/CryptoDustSolutions.tsx")
 const Compliance = lazy(() => import("./pages/Compliance.tsx"));
 const CryptoDustManifesto = lazy(() => import("./pages/CryptoDustManifesto.tsx"));
 const LiquidityWhitepaper = lazy(() => import("./pages/LiquidityWhitepaper.tsx"));
+const SovereignWhitepaper = lazy(() => import("./pages/SovereignWhitepaper.tsx"));
 const Partners = lazy(() => import("./pages/Partners.tsx"));
 const PartnerDashboard = lazy(() => import("./pages/PartnerDashboard.tsx"));
 const AdminPortal = lazy(() => import("./pages/AdminPortal.tsx"));
@@ -128,6 +129,7 @@ const AppRoutes = () => (
     <Route path="compliance" element={<Compliance />} />
     <Route path="guide/crypto-dust" element={<CryptoDustManifesto />} />
     <Route path="liquidity-expansion" element={<LiquidityWhitepaper />} />
+    <Route path="sovereign-settlement" element={<SovereignWhitepaper />} />
     <Route path="unsubscribe" element={<Unsubscribe />} />
     <Route path="partners" element={<Partners />} />
     <Route path="dashboard" element={<PartnerDashboard />} />
