@@ -148,6 +148,7 @@ const App = () => (
           <Toaster />
           <Sonner />
           <BrowserRouter>
+            <ScrollToTop />
             <div className="pb-16 lg:pb-0">
               <Suspense fallback={<div className="min-h-screen bg-background" />}>
                 <Routes>
