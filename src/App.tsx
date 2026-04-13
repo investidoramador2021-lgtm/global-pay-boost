@@ -9,6 +9,7 @@ import { TooltipProvider } from "@/components/ui/tooltip";
 import { ThemeProvider } from "@/hooks/use-theme";
 import MobileBottomNav from "@/components/MobileBottomNav";
 import LangLayout from "@/components/LangLayout";
+import ScrollToTop from "@/components/ScrollToTop";
 import Index from "./pages/Index.tsx";
 
 const PrivacyPolicy = lazy(() => import("./pages/PrivacyPolicy.tsx"));
