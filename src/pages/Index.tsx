@@ -121,6 +121,7 @@ const Index = () => {
         <link rel="canonical" href={homeUrl} />
         <script type="application/ld+json">{JSON.stringify(financialServiceJsonLd)}</script>
         <script type="application/ld+json">{JSON.stringify(currencyConversionJsonLd)}</script>
+        <script type="application/ld+json">{JSON.stringify(softwareAppJsonLd)}</script>
       </Helmet>
 
       <PullToRefresh onRefresh={handleRefresh}>
