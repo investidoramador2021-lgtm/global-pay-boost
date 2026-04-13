@@ -30,7 +30,7 @@ const SovereignWhitepaper = () => {
   const canonicalUrl = usePageUrl("/sovereign-settlement");
   const { pathname } = useLocation();
   const lang = getLangFromPath(pathname);
-  const invoiceCta = langPath(lang, "/#exchange") + "?tab=invoice";
+  const invoiceCta = langPath(lang, "/") + "?tab=invoice";
 
   const wp = (key: string) => t(`sovereignWp.${key}`);
 
