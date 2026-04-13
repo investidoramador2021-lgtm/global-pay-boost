@@ -9,6 +9,7 @@ import { TooltipProvider } from "@/components/ui/tooltip";
 import { ThemeProvider } from "@/hooks/use-theme";
 import MobileBottomNav from "@/components/MobileBottomNav";
 import LangLayout from "@/components/LangLayout";
+import ScrollToTop from "@/components/ScrollToTop";
 import Index from "./pages/Index.tsx";
 
 const PrivacyPolicy = lazy(() => import("./pages/PrivacyPolicy.tsx"));
@@ -147,6 +148,7 @@ const App = () => (
           <Toaster />
           <Sonner />
           <BrowserRouter>
+            <ScrollToTop />
             <div className="pb-16 lg:pb-0">
               <Suspense fallback={<div className="min-h-screen bg-background" />}>
                 <Routes>
