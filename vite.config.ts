@@ -22,7 +22,7 @@ export default defineConfig(({ mode }) => ({
       strategies: "generateSW",
       injectRegister: "script",
       manifestFilename: "manifest.json",
-      includeAssets: ["favicon.png", "favicon-32x32.png", "favicon-192x192.png", "icon-512x512.png"],
+      includeAssets: ["favicon.png", "favicon-32x32.png", "favicon-192x192.png", "icon-512x512.png", "shortcut-swap-96.png", "shortcut-wallet-96.png", "apple-touch-icon.png"],
       manifest: {
         id: "com.mrcglobalpay.app",
         name: "MRC GlobalPay",
