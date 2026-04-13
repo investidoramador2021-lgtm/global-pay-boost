@@ -95,6 +95,22 @@ const Index = () => {
     "slogan": "Registration-Free Crypto Swap from $0.30"
   };
 
+  const softwareAppJsonLd = {
+    "@context": "https://schema.org",
+    "@type": "SoftwareApplication",
+    "@id": `${homeUrl}#app`,
+    name: "MRC GlobalPay",
+    url: homeUrl,
+    description: t("meta.description"),
+    applicationCategory: "FinanceApplication",
+    operatingSystem: "Android, iOS, Windows, macOS",
+    offers: {
+      "@type": "Offer",
+      price: "0.00",
+      priceCurrency: "USD"
+    }
+  };
+
   return (
     <>
       <Helmet>
@@ -105,6 +121,7 @@ const Index = () => {
         <link rel="canonical" href={homeUrl} />
         <script type="application/ld+json">{JSON.stringify(financialServiceJsonLd)}</script>
         <script type="application/ld+json">{JSON.stringify(currencyConversionJsonLd)}</script>
+        <script type="application/ld+json">{JSON.stringify(softwareAppJsonLd)}</script>
       </Helmet>
 
       <PullToRefresh onRefresh={handleRefresh}>
