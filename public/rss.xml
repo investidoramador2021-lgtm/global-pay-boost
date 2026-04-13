@@ -296,5 +296,14 @@
       <pubDate>Sat, 12 Apr 2026 00:00:00 GMT</pubDate>
       <category>Whitepaper</category>
     </item>
+    <item>
+      <title>The Sovereign Settlement: Erasing the Friction of Global Commerce</title>
+      <link>https://mrcglobalpay.com/sovereign-settlement</link>
+      <guid isPermaLink="true">https://mrcglobalpay.com/sovereign-settlement</guid>
+      <description>How 168-hour rate locks, inclusive 0.5% pricing, and cross-chain bridge architecture replace correspondent banking with mathematical certainty for global settlement.</description>
+      <dc:creator>MRC GlobalPay Team</dc:creator>
+      <pubDate>Sun, 13 Apr 2026 00:00:00 GMT</pubDate>
+      <category>Whitepaper</category>
+    </item>
   </channel>
 </rss>
