@@ -123,6 +123,10 @@ Allow: /private-transfer
 Allow: /permanent-bridge
 Allow: /permanent-bridge/whitepaper
 Allow: /private-transfer/whitepaper
+Allow: /liquidity-expansion
+Allow: /sovereign-settlement
+Allow: /blog/whitepapers/
+Allow: /lend
 Allow: /compliance
 Allow: /partners
 Allow: /crypto-dust-solutions
