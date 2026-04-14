@@ -95,6 +95,7 @@ const ComparePage = () => {
       "@type": "Product",
       name: "MRC GlobalPay Crypto Exchange",
       description: `Compare MRC GlobalPay vs ${competitor.name}. MRC offers $0.30 minimum swaps, registration-free access, and 500+ assets.`,
+      image: "https://mrcglobalpay.com/icon-512x512.png",
       url: pageUrl,
       brand: { "@type": "Brand", name: "MRC GlobalPay" },
       offers: {
