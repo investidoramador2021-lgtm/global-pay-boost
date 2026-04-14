@@ -699,24 +699,20 @@
     "loanTitle": "Hoe Kripto-lenings Werk",
     "loanSubtitle": "Van onderpandkeuse tot stablecoin-uitbetaling — 'n stap-vir-stap gids om teen jou kripto te leen sonder om dit te verkoop.",
     "loan": {
-      "step1Title": "Onderpand & LTV Keuse",
-      "step1Desc": "Kies jou onderpandbate (BTC, ETH, BNB en 130+ ander) en stel jou Lening-tot-Waarde verhouding. Beskikbare vlakke is 50%, 70%, 80% en 90%.",
-      "step2Title": "Onderpand Oordra",
-      "step2Desc": "Stuur onderpand na die unieke deposito-adres. 2 netwerk bevestigings word benodig.",
-      "step3Title": "Ontvang Stablecoin Betaling",
-      "step3Desc": "Sodra bevestigings ontvang is, word stablecoins (USDT of USDC) na jou adres gestuur. Gewoonlik binne 10 minute.",
-      "step4Title": "Leningsbestuur & Terugbetaling",
-      "step4Desc": "Geen maandelikse rentebetalings nodig nie. Rente word bereken op APR. Betaal enige tyd terug — geen vroeë terugbetalingsboetes nie."
+      "step1Title": "Kies Onderpand",
+      "step1Desc": "Kies jou bate en stel jou LTV-buffer in.",
+      "step2Title": "Veilige Oordrag",
+      "step2Desc": "Stuur onderpand na die infrastruktuurvennoot se veilige koubergingsadres.",
+      "step3Title": "Onmiddellike Betaling",
+      "step3Desc": "Ontvang jou stablecoins binne 10 minute of minder sonder maandelikse betalings."
     },
     "earn": {
-      "step1Title": "Kies Jou Bate",
-      "step1Desc": "Kies uit stablecoins (USDT, USDC) of hoofbates (BTC, ETH). Elke bate bied mededingende APY.",
-      "step2Title": "Deponeer",
-      "step2Desc": "Stuur jou gekose bate na die unieke deposito-adres. Begin verdien vanaf $100 ekwivalent.",
-      "step3Title": "Daaglikse Oploop & Saamgestelde Rente",
-      "step3Desc": "Rente loop daagliks op en word outomaties in jou saldo saamgestel.",
-      "step4Title": "Volle Buigsaamheid",
-      "step4Desc": "Geen sluitperiodes of onttrekkingsfooie nie. Onttrek 24/7."
+      "step1Title": "Deponeer Bate",
+      "step1Desc": "Dra USDT, USDC of BTC oor na jou unieke rente-verdienende adres.",
+      "step2Title": "Daaglikse Opbou",
+      "step2Desc": "Sien hoe jou saldo groei met outomatiese daaglikse saamgestelde rente.",
+      "step3Title": "Totale Buigsaamheid",
+      "step3Desc": "Onttrek jou kapitaal en alle verdiende belonings enige tyd sonder sluitperiodes."
     },
     "safety": {
       "coldTitle": "Koue Berging Bewaring",
@@ -770,6 +766,7 @@
       "instantDesc": "24/7 sonder sluitperiodes.",
       "minimumTitle": "Lae Minimums",
       "minimumDesc": "Begin verdien vanaf $100 ekwivalent."
-    }
+    },
+    "partnerLiabilityFooter": "Monitering, sekuriteitsalarms en likwidasie-uitvoering word uitsluitlik bestuur deur ons tegnologievennoot se outomatiese risiko-enjin."
   }
 }

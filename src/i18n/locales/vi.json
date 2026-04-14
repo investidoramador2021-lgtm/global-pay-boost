@@ -699,24 +699,20 @@
     "loanTitle": "Cách Hoạt Động Cho Vay Crypto",
     "loanSubtitle": "Từ chọn tài sản thế chấp đến thanh toán stablecoin — hướng dẫn từng bước để vay bằng crypto mà không cần bán.",
     "loan": {
-      "step1Title": "Chọn Tài Sản Thế Chấp & LTV",
-      "step1Desc": "Chọn tài sản thế chấp (BTC, ETH, BNB và hơn 130 loại khác) và đặt tỷ lệ Khoản Vay/Giá Trị. Các mức có sẵn là 50%, 70%, 80% và 90%.",
-      "step2Title": "Chuyển Tài Sản Thế Chấp",
-      "step2Desc": "Gửi tài sản thế chấp đến địa chỉ nạp tiền duy nhất do hệ thống tạo ra. Cơ sở hạ tầng giám sát blockchain và yêu cầu 2 xác nhận mạng.",
-      "step3Title": "Nhận Thanh Toán Stablecoin",
-      "step3Desc": "Sau khi xác nhận, stablecoin (USDT hoặc USDC) được gửi đến địa chỉ của bạn. Giao hàng thường hoàn tất trong 10 phút.",
-      "step4Title": "Quản Lý & Trả Nợ",
-      "step4Desc": "Không cần thanh toán lãi hàng tháng. Lãi suất dựa trên APR. Trả nợ gốc và lãi tích lũy bất cứ lúc nào — không có phí trả sớm."
+      "step1Title": "Chọn Tài Sản Thế Chấp",
+      "step1Desc": "Chọn tài sản của bạn và đặt biên độ LTV.",
+      "step2Title": "Chuyển Khoản An Toàn",
+      "step2Desc": "Gửi tài sản thế chấp đến địa chỉ kho lạnh an toàn của đối tác cơ sở hạ tầng.",
+      "step3Title": "Thanh Toán Tức Thì",
+      "step3Desc": "Nhận stablecoin trong 10 phút hoặc ít hơn mà không cần thanh toán hàng tháng."
     },
     "earn": {
-      "step1Title": "Chọn Tài Sản",
-      "step1Desc": "Chọn từ stablecoin (USDT, USDC) hoặc tài sản chính (BTC, ETH). Mỗi tài sản có APY cạnh tranh hiển thị theo thời gian thực.",
-      "step2Title": "Nạp Tiền",
-      "step2Desc": "Gửi tài sản đã chọn đến địa chỉ nạp tiền duy nhất. Bắt đầu kiếm từ $100 tương đương.",
-      "step3Title": "Tích Lũy & Lãi Kép Hàng Ngày",
-      "step3Desc": "Lãi suất tích lũy mỗi ngày và tự động lãi kép vào số dư của bạn.",
-      "step4Title": "Linh Hoạt Hoàn Toàn",
-      "step4Desc": "Không có thời gian khóa hay phí rút. Rút toàn bộ vốn và lãi 24/7."
+      "step1Title": "Nạp Tài Sản",
+      "step1Desc": "Chuyển USDT, USDC hoặc BTC vào địa chỉ sinh lãi duy nhất của bạn.",
+      "step2Title": "Tích Lũy Hàng Ngày",
+      "step2Desc": "Xem số dư của bạn tăng lên với lãi kép hàng ngày tự động.",
+      "step3Title": "Linh Hoạt Hoàn Toàn",
+      "step3Desc": "Rút vốn gốc và tất cả phần thưởng kiếm được bất cứ lúc nào không có thời gian khóa."
     },
     "safety": {
       "coldTitle": "Lưu Trữ Lạnh",
@@ -770,6 +766,7 @@
       "instantDesc": "Rút 24/7 không thời gian khóa.",
       "minimumTitle": "Mức Tối Thiểu Thấp",
       "minimumDesc": "Bắt đầu từ $100 tương đương."
-    }
+    },
+    "partnerLiabilityFooter": "Giám sát, cảnh báo bảo mật và thực hiện thanh lý được quản lý độc quyền bởi công cụ rủi ro tự động của đối tác công nghệ của chúng tôi."
   }
 }

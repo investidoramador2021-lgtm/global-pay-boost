@@ -699,24 +699,20 @@
     "loanTitle": "Comment Fonctionnent les Prêts Crypto",
     "loanSubtitle": "De la sélection du collatéral au versement de stablecoins — un guide étape par étape pour emprunter contre votre crypto sans le vendre.",
     "loan": {
-      "step1Title": "Sélection du Collatéral et LTV",
-      "step1Desc": "Choisissez votre actif de collatéral (BTC, ETH, BNB et plus de 130 autres) et définissez votre ratio Prêt-Valeur. Les niveaux disponibles sont 50%, 70%, 80% et 90%. Un LTV plus élevé débloque plus de stablecoins d'avance mais laisse une marge de sécurité plus mince. Un LTV plus bas (50%) offre une protection maximale et le taux d'intérêt le plus bas.",
-      "step2Title": "Transférer le Collatéral",
-      "step2Desc": "Envoyez le collatéral à l'adresse de dépôt unique générée par le système. Notre infrastructure surveille la blockchain et nécessite 2 confirmations réseau. L'adresse est à usage unique et sécurisée par des portefeuilles froids multisig.",
-      "step3Title": "Recevoir le Paiement en Stablecoin",
-      "step3Desc": "Une fois les confirmations reçues, les stablecoins (USDT ou USDC) sont envoyées à votre adresse de paiement. La livraison se termine généralement dans les 10 minutes suivant la confirmation blockchain.",
-      "step4Title": "Gestion et Remboursement du Prêt",
-      "step4Desc": "Aucun paiement d'intérêt mensuel n'est requis. L'intérêt est calculé selon le Taux Annuel Effectif (APR) pour votre actif et niveau LTV sélectionnés, et est simplement ajouté au montant total de remboursement. Remboursez le principal plus les intérêts accumulés à tout moment — sans pénalités de remboursement anticipé — pour débloquer et récupérer votre collatéral instantanément."
+      "step1Title": "Sélectionner la Garantie",
+      "step1Desc": "Choisissez votre actif et définissez votre marge LTV.",
+      "step2Title": "Transfert Sécurisé",
+      "step2Desc": "Envoyez la garantie à l'adresse sécurisée de stockage à froid du partenaire d'infrastructure.",
+      "step3Title": "Paiement Instantané",
+      "step3Desc": "Recevez vos stablecoins en 10 minutes ou moins sans paiements mensuels."
     },
     "earn": {
-      "step1Title": "Choisissez Votre Actif",
-      "step1Desc": "Sélectionnez parmi les stablecoins (USDT, USDC) ou les actifs majeurs (BTC, ETH) et plus. Chaque actif offre un Rendement Annuel (APY) compétitif affiché en temps réel.",
-      "step2Title": "Déposer",
-      "step2Desc": "Envoyez votre actif choisi à l'adresse de dépôt unique fournie. Vous pouvez commencer à gagner avec aussi peu que 100$ équivalent.",
-      "step3Title": "Accumulation Quotidienne et Capitalisation",
-      "step3Desc": "Les intérêts sont accumulés chaque jour et automatiquement capitalisés dans votre solde. Vos gains génèrent un rendement supplémentaire au fil du temps sans aucune action de votre part.",
-      "step4Title": "Flexibilité Totale",
-      "step4Desc": "Il n'y a pas de périodes de blocage ni de frais de retrait. Retirez votre capital complet et tous les intérêts gagnés 24/7, quand vous le souhaitez."
+      "step1Title": "Déposer un Actif",
+      "step1Desc": "Transférez USDT, USDC ou BTC vers votre adresse unique génératrice d'intérêts.",
+      "step2Title": "Accumulation Quotidienne",
+      "step2Desc": "Regardez votre solde croître avec des intérêts composés quotidiens automatiquement.",
+      "step3Title": "Flexibilité Totale",
+      "step3Desc": "Retirez votre capital et toutes les récompenses à tout moment sans période de blocage."
     },
     "safety": {
       "coldTitle": "Custody en Stockage Froid",
@@ -770,6 +766,7 @@
       "instantDesc": "Capital et intérêts peuvent être retirés 24/7 sans période de blocage.",
       "minimumTitle": "Minimums Bas",
       "minimumDesc": "Commencez à gagner du rendement avec aussi peu que 100$ équivalent."
-    }
+    },
+    "partnerLiabilityFooter": "La surveillance, les alertes de sécurité et l'exécution des liquidations sont gérées exclusivement par le moteur de risque automatisé de notre partenaire technologique."
   }
 }
