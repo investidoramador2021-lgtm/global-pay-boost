@@ -3,6 +3,8 @@ import { Menu, X, Zap, Sun, Moon, UserPlus, LogIn } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { useTheme } from "@/hooks/use-theme";
 import { useTranslation } from "react-i18next";
+import { useLocation } from "react-router-dom";
+import { getLangFromPath, langPath } from "@/i18n";
 import LanguageSwitcher from "@/components/LanguageSwitcher";
 import GetTheAppBadges from "@/components/GetTheAppBadges";
 
@@ -11,6 +13,9 @@ const SiteHeader = () => {
   const { theme, toggleTheme } = useTheme();
   const { t } = useTranslation();
   const [scrolled, setScrolled] = useState(false);
+  const { pathname } = useLocation();
+  const lang = getLangFromPath(pathname);
+  const lp = (path: string) => langPath(lang, path);
 
   useEffect(() => {
     let raf = 0;
@@ -29,13 +34,13 @@ const SiteHeader = () => {
   }, []);
 
   const navLinks = [
-    { label: t("nav.howItWorks"), href: "/#how-it-works" },
-    { label: t("nav.features"), href: "/#features" },
-    { label: "Borrow", href: "/lend" },
-    { label: "Earn", href: "/lend?tab=earn" },
-    { label: t("nav.blog"), href: "/blog" },
-    { label: t("nav.faq"), href: "/#faq" },
-    { label: "Developers", href: "/developer" },
+    { label: t("nav.howItWorks"), href: lp("/") + "#how-it-works" },
+    { label: t("nav.features"), href: lp("/") + "#features" },
+    { label: "Borrow", href: lp("/lend") },
+    { label: "Earn", href: lp("/lend") + "?tab=earn" },
+    { label: t("nav.blog"), href: lp("/blog") },
+    { label: t("nav.faq"), href: lp("/") + "#faq" },
+    { label: "Developers", href: lp("/developer") },
   ];
 
   return (
@@ -47,7 +52,7 @@ const SiteHeader = () => {
       }`}
     >
       <div className="container mx-auto flex h-14 items-center justify-between px-4 sm:h-16">
-        <a href="/" className="font-display text-lg font-bold tracking-tight text-foreground sm:text-xl">
+        <a href={lp("/")} className="font-display text-lg font-bold tracking-tight text-foreground sm:text-xl">
           MRC<span className="text-primary">GlobalPay</span>
         </a>
 
@@ -76,7 +81,7 @@ const SiteHeader = () => {
 
           <div className="hidden lg:flex items-center gap-1.5">
             <a
-              href="/partners?mode=login"
+              href={lp("/partners") + "?mode=login"}
               className="flex h-9 w-9 items-center justify-center rounded-lg border border-border text-muted-foreground transition-colors hover:bg-accent hover:text-foreground"
               aria-label="Partner Login"
               title="Partner Login"
@@ -84,7 +89,7 @@ const SiteHeader = () => {
               <LogIn className="h-4 w-4" />
             </a>
             <a
-              href="/partners"
+              href={lp("/partners")}
               className="flex h-9 w-9 items-center justify-center rounded-lg border border-border text-muted-foreground transition-colors hover:bg-accent hover:text-foreground"
               aria-label="Join Partner Program"
               title="Join Partner Program"
@@ -92,7 +97,7 @@ const SiteHeader = () => {
               <UserPlus className="h-4 w-4" />
             </a>
             <Button className="shadow-neon" size="sm" asChild>
-              <a href="/#exchange">
+              <a href={lp("/") + "#exchange"}>
                 <Zap className="me-1 h-4 w-4" />
                 {t("nav.startSwap")}
               </a>
@@ -125,14 +130,14 @@ const SiteHeader = () => {
           {/* Partner actions */}
           <div className="flex items-center gap-2 py-3 border-t border-border/50 mt-1">
             <a
-              href="/partners?mode=login"
+              href={lp("/partners") + "?mode=login"}
               onClick={() => setMobileOpen(false)}
               className="flex-1 flex items-center justify-center gap-2 h-10 rounded-xl border border-border bg-card/50 text-sm font-medium text-muted-foreground transition-colors active:bg-accent active:text-foreground"
             >
               <LogIn className="h-4 w-4" /> Partner Login
             </a>
             <a
-              href="/partners"
+              href={lp("/partners")}
               onClick={() => setMobileOpen(false)}
               className="flex-1 flex items-center justify-center gap-2 h-10 rounded-xl border border-primary/30 bg-primary/5 text-sm font-medium text-primary transition-colors active:bg-primary/10"
             >
@@ -144,7 +149,7 @@ const SiteHeader = () => {
             <GetTheAppBadges variant="inline" />
           </div>
           <Button className="mt-2 w-full shadow-neon" size="sm" asChild>
-            <a href="/#exchange" onClick={() => setMobileOpen(false)}>
+            <a href={lp("/") + "#exchange"} onClick={() => setMobileOpen(false)}>
               <Zap className="me-1 h-4 w-4" />
               {t("nav.startSwap")}
             </a>
