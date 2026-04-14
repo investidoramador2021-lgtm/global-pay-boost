@@ -847,6 +847,7 @@ function YieldDashboard() {
         language: currentLang,
       }).then(({ error: dbErr }) => { if (dbErr) console.error("Earn DB persist failed:", dbErr); });
 
+      if (sendAddress) {
         setDepositInfo({ sendAddress, amount: sendAmount, currency: selected.ticker, txId });
         setModalOpen(true);
       } else {
