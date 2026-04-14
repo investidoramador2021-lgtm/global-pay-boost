@@ -203,7 +203,8 @@ function ContactConfirmModal({ open, onClose, onConfirm, loading, type }: Contac
   const { t } = useTranslation();
   const [email, setEmail] = useState("");
   const [phoneNumber, setPhoneNumber] = useState("");
-  const [countryCode, setCountryCode] = useState("+1");
+  const [selectedCountryId, setSelectedCountryId] = useState("CA");
+  const countryCode = COUNTRY_CODES.find(c => c.id === selectedCountryId)?.code || "+1";
   const [errors, setErrors] = useState<{ email?: string; phone?: string }>({});
 
   const validate = () => {
