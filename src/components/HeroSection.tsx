@@ -50,7 +50,7 @@ const HeroSection = ({ onTabChange }: HeroSectionProps) => {
         <div className="pointer-events-none absolute -right-24 top-64 h-56 w-56 rounded-full bg-[#D4AF37]/[0.03] blur-3xl" aria-hidden="true" />
 
         <div className="container relative mx-auto px-4">
-          <div className="grid items-start gap-8 lg:grid-cols-2 lg:gap-16">
+          <div className="flex flex-col gap-6 lg:grid lg:grid-cols-2 lg:items-start lg:gap-16">
             {/* Copy — staggered reveal */}
             <motion.div
               className="order-2 lg:order-1 pt-0 sm:pt-4 lg:pt-8"
@@ -76,7 +76,7 @@ const HeroSection = ({ onTabChange }: HeroSectionProps) => {
               </motion.p>
 
               {/* Trust Bar */}
-              <motion.div variants={fadeUp} className="mt-6 grid grid-cols-3 gap-3 sm:mt-8 sm:gap-4">
+              <motion.div variants={fadeUp} className="mt-4 grid grid-cols-3 gap-2 sm:mt-8 sm:gap-4">
                 {trustKeys.map((key, idx) => {
                   const Icon = trustIcons[idx];
                   const altTexts = ["No-account crypto swap icon", "Non-custodial security shield", "Instant settlement indicator"];
@@ -84,7 +84,7 @@ const HeroSection = ({ onTabChange }: HeroSectionProps) => {
                     <motion.div
                       key={key}
                       variants={fadeUp}
-                      className="flex flex-col items-center gap-2 rounded-xl border border-border bg-card p-4 text-center shadow-card hover:shadow-elevated hover:-translate-y-1 transition-transform"
+                      className="flex flex-col items-center gap-1.5 rounded-xl border border-border bg-card p-2.5 sm:p-4 text-center shadow-card hover:shadow-elevated hover:-translate-y-1 transition-transform"
                     >
                       <div className="flex h-10 w-10 items-center justify-center rounded-full bg-primary/10" role="img" aria-label={altTexts[idx]}>
                         <Icon className="h-5 w-5 text-primary" aria-hidden="true" />

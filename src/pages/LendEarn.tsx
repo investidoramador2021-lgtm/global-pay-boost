@@ -1197,20 +1197,20 @@ export default function LendEarn() {
           </div>
         </section>
 
-        <section className="mx-auto max-w-6xl px-4 py-12">
-          <Tabs defaultValue={defaultTab} className="space-y-8">
-            <TabsList className="grid w-full max-w-lg mx-auto grid-cols-4 bg-muted/50">
-              <TabsTrigger value="borrow" className="data-[state=active]:bg-[#D4AF37] data-[state=active]:text-background">
-                <DollarSign className="me-1 h-4 w-4" /> {t("lend.tabBorrow")}
+        <section className="mx-auto max-w-6xl px-4 py-8 sm:py-12">
+          <Tabs defaultValue={defaultTab} className="space-y-6 sm:space-y-8">
+            <TabsList className="grid w-full max-w-lg mx-auto grid-cols-2 sm:grid-cols-4 bg-muted/50 h-auto gap-1 p-1">
+              <TabsTrigger value="borrow" className="data-[state=active]:bg-[#D4AF37] data-[state=active]:text-background text-xs sm:text-sm py-2.5">
+                <DollarSign className="me-1 h-3.5 w-3.5 sm:h-4 sm:w-4" /> {t("lend.tabBorrow")}
               </TabsTrigger>
-              <TabsTrigger value="earn" className="data-[state=active]:bg-[#D4AF37] data-[state=active]:text-background">
-                <Percent className="me-1 h-4 w-4" /> {t("lend.tabEarn")}
+              <TabsTrigger value="earn" className="data-[state=active]:bg-[#D4AF37] data-[state=active]:text-background text-xs sm:text-sm py-2.5">
+                <Percent className="me-1 h-3.5 w-3.5 sm:h-4 sm:w-4" /> {t("lend.tabEarn")}
               </TabsTrigger>
-              <TabsTrigger value="dashboard" className="data-[state=active]:bg-[#D4AF37] data-[state=active]:text-background">
-                <LayoutDashboard className="me-1 h-4 w-4" /> {t("lend.tabDashboard", "Dashboard")}
+              <TabsTrigger value="dashboard" className="data-[state=active]:bg-[#D4AF37] data-[state=active]:text-background text-xs sm:text-sm py-2.5">
+                <LayoutDashboard className="me-1 h-3.5 w-3.5 sm:h-4 sm:w-4" /> {t("lend.tabDashboard", "Dashboard")}
               </TabsTrigger>
-              <TabsTrigger value="track" className="data-[state=active]:bg-[#D4AF37] data-[state=active]:text-background">
-                <Clock className="me-1 h-4 w-4" /> {t("lend.tabTrack")}
+              <TabsTrigger value="track" className="data-[state=active]:bg-[#D4AF37] data-[state=active]:text-background text-xs sm:text-sm py-2.5">
+                <Clock className="me-1 h-3.5 w-3.5 sm:h-4 sm:w-4" /> {t("lend.tabTrack")}
               </TabsTrigger>
             </TabsList>
 
