@@ -1678,7 +1678,7 @@ const ExchangeWidget = ({ onTabChange }: ExchangeWidgetProps = {}) => {
                       }`}
                     >
                       <TabIcon className="hidden sm:block h-4 w-4" />
-                      {t(tab.labelKey)}
+                      {tab.mode === "loan" ? tab.labelKey : t(tab.labelKey)}
                     </button>
                   );
                 })}
@@ -2501,6 +2501,50 @@ const ExchangeWidget = ({ onTabChange }: ExchangeWidgetProps = {}) => {
             {/* ===== INVOICE REQUEST MODE ===== */}
             {widgetMode === "request" && (
               <InvoiceRequestTab />
+            )}
+
+            {/* ===== INSTANT LOAN MODE ===== */}
+            {widgetMode === "loan" && (
+              <div className="space-y-4">
+                <div className="space-y-2">
+                  <label className="text-xs font-medium text-muted-foreground">Collateral Asset</label>
+                  <div className="grid grid-cols-3 gap-2">
+                    {[
+                      { ticker: "BTC", icon: "₿" },
+                      { ticker: "ETH", icon: "Ξ" },
+                      { ticker: "SOL", icon: "◎" },
+                    ].map((c) => (
+                      <button
+                        key={c.ticker}
+                        className="rounded-lg border border-border bg-accent p-3 text-center transition-colors hover:border-primary/40 focus:border-primary focus:bg-primary/10"
+                      >
+                        <div className="text-xl">{c.icon}</div>
+                        <div className="text-xs font-semibold text-foreground">{c.ticker}</div>
+                      </button>
+                    ))}
+                  </div>
+                </div>
+                <div className="space-y-1">
+                  <label className="text-xs font-medium text-muted-foreground">Collateral Value (USD)</label>
+                  <Input type="number" placeholder="1,000" defaultValue="1000" className="font-mono" />
+                </div>
+                <div className="rounded-lg border border-border bg-accent/50 p-3 space-y-2">
+                  <div className="flex justify-between text-sm">
+                    <span className="text-muted-foreground">You can borrow</span>
+                    <span className="font-bold text-primary">~$700 USDT</span>
+                  </div>
+                  <div className="flex justify-between text-xs">
+                    <span className="text-muted-foreground">LTV Ratio</span>
+                    <span className="text-foreground">70%</span>
+                  </div>
+                </div>
+                <a
+                  href="/lend"
+                  className="flex w-full items-center justify-center gap-2 rounded-lg bg-primary px-4 py-3 font-display text-sm font-bold text-primary-foreground shadow-card transition-colors hover:bg-primary/90"
+                >
+                  <Landmark className="h-4 w-4" /> Get Instant Loan
+                </a>
+              </div>
             )}
 
             {/* ===== EXCHANGE MODE (ChangeNOW) ===== */}
