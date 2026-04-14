@@ -1,4 +1,6 @@
 import { useTranslation } from "react-i18next";
+import { Link, useLocation } from "react-router-dom";
+import { getLangFromPath, langPath } from "@/i18n";
 import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import {
@@ -526,6 +528,8 @@ function EarnHeroVisual() {
 /* ────────────────────────────────────────────────────────────── */
 export function LoanProductGuide() {
   const { t } = useTranslation();
+  const { pathname } = useLocation();
+  const lang = getLangFromPath(pathname);
   return (
     <section className="space-y-8">
       <LoanHeroVisual />
@@ -547,6 +551,10 @@ export function LoanProductGuide() {
           <PartnerLiabilityFooter />
           <RiskZoneWarning />
           <FaqBlock items={LOAN_FAQ} />
+          <Link to={langPath(lang, "/blog/whitepapers/crypto-loans")}
+            className="inline-flex items-center gap-2 text-sm font-semibold text-primary hover:text-primary/80 transition-colors">
+            📄 {t("lendGuide.readWhitepaper", "Read Technical Whitepaper")} →
+          </Link>
         </CardContent>
       </Card>
       <SecurityDeepDive />
@@ -559,6 +567,8 @@ export function LoanProductGuide() {
 /* ────────────────────────────────────────────────────────────── */
 export function EarnProductGuide() {
   const { t } = useTranslation();
+  const { pathname } = useLocation();
+  const lang = getLangFromPath(pathname);
   return (
     <section className="space-y-8">
       <EarnHeroVisual />
@@ -580,6 +590,10 @@ export function EarnProductGuide() {
           <PartnerLiabilityFooter />
           <EarnFlexibilitySection />
           <FaqBlock items={EARN_FAQ} />
+          <Link to={langPath(lang, "/blog/whitepapers/digital-yield")}
+            className="inline-flex items-center gap-2 text-sm font-semibold text-primary hover:text-primary/80 transition-colors">
+            📄 {t("lendGuide.readWhitepaper", "Read Technical Whitepaper")} →
+          </Link>
         </CardContent>
       </Card>
       <SecurityDeepDive />
