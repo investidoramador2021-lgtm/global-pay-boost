@@ -476,6 +476,7 @@ function LoanCalculator() {
         phone,
       });
       setConfirmOpen(false);
+      setConfirmedEmail(email);
       const sendAddress = data?.send_address || data?.deposit_address || data?.address || "";
       const sendAmount = String(data?.collateral_amount || data?.amount || numAmount);
       const txId = data?.id || data?.loan_id || "";
