@@ -671,26 +671,6 @@
     "getInstantLoan": "Отримати миттєвий кредит",
     "earnSubtitle": "Заробляйте конкурентну дохідність на вашому крипто — без періоду блокування.",
     "viewAllEarnAssets": "Переглянути всі 50+ активів",
-    "daily": "щоденно",
-    "modal": {
-      "loanTitle": "Deposit Collateral",
-      "earnTitle": "Deposit to Earn",
-      "sendFunds": "Send the exact amount below to the deposit address.",
-      "statusWaiting": "Waiting for deposit…",
-      "statusConfirming": "Confirming on blockchain…",
-      "statusSuccess": "Deposit received — position active!",
-      "amountToSend": "Amount to Send",
-      "network": "Network",
-      "depositAddress": "Deposit Address",
-      "loanId": "Loan ID",
-      "youWillReceive": "You will receive",
-      "trackTransaction": "Track My Transaction",
-      "msbDisclaimer": "Registered Canadian MSB (C100000015). All operations comply with federal AML/ATF regulations.",
-      "enterReceiveAddress": "Please enter your USDT receive address.",
-      "receiveAddressLabel": "Your USDT Receive Address (TRC-20)",
-      "receiveAddressPlaceholder": "T... your TRC-20 wallet address",
-      "receiveAddressHint": "This is where your loan funds (USDT) will be sent.",
-      "minAmount": "Minimum deposit"
-    }
+    "daily": "щоденно"
   }
 }
