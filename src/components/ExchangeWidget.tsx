@@ -2565,39 +2565,7 @@ const ExchangeWidget = ({ onTabChange }: ExchangeWidgetProps = {}) => {
 
             {/* ===== EARN MODE ===== */}
             {widgetMode === "earn" && (
-              <div className="space-y-4">
-                <p className="text-xs text-muted-foreground">Earn competitive yield on your crypto — no lock-up period.</p>
-                <div className="space-y-2">
-                  {[
-                    { asset: "USDT", icon: "₮", apy: "10%", daily: "0.0274%" },
-                    { asset: "BTC", icon: "₿", apy: "4%", daily: "0.011%" },
-                    { asset: "ETH", icon: "Ξ", apy: "5%", daily: "0.0137%" },
-                  ].map((opt) => (
-                    <div
-                      key={opt.asset}
-                      className="flex items-center justify-between rounded-lg border border-[#D4AF37]/20 bg-[#D4AF37]/5 p-3 transition-all hover:border-[#D4AF37]/40"
-                    >
-                      <div className="flex items-center gap-3">
-                        <span className="flex h-9 w-9 items-center justify-center rounded-full border border-[#D4AF37]/30 bg-[#D4AF37]/10 text-lg">{opt.icon}</span>
-                        <div>
-                          <div className="text-sm font-semibold text-foreground">{opt.asset}</div>
-                          <div className="text-[10px] text-muted-foreground">{opt.daily} daily</div>
-                        </div>
-                      </div>
-                      <div className="text-right">
-                        <div className="text-lg font-bold text-[#D4AF37]">{opt.apy}</div>
-                        <div className="text-[10px] font-medium text-muted-foreground">APY</div>
-                      </div>
-                    </div>
-                  ))}
-                </div>
-                <a
-                  href="/lend?tab=earn"
-                  className="flex w-full items-center justify-center gap-2 rounded-lg bg-[#D4AF37] px-4 py-3 font-display text-sm font-bold text-background shadow-lg transition-colors hover:bg-[#C5A028]"
-                >
-                  <TrendingUp className="h-4 w-4" /> Start Earning
-                </a>
-              </div>
+              <EarnWidgetPanel />
             )}
 
             {/* ===== EXCHANGE MODE (ChangeNOW) ===== */}
