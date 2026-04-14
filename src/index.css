@@ -60,7 +60,11 @@
     --shadow-neon: 0 4px 14px -2px hsl(160 84% 39% / 0.25);
 
     font-family: 'Inter', system-ui, sans-serif;
-  }
+
+@keyframes shimmer {
+  0% { background-position: 200% 0; }
+  100% { background-position: -200% 0; }
+}
 
   /* Dark mode */
   .dark {
