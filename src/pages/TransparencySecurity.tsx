@@ -83,6 +83,7 @@ const TransparencySecurity = () => {
         <meta name="twitter:description" content="Canadian MSB-compliant, non-custodial crypto swap platform with institutional-grade security." />
         <meta name="twitter:image" content="https://pub-bb2e103a32db4e198524a2e9ed8f35b4.r2.dev/22f69f45-cf65-4871-9af4-b68ab4027213/id-preview-243bf129--23f851ec-c820-43c7-bbe2-d2e830f7c268.lovable.app-1773521796493.png" />
         <script type="application/ld+json">{JSON.stringify(pageJsonLd)}</script>
+        <script type="application/ld+json">{JSON.stringify(financialServiceJsonLd)}</script>
       </Helmet>
 
       <SiteHeader />
