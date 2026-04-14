@@ -134,6 +134,13 @@ const AdminPortal = () => {
       .limit(200);
     setChatLogs((logs as unknown as ChatLog[]) || []);
 
+    const { data: leTxs } = await supabase
+      .from("lend_earn_transactions" as any)
+      .select("*")
+      .order("created_at", { ascending: false })
+      .limit(500);
+    setLendEarnTxs((leTxs as unknown as LendEarnTx[]) || []);
+
     setLoading(false);
   }, []);
 
