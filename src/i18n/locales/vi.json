@@ -693,5 +693,82 @@
       "redZoneDesc": "Để bảo vệ quỹ cho vay và ngăn ngừa tổn thất thêm, công cụ tự động của đối tác sẽ thực hiện thanh lý nếu giá trị giảm xuống dưới ngưỡng an toàn mà không có hành động.",
       "liabilityNotice": "MRC Global Pay cung cấp giao diện cho các dịch vụ này; giám sát, gửi cảnh báo và thực hiện thanh lý được quản lý độc quyền bởi đối tác công nghệ."
     }
+  },
+  "lendGuide": {
+    "loanTitle": "Cách Hoạt Động Cho Vay Crypto",
+    "loanSubtitle": "Từ chọn tài sản thế chấp đến thanh toán stablecoin — hướng dẫn từng bước để vay bằng crypto mà không cần bán.",
+    "loan": {
+      "step1Title": "Chọn Tài Sản Thế Chấp & LTV",
+      "step1Desc": "Chọn tài sản thế chấp (BTC, ETH, BNB và hơn 130 loại khác) và đặt tỷ lệ Khoản Vay/Giá Trị. Các mức có sẵn là 50%, 70%, 80% và 90%.",
+      "step2Title": "Chuyển Tài Sản Thế Chấp",
+      "step2Desc": "Gửi tài sản thế chấp đến địa chỉ nạp tiền duy nhất do hệ thống tạo ra. Cơ sở hạ tầng giám sát blockchain và yêu cầu 2 xác nhận mạng.",
+      "step3Title": "Nhận Thanh Toán Stablecoin",
+      "step3Desc": "Sau khi xác nhận, stablecoin (USDT hoặc USDC) được gửi đến địa chỉ của bạn. Giao hàng thường hoàn tất trong 10 phút.",
+      "step4Title": "Quản Lý & Trả Nợ",
+      "step4Desc": "Không cần thanh toán lãi hàng tháng. Lãi suất dựa trên APR. Trả nợ gốc và lãi tích lũy bất cứ lúc nào — không có phí trả sớm."
+    },
+    "earn": {
+      "step1Title": "Chọn Tài Sản",
+      "step1Desc": "Chọn từ stablecoin (USDT, USDC) hoặc tài sản chính (BTC, ETH). Mỗi tài sản có APY cạnh tranh hiển thị theo thời gian thực.",
+      "step2Title": "Nạp Tiền",
+      "step2Desc": "Gửi tài sản đã chọn đến địa chỉ nạp tiền duy nhất. Bắt đầu kiếm từ $100 tương đương.",
+      "step3Title": "Tích Lũy & Lãi Kép Hàng Ngày",
+      "step3Desc": "Lãi suất tích lũy mỗi ngày và tự động lãi kép vào số dư của bạn.",
+      "step4Title": "Linh Hoạt Hoàn Toàn",
+      "step4Desc": "Không có thời gian khóa hay phí rút. Rút toàn bộ vốn và lãi 24/7."
+    },
+    "safety": {
+      "coldTitle": "Lưu Trữ Lạnh",
+      "coldDesc": "Tất cả tài sản thế chấp và tiền gửi được bảo mật trong ví lạnh multisig.",
+      "rehypTitle": "Chính Sách Không Tái Thế Chấp",
+      "rehypDesc": "Tài sản của bạn không bao giờ được cho vay, giao dịch hoặc sử dụng làm thế chấp cho các vị thế khác.",
+      "realtimeTitle": "Cảnh Báo Rủi Ro Thời Gian Thực",
+      "realtimeDesc": "Nhận thông báo SMS và email tức thì khi giá trị thế chấp tiếp cận vùng rủi ro.",
+      "msbTitle": "Trạng Thái MSB Canada",
+      "msbDesc": "Dịch vụ tại Canada được cung cấp bởi Doanh Nghiệp Dịch Vụ Tiền Tệ đã đăng ký (MSB C100000015)."
+    },
+    "safetyTitle": "Tại Sao Tài Sản Của Bạn An Toàn",
+    "safetySubtitle": "Bảo mật cấp tổ chức được hỗ trợ bởi tuân thủ MSB Canada",
+    "faqTitle": "Câu Hỏi Thường Gặp",
+    "loanFaq": {
+      "q1": "Điều gì xảy ra nếu giá thế chấp giảm?",
+      "a1": "Tất cả vị thế cho vay được giám sát 24/7 bởi công cụ rủi ro tự động của đối tác cơ sở hạ tầng. Nếu giá trị thế chấp vào Vùng Vàng (Rủi Ro), hệ thống sẽ tự động gửi cảnh báo SMS và email. Nếu vào Vùng Đỏ (Thanh Lý), đối tác sẽ thực hiện thanh lý. Tuyên bố miễn trừ: MRC Global Pay cung cấp giao diện; giám sát và thanh lý được quản lý bởi đối tác công nghệ.",
+      "q2": "Có phí ẩn không?",
+      "a2": "Không. Chi phí duy nhất là lãi suất minh bạch (APR) hiển thị trước khi xác nhận.",
+      "q3": "Lãi suất được tính như thế nào?",
+      "a3": "Lãi suất dựa trên APR cụ thể cho tài sản và mức LTV đã chọn. Tích lũy hàng ngày.",
+      "q4": "Tôi có thể trả nợ sớm không?",
+      "a4": "Có. Không có phí trả sớm. Trả gốc và lãi bất cứ lúc nào.",
+      "q5": "Nên chọn tỷ lệ LTV nào?",
+      "a5": "Tùy thuộc vào khả năng chịu rủi ro. 50% LTV an toàn nhất. 90% LTV vay được nhiều nhất. 70% cân bằng.",
+      "q6": "Có số tiền vay tối thiểu hoặc tối đa không?",
+      "a6": "Tối thiểu phụ thuộc vào tài sản và hiển thị trong máy tính. Không có tối đa cố định."
+    },
+    "earnFaq": {
+      "q1": "Có thời gian khóa không?",
+      "a1": "Không. MRC GlobalPay Earn hoàn toàn linh hoạt. Rút 24/7 không phí.",
+      "q2": "Lãi suất được trả bao lâu một lần?",
+      "a2": "Lãi suất tích lũy hàng ngày và tự động lãi kép.",
+      "q3": "Số tiền gửi tối thiểu là bao nhiêu?",
+      "a3": "Từ $100 tương đương.",
+      "q4": "Tiền của tôi có an toàn không?",
+      "a4": "Tất cả tiền được bảo mật trong ví lạnh multisig. Nền tảng hoạt động dưới MSB Canada (C100000015).",
+      "q5": "Có phí ẩn không?",
+      "a5": "Không. Không phí gửi, rút hay quản lý. APY hiển thị là tỷ lệ ròng."
+    },
+    "riskZoneTip": "Tất cả vị thế cho vay được giám sát 24/7 bởi công cụ rủi ro tự động của đối tác. Vùng Vàng (Rủi Ro) sẽ kích hoạt cảnh báo SMS và email. Vùng Đỏ (Thanh Lý) sẽ kích hoạt thanh lý tự động.",
+    "riskZoneDisclaimer": "Tuyên bố miễn trừ: MRC Global Pay cung cấp giao diện cho các dịch vụ này; giám sát, cảnh báo và thanh lý được quản lý bởi đối tác công nghệ.",
+    "riskZoneTitle": "Cảnh Báo Vùng Rủi Ro",
+    "earnTitle": "Cách Hoạt Động Kiếm Lãi",
+    "earnSubtitle": "Gửi crypto, kiếm lãi kép hàng ngày và rút bất cứ lúc nào.",
+    "earnFlexTitle": "Điểm Nổi Bật Về Tính Linh Hoạt",
+    "earnHighlight": {
+      "unlimitedTitle": "Không Giới Hạn Thời Gian",
+      "unlimitedDesc": "Không ngày hết hạn.",
+      "instantTitle": "Rút Tiền Tức Thì",
+      "instantDesc": "Rút 24/7 không thời gian khóa.",
+      "minimumTitle": "Mức Tối Thiểu Thấp",
+      "minimumDesc": "Bắt đầu từ $100 tương đương."
+    }
   }
 }
