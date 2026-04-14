@@ -1,4 +1,4 @@
-import { useState, useEffect, useCallback } from "react";
+import { useState, useEffect, useCallback, useMemo } from "react";
 import { Helmet } from "react-helmet-async";
 import SiteHeader from "@/components/SiteHeader";
 import SiteFooter from "@/components/SiteFooter";
@@ -7,11 +7,12 @@ import { Button } from "@/components/ui/button";
 import { Slider } from "@/components/ui/slider";
 import { Badge } from "@/components/ui/badge";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Input } from "@/components/ui/input";
 import { supabase } from "@/integrations/supabase/client";
 import { toast } from "sonner";
 import { Shield, TrendingUp, Wallet, Clock, AlertTriangle, ArrowRight, Percent, DollarSign, Lock } from "lucide-react";
+import CollateralSelector from "@/components/CollateralSelector";
+import { COLLATERAL_ASSETS, LTV_BY_RISK, type CollateralAsset } from "@/lib/coinrabbit-assets";
 
 /* ------------------------------------------------------------------ */
 /*  API helper                                                         */
@@ -25,20 +26,8 @@ async function coinrabbitApi(endpoint: string, method = "GET", body?: unknown) {
 }
 
 /* ------------------------------------------------------------------ */
-/*  Static mock data (used when API has no quotes endpoint yet)        */
+/*  Static data                                                        */
 /* ------------------------------------------------------------------ */
-const COLLATERAL_OPTIONS = [
-  { ticker: "BTC", name: "Bitcoin", icon: "₿", minUsd: 100 },
-  { ticker: "ETH", name: "Ethereum", icon: "Ξ", minUsd: 50 },
-  { ticker: "SOL", name: "Solana", icon: "◎", minUsd: 25 },
-];
-
-const LTV_TIERS = [
-  { ltv: 50, label: "Conservative", liquidation: "Low risk", color: "text-emerald-400" },
-  { ltv: 70, label: "Standard", liquidation: "Medium risk", color: "text-[#D4AF37]" },
-  { ltv: 90, label: "Aggressive", liquidation: "High risk", color: "text-red-400" },
-];
-
 const EARN_OPTIONS = [
   { asset: "USDT", apy: 10, daily: 0.0274, min: 100, icon: "₮" },
   { asset: "BTC", apy: 4, daily: 0.011, min: 0.005, icon: "₿" },
@@ -49,23 +38,35 @@ const EARN_OPTIONS = [
 /*  Loan Calculator                                                    */
 /* ------------------------------------------------------------------ */
 function LoanCalculator() {
-  const [collateral, setCollateral] = useState("BTC");
+  const [selectedAsset, setSelectedAsset] = useState<CollateralAsset>(COLLATERAL_ASSETS[0]);
   const [amount, setAmount] = useState(1000);
-  const [ltvIndex, setLtvIndex] = useState(1);
   const [loading, setLoading] = useState(false);
 
-  const selected = COLLATERAL_OPTIONS.find((c) => c.ticker === collateral)!;
-  const tier = LTV_TIERS[ltvIndex];
-  const borrowable = Math.floor(amount * (tier.ltv / 100));
+  const riskConfig = LTV_BY_RISK[selectedAsset.riskTier];
+  const ltvOptions = riskConfig.ltvOptions;
+
+  const [selectedLtv, setSelectedLtv] = useState(ltvOptions[1] ?? ltvOptions[0]);
+
+  // Reset LTV when asset risk tier changes
+  useEffect(() => {
+    const opts = LTV_BY_RISK[selectedAsset.riskTier].ltvOptions;
+    if (!opts.includes(selectedLtv as any)) {
+      setSelectedLtv(opts[1] ?? opts[0]);
+    }
+  }, [selectedAsset.riskTier]);
+
+  const borrowable = Math.floor(amount * (selectedLtv / 100));
   const liquidationPrice = amount > 0 ? ((borrowable / amount) * 100).toFixed(2) : "0";
+  const riskLabel = selectedLtv <= 50 ? "Low risk" : selectedLtv <= 70 ? "Medium risk" : "High risk";
+  const riskColor = selectedLtv <= 50 ? "text-emerald-400" : selectedLtv <= 70 ? "text-[#D4AF37]" : "text-red-400";
 
   const handleOpenLoan = async () => {
     setLoading(true);
     try {
       await coinrabbitApi("/loans/open", "POST", {
-        collateral_currency: collateral.toLowerCase(),
+        collateral_currency: selectedAsset.ticker.toLowerCase(),
         collateral_amount: amount,
-        ltv: tier.ltv,
+        ltv: selectedLtv,
         loan_currency: "usdt",
       });
       toast.success("Loan request submitted! Check the tracking tab for status.");
@@ -90,18 +91,10 @@ function LoanCalculator() {
         {/* Collateral selector */}
         <div className="space-y-2">
           <label className="text-sm font-medium text-muted-foreground">Collateral Asset</label>
-          <Select value={collateral} onValueChange={setCollateral}>
-            <SelectTrigger className="border-[#D4AF37]/30">
-              <SelectValue />
-            </SelectTrigger>
-            <SelectContent>
-              {COLLATERAL_OPTIONS.map((c) => (
-                <SelectItem key={c.ticker} value={c.ticker}>
-                  {c.icon} {c.name} ({c.ticker})
-                </SelectItem>
-              ))}
-            </SelectContent>
-          </Select>
+          <CollateralSelector
+            value={selectedAsset.ticker}
+            onChange={setSelectedAsset}
+          />
         </div>
 
         {/* Amount slider */}
@@ -113,35 +106,41 @@ function LoanCalculator() {
           <Slider
             value={[amount]}
             onValueChange={(v) => setAmount(v[0])}
-            min={selected.minUsd}
+            min={25}
             max={50000}
             step={50}
             className="[&_[role=slider]]:border-[#D4AF37] [&_[role=slider]]:bg-[#D4AF37]"
           />
           <div className="flex justify-between text-xs text-muted-foreground">
-            <span>${selected.minUsd}</span>
+            <span>$25</span>
             <span>$50,000</span>
           </div>
         </div>
 
-        {/* LTV selector */}
+        {/* LTV selector – dynamic based on asset risk tier */}
         <div className="space-y-2">
-          <label className="text-sm font-medium text-muted-foreground">LTV Ratio</label>
-          <div className="grid grid-cols-3 gap-2">
-            {LTV_TIERS.map((t, i) => (
-              <button
-                key={t.ltv}
-                onClick={() => setLtvIndex(i)}
-                className={`rounded-lg border p-3 text-center transition-all ${
-                  ltvIndex === i
-                    ? "border-[#D4AF37] bg-[#D4AF37]/10"
-                    : "border-border hover:border-[#D4AF37]/40"
-                }`}
-              >
-                <div className={`text-lg font-bold ${t.color}`}>{t.ltv}%</div>
-                <div className="text-xs text-muted-foreground">{t.label}</div>
-              </button>
-            ))}
+          <label className="text-sm font-medium text-muted-foreground">
+            LTV Ratio
+            <span className="ml-2 text-xs text-[#D4AF37]">({riskConfig.baseRate}% APR)</span>
+          </label>
+          <div className={`grid gap-2 ${ltvOptions.length === 2 ? "grid-cols-2" : "grid-cols-3"}`}>
+            {ltvOptions.map((ltv) => {
+              const label = ltv <= 50 ? "Conservative" : ltv <= 70 ? "Standard" : ltv <= 80 ? "Moderate" : "Aggressive";
+              return (
+                <button
+                  key={ltv}
+                  onClick={() => setSelectedLtv(ltv)}
+                  className={`rounded-lg border p-3 text-center transition-all ${
+                    selectedLtv === ltv
+                      ? "border-[#D4AF37] bg-[#D4AF37]/10"
+                      : "border-border hover:border-[#D4AF37]/40"
+                  }`}
+                >
+                  <div className={`text-lg font-bold ${ltv <= 50 ? "text-emerald-400" : ltv <= 70 ? "text-[#D4AF37]" : "text-red-400"}`}>{ltv}%</div>
+                  <div className="text-xs text-muted-foreground">{label}</div>
+                </button>
+              );
+            })}
           </div>
         </div>
 
@@ -153,13 +152,17 @@ function LoanCalculator() {
           </div>
           <div className="flex justify-between">
             <span className="text-sm text-muted-foreground">Liquidation Price</span>
-            <span className={`text-sm font-mono ${tier.color}`}>${liquidationPrice}</span>
+            <span className={`text-sm font-mono ${riskColor}`}>${liquidationPrice}</span>
           </div>
           <div className="flex justify-between">
             <span className="text-sm text-muted-foreground">Risk Level</span>
-            <Badge variant="outline" className={`${tier.color} border-current`}>
-              {tier.liquidation}
+            <Badge variant="outline" className={`${riskColor} border-current`}>
+              {riskLabel}
             </Badge>
+          </div>
+          <div className="flex justify-between">
+            <span className="text-sm text-muted-foreground">Interest Rate</span>
+            <span className="text-sm font-mono text-[#D4AF37]">{riskConfig.baseRate}% APR</span>
           </div>
         </div>
 

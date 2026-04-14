@@ -1,0 +1,140 @@
+/**
+ * CoinRabbit supported collateral assets.
+ * Sourced from https://coinrabbit.io/assets/ — 130+ supported coins.
+ * Each entry includes risk tier which affects LTV and interest rates.
+ */
+
+export interface CollateralAsset {
+  ticker: string;
+  name: string;
+  icon: string; // URL to icon
+  network?: string;
+  riskTier: "low" | "medium" | "high"; // affects LTV & rates
+}
+
+/** LTV tiers keyed by risk */
+export const LTV_BY_RISK = {
+  low:    { ltvOptions: [50, 70, 90], baseRate: 8   },
+  medium: { ltvOptions: [50, 70, 80], baseRate: 10  },
+  high:   { ltvOptions: [50, 70],     baseRate: 12  },
+} as const;
+
+const ico = (t: string) => `https://changenow.io/images/sprite/currencies/${t.toLowerCase()}.svg`;
+
+export const COLLATERAL_ASSETS: CollateralAsset[] = [
+  // ── Tier 1 (Low Risk) ──
+  { ticker: "BTC",   name: "Bitcoin",          icon: ico("btc"),   riskTier: "low" },
+  { ticker: "ETH",   name: "Ethereum",         icon: ico("eth"),   riskTier: "low" },
+  { ticker: "USDT",  name: "Tether (ERC-20)",  icon: ico("usdt"),  riskTier: "low" },
+  { ticker: "USDC",  name: "USD Coin",         icon: ico("usdc"),  riskTier: "low" },
+  { ticker: "BNB",   name: "Binance Coin",     icon: ico("bnb"),   riskTier: "low" },
+  { ticker: "SOL",   name: "Solana",           icon: ico("sol"),   riskTier: "low" },
+  { ticker: "XRP",   name: "XRP",              icon: ico("xrp"),   riskTier: "low" },
+  { ticker: "ADA",   name: "Cardano",          icon: ico("ada"),   riskTier: "low" },
+  { ticker: "AVAX",  name: "Avalanche",        icon: ico("avax"),  riskTier: "low" },
+  { ticker: "DOT",   name: "Polkadot",         icon: ico("dot"),   riskTier: "low" },
+  { ticker: "LINK",  name: "Chainlink",        icon: ico("link"),  riskTier: "low" },
+  { ticker: "MATIC", name: "Polygon",          icon: ico("matic"), riskTier: "low" },
+  { ticker: "LTC",   name: "Litecoin",         icon: ico("ltc"),   riskTier: "low" },
+  { ticker: "DAI",   name: "Dai",              icon: ico("dai"),   riskTier: "low" },
+  { ticker: "TRX",   name: "TRON",             icon: ico("trx"),   riskTier: "low" },
+  { ticker: "TON",   name: "Toncoin",          icon: ico("ton"),   riskTier: "low" },
+  { ticker: "ATOM",  name: "Cosmos",           icon: ico("atom"),  riskTier: "low" },
+
+  // ── Tier 2 (Medium Risk) ──
+  { ticker: "DOGE",  name: "Dogecoin",         icon: ico("doge"),  riskTier: "medium" },
+  { ticker: "SHIB",  name: "Shiba Inu",        icon: ico("shib"),  riskTier: "medium" },
+  { ticker: "UNI",   name: "Uniswap",          icon: ico("uni"),   riskTier: "medium" },
+  { ticker: "AAVE",  name: "Aave",             icon: ico("aave"),  riskTier: "medium" },
+  { ticker: "FIL",   name: "Filecoin",         icon: ico("fil"),   riskTier: "medium" },
+  { ticker: "NEAR",  name: "NEAR Protocol",    icon: ico("near"),  riskTier: "medium" },
+  { ticker: "APT",   name: "Aptos",            icon: ico("apt"),   riskTier: "medium" },
+  { ticker: "ARB",   name: "Arbitrum",         icon: ico("arb"),   riskTier: "medium" },
+  { ticker: "OP",    name: "Optimism",         icon: ico("op"),    riskTier: "medium" },
+  { ticker: "INJ",   name: "Injective",        icon: ico("inj"),   riskTier: "medium" },
+  { ticker: "FTM",   name: "Fantom",           icon: ico("ftm"),   riskTier: "medium" },
+  { ticker: "ALGO",  name: "Algorand",         icon: ico("algo"),  riskTier: "medium" },
+  { ticker: "XLM",   name: "Stellar",          icon: ico("xlm"),   riskTier: "medium" },
+  { ticker: "VET",   name: "VeChain",          icon: ico("vet"),   riskTier: "medium" },
+  { ticker: "EOS",   name: "EOS",              icon: ico("eos"),   riskTier: "medium" },
+  { ticker: "XTZ",   name: "Tezos",            icon: ico("xtz"),   riskTier: "medium" },
+  { ticker: "HBAR",  name: "Hedera",           icon: ico("hbar"),  riskTier: "medium" },
+  { ticker: "MKR",   name: "Maker",            icon: ico("mkr"),   riskTier: "medium" },
+  { ticker: "GRT",   name: "The Graph",        icon: ico("grt"),   riskTier: "medium" },
+  { ticker: "SAND",  name: "The Sandbox",      icon: ico("sand"),  riskTier: "medium" },
+  { ticker: "MANA",  name: "Decentraland",     icon: ico("mana"),  riskTier: "medium" },
+  { ticker: "AXS",   name: "Axie Infinity",    icon: ico("axs"),   riskTier: "medium" },
+  { ticker: "CRV",   name: "Curve DAO",        icon: ico("crv"),   riskTier: "medium" },
+  { ticker: "COMP",  name: "Compound",         icon: ico("comp"),  riskTier: "medium" },
+  { ticker: "SNX",   name: "Synthetix",        icon: ico("snx"),   riskTier: "medium" },
+  { ticker: "ENS",   name: "Ethereum Name Service", icon: ico("ens"), riskTier: "medium" },
+  { ticker: "LDO",   name: "Lido DAO",         icon: ico("ldo"),   riskTier: "medium" },
+  { ticker: "RUNE",  name: "THORChain",        icon: ico("rune"),  riskTier: "medium" },
+  { ticker: "FLR",   name: "Flare",            icon: ico("flr"),   riskTier: "medium" },
+  { ticker: "EGLD",  name: "MultiversX",       icon: ico("egld"),  riskTier: "medium" },
+  { ticker: "ZEC",   name: "Zcash",            icon: ico("zec"),   riskTier: "medium" },
+  { ticker: "XMR",   name: "Monero",           icon: ico("xmr"),   riskTier: "medium" },
+  { ticker: "DASH",  name: "Dash",             icon: ico("dash"),  riskTier: "medium" },
+  { ticker: "ETC",   name: "Ethereum Classic", icon: ico("etc"),   riskTier: "medium" },
+  { ticker: "BCH",   name: "Bitcoin Cash",     icon: ico("bch"),   riskTier: "medium" },
+  { ticker: "ICP",   name: "Internet Computer", icon: ico("icp"),  riskTier: "medium" },
+  { ticker: "SUI",   name: "Sui",              icon: ico("sui"),   riskTier: "medium" },
+  { ticker: "SEI",   name: "Sei",              icon: ico("sei"),   riskTier: "medium" },
+  { ticker: "TIA",   name: "Celestia",         icon: ico("tia"),   riskTier: "medium" },
+  { ticker: "STX",   name: "Stacks",           icon: ico("stx"),   riskTier: "medium" },
+  { ticker: "RENDER",name: "Render Token",     icon: ico("render"),riskTier: "medium" },
+  { ticker: "FET",   name: "Fetch.ai",         icon: ico("fet"),   riskTier: "medium" },
+  { ticker: "PEPE",  name: "Pepe",             icon: ico("pepe"),  riskTier: "medium" },
+  { ticker: "WIF",   name: "dogwifhat",        icon: ico("wif"),   riskTier: "medium" },
+  { ticker: "BONK",  name: "Bonk",             icon: ico("bonk"),  riskTier: "medium" },
+  { ticker: "FLOKI", name: "FLOKI",            icon: ico("floki"), riskTier: "medium" },
+
+  // ── Tier 3 (High Risk) ──
+  { ticker: "1INCH", name: "1inch Network",    icon: ico("1inch"), riskTier: "high" },
+  { ticker: "ACH",   name: "ACH",              icon: ico("ach"),   riskTier: "high" },
+  { ticker: "CAKE",  name: "PancakeSwap",      icon: ico("cake"),  riskTier: "high" },
+  { ticker: "CHZ",   name: "Chiliz",           icon: ico("chz"),   riskTier: "high" },
+  { ticker: "CRO",   name: "Cronos",           icon: ico("cro"),   riskTier: "high" },
+  { ticker: "DYDX",  name: "dYdX",             icon: ico("dydx"),  riskTier: "high" },
+  { ticker: "ENJ",   name: "Enjin Coin",       icon: ico("enj"),   riskTier: "high" },
+  { ticker: "GALA",  name: "Gala",             icon: ico("gala"),  riskTier: "high" },
+  { ticker: "GMT",   name: "STEPN",            icon: ico("gmt"),   riskTier: "high" },
+  { ticker: "IMX",   name: "ImmutableX",       icon: ico("imx"),   riskTier: "high" },
+  { ticker: "JASMY", name: "JasmyCoin",        icon: ico("jasmy"), riskTier: "high" },
+  { ticker: "KAVA",  name: "Kava",             icon: ico("kava"),  riskTier: "high" },
+  { ticker: "KSM",   name: "Kusama",           icon: ico("ksm"),   riskTier: "high" },
+  { ticker: "LUNC",  name: "Terra Classic",    icon: ico("lunc"),  riskTier: "high" },
+  { ticker: "MASK",  name: "Mask Network",     icon: ico("mask"),  riskTier: "high" },
+  { ticker: "OCEAN", name: "Ocean Protocol",   icon: ico("ocean"), riskTier: "high" },
+  { ticker: "ONE",   name: "Harmony",          icon: ico("one"),   riskTier: "high" },
+  { ticker: "QTUM",  name: "Qtum",             icon: ico("qtum"),  riskTier: "high" },
+  { ticker: "ROSE",  name: "Oasis Network",    icon: ico("rose"),  riskTier: "high" },
+  { ticker: "RSR",   name: "Reserve Rights",   icon: ico("rsr"),   riskTier: "high" },
+  { ticker: "RVN",   name: "Ravencoin",        icon: ico("rvn"),   riskTier: "high" },
+  { ticker: "STORJ", name: "Storj",            icon: ico("storj"), riskTier: "high" },
+  { ticker: "SUSHI", name: "SushiSwap",        icon: ico("sushi"), riskTier: "high" },
+  { ticker: "WAVES", name: "Waves",            icon: ico("waves"), riskTier: "high" },
+  { ticker: "WOO",   name: "WOO",              icon: ico("woo"),   riskTier: "high" },
+  { ticker: "YFI",   name: "yearn.finance",    icon: ico("yfi"),   riskTier: "high" },
+  { ticker: "ZIL",   name: "Zilliqa",          icon: ico("zil"),   riskTier: "high" },
+  { ticker: "ZRX",   name: "0x Protocol",      icon: ico("zrx"),   riskTier: "high" },
+  { ticker: "CELO",  name: "Celo",             icon: ico("celo"),  riskTier: "high" },
+  { ticker: "IOTA",  name: "IOTA",             icon: ico("iota"),  riskTier: "high" },
+  { ticker: "NEO",   name: "Neo",              icon: ico("neo"),   riskTier: "high" },
+  { ticker: "BAT",   name: "Basic Attention Token", icon: ico("bat"), riskTier: "high" },
+  { ticker: "SKL",   name: "SKALE",            icon: ico("skl"),   riskTier: "high" },
+  { ticker: "ANKR",  name: "Ankr",             icon: ico("ankr"),  riskTier: "high" },
+  { ticker: "GLM",   name: "Golem",            icon: ico("glm"),   riskTier: "high" },
+  { ticker: "BAND",  name: "Band Protocol",    icon: ico("band"),  riskTier: "high" },
+  { ticker: "SC",    name: "Siacoin",          icon: ico("sc"),    riskTier: "high" },
+  { ticker: "LUNA",  name: "Terra",            icon: ico("luna"),  riskTier: "high" },
+  { ticker: "PENDLE",name: "Pendle",           icon: ico("pendle"),riskTier: "high" },
+  { ticker: "JUP",   name: "Jupiter",          icon: ico("jup"),   riskTier: "high" },
+  { ticker: "W",     name: "Wormhole",         icon: ico("w"),     riskTier: "high" },
+  { ticker: "STRK",  name: "Starknet",         icon: ico("strk"),  riskTier: "high" },
+  { ticker: "PYTH",  name: "Pyth Network",     icon: ico("pyth"),  riskTier: "high" },
+  { ticker: "ONDO",  name: "Ondo Finance",     icon: ico("ondo"),  riskTier: "high" },
+  { ticker: "AERO",  name: "Aerodrome Finance",icon: ico("aero"),  riskTier: "high" },
+  { ticker: "AITECH",name: "Solidus Ai Tech",  icon: ico("aitech"),riskTier: "high" },
+  { ticker: "AIXBT", name: "aixbt by Virtuals", icon: ico("aixbt"),riskTier: "high" },
+];
