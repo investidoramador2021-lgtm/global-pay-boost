@@ -312,8 +312,8 @@ Deno.serve(async (req: Request) => {
         loan: {
           currency_code: toCode,
           currency_network: toNetwork,
-        },
-        ltv_percent: body.ltv / 100,
+      },
+        ltv_percent: body.ltv,
       }
       if (p.email) requestBody.email = String(p.email)
       if (p.phone) requestBody.phone = String(p.phone)
