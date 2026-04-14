@@ -8,6 +8,8 @@ import explainerBuy from "@/assets/explainer-buy-masked-v2.png";
 import explainerBridge from "@/assets/explainer-bridge-masked.png";
 import explainerPrivate from "@/assets/explainer-private-masked.png";
 import explainerInvoice from "@/assets/invoice-3d-hero.png";
+import explainerLoan from "@/assets/explainer-loan-masked.png";
+import explainerEarn from "@/assets/explainer-earn-masked.png";
 import visaLogo from "@/assets/logo-visa.png";
 import mastercardLogo from "@/assets/logo-mastercard.png";
 import applePayLogo from "@/assets/logo-applepay.png";
@@ -22,7 +24,7 @@ interface Props {
   onCtaClick?: (tab: WidgetMode) => void;
 }
 
-type DisplayMode = "exchange" | "buysell" | "private" | "bridge" | "invoice";
+type DisplayMode = "exchange" | "buysell" | "private" | "bridge" | "invoice" | "loan" | "earn";
 
 const logos = [
   { src: visaLogo, alt: "Visa" },
@@ -64,6 +66,18 @@ const modeConfig: Record<DisplayMode, { accent: string; label: string; image: st
     image: explainerInvoice,
     glow: "0 0 70px hsl(38 92% 50% / 0.28), 0 0 140px hsl(38 92% 50% / 0.12)",
   },
+  loan: {
+    accent: "25 95% 53%",
+    label: "BORROW",
+    image: explainerLoan,
+    glow: "0 0 70px hsl(25 95% 53% / 0.28), 0 0 140px hsl(25 95% 53% / 0.12)",
+  },
+  earn: {
+    accent: "168 80% 48%",
+    label: "EARN",
+    image: explainerEarn,
+    glow: "0 0 70px hsl(168 80% 48% / 0.28), 0 0 140px hsl(168 80% 48% / 0.12)",
+  },
 };
 
 const labelPositions = [
@@ -86,7 +100,7 @@ const lineStyles = [
 
 const DynamicExplainer = ({ activeTab, onCtaClick }: Props) => {
   const { t } = useTranslation();
-  const mode: DisplayMode = activeTab === "request" ? "invoice" : activeTab === "loan" || activeTab === "earn" ? "exchange" : (activeTab as DisplayMode);
+  const mode: DisplayMode = activeTab === "request" ? "invoice" : (activeTab as DisplayMode);
   const [activeStep, setActiveStep] = useState(0);
 
   const config = modeConfig[mode];
