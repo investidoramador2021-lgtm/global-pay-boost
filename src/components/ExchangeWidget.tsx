@@ -1,4 +1,4 @@
-import { useState, useEffect, useCallback, useRef, forwardRef } from "react";
+import { useState, useEffect, useCallback, useRef, forwardRef, useMemo } from "react";
 import { useTranslation } from "react-i18next";
 import { motion, AnimatePresence } from "framer-motion";
 import { ArrowDownUp, Loader2, Search, Copy, Check, ArrowLeft, ArrowRight, ArrowLeftRight, Clock, CheckCircle2, AlertCircle, ExternalLink, Wallet, QrCode, XCircle, Info, Mail, RefreshCw, Shield, Lock, ChevronDown, Share2, CreditCard, Repeat, EyeOff, Link2, FileText, Landmark, TrendingUp } from "lucide-react";
@@ -8,6 +8,7 @@ import InvoiceRequestTab from "@/components/InvoiceRequestTab";
 import DestinationAddressInput, { tickerToAddressType } from "@/components/DestinationAddressInput";
 import CollateralSelector from "@/components/CollateralSelector";
 import { COLLATERAL_ASSETS, LTV_BY_RISK, type CollateralAsset } from "@/lib/coinrabbit-assets";
+import { EARN_ASSETS as EARN_ASSETS_LIST } from "@/lib/coinrabbit-earn-assets";
 import { supabase } from "@/integrations/supabase/client";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
