@@ -135,23 +135,26 @@ const securityLegalLinks = [
 
 type FooterLink = { label: string; href: string; title: string };
 
-const FooterLinkList = ({ title, links }: { title: string; links: FooterLink[] }) => (
+const FooterLinkList = ({ title, links, langPrefix }: { title: string; links: FooterLink[]; langPrefix?: (path: string) => string }) => (
   <div>
     <h3 className="font-display text-xs font-semibold uppercase tracking-wider text-foreground/80 sm:text-sm">
       {title}
     </h3>
     <ul className="mt-3 space-y-2 sm:mt-4 sm:space-y-3">
-      {links.map((link) => (
-        <li key={link.href}>
-          <a
-            href={link.href}
-            title={link.title}
-            className="font-body text-sm text-muted-foreground transition-colors hover:text-foreground"
-          >
-            {link.label}
-          </a>
-        </li>
-      ))}
+      {links.map((link) => {
+        const href = langPrefix ? langPrefix(link.href) : link.href;
+        return (
+          <li key={link.href}>
+            <a
+              href={href}
+              title={link.title}
+              className="font-body text-sm text-muted-foreground transition-colors hover:text-foreground"
+            >
+              {link.label}
+            </a>
+          </li>
+        );
+      })}
     </ul>
   </div>
 );
