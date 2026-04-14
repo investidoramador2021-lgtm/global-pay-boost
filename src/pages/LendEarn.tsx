@@ -41,23 +41,12 @@ async function coinrabbitApi(action: string, payload: Record<string, unknown> = 
   Object.entries(payload).forEach(([k, v]) => {
     if (v !== undefined && v !== null) params.set(k, String(v));
   });
-  const projectId = import.meta.env.VITE_SUPABASE_PROJECT_ID;
-  const anonKey = import.meta.env.VITE_SUPABASE_PUBLISHABLE_KEY;
-  const res = await fetch(
-    `https://${projectId}.supabase.co/functions/v1/coinrabbit?${params}`,
-    {
-      method: "GET",
-      headers: {
-        apikey: anonKey,
-        Authorization: `Bearer ${anonKey}`,
-      },
-    }
+  const { data, error } = await supabase.functions.invoke(
+    `coinrabbit?${params.toString()}`,
+    { method: "GET" }
   );
-  if (!res.ok) {
-    const body = await res.text();
-    throw new Error(body || `HTTP ${res.status}`);
-  }
-  return res.json();
+  if (error) throw new Error(error.message);
+  return data;
 }
 
 /* ------------------------------------------------------------------ */
