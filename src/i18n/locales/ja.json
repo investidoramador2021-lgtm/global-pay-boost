@@ -839,7 +839,7 @@
     "loginRequired": "{{action}}にはサインインが必要です",
     "comingSoon": "近日公開 — サポートにお問い合わせください",
     "authenticated": "サインイン成功",
-    "disclaimer": "ライブデータはテクノロジーパートナーのAPIから取得され、60秒ごとに更新されます。出金、返済、追加入金には登録アカウントが必要です。MRC GlobalPay · MSB登録 C100000015。",
+    "disclaimer": "データはテクノロジーパートナーのAPIから取得され、1日1回または管理アクション（返済、追加、出金）実行時に更新されます。MRC GlobalPay · MSB登録 C100000015。",
     "auth": {
       "createTitle": "管理アカウントを作成",
       "loginTitle": "ダッシュボードにサインイン",

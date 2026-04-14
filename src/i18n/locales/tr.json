@@ -839,7 +839,7 @@
     "loginRequired": "{{action}} için giriş gerekli",
     "comingSoon": "Yakında — destek ile iletişime geçin",
     "authenticated": "Başarıyla giriş yapıldı",
-    "disclaimer": "Canlı veriler teknoloji ortağımızın API'sinden alınır ve her 60 saniyede güncellenir. Çekim, geri ödeme ve yükleme kayıtlı bir hesap gerektirir. MRC GlobalPay · MSB Kaydı C100000015.",
+    "disclaimer": "Veriler teknoloji ortağımızın API'sinden alınır ve günde bir kez veya yönetim işlemi (Geri Öde, Yükle, Çek) gerçekleştirdiğinizde güncellenir. MRC GlobalPay · MSB Kaydı C100000015.",
     "auth": {
       "createTitle": "Yönetim Hesabınızı Oluşturun",
       "loginTitle": "Panele Giriş Yapın",

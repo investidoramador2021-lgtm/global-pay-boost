@@ -839,7 +839,7 @@
     "loginRequired": "Connexion requise pour {{action}}",
     "comingSoon": "Bientôt disponible — contactez le support",
     "authenticated": "Connecté avec succès",
-    "disclaimer": "Les données en direct proviennent de l'API de notre partenaire technologique et sont actualisées toutes les 60 secondes. Retirer, rembourser et recharger nécessitent un compte enregistré. MRC GlobalPay · Enregistrement MSB C100000015.",
+    "disclaimer": "Les données proviennent de l'API de notre partenaire et sont actualisées une fois par jour ou lors d'une action de gestion (Rembourser, Recharger, Retirer). MRC GlobalPay · Enregistrement MSB C100000015.",
     "auth": {
       "createTitle": "Créez votre compte de gestion",
       "loginTitle": "Se connecter au tableau de bord",

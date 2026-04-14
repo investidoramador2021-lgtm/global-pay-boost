@@ -853,7 +853,7 @@
     "loginRequired": "Sign in required to {{action}}",
     "comingSoon": "Coming soon — contact support",
     "authenticated": "Signed in successfully",
-    "disclaimer": "Live data is sourced from our technology partner's API and refreshes every 60 seconds. Withdraw, Repay, and Top Up require a registered account. MRC GlobalPay · MSB Registration C100000015.",
+    "disclaimer": "Data is sourced from our technology partner's API and refreshes once daily or when you perform a management action (Repay, Top Up, Withdraw). MRC GlobalPay · MSB Registration C100000015.",
     "auth": {
       "createTitle": "Create Your Management Account",
       "loginTitle": "Sign In to Dashboard",

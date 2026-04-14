@@ -839,7 +839,7 @@
     "loginRequired": "Aanmelding vereis vir {{action}}",
     "comingSoon": "Binnekort beskikbaar — kontak ondersteuning",
     "authenticated": "Suksesvol aangemeld",
-    "disclaimer": "Regstreekse data kom van ons tegnologievennoot se API en word elke 60 sekondes opgedateer. Onttrek, terugbetaal en herlaai vereis 'n geregistreerde rekening. MRC GlobalPay · MSB-registrasie C100000015.",
+    "disclaimer": "Data word verkry van ons tegnologievennoot se API en verfris een keer per dag of wanneer jy 'n bestuursaksie uitvoer (Terugbetaal, Hervul, Onttrek). MRC GlobalPay · MSB-registrasie C100000015.",
     "auth": {
       "createTitle": "Skep jou bestuursrekening",
       "loginTitle": "Teken in by kontrolepaneel",

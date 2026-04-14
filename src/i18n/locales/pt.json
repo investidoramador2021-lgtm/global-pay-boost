@@ -839,7 +839,7 @@
     "loginRequired": "Login necessário para {{action}}",
     "comingSoon": "Em breve — entre em contato com o suporte",
     "authenticated": "Login realizado com sucesso",
-    "disclaimer": "Os dados ao vivo são obtidos da API do nosso parceiro tecnológico e atualizam a cada 60 segundos. Retirar, pagar e recarregar requerem uma conta registrada. MRC GlobalPay · Registro MSB C100000015.",
+    "disclaimer": "Os dados são obtidos da API do nosso parceiro tecnológico e atualizam uma vez por dia ou ao executar uma ação de gestão (Pagar, Recarregar, Retirar). MRC GlobalPay · Registro MSB C100000015.",
     "auth": {
       "createTitle": "Crie sua conta de gerenciamento",
       "loginTitle": "Entrar no painel",
