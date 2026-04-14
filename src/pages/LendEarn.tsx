@@ -1,4 +1,5 @@
 import { useState, useEffect, useCallback, useMemo, useRef } from "react";
+import { LoanProductGuide, EarnProductGuide } from "@/components/LendEarnGuide";
 import { Helmet } from "react-helmet-async";
 import { useTranslation } from "react-i18next";
 import { QRCodeSVG } from "qrcode.react";
@@ -833,11 +834,19 @@ export default function LendEarn() {
               </TabsTrigger>
             </TabsList>
 
-            <TabsContent value="borrow" className="max-w-xl mx-auto">
-              <LoanCalculator />
+            <TabsContent value="borrow" className="space-y-12">
+              <div className="max-w-xl mx-auto">
+                <LoanCalculator />
+              </div>
+              <div className="max-w-4xl mx-auto">
+                <LoanProductGuide />
+              </div>
             </TabsContent>
-            <TabsContent value="earn">
+            <TabsContent value="earn" className="space-y-12">
               <YieldDashboard />
+              <div className="max-w-4xl mx-auto">
+                <EarnProductGuide />
+              </div>
             </TabsContent>
             <TabsContent value="track" className="max-w-xl mx-auto">
               <TransactionTracker />
