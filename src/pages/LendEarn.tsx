@@ -9,9 +9,11 @@ import { Slider } from "@/components/ui/slider";
 import { Badge } from "@/components/ui/badge";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Input } from "@/components/ui/input";
+import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription } from "@/components/ui/dialog";
 import { supabase } from "@/integrations/supabase/client";
 import { toast } from "sonner";
-import { Shield, TrendingUp, Wallet, Clock, AlertTriangle, ArrowRight, Percent, DollarSign, Lock, Search } from "lucide-react";
+import { Shield, TrendingUp, Wallet, Clock, AlertTriangle, ArrowRight, Percent, DollarSign, Lock, Search, Copy, CheckCircle2, QrCode, ExternalLink } from "lucide-react";
+import { QRCodeSVG } from "qrcode.react";
 import CollateralSelector from "@/components/CollateralSelector";
 import { COLLATERAL_ASSETS, LTV_BY_RISK, type CollateralAsset } from "@/lib/coinrabbit-assets";
 import { EARN_ASSETS, EARN_ASSETS_UNIQUE_KEY } from "@/lib/coinrabbit-earn-assets";
@@ -33,12 +35,185 @@ function useLocaleFormat() {
 /* ------------------------------------------------------------------ */
 /*  API helper                                                         */
 /* ------------------------------------------------------------------ */
-async function coinrabbitApi(endpoint: string, method = "GET", body?: unknown) {
+async function coinrabbitApi(payload: Record<string, unknown>) {
   const { data, error } = await supabase.functions.invoke("coinrabbit", {
-    body: { endpoint, method, body },
+    body: payload,
   });
   if (error) throw new Error(error.message);
   return data;
+}
+
+/* ------------------------------------------------------------------ */
+/*  Deposit Modal (shared by Loan + Earn)                              */
+/* ------------------------------------------------------------------ */
+interface DepositModalProps {
+  open: boolean;
+  onClose: () => void;
+  type: "loan" | "earn";
+  depositAddress: string | null;
+  depositExtraId: string | null;
+  amount: string;
+  ticker: string;
+  network: string;
+  txId: string;
+  externalId: string;
+  loanDetails?: Record<string, unknown>;
+}
+
+function DepositModal({ open, onClose, type, depositAddress, depositExtraId, amount, ticker, network, txId, externalId, loanDetails }: DepositModalProps) {
+  const { t } = useTranslation();
+  const [copied, setCopied] = useState(false);
+  const [status, setStatus] = useState<string>("waiting");
+  const [polling, setPolling] = useState(true);
+
+  const copyAddress = () => {
+    if (!depositAddress) return;
+    navigator.clipboard.writeText(depositAddress);
+    setCopied(true);
+    setTimeout(() => setCopied(false), 2000);
+  };
+
+  // Poll for status
+  useEffect(() => {
+    if (!open || !polling || !txId || !externalId) return;
+    const interval = setInterval(async () => {
+      try {
+        const action = type === "loan" ? "loan-status" : "earn-status";
+        const idKey = type === "loan" ? "loan_id" : "earn_id";
+        const data = await coinrabbitApi({ action, [idKey]: txId, external_id: externalId });
+        const rawStatus = String(data?.response?.status || data?.status || "").toLowerCase();
+        if (rawStatus.includes("active") || rawStatus.includes("confirmed") || rawStatus.includes("completed") || rawStatus.includes("funded")) {
+          setStatus("success");
+          setPolling(false);
+        } else if (rawStatus.includes("processing") || rawStatus.includes("confirming")) {
+          setStatus("confirming");
+        } else {
+          setStatus("waiting");
+        }
+      } catch {
+        // silent
+      }
+    }, 15000);
+    return () => clearInterval(interval);
+  }, [open, polling, txId, externalId, type]);
+
+  const statusConfig = {
+    waiting: { label: t("lend.modal.statusWaiting"), color: "text-[#D4AF37]", icon: Clock, pulse: true },
+    confirming: { label: t("lend.modal.statusConfirming"), color: "text-blue-400", icon: Shield, pulse: true },
+    success: { label: t("lend.modal.statusSuccess"), color: "text-emerald-400", icon: CheckCircle2, pulse: false },
+  }[status] || { label: t("lend.modal.statusWaiting"), color: "text-[#D4AF37]", icon: Clock, pulse: true };
+
+  const StatusIcon = statusConfig.icon;
+
+  return (
+    <Dialog open={open} onOpenChange={(v) => !v && onClose()}>
+      <DialogContent className="sm:max-w-md border-[#D4AF37]/30 bg-card">
+        <DialogHeader>
+          <DialogTitle className="flex items-center gap-2 text-foreground">
+            <Wallet className="h-5 w-5 text-[#D4AF37]" />
+            {type === "loan" ? t("lend.modal.loanTitle") : t("lend.modal.earnTitle")}
+          </DialogTitle>
+          <DialogDescription>{t("lend.modal.sendFunds")}</DialogDescription>
+        </DialogHeader>
+
+        <div className="space-y-4">
+          {/* Status */}
+          <div className={`flex items-center gap-2 rounded-lg border border-current/20 p-3 ${statusConfig.color}`}>
+            <StatusIcon className={`h-5 w-5 ${statusConfig.pulse ? "animate-pulse" : ""}`} />
+            <span className="font-medium text-sm">{statusConfig.label}</span>
+          </div>
+
+          {/* Amount to send */}
+          <div className="rounded-lg border border-[#D4AF37]/20 bg-background/50 p-4 text-center">
+            <div className="text-xs text-muted-foreground mb-1">{t("lend.modal.amountToSend")}</div>
+            <div className="text-2xl font-bold text-[#D4AF37] font-mono">{amount} {ticker}</div>
+            <div className="text-xs text-muted-foreground mt-1">{t("lend.modal.network")}: {network}</div>
+          </div>
+
+          {/* QR Code */}
+          {depositAddress && (
+            <div className="flex justify-center p-4 bg-white rounded-lg">
+              <QRCodeSVG value={depositAddress} size={180} level="H" />
+            </div>
+          )}
+
+          {/* Address */}
+          {depositAddress && (
+            <div className="space-y-2">
+              <div className="text-xs text-muted-foreground">{t("lend.modal.depositAddress")}</div>
+              <div className="flex items-center gap-2">
+                <code className="flex-1 rounded border border-border bg-muted/50 px-3 py-2 text-xs font-mono break-all text-foreground">
+                  {depositAddress}
+                </code>
+                <Button size="sm" variant="outline" onClick={copyAddress} className="shrink-0">
+                  {copied ? <CheckCircle2 className="h-4 w-4 text-emerald-400" /> : <Copy className="h-4 w-4" />}
+                </Button>
+              </div>
+            </div>
+          )}
+
+          {/* Extra ID / Memo */}
+          {depositExtraId && (
+            <div className="space-y-1">
+              <div className="text-xs text-muted-foreground">Memo / Extra ID</div>
+              <code className="block rounded border border-border bg-muted/50 px-3 py-2 text-xs font-mono text-foreground">
+                {depositExtraId}
+              </code>
+            </div>
+          )}
+
+          {/* Loan details */}
+          {type === "loan" && loanDetails && (
+            <div className="rounded-lg border border-border bg-muted/30 p-3 space-y-1 text-xs">
+              <div className="flex justify-between">
+                <span className="text-muted-foreground">{t("lend.modal.loanId")}</span>
+                <span className="font-mono text-foreground">{txId}</span>
+              </div>
+              {loanDetails.loan_details && (
+                <>
+                  <div className="flex justify-between">
+                    <span className="text-muted-foreground">{t("lend.modal.youWillReceive")}</span>
+                    <span className="font-mono text-[#D4AF37]">
+                      {(loanDetails.loan_details as Record<string, unknown>)?.loan
+                        ? `${((loanDetails.loan_details as Record<string, unknown>).loan as Record<string, unknown>)?.expected_amount} ${((loanDetails.loan_details as Record<string, unknown>).loan as Record<string, unknown>)?.currency}`
+                        : "—"}
+                    </span>
+                  </div>
+                  <div className="flex justify-between">
+                    <span className="text-muted-foreground">{t("lend.interestRate")}</span>
+                    <span className="font-mono text-foreground">{String((loanDetails.loan_details as Record<string, unknown>)?.interest_percent ?? "—")}% APR</span>
+                  </div>
+                </>
+              )}
+            </div>
+          )}
+
+          {/* MSB Compliance */}
+          <div className="rounded-lg border border-[#D4AF37]/20 bg-[#D4AF37]/5 p-3">
+            <div className="flex items-start gap-2">
+              <Shield className="h-4 w-4 mt-0.5 text-[#D4AF37] shrink-0" />
+              <div className="text-[10px] text-muted-foreground leading-relaxed">
+                <strong className="text-foreground">MRC GlobalPay</strong> — {t("lend.modal.msbDisclaimer")}
+              </div>
+            </div>
+          </div>
+
+          {/* Track button */}
+          <Button
+            variant="outline"
+            className="w-full border-[#D4AF37]/30 text-[#D4AF37] hover:bg-[#D4AF37]/10"
+            onClick={() => {
+              const params = new URLSearchParams({ tab: "track" });
+              window.location.href = `/lend?${params.toString()}`;
+            }}
+          >
+            <Search className="me-2 h-4 w-4" />
+            {t("lend.modal.trackTransaction")}
+          </Button>
+        </div>
+      </DialogContent>
+    </Dialog>
+  );
 }
 
 /* ------------------------------------------------------------------ */
@@ -50,6 +225,20 @@ function LoanCalculator() {
   const [selectedAsset, setSelectedAsset] = useState<CollateralAsset>(COLLATERAL_ASSETS[0]);
   const [amount, setAmount] = useState(1000);
   const [loading, setLoading] = useState(false);
+  const [receiveAddress, setReceiveAddress] = useState("");
+
+  // Modal state
+  const [modalOpen, setModalOpen] = useState(false);
+  const [modalData, setModalData] = useState<{
+    depositAddress: string | null;
+    depositExtraId: string | null;
+    amount: string;
+    ticker: string;
+    network: string;
+    txId: string;
+    externalId: string;
+    loanDetails: Record<string, unknown>;
+  } | null>(null);
 
   const riskConfig = LTV_BY_RISK[selectedAsset.riskTier];
   const ltvOptions = riskConfig.ltvOptions;
@@ -76,15 +265,34 @@ function LoanCalculator() {
   };
 
   const handleOpenLoan = async () => {
+    if (!receiveAddress.trim()) {
+      toast.error(t("lend.modal.enterReceiveAddress"));
+      return;
+    }
     setLoading(true);
     try {
-      await coinrabbitApi("/loans/open", "POST", {
-        collateral_currency: selectedAsset.ticker.toLowerCase(),
+      const data = await coinrabbitApi({
+        action: "create-loan",
+        collateral_code: selectedAsset.ticker.toUpperCase(),
+        collateral_network: selectedAsset.network || selectedAsset.ticker.toUpperCase(),
         collateral_amount: amount,
-        ltv: selectedLtv,
-        loan_currency: "usdt",
+        loan_code: "USDT",
+        loan_network: "TRX",
+        receive_address: receiveAddress,
       });
-      toast.success(t("lend.loanSuccess"));
+      if (!data.result) throw new Error(data.error || "Failed to create loan");
+
+      setModalData({
+        depositAddress: data.deposit_address,
+        depositExtraId: data.deposit_extra_id,
+        amount: String(data.loan_details?.deposit?.expected_amount || amount),
+        ticker: selectedAsset.ticker,
+        network: selectedAsset.network || selectedAsset.ticker,
+        txId: data.loan_id,
+        externalId: data.external_id,
+        loanDetails: data,
+      });
+      setModalOpen(true);
     } catch (e: unknown) {
       const msg = e instanceof Error ? e.message : "Failed to open loan";
       toast.error(msg);
@@ -94,93 +302,123 @@ function LoanCalculator() {
   };
 
   return (
-    <Card className="border-[#D4AF37]/20 bg-card/50 backdrop-blur">
-      <CardHeader>
-        <CardTitle className="flex items-center gap-2 text-foreground">
-          <DollarSign className="h-5 w-5 text-[#D4AF37]" />
-          {t("lend.loanCalcTitle")}
-        </CardTitle>
-        <CardDescription>{t("lend.loanCalcDesc")}</CardDescription>
-      </CardHeader>
-      <CardContent className="space-y-6">
-        <div className="space-y-2">
-          <label className="text-sm font-medium text-muted-foreground">{t("lend.collateralAsset")}</label>
-          <CollateralSelector value={selectedAsset.ticker} onChange={setSelectedAsset} />
-        </div>
+    <>
+      <Card className="border-[#D4AF37]/20 bg-card/50 backdrop-blur">
+        <CardHeader>
+          <CardTitle className="flex items-center gap-2 text-foreground">
+            <DollarSign className="h-5 w-5 text-[#D4AF37]" />
+            {t("lend.loanCalcTitle")}
+          </CardTitle>
+          <CardDescription>{t("lend.loanCalcDesc")}</CardDescription>
+        </CardHeader>
+        <CardContent className="space-y-6">
+          <div className="space-y-2">
+            <label className="text-sm font-medium text-muted-foreground">{t("lend.collateralAsset")}</label>
+            <CollateralSelector value={selectedAsset.ticker} onChange={setSelectedAsset} />
+          </div>
 
-        <div className="space-y-2">
-          <div className="flex justify-between text-sm">
-            <span className="text-muted-foreground">{t("lend.collateralUsd")}</span>
-            <span className="font-mono text-[#D4AF37]">{fmt.usd(amount)}</span>
+          <div className="space-y-2">
+            <div className="flex justify-between text-sm">
+              <span className="text-muted-foreground">{t("lend.collateralUsd")}</span>
+              <span className="font-mono text-[#D4AF37]">{fmt.usd(amount)}</span>
+            </div>
+            <Slider
+              value={[amount]}
+              onValueChange={(v) => setAmount(v[0])}
+              min={25}
+              max={50000}
+              step={50}
+              className="[&_[role=slider]]:border-[#D4AF37] [&_[role=slider]]:bg-[#D4AF37]"
+              dir="ltr"
+            />
+            <div className="flex justify-between text-xs text-muted-foreground">
+              <span>$25</span>
+              <span>$50,000</span>
+            </div>
           </div>
-          <Slider
-            value={[amount]}
-            onValueChange={(v) => setAmount(v[0])}
-            min={25}
-            max={50000}
-            step={50}
-            className="[&_[role=slider]]:border-[#D4AF37] [&_[role=slider]]:bg-[#D4AF37]"
-            dir="ltr"
-          />
-          <div className="flex justify-between text-xs text-muted-foreground">
-            <span>$25</span>
-            <span>$50,000</span>
-          </div>
-        </div>
 
-        <div className="space-y-2">
-          <label className="text-sm font-medium text-muted-foreground">
-            {t("lend.ltvRatio")}
-            <span className="ms-2 text-xs text-[#D4AF37]">({riskConfig.baseRate}% APR)</span>
-          </label>
-          <div className={`grid gap-2 ${ltvOptions.length === 2 ? "grid-cols-2" : "grid-cols-3"}`}>
-            {ltvOptions.map((ltv) => (
-              <button
-                key={ltv}
-                onClick={() => setSelectedLtv(ltv)}
-                className={`rounded-lg border p-3 text-center transition-all ${
-                  selectedLtv === ltv
-                    ? "border-[#D4AF37] bg-[#D4AF37]/10"
-                    : "border-border hover:border-[#D4AF37]/40"
-                }`}
-              >
-                <div className={`text-lg font-bold ${ltv <= 50 ? "text-emerald-400" : ltv <= 70 ? "text-[#D4AF37]" : "text-red-400"}`}>{ltv}%</div>
-                <div className="text-xs text-muted-foreground">{ltvLabels[String(ltv)] ?? t("lend.standard")}</div>
-              </button>
-            ))}
+          <div className="space-y-2">
+            <label className="text-sm font-medium text-muted-foreground">
+              {t("lend.ltvRatio")}
+              <span className="ms-2 text-xs text-[#D4AF37]">({riskConfig.baseRate}% APR)</span>
+            </label>
+            <div className={`grid gap-2 ${ltvOptions.length === 2 ? "grid-cols-2" : "grid-cols-3"}`}>
+              {ltvOptions.map((ltv) => (
+                <button
+                  key={ltv}
+                  onClick={() => setSelectedLtv(ltv)}
+                  className={`rounded-lg border p-3 text-center transition-all ${
+                    selectedLtv === ltv
+                      ? "border-[#D4AF37] bg-[#D4AF37]/10"
+                      : "border-border hover:border-[#D4AF37]/40"
+                  }`}
+                >
+                  <div className={`text-lg font-bold ${ltv <= 50 ? "text-emerald-400" : ltv <= 70 ? "text-[#D4AF37]" : "text-red-400"}`}>{ltv}%</div>
+                  <div className="text-xs text-muted-foreground">{ltvLabels[String(ltv)] ?? t("lend.standard")}</div>
+                </button>
+              ))}
+            </div>
           </div>
-        </div>
 
-        <div className="rounded-lg border border-[#D4AF37]/20 bg-background/50 p-4 space-y-3">
-          <div className="flex justify-between">
-            <span className="text-sm text-muted-foreground">{t("lend.youCanBorrow")}</span>
-            <span className="text-lg font-bold text-[#D4AF37]">{fmt.usd(borrowable)} USDT</span>
+          <div className="rounded-lg border border-[#D4AF37]/20 bg-background/50 p-4 space-y-3">
+            <div className="flex justify-between">
+              <span className="text-sm text-muted-foreground">{t("lend.youCanBorrow")}</span>
+              <span className="text-lg font-bold text-[#D4AF37]">{fmt.usd(borrowable)} USDT</span>
+            </div>
+            <div className="flex justify-between">
+              <span className="text-sm text-muted-foreground">{t("lend.liquidationPrice")}</span>
+              <span className={`text-sm font-mono ${riskColor}`}>${liquidationPrice}</span>
+            </div>
+            <div className="flex justify-between">
+              <span className="text-sm text-muted-foreground">{t("lend.riskLevel")}</span>
+              <Badge variant="outline" className={`${riskColor} border-current`}>
+                {riskLabel}
+              </Badge>
+            </div>
+            <div className="flex justify-between">
+              <span className="text-sm text-muted-foreground">{t("lend.interestRate")}</span>
+              <span className="text-sm font-mono text-[#D4AF37]">{riskConfig.baseRate}% APR</span>
+            </div>
           </div>
-          <div className="flex justify-between">
-            <span className="text-sm text-muted-foreground">{t("lend.liquidationPrice")}</span>
-            <span className={`text-sm font-mono ${riskColor}`}>${liquidationPrice}</span>
-          </div>
-          <div className="flex justify-between">
-            <span className="text-sm text-muted-foreground">{t("lend.riskLevel")}</span>
-            <Badge variant="outline" className={`${riskColor} border-current`}>
-              {riskLabel}
-            </Badge>
-          </div>
-          <div className="flex justify-between">
-            <span className="text-sm text-muted-foreground">{t("lend.interestRate")}</span>
-            <span className="text-sm font-mono text-[#D4AF37]">{riskConfig.baseRate}% APR</span>
-          </div>
-        </div>
 
-        <Button
-          onClick={handleOpenLoan}
-          disabled={loading}
-          className="w-full bg-[#D4AF37] text-background hover:bg-[#D4AF37]/90 font-semibold"
-        >
-          {loading ? t("lend.submitting") : t("lend.openLoan")} <ArrowRight className="h-4 w-4" />
-        </Button>
-      </CardContent>
-    </Card>
+          {/* Receive address input */}
+          <div className="space-y-2">
+            <label className="text-sm font-medium text-muted-foreground">{t("lend.modal.receiveAddressLabel")}</label>
+            <Input
+              placeholder={t("lend.modal.receiveAddressPlaceholder")}
+              value={receiveAddress}
+              onChange={(e) => setReceiveAddress(e.target.value)}
+              className="border-[#D4AF37]/30 font-mono text-xs"
+            />
+            <p className="text-[10px] text-muted-foreground">{t("lend.modal.receiveAddressHint")}</p>
+          </div>
+
+          <Button
+            onClick={handleOpenLoan}
+            disabled={loading}
+            className="w-full bg-[#D4AF37] text-background hover:bg-[#D4AF37]/90 font-semibold"
+          >
+            {loading ? t("lend.submitting") : t("lend.openLoan")} <ArrowRight className="h-4 w-4" />
+          </Button>
+        </CardContent>
+      </Card>
+
+      {modalData && (
+        <DepositModal
+          open={modalOpen}
+          onClose={() => setModalOpen(false)}
+          type="loan"
+          depositAddress={modalData.depositAddress}
+          depositExtraId={modalData.depositExtraId}
+          amount={modalData.amount}
+          ticker={modalData.ticker}
+          network={modalData.network}
+          txId={modalData.txId}
+          externalId={modalData.externalId}
+          loanDetails={modalData.loanDetails}
+        />
+      )}
+    </>
   );
 }
 
@@ -193,7 +431,20 @@ function YieldDashboard() {
   const [selectedKey, setSelectedKey] = useState(EARN_ASSETS_UNIQUE_KEY(EARN_ASSETS[0]));
   const [depositAmount, setDepositAmount] = useState("");
   const [search, setSearch] = useState("");
+  const [loading, setLoading] = useState(false);
   const calcRef = useRef<HTMLDivElement>(null);
+
+  // Modal state
+  const [modalOpen, setModalOpen] = useState(false);
+  const [modalData, setModalData] = useState<{
+    depositAddress: string | null;
+    depositExtraId: string | null;
+    amount: string;
+    ticker: string;
+    network: string;
+    txId: string;
+    externalId: string;
+  } | null>(null);
 
   const selected = useMemo(
     () => EARN_ASSETS.find((a) => EARN_ASSETS_UNIQUE_KEY(a) === selectedKey) ?? EARN_ASSETS[0],
@@ -217,9 +468,41 @@ function YieldDashboard() {
     setTimeout(() => calcRef.current?.scrollIntoView({ behavior: "smooth", block: "center" }), 100);
   };
 
-  const handleDeposit = () => {
-    const coinrabbitUrl = `https://coinrabbit.io/earn/?currency=${selected.ticker.toLowerCase()}`;
-    window.open(coinrabbitUrl, "_blank", "noopener,noreferrer");
+  const handleDeposit = async () => {
+    if (numAmount < selected.minUsd) {
+      toast.error(`${t("lend.modal.minAmount")}: $${selected.minUsd}`);
+      return;
+    }
+    setLoading(true);
+    try {
+      // Map earn asset ticker/network to CoinRabbit currency codes
+      const currencyCode = selected.ticker.toUpperCase();
+      const currencyNetwork = selected.network.toUpperCase();
+
+      const data = await coinrabbitApi({
+        action: "create-earn",
+        currency_code: currencyCode,
+        currency_network: currencyNetwork,
+        amount: numAmount,
+      });
+      if (!data.result) throw new Error(data.error || "Failed to create earn deposit");
+
+      setModalData({
+        depositAddress: data.deposit_address,
+        depositExtraId: data.deposit_extra_id,
+        amount: String(numAmount),
+        ticker: selected.ticker,
+        network: selected.network,
+        txId: data.earn_id,
+        externalId: data.external_id,
+      });
+      setModalOpen(true);
+    } catch (e: unknown) {
+      const msg = e instanceof Error ? e.message : "Failed";
+      toast.error(msg);
+    } finally {
+      setLoading(false);
+    }
   };
 
   return (
@@ -316,13 +599,29 @@ function YieldDashboard() {
 
             <Button
               onClick={handleDeposit}
+              disabled={loading || numAmount <= 0}
               className="w-full bg-[#D4AF37] text-background hover:bg-[#D4AF37]/90 font-semibold"
             >
-              {t("lend.startEarning")} {selected.ticker} <ArrowRight className="h-4 w-4" />
+              {loading ? t("lend.submitting") : `${t("lend.startEarning")} ${selected.ticker}`} <ArrowRight className="h-4 w-4" />
             </Button>
           </CardContent>
         </Card>
       </div>
+
+      {modalData && (
+        <DepositModal
+          open={modalOpen}
+          onClose={() => setModalOpen(false)}
+          type="earn"
+          depositAddress={modalData.depositAddress}
+          depositExtraId={modalData.depositExtraId}
+          amount={modalData.amount}
+          ticker={modalData.ticker}
+          network={modalData.network}
+          txId={modalData.txId}
+          externalId={modalData.externalId}
+        />
+      )}
     </div>
   );
 }
@@ -346,10 +645,13 @@ function TransactionTracker() {
   const checkStatus = useCallback(async () => {
     if (!txId.trim()) return;
     try {
-      const data = await coinrabbitApi(`/loans/list?id=${encodeURIComponent(txId)}`);
+      // Try loan first, then earn
+      let data = await coinrabbitApi({ endpoint: `/loans/estimate?from_code=BTC&from_network=BTC&to_code=USDT&to_network=ETH&amount=0.001` });
+      // For tracking, use the generic proxy
+      data = await coinrabbitApi({ endpoint: `/loans/${encodeURIComponent(txId)}`, method: "GET" });
       setTxData(data);
-      const status = String(data?.status || data?.loan_status || "").toLowerCase();
-      if (status.includes("active") || status.includes("completed")) setCurrentStep(2);
+      const status = String(data?.response?.status || data?.status || "").toLowerCase();
+      if (status.includes("active") || status.includes("completed") || status.includes("confirmed")) setCurrentStep(2);
       else if (status.includes("confirm") || status.includes("processing")) setCurrentStep(1);
       else setCurrentStep(0);
     } catch {
