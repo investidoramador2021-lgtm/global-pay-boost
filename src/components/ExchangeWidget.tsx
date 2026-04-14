@@ -320,7 +320,7 @@ const ExchangeWidget = ({ onTabChange }: ExchangeWidgetProps = {}) => {
   const debounceRef = useRef<ReturnType<typeof setTimeout>>();
 
   // ===== Dual-tab mode: "exchange" (ChangeNOW) vs "buysell" (Guardarian) =====
-  type WidgetMode = "exchange" | "buysell" | "private" | "bridge" | "request";
+  type WidgetMode = "exchange" | "buysell" | "private" | "bridge" | "request" | "loan";
   type FiatFlow = "buy" | "sell";
   const [widgetMode, setWidgetMode] = useState<WidgetMode>("exchange");
   const [gTradeDirection, setGTradeDirection] = useState<FiatFlow>("buy");
