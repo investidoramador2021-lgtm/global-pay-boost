@@ -262,15 +262,11 @@ Deno.serve(async (req: Request) => {
       })
 
       if (!match) {
-        const fallbackMessage = exactRequest.response.status === 404
-          ? 'Endpoint not found'
-          : `No earn product found for ${body.currency}${body.network ? ` on ${body.network}` : ''}`
-
         return json(buildProviderError(
-          exactRequest.response.status === 404 ? exactUrl : `${BASE}/currencies`,
-          exactRequest.response.status === 404 ? exactBody : body,
-          exactRequest.response.status === 404 ? exactRequest.responseBody : { catalog_match: false },
-          fallbackMessage,
+          exactUrl,
+          { currency_code: currencyCode, currency_network: currencyNetwork },
+          exactRequest.responseBody,
+          `No earn product found for ${body.currency}${body.network ? ` on ${body.network}` : ''}`,
         ), 200)
       }
 
