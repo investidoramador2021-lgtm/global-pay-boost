@@ -346,51 +346,49 @@ Deno.serve(async (req: Request) => {
       const currencyCode = body.currency.toUpperCase()
       const currencyNetwork = body.network || normalizeNetwork(p.currency_network || currencyCode)
 
-      const requestBody: Record<string, unknown> = {
+      // V2 API expects currency as nested object: { code, network }
+      const requestBodyV2: Record<string, unknown> = {
+        currency: { code: currencyCode, network: currencyNetwork },
+        amount: body.amount,
+        external_id: 'mrc-pay-platform',
+      }
+      if (p.email) requestBodyV2.email = String(p.email)
+      if (p.phone) requestBodyV2.phone = String(p.phone)
+
+      // Fallback: flat structure
+      const requestBodyFlat: Record<string, unknown> = {
         currency_code: currencyCode,
         currency_network: currencyNetwork,
         amount: body.amount,
         external_id: 'mrc-pay-platform',
       }
-      if (p.email) requestBody.email = String(p.email)
-      if (p.phone) requestBody.phone = String(p.phone)
+      if (p.email) requestBodyFlat.email = String(p.email)
+      if (p.phone) requestBodyFlat.phone = String(p.phone)
 
-      // Also try nested deposit structure that V2 may require
-      const requestBodyAlt: Record<string, unknown> = {
-        deposit: {
-          currency_code: currencyCode,
-          currency_network: currencyNetwork,
-          expected_amount: body.amount,
-        },
-        external_id: 'mrc-pay-platform',
-      }
-      if (p.email) requestBodyAlt.email = String(p.email)
-      if (p.phone) requestBodyAlt.phone = String(p.phone)
-
-      console.log('[create-earn] body:', JSON.stringify(requestBody))
+      console.log('[create-earn] body v2:', JSON.stringify(requestBodyV2))
       const url = `${BASE}/earns`
       let { response, responseBody } = await callProvider(url, {
-        method: 'POST', headers: h, body: JSON.stringify(requestBody),
-      }, requestBody)
+        method: 'POST', headers: h, body: JSON.stringify(requestBodyV2),
+      }, requestBodyV2)
 
-      // If 500 with flat body, retry with nested deposit structure
-      if (response.status === 500) {
-        console.log('[create-earn] Retrying with nested deposit structure')
+      // If V2 nested format fails, try flat format
+      if (!response.ok) {
+        console.log('[create-earn] v2 failed, trying flat format, status:', response.status)
         const retry = await callProvider(url, {
-          method: 'POST', headers: h, body: JSON.stringify(requestBodyAlt),
-        }, requestBodyAlt)
+          method: 'POST', headers: h, body: JSON.stringify(requestBodyFlat),
+        }, requestBodyFlat)
         response = retry.response
         responseBody = retry.responseBody
       }
 
-      if (response.status === 404) return json(buildProviderError(url, requestBody, responseBody), 200)
+      if (response.status === 404) return json(buildProviderError(url, requestBodyV2, responseBody), 200)
 
       if (!response.ok) {
         const msg = typeof responseBody === 'object' && responseBody ? JSON.stringify(responseBody) : String(responseBody)
         if (msg.includes('contact') || msg.includes('validat') || msg.includes('email') || msg.includes('phone')) {
           return json({ error: 'Please check your phone and email format (Include + for country code).', provider_error: responseBody }, 422)
         }
-        return json({ provider_error: responseBody, request_body_tried: [requestBody, requestBodyAlt] }, response.status)
+        return json({ provider_error: responseBody, request_body_tried: [requestBodyV2, requestBodyFlat] }, response.status)
       }
 
       const inner = unwrapResponse(responseBody)
