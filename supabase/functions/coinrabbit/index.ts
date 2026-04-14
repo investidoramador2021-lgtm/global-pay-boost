@@ -182,13 +182,22 @@ Deno.serve(async (req: Request) => {
       const body = normalizeLoanEstimate(p)
       if (!body.collateral_currency || !body.collateral_amount) return json({ error: 'Missing params' }, 400)
 
-      // Try the direct endpoint first
-      const url = `${BASE}/loans/estimate`
-      const { response, responseBody } = await callProvider(url, {
-        method: 'POST',
-        headers: h,
-        body: JSON.stringify(body),
-      }, body)
+      const fromCode = body.collateral_currency.toUpperCase()
+      const fromNetwork = normalizeNetwork(p.from_network || p.collateral_network || fromCode)
+      const toCode = body.loan_currency.toUpperCase()
+      const toNetwork = normalizeNetwork(p.to_network || p.loan_network || 'ETH')
+      const exchange = String(p.exchange || 'direct')
+
+      const qs = new URLSearchParams({
+        from_code: fromCode,
+        from_network: fromNetwork,
+        to_code: toCode,
+        to_network: toNetwork,
+        amount: String(body.collateral_amount),
+        exchange,
+      })
+      const url = `${BASE}/loans/estimate?${qs}`
+      const { response, responseBody } = await callProvider(url, { method: 'GET', headers: h })
 
       if (response.ok) {
         return json(responseBody, 200)
@@ -197,11 +206,10 @@ Deno.serve(async (req: Request) => {
       // Fallback: derive estimate from currencies catalog + static math
       const { items } = await getCurrenciesCatalog(h)
       const match = items.find((item) => {
-        const sameCode = String(item.code || '').toUpperCase() === body.collateral_currency.toUpperCase()
+        const sameCode = String(item.code || '').toUpperCase() === fromCode
         return sameCode && item.is_loan_deposit_enabled
       })
 
-      // Static rate table by LTV
       const ltvRates: Record<number, number> = { 50: 8, 70: 10, 80: 12, 90: 14 }
       const interestRate = ltvRates[body.ltv] || 12
       const loanAmount = body.collateral_amount * (body.ltv / 100)
@@ -229,20 +237,28 @@ Deno.serve(async (req: Request) => {
       const body = normalizeEarnEstimate(p)
       if (!body.currency || !body.amount) return json({ error: 'Missing params' }, 400)
 
-      const exactUrl = `${BASE}/earns/estimate`
-      const exactBody = {
-        amount: body.amount,
-        currency: body.currencyId || body.currency,
-      }
+      const currencyCode = body.currency.toUpperCase()
+      const currencyNetwork = body.network || normalizeNetwork(p.currency_network || currencyCode)
 
-      const exactRequest = await callProvider(exactUrl, {
-        method: 'POST',
-        headers: h,
-        body: JSON.stringify(exactBody),
-      }, exactBody)
+      const qs = new URLSearchParams({
+        currency_code: currencyCode,
+        currency_network: currencyNetwork,
+      })
+      const exactUrl = `${BASE}/earns/estimate?${qs}`
+
+      const exactRequest = await callProvider(exactUrl, { method: 'GET', headers: h })
 
       if (exactRequest.response.ok) {
-        return json(exactRequest.responseBody, 200)
+        const raw = exactRequest.responseBody as Record<string, unknown>
+        const inner = (raw?.response && typeof raw.response === 'object' ? raw.response : raw) as Record<string, unknown>
+        return json({
+          result: true,
+          annual_percent: Number(inner.annual_percent || 0),
+          currency: currencyCode,
+          network: currencyNetwork,
+          currency_id: buildCurrencyId(currencyCode, currencyNetwork),
+          source: 'live_api',
+        }, 200)
       }
 
       const { items } = await getCurrenciesCatalog(h)
@@ -255,15 +271,11 @@ Deno.serve(async (req: Request) => {
       })
 
       if (!match) {
-        const fallbackMessage = exactRequest.response.status === 404
-          ? 'Endpoint not found'
-          : `No earn product found for ${body.currency}${body.network ? ` on ${body.network}` : ''}`
-
         return json(buildProviderError(
-          exactRequest.response.status === 404 ? exactUrl : `${BASE}/currencies`,
-          exactRequest.response.status === 404 ? exactBody : body,
-          exactRequest.response.status === 404 ? exactRequest.responseBody : { catalog_match: false },
-          fallbackMessage,
+          exactUrl,
+          { currency_code: currencyCode, currency_network: currencyNetwork },
+          exactRequest.responseBody,
+          `No earn product found for ${body.currency}${body.network ? ` on ${body.network}` : ''}`,
         ), 200)
       }
 
