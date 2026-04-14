@@ -135,23 +135,26 @@ const securityLegalLinks = [
 
 type FooterLink = { label: string; href: string; title: string };
 
-const FooterLinkList = ({ title, links }: { title: string; links: FooterLink[] }) => (
+const FooterLinkList = ({ title, links, langPrefix }: { title: string; links: FooterLink[]; langPrefix?: (path: string) => string }) => (
   <div>
     <h3 className="font-display text-xs font-semibold uppercase tracking-wider text-foreground/80 sm:text-sm">
       {title}
     </h3>
     <ul className="mt-3 space-y-2 sm:mt-4 sm:space-y-3">
-      {links.map((link) => (
-        <li key={link.href}>
-          <a
-            href={link.href}
-            title={link.title}
-            className="font-body text-sm text-muted-foreground transition-colors hover:text-foreground"
-          >
-            {link.label}
-          </a>
-        </li>
-      ))}
+      {links.map((link) => {
+        const href = langPrefix ? langPrefix(link.href) : link.href;
+        return (
+          <li key={link.href}>
+            <a
+              href={href}
+              title={link.title}
+              className="font-body text-sm text-muted-foreground transition-colors hover:text-foreground"
+            >
+              {link.label}
+            </a>
+          </li>
+        );
+      })}
     </ul>
   </div>
 );
@@ -185,8 +188,8 @@ const SiteFooter = () => {
             </p>
           </div>
 
-          <FooterLinkList title="Crypto Guides" links={resourceLinks} />
-          <FooterLinkList title="Security & Legal" links={securityLegalLinks} />
+          <FooterLinkList langPrefix={lp} title="Crypto Guides" links={resourceLinks} />
+          <FooterLinkList langPrefix={lp} title="Security & Legal" links={securityLegalLinks} />
 
           <div>
             <h3 className="font-display text-xs font-semibold uppercase tracking-wider text-foreground/80 sm:text-sm">
@@ -211,7 +214,7 @@ const SiteFooter = () => {
             </ul>
           </div>
 
-          <FooterLinkList title="Wallet Reviews" links={walletReviews} />
+          <FooterLinkList langPrefix={lp} title="Wallet Reviews" links={walletReviews} />
         </div>
 
         {/* Swap pairs categorized grid */}
@@ -220,17 +223,17 @@ const SiteFooter = () => {
             Swap Pairs Directory
           </h3>
           <div className="grid gap-8 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
-            <FooterLinkList title="Popular Crypto Swaps" links={popularCryptoSwaps} />
-            <FooterLinkList title="Stablecoin Bridges" links={stablecoinBridges} />
-            <FooterLinkList title="Buy Crypto" links={buyLinks} />
-            <FooterLinkList title="Tools & Alternatives" links={toolsAndAlternatives} />
+            <FooterLinkList langPrefix={lp} title="Popular Crypto Swaps" links={popularCryptoSwaps} />
+            <FooterLinkList langPrefix={lp} title="Stablecoin Bridges" links={stablecoinBridges} />
+            <FooterLinkList langPrefix={lp} title="Buy Crypto" links={buyLinks} />
+            <FooterLinkList langPrefix={lp} title="Tools & Alternatives" links={toolsAndAlternatives} />
           </div>
         </div>
 
         {/* Popular Comparisons */}
         <div className="mt-8 border-t border-border pt-8">
           <div className="grid gap-8 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
-            <FooterLinkList title="Popular Comparisons" links={[
+            <FooterLinkList langPrefix={lp} title="Popular Comparisons" links={[
               { label: "MRC vs Binance", href: "/compare/mrc-vs-binance", title: "Compare MRC GlobalPay vs Binance" },
               { label: "MRC vs Coinbase", href: "/compare/mrc-vs-coinbase", title: "Compare MRC GlobalPay vs Coinbase" },
               { label: "MRC vs ChangeNOW", href: "/compare/mrc-vs-changenow", title: "Compare MRC GlobalPay vs ChangeNOW" },
@@ -241,7 +244,7 @@ const SiteFooter = () => {
               { label: "MRC vs THORChain", href: "/compare/mrc-vs-thorchain", title: "Compare MRC GlobalPay vs THORChain" },
               { label: "All Comparisons →", href: "/compare", title: "View all 50+ exchange comparisons" },
             ]} />
-            <FooterLinkList title="Ecosystem & Prices" links={ecosystemLinks} />
+            <FooterLinkList langPrefix={lp} title="Ecosystem & Prices" links={ecosystemLinks} />
           </div>
         </div>
 
@@ -282,7 +285,7 @@ const SiteFooter = () => {
                 e.preventDefault();
                 const input = (e.currentTarget.elements.namedItem("loanId") as HTMLInputElement)?.value;
                 if (input?.trim()) {
-                  window.location.href = `/lend?tab=track&id=${encodeURIComponent(input.trim())}`;
+                  window.location.href = lp(`/lend`) + `?tab=track&id=${encodeURIComponent(input.trim())}`;
                 }
               }}
             >

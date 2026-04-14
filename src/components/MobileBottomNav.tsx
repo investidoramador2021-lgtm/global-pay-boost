@@ -1,18 +1,21 @@
 import { ArrowLeftRight, Landmark, TrendingUp, Clock, HelpCircle } from "lucide-react";
 import { useLocation } from "react-router-dom";
 import { useTranslation } from "react-i18next";
+import { getLangFromPath, langPath } from "@/i18n";
 
 const MobileBottomNav = () => {
   const location = useLocation();
   const currentHash = location.hash;
   const { t } = useTranslation();
+  const lang = getLangFromPath(location.pathname);
+  const lp = (path: string) => langPath(lang, path);
 
   const navItems = [
-    { labelKey: "widget.tabs.exchange", icon: ArrowLeftRight, href: "/#exchange" },
-    { labelKey: "widget.tabs.loan", icon: Landmark, href: "/lend" },
-    { labelKey: "widget.tabs.earn", icon: TrendingUp, href: "/lend?tab=earn" },
-    { labelKey: "nav.track", icon: Clock, href: "/lend?tab=track" },
-    { labelKey: "nav.help", icon: HelpCircle, href: "/#faq" },
+    { labelKey: "widget.tabs.exchange", icon: ArrowLeftRight, href: lp("/") + "#exchange" },
+    { labelKey: "widget.tabs.loan", icon: Landmark, href: lp("/lend") },
+    { labelKey: "widget.tabs.earn", icon: TrendingUp, href: lp("/lend") + "?tab=earn" },
+    { labelKey: "nav.track", icon: Clock, href: lp("/lend") + "?tab=track" },
+    { labelKey: "nav.help", icon: HelpCircle, href: lp("/") + "#faq" },
   ];
 
   return (
