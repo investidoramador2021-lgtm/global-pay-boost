@@ -25,16 +25,16 @@ async function readProviderBody(response: Response) {
 
 function normalizeLoanEstimate(payload: Record<string, unknown>) {
   return {
-    collateral_currency: String(payload.collateral_currency || ''),
+    collateral_currency: String(payload.collateral_currency || '').toLowerCase(),
     collateral_amount: Number(payload.collateral_amount || 0),
-    loan_currency: String(payload.loan_currency || 'usdt'),
+    loan_currency: String(payload.loan_currency || 'usdt').toLowerCase(),
     ltv: Number(payload.ltv || 0),
   }
 }
 
 function normalizeEarnEstimate(payload: Record<string, unknown>) {
   return {
-    currency: String(payload.currency || ''),
+    currency: String(payload.currency || '').toLowerCase(),
     amount: Number(payload.amount || 0),
   }
 }
