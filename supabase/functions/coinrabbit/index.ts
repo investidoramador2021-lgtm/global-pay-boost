@@ -102,16 +102,18 @@ async function getJwt(apiKey: string): Promise<string> {
 }
 
 function authHeaders(apiKey: string, jwt?: string): Record<string, string> {
-  const h: Record<string, string> = {
+  if (jwt) {
+    // JWT-authenticated requests: use JWT only, no API key to avoid conflicts
+    return {
+      'Content-Type': 'application/json',
+      'Authorization': `Bearer ${jwt}`,
+    }
+  }
+  return {
     'Content-Type': 'application/json',
+    'Authorization': `Bearer ${apiKey}`,
     'x-api-key': apiKey,
   }
-  if (jwt) {
-    h['Authorization'] = `Bearer ${jwt}`
-  } else {
-    h['Authorization'] = `Bearer ${apiKey}`
-  }
-  return h
 }
 
 // ─── Currencies catalog ───
