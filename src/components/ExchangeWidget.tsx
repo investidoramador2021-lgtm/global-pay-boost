@@ -289,6 +289,54 @@ const STATUS_LABEL_KEYS: Record<string, string> = {
   overdue: "widget.statusOverdue",
 };
 
+/* ── LTV Gauge: semi-circular dial ── */
+function LtvGauge({ value, max = 90 }: { value: number; max?: number }) {
+  const pct = Math.min(value / max, 1);
+  const angle = -90 + pct * 180; // -90 = left, 90 = right
+  const r = 60;
+  const cx = 70;
+  const cy = 70;
+  // Arc path
+  const arcStartX = cx + r * Math.cos((-90 * Math.PI) / 180);
+  const arcStartY = cy + r * Math.sin((-90 * Math.PI) / 180);
+  const arcEndX = cx + r * Math.cos((90 * Math.PI) / 180);
+  const arcEndY = cy + r * Math.sin((90 * Math.PI) / 180);
+  // Needle end
+  const needleX = cx + (r - 8) * Math.cos((angle * Math.PI) / 180);
+  const needleY = cy + (r - 8) * Math.sin((angle * Math.PI) / 180);
+
+  return (
+    <svg viewBox="0 0 140 85" className="w-full max-w-[200px] mx-auto" aria-label={`LTV ${value}%`}>
+      <defs>
+        <linearGradient id="gaugeGrad" x1="0" y1="0" x2="1" y2="0">
+          <stop offset="0%" stopColor="hsl(160 100% 45%)" />
+          <stop offset="60%" stopColor="hsl(45 100% 55%)" />
+          <stop offset="100%" stopColor="hsl(0 80% 55%)" />
+        </linearGradient>
+        <filter id="needleGlow">
+          <feGaussianBlur stdDeviation="2" result="blur" />
+          <feMerge><feMergeNode in="blur" /><feMergeNode in="SourceGraphic" /></feMerge>
+        </filter>
+      </defs>
+      {/* Track */}
+      <path d={`M ${arcStartX} ${arcStartY} A ${r} ${r} 0 0 1 ${arcEndX} ${arcEndY}`} fill="none" stroke="hsl(220 20% 18%)" strokeWidth="8" strokeLinecap="round" />
+      {/* Filled arc up to pct */}
+      {pct > 0.01 && (() => {
+        const filledAngle = -90 + pct * 180;
+        const fX = cx + r * Math.cos((filledAngle * Math.PI) / 180);
+        const fY = cy + r * Math.sin((filledAngle * Math.PI) / 180);
+        const largeArc = pct > 0.5 ? 1 : 0;
+        return <path d={`M ${arcStartX} ${arcStartY} A ${r} ${r} 0 ${largeArc} 1 ${fX} ${fY}`} fill="none" stroke="url(#gaugeGrad)" strokeWidth="8" strokeLinecap="round" />;
+      })()}
+      {/* Needle */}
+      <line x1={cx} y1={cy} x2={needleX} y2={needleY} stroke="hsl(160 100% 50%)" strokeWidth="2.5" strokeLinecap="round" filter="url(#needleGlow)" />
+      <circle cx={cx} cy={cy} r="4" fill="hsl(160 100% 50%)" opacity="0.8" />
+      {/* Value text */}
+      <text x={cx} y={cy + 2} textAnchor="middle" fill="white" fontSize="16" fontWeight="700" fontFamily="monospace">{value}%</text>
+    </svg>
+  );
+}
+
 /* ── Compact Loan Widget for homepage ── */
 function LoanWidgetPanel() {
   const { t } = useTranslation();
@@ -314,14 +362,17 @@ function LoanWidgetPanel() {
           className="font-mono border-[#D4AF37]/20 focus:border-[#D4AF37] focus:ring-[#D4AF37]/30"
         />
       </div>
+
+      {/* LTV Gauge */}
+      <div className="rounded-xl border border-[#D4AF37]/20 p-4" style={{ background: "hsl(220 25% 8% / 0.6)", boxShadow: "inset 0 2px 6px rgba(0,0,0,0.35)" }}>
+        <div className="text-[10px] uppercase tracking-wider text-center text-muted-foreground mb-2">{t("lend.maxLtv")} Gauge</div>
+        <LtvGauge value={maxLtv} />
+      </div>
+
       <div className="rounded-lg border border-[#D4AF37]/20 bg-[#D4AF37]/5 p-3 space-y-2">
         <div className="flex justify-between text-sm">
           <span className="text-muted-foreground">{t("lend.youCanBorrow")}</span>
           <span className="font-bold text-[#D4AF37]">~${borrowable.toLocaleString()} USDT</span>
-        </div>
-        <div className="flex justify-between text-xs">
-          <span className="text-muted-foreground">{t("lend.maxLtv")}</span>
-          <span className="font-mono text-[#D4AF37]">{maxLtv}%</span>
         </div>
         <div className="flex justify-between text-xs">
           <span className="text-muted-foreground">{t("lend.interestRate")}</span>
@@ -330,7 +381,11 @@ function LoanWidgetPanel() {
       </div>
       <a
         href="/lend"
-        className="flex w-full items-center justify-center gap-2 rounded-lg bg-[#D4AF37] px-4 py-3 font-display text-sm font-bold text-background shadow-lg transition-colors hover:bg-[#C5A028]"
+        className="flex w-full items-center justify-center gap-2 rounded-lg px-4 py-3 font-display text-sm font-bold text-background shadow-lg transition-all hover:shadow-xl"
+        style={{
+          background: "linear-gradient(135deg, #D4AF37 0%, #C5A028 100%)",
+          boxShadow: "0 4px 16px rgba(212,175,55,0.3)",
+        }}
       >
         <Landmark className="h-4 w-4" /> {t("lend.getInstantLoan")}
       </a>
