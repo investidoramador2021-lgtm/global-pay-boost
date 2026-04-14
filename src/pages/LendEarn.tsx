@@ -449,6 +449,7 @@ function YieldDashboard() {
       try {
         const data = await coinrabbitApi("earn-estimate", {
           currency: selected.ticker.toLowerCase(),
+          network: selected.network,
           amount: debouncedAmount,
         });
         if (!cancelled && data && !data.error) {
@@ -492,6 +493,7 @@ function YieldDashboard() {
     try {
       const data = await coinrabbitApi("create-earn", {
         currency: selected.ticker.toLowerCase(),
+        network: selected.network,
         amount: numAmount,
       });
       const sendAddress = data?.send_address || data?.deposit_address || data?.address || "";
