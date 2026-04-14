@@ -19,6 +19,12 @@ function getSmtpAccount(type: string): SmtpAccount {
       if (!user || !pass) throw new Error('SUPPORT_USER / SUPPORT_PASS not configured')
       return { user, pass, displayName: 'MRC GlobalPay Support' }
     }
+    case 'risk-alert': {
+      const user = Deno.env.get('COMPLIANCE_USER')
+      const pass = Deno.env.get('COMPLIANCE_PASS')
+      if (!user || !pass) throw new Error('COMPLIANCE_USER / COMPLIANCE_PASS not configured')
+      return { user, pass, displayName: 'MRC GlobalPay Compliance' }
+    }
     default: {
       const user = Deno.env.get('NOREPLY_USER')
       const pass = Deno.env.get('NOREPLY_PASS')
