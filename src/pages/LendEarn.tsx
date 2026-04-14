@@ -15,11 +15,13 @@ import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogFooter } from "
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { supabase } from "@/integrations/supabase/client";
 import { toast } from "sonner";
-import { Shield, TrendingUp, Wallet, Clock, AlertTriangle, ArrowRight, Percent, DollarSign, Lock, Search, Copy, CheckCircle, Loader2, Phone, Mail } from "lucide-react";
+import { Shield, TrendingUp, Wallet, Clock, AlertTriangle, ArrowRight, Percent, DollarSign, Lock, Search, Copy, CheckCircle, Loader2, Phone, Mail, LayoutDashboard } from "lucide-react";
 import CollateralSelector from "@/components/CollateralSelector";
 import { COLLATERAL_ASSETS, LTV_BY_RISK, type CollateralAsset } from "@/lib/coinrabbit-assets";
 import { EARN_ASSETS, EARN_ASSETS_UNIQUE_KEY } from "@/lib/coinrabbit-earn-assets";
 import HreflangTags from "@/components/HreflangTags";
+import LendDashboard from "@/components/lend/LendDashboard";
+import PostTransactionAuth from "@/components/lend/PostTransactionAuth";
 
 /* ------------------------------------------------------------------ */
 /*  Locale-aware number formatter                                      */
