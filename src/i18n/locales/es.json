@@ -671,6 +671,21 @@
     "getInstantLoan": "Obtener Préstamo Instantáneo",
     "earnSubtitle": "Gana rendimiento competitivo en tu cripto — sin período de bloqueo.",
     "viewAllEarnAssets": "Ver Todos los 50+ Activos",
-    "daily": "diario"
+    "daily": "diario",
+    "contact": {
+      "titleLoan": "Confirmar Detalles del Préstamo",
+      "titleEarn": "Confirmar Detalles de Ganancia",
+      "alertsNote": "Requerido para alertas automatizadas de LTV y seguridad proporcionadas por nuestro socio tecnológico.",
+      "emailLabel": "Dirección de Email",
+      "emailPlaceholder": "tu@email.com",
+      "invalidEmail": "Por favor ingresa un email válido",
+      "phoneLabel": "Número de Teléfono",
+      "phonePlaceholder": "123 456 7890",
+      "invalidPhone": "Por favor ingresa un número válido",
+      "compliance": "MRC GlobalPay · Registro MSB C100000015 · Tus datos están encriptados y solo se usan para alertas.",
+      "cancel": "Cancelar",
+      "confirm": "Confirmar y Proceder",
+      "proTip": "Consejo: Recibirás alertas por SMS y email si tu préstamo llega a las zonas Amarilla (Riesgo) o Roja (Liquidación)."
+    }
   }
 }

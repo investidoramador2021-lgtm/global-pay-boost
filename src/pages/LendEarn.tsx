@@ -11,10 +11,12 @@ import { Slider } from "@/components/ui/slider";
 import { Badge } from "@/components/ui/badge";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Input } from "@/components/ui/input";
-import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
+import { Label } from "@/components/ui/label";
+import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogFooter } from "@/components/ui/dialog";
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { supabase } from "@/integrations/supabase/client";
 import { toast } from "sonner";
-import { Shield, TrendingUp, Wallet, Clock, AlertTriangle, ArrowRight, Percent, DollarSign, Lock, Search, Copy, CheckCircle, Loader2 } from "lucide-react";
+import { Shield, TrendingUp, Wallet, Clock, AlertTriangle, ArrowRight, Percent, DollarSign, Lock, Search, Copy, CheckCircle, Loader2, Phone, Mail } from "lucide-react";
 import CollateralSelector from "@/components/CollateralSelector";
 import { COLLATERAL_ASSETS, LTV_BY_RISK, type CollateralAsset } from "@/lib/coinrabbit-assets";
 import { EARN_ASSETS, EARN_ASSETS_UNIQUE_KEY } from "@/lib/coinrabbit-earn-assets";
@@ -164,6 +166,157 @@ function DepositModal({ open, onClose, sendAddress, amount, currency, txId, type
 }
 
 /* ------------------------------------------------------------------ */
+/*  Country codes for phone picker                                     */
+/* ------------------------------------------------------------------ */
+const COUNTRY_CODES = [
+  { code: "+1", label: "🇨🇦 CA", country: "Canada", id: "CA" },
+  { code: "+1", label: "🇺🇸 US", country: "USA", id: "US" },
+  { code: "+55", label: "🇧🇷 BR", country: "Brazil", id: "BR" },
+  { code: "+44", label: "🇬🇧 UK", country: "UK", id: "GB" },
+  { code: "+33", label: "🇫🇷 FR", country: "France", id: "FR" },
+  { code: "+49", label: "🇩🇪 DE", country: "Germany", id: "DE" },
+  { code: "+81", label: "🇯🇵 JP", country: "Japan", id: "JP" },
+  { code: "+91", label: "🇮🇳 IN", country: "India", id: "IN" },
+  { code: "+84", label: "🇻🇳 VN", country: "Vietnam", id: "VN" },
+  { code: "+90", label: "🇹🇷 TR", country: "Turkey", id: "TR" },
+  { code: "+380", label: "🇺🇦 UA", country: "Ukraine", id: "UA" },
+  { code: "+92", label: "🇵🇰 PK", country: "Pakistan", id: "PK" },
+  { code: "+972", label: "🇮🇱 IL", country: "Israel", id: "IL" },
+  { code: "+98", label: "🇮🇷 IR", country: "Iran", id: "IR" },
+  { code: "+27", label: "🇿🇦 ZA", country: "South Africa", id: "ZA" },
+  { code: "+351", label: "🇵🇹 PT", country: "Portugal", id: "PT" },
+  { code: "+34", label: "🇪🇸 ES", country: "Spain", id: "ES" },
+];
+
+/* ------------------------------------------------------------------ */
+/*  Contact Confirm Modal – collects email + phone before submission    */
+/* ------------------------------------------------------------------ */
+interface ContactConfirmModalProps {
+  open: boolean;
+  onClose: () => void;
+  onConfirm: (email: string, phone: string) => void;
+  loading: boolean;
+  type: "loan" | "earn";
+}
+
+function ContactConfirmModal({ open, onClose, onConfirm, loading, type }: ContactConfirmModalProps) {
+  const { t } = useTranslation();
+  const [email, setEmail] = useState("");
+  const [phoneNumber, setPhoneNumber] = useState("");
+  const [selectedCountryId, setSelectedCountryId] = useState("CA");
+  const countryCode = COUNTRY_CODES.find(c => c.id === selectedCountryId)?.code || "+1";
+  const [errors, setErrors] = useState<{ email?: string; phone?: string }>({});
+
+  const validate = () => {
+    const newErrors: typeof errors = {};
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!email.trim() || !emailRegex.test(email.trim())) {
+      newErrors.email = t("lend.contact.invalidEmail", "Please enter a valid email address");
+    }
+    const digitsOnly = phoneNumber.replace(/\D/g, "");
+    if (!digitsOnly || digitsOnly.length < 7 || digitsOnly.length > 15) {
+      newErrors.phone = t("lend.contact.invalidPhone", "Please enter a valid phone number");
+    }
+    setErrors(newErrors);
+    return Object.keys(newErrors).length === 0;
+  };
+
+  const handleSubmit = () => {
+    if (!validate()) return;
+    const digitsOnly = phoneNumber.replace(/\D/g, "");
+    const e164Phone = `${countryCode}${digitsOnly}`;
+    onConfirm(email.trim(), e164Phone);
+  };
+
+  return (
+    <Dialog open={open} onOpenChange={(v) => !v && onClose()}>
+      <DialogContent className="max-w-md border-[#D4AF37]/20 bg-card">
+        <DialogHeader>
+          <DialogTitle className="flex items-center gap-2 text-foreground">
+            <Shield className="h-5 w-5 text-[#D4AF37]" />
+            {type === "loan"
+              ? t("lend.contact.titleLoan", "Confirm Loan Details")
+              : t("lend.contact.titleEarn", "Confirm Earn Details")}
+          </DialogTitle>
+        </DialogHeader>
+        <div className="space-y-4">
+          <div className="rounded-lg border border-[#D4AF37]/20 bg-[#D4AF37]/5 p-3">
+            <p className="text-xs text-muted-foreground leading-relaxed">
+              <Shield className="inline h-3 w-3 me-1 text-[#D4AF37]" />
+              {t("lend.contact.alertsNote", "Required for automated LTV and security alerts provided by our technology partner.")}
+            </p>
+          </div>
+
+          <div className="space-y-2">
+            <Label htmlFor="contact-email" className="flex items-center gap-1.5 text-sm text-foreground">
+              <Mail className="h-3.5 w-3.5 text-muted-foreground" />
+              {t("lend.contact.emailLabel", "Email Address")}
+            </Label>
+            <Input
+              id="contact-email"
+              type="email"
+              placeholder={t("lend.contact.emailPlaceholder", "your@email.com")}
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+              className="border-border"
+            />
+            {errors.email && <p className="text-xs text-red-400">{errors.email}</p>}
+          </div>
+
+          <div className="space-y-2">
+            <Label htmlFor="contact-phone" className="flex items-center gap-1.5 text-sm text-foreground">
+              <Phone className="h-3.5 w-3.5 text-muted-foreground" />
+              {t("lend.contact.phoneLabel", "Phone Number")}
+            </Label>
+            <div className="flex gap-2">
+              <Select value={selectedCountryId} onValueChange={setSelectedCountryId}>
+                <SelectTrigger className="w-[110px] border-border shrink-0">
+                  <SelectValue />
+                </SelectTrigger>
+                <SelectContent>
+                  {COUNTRY_CODES.map((c) => (
+                    <SelectItem key={c.id} value={c.id}>
+                      {c.label} {c.code}
+                    </SelectItem>
+                  ))}
+                </SelectContent>
+              </Select>
+              <Input
+                id="contact-phone"
+                type="tel"
+                placeholder={t("lend.contact.phonePlaceholder", "123 456 7890")}
+                value={phoneNumber}
+                onChange={(e) => setPhoneNumber(e.target.value.replace(/[^0-9\s\-()]/g, ""))}
+                className="border-border flex-1"
+              />
+            </div>
+            {errors.phone && <p className="text-xs text-red-400">{errors.phone}</p>}
+          </div>
+
+          <p className="text-[10px] text-muted-foreground text-center leading-relaxed">
+            {t("lend.contact.compliance", "MRC GlobalPay · MSB Registration C100000015 · Your data is encrypted and only used for transaction alerts.")}
+          </p>
+        </div>
+        <DialogFooter>
+          <Button variant="outline" onClick={onClose} disabled={loading}>
+            {t("lend.contact.cancel", "Cancel")}
+          </Button>
+          <Button
+            onClick={handleSubmit}
+            disabled={loading}
+            className="bg-[#D4AF37] text-background hover:bg-[#D4AF37]/90"
+          >
+            {loading ? <Loader2 className="h-4 w-4 animate-spin me-2" /> : null}
+            {loading ? t("lend.submitting") : t("lend.contact.confirm", "Confirm & Proceed")}
+            <ArrowRight className="h-4 w-4 ms-1" />
+          </Button>
+        </DialogFooter>
+      </DialogContent>
+    </Dialog>
+  );
+}
+
+/* ------------------------------------------------------------------ */
 /*  Loan Estimate data shape                                           */
 /* ------------------------------------------------------------------ */
 interface LoanEstimate {
@@ -187,6 +340,7 @@ function LoanCalculator() {
   const [estimate, setEstimate] = useState<LoanEstimate | null>(null);
 
   const [modalOpen, setModalOpen] = useState(false);
+  const [confirmOpen, setConfirmOpen] = useState(false);
   const [depositInfo, setDepositInfo] = useState({ sendAddress: "", amount: "", currency: "", txId: "" });
 
   const riskConfig = LTV_BY_RISK[selectedAsset.riskTier];
@@ -254,19 +408,26 @@ function LoanCalculator() {
     "90": t("lend.aggressive"),
   };
 
-  const handleOpenLoan = async () => {
+  const handleOpenLoan = () => {
     if (belowMinimum) {
       toast.error(t("lend.belowMinLoan", `Minimum collateral is $${minLoanAmount}`));
       return;
     }
+    setConfirmOpen(true);
+  };
+
+  const handleConfirmLoan = async (email: string, phone: string) => {
     setLoading(true);
     try {
       const data = await coinrabbitApi("create-loan", {
         collateral_currency: selectedAsset.ticker.toLowerCase(),
-        collateral_amount: amount,
+        collateral_amount: parseFloat(amount.toFixed(8)),
         ltv: selectedLtv,
         loan_currency: "usdt",
+        email,
+        phone,
       });
+      setConfirmOpen(false);
       const sendAddress = data?.send_address || data?.deposit_address || data?.address || "";
       const sendAmount = String(data?.collateral_amount || data?.amount || amount);
       const txId = data?.id || data?.loan_id || "";
@@ -393,6 +554,14 @@ function LoanCalculator() {
         </CardContent>
       </Card>
 
+      <ContactConfirmModal
+        open={confirmOpen}
+        onClose={() => setConfirmOpen(false)}
+        onConfirm={handleConfirmLoan}
+        loading={loading}
+        type="loan"
+      />
+
       <DepositModal
         open={modalOpen}
         onClose={() => setModalOpen(false)}
@@ -429,6 +598,7 @@ function YieldDashboard() {
   const calcRef = useRef<HTMLDivElement>(null);
 
   const [modalOpen, setModalOpen] = useState(false);
+  const [confirmOpen, setConfirmOpen] = useState(false);
   const [depositInfo, setDepositInfo] = useState({ sendAddress: "", amount: "", currency: "", txId: "" });
 
   const selected = useMemo(
@@ -492,11 +662,15 @@ function YieldDashboard() {
     setTimeout(() => calcRef.current?.scrollIntoView({ behavior: "smooth", block: "center" }), 100);
   };
 
-  const handleDeposit = async () => {
+  const handleDeposit = () => {
     if (belowMinimum) {
       toast.error(t("lend.minDeposit", { min: minEarnAmount }));
       return;
     }
+    setConfirmOpen(true);
+  };
+
+  const handleConfirmEarn = async (email: string, phone: string) => {
     setLoading(true);
     try {
       const data = await coinrabbitApi("create-earn", {
@@ -504,7 +678,10 @@ function YieldDashboard() {
         currencyId: selected.currencyId,
         network: selected.network,
         amount: numAmount,
+        email,
+        phone,
       });
+      setConfirmOpen(false);
       const sendAddress = data?.send_address || data?.deposit_address || data?.address || "";
       const sendAmount = String(data?.amount || numAmount);
       const txId = data?.id || data?.earn_id || "";
@@ -691,6 +868,14 @@ function YieldDashboard() {
           </Card>
         </div>
       </div>
+
+      <ContactConfirmModal
+        open={confirmOpen}
+        onClose={() => setConfirmOpen(false)}
+        onConfirm={handleConfirmEarn}
+        loading={loading}
+        type="earn"
+      />
 
       <DepositModal
         open={modalOpen}

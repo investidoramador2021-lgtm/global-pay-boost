@@ -188,12 +188,16 @@ Deno.serve(async (req: Request) => {
       const toNetwork = normalizeNetwork(p.to_network || p.loan_network || 'ETH')
       const exchange = String(p.exchange || 'direct')
 
+      // Round amount to 8 decimal places (standard crypto precision)
+      const roundedAmount = parseFloat(Number(body.collateral_amount).toFixed(8))
+
       const qs = new URLSearchParams({
         from_code: fromCode,
         from_network: fromNetwork,
         to_code: toCode,
         to_network: toNetwork,
-        amount: String(body.collateral_amount),
+        amount: String(roundedAmount),
+        ltv_percent: String(body.ltv || 50),
         exchange,
       })
       const url = `${BASE}/loans/estimate?${qs}`
@@ -293,11 +297,17 @@ Deno.serve(async (req: Request) => {
     if (action === 'create-loan') {
       const body = normalizeLoanEstimate(p)
       if (!body.collateral_currency || !body.collateral_amount || !body.ltv) return json({ error: 'Missing fields' }, 400)
+      const requestBody = {
+        ...body,
+        collateral_amount: parseFloat(Number(body.collateral_amount).toFixed(8)),
+        ...(p.email ? { email: String(p.email) } : {}),
+        ...(p.phone ? { phone: String(p.phone) } : {}),
+      }
       const { response, responseBody } = await callProvider(`${BASE}/loans`, {
         method: 'POST',
         headers: h,
-        body: JSON.stringify(body),
-      }, body)
+        body: JSON.stringify(requestBody),
+      }, requestBody)
       return json(responseBody, response.ok ? 200 : response.status)
     }
 
@@ -307,6 +317,8 @@ Deno.serve(async (req: Request) => {
       const requestBody = {
         amount: body.amount,
         currency: body.currencyId || body.currency,
+        ...(p.email ? { email: String(p.email) } : {}),
+        ...(p.phone ? { phone: String(p.phone) } : {}),
       }
       const url = `${BASE}/earns`
       const { response, responseBody } = await callProvider(url, {

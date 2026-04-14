@@ -685,6 +685,21 @@
     "periodWeekly": "7 Days",
     "periodMonthly": "1 Month",
     "periodAnnual": "1 Year",
-    "earnSuccess": "Earn deposit initiated!"
+    "earnSuccess": "Earn deposit initiated!",
+    "contact": {
+      "titleLoan": "Confirm Loan Details",
+      "titleEarn": "Confirm Earn Details",
+      "alertsNote": "Required for automated LTV and security alerts provided by our technology partner.",
+      "emailLabel": "Email Address",
+      "emailPlaceholder": "your@email.com",
+      "invalidEmail": "Please enter a valid email address",
+      "phoneLabel": "Phone Number",
+      "phonePlaceholder": "123 456 7890",
+      "invalidPhone": "Please enter a valid phone number",
+      "compliance": "MRC GlobalPay · MSB Registration C100000015 · Your data is encrypted and only used for transaction alerts.",
+      "cancel": "Cancel",
+      "confirm": "Confirm & Proceed",
+      "proTip": "Pro Tip: You will receive SMS and email alerts if your loan reaches the Yellow (Risk) or Red (Liquidation) zones."
+    }
   }
 }

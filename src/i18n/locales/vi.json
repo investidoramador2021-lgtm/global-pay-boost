@@ -671,6 +671,21 @@
     "getInstantLoan": "Nhận Khoản vay Tức thì",
     "earnSubtitle": "Kiếm lợi nhuận cạnh tranh từ crypto — không khóa tài sản.",
     "viewAllEarnAssets": "Xem Tất cả 50+ Tài sản",
-    "daily": "hàng ngày"
+    "daily": "hàng ngày",
+    "contact": {
+      "titleLoan": "Xác Nhận Chi Tiết Khoản Vay",
+      "titleEarn": "Xác Nhận Chi Tiết Thu Nhập",
+      "alertsNote": "Bắt buộc cho cảnh báo LTV và bảo mật tự động được cung cấp bởi đối tác công nghệ.",
+      "emailLabel": "Địa Chỉ Email",
+      "emailPlaceholder": "your@email.com",
+      "invalidEmail": "Vui lòng nhập email hợp lệ",
+      "phoneLabel": "Số Điện Thoại",
+      "phonePlaceholder": "123 456 7890",
+      "invalidPhone": "Vui lòng nhập số điện thoại hợp lệ",
+      "compliance": "MRC GlobalPay · Đăng ký MSB C100000015 · Dữ liệu được mã hóa và chỉ dùng cho cảnh báo.",
+      "cancel": "Hủy",
+      "confirm": "Xác Nhận & Tiếp Tục",
+      "proTip": "Mẹo: Bạn sẽ nhận cảnh báo SMS và email nếu khoản vay đạt vùng Vàng (Rủi ro) hoặc Đỏ (Thanh lý)."
+    }
   }
 }

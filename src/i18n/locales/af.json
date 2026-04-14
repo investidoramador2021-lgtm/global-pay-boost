@@ -671,6 +671,21 @@
     "getInstantLoan": "Kry Onmiddellike Lening",
     "earnSubtitle": "Verdien mededingende opbrengs op jou kripto — geen sluitperiode.",
     "viewAllEarnAssets": "Bekyk Alle 50+ Bates",
-    "daily": "daagliks"
+    "daily": "daagliks",
+    "contact": {
+      "titleLoan": "Bevestig Leningsbesonderhede",
+      "titleEarn": "Bevestig Verdienstebesonderhede",
+      "alertsNote": "Vereis vir outomatiese LTV- en sekuriteitswaarskuwings van ons tegnologievennoot.",
+      "emailLabel": "E-posadres",
+      "emailPlaceholder": "jou@epos.com",
+      "invalidEmail": "Voer asseblief 'n geldige e-posadres in",
+      "phoneLabel": "Telefoonnommer",
+      "phonePlaceholder": "123 456 7890",
+      "invalidPhone": "Voer asseblief 'n geldige nommer in",
+      "compliance": "MRC GlobalPay · MSB-registrasie C100000015 · U data is geënkripteer.",
+      "cancel": "Kanselleer",
+      "confirm": "Bevestig & Gaan Voort",
+      "proTip": "Wenk: U sal SMS- en e-poswaarskuwings ontvang as u lening die Geel (Risiko) of Rooi (Likwidasie) sones bereik."
+    }
   }
 }

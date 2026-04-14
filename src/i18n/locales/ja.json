@@ -671,6 +671,21 @@
     "getInstantLoan": "即時ローンを取得",
     "earnSubtitle": "ロックアップ期間なしで暗号資産で競争力のある利回りを得ましょう。",
     "viewAllEarnAssets": "50以上の資産を表示",
-    "daily": "日次"
+    "daily": "日次",
+    "contact": {
+      "titleLoan": "ローン詳細の確認",
+      "titleEarn": "収益詳細の確認",
+      "alertsNote": "技術パートナーが提供する自動LTVおよびセキュリティアラートに必要です。",
+      "emailLabel": "メールアドレス",
+      "emailPlaceholder": "your@email.com",
+      "invalidEmail": "有効なメールアドレスを入力してください",
+      "phoneLabel": "電話番号",
+      "phonePlaceholder": "123 456 7890",
+      "invalidPhone": "有効な電話番号を入力してください",
+      "compliance": "MRC GlobalPay · MSB登録 C100000015 · データは暗号化され、アラートにのみ使用されます。",
+      "cancel": "キャンセル",
+      "confirm": "確認して続行",
+      "proTip": "ヒント: ローンが黄色（リスク）または赤（清算）ゾーンに達した場合、SMSとメールでアラートが届きます。"
+    }
   }
 }

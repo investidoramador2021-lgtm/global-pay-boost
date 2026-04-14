@@ -671,6 +671,21 @@
     "getInstantLoan": "Anında Kredi Al",
     "earnSubtitle": "Kriptolarınızda rekabetçi getiri kazanın — kilitleme süresi yok.",
     "viewAllEarnAssets": "Tüm 50+ Varlığı Gör",
-    "daily": "günlük"
+    "daily": "günlük",
+    "contact": {
+      "titleLoan": "Kredi Detaylarını Onayla",
+      "titleEarn": "Kazanç Detaylarını Onayla",
+      "alertsNote": "Teknoloji ortağımız tarafından sağlanan otomatik LTV ve güvenlik uyarıları için gereklidir.",
+      "emailLabel": "E-posta Adresi",
+      "emailPlaceholder": "your@email.com",
+      "invalidEmail": "Lütfen geçerli bir e-posta girin",
+      "phoneLabel": "Telefon Numarası",
+      "phonePlaceholder": "123 456 7890",
+      "invalidPhone": "Lütfen geçerli bir numara girin",
+      "compliance": "MRC GlobalPay · MSB Kayıt C100000015 · Verileriniz şifrelenir ve yalnızca uyarılar için kullanılır.",
+      "cancel": "İptal",
+      "confirm": "Onayla ve Devam Et",
+      "proTip": "İpucu: Krediniz Sarı (Risk) veya Kırmızı (Tasfiye) bölgelerine ulaşırsa SMS ve e-posta uyarıları alırsınız."
+    }
   }
 }
