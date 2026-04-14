@@ -13,7 +13,7 @@ const MsbTrustBar = () => (
         >
           Registered Canadian MSB
         </Link>
-        {" "}— Licensed &amp; compliant under FINTRAC. Your swaps are processed through a regulated money services business.
+        {" "}— MRC Pay International Corp. Licensed &amp; compliant. Your swaps are processed through a regulated money services business.
       </p>
     </div>
   </section>
