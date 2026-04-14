@@ -5,6 +5,7 @@
 
 export interface EarnAsset {
   ticker: string;
+  currencyId: string;
   name: string;
   network: string;
   icon: string;
@@ -17,11 +18,25 @@ function makeAsset(
   ticker: string, name: string, network: string,
   iconSlug: string, apy: number, minUsd = 100,
 ): EarnAsset {
+  const networkMap: Record<string, string> = {
+    "TRC-20": "TRX",
+    "ERC-20": "ETH",
+    "Polygon": "MATIC",
+    "Solana": "SOL",
+    "Arbitrum": "ARBITRUM",
+    "Optimism": "OP",
+    "Mainnet": ticker.toUpperCase() === "BTC" ? "BTC" : ticker.toUpperCase() === "ETH" ? "ETH" : network.toUpperCase(),
+    "BSC": "BSC",
+  };
+  const normalizedNetwork = networkMap[network] ?? network.toUpperCase();
   const baseUrl = iconSlug.includes("/")
     ? `https://content-api.changenow.io/uploads/${iconSlug}`
     : `https://changenow.io/images/sprite/currencies/${iconSlug}.svg`;
   return {
-    ticker, name, network,
+    ticker,
+    currencyId: `${ticker.toUpperCase()}_${normalizedNetwork}`,
+    name,
+    network,
     icon: baseUrl,
     apy,
     daily: +(apy / 365).toFixed(4),
