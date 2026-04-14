@@ -1,4 +1,6 @@
 import { useTranslation } from "react-i18next";
+import { Link, useLocation } from "react-router-dom";
+import { getLangFromPath, langPath } from "@/i18n";
 import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import {
