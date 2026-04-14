@@ -37,14 +37,9 @@ function useLocaleFormat() {
 /*  API helper                                                         */
 /* ------------------------------------------------------------------ */
 async function coinrabbitApi(action: string, payload: Record<string, unknown> = {}) {
-  const params = new URLSearchParams({ action });
-  Object.entries(payload).forEach(([k, v]) => {
-    if (v !== undefined && v !== null) params.set(k, String(v));
+  const { data, error } = await supabase.functions.invoke("coinrabbit", {
+    body: { action, ...payload },
   });
-  const { data, error } = await supabase.functions.invoke(
-    `coinrabbit?${params.toString()}`,
-    { method: "GET" }
-  );
   if (error) throw new Error(error.message);
   return data;
 }
