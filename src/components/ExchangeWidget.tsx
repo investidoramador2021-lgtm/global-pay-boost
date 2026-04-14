@@ -495,7 +495,11 @@ function EarnWidgetPanel() {
       {/* Start Earning */}
       <a
         href="/lend?tab=earn"
-        className="flex w-full items-center justify-center gap-2 rounded-lg bg-[#D4AF37] px-4 py-3 font-display text-sm font-bold text-background shadow-lg transition-colors hover:bg-[#C5A028]"
+        className="flex w-full items-center justify-center gap-2 rounded-lg px-4 py-3 font-display text-sm font-bold text-background shadow-lg transition-all hover:shadow-xl"
+        style={{
+          background: "linear-gradient(135deg, #D4AF37 0%, #C5A028 100%)",
+          boxShadow: "0 4px 16px rgba(212,175,55,0.3)",
+        }}
       >
         <TrendingUp className="h-4 w-4" /> {t("lend.startEarning", "Start Earning")}
       </a>
