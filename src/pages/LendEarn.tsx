@@ -166,6 +166,156 @@ function DepositModal({ open, onClose, sendAddress, amount, currency, txId, type
 }
 
 /* ------------------------------------------------------------------ */
+/*  Country codes for phone picker                                     */
+/* ------------------------------------------------------------------ */
+const COUNTRY_CODES = [
+  { code: "+1", label: "🇨🇦 CA", country: "Canada" },
+  { code: "+1", label: "🇺🇸 US", country: "USA" },
+  { code: "+55", label: "🇧🇷 BR", country: "Brazil" },
+  { code: "+44", label: "🇬🇧 UK", country: "UK" },
+  { code: "+33", label: "🇫🇷 FR", country: "France" },
+  { code: "+49", label: "🇩🇪 DE", country: "Germany" },
+  { code: "+81", label: "🇯🇵 JP", country: "Japan" },
+  { code: "+91", label: "🇮🇳 IN", country: "India" },
+  { code: "+84", label: "🇻🇳 VN", country: "Vietnam" },
+  { code: "+90", label: "🇹🇷 TR", country: "Turkey" },
+  { code: "+380", label: "🇺🇦 UA", country: "Ukraine" },
+  { code: "+92", label: "🇵🇰 PK", country: "Pakistan" },
+  { code: "+972", label: "🇮🇱 IL", country: "Israel" },
+  { code: "+98", label: "🇮🇷 IR", country: "Iran" },
+  { code: "+27", label: "🇿🇦 ZA", country: "South Africa" },
+  { code: "+351", label: "🇵🇹 PT", country: "Portugal" },
+  { code: "+34", label: "🇪🇸 ES", country: "Spain" },
+];
+
+/* ------------------------------------------------------------------ */
+/*  Contact Confirm Modal – collects email + phone before submission    */
+/* ------------------------------------------------------------------ */
+interface ContactConfirmModalProps {
+  open: boolean;
+  onClose: () => void;
+  onConfirm: (email: string, phone: string) => void;
+  loading: boolean;
+  type: "loan" | "earn";
+}
+
+function ContactConfirmModal({ open, onClose, onConfirm, loading, type }: ContactConfirmModalProps) {
+  const { t } = useTranslation();
+  const [email, setEmail] = useState("");
+  const [phoneNumber, setPhoneNumber] = useState("");
+  const [countryCode, setCountryCode] = useState("+1");
+  const [errors, setErrors] = useState<{ email?: string; phone?: string }>({});
+
+  const validate = () => {
+    const newErrors: typeof errors = {};
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!email.trim() || !emailRegex.test(email.trim())) {
+      newErrors.email = t("lend.contact.invalidEmail", "Please enter a valid email address");
+    }
+    const digitsOnly = phoneNumber.replace(/\D/g, "");
+    if (!digitsOnly || digitsOnly.length < 7 || digitsOnly.length > 15) {
+      newErrors.phone = t("lend.contact.invalidPhone", "Please enter a valid phone number");
+    }
+    setErrors(newErrors);
+    return Object.keys(newErrors).length === 0;
+  };
+
+  const handleSubmit = () => {
+    if (!validate()) return;
+    const digitsOnly = phoneNumber.replace(/\D/g, "");
+    const e164Phone = `${countryCode}${digitsOnly}`;
+    onConfirm(email.trim(), e164Phone);
+  };
+
+  return (
+    <Dialog open={open} onOpenChange={(v) => !v && onClose()}>
+      <DialogContent className="max-w-md border-[#D4AF37]/20 bg-card">
+        <DialogHeader>
+          <DialogTitle className="flex items-center gap-2 text-foreground">
+            <Shield className="h-5 w-5 text-[#D4AF37]" />
+            {type === "loan"
+              ? t("lend.contact.titleLoan", "Confirm Loan Details")
+              : t("lend.contact.titleEarn", "Confirm Earn Details")}
+          </DialogTitle>
+        </DialogHeader>
+        <div className="space-y-4">
+          <div className="rounded-lg border border-[#D4AF37]/20 bg-[#D4AF37]/5 p-3">
+            <p className="text-xs text-muted-foreground leading-relaxed">
+              <Shield className="inline h-3 w-3 me-1 text-[#D4AF37]" />
+              {t("lend.contact.alertsNote", "Required for automated LTV and security alerts provided by our technology partner.")}
+            </p>
+          </div>
+
+          <div className="space-y-2">
+            <Label htmlFor="contact-email" className="flex items-center gap-1.5 text-sm text-foreground">
+              <Mail className="h-3.5 w-3.5 text-muted-foreground" />
+              {t("lend.contact.emailLabel", "Email Address")}
+            </Label>
+            <Input
+              id="contact-email"
+              type="email"
+              placeholder={t("lend.contact.emailPlaceholder", "your@email.com")}
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+              className="border-border"
+            />
+            {errors.email && <p className="text-xs text-red-400">{errors.email}</p>}
+          </div>
+
+          <div className="space-y-2">
+            <Label htmlFor="contact-phone" className="flex items-center gap-1.5 text-sm text-foreground">
+              <Phone className="h-3.5 w-3.5 text-muted-foreground" />
+              {t("lend.contact.phoneLabel", "Phone Number")}
+            </Label>
+            <div className="flex gap-2">
+              <Select value={countryCode} onValueChange={setCountryCode}>
+                <SelectTrigger className="w-[100px] border-border shrink-0">
+                  <SelectValue />
+                </SelectTrigger>
+                <SelectContent>
+                  {COUNTRY_CODES.map((c, i) => (
+                    <SelectItem key={`${c.code}-${i}`} value={c.code}>
+                      {c.label} {c.code}
+                    </SelectItem>
+                  ))}
+                </SelectContent>
+              </Select>
+              <Input
+                id="contact-phone"
+                type="tel"
+                placeholder={t("lend.contact.phonePlaceholder", "123 456 7890")}
+                value={phoneNumber}
+                onChange={(e) => setPhoneNumber(e.target.value.replace(/[^0-9\s\-()]/g, ""))}
+                className="border-border flex-1"
+              />
+            </div>
+            {errors.phone && <p className="text-xs text-red-400">{errors.phone}</p>}
+          </div>
+
+          <p className="text-[10px] text-muted-foreground text-center leading-relaxed">
+            {t("lend.contact.compliance", "MRC GlobalPay · MSB Registration C100000015 · Your data is encrypted and only used for transaction alerts.")}
+          </p>
+        </div>
+        <DialogFooter>
+          <Button variant="outline" onClick={onClose} disabled={loading}>
+            {t("lend.contact.cancel", "Cancel")}
+          </Button>
+          <Button
+            onClick={handleSubmit}
+            disabled={loading}
+            className="bg-[#D4AF37] text-background hover:bg-[#D4AF37]/90"
+          >
+            {loading ? <Loader2 className="h-4 w-4 animate-spin me-2" /> : null}
+            {loading ? t("lend.submitting") : t("lend.contact.confirm", "Confirm & Proceed")}
+            <ArrowRight className="h-4 w-4 ms-1" />
+          </Button>
+        </DialogFooter>
+      </DialogContent>
+    </Dialog>
+  );
+}
+
+/* ------------------------------------------------------------------ */
 /*  Loan Estimate data shape                                           */
 /* ------------------------------------------------------------------ */
 interface LoanEstimate {
