@@ -83,13 +83,16 @@ interface DepositModalProps {
   currency: string;
   txId: string;
   type: "loan" | "earn";
+  userEmail?: string;
+  userLang?: string;
 }
 
-function DepositModal({ open, onClose, sendAddress, amount, currency, txId, type }: DepositModalProps) {
+function DepositModal({ open, onClose, sendAddress, amount, currency, txId, type, userEmail, userLang }: DepositModalProps) {
   const { t } = useTranslation();
   const [copied, setCopied] = useState(false);
   const [status, setStatus] = useState<"waiting" | "confirming" | "success">("waiting");
   const pollRef = useRef<ReturnType<typeof setInterval>>();
+  const riskAlertSentRef = useRef<Set<string>>(new Set());
 
   const copyAddress = () => {
     navigator.clipboard.writeText(sendAddress);
@@ -109,12 +112,32 @@ function DepositModal({ open, onClose, sendAddress, amount, currency, txId, type
         } else if (s.includes("confirm") || s.includes("processing")) {
           setStatus("confirming");
         }
+
+        // ── Risk Alert wiring (compliance@mrc-pay.com) ──
+        if (type === "loan" && userEmail && data?.ltv_percent) {
+          const ltv = Number(data.ltv_percent);
+          const riskZone = data?.risk_zone || (ltv >= 85 ? "red" : ltv >= 75 ? "yellow" : null);
+          if (riskZone && !riskAlertSentRef.current.has(riskZone)) {
+            riskAlertSentRef.current.add(riskZone);
+            supabase.functions.invoke("smtp-send", {
+              body: {
+                type: "risk-alert",
+                recipientEmail: userEmail,
+                loanId: txId,
+                collateralCurrency: currency,
+                currentLtv: String(ltv),
+                zone: riskZone,
+                lang: userLang || "en",
+              },
+            }).catch((err) => console.error("Risk alert email failed (non-blocking):", err));
+          }
+        }
       } catch { /* silent */ }
     };
     poll();
     pollRef.current = setInterval(poll, 15000);
     return () => { if (pollRef.current) clearInterval(pollRef.current); };
-  }, [open, txId, type]);
+  }, [open, txId, type, userEmail, userLang, currency]);
 
   const statusConfig = {
     waiting: { icon: Clock, label: t("lend.modal.waiting", "Waiting for deposit…"), color: "text-[#D4AF37]" },
@@ -355,7 +378,7 @@ interface LoanEstimate {
 /*  Loan Calculator – wired to /v2/loans/estimate                      */
 /* ------------------------------------------------------------------ */
 function LoanCalculator() {
-  const { t } = useTranslation();
+  const { t, i18n } = useTranslation();
   const fmt = useLocaleFormat();
   const [selectedAsset, setSelectedAsset] = useState<CollateralAsset>(COLLATERAL_ASSETS[0]);
   const [amount, setAmount] = useState<number | "">(1000);
@@ -366,6 +389,7 @@ function LoanCalculator() {
   const [modalOpen, setModalOpen] = useState(false);
   const [confirmOpen, setConfirmOpen] = useState(false);
   const [depositInfo, setDepositInfo] = useState({ sendAddress: "", amount: "", currency: "", txId: "" });
+  const [confirmedEmail, setConfirmedEmail] = useState("");
 
   const riskConfig = LTV_BY_RISK[selectedAsset.riskTier];
   const ltvOptions = riskConfig.ltvOptions;
@@ -452,9 +476,27 @@ function LoanCalculator() {
         phone,
       });
       setConfirmOpen(false);
+      setConfirmedEmail(email);
       const sendAddress = data?.send_address || data?.deposit_address || data?.address || "";
       const sendAmount = String(data?.collateral_amount || data?.amount || numAmount);
       const txId = data?.id || data?.loan_id || "";
+
+      // ── Parallel email trigger (no-reply@mrc-pay.com) — does NOT modify partner payload ──
+      const currentLang = i18n.language || "en";
+      supabase.functions.invoke("smtp-send", {
+        body: {
+          type: "loan-confirmation",
+          recipientEmail: email,
+          collateralAmount: sendAmount,
+          collateralCurrency: selectedAsset.ticker,
+          loanAmount: String(borrowable),
+          ltvPercent: String(selectedLtv),
+          sendAddress,
+          txId,
+          lang: currentLang,
+        },
+      }).catch((err) => console.error("Loan confirmation email failed (non-blocking):", err));
+
       if (sendAddress) {
         setDepositInfo({ sendAddress, amount: sendAmount, currency: selectedAsset.ticker, txId });
         setModalOpen(true);
@@ -595,6 +637,8 @@ function LoanCalculator() {
         currency={depositInfo.currency}
         txId={depositInfo.txId}
         type="loan"
+        userEmail={confirmedEmail}
+        userLang={i18n.language}
       />
     </>
   );
@@ -612,7 +656,7 @@ interface EarnEstimate {
 /*  Yield Dashboard – wired to /v2/earns/estimate                      */
 /* ------------------------------------------------------------------ */
 function YieldDashboard() {
-  const { t } = useTranslation();
+  const { t, i18n } = useTranslation();
   const fmt = useLocaleFormat();
   const [selectedKey, setSelectedKey] = useState(EARN_ASSETS_UNIQUE_KEY(EARN_ASSETS[0]));
   const [depositAmount, setDepositAmount] = useState("");
@@ -710,6 +754,22 @@ function YieldDashboard() {
       const sendAddress = data?.send_address || data?.deposit_address || data?.address || "";
       const sendAmount = String(data?.amount || numAmount);
       const txId = data?.id || data?.earn_id || "";
+
+      // ── Parallel email trigger (no-reply@mrc-pay.com) — does NOT modify partner payload ──
+      const currentLang = i18n.language || "en";
+      supabase.functions.invoke("smtp-send", {
+        body: {
+          type: "earn-confirmation",
+          recipientEmail: email,
+          depositAmount: sendAmount,
+          depositCurrency: selected.ticker,
+          apy: String(apy),
+          sendAddress,
+          txId,
+          lang: currentLang,
+        },
+      }).catch((err) => console.error("Earn confirmation email failed (non-blocking):", err));
+
       if (sendAddress) {
         setDepositInfo({ sendAddress, amount: sendAmount, currency: selected.ticker, txId });
         setModalOpen(true);
