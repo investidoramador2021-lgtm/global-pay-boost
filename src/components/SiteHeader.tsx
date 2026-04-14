@@ -31,11 +31,10 @@ const SiteHeader = () => {
   const navLinks = [
     { label: t("nav.howItWorks"), href: "/#how-it-works" },
     { label: t("nav.features"), href: "/#features" },
-    { label: t("nav.swapPairs"), href: "/#swap-pairs" },
+    { label: "Borrow", href: "/lend" },
+    { label: "Earn", href: "/lend?tab=earn" },
     { label: t("nav.blog"), href: "/blog" },
     { label: t("nav.faq"), href: "/#faq" },
-    { label: "Get Widget", href: "/get-widget" },
-    { label: "Dust Calculator", href: "/tools/crypto-dust-calculator" },
     { label: "Developers", href: "/developer" },
   ];
 

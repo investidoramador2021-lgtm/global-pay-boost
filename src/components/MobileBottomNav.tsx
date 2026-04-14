@@ -1,11 +1,12 @@
-import { ArrowLeftRight, BarChart3, Clock, HelpCircle } from "lucide-react";
+import { ArrowLeftRight, Landmark, TrendingUp, Clock, HelpCircle } from "lucide-react";
 import { useLocation } from "react-router-dom";
 
 const navItems = [
   { label: "Swap", icon: ArrowLeftRight, href: "/#exchange" },
-  { label: "Pairs", icon: BarChart3, href: "/#swap-pairs" },
-  { label: "History", icon: Clock, href: "/#live-swaps" },
-  { label: "Support", icon: HelpCircle, href: "/#faq" },
+  { label: "Borrow", icon: Landmark, href: "/lend" },
+  { label: "Earn", icon: TrendingUp, href: "/lend?tab=earn" },
+  { label: "Track", icon: Clock, href: "/lend?tab=track" },
+  { label: "Help", icon: HelpCircle, href: "/#faq" },
 ];
 
 const MobileBottomNav = () => {
