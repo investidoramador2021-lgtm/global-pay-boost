@@ -233,3 +233,8 @@ html[lang='fa'] body { font-family: 'Vazirmatn', 'Inter', sans-serif; }
   content-visibility: auto;
   contain-intrinsic-size: auto 600px;
 }
+
+@keyframes shimmer {
+  0% { background-position: 200% 0; }
+  100% { background-position: -200% 0; }
+}
