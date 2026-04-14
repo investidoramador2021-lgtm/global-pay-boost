@@ -1832,7 +1832,7 @@ const ExchangeWidget = ({ onTabChange }: ExchangeWidgetProps = {}) => {
                       <button
                         key={tab.mode}
                         onClick={tab.onClick}
-                        className={`group relative flex items-center justify-center gap-1.5 rounded-lg py-2.5 font-display text-xs font-semibold whitespace-nowrap min-h-[44px] ${
+                        className={`group relative flex w-full items-center justify-center gap-1.5 rounded-lg py-2.5 font-display text-xs font-semibold whitespace-nowrap min-h-[44px] ${
                           isActive
                             ? "text-[hsl(160_100%_8%)] shadow-[inset_0_1px_0_rgba(255,255,255,0.25),0_1px_3px_rgba(0,0,0,0.4)]"
                             : isFinancial && !isActive
