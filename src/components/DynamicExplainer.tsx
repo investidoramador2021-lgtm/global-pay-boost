@@ -15,7 +15,7 @@ import googlePayLogo from "@/assets/logo-googlepay.png";
 import pixLogo from "@/assets/logo-pix.png";
 import sepaLogo from "@/assets/logo-sepa.png";
 
-type WidgetMode = "exchange" | "buysell" | "private" | "bridge" | "request";
+type WidgetMode = "exchange" | "buysell" | "private" | "bridge" | "request" | "loan";
 
 interface Props {
   activeTab: WidgetMode;
@@ -86,7 +86,7 @@ const lineStyles = [
 
 const DynamicExplainer = ({ activeTab, onCtaClick }: Props) => {
   const { t } = useTranslation();
-  const mode: DisplayMode = activeTab === "request" ? "invoice" : (activeTab as DisplayMode);
+  const mode: DisplayMode = activeTab === "request" ? "invoice" : activeTab === "loan" ? "exchange" : (activeTab as DisplayMode);
   const [activeStep, setActiveStep] = useState(0);
 
   const config = modeConfig[mode];
