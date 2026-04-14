@@ -447,13 +447,88 @@ function EarnFlexibilitySection() {
 }
 
 /* ────────────────────────────────────────────────────────────── */
+/*  Partner Liability Footer                                     */
+/* ────────────────────────────────────────────────────────────── */
+function PartnerLiabilityFooter() {
+  const { t } = useTranslation();
+  return (
+    <div className="rounded-lg border border-border/40 bg-background/30 p-4 text-center">
+      <p className="text-[11px] leading-relaxed text-muted-foreground italic">
+        {t(
+          "lendGuide.partnerLiabilityFooter",
+          "Monitoring, security alerts, and liquidation execution are managed exclusively by our technology partner's automated risk engine."
+        )}
+      </p>
+    </div>
+  );
+}
+
+/* ────────────────────────────────────────────────────────────── */
+/*  3D Hero Visual – Loan (CSS-based illustration)               */
+/* ────────────────────────────────────────────────────────────── */
+function LoanHeroVisual() {
+  return (
+    <div className="relative mx-auto flex h-48 max-w-sm items-center justify-center overflow-hidden rounded-2xl border border-[#D4AF37]/20 bg-gradient-to-br from-background via-card to-background">
+      <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,hsl(var(--primary)/0.08),transparent_70%)]" />
+      <div className="relative z-10 flex h-24 w-24 items-center justify-center rounded-2xl border-2 border-[#D4AF37]/40 bg-[#D4AF37]/10 shadow-[0_0_40px_-10px_#D4AF37]">
+        <Shield className="h-12 w-12 text-[#D4AF37]" />
+      </div>
+      <div className="absolute top-6 start-8 flex h-10 w-10 items-center justify-center rounded-full border border-[#D4AF37]/30 bg-card/80 shadow-lg animate-bounce" style={{ animationDelay: "0s", animationDuration: "3s" }}>
+        <span className="text-xs font-bold text-[#D4AF37]">₿</span>
+      </div>
+      <div className="absolute top-10 end-10 flex h-9 w-9 items-center justify-center rounded-full border border-[#D4AF37]/30 bg-card/80 shadow-lg animate-bounce" style={{ animationDelay: "0.5s", animationDuration: "3.5s" }}>
+        <span className="text-xs font-bold text-[#D4AF37]">Ξ</span>
+      </div>
+      <div className="absolute bottom-6 start-12 flex h-8 w-8 items-center justify-center rounded-full border border-emerald-400/30 bg-card/80 shadow-lg animate-bounce" style={{ animationDelay: "1s", animationDuration: "4s" }}>
+        <span className="text-[10px] font-bold text-emerald-400">$</span>
+      </div>
+      <div className="absolute bottom-8 end-14 flex h-8 w-8 items-center justify-center rounded-full border border-emerald-400/30 bg-card/80 shadow-lg animate-bounce" style={{ animationDelay: "1.5s", animationDuration: "3.2s" }}>
+        <span className="text-[10px] font-bold text-emerald-400">$</span>
+      </div>
+    </div>
+  );
+}
+
+/* ────────────────────────────────────────────────────────────── */
+/*  3D Hero Visual – Earn (CSS-based illustration)               */
+/* ────────────────────────────────────────────────────────────── */
+function EarnHeroVisual() {
+  return (
+    <div className="relative mx-auto flex h-48 max-w-sm items-center justify-center overflow-hidden rounded-2xl border border-[#D4AF37]/20 bg-gradient-to-br from-background via-card to-background">
+      <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,hsl(var(--primary)/0.08),transparent_70%)]" />
+      <div className="relative z-10 flex items-end gap-2">
+        {[32, 48, 40, 56, 52, 64, 72].map((h, i) => (
+          <div
+            key={i}
+            className="w-5 rounded-t-md bg-gradient-to-t from-[#D4AF37]/60 to-[#D4AF37] shadow-[0_0_12px_-3px_#D4AF37]"
+            style={{ height: `${h}px` }}
+          />
+        ))}
+      </div>
+      <div className="absolute top-5 end-8 flex h-11 w-11 items-center justify-center rounded-full border border-[#D4AF37]/30 bg-card/80 shadow-lg animate-bounce" style={{ animationDuration: "3s" }}>
+        <span className="text-sm font-bold text-[#D4AF37]">%</span>
+      </div>
+      <div className="absolute top-8 start-8 flex h-9 w-9 items-center justify-center rounded-full border border-[#D4AF37]/30 bg-card/80 shadow-lg animate-bounce" style={{ animationDelay: "0.8s", animationDuration: "3.5s" }}>
+        <span className="text-xs font-bold text-[#D4AF37]">₿</span>
+      </div>
+      <div className="absolute bottom-6 start-10 flex h-8 w-8 items-center justify-center rounded-full border border-emerald-400/30 bg-card/80 shadow-lg animate-bounce" style={{ animationDelay: "1.2s", animationDuration: "4s" }}>
+        <span className="text-[10px] font-bold text-emerald-400">$</span>
+      </div>
+      <div className="absolute bottom-5 end-6 rounded-md border border-[#D4AF37]/20 bg-card/90 px-2 py-1 shadow-md">
+        <span className="text-[10px] font-semibold text-[#D4AF37]">Daily ↑</span>
+      </div>
+    </div>
+  );
+}
+
+/* ────────────────────────────────────────────────────────────── */
 /*  Exported: Loan Product Guide                                 */
 /* ────────────────────────────────────────────────────────────── */
 export function LoanProductGuide() {
   const { t } = useTranslation();
   return (
     <section className="space-y-8">
-      {/* Step-by-step timeline */}
+      <LoanHeroVisual />
       <Card className="border-border/40 bg-card/40 backdrop-blur-sm">
         <CardContent className="p-6 sm:p-8 space-y-8">
           <div className="space-y-2">
@@ -461,28 +536,19 @@ export function LoanProductGuide() {
               {t("lendGuide.loanTitle", "How Crypto Loans Work")}
             </h2>
             <p className="text-sm text-muted-foreground max-w-2xl">
-              {t(
-                "lendGuide.loanSubtitle",
-                "From collateral selection to stablecoin payout — a step-by-step guide to borrowing against your crypto without selling it."
-              )}
+              {t("lendGuide.loanSubtitle", "From collateral selection to stablecoin payout — a step-by-step guide to borrowing against your crypto without selling it.")}
             </p>
           </div>
-
           <div>
             {LOAN_STEPS.map((step, i) => (
               <StepRow key={step.titleKey} step={step} index={i} total={LOAN_STEPS.length} />
             ))}
           </div>
-
-          {/* Pro-Tip risk zone warning */}
+          <PartnerLiabilityFooter />
           <RiskZoneWarning />
-
-          {/* FAQ */}
           <FaqBlock items={LOAN_FAQ} />
         </CardContent>
       </Card>
-
-      {/* Security deep-dive */}
       <SecurityDeepDive />
     </section>
   );
@@ -495,7 +561,7 @@ export function EarnProductGuide() {
   const { t } = useTranslation();
   return (
     <section className="space-y-8">
-      {/* Step-by-step timeline */}
+      <EarnHeroVisual />
       <Card className="border-border/40 bg-card/40 backdrop-blur-sm">
         <CardContent className="p-6 sm:p-8 space-y-8">
           <div className="space-y-2">
@@ -503,28 +569,19 @@ export function EarnProductGuide() {
               {t("lendGuide.earnTitle", "How Earn Interest Works")}
             </h2>
             <p className="text-sm text-muted-foreground max-w-2xl">
-              {t(
-                "lendGuide.earnSubtitle",
-                "Deposit your crypto, earn daily compounding interest, and withdraw anytime — no lock-ups, no fees."
-              )}
+              {t("lendGuide.earnSubtitle", "Deposit your crypto, earn daily compounding interest, and withdraw anytime — no lock-ups, no fees.")}
             </p>
           </div>
-
           <div>
             {EARN_STEPS.map((step, i) => (
               <StepRow key={step.titleKey} step={step} index={i} total={EARN_STEPS.length} />
             ))}
           </div>
-
-          {/* Flexibility highlights */}
+          <PartnerLiabilityFooter />
           <EarnFlexibilitySection />
-
-          {/* FAQ */}
           <FaqBlock items={EARN_FAQ} />
         </CardContent>
       </Card>
-
-      {/* Security deep-dive */}
       <SecurityDeepDive />
     </section>
   );
