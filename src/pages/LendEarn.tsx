@@ -153,13 +153,17 @@ function LoanCalculator() {
           </div>
           <div className="flex justify-between">
             <span className="text-sm text-muted-foreground">Liquidation Price</span>
-            <span className={`text-sm font-mono ${tier.color}`}>${liquidationPrice}</span>
+            <span className={`text-sm font-mono ${riskColor}`}>${liquidationPrice}</span>
           </div>
           <div className="flex justify-between">
             <span className="text-sm text-muted-foreground">Risk Level</span>
-            <Badge variant="outline" className={`${tier.color} border-current`}>
-              {tier.liquidation}
+            <Badge variant="outline" className={`${riskColor} border-current`}>
+              {riskLabel}
             </Badge>
+          </div>
+          <div className="flex justify-between">
+            <span className="text-sm text-muted-foreground">Interest Rate</span>
+            <span className="text-sm font-mono text-[#D4AF37]">{riskConfig.baseRate}% APR</span>
           </div>
         </div>
 
