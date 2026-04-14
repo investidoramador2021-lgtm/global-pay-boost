@@ -1780,7 +1780,7 @@ const ExchangeWidget = ({ onTabChange }: ExchangeWidgetProps = {}) => {
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.5, delay: 0.15 }}
       id="exchange-widget"
-      className="relative scroll-mt-24 rounded-2xl border border-border/50 glass p-4 shadow-elevated sm:p-6 lg:p-8 transform-gpu"
+      className="relative scroll-mt-24 rounded-2xl border border-border/50 glass p-3 shadow-elevated sm:p-6 lg:p-8 transform-gpu"
       style={{ backfaceVisibility: "hidden" }}
     >
       <AnimatePresence mode="wait">
