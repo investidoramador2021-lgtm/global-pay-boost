@@ -693,5 +693,82 @@
       "redZoneDesc": "Pour protéger le pool de prêts et prévenir d'autres pertes, le moteur automatisé du partenaire exécutera une liquidation si la valeur tombe en dessous du seuil de sécurité sans action.",
       "liabilityNotice": "MRC Global Pay fournit l'interface pour ces services ; la surveillance, la livraison des alertes et l'exécution des liquidations sont gérées exclusivement par notre partenaire technologique. Nous recommandons de maintenir un buffer LTV sain pendant la volatilité du marché."
     }
+  },
+  "lendGuide": {
+    "loanTitle": "Comment Fonctionnent les Prêts Crypto",
+    "loanSubtitle": "De la sélection du collatéral au versement de stablecoins — un guide étape par étape pour emprunter contre votre crypto sans le vendre.",
+    "loan": {
+      "step1Title": "Sélection du Collatéral et LTV",
+      "step1Desc": "Choisissez votre actif de collatéral (BTC, ETH, BNB et plus de 130 autres) et définissez votre ratio Prêt-Valeur. Les niveaux disponibles sont 50%, 70%, 80% et 90%. Un LTV plus élevé débloque plus de stablecoins d'avance mais laisse une marge de sécurité plus mince. Un LTV plus bas (50%) offre une protection maximale et le taux d'intérêt le plus bas.",
+      "step2Title": "Transférer le Collatéral",
+      "step2Desc": "Envoyez le collatéral à l'adresse de dépôt unique générée par le système. Notre infrastructure surveille la blockchain et nécessite 2 confirmations réseau. L'adresse est à usage unique et sécurisée par des portefeuilles froids multisig.",
+      "step3Title": "Recevoir le Paiement en Stablecoin",
+      "step3Desc": "Une fois les confirmations reçues, les stablecoins (USDT ou USDC) sont envoyées à votre adresse de paiement. La livraison se termine généralement dans les 10 minutes suivant la confirmation blockchain.",
+      "step4Title": "Gestion et Remboursement du Prêt",
+      "step4Desc": "Aucun paiement d'intérêt mensuel n'est requis. L'intérêt est calculé selon le Taux Annuel Effectif (APR) pour votre actif et niveau LTV sélectionnés, et est simplement ajouté au montant total de remboursement. Remboursez le principal plus les intérêts accumulés à tout moment — sans pénalités de remboursement anticipé — pour débloquer et récupérer votre collatéral instantanément."
+    },
+    "earn": {
+      "step1Title": "Choisissez Votre Actif",
+      "step1Desc": "Sélectionnez parmi les stablecoins (USDT, USDC) ou les actifs majeurs (BTC, ETH) et plus. Chaque actif offre un Rendement Annuel (APY) compétitif affiché en temps réel.",
+      "step2Title": "Déposer",
+      "step2Desc": "Envoyez votre actif choisi à l'adresse de dépôt unique fournie. Vous pouvez commencer à gagner avec aussi peu que 100$ équivalent.",
+      "step3Title": "Accumulation Quotidienne et Capitalisation",
+      "step3Desc": "Les intérêts sont accumulés chaque jour et automatiquement capitalisés dans votre solde. Vos gains génèrent un rendement supplémentaire au fil du temps sans aucune action de votre part.",
+      "step4Title": "Flexibilité Totale",
+      "step4Desc": "Il n'y a pas de périodes de blocage ni de frais de retrait. Retirez votre capital complet et tous les intérêts gagnés 24/7, quand vous le souhaitez."
+    },
+    "safety": {
+      "coldTitle": "Custody en Stockage Froid",
+      "coldDesc": "Tout le collatéral et les dépôts sont sécurisés dans des portefeuilles froids multisig, isolés des systèmes en ligne.",
+      "rehypTitle": "Politique Stricte de Non-Rehypothécation",
+      "rehypDesc": "Vos actifs ne sont jamais prêtés, échangés ou utilisés comme collatéral pour d'autres positions. Ce que vous déposez est exactement ce que vous récupérez.",
+      "realtimeTitle": "Alertes de Risque en Temps Réel",
+      "realtimeDesc": "Recevez des notifications instantanées par SMS et email si la valeur du collatéral approche la zone de risque, vous donnant le temps de renforcer et prévenir la liquidation.",
+      "msbTitle": "Statut MSB Canadien",
+      "msbDesc": "Les services au Canada sont fournis par une Entreprise de Services Monétaires enregistrée (MSB C100000015), opérant sous la supervision de FINTRAC et les directives fédérales AML/ATF."
+    },
+    "safetyTitle": "Pourquoi Vos Actifs Sont en Sécurité",
+    "safetySubtitle": "Sécurité de niveau institutionnel soutenue par la conformité MSB canadienne",
+    "faqTitle": "Questions Fréquemment Posées",
+    "loanFaq": {
+      "q1": "Que se passe-t-il si le prix de mon collatéral baisse ?",
+      "a1": "Toutes les positions de prêt sont surveillées 24/7 par le moteur de risque automatisé de notre partenaire d'infrastructure. Si la valeur de votre collatéral entre dans la Zone Jaune (Risque), le système du partenaire déclenchera automatiquement des alertes instantanées par SMS et email à vos coordonnées enregistrées avec des instructions pour ajuster votre position. Pour protéger le pool de prêts, le moteur du partenaire exécutera une liquidation si la valeur tombe dans la Zone Rouge (Liquidation) sans action. Avis : MRC Global Pay fournit l'interface pour ces services ; la surveillance, la livraison des alertes et l'exécution des liquidations sont gérées exclusivement par notre partenaire technologique.",
+      "q2": "Y a-t-il des frais cachés ?",
+      "a2": "Non. Le seul coût est le taux d'intérêt transparent (APR) affiché avant de confirmer le prêt. Il n'y a pas de frais d'origination, de charges mensuelles de service ni de pénalités de remboursement anticipé.",
+      "q3": "Comment les intérêts sont-ils calculés ?",
+      "a3": "Les intérêts sont basés sur le Taux Annuel (APR) spécifique à votre actif de collatéral et niveau LTV choisi. Ils s'accumulent quotidiennement et sont ajoutés au montant total de remboursement. Il n'y a pas de calendriers de paiement mensuel — vous remboursez le montant total quand vous êtes prêt.",
+      "q4": "Puis-je rembourser mon prêt par anticipation ?",
+      "a4": "Oui. Il n'y a absolument aucune pénalité de remboursement anticipé. Remboursez le principal plus les intérêts à tout moment, et votre collatéral est débloqué et restitué instantanément.",
+      "q5": "Quel ratio LTV dois-je choisir ?",
+      "a5": "Cela dépend de votre tolérance au risque. Un LTV de 50% offre la plus grande marge de sécurité et le taux le plus bas, mais moins de fonds initiaux. Un LTV de 90% maximise votre capacité d'emprunt mais a une marge de liquidation plus serrée. Pour la plupart des utilisateurs, 70% offre un bon équilibre.",
+      "q6": "Y a-t-il un montant minimum ou maximum de prêt ?",
+      "a6": "Le minimum dépend de l'actif et est affiché dans la calculatrice. Il n'y a pas de maximum fixe — les positions plus importantes peuvent faire l'objet d'un examen de conformité supplémentaire."
+    },
+    "earnFaq": {
+      "q1": "Y a-t-il une période de blocage ?",
+      "a1": "Non. MRC GlobalPay Earn est totalement flexible. Vous pouvez retirer votre capital et tous les intérêts gagnés à tout moment, 24/7, sans pénalités ni frais de retrait.",
+      "q2": "À quelle fréquence les intérêts sont-ils payés ?",
+      "a2": "Les intérêts sont accumulés quotidiennement et automatiquement capitalisés dans votre solde.",
+      "q3": "Quel est le dépôt minimum ?",
+      "a3": "Vous pouvez commencer à gagner avec aussi peu que 100$ équivalent, selon l'actif sélectionné.",
+      "q4": "Mes fonds sont-ils en sécurité ?",
+      "a4": "Tous les fonds sont sécurisés dans des portefeuilles froids multisig avec une politique stricte de non-rehypothécation. La plateforme opère sous la supervision d'un MSB canadien enregistré (C100000015).",
+      "q5": "Y a-t-il des frais ou charges cachés ?",
+      "a5": "Non. Il n'y a pas de frais de dépôt, de frais de retrait ni de charges de gestion. L'APY affiché est le taux net que vous gagnez."
+    },
+    "riskZoneTip": "Toutes les positions de prêt sont surveillées 24/7 par le moteur de risque automatisé de notre partenaire d'infrastructure. Si la valeur de votre collatéral entre dans la Zone Jaune (Risque), le système du partenaire déclenchera automatiquement des alertes instantanées par SMS et email avec des instructions pour ajuster votre position. Pour protéger le pool de prêts, le moteur du partenaire exécutera une liquidation si la valeur tombe dans la Zone Rouge (Liquidation) sans action.",
+    "riskZoneDisclaimer": "Avis : MRC Global Pay fournit l'interface pour ces services ; la surveillance, la livraison des alertes et l'exécution des liquidations sont gérées exclusivement par notre partenaire technologique.",
+    "riskZoneTitle": "Alertes de Zone de Risque",
+    "earnTitle": "Comment Fonctionne le Gain d'Intérêts",
+    "earnSubtitle": "Déposez votre crypto, gagnez des intérêts composés quotidiens et retirez à tout moment — sans blocages, sans frais.",
+    "earnFlexTitle": "Points Forts de Flexibilité",
+    "earnHighlight": {
+      "unlimitedTitle": "Durée Illimitée",
+      "unlimitedDesc": "Pas de date d'expiration. Votre épargne croît aussi longtemps que vous le souhaitez.",
+      "instantTitle": "Retraits Instantanés",
+      "instantDesc": "Capital et intérêts peuvent être retirés 24/7 sans période de blocage.",
+      "minimumTitle": "Minimums Bas",
+      "minimumDesc": "Commencez à gagner du rendement avec aussi peu que 100$ équivalent."
+    }
   }
 }

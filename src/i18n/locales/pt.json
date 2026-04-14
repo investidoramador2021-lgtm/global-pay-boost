@@ -693,5 +693,82 @@
       "redZoneDesc": "Para proteger o pool de empréstimos e evitar perdas adicionais, o motor automatizado do parceiro executará uma liquidação se o valor cair abaixo do limite de segurança sem ação.",
       "liabilityNotice": "MRC Global Pay fornece a interface para estes serviços; monitoramento, entrega de alertas e execução de liquidações são gerenciados exclusivamente pelo nosso parceiro tecnológico. Recomendamos manter um buffer de LTV saudável durante a volatilidade do mercado."
     }
+  },
+  "lendGuide": {
+    "loanTitle": "Como Funcionam os Empréstimos Cripto",
+    "loanSubtitle": "Da seleção de colateral ao desembolso de stablecoins — um guia passo a passo para emprestar contra seu cripto sem vendê-lo.",
+    "loan": {
+      "step1Title": "Seleção de Colateral e LTV",
+      "step1Desc": "Escolha seu ativo de colateral (BTC, ETH, BNB e mais de 130 outros) e defina sua relação Empréstimo-Valor. Os níveis disponíveis são 50%, 70%, 80% e 90%. Um LTV mais alto libera mais stablecoins antecipadamente, mas deixa uma margem de segurança mais estreita contra quedas do mercado. Um LTV mais baixo (50%) oferece proteção máxima e a menor taxa de juros.",
+      "step2Title": "Transferir Colateral",
+      "step2Desc": "Envie o colateral para o endereço de depósito único gerado pelo sistema. Nossa infraestrutura monitora a blockchain e requer 2 confirmações de rede antes de prosseguir. O endereço é de uso único e protegido por carteiras frias multisig.",
+      "step3Title": "Receber Pagamento em Stablecoin",
+      "step3Desc": "Uma vez recebidas as confirmações, stablecoins (USDT ou USDC) são enviadas para seu endereço de pagamento fornecido. A entrega normalmente é concluída em 10 minutos após a confirmação na blockchain.",
+      "step4Title": "Gestão e Pagamento do Empréstimo",
+      "step4Desc": "Não são necessários pagamentos mensais de juros. Os juros são calculados com base na Taxa Percentual Anual (APR) para seu ativo e nível LTV selecionados, e são simplesmente adicionados ao valor total de pagamento. Pague o principal mais os juros acumulados a qualquer momento — sem penalidades por pagamento antecipado — para desbloquear e receber seu colateral instantaneamente."
+    },
+    "earn": {
+      "step1Title": "Escolha Seu Ativo",
+      "step1Desc": "Selecione entre stablecoins (USDT, USDC) ou ativos principais (BTC, ETH) e mais. Cada ativo oferece um Rendimento Percentual Anual (APY) competitivo exibido em tempo real.",
+      "step2Title": "Depositar",
+      "step2Desc": "Envie seu ativo escolhido para o endereço de depósito único fornecido. Você pode começar a ganhar com apenas $100 equivalentes.",
+      "step3Title": "Acumulação Diária e Capitalização",
+      "step3Desc": "Os juros são acumulados todos os dias e capitalizados automaticamente em seu saldo. Seus ganhos geram rendimento adicional ao longo do tempo sem nenhuma ação necessária.",
+      "step4Title": "Flexibilidade Total",
+      "step4Desc": "Não há períodos de bloqueio nem taxas de retirada. Retire seu capital completo e todos os juros ganhos 24/7, quando quiser."
+    },
+    "safety": {
+      "coldTitle": "Custódia em Armazenamento Frio",
+      "coldDesc": "Todo o colateral e depósitos são protegidos em carteiras frias multisig, isoladas dos sistemas online.",
+      "rehypTitle": "Política Rigorosa de Não-Rehipotecação",
+      "rehypDesc": "Seus ativos nunca são emprestados, negociados ou usados como colateral para outras posições. O que você deposita é exatamente o que recebe de volta.",
+      "realtimeTitle": "Alertas de Risco em Tempo Real",
+      "realtimeDesc": "Receba notificações instantâneas por SMS e email se o valor do colateral se aproximar da zona de risco, dando-lhe tempo para reforçar e prevenir a liquidação.",
+      "msbTitle": "Status MSB Canadense",
+      "msbDesc": "Os serviços no Canadá são fornecidos por um Negócio de Serviços Monetários registrado (MSB C100000015), operando sob a supervisão do FINTRAC e diretrizes federais AML/ATF."
+    },
+    "safetyTitle": "Por Que Seus Ativos Estão Seguros",
+    "safetySubtitle": "Segurança de grau institucional respaldada por conformidade MSB canadense",
+    "faqTitle": "Perguntas Frequentes",
+    "loanFaq": {
+      "q1": "O que acontece se o preço do meu colateral cair?",
+      "a1": "Todas as posições de empréstimo são monitoradas 24/7 pelo motor de risco automatizado do nosso parceiro de infraestrutura. Se o valor do seu colateral entrar na Zona Amarela (Risco), o sistema do parceiro ativará automaticamente alertas instantâneas por SMS e email para seus dados de contato registrados com instruções para ajustar sua posição. Para proteger o pool de empréstimos, o motor do parceiro executará uma liquidação se o valor cair na Zona Vermelha (Liquidação) sem ação. Aviso: MRC Global Pay fornece a interface para estes serviços; monitoramento, entrega de alertas e execução de liquidações são gerenciados exclusivamente pelo nosso parceiro tecnológico.",
+      "q2": "Existem taxas ocultas?",
+      "a2": "Não. O único custo é a taxa de juros transparente (APR) exibida antes de confirmar o empréstimo. Não há taxas de originação, cobranças mensais de serviço nem penalidades por pagamento antecipado.",
+      "q3": "Como os juros são calculados?",
+      "a3": "Os juros são baseados na Taxa Percentual Anual (APR) específica para seu ativo de colateral e nível LTV escolhido. Acumula diariamente e é adicionado ao valor total de pagamento. Não há cronogramas de pagamento mensal — você paga o valor total (principal + juros acumulados) quando estiver pronto.",
+      "q4": "Posso pagar meu empréstimo antecipadamente?",
+      "a4": "Sim. Não há absolutamente nenhuma penalidade por pagamento antecipado. Pague o principal mais os juros acumulados a qualquer momento, e seu colateral é desbloqueado e devolvido instantaneamente.",
+      "q5": "Qual ratio LTV devo escolher?",
+      "a5": "Depende da sua tolerância ao risco. Um LTV de 50% oferece a maior margem de segurança contra quedas de preço e a menor taxa de juros, mas menos fundos iniciais. Um LTV de 90% maximiza sua capacidade de empréstimo mas tem uma margem de liquidação mais estreita. Para a maioria dos usuários, 70% oferece um equilíbrio adequado.",
+      "q6": "Existe um valor mínimo ou máximo de empréstimo?",
+      "a6": "O mínimo depende do ativo de colateral e é exibido na calculadora. Não há máximo fixo — posições maiores podem passar por revisão adicional de conformidade de acordo com as regulamentações MSB canadenses."
+    },
+    "earnFaq": {
+      "q1": "Existe um período de bloqueio?",
+      "a1": "Não. MRC GlobalPay Earn é completamente flexível. Você pode retirar seu capital completo e todos os juros ganhos a qualquer momento, 24/7, sem penalidades e sem taxas de retirada.",
+      "q2": "Com que frequência os juros são pagos?",
+      "a2": "Os juros são acumulados diariamente e capitalizados automaticamente em seu saldo. Seus ganhos geram rendimento adicional ao longo do tempo sem ação manual.",
+      "q3": "Qual é o depósito mínimo?",
+      "a3": "Você pode começar a ganhar com apenas $100 equivalentes, dependendo do ativo selecionado.",
+      "q4": "Meus fundos estão seguros?",
+      "a4": "Todos os fundos são protegidos em carteiras frias multisig com uma política rigorosa de não-rehipotecação — seus ativos nunca são emprestados ou negociados. A plataforma opera sob a supervisão de um MSB canadense registrado (C100000015).",
+      "q5": "Existem taxas ou cobranças ocultas?",
+      "a5": "Não. Não há taxas de depósito, taxas de retirada nem cobranças de gestão. O APY exibido é a taxa líquida que você ganha."
+    },
+    "riskZoneTip": "Todas as posições de empréstimo são monitoradas 24/7 pelo motor de risco automatizado do nosso parceiro de infraestrutura. Se o valor do seu colateral entrar na Zona Amarela (Risco), o sistema do parceiro ativará automaticamente alertas instantâneas por SMS e email para seus dados de contato registrados com instruções para ajustar sua posição. Para proteger o pool de empréstimos, o motor do parceiro executará uma liquidação se o valor cair na Zona Vermelha (Liquidação) sem ação.",
+    "riskZoneDisclaimer": "Aviso: MRC Global Pay fornece a interface para estes serviços; monitoramento, entrega de alertas e execução de liquidações são gerenciados exclusivamente pelo nosso parceiro tecnológico.",
+    "riskZoneTitle": "Alertas de Zona de Risco",
+    "earnTitle": "Como Funciona Ganhar Juros",
+    "earnSubtitle": "Deposite seu cripto, ganhe juros compostos diários e retire a qualquer momento — sem bloqueios, sem taxas.",
+    "earnFlexTitle": "Destaques de Flexibilidade",
+    "earnHighlight": {
+      "unlimitedTitle": "Prazo Ilimitado",
+      "unlimitedDesc": "Sem data de vencimento. Suas economias crescem pelo tempo que você escolher.",
+      "instantTitle": "Retiradas Instantâneas",
+      "instantDesc": "Capital e juros podem ser retirados 24/7 sem períodos de bloqueio.",
+      "minimumTitle": "Mínimos Baixos",
+      "minimumDesc": "Comece a ganhar rendimento com apenas $100 equivalentes."
+    }
   }
 }

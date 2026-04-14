@@ -693,5 +693,82 @@
       "redZoneDesc": "Om die leningspoel te beskerm en verdere verliese te voorkom, sal die vennoot se outomatiese enjin 'n likwidasie uitvoer as die waarde onder die veiligheidsdrempel val.",
       "liabilityNotice": "MRC Global Pay bied die koppelvlak vir hierdie dienste; monitering, waarskuwingsaflewering en likwidasie-uitvoering word uitsluitlik deur ons tegnologievennoot bestuur."
     }
+  },
+  "lendGuide": {
+    "loanTitle": "Hoe Kripto-lenings Werk",
+    "loanSubtitle": "Van onderpandkeuse tot stablecoin-uitbetaling — 'n stap-vir-stap gids om teen jou kripto te leen sonder om dit te verkoop.",
+    "loan": {
+      "step1Title": "Onderpand & LTV Keuse",
+      "step1Desc": "Kies jou onderpandbate (BTC, ETH, BNB en 130+ ander) en stel jou Lening-tot-Waarde verhouding. Beskikbare vlakke is 50%, 70%, 80% en 90%.",
+      "step2Title": "Onderpand Oordra",
+      "step2Desc": "Stuur onderpand na die unieke deposito-adres. 2 netwerk bevestigings word benodig.",
+      "step3Title": "Ontvang Stablecoin Betaling",
+      "step3Desc": "Sodra bevestigings ontvang is, word stablecoins (USDT of USDC) na jou adres gestuur. Gewoonlik binne 10 minute.",
+      "step4Title": "Leningsbestuur & Terugbetaling",
+      "step4Desc": "Geen maandelikse rentebetalings nodig nie. Rente word bereken op APR. Betaal enige tyd terug — geen vroeë terugbetalingsboetes nie."
+    },
+    "earn": {
+      "step1Title": "Kies Jou Bate",
+      "step1Desc": "Kies uit stablecoins (USDT, USDC) of hoofbates (BTC, ETH). Elke bate bied mededingende APY.",
+      "step2Title": "Deponeer",
+      "step2Desc": "Stuur jou gekose bate na die unieke deposito-adres. Begin verdien vanaf $100 ekwivalent.",
+      "step3Title": "Daaglikse Oploop & Saamgestelde Rente",
+      "step3Desc": "Rente loop daagliks op en word outomaties in jou saldo saamgestel.",
+      "step4Title": "Volle Buigsaamheid",
+      "step4Desc": "Geen sluitperiodes of onttrekkingsfooie nie. Onttrek 24/7."
+    },
+    "safety": {
+      "coldTitle": "Koue Berging Bewaring",
+      "coldDesc": "Alle onderpand en deposito's word beveilig in multisig koue-berging beursies.",
+      "rehypTitle": "Streng Geen Herverband",
+      "rehypDesc": "Jou bates word nooit uitgeleen, verhandel of as onderpand vir ander posisies gebruik nie.",
+      "realtimeTitle": "Intydse Risiko-waarskuwings",
+      "realtimeDesc": "Ontvang onmiddellike SMS en e-pos kennisgewings wanneer onderpandwaarde die risikosone nader.",
+      "msbTitle": "Kanadese MSB Status",
+      "msbDesc": "Dienste in Kanada word verskaf deur 'n geregistreerde Gelddienstebesigheid (MSB C100000015)."
+    },
+    "safetyTitle": "Hoekom Jou Bates Veilig Is",
+    "safetySubtitle": "Institusionele-graad sekuriteit ondersteun deur Kanadese MSB nakoming",
+    "faqTitle": "Gereelde Vrae",
+    "loanFaq": {
+      "q1": "Wat gebeur as die prys van my onderpand daal?",
+      "a1": "Alle leningsposisies word 24/7 gemonitor deur ons infrastruktuurvennoot se outomatiese risiko-enjin. As die onderpandwaarde die Geel Sone (Risiko) betree, sal SMS en e-pos waarskuwings gestuur word. In die Rooi Sone (Likwidasie) sal likwidasie uitgevoer word. Vrywaring: MRC Global Pay verskaf die koppelvlak; monitering en likwidasie word deur ons tegnologievennoot bestuur.",
+      "q2": "Is daar versteekte fooie?",
+      "a2": "Nee. Die enigste koste is die deursigtige rentekoers (APR).",
+      "q3": "Hoe word rente bereken?",
+      "a3": "Rente is gebaseer op die APR spesifiek vir jou bate en LTV vlak.",
+      "q4": "Kan ek my lening vroeg terugbetaal?",
+      "a4": "Ja. Geen vroeë terugbetalingsboetes nie.",
+      "q5": "Watter LTV verhouding moet ek kies?",
+      "a5": "Dit hang af van jou risikotoleransie. 50% LTV is die veiligste. 70% is gebalanseerd.",
+      "q6": "Is daar 'n minimum of maksimum leningsbedrag?",
+      "a6": "Minimum hang af van die bate en word in die sakrekenaar getoon."
+    },
+    "earnFaq": {
+      "q1": "Is daar 'n sluitperiode?",
+      "a1": "Nee. MRC GlobalPay Earn is heeltemal buigsaam. Onttrek 24/7 sonder boetes.",
+      "q2": "Hoe gereeld word rente betaal?",
+      "a2": "Rente loop daagliks op en word outomaties saamgestel.",
+      "q3": "Wat is die minimum deposito?",
+      "a3": "Vanaf $100 ekwivalent.",
+      "q4": "Is my fondse veilig?",
+      "a4": "Alle fondse is beveilig in multisig koue-berging beursies onder Kanadese MSB (C100000015) toesig.",
+      "q5": "Is daar versteekte fooie?",
+      "a5": "Nee. Geen deposito-, onttrekkings- of bestuursfooie nie."
+    },
+    "riskZoneTip": "Alle leningsposisies word 24/7 gemonitor deur ons vennoot se outomatiese risiko-enjin. Geel Sone aktiveer SMS en e-pos waarskuwings. Rooi Sone aktiveer outomatiese likwidasie.",
+    "riskZoneDisclaimer": "Vrywaring: MRC Global Pay verskaf die koppelvlak vir hierdie dienste; monitering, waarskuwingsaflewering en likwidasie-uitvoering word uitsluitlik deur ons tegnologievennoot bestuur.",
+    "riskZoneTitle": "Risikosone Waarskuwings",
+    "earnTitle": "Hoe Rente Verdien Werk",
+    "earnSubtitle": "Deponeer jou kripto, verdien daaglikse saamgestelde rente en onttrek enige tyd.",
+    "earnFlexTitle": "Buigsaamheid Hoogtepunte",
+    "earnHighlight": {
+      "unlimitedTitle": "Onbeperkte Termyn",
+      "unlimitedDesc": "Geen vervaldatum nie.",
+      "instantTitle": "Onmiddellike Onttrekkings",
+      "instantDesc": "24/7 sonder sluitperiodes.",
+      "minimumTitle": "Lae Minimums",
+      "minimumDesc": "Begin verdien vanaf $100 ekwivalent."
+    }
   }
 }

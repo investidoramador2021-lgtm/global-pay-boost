@@ -693,5 +693,82 @@
       "redZoneDesc": "Kredi havuzunu korumak ve daha fazla kaybı önlemek için, değer güvenlik eşiğinin altına düşerse ortağın otomatik motoru tasfiye gerçekleştirir.",
       "liabilityNotice": "MRC Global Pay bu hizmetler için arayüz sağlar; izleme, uyarı teslimi ve tasfiye yürütmesi yalnızca teknoloji ortağımız tarafından yönetilir."
     }
+  },
+  "lendGuide": {
+    "loanTitle": "Kripto Krediler Nasıl Çalışır",
+    "loanSubtitle": "Teminat seçiminden stablecoin ödemesine — kriptonuzu satmadan borç almak için adım adım rehber.",
+    "loan": {
+      "step1Title": "Teminat ve LTV Seçimi",
+      "step1Desc": "Teminat varlığınızı (BTC, ETH, BNB ve 130+ diğerleri) seçin ve Kredi/Değer oranınızı ayarlayın. Mevcut seviyeler %50, %70, %80 ve %90'dır.",
+      "step2Title": "Teminat Transfer Et",
+      "step2Desc": "Teminatı sistem tarafından oluşturulan benzersiz yatırma adresine gönderin. 2 ağ onayı gereklidir.",
+      "step3Title": "Stablecoin Ödemesi Al",
+      "step3Desc": "Onaylar alındığında, stablecoinler (USDT veya USDC) belirttiğiniz adrese gönderilir. Genellikle 10 dakika içinde tamamlanır.",
+      "step4Title": "Kredi Yönetimi ve Geri Ödeme",
+      "step4Desc": "Aylık faiz ödemesi gerekmez. Faiz, seçilen varlık ve LTV seviyesine göre APR üzerinden hesaplanır. İstediğiniz zaman ana para ve birikmiş faizi ödeyin — erken ödeme cezası yoktur."
+    },
+    "earn": {
+      "step1Title": "Varlığınızı Seçin",
+      "step1Desc": "Stablecoinler (USDT, USDC) veya ana varlıklardan (BTC, ETH) seçin. Her varlık gerçek zamanlı APY sunar.",
+      "step2Title": "Yatırım Yap",
+      "step2Desc": "Seçtiğiniz varlığı benzersiz yatırma adresine gönderin. $100 eşdeğerinden başlayabilirsiniz.",
+      "step3Title": "Günlük Birikim ve Bileşik Faiz",
+      "step3Desc": "Faiz her gün tahakkuk eder ve bakiyenize otomatik olarak bileşik uygulanır.",
+      "step4Title": "Tam Esneklik",
+      "step4Desc": "Kilitleme süresi veya çekim ücreti yoktur. 7/24 tam anaparanızı ve kazanılan faizi çekin."
+    },
+    "safety": {
+      "coldTitle": "Soğuk Depolama Saklama",
+      "coldDesc": "Tüm teminat ve mevduatlar multisig soğuk depolama cüzdanlarında güvence altındadır.",
+      "rehypTitle": "Kesin Yeniden Rehin Yasağı",
+      "rehypDesc": "Varlıklarınız asla ödünç verilmez, takas edilmez veya başka pozisyonlar için teminat olarak kullanılmaz.",
+      "realtimeTitle": "Gerçek Zamanlı Risk Uyarıları",
+      "realtimeDesc": "Teminat değeri risk bölgesine yaklaştığında anında SMS ve e-posta bildirimleri alın.",
+      "msbTitle": "Kanada MSB Statüsü",
+      "msbDesc": "Kanada'daki hizmetler kayıtlı bir Para Hizmetleri İşletmesi (MSB C100000015) tarafından sağlanmaktadır."
+    },
+    "safetyTitle": "Varlıklarınız Neden Güvende",
+    "safetySubtitle": "Kanada MSB uyumluluğuyla desteklenen kurumsal düzeyde güvenlik",
+    "faqTitle": "Sık Sorulan Sorular",
+    "loanFaq": {
+      "q1": "Teminatımın fiyatı düşerse ne olur?",
+      "a1": "Tüm kredi pozisyonları altyapı ortağımızın otomatik risk motoru tarafından 7/24 izlenir. Teminat değeri Sarı Bölge'ye (Risk) girerse, ortağın sistemi otomatik olarak SMS ve e-posta uyarıları tetikler. Kırmızı Bölge'ye (Tasfiye) düşerse, ortağın motoru tasfiye gerçekleştirir. Sorumluluk Reddi: MRC Global Pay bu hizmetler için arayüzü sağlar; izleme, uyarı ve tasfiye yalnızca teknoloji ortağımız tarafından yönetilir.",
+      "q2": "Gizli ücretler var mı?",
+      "a2": "Hayır. Tek maliyet, krediyi onaylamadan önce gösterilen şeffaf faiz oranıdır (APR).",
+      "q3": "Faiz nasıl hesaplanır?",
+      "a3": "Faiz, teminat varlığınıza ve seçilen LTV seviyesine özel APR'ye dayanır.",
+      "q4": "Kredimi erken ödeyebilir miyim?",
+      "a4": "Evet. Erken ödeme cezası yoktur.",
+      "q5": "Hangi LTV oranını seçmeliyim?",
+      "a5": "Risk toleransınıza bağlıdır. %50 LTV en güvenli, %90 LTV en fazla borçlanma sağlar. Çoğu kullanıcı için %70 dengelidir.",
+      "q6": "Minimum veya maksimum kredi tutarı var mı?",
+      "a6": "Minimum, teminat varlığına bağlıdır ve hesap makinesinde gösterilir."
+    },
+    "earnFaq": {
+      "q1": "Kilitleme süresi var mı?",
+      "a1": "Hayır. MRC GlobalPay Earn tamamen esnektir. 7/24 cezasız çekim yapın.",
+      "q2": "Faiz ne sıklıkla ödenir?",
+      "a2": "Faiz günlük tahakkuk eder ve otomatik bileşik uygulanır.",
+      "q3": "Minimum yatırım nedir?",
+      "a3": "$100 eşdeğerinden başlayabilirsiniz.",
+      "q4": "Fonlarım güvende mi?",
+      "a4": "Tüm fonlar multisig soğuk depolama cüzdanlarında güvence altındadır. Platform kayıtlı Kanada MSB (C100000015) gözetiminde çalışır.",
+      "q5": "Gizli ücret veya masraf var mı?",
+      "a5": "Hayır. Yatırım, çekim veya yönetim ücreti yoktur."
+    },
+    "riskZoneTip": "Tüm kredi pozisyonları altyapı ortağımızın otomatik risk motoru tarafından 7/24 izlenir. Sarı Bölge'de SMS ve e-posta uyarıları tetiklenir. Kırmızı Bölge'de otomatik tasfiye gerçekleştirilir.",
+    "riskZoneDisclaimer": "Sorumluluk Reddi: MRC Global Pay bu hizmetler için arayüzü sağlar; izleme, uyarı teslimi ve tasfiye yürütmesi yalnızca teknoloji ortağımız tarafından yönetilir.",
+    "riskZoneTitle": "Risk Bölgesi Uyarıları",
+    "earnTitle": "Faiz Kazanma Nasıl Çalışır",
+    "earnSubtitle": "Kriptonuzu yatırın, günlük bileşik faiz kazanın ve istediğiniz zaman çekin.",
+    "earnFlexTitle": "Esneklik Özellikleri",
+    "earnHighlight": {
+      "unlimitedTitle": "Sınırsız Süre",
+      "unlimitedDesc": "Son kullanma tarihi yok.",
+      "instantTitle": "Anında Çekim",
+      "instantDesc": "7/24 kilitleme süresi olmadan çekim.",
+      "minimumTitle": "Düşük Minimumlar",
+      "minimumDesc": "$100 eşdeğerinden başlayın."
+    }
   }
 }
