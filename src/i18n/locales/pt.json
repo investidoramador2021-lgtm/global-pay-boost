@@ -685,7 +685,13 @@
       "compliance": "MRC GlobalPay · Registro MSB C100000015 · Seus dados são criptografados e usados apenas para alertas.",
       "cancel": "Cancelar",
       "confirm": "Confirmar e Prosseguir",
-      "proTip": "Dica: Você receberá alertas por SMS e email se seu empréstimo atingir as zonas Amarela (Risco) ou Vermelha (Liquidação)."
+      "proTipTitle": "Dica Pro: Alertas de Segurança Automatizados",
+      "proTipIntro": "Todas as posições de empréstimo são continuamente monitoradas pelo motor de risco automatizado do nosso parceiro de infraestrutura.",
+      "yellowZoneTitle": "Zona Amarela (Risco)",
+      "yellowZoneDesc": "Se o valor do seu colateral diminuir, o sistema do parceiro acionará automaticamente alertas instantâneos por SMS e e-mail para seus dados de contato registrados com instruções para ajustar sua posição.",
+      "redZoneTitle": "Zona Vermelha (Liquidação)",
+      "redZoneDesc": "Para proteger o pool de empréstimos e evitar perdas adicionais, o motor automatizado do parceiro executará uma liquidação se o valor cair abaixo do limite de segurança sem ação.",
+      "liabilityNotice": "MRC Global Pay fornece a interface para estes serviços; monitoramento, entrega de alertas e execução de liquidações são gerenciados exclusivamente pelo nosso parceiro tecnológico. Recomendamos manter um buffer de LTV saudável durante a volatilidade do mercado."
     }
   }
 }

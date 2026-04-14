@@ -699,7 +699,13 @@
       "compliance": "MRC GlobalPay · MSB Registration C100000015 · Your data is encrypted and only used for transaction alerts.",
       "cancel": "Cancel",
       "confirm": "Confirm & Proceed",
-      "proTip": "Pro Tip: You will receive SMS and email alerts if your loan reaches the Yellow (Risk) or Red (Liquidation) zones."
+      "proTipTitle": "Pro Tip: Automated Security Alerts",
+      "proTipIntro": "All loan positions are continuously monitored by our infrastructure partner's automated risk engine.",
+      "yellowZoneTitle": "Yellow Zone (Risk)",
+      "yellowZoneDesc": "If your collateral value decreases, the partner's system will automatically trigger instant SMS and email alerts to your registered contact details with instructions to adjust your position.",
+      "redZoneTitle": "Red Zone (Liquidation)",
+      "redZoneDesc": "To protect the lending pool and prevent further losses, the partner's automated engine will execute a liquidation if the value falls below the safety threshold without action.",
+      "liabilityNotice": "MRC Global Pay provides the interface for these services; monitoring, alert delivery, and liquidation execution are managed exclusively by our technology partner. We recommend users maintain a healthy LTV buffer during market volatility."
     }
   }
 }
