@@ -399,39 +399,45 @@ Deno.serve(async (req: Request) => {
     // ─── Loan status (JWT-authenticated) ───
     if (action === 'loan-status') {
       if (!p.id) return json({ error: 'Missing id' }, 400)
+      // Force fresh JWT for status calls
+      cachedJwt = null; jwtExpiresAt = 0
       try {
         const jwt = await getJwt(apiKey)
         const jwtHeaders = authHeaders(apiKey, jwt)
         const url = `${BASE}/loans/${encodeURIComponent(String(p.id))}`
+        console.log('[loan-status] Fetching with JWT, headers:', JSON.stringify(Object.keys(jwtHeaders)))
         const { response, responseBody } = await callProvider(url, { method: 'GET', headers: jwtHeaders })
+        console.log('[loan-status] Response:', response.status, JSON.stringify(responseBody))
         if (response.ok) return json(unwrapResponse(responseBody), 200)
-        // If JWT failed, try with just API key as fallback
-        const fallback = await callProvider(url, { method: 'GET', headers: h })
-        return json(unwrapResponse(fallback.responseBody), fallback.response.ok ? 200 : fallback.response.status)
+        // Return full diagnostics on failure
+        return json({ 
+          result: false, error: 'Status fetch failed', status: response.status,
+          provider_response: responseBody,
+          jwt_preview: jwt.substring(0, 20) + '...',
+        }, response.status)
       } catch (e) {
-        console.error('loan-status JWT error:', e)
-        const url = `${BASE}/loans/${encodeURIComponent(String(p.id))}`
-        const { response, responseBody } = await callProvider(url, { method: 'GET', headers: h })
-        return json(responseBody, response.ok ? 200 : response.status)
+        console.error('loan-status error:', e)
+        return json({ result: false, error: e instanceof Error ? e.message : 'Unknown error' }, 500)
       }
     }
 
     // ─── Earn status (JWT-authenticated) ───
     if (action === 'earn-status') {
       if (!p.id) return json({ error: 'Missing id' }, 400)
+      cachedJwt = null; jwtExpiresAt = 0
       try {
         const jwt = await getJwt(apiKey)
         const jwtHeaders = authHeaders(apiKey, jwt)
         const url = `${BASE}/earns/${encodeURIComponent(String(p.id))}`
         const { response, responseBody } = await callProvider(url, { method: 'GET', headers: jwtHeaders })
         if (response.ok) return json(unwrapResponse(responseBody), 200)
-        const fallback = await callProvider(url, { method: 'GET', headers: h })
-        return json(unwrapResponse(fallback.responseBody), fallback.response.ok ? 200 : fallback.response.status)
+        return json({
+          result: false, error: 'Status fetch failed', status: response.status,
+          provider_response: responseBody,
+        }, response.status)
       } catch (e) {
-        console.error('earn-status JWT error:', e)
-        const url = `${BASE}/earns/${encodeURIComponent(String(p.id))}`
-        const { response, responseBody } = await callProvider(url, { method: 'GET', headers: h })
-        return json(responseBody, response.ok ? 200 : response.status)
+        console.error('earn-status error:', e)
+        return json({ result: false, error: e instanceof Error ? e.message : 'Unknown error' }, 500)
       }
     }
 
