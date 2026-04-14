@@ -359,7 +359,7 @@ function LoanCalculator() {
   const { t } = useTranslation();
   const fmt = useLocaleFormat();
   const [selectedAsset, setSelectedAsset] = useState<CollateralAsset>(COLLATERAL_ASSETS[0]);
-  const [amount, setAmount] = useState(1000);
+  const [amount, setAmount] = useState<number | "">(1000);
   const [loading, setLoading] = useState(false);
   const [estimating, setEstimating] = useState(false);
   const [estimate, setEstimate] = useState<LoanEstimate | null>(null);
@@ -379,8 +379,7 @@ function LoanCalculator() {
     }
   }, [selectedAsset.riskTier]);
 
-  // Debounced values for API calls
-  const debouncedAmount = useDebounce(amount, 500);
+  const debouncedAmount = useDebounce(typeof amount === "number" ? amount : 0, 500);
   const debouncedLtv = useDebounce(selectedLtv, 300);
 
   // Fetch live estimate from API
@@ -416,12 +415,13 @@ function LoanCalculator() {
   }, [selectedAsset.ticker, debouncedAmount, debouncedLtv]);
 
   // Computed values: prefer live estimate, fallback to static calc
-  const borrowable = estimate?.amount_to ?? Math.floor(amount * (selectedLtv / 100));
+  const numAmount = typeof amount === "number" ? amount : 0;
+  const borrowable = estimate?.amount_to ?? Math.floor(numAmount * (selectedLtv / 100));
   const interestRate = estimate?.interest_percent ?? riskConfig.baseRate;
   const maxLtv = estimate?.ltv_percent ?? selectedLtv;
-  const liquidationPrice = estimate?.liquidation_price ?? (amount > 0 ? (borrowable / amount) * 100 : 0);
+  const liquidationPrice = estimate?.liquidation_price ?? (numAmount > 0 ? (borrowable / numAmount) * 100 : 0);
   const minLoanAmount = estimate?.loan_deposit_min_amount ?? 25;
-  const belowMinimum = amount < minLoanAmount;
+  const belowMinimum = numAmount > 0 && numAmount < minLoanAmount;
 
   const riskLabel = selectedLtv <= 50 ? t("lend.riskLow") : selectedLtv <= 70 ? t("lend.riskMedium") : t("lend.riskHigh");
   const riskColor = selectedLtv <= 50 ? "text-emerald-400" : selectedLtv <= 70 ? "text-[#D4AF37]" : "text-red-400";
@@ -434,7 +434,7 @@ function LoanCalculator() {
   };
 
   const handleOpenLoan = () => {
-    if (belowMinimum) {
+    if (numAmount <= 0 || belowMinimum) {
       toast.error(t("lend.belowMinLoan", `Minimum collateral is $${minLoanAmount}`));
       return;
     }
@@ -446,7 +446,7 @@ function LoanCalculator() {
     try {
       const data = await coinrabbitApi("create-loan", {
         collateral_currency: selectedAsset.ticker.toLowerCase(),
-        collateral_amount: parseFloat(amount.toFixed(8)),
+        collateral_amount: parseFloat(numAmount.toFixed(8)),
         ltv: selectedLtv,
         loan_currency: "usdt",
         email,
@@ -454,7 +454,7 @@ function LoanCalculator() {
       });
       setConfirmOpen(false);
       const sendAddress = data?.send_address || data?.deposit_address || data?.address || "";
-      const sendAmount = String(data?.collateral_amount || data?.amount || amount);
+      const sendAmount = String(data?.collateral_amount || data?.amount || numAmount);
       const txId = data?.id || data?.loan_id || "";
       if (sendAddress) {
         setDepositInfo({ sendAddress, amount: sendAmount, currency: selectedAsset.ticker, txId });
