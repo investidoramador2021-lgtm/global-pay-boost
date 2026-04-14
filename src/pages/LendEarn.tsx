@@ -207,24 +207,9 @@ function YieldDashboard() {
     setTimeout(() => calcRef.current?.scrollIntoView({ behavior: "smooth", block: "center" }), 100);
   };
 
-  const handleDeposit = async () => {
-    if (numAmount < selected.minUsd) {
-      toast.error(`Minimum deposit is $${selected.minUsd}`);
-      return;
-    }
-    setLoading(true);
-    try {
-      await coinrabbitApi("/earn/deposit", "POST", {
-        currency: selected.ticker.toLowerCase(),
-        amount: numAmount,
-      });
-      toast.success("Deposit submitted! Your yield starts accruing immediately.");
-    } catch (e: unknown) {
-      const msg = e instanceof Error ? e.message : "Deposit failed";
-      toast.error(msg);
-    } finally {
-      setLoading(false);
-    }
+  const handleDeposit = () => {
+    const coinrabbitUrl = `https://coinrabbit.io/earn/?currency=${selected.ticker.toLowerCase()}`;
+    window.open(coinrabbitUrl, "_blank", "noopener,noreferrer");
   };
 
   return (
