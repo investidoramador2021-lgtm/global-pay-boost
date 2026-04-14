@@ -25,6 +25,8 @@ interface SwapPairPageProps {
   slug: string;
   isFeatured?: boolean;
   extraFaqs?: { q: string; a: string }[];
+  metaTitle?: string;
+  metaDescription?: string;
 }
 
 const SwapPairLanding = ({
@@ -39,12 +41,14 @@ const SwapPairLanding = ({
   slug,
   isFeatured = false,
   extraFaqs = [],
+  metaTitle,
+  metaDescription,
 }: SwapPairPageProps) => {
   const { pathname } = useLocation();
   const lang = getLangFromPath(pathname);
   const lp = (path: string) => langPath(lang, path);
-  const title = `Swap ${assetA} to ${assetB} Instantly | MRC GlobalPay`;
-  const description = `Instant ${assetAName} to ${assetBName} swaps in under 60 seconds. No registration, zero delays. Best rates March 2026.`;
+  const title = metaTitle || `Swap ${assetA} to ${assetB} Instantly | MRC GlobalPay`;
+  const description = metaDescription || `Instant ${assetAName} to ${assetBName} swaps in under 60 seconds. No registration, zero delays. Best rates March 2026.`;
   const url = `https://mrcglobalpay.com${lp(`/swap/${slug}`)}`;
 
   const aeoFaq = {

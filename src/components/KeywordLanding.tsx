@@ -56,11 +56,17 @@ const KeywordLanding = ({ data }: Props) => {
   const canonicalPath = canonicalUrl || targetUrl;
   // Canonical always points to English URL to avoid GSC duplicate canonical issues
   const canonical = `https://mrcglobalpay.com${canonicalPath}`;
-  const truncatedKw = keyword.length > 30 ? keyword.slice(0, 30).trim() : keyword;
-  const title = `${truncatedKw} | MRC GlobalPay`;
-  const description = `${benefitHook} Swap from $0.30 with no account. 500+ tokens on MRC GlobalPay.`;
 
-  const faqs = [
+  const isMoneroNoKyc = targetUrl === "/buy/monero-no-kyc";
+
+  const title = isMoneroNoKyc
+    ? "Buy Monero No KYC – Private XMR Swap, No Registration | MRC GlobalPay"
+    : `${keyword.length > 30 ? keyword.slice(0, 30).trim() : keyword} | MRC GlobalPay`;
+  const description = isMoneroNoKyc
+    ? "Buy Monero (XMR) with no KYC, no registration, and no account. Non-custodial swap from $0.30 with 0.5% flat fee. The most private way to acquire XMR in 2026."
+    : `${benefitHook} Swap from $0.30 with no account. 500+ tokens on MRC GlobalPay.`;
+
+  const defaultFaqs = [
     {
       q: `What is the minimum amount for ${keyword}?`,
       a: `MRC GlobalPay supports micro-swaps starting as low as $0.30. This makes us ideal for converting crypto dust that other exchanges with $10–$15 minimums won't process.`,
@@ -74,6 +80,27 @@ const KeywordLanding = ({ data }: Props) => {
       a: `Yes. Select our Fixed Rate option and the amount displayed is exactly what you receive—protected from price volatility during the transaction.`,
     },
   ];
+
+  const moneroFaqs = [
+    {
+      q: "Can I buy Monero without KYC or identity verification?",
+      a: "Yes. MRC GlobalPay is completely registration-free. Swap any supported crypto to Monero (XMR) without providing an email, photo ID, or any personal information. Our non-custodial architecture means we never hold your funds.",
+    },
+    {
+      q: "What is the fastest way to buy Monero no KYC in 2026?",
+      a: "MRC GlobalPay settles most XMR swaps in under 60 seconds. Simply enter your Monero wallet address, send any of 500+ supported cryptocurrencies, and receive XMR directly — no account, no waiting period, no limits.",
+    },
+    {
+      q: "Is there a minimum or maximum for buying Monero without registration?",
+      a: "The minimum is just $0.30 USD equivalent — the lowest in the industry. There is no hard maximum. MRC GlobalPay's aggregated liquidity from 700+ sources handles swaps of all sizes with a flat 0.5% inclusive fee.",
+    },
+    {
+      q: "Is buying Monero without KYC legal?",
+      a: "MRC GlobalPay is a registered Canadian Money Services Business (MSB C100000015) operating under FINTRAC regulations. Our non-custodial, registration-free model is fully compliant. Automated risk-prevention systems may request verification only for transactions flagged as high-risk.",
+    },
+  ];
+
+  const faqs = isMoneroNoKyc ? moneroFaqs : defaultFaqs;
 
   const jsonLd = [
     {
