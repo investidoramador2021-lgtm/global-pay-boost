@@ -153,7 +153,7 @@ const LOAN_FAQ = [
     aKey: "lendGuide.loanFaq.a1",
     fallbackQ: "What happens if the price of my collateral drops?",
     fallbackA:
-      "MRC GlobalPay monitors your collateral value in real-time. If it enters the Yellow (Risk) zone, you will receive SMS and email alerts. You can top up additional collateral at any time to restore a healthy Loan-to-Value ratio. If the value continues to decline into the Red (Liquidation) zone without a top-up, the system will automatically liquidate enough collateral to repay the loan and protect both parties.",
+      "MRC GlobalPay actively monitors all open loan positions. If your collateral value enters the Yellow (Risk) zone, you will receive instant SMS and email alerts with instructions to top up. If the value declines further into the Red (Liquidation) zone without action, the system will automatically sell enough collateral to repay the loan — protecting you from further losses.",
   },
   {
     qKey: "lendGuide.loanFaq.q2",
