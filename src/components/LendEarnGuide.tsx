@@ -1,5 +1,7 @@
 import { useTranslation } from "react-i18next";
 import { Card, CardContent } from "@/components/ui/card";
+import loanHero3d from "@/assets/loan-hero-3d.jpg";
+import earnHero3d from "@/assets/earn-hero-3d.jpg";
 import { Badge } from "@/components/ui/badge";
 import {
   Accordion,
