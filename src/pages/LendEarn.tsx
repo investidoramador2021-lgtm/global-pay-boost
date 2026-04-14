@@ -661,11 +661,15 @@ function YieldDashboard() {
     setTimeout(() => calcRef.current?.scrollIntoView({ behavior: "smooth", block: "center" }), 100);
   };
 
-  const handleDeposit = async () => {
+  const handleDeposit = () => {
     if (belowMinimum) {
       toast.error(t("lend.minDeposit", { min: minEarnAmount }));
       return;
     }
+    setConfirmOpen(true);
+  };
+
+  const handleConfirmEarn = async (email: string, phone: string) => {
     setLoading(true);
     try {
       const data = await coinrabbitApi("create-earn", {
@@ -673,7 +677,10 @@ function YieldDashboard() {
         currencyId: selected.currencyId,
         network: selected.network,
         amount: numAmount,
+        email,
+        phone,
       });
+      setConfirmOpen(false);
       const sendAddress = data?.send_address || data?.deposit_address || data?.address || "";
       const sendAmount = String(data?.amount || numAmount);
       const txId = data?.id || data?.earn_id || "";
