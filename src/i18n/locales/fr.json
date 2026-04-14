@@ -17,7 +17,9 @@
     "swapPairs": "Paires d'échange",
     "blog": "Blog",
     "faq": "FAQ",
-    "startSwap": "Commencer l'échange"
+    "startSwap": "Commencer l'échange",
+    "track": "Suivre",
+    "help": "Aide"
   },
   "hero": {
     "heading": "Échanges de cryptos instantanés.",

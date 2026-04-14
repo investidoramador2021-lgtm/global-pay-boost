@@ -17,7 +17,9 @@
     "swapPairs": "Pares de Troca",
     "blog": "Blog",
     "faq": "Perguntas Frequentes",
-    "startSwap": "Iniciar Troca"
+    "startSwap": "Iniciar Troca",
+    "track": "Rastrear",
+    "help": "Ajuda"
   },
   "hero": {
     "heading": "Trocas sem Cadastro.",

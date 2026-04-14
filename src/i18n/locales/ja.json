@@ -17,7 +17,9 @@
     "swapPairs": "交換ペア",
     "blog": "ブログ",
     "faq": "よくある質問",
-    "startSwap": "交換を開始"
+    "startSwap": "交換を開始",
+    "track": "追跡",
+    "help": "ヘルプ"
   },
   "hero": {
     "heading": "安全な非保持型クリプト交換。",
