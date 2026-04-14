@@ -857,7 +857,19 @@
       "signIn": "Iniciar sesión",
       "noAccount": "¿Aún no tienes cuenta?",
       "register": "Registrarse",
-      "registered": "¡Cuenta creada! Revisa tu correo para verificar."
+      "registered": "¡Cuenta creada! Revisa tu correo para verificar.",
+      "otpTitle": "Verificación en dos pasos",
+      "otpSent": "Se envió un código de 6 dígitos a tu correo electrónico.",
+      "otpExplain": "Ingresa el código de 6 dígitos enviado a {{email}} para completar el inicio de sesión.",
+      "otpExpired": "Código expirado. Solicita uno nuevo.",
+      "otpInvalid": "Código inválido. Inténtalo de nuevo.",
+      "otpResent": "Nuevo código enviado a tu correo.",
+      "otpResendFail": "Error al reenviar el código. Inténtalo de nuevo.",
+      "verifyBtn": "Verificar y continuar",
+      "resendIn": "Reenviar en {{secs}}s",
+      "resendCode": "Reenviar código",
+      "otpExpiry": "Este código es válido por 10 minutos.",
+      "twoFaNotice": "Se enviará un código de verificación de 6 dígitos a tu correo tras iniciar sesión para mayor seguridad."
     }
   }
 }

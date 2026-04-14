@@ -857,7 +857,19 @@
       "signIn": "Teken in",
       "noAccount": "Het jy nog nie 'n rekening nie?",
       "register": "Registreer",
-      "registered": "Rekening geskep! Gaan kyk jou e-pos vir verifikasie."
+      "registered": "Rekening geskep! Gaan kyk jou e-pos vir verifikasie.",
+      "otpTitle": "Twee-faktor-verifikasie",
+      "otpSent": "'n 6-syfer sekuriteitskode is na jou e-pos gestuur.",
+      "otpExplain": "Voer die 6-syfer kode in wat na {{email}} gestuur is om aan te meld.",
+      "otpExpired": "Kode het verval. Vra asseblief 'n nuwe een.",
+      "otpInvalid": "Ongeldige kode. Probeer weer.",
+      "otpResent": "Nuwe kode na jou e-pos gestuur.",
+      "otpResendFail": "Kon nie kode herstuur nie. Probeer weer.",
+      "verifyBtn": "Verifieer en gaan voort",
+      "resendIn": "Herstuur oor {{secs}}s",
+      "resendCode": "Herstuur kode",
+      "otpExpiry": "Hierdie kode is 10 minute geldig.",
+      "twoFaNotice": "'n 6-syfer verifikasiekode sal na jou e-pos gestuur word na aanmelding vir ekstra sekuriteit."
     }
   }
 }
