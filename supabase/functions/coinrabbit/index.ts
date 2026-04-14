@@ -71,7 +71,7 @@ async function getJwt(apiKey: string): Promise<string> {
   // Return cached JWT if still valid (with 60s margin)
   if (cachedJwt && Date.now() < jwtExpiresAt - 60_000) return cachedJwt
 
-  const body = { api_key: apiKey, external_id: 'mrc-pay-platform' }
+  const body = { api_key: apiKey, external_id: 'MRCGlobalPay' }
   const { response, responseBody } = await callProvider(`${BASE}/auth/partner`, {
     method: 'POST',
     headers: {
@@ -298,7 +298,7 @@ Deno.serve(async (req: Request) => {
         },
         loan: { currency_code: toCode, currency_network: toNetwork },
         ltv_percent: String(body.ltv / 100),
-        external_id: 'mrc-pay-platform',
+        external_id: 'MRCGlobalPay',
       }
       if (p.email) requestBody.email = String(p.email)
       if (p.phone) requestBody.phone = String(p.phone)
@@ -351,7 +351,7 @@ Deno.serve(async (req: Request) => {
       const requestBodyV2: Record<string, unknown> = {
         currency: { code: currencyCode, network: currencyNetwork },
         amount: body.amount,
-        external_id: 'mrc-pay-platform',
+        external_id: 'MRCGlobalPay',
       }
       if (p.email) requestBodyV2.email = String(p.email)
       if (p.phone) requestBodyV2.phone = String(p.phone)
@@ -361,7 +361,7 @@ Deno.serve(async (req: Request) => {
         currency_code: currencyCode,
         currency_network: currencyNetwork,
         amount: body.amount,
-        external_id: 'mrc-pay-platform',
+        external_id: 'MRCGlobalPay',
       }
       if (p.email) requestBodyFlat.email = String(p.email)
       if (p.phone) requestBodyFlat.phone = String(p.phone)
