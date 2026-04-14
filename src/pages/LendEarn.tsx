@@ -46,6 +46,13 @@ async function coinrabbitApi(action: string, payload: Record<string, unknown> = 
   }
 
   if (data && typeof data === "object" && "message" in data && (data as { result?: boolean }).result === false) {
+    const diagnostics = (data as { diagnostics?: { requested_url?: string; request_body?: unknown } }).diagnostics;
+    if (diagnostics?.requested_url) {
+      console.error("CoinRabbit request failed", {
+        url: diagnostics.requested_url,
+        requestBody: diagnostics.request_body,
+      });
+    }
     throw new Error(String((data as { message?: string }).message || "CoinRabbit request failed"));
   }
 
@@ -449,6 +456,7 @@ function YieldDashboard() {
       try {
         const data = await coinrabbitApi("earn-estimate", {
           currency: selected.ticker.toLowerCase(),
+          currencyId: selected.currencyId,
           network: selected.network,
           amount: debouncedAmount,
         });
@@ -493,6 +501,7 @@ function YieldDashboard() {
     try {
       const data = await coinrabbitApi("create-earn", {
         currency: selected.ticker.toLowerCase(),
+        currencyId: selected.currencyId,
         network: selected.network,
         amount: numAmount,
       });
