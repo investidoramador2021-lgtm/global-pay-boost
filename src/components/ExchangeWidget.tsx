@@ -1767,8 +1767,8 @@ const ExchangeWidget = ({ onTabChange }: ExchangeWidgetProps = {}) => {
                   { mode: "private" as WidgetMode, icon: EyeOff, labelKey: "widget.tabs.private", onClick: () => { setWidgetMode("private"); } },
                   { mode: "bridge" as WidgetMode, icon: Link2, labelKey: "widget.tabs.bridge", onClick: () => { setWidgetMode("bridge"); } },
                   { mode: "request" as WidgetMode, icon: FileText, labelKey: "widget.tabs.invoice", onClick: () => { setWidgetMode("request"); } },
-                  { mode: "loan" as WidgetMode, icon: Landmark, labelKey: "Loan", onClick: () => { setWidgetMode("loan"); } },
-                  { mode: "earn" as WidgetMode, icon: TrendingUp, labelKey: "Earn", onClick: () => { setWidgetMode("earn"); } },
+                  { mode: "loan" as WidgetMode, icon: Landmark, labelKey: "widget.tabs.loan", onClick: () => { setWidgetMode("loan"); } },
+                  { mode: "earn" as WidgetMode, icon: TrendingUp, labelKey: "widget.tabs.earn", onClick: () => { setWidgetMode("earn"); } },
                 ] as const).map((tab) => {
                   const isActive = tab.mode === "buysell"
                     ? widgetMode === "buysell" && gTradeDirection === "buy"
@@ -1785,7 +1785,7 @@ const ExchangeWidget = ({ onTabChange }: ExchangeWidgetProps = {}) => {
                       }`}
                     >
                       <TabIcon className="hidden sm:block h-4 w-4" />
-                      {tab.mode === "loan" || tab.mode === "earn" ? tab.labelKey : t(tab.labelKey)}
+                      {t(tab.labelKey)}
                     </button>
                   );
                 })}

@@ -17,7 +17,9 @@
     "swapPairs": "Swap Pairs",
     "blog": "Blog",
     "faq": "FAQ",
-    "startSwap": "Start Swap"
+    "startSwap": "Start Swap",
+    "track": "Track",
+    "help": "Help"
   },
   "hero": {
     "heading": "Non-Custodial Crypto Exchange.",
@@ -81,7 +83,9 @@
       "buy": "Buy",
       "private": "Private",
       "bridge": "Bridge",
-      "invoice": "Invoice"
+      "invoice": "Invoice",
+      "loan": "Loan",
+      "earn": "Earn"
     },
     "online": "Online",
     "fixedRate": "Fixed Rate",

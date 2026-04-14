@@ -17,7 +17,9 @@
     "swapPairs": "Cặp giao dịch",
     "blog": "Blog",
     "faq": "Câu hỏi thường gặp",
-    "startSwap": "Bắt đầu giao dịch"
+    "startSwap": "Bắt đầu giao dịch",
+    "track": "Theo dõi",
+    "help": "Trợ giúp"
   },
   "hero": {
     "heading": "Trao Đổi Crypto Tức Thì.",
@@ -79,7 +81,9 @@
       "buy": "Mua",
       "private": "Rieng tu",
       "bridge": "Bridge",
-      "invoice": "Hóa đơn"
+      "invoice": "Hóa đơn",
+      "loan": "Vay",
+      "earn": "Kiếm"
     },
     "online": "Truc tuyen",
     "fixedRate": "Ty gia co dinh",

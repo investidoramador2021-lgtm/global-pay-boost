@@ -17,7 +17,9 @@
     "swapPairs": "Paires d'échange",
     "blog": "Blog",
     "faq": "FAQ",
-    "startSwap": "Commencer l'échange"
+    "startSwap": "Commencer l'échange",
+    "track": "Suivre",
+    "help": "Aide"
   },
   "hero": {
     "heading": "Échanges de cryptos instantanés.",
@@ -79,7 +81,9 @@
       "buy": "Acheter",
       "private": "Prive",
       "bridge": "Bridge",
-      "invoice": "Facture"
+      "invoice": "Facture",
+      "loan": "Prêt",
+      "earn": "Gagner"
     },
     "online": "En ligne",
     "fixedRate": "Taux Fixe",

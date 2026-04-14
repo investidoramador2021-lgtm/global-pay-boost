@@ -17,7 +17,9 @@
     "swapPairs": "Ruilpare",
     "blog": "Blog",
     "faq": "Gereelde Vrae",
-    "startSwap": "Begin Ruil"
+    "startSwap": "Begin Ruil",
+    "track": "Volg",
+    "help": "Hulp"
   },
   "hero": {
     "heading": "Onmiddellike Kripto Ruil.",
@@ -79,7 +81,9 @@
       "buy": "Koop",
       "private": "Privaat",
       "bridge": "Bridge",
-      "invoice": "Faktuur"
+      "invoice": "Faktuur",
+      "loan": "Lening",
+      "earn": "Verdien"
     },
     "online": "Aanlyn",
     "fixedRate": "Vaste Koers",
