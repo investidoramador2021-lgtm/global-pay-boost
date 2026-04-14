@@ -67,6 +67,7 @@ const AuditInspector = lazy(() => import("./pages/AuditInspector.tsx"));
 const RegulatoryReport = lazy(() => import("./pages/RegulatoryReport.tsx"));
 const InvoicePay = lazy(() => import("./pages/InvoicePay.tsx"));
 const InvoiceStatus = lazy(() => import("./pages/InvoiceStatus.tsx"));
+const LendEarn = lazy(() => import("./pages/LendEarn.tsx"));
 const NotFound = lazy(() => import("./pages/NotFound.tsx"));
 
 const queryClient = new QueryClient();
@@ -137,6 +138,7 @@ const AppRoutes = () => (
     <Route path="admin-portal-mrc" element={<AdminPortal />} />
     <Route path="verify-update" element={<VerifyUpdate />} />
     <Route path="verify-email" element={<VerifyEmail />} />
+    <Route path="lend" element={<LendEarn />} />
   </>
 );
 
