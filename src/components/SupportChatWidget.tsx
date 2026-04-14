@@ -104,19 +104,116 @@ const PROACTIVE_MESSAGES: Record<string, (name: string) => string> = {
 };
 
 const WELCOME_MESSAGES: Record<string, (name: string) => string> = {
-  en: (n) => `Welcome to MRC GlobalPay. I'm ${n}, your personal concierge. How can I assist you today?`,
-  es: (n) => `Bienvenido a MRC GlobalPay. Soy ${n}, su concierge personal. ¿En qué puedo asistirle?`,
-  pt: (n) => `Bem-vindo ao MRC GlobalPay. Sou ${n}, seu concierge pessoal. Como posso ajudá-lo?`,
-  fr: (n) => `Bienvenue chez MRC GlobalPay. Je suis ${n}, votre concierge personnel. Comment puis-je vous assister ?`,
-  ja: (n) => `MRC GlobalPayへようこそ。${n}と申します。パーソナルコンシェルジュとしてお手伝いいたします。`,
-  tr: (n) => `MRC GlobalPay'e hoş geldiniz. Ben ${n}, kişisel danışmanınız. Size nasıl yardımcı olabilirim?`,
-  hi: (n) => `MRC GlobalPay में आपका स्वागत है। मैं ${n}, आपका व्यक्तिगत कंसीयज हूँ। मैं आपकी कैसे सहायता कर सकता/सकती हूँ?`,
-  vi: (n) => `Chào mừng đến MRC GlobalPay. Tôi là ${n}, trợ lý cá nhân của bạn. Tôi có thể giúp gì cho bạn?`,
-  af: (n) => `Welkom by MRC GlobalPay. Ek is ${n}, jou persoonlike konsierge. Hoe kan ek jou help?`,
-  fa: (n) => `به MRC GlobalPay خوش آمدید. من ${n} هستم، دستیار شخصی شما. چطور می‌توانم کمکتان کنم؟`,
-  ur: (n) => `MRC GlobalPay میں خوش آمدید۔ میں ${n} ہوں، آپ کا ذاتی کنسیئرج۔ میں آپ کی کیسے مدد کر سکتا/سکتی ہوں؟`,
-  he: (n) => `ברוכים הבאים ל-MRC GlobalPay. אני ${n}, הקונסיירז' האישי שלך. כיצד אוכל לסייע לך?`,
-  uk: (n) => `Ласкаво просимо до MRC GlobalPay. Я ${n}, ваш персональний консьєрж. Чим можу допомогти?`,
+  en: (n) => `Welcome to MRC GlobalPay! I'm ${n}, your personal concierge. I can help you with **Swaps, Buying crypto, Private Transfers, Bridges, Invoices, Loans, and Earning yield**. What would you like to do today?`,
+  es: (n) => `¡Bienvenido a MRC GlobalPay! Soy ${n}, su concierge personal. Puedo ayudarle con **Intercambios, Compra de cripto, Transferencias Privadas, Puentes, Facturas, Préstamos y Ganancias**. ¿Qué desea hacer hoy?`,
+  pt: (n) => `Bem-vindo ao MRC GlobalPay! Sou ${n}, seu concierge pessoal. Posso ajudá-lo com **Trocas, Compra de cripto, Transferências Privadas, Bridges, Faturas, Empréstimos e Rendimentos**. O que deseja fazer hoje?`,
+  fr: (n) => `Bienvenue chez MRC GlobalPay ! Je suis ${n}, votre concierge personnel. Je peux vous aider avec **les Échanges, l'Achat de crypto, les Transferts Privés, les Ponts, les Factures, les Prêts et les Rendements**. Comment puis-je vous assister ?`,
+  ja: (n) => `MRC GlobalPayへようこそ！${n}です。**スワップ、暗号購入、プライベート送金、ブリッジ、請求書、ローン、利回り運用**のお手伝いができます。今日は何をされますか？`,
+  tr: (n) => `MRC GlobalPay'e hoş geldiniz! Ben ${n}, kişisel danışmanınız. **Takas, Kripto Satın Alma, Özel Transfer, Köprü, Fatura, Kredi ve Kazanç** konularında yardımcı olabilirim. Bugün ne yapmak istersiniz?`,
+  hi: (n) => `MRC GlobalPay में आपका स्वागत है! मैं ${n} हूँ। मैं **स्वैप, क्रिप्टो खरीद, प्राइवेट ट्रांसफर, ब्रिज, इनवॉइस, लोन और अर्निंग** में मदद कर सकता/सकती हूँ। आज क्या करना चाहेंगे?`,
+  vi: (n) => `Chào mừng đến MRC GlobalPay! Tôi là ${n}. Tôi có thể hỗ trợ bạn với **Hoán đổi, Mua crypto, Chuyển khoản Riêng tư, Cầu nối, Hóa đơn, Vay và Kiếm lợi nhuận**. Bạn muốn làm gì hôm nay?`,
+  af: (n) => `Welkom by MRC GlobalPay! Ek is ${n}. Ek kan jou help met **Ruil, Kripto Koop, Privaat Oordrag, Brug, Faktuur, Lenings en Verdienste**. Wat wil jy vandag doen?`,
+  fa: (n) => `به MRC GlobalPay خوش آمدید! من ${n} هستم. می‌توانم در **مبادله، خرید کریپتو، انتقال خصوصی، پل، فاکتور، وام و کسب سود** کمکتان کنم. امروز چه کاری می‌خواهید انجام دهید؟`,
+  ur: (n) => `MRC GlobalPay میں خوش آمدید! میں ${n} ہوں۔ میں **سواپ، کرپٹو خرید، پرائیویٹ ٹرانسفر، برج، انوائس، لون اور کمائی** میں مدد کر سکتا/سکتی ہوں۔ آج کیا کرنا چاہیں گے?`,
+  he: (n) => `ברוכים הבאים ל-MRC GlobalPay! אני ${n}. אני יכול/ה לעזור עם **המרות, קניית קריפטו, העברות פרטיות, גשרים, חשבוניות, הלוואות ותשואה**. מה תרצה/י לעשות היום?`,
+  uk: (n) => `Ласкаво просимо до MRC GlobalPay! Я ${n}. Можу допомогти зі **Свопами, Купівлею крипто, Приватними переказами, Мостами, Інвойсами, Кредитами та Заробітком**. Що бажаєте зробити сьогодні?`,
+};
+
+/* ── Tab-aware contextual messages ── */
+type WidgetMode = "exchange" | "buysell" | "private" | "bridge" | "request";
+
+const TAB_CONTEXT_MESSAGES: Record<string, Record<WidgetMode, string>> = {
+  en: {
+    exchange: "I see you're looking at **Crypto Swaps**! I can help you find the best rates, explain fees, or walk you through the process step-by-step. What coins are you looking to swap?",
+    buysell: "You're on the **Buy Crypto** tab! I can guide you through purchasing crypto with your local currency — via card, SEPA, PIX, or other methods. What would you like to buy?",
+    private: "Interested in **Private Transfers**? I can explain how our shielded routing works to protect your transaction privacy. How much are you looking to transfer?",
+    bridge: "You're exploring **Permanent Bridges**! I can help you set up a fixed deposit address for recurring cross-chain transfers. Which networks do you need to bridge?",
+    request: "Looking at **Invoices**? I can help you create a professional crypto invoice to request payment from anyone. Who do you need to invoice?",
+  },
+  es: {
+    exchange: "¡Veo que está explorando los **Intercambios Cripto**! Puedo ayudarle a encontrar las mejores tasas y guiarle paso a paso. ¿Qué monedas desea intercambiar?",
+    buysell: "¡Está en la pestaña de **Compra de Cripto**! Puedo guiarle para comprar con su moneda local — tarjeta, SEPA, PIX u otros métodos. ¿Qué desea comprar?",
+    private: "¿Interesado en **Transferencias Privadas**? Puedo explicar cómo funciona nuestro enrutamiento protegido. ¿Cuánto desea transferir?",
+    bridge: "¡Está explorando **Puentes Permanentes**! Puedo ayudarle a configurar una dirección fija para transferencias recurrentes. ¿Qué redes necesita conectar?",
+    request: "¿Está viendo **Facturas**? Puedo ayudarle a crear una factura cripto profesional. ¿A quién necesita facturar?",
+  },
+  pt: {
+    exchange: "Vejo que está explorando **Trocas Cripto**! Posso ajudar a encontrar as melhores taxas. Quais moedas deseja trocar?",
+    buysell: "Está na aba de **Compra de Cripto**! Posso guiá-lo na compra com sua moeda local — cartão, SEPA, PIX. O que deseja comprar?",
+    private: "Interessado em **Transferências Privadas**? Posso explicar como funciona nosso roteamento protegido. Quanto deseja transferir?",
+    bridge: "Explorando **Bridges Permanentes**! Posso ajudar a configurar um endereço fixo. Quais redes precisa conectar?",
+    request: "Vendo **Faturas**? Posso ajudar a criar uma fatura cripto profissional. Para quem precisa faturar?",
+  },
+  fr: {
+    exchange: "Je vois que vous explorez les **Échanges Crypto** ! Je peux vous aider à trouver les meilleurs taux. Quelles cryptos souhaitez-vous échanger ?",
+    buysell: "Vous êtes sur l'onglet **Achat Crypto** ! Je peux vous guider pour acheter avec votre monnaie locale. Que souhaitez-vous acheter ?",
+    private: "Intéressé par les **Transferts Privés** ? Je peux expliquer notre routage protégé. Combien souhaitez-vous transférer ?",
+    bridge: "Vous explorez les **Ponts Permanents** ! Je peux vous aider à configurer une adresse fixe. Quels réseaux avez-vous besoin de relier ?",
+    request: "Vous consultez les **Factures** ? Je peux vous aider à créer une facture crypto professionnelle. Qui devez-vous facturer ?",
+  },
+  ja: {
+    exchange: "**暗号スワップ**をご覧ですね！最適なレートを見つけるお手伝いができます。どのコインをスワップしたいですか？",
+    buysell: "**暗号購入**タブですね！現地通貨での購入をガイドします。何を購入したいですか？",
+    private: "**プライベート送金**に興味がありますか？シールドルーティングについて説明します。いくら送金したいですか？",
+    bridge: "**パーマネントブリッジ**を探索中ですね！固定アドレスの設定をお手伝いします。どのネットワークを接続しますか？",
+    request: "**請求書**をご覧ですね！プロフェッショナルな暗号請求書の作成をお手伝いします。誰に請求しますか？",
+  },
+  tr: {
+    exchange: "**Kripto Takas** sekmesine bakıyorsunuz! En iyi kurları bulmada yardımcı olabilirim. Hangi coinleri takas etmek istiyorsunuz?",
+    buysell: "**Kripto Satın Al** sekmesinde! Yerel para biriminizle satın alma konusunda rehberlik edebilirim. Ne almak istiyorsunuz?",
+    private: "**Özel Transfer** ile ilgileniyor musunuz? Korumalı yönlendirmemizi açıklayabilirim. Ne kadar transfer etmek istiyorsunuz?",
+    bridge: "**Kalıcı Köprü** keşfediyorsunuz! Sabit adres kurulumunda yardımcı olabilirim. Hangi ağları bağlamanız gerekiyor?",
+    request: "**Fatura** sekmesine bakıyorsunuz! Profesyonel bir kripto fatura oluşturmanıza yardımcı olabilirim.",
+  },
+  hi: {
+    exchange: "मैं देख रहा/रही हूँ कि आप **क्रिप्टो स्वैप** देख रहे हैं! मैं सबसे अच्छी दरें खोजने में मदद कर सकता/सकती हूँ। कौन से कॉइन स्वैप करना चाहेंगे?",
+    buysell: "आप **क्रिप्टो खरीद** टैब पर हैं! मैं स्थानीय मुद्रा से खरीदने में गाइड कर सकता/सकती हूँ। क्या खरीदना चाहेंगे?",
+    private: "**प्राइवेट ट्रांसफर** में रुचि है? मैं शील्डेड रूटिंग समझा सकता/सकती हूँ। कितना ट्रांसफर करना चाहेंगे?",
+    bridge: "**परमानेंट ब्रिज** एक्सप्लोर कर रहे हैं! फिक्स्ड एड्रेस सेटअप में मदद कर सकता/सकती हूँ।",
+    request: "**इनवॉइस** देख रहे हैं? प्रोफेशनल क्रिप्टो इनवॉइस बनाने में मदद कर सकता/सकती हूँ।",
+  },
+  vi: {
+    exchange: "Tôi thấy bạn đang xem **Hoán đổi Crypto**! Tôi có thể giúp tìm tỷ giá tốt nhất. Bạn muốn đổi coin nào?",
+    buysell: "Bạn đang ở tab **Mua Crypto**! Tôi có thể hướng dẫn mua bằng tiền địa phương. Bạn muốn mua gì?",
+    private: "Quan tâm đến **Chuyển khoản Riêng tư**? Tôi có thể giải thích cách hoạt động. Bạn muốn chuyển bao nhiêu?",
+    bridge: "Bạn đang khám phá **Cầu nối Vĩnh viễn**! Tôi có thể giúp thiết lập địa chỉ cố định.",
+    request: "Đang xem **Hóa đơn**? Tôi có thể giúp tạo hóa đơn crypto chuyên nghiệp.",
+  },
+  af: {
+    exchange: "Ek sien jy kyk na **Kripto Ruil**! Ek kan help om die beste koerse te vind. Watter munte wil jy ruil?",
+    buysell: "Jy is op die **Kripto Koop** oortjie! Ek kan jou lei om met jou plaaslike geldeenheid te koop.",
+    private: "Belangstel in **Privaat Oordrag**? Ek kan verduidelik hoe ons beskermde roeting werk.",
+    bridge: "Jy verken **Permanente Brûe**! Ek kan help met vaste adres-opstelling.",
+    request: "Kyk na **Fakture**? Ek kan help om 'n professionele kripto-faktuur te skep.",
+  },
+  fa: {
+    exchange: "می‌بینم که به **مبادله کریپتو** نگاه می‌کنید! می‌توانم بهترین نرخ‌ها را پیدا کنم. کدام کوین‌ها را می‌خواهید مبادله کنید؟",
+    buysell: "در تب **خرید کریپتو** هستید! می‌توانم راهنمایی خرید با ارز محلی کنم.",
+    private: "به **انتقال خصوصی** علاقه‌مندید؟ می‌توانم مسیریابی محافظت‌شده را توضیح دهم.",
+    bridge: "در حال بررسی **پل دائمی** هستید! می‌توانم آدرس ثابت تنظیم کنم.",
+    request: "**فاکتور** می‌بینید؟ می‌توانم فاکتور کریپتو حرفه‌ای بسازم.",
+  },
+  ur: {
+    exchange: "میں دیکھ رہا/رہی ہوں کہ آپ **کرپٹو سواپ** دیکھ رہے ہیں! بہترین ریٹ تلاش کرنے میں مدد کر سکتا/سکتی ہوں۔",
+    buysell: "آپ **کرپٹو خرید** ٹیب پر ہیں! مقامی کرنسی سے خریدنے میں رہنمائی کر سکتا/سکتی ہوں۔",
+    private: "**پرائیویٹ ٹرانسفر** میں دلچسپی ہے؟ شیلڈڈ روٹنگ سمجھا سکتا/سکتی ہوں۔",
+    bridge: "**پرمننٹ برج** دیکھ رہے ہیں! فکسڈ ایڈریس سیٹ اپ میں مدد کر سکتا/سکتی ہوں۔",
+    request: "**انوائس** دیکھ رہے ہیں؟ پروفیشنل کرپٹو انوائس بنانے میں مدد کر سکتا/سکتی ہوں۔",
+  },
+  he: {
+    exchange: "אני רואה שאתה בודק **המרות קריפטו**! אוכל לעזור למצוא את השערים הטובים ביותר. אילו מטבעות ברצונך להמיר?",
+    buysell: "אתה בלשונית **קניית קריפטו**! אוכל להדריך ברכישה במטבע המקומי שלך.",
+    private: "מעוניין ב**העברות פרטיות**? אוכל להסביר כיצד הניתוב המוגן שלנו עובד.",
+    bridge: "בודק **גשרים קבועים**! אוכל לעזור בהגדרת כתובת קבועה.",
+    request: "בודק **חשבוניות**? אוכל לעזור ליצור חשבונית קריפטו מקצועית.",
+  },
+  uk: {
+    exchange: "Бачу, ви дивитесь на **Крипто Свопи**! Можу допомогти знайти найкращі курси. Які монети хочете обміняти?",
+    buysell: "Ви на вкладці **Купівля Крипто**! Можу провести через покупку у вашій місцевій валюті.",
+    private: "Цікавить **Приватний Переказ**? Можу пояснити як працює захищена маршрутизація.",
+    bridge: "Досліджуєте **Постійні Мости**! Можу допомогти налаштувати фіксовану адресу.",
+    request: "Дивитесь на **Інвойси**? Можу допомогти створити професійний крипто-інвойс.",
+  },
 };
 
 /* ── Pages that trigger proactive popup ── */
@@ -151,6 +248,21 @@ const SupportChatWidget = () => {
       const greet = WELCOME_MESSAGES[lang] || WELCOME_MESSAGES.en;
       setMessages([{ role: "assistant", content: greet(currentPersona.name) }]);
     }
+  }, [open, lang]);
+
+  /* ── Listen for widget tab changes and inject contextual message ── */
+  useEffect(() => {
+    const handler = (e: Event) => {
+      if (!open) return; // only when chat is open
+      const tab = (e as CustomEvent).detail as WidgetMode;
+      const tabMsgs = TAB_CONTEXT_MESSAGES[lang] || TAB_CONTEXT_MESSAGES.en;
+      const msg = tabMsgs[tab];
+      if (msg) {
+        setMessages((prev) => [...prev, { role: "assistant", content: msg }]);
+      }
+    };
+    window.addEventListener("mrc-widget-tab-change", handler);
+    return () => window.removeEventListener("mrc-widget-tab-change", handler);
   }, [open, lang]);
 
   /* ── Proactive 10-second popup on tool pages ── */
