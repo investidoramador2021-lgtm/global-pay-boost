@@ -60,7 +60,8 @@ const HeroSection = ({ onTabChange }: HeroSectionProps) => {
             >
               <motion.h1
                 variants={fadeUp}
-                className="font-display text-3xl font-extrabold leading-tight tracking-tight text-foreground sm:text-4xl lg:text-5xl xl:text-6xl"
+                className="font-display font-extrabold leading-tight tracking-tight text-foreground"
+              >
               >
                 {t("hero.heading")}{" "}
                 <span className="text-gradient-neon">{t("hero.headingAccent")}</span>
