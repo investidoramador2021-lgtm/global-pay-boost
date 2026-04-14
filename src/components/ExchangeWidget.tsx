@@ -1791,11 +1791,8 @@ const ExchangeWidget = ({ onTabChange }: ExchangeWidgetProps = {}) => {
             <div className="mb-5 space-y-2">
               {/* Sticky tab header on mobile — premium HNW fintech aesthetic */}
               <div className="sticky top-0 z-20 -mx-3 px-3 sm:-mx-6 sm:px-6 lg:-mx-8 lg:px-8 pt-1 pb-2 bg-card/80 backdrop-blur-md rounded-t-2xl">
-                <div
-                  className="flex overflow-x-auto scrollbar-hide snap-x snap-mandatory rounded-xl border border-[hsl(220_20%_18%)] bg-[hsl(220_20%_8%/0.6)] p-1 gap-0.5"
-                  style={{ WebkitOverflowScrolling: "touch" }}
-                >
-                  {([
+                {(() => {
+                  const allTabs = [
                     { mode: "exchange" as WidgetMode, icon: Repeat, labelKey: "widget.tabs.exchange", onClick: () => { setWidgetMode("exchange"); setGStep("form"); setGCheckoutUrl(""); } },
                     { mode: "buysell" as WidgetMode, icon: CreditCard, labelKey: "widget.tabs.buy", onClick: () => {
                       setWidgetMode("buysell");
@@ -1819,31 +1816,43 @@ const ExchangeWidget = ({ onTabChange }: ExchangeWidgetProps = {}) => {
                     { mode: "request" as WidgetMode, icon: FileText, labelKey: "widget.tabs.invoice", onClick: () => { setWidgetMode("request"); } },
                     { mode: "loan" as WidgetMode, icon: Landmark, labelKey: "widget.tabs.loan", badge: "🔥", onClick: () => { setWidgetMode("loan"); } },
                     { mode: "earn" as WidgetMode, icon: TrendingUp, labelKey: "widget.tabs.earn", badge: "NEW", onClick: () => { setWidgetMode("earn"); } },
-                  ] as const).map((tab) => {
+                  ] as const;
+
+                  const row1 = allTabs.slice(0, 4);
+                  const row2 = allTabs.slice(4);
+
+                  const renderTab = (tab: typeof allTabs[number]) => {
                     const isActive = tab.mode === "buysell"
                       ? widgetMode === "buysell" && gTradeDirection === "buy"
                       : widgetMode === tab.mode;
                     const TabIcon = tab.icon;
                     const badge = "badge" in tab ? tab.badge : null;
+                    const isFinancial = tab.mode === "loan" || tab.mode === "earn";
                     return (
                       <button
                         key={tab.mode}
                         onClick={tab.onClick}
-                        className={`group relative flex snap-start shrink-0 flex-row items-center justify-center gap-1.5 rounded-lg px-4 sm:px-5 py-2.5 font-display text-xs font-semibold whitespace-nowrap transition-all duration-200 min-h-[44px] min-w-[44px] ${
+                        className={`group relative flex w-full items-center justify-center gap-1.5 rounded-lg py-2.5 font-display text-xs font-semibold whitespace-nowrap min-h-[44px] ${
                           isActive
                             ? "text-[hsl(160_100%_8%)] shadow-[inset_0_1px_0_rgba(255,255,255,0.25),0_1px_3px_rgba(0,0,0,0.4)]"
-                            : "text-[hsl(220_15%_55%)] hover:text-[hsl(220_15%_80%)] hover:bg-[hsl(0_0%_100%/0.05)]"
+                            : isFinancial && !isActive
+                              ? "text-[hsl(220_15%_55%)] hover:text-[hsl(220_15%_80%)] border border-[hsl(160_100%_45%/0.15)] hover:border-[hsl(160_100%_45%/0.35)] hover:bg-[hsl(0_0%_100%/0.05)] hover:shadow-[0_0_8px_hsl(160_100%_45%/0.1)]"
+                              : "text-[hsl(220_15%_55%)] hover:text-[hsl(220_15%_80%)] hover:bg-[hsl(0_0%_100%/0.05)]"
                         }`}
-                        style={isActive ? {
-                          background: "linear-gradient(180deg, hsl(160 100% 52%) 0%, hsl(160 100% 38%) 100%)",
-                        } : undefined}
+                        style={{
+                          transition: "all 0.2s ease",
+                          ...(isActive ? {
+                            background: "linear-gradient(180deg, hsl(160 100% 52%) 0%, hsl(160 100% 38%) 100%)",
+                          } : {}),
+                        }}
                       >
                         <TabIcon
-                          className={`h-4 w-4 shrink-0 transition-all duration-200 ${
+                          className={`h-4 w-4 shrink-0 ${
                             isActive
                               ? "drop-shadow-[0_0_3px_hsl(160_100%_45%/0.6)]"
                               : "group-hover:drop-shadow-[0_0_2px_hsl(160_100%_45%/0.3)]"
                           }`}
+                          style={{ transition: "filter 0.2s ease" }}
                         />
                         <span className="leading-tight tracking-wide">{t(tab.labelKey)}</span>
                         {badge && (
@@ -1853,8 +1862,34 @@ const ExchangeWidget = ({ onTabChange }: ExchangeWidgetProps = {}) => {
                         )}
                       </button>
                     );
-                  })}
-                </div>
+                  };
+
+                  return (
+                    <div
+                      className="rounded-xl border border-[hsl(220_20%_18%)] p-1.5"
+                      style={{
+                        background: "hsl(220 20% 8% / 0.6)",
+                        boxShadow: "inset 0 2px 6px rgba(0,0,0,0.35), inset 0 0 1px rgba(255,255,255,0.04)",
+                      }}
+                    >
+                      {/* Row 1 — Transactional: 4 cols on sm+, 2 cols on mobile */}
+                      <div className="grid grid-cols-2 sm:grid-cols-4 gap-1 mb-1">
+                        {row1.map(renderTab)}
+                      </div>
+                      {/* Row 2 — Financial Services: 3 cols on sm+, 2 cols (+ 1 spanning) on mobile */}
+                      <div className="grid grid-cols-2 sm:grid-cols-3 gap-1">
+                        {row2.map((tab, i) => {
+                          const isLast = i === row2.length - 1 && row2.length % 2 !== 0;
+                          return (
+                            <div key={tab.mode} className={isLast ? "col-span-2 sm:col-span-1" : ""}>
+                              {renderTab(tab)}
+                            </div>
+                          );
+                        })}
+                      </div>
+                    </div>
+                  );
+                })()}
               </div>
               <div className="flex justify-end">
                 <span className="hidden min-[481px]:flex items-center gap-1.5 rounded-full border border-trust/30 bg-trust/10 px-2.5 py-1 font-body text-[10px] font-semibold uppercase tracking-wider text-trust">
