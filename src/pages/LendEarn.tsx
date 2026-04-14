@@ -834,7 +834,19 @@ function YieldDashboard() {
         },
       }).catch((err) => console.error("Earn confirmation email failed (non-blocking):", err));
 
-      if (sendAddress) {
+      // ── Persist to lend_earn_transactions for admin visibility ──
+      supabase.from("lend_earn_transactions" as any).insert({
+        tx_type: "earn",
+        external_tx_id: txId,
+        email,
+        phone,
+        currency: selected.ticker,
+        amount: numAmount,
+        apy_percent: apy,
+        deposit_address: sendAddress,
+        language: currentLang,
+      }).then(({ error: dbErr }) => { if (dbErr) console.error("Earn DB persist failed:", dbErr); });
+
         setDepositInfo({ sendAddress, amount: sendAmount, currency: selected.ticker, txId });
         setModalOpen(true);
       } else {
