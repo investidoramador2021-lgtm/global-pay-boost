@@ -36,6 +36,7 @@ const HeroSection = ({ onTabChange }: HeroSectionProps) => {
   const handleTabChange = (tab: WidgetMode) => {
     setActiveTab(tab);
     onTabChange?.(tab);
+    window.dispatchEvent(new CustomEvent("mrc-widget-tab-change", { detail: tab }));
   };
 
   return (
