@@ -1,7 +1,7 @@
 import { useState, useEffect, useCallback, useRef, forwardRef } from "react";
 import { useTranslation } from "react-i18next";
 import { motion, AnimatePresence } from "framer-motion";
-import { ArrowDownUp, Loader2, Search, Copy, Check, ArrowLeft, ArrowRight, ArrowLeftRight, Clock, CheckCircle2, AlertCircle, ExternalLink, Wallet, QrCode, XCircle, Info, Mail, RefreshCw, Shield, Lock, ChevronDown, Share2, CreditCard, Repeat, EyeOff, Link2, FileText, Landmark } from "lucide-react";
+import { ArrowDownUp, Loader2, Search, Copy, Check, ArrowLeft, ArrowRight, ArrowLeftRight, Clock, CheckCircle2, AlertCircle, ExternalLink, Wallet, QrCode, XCircle, Info, Mail, RefreshCw, Shield, Lock, ChevronDown, Share2, CreditCard, Repeat, EyeOff, Link2, FileText, Landmark, TrendingUp } from "lucide-react";
 import PrivateTransferTab from "@/components/PrivateTransferTab";
 import PermanentBridgeTab from "@/components/PermanentBridgeTab";
 import InvoiceRequestTab from "@/components/InvoiceRequestTab";
@@ -287,7 +287,7 @@ const STATUS_LABEL_KEYS: Record<string, string> = {
 };
 
 interface ExchangeWidgetProps {
-  onTabChange?: (tab: "exchange" | "buysell" | "private" | "bridge" | "request" | "loan") => void;
+  onTabChange?: (tab: "exchange" | "buysell" | "private" | "bridge" | "request" | "loan" | "earn") => void;
 }
 
 const ExchangeWidget = ({ onTabChange }: ExchangeWidgetProps = {}) => {
@@ -320,7 +320,7 @@ const ExchangeWidget = ({ onTabChange }: ExchangeWidgetProps = {}) => {
   const debounceRef = useRef<ReturnType<typeof setTimeout>>();
 
   // ===== Dual-tab mode: "exchange" (ChangeNOW) vs "buysell" (Guardarian) =====
-  type WidgetMode = "exchange" | "buysell" | "private" | "bridge" | "request" | "loan";
+  type WidgetMode = "exchange" | "buysell" | "private" | "bridge" | "request" | "loan" | "earn";
   type FiatFlow = "buy" | "sell";
   const [widgetMode, setWidgetMode] = useState<WidgetMode>("exchange");
   const [gTradeDirection, setGTradeDirection] = useState<FiatFlow>("buy");
