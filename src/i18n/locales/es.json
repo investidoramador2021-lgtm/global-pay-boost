@@ -692,7 +692,8 @@
       "redZoneTitle": "Zona Roja (Liquidación)",
       "redZoneDesc": "Para proteger el fondo de préstamos y prevenir mayores pérdidas, el motor automatizado del socio ejecutará una liquidación si el valor cae por debajo del umbral de seguridad sin acción.",
       "liabilityNotice": "MRC Global Pay proporciona la interfaz para estos servicios; el monitoreo, la entrega de alertas y la ejecución de liquidaciones son gestionados exclusivamente por nuestro socio tecnológico. Recomendamos mantener un buffer de LTV saludable durante la volatilidad del mercado."
-    }
+    },
+    "liabilityShift": "El monitoreo y las alertas son gestionados por el motor de riesgo automatizado de nuestro socio de infraestructura."
   },
   "lendGuide": {
     "loanTitle": "Cómo Funcionan los Préstamos Cripto",

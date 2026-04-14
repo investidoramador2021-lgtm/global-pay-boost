@@ -7,7 +7,6 @@ import SiteHeader from "@/components/SiteHeader";
 import SiteFooter from "@/components/SiteFooter";
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-import { Slider } from "@/components/ui/slider";
 import { Badge } from "@/components/ui/badge";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Input } from "@/components/ui/input";
@@ -359,7 +358,7 @@ function LoanCalculator() {
   const { t } = useTranslation();
   const fmt = useLocaleFormat();
   const [selectedAsset, setSelectedAsset] = useState<CollateralAsset>(COLLATERAL_ASSETS[0]);
-  const [amount, setAmount] = useState(1000);
+  const [amount, setAmount] = useState<number | "">(1000);
   const [loading, setLoading] = useState(false);
   const [estimating, setEstimating] = useState(false);
   const [estimate, setEstimate] = useState<LoanEstimate | null>(null);
@@ -379,8 +378,7 @@ function LoanCalculator() {
     }
   }, [selectedAsset.riskTier]);
 
-  // Debounced values for API calls
-  const debouncedAmount = useDebounce(amount, 500);
+  const debouncedAmount = useDebounce(typeof amount === "number" ? amount : 0, 500);
   const debouncedLtv = useDebounce(selectedLtv, 300);
 
   // Fetch live estimate from API
@@ -416,12 +414,13 @@ function LoanCalculator() {
   }, [selectedAsset.ticker, debouncedAmount, debouncedLtv]);
 
   // Computed values: prefer live estimate, fallback to static calc
-  const borrowable = estimate?.amount_to ?? Math.floor(amount * (selectedLtv / 100));
+  const numAmount = typeof amount === "number" ? amount : 0;
+  const borrowable = estimate?.amount_to ?? Math.floor(numAmount * (selectedLtv / 100));
   const interestRate = estimate?.interest_percent ?? riskConfig.baseRate;
   const maxLtv = estimate?.ltv_percent ?? selectedLtv;
-  const liquidationPrice = estimate?.liquidation_price ?? (amount > 0 ? (borrowable / amount) * 100 : 0);
+  const liquidationPrice = estimate?.liquidation_price ?? (numAmount > 0 ? (borrowable / numAmount) * 100 : 0);
   const minLoanAmount = estimate?.loan_deposit_min_amount ?? 25;
-  const belowMinimum = amount < minLoanAmount;
+  const belowMinimum = numAmount > 0 && numAmount < minLoanAmount;
 
   const riskLabel = selectedLtv <= 50 ? t("lend.riskLow") : selectedLtv <= 70 ? t("lend.riskMedium") : t("lend.riskHigh");
   const riskColor = selectedLtv <= 50 ? "text-emerald-400" : selectedLtv <= 70 ? "text-[#D4AF37]" : "text-red-400";
@@ -434,7 +433,7 @@ function LoanCalculator() {
   };
 
   const handleOpenLoan = () => {
-    if (belowMinimum) {
+    if (numAmount <= 0 || belowMinimum) {
       toast.error(t("lend.belowMinLoan", `Minimum collateral is $${minLoanAmount}`));
       return;
     }
@@ -446,7 +445,7 @@ function LoanCalculator() {
     try {
       const data = await coinrabbitApi("create-loan", {
         collateral_currency: selectedAsset.ticker.toLowerCase(),
-        collateral_amount: parseFloat(amount.toFixed(8)),
+        collateral_amount: parseFloat(numAmount.toFixed(8)),
         ltv: selectedLtv,
         loan_currency: "usdt",
         email,
@@ -454,7 +453,7 @@ function LoanCalculator() {
       });
       setConfirmOpen(false);
       const sendAddress = data?.send_address || data?.deposit_address || data?.address || "";
-      const sendAmount = String(data?.collateral_amount || data?.amount || amount);
+      const sendAmount = String(data?.collateral_amount || data?.amount || numAmount);
       const txId = data?.id || data?.loan_id || "";
       if (sendAddress) {
         setDepositInfo({ sendAddress, amount: sendAmount, currency: selectedAsset.ticker, txId });
@@ -486,23 +485,26 @@ function LoanCalculator() {
           </div>
 
           <div className="space-y-2">
-            <div className="flex justify-between text-sm">
-              <span className="text-muted-foreground">{t("lend.collateralUsd")}</span>
-              <span className="font-mono text-[#D4AF37]">{fmt.usd(amount)}</span>
+            <label className="text-sm font-medium text-muted-foreground">{t("lend.collateralUsd")}</label>
+            <div className="relative">
+              <DollarSign className="absolute start-3 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground" />
+              <Input
+                type="number"
+                placeholder={`Min $${minLoanAmount}`}
+                value={amount}
+                onChange={(e) => {
+                  const v = e.target.value;
+                  setAmount(v === "" ? "" : Math.max(0, parseFloat(v) || 0));
+                }}
+                className="ps-9 border-[#D4AF37]/30 font-mono text-lg"
+                min={0}
+              />
             </div>
-            <Slider
-              value={[amount]}
-              onValueChange={(v) => setAmount(v[0])}
-              min={25}
-              max={50000}
-              step={50}
-              className="[&_[role=slider]]:border-[#D4AF37] [&_[role=slider]]:bg-[#D4AF37]"
-              dir="ltr"
-            />
-            <div className="flex justify-between text-xs text-muted-foreground">
-              <span>${minLoanAmount} min</span>
-              <span>$50,000</span>
-            </div>
+            {numAmount > 0 && numAmount < minLoanAmount && (
+              <p className="text-xs text-red-400">
+                {t("lend.belowMinLoan", `Minimum collateral is $${minLoanAmount}`)}
+              </p>
+            )}
           </div>
 
           <div className="space-y-2">
@@ -562,20 +564,18 @@ function LoanCalculator() {
             )}
           </div>
 
-          {belowMinimum && (
-            <p className="text-xs text-red-400 text-center">
-              {t("lend.belowMinLoan", `Minimum collateral is $${minLoanAmount}`)}
-            </p>
-          )}
-
           <Button
             onClick={handleOpenLoan}
-            disabled={loading || belowMinimum}
+            disabled={loading || belowMinimum || numAmount <= 0}
             className="w-full bg-[#D4AF37] text-background hover:bg-[#D4AF37]/90 font-semibold"
           >
             {loading ? <Loader2 className="h-4 w-4 animate-spin me-2" /> : null}
             {loading ? t("lend.submitting") : t("lend.openLoan")} <ArrowRight className="h-4 w-4" />
           </Button>
+
+          <p className="text-[10px] text-muted-foreground text-center leading-relaxed italic">
+            {t("lend.liabilityShift", "Monitoring and alerts are managed by our infrastructure partner's automated risk engine.")}
+          </p>
         </CardContent>
       </Card>
 

@@ -692,7 +692,8 @@
       "redZoneTitle": "Vùng Đỏ (Thanh lý)",
       "redZoneDesc": "Để bảo vệ quỹ cho vay và ngăn ngừa tổn thất thêm, công cụ tự động của đối tác sẽ thực hiện thanh lý nếu giá trị giảm xuống dưới ngưỡng an toàn mà không có hành động.",
       "liabilityNotice": "MRC Global Pay cung cấp giao diện cho các dịch vụ này; giám sát, gửi cảnh báo và thực hiện thanh lý được quản lý độc quyền bởi đối tác công nghệ."
-    }
+    },
+    "liabilityShift": "Giám sát và cảnh báo được quản lý bởi công cụ rủi ro tự động của đối tác cơ sở hạ tầng."
   },
   "lendGuide": {
     "loanTitle": "Cách Hoạt Động Cho Vay Crypto",

@@ -692,7 +692,8 @@
       "redZoneTitle": "Kırmızı Bölge (Tasfiye)",
       "redZoneDesc": "Kredi havuzunu korumak ve daha fazla kaybı önlemek için, değer güvenlik eşiğinin altına düşerse ortağın otomatik motoru tasfiye gerçekleştirir.",
       "liabilityNotice": "MRC Global Pay bu hizmetler için arayüz sağlar; izleme, uyarı teslimi ve tasfiye yürütmesi yalnızca teknoloji ortağımız tarafından yönetilir."
-    }
+    },
+    "liabilityShift": "İzleme ve uyarılar altyapı ortağımızın otomatik risk motoru tarafından yönetilmektedir."
   },
   "lendGuide": {
     "loanTitle": "Kripto Krediler Nasıl Çalışır",
