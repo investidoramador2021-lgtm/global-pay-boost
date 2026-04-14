@@ -1944,7 +1944,7 @@ const ExchangeWidget = ({ onTabChange }: ExchangeWidgetProps = {}) => {
                       <label className="mb-1.5 block font-body text-xs font-medium uppercase tracking-wider text-muted-foreground">
                         {gTradeDirection === "buy" ? t("widget.youPayFiat") : t("widget.youPayCrypto")}
                       </label>
-                      <div className="flex items-center gap-3 rounded-xl border border-border bg-accent p-4">
+                      <div className="flex items-center gap-3 rounded-xl border border-[hsl(220_20%_20%/0.3)] p-4" style={{ background: "hsl(220 25% 8% / 0.6)", boxShadow: "inset 0 2px 6px rgba(0,0,0,0.35), inset 0 0 1px rgba(255,255,255,0.03)" }}>
                         <Input
                           type="number"
                           value={gSendAmount}
