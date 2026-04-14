@@ -394,6 +394,40 @@
         "description": "Votre client paie en crypto ; notre moteur livre l'équivalent exact en fiat à votre portefeuille. Les deux parties reçoivent des reçus numériques signés."
       },
       "cta": "Créer une Facture"
+    },
+    "loan": {
+      "heading": "Prêts Instantanés Crypto.",
+      "subtitle": "Débloquez la liquidité de vos cryptos sans les vendre. Définissez votre LTV, envoyez la garantie et recevez des stablecoins en minutes — sans paiements mensuels.",
+      "step1": {
+        "title": "Sélectionner la Garantie",
+        "description": "Choisissez votre actif et définissez votre marge LTV."
+      },
+      "step2": {
+        "title": "Transfert Sécurisé",
+        "description": "Envoyez la garantie à l'adresse de stockage à froid sécurisée du partenaire d'infrastructure."
+      },
+      "step3": {
+        "title": "Paiement Instantané",
+        "description": "Recevez vos stablecoins en 10 minutes ou moins sans paiements mensuels."
+      },
+      "cta": "Obtenir un Prêt"
+    },
+    "earn": {
+      "heading": "Gagnez des Intérêts Quotidiens.",
+      "subtitle": "Faites travailler vos cryptos inactives. Déposez USDT, USDC ou BTC et regardez votre solde croître avec des intérêts composés quotidiens — retirez à tout moment.",
+      "step1": {
+        "title": "Déposer un Actif",
+        "description": "Transférez USDT, USDC ou BTC vers votre adresse unique à rendement."
+      },
+      "step2": {
+        "title": "Accumulation Quotidienne",
+        "description": "Regardez votre solde croître avec des intérêts composés quotidiens automatiquement."
+      },
+      "step3": {
+        "title": "Flexibilité Totale",
+        "description": "Retirez votre capital et toutes les récompenses gagnées à tout moment sans période de blocage."
+      },
+      "cta": "Commencer à Gagner"
     }
   },
   "whitepaper": {

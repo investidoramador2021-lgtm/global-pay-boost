@@ -394,6 +394,40 @@
         "description": "Müşteriniz kripto ile öder; motorumuz tam fiat eşdeğerini cüzdanınıza teslim eder. Her iki taraf da imzalı dijital makbuz alır."
       },
       "cta": "Fatura Oluştur"
+    },
+    "loan": {
+      "heading": "Kripto Teminatlı Anında Krediler.",
+      "subtitle": "Satmadan kripto varlıklarınızdan likidite açın. LTV'nizi ayarlayın, teminat gönderin ve dakikalar içinde stablecoin alın — aylık ödeme yok.",
+      "step1": {
+        "title": "Teminat Seçin",
+        "description": "Varlığınızı seçin ve LTV tamponunuzu ayarlayın."
+      },
+      "step2": {
+        "title": "Güvenli Transfer",
+        "description": "Teminatı altyapı ortağının güvenli soğuk depolama adresine gönderin."
+      },
+      "step3": {
+        "title": "Anında Ödeme",
+        "description": "Aylık ödeme olmadan 10 dakika veya daha kısa sürede stablecoin'lerinizi alın."
+      },
+      "cta": "Anında Kredi Al"
+    },
+    "earn": {
+      "heading": "Günlük Faiz Kazanın.",
+      "subtitle": "Atıl kriptonuzu çalıştırın. USDT, USDC veya BTC yatırın ve günlük bileşik faizle bakiyenizin büyümesini izleyin — istediğiniz zaman çekin.",
+      "step1": {
+        "title": "Varlık Yatırın",
+        "description": "USDT, USDC veya BTC'yi benzersiz faiz kazandıran adresinize aktarın."
+      },
+      "step2": {
+        "title": "Günlük Birikim",
+        "description": "Günlük bileşik faizle bakiyenizin otomatik olarak büyümesini izleyin."
+      },
+      "step3": {
+        "title": "Tam Esneklik",
+        "description": "Anaparanızı ve kazanılan tüm ödülleri kilitleme süresi olmadan istediğiniz zaman çekin."
+      },
+      "cta": "Kazanmaya Başla"
     }
   },
   "whitepaper": {

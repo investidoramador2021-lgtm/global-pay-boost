@@ -394,6 +394,40 @@
         "description": "Seu cliente paga em cripto; nosso motor entrega o equivalente exato em fiat para sua carteira. Ambas as partes recebem recibos digitais assinados."
       },
       "cta": "Criar Fatura"
+    },
+    "loan": {
+      "heading": "Empréstimos Instantâneos com Cripto.",
+      "subtitle": "Desbloqueie liquidez dos seus ativos cripto sem vender. Defina seu LTV, envie garantia e receba stablecoins em minutos — sem pagamentos mensais.",
+      "step1": {
+        "title": "Selecionar Garantia",
+        "description": "Escolha seu ativo e defina seu buffer de LTV."
+      },
+      "step2": {
+        "title": "Transferência Segura",
+        "description": "Envie a garantia para o endereço de armazenamento frio seguro do parceiro de infraestrutura."
+      },
+      "step3": {
+        "title": "Pagamento Instantâneo",
+        "description": "Receba suas stablecoins em 10 minutos ou menos, sem pagamentos mensais."
+      },
+      "cta": "Obter Empréstimo"
+    },
+    "earn": {
+      "heading": "Ganhe Juros Diários.",
+      "subtitle": "Coloque seu cripto ocioso para trabalhar. Deposite USDT, USDC ou BTC e veja seu saldo crescer com juros compostos diários — saque a qualquer momento.",
+      "step1": {
+        "title": "Depositar Ativo",
+        "description": "Transfira USDT, USDC ou BTC para seu endereço exclusivo com rendimento."
+      },
+      "step2": {
+        "title": "Acumulação Diária",
+        "description": "Veja seu saldo crescer com juros compostos diários automaticamente."
+      },
+      "step3": {
+        "title": "Flexibilidade Total",
+        "description": "Retire seu principal e todas as recompensas ganhas a qualquer momento, sem períodos de bloqueio."
+      },
+      "cta": "Começar a Ganhar"
     }
   },
   "whitepaper": {
