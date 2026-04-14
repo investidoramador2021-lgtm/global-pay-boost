@@ -183,6 +183,7 @@ function YieldDashboard() {
   const [depositAmount, setDepositAmount] = useState("");
   const [loading, setLoading] = useState(false);
   const [search, setSearch] = useState("");
+  const calcRef = useRef<HTMLDivElement>(null);
 
   const selected = useMemo(
     () => EARN_ASSETS.find((a) => EARN_ASSETS_UNIQUE_KEY(a) === selectedKey) ?? EARN_ASSETS[0],
@@ -200,6 +201,11 @@ function YieldDashboard() {
   const numAmount = parseFloat(depositAmount) || 0;
   const dailyEarning = numAmount * (selected.daily / 100);
   const annualEarning = numAmount * (selected.apy / 100);
+
+  const selectAndScroll = (key: string) => {
+    setSelectedKey(key);
+    setTimeout(() => calcRef.current?.scrollIntoView({ behavior: "smooth", block: "center" }), 100);
+  };
 
   const handleDeposit = async () => {
     if (numAmount < selected.minUsd) {
@@ -241,14 +247,14 @@ function YieldDashboard() {
           return (
             <Card
               key={key}
-              onClick={() => setSelectedKey(key)}
+              onClick={() => selectAndScroll(key)}
               className={`cursor-pointer transition-all border ${
                 selectedKey === key
                   ? "border-[#D4AF37] bg-[#D4AF37]/5 ring-1 ring-[#D4AF37]/30"
                   : "border-border hover:border-[#D4AF37]/40"
               }`}
             >
-              <CardContent className="p-3 space-y-1.5">
+              <CardContent className="p-3 space-y-2">
                 <div className="flex items-center gap-2">
                   <img
                     src={asset.icon}
@@ -264,6 +270,13 @@ function YieldDashboard() {
                 </div>
                 <div className="text-xl font-bold text-[#D4AF37]">{asset.apy}%</div>
                 <div className="text-[10px] text-muted-foreground">APY · {asset.daily}% daily</div>
+                <Button
+                  size="sm"
+                  onClick={(e) => { e.stopPropagation(); selectAndScroll(key); }}
+                  className="w-full mt-1 bg-[#D4AF37] text-background hover:bg-[#D4AF37]/90 text-xs font-semibold"
+                >
+                  Earn Now <ArrowRight className="ml-1 h-3 w-3" />
+                </Button>
               </CardContent>
             </Card>
           );
@@ -275,48 +288,50 @@ function YieldDashboard() {
       )}
 
       {/* Deposit form */}
-      <Card className="border-[#D4AF37]/20 bg-card/50 backdrop-blur">
-        <CardHeader>
-          <CardTitle className="flex items-center gap-2 text-foreground">
-            <TrendingUp className="h-5 w-5 text-[#D4AF37]" />
-            Start Earning on {selected.ticker}
-            <span className="text-xs font-normal text-muted-foreground">({selected.network})</span>
-          </CardTitle>
-        </CardHeader>
-        <CardContent className="space-y-4">
-          <div className="space-y-2">
-            <label className="text-sm text-muted-foreground">Deposit Amount (USD)</label>
-            <Input
-              type="number"
-              placeholder={`Min $${selected.minUsd}`}
-              value={depositAmount}
-              onChange={(e) => setDepositAmount(e.target.value)}
-              className="border-[#D4AF37]/30 font-mono"
-            />
-          </div>
-
-          {numAmount > 0 && (
-            <div className="rounded-lg border border-[#D4AF37]/20 bg-background/50 p-4 space-y-2">
-              <div className="flex justify-between text-sm">
-                <span className="text-muted-foreground">Daily Earnings</span>
-                <span className="font-mono text-emerald-400">+${dailyEarning.toFixed(4)}</span>
-              </div>
-              <div className="flex justify-between text-sm">
-                <span className="text-muted-foreground">Annual Earnings</span>
-                <span className="font-mono text-[#D4AF37]">+${annualEarning.toFixed(2)}</span>
-              </div>
+      <div ref={calcRef}>
+        <Card className="border-[#D4AF37]/20 bg-card/50 backdrop-blur">
+          <CardHeader>
+            <CardTitle className="flex items-center gap-2 text-foreground">
+              <TrendingUp className="h-5 w-5 text-[#D4AF37]" />
+              Start Earning on {selected.ticker}
+              <span className="text-xs font-normal text-muted-foreground">({selected.network})</span>
+            </CardTitle>
+          </CardHeader>
+          <CardContent className="space-y-4">
+            <div className="space-y-2">
+              <label className="text-sm text-muted-foreground">Deposit Amount (USD)</label>
+              <Input
+                type="number"
+                placeholder={`Min $${selected.minUsd}`}
+                value={depositAmount}
+                onChange={(e) => setDepositAmount(e.target.value)}
+                className="border-[#D4AF37]/30 font-mono"
+              />
             </div>
-          )}
 
-          <Button
-            onClick={handleDeposit}
-            disabled={loading || numAmount < selected.minUsd}
-            className="w-full bg-[#D4AF37] text-background hover:bg-[#D4AF37]/90 font-semibold"
-          >
-            {loading ? "Submitting…" : "Deposit & Earn"} <Wallet className="h-4 w-4" />
-          </Button>
-        </CardContent>
-      </Card>
+            {numAmount > 0 && (
+              <div className="rounded-lg border border-[#D4AF37]/20 bg-background/50 p-4 space-y-2">
+                <div className="flex justify-between text-sm">
+                  <span className="text-muted-foreground">Daily Earnings</span>
+                  <span className="font-mono text-emerald-400">+${dailyEarning.toFixed(4)}</span>
+                </div>
+                <div className="flex justify-between text-sm">
+                  <span className="text-muted-foreground">Annual Earnings</span>
+                  <span className="font-mono text-[#D4AF37]">+${annualEarning.toFixed(2)}</span>
+                </div>
+              </div>
+            )}
+
+            <Button
+              onClick={handleDeposit}
+              disabled={loading || numAmount < selected.minUsd}
+              className="w-full bg-[#D4AF37] text-background hover:bg-[#D4AF37]/90 font-semibold"
+            >
+              {loading ? "Submitting…" : "Deposit & Earn"} <Wallet className="h-4 w-4" />
+            </Button>
+          </CardContent>
+        </Card>
+      </div>
     </div>
   );
 }
