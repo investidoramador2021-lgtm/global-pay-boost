@@ -632,6 +632,9 @@ const AdminPortal = () => {
               <TabsTrigger value="partners" className="gap-2 data-[state=active]:bg-primary/10">
                 <Users className="w-4 h-4" /> Partner Management
               </TabsTrigger>
+              <TabsTrigger value="lending" className="gap-2 data-[state=active]:bg-primary/10">
+                <Landmark className="w-4 h-4" /> Lending & Earn ({lendEarnTxs.length})
+              </TabsTrigger>
               <TabsTrigger value="support" className="gap-2 data-[state=active]:bg-primary/10">
                 <MessageCircle className="w-4 h-4" /> Support Logs ({chatLogs.length})
               </TabsTrigger>
