@@ -74,7 +74,11 @@ async function getJwt(apiKey: string): Promise<string> {
   const body = { api_key: apiKey, external_id: 'mrc-pay-platform' }
   const { response, responseBody } = await callProvider(`${BASE}/auth/partner`, {
     method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
+    headers: {
+      'Content-Type': 'application/json',
+      'Authorization': `Bearer ${apiKey}`,
+      'x-api-key': apiKey,
+    },
     body: JSON.stringify(body),
   }, body)
 
