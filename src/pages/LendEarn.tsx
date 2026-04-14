@@ -1131,7 +1131,7 @@ export default function LendEarn() {
   const { t } = useTranslation();
   const urlParams = new URLSearchParams(window.location.search);
   const tabParam = urlParams.get("tab");
-  const defaultTab = tabParam === "earn" ? "earn" : tabParam === "track" ? "track" : "borrow";
+  const defaultTab = tabParam === "earn" ? "earn" : tabParam === "track" ? "track" : tabParam === "dashboard" ? "dashboard" : "borrow";
 
   return (
     <>
