@@ -313,7 +313,7 @@ Deno.serve(async (req: Request) => {
           currency_code: toCode,
           currency_network: toNetwork,
       },
-        ltv_percent: body.ltv / 100,
+        ltv_percent: String(body.ltv / 100),
       }
       if (p.email) requestBody.email = String(p.email)
       if (p.phone) requestBody.phone = String(p.phone)
