@@ -160,8 +160,10 @@ import { useTranslation } from "react-i18next";
 import { useLocation } from "react-router-dom";
 import { getLangFromPath, langPath } from "@/i18n";
 import { useState } from "react";
-import { Shield, ExternalLink, X } from "lucide-react";
+import { Shield, ExternalLink, X, Search } from "lucide-react";
 import GetTheAppBadges from "@/components/GetTheAppBadges";
+import { Input } from "@/components/ui/input";
+import { Button } from "@/components/ui/button";
 
 const SiteFooter = () => {
   const { t } = useTranslation();
@@ -267,6 +269,28 @@ const SiteFooter = () => {
                 ))}
               </div>
             </div>
+          </div>
+
+          {/* Track My Loan */}
+          <div className="mb-6 rounded-lg border border-border bg-muted/30 px-4 py-4">
+            <h3 className="font-display text-xs font-semibold uppercase tracking-wider text-foreground/60 mb-3">
+              Track My Loan
+            </h3>
+            <form
+              className="flex gap-2"
+              onSubmit={(e) => {
+                e.preventDefault();
+                const input = (e.currentTarget.elements.namedItem("loanId") as HTMLInputElement)?.value;
+                if (input?.trim()) {
+                  window.location.href = `/lend?tab=track&id=${encodeURIComponent(input.trim())}`;
+                }
+              }}
+            >
+              <Input name="loanId" placeholder="Enter Loan or Earn Transaction ID" className="text-sm" />
+              <Button type="submit" size="sm" variant="outline" className="shrink-0">
+                <Search className="h-4 w-4 mr-1" /> Track
+              </Button>
+            </form>
           </div>
 
           {/* Compliance & Security */}

@@ -402,6 +402,10 @@ function TransactionTracker() {
 /*  Main Page                                                          */
 /* ------------------------------------------------------------------ */
 export default function LendEarn() {
+  const urlParams = new URLSearchParams(window.location.search);
+  const tabParam = urlParams.get("tab");
+  const defaultTab = tabParam === "earn" ? "earn" : tabParam === "track" ? "track" : "borrow";
+
   return (
     <>
       <Helmet>
@@ -435,7 +439,7 @@ export default function LendEarn() {
 
         {/* Content */}
         <section className="mx-auto max-w-6xl px-4 py-12">
-          <Tabs defaultValue="borrow" className="space-y-8">
+          <Tabs defaultValue={defaultTab} className="space-y-8">
             <TabsList className="grid w-full max-w-md mx-auto grid-cols-3 bg-muted/50">
               <TabsTrigger value="borrow" className="data-[state=active]:bg-[#D4AF37] data-[state=active]:text-background">
                 <DollarSign className="mr-1 h-4 w-4" /> Borrow
