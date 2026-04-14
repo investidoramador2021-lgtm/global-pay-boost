@@ -303,11 +303,18 @@ Deno.serve(async (req: Request) => {
         ...(p.email ? { email: String(p.email) } : {}),
         ...(p.phone ? { phone: String(p.phone) } : {}),
       }
+      console.log('[API Debug] Sending contact info:', JSON.stringify({ email: requestBody.email, phone: requestBody.phone }))
       const { response, responseBody } = await callProvider(`${BASE}/loans`, {
         method: 'POST',
         headers: h,
         body: JSON.stringify(requestBody),
       }, requestBody)
+      if (!response.ok) {
+        const msg = typeof responseBody === 'object' && responseBody ? JSON.stringify(responseBody) : String(responseBody)
+        if (msg.includes('contact') || msg.includes('validat') || msg.includes('email') || msg.includes('phone')) {
+          return json({ error: 'Please check your phone and email format (Include + for country code).', provider_error: responseBody }, 422)
+        }
+      }
       return json(responseBody, response.ok ? 200 : response.status)
     }
 
@@ -320,6 +327,7 @@ Deno.serve(async (req: Request) => {
         ...(p.email ? { email: String(p.email) } : {}),
         ...(p.phone ? { phone: String(p.phone) } : {}),
       }
+      console.log('[API Debug] Sending contact info:', JSON.stringify({ email: requestBody.email, phone: requestBody.phone }))
       const url = `${BASE}/earns`
       const { response, responseBody } = await callProvider(url, {
         method: 'POST',
@@ -329,6 +337,13 @@ Deno.serve(async (req: Request) => {
 
       if (response.status === 404) {
         return json(buildProviderError(url, requestBody, responseBody), 200)
+      }
+
+      if (!response.ok) {
+        const msg = typeof responseBody === 'object' && responseBody ? JSON.stringify(responseBody) : String(responseBody)
+        if (msg.includes('contact') || msg.includes('validat') || msg.includes('email') || msg.includes('phone')) {
+          return json({ error: 'Please check your phone and email format (Include + for country code).', provider_error: responseBody }, 422)
+        }
       }
 
       return json(responseBody, response.ok ? 200 : response.status)
