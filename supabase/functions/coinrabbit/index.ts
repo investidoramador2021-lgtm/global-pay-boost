@@ -103,10 +103,11 @@ async function getJwt(apiKey: string): Promise<string> {
 
 function authHeaders(apiKey: string, jwt?: string): Record<string, string> {
   if (jwt) {
-    // JWT-authenticated requests: use JWT only, no API key to avoid conflicts
+    // JWT-authenticated: include both JWT and API key (some endpoints need both)
     return {
       'Content-Type': 'application/json',
       'Authorization': `Bearer ${jwt}`,
+      'x-api-key': apiKey,
     }
   }
   return {
