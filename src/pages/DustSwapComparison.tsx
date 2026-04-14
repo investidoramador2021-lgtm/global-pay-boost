@@ -20,6 +20,7 @@ const comparisonJsonLd = {
   name: "MRC GlobalPay Micro-Swap Service",
   description:
     "No-minimum crypto exchange with $0.30 minimum swap. No registration required. Non-custodial, instant settlement, 500+ assets.",
+  image: "https://mrcglobalpay.com/icon-512x512.png",
   url: "https://mrcglobalpay.com/dust-swap-comparison",
   brand: {
     "@type": "Brand",
