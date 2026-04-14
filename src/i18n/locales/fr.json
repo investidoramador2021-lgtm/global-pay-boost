@@ -692,7 +692,8 @@
       "redZoneTitle": "Zone Rouge (Liquidation)",
       "redZoneDesc": "Pour protéger le pool de prêts et prévenir d'autres pertes, le moteur automatisé du partenaire exécutera une liquidation si la valeur tombe en dessous du seuil de sécurité sans action.",
       "liabilityNotice": "MRC Global Pay fournit l'interface pour ces services ; la surveillance, la livraison des alertes et l'exécution des liquidations sont gérées exclusivement par notre partenaire technologique. Nous recommandons de maintenir un buffer LTV sain pendant la volatilité du marché."
-    }
+    },
+    "liabilityShift": "La surveillance et les alertes sont gérées par le moteur de risque automatisé de notre partenaire d'infrastructure."
   },
   "lendGuide": {
     "loanTitle": "Comment Fonctionnent les Prêts Crypto",

@@ -692,7 +692,8 @@
       "redZoneTitle": "Rooi Sone (Likwidasie)",
       "redZoneDesc": "Om die leningspoel te beskerm en verdere verliese te voorkom, sal die vennoot se outomatiese enjin 'n likwidasie uitvoer as die waarde onder die veiligheidsdrempel val.",
       "liabilityNotice": "MRC Global Pay bied die koppelvlak vir hierdie dienste; monitering, waarskuwingsaflewering en likwidasie-uitvoering word uitsluitlik deur ons tegnologievennoot bestuur."
-    }
+    },
+    "liabilityShift": "Monitering en waarskuwings word bestuur deur ons infrastruktuurvennoot se outomatiese risiko-enjin."
   },
   "lendGuide": {
     "loanTitle": "Hoe Kripto-lenings Werk",

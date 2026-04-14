@@ -706,7 +706,8 @@
       "redZoneTitle": "Red Zone (Liquidation)",
       "redZoneDesc": "To protect the lending pool and prevent further losses, the partner's automated engine will execute a liquidation if the value falls below the safety threshold without action.",
       "liabilityNotice": "MRC Global Pay provides the interface for these services; monitoring, alert delivery, and liquidation execution are managed exclusively by our technology partner. We recommend users maintain a healthy LTV buffer during market volatility."
-    }
+    },
+    "liabilityShift": "Monitoring and alerts are managed by our infrastructure partner's automated risk engine."
   },
   "lendGuide": {
     "loanTitle": "How Crypto Loans Work",
