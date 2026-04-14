@@ -204,11 +204,18 @@ export default function LendDashboard() {
     }
   }, [loanIds, earnIds]);
 
-  // Initial fetch + 60s auto-refresh
+  // Fetch on mount, but only if stale (>24h since last refresh)
   useEffect(() => {
-    fetchPositions();
-    const interval = setInterval(fetchPositions, 60000);
-    return () => clearInterval(interval);
+    const lastKey = "mrc_dash_last_refresh";
+    const last = parseInt(localStorage.getItem(lastKey) || "0", 10);
+    const ONE_DAY = 24 * 60 * 60 * 1000;
+    if (Date.now() - last > ONE_DAY || last === 0) {
+      fetchPositions().then(() => localStorage.setItem(lastKey, String(Date.now())));
+    } else {
+      // Still load cached positions on mount (single fetch, no interval)
+      fetchPositions();
+    }
+    // No auto-refresh interval — data refreshes on user actions or once per day
   }, [fetchPositions]);
 
   // Save IDs to localStorage
