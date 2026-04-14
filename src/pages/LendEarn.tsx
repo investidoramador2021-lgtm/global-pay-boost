@@ -727,6 +727,22 @@ function YieldDashboard() {
       const sendAddress = data?.send_address || data?.deposit_address || data?.address || "";
       const sendAmount = String(data?.amount || numAmount);
       const txId = data?.id || data?.earn_id || "";
+
+      // ── Parallel email trigger (no-reply@mrc-pay.com) — does NOT modify partner payload ──
+      const currentLang = i18n.language || "en";
+      supabase.functions.invoke("smtp-send", {
+        body: {
+          type: "earn-confirmation",
+          recipientEmail: email,
+          depositAmount: sendAmount,
+          depositCurrency: selected.ticker,
+          apy: String(apy),
+          sendAddress,
+          txId,
+          lang: currentLang,
+        },
+      }).catch((err) => console.error("Earn confirmation email failed (non-blocking):", err));
+
       if (sendAddress) {
         setDepositInfo({ sendAddress, amount: sendAmount, currency: selected.ticker, txId });
         setModalOpen(true);
