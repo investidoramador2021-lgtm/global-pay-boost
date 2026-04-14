@@ -48,9 +48,8 @@ const Index = () => {
         name: "MRC GlobalPay",
         url: homeUrl,
         description: t("meta.description"),
-        telephone: "+1-613-900-1382",
         priceRange: "$0.30 - $$$",
-        image: "https://mrcglobalpay.com/og-image.png",
+        image: "https://mrcglobalpay.com/og-image.jpg",
         address: {
           "@type": "PostalAddress",
           streetAddress: "343 Preston Street, Unit R111",
