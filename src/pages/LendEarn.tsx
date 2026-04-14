@@ -13,7 +13,7 @@ import { Input } from "@/components/ui/input";
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
 import { supabase } from "@/integrations/supabase/client";
 import { toast } from "sonner";
-import { Shield, TrendingUp, Wallet, Clock, AlertTriangle, ArrowRight, Percent, DollarSign, Lock, Search, Copy, CheckCircle, Loader2, X } from "lucide-react";
+import { Shield, TrendingUp, Wallet, Clock, AlertTriangle, ArrowRight, Percent, DollarSign, Lock, Search, Copy, CheckCircle, Loader2 } from "lucide-react";
 import CollateralSelector from "@/components/CollateralSelector";
 import { COLLATERAL_ASSETS, LTV_BY_RISK, type CollateralAsset } from "@/lib/coinrabbit-assets";
 import { EARN_ASSETS, EARN_ASSETS_UNIQUE_KEY } from "@/lib/coinrabbit-earn-assets";
@@ -44,6 +44,18 @@ async function coinrabbitApi(action: string, payload: Record<string, unknown> = 
 }
 
 /* ------------------------------------------------------------------ */
+/*  Debounce hook                                                      */
+/* ------------------------------------------------------------------ */
+function useDebounce<T>(value: T, delay: number): T {
+  const [debounced, setDebounced] = useState(value);
+  useEffect(() => {
+    const t = setTimeout(() => setDebounced(value), delay);
+    return () => clearTimeout(t);
+  }, [value, delay]);
+  return debounced;
+}
+
+/* ------------------------------------------------------------------ */
 /*  Deposit Modal – white-labeled, no redirect                         */
 /* ------------------------------------------------------------------ */
 interface DepositModalProps {
@@ -68,7 +80,6 @@ function DepositModal({ open, onClose, sendAddress, amount, currency, txId, type
     setTimeout(() => setCopied(false), 2000);
   };
 
-  // Status polling
   useEffect(() => {
     if (!open || !txId) return;
     const poll = async () => {
@@ -104,22 +115,16 @@ function DepositModal({ open, onClose, sendAddress, amount, currency, txId, type
             {type === "loan" ? t("lend.modal.titleLoan", "Send Collateral") : t("lend.modal.titleEarn", "Send Deposit")}
           </DialogTitle>
         </DialogHeader>
-
         <div className="space-y-5">
-          {/* QR Code */}
           <div className="flex justify-center">
             <div className="rounded-xl border border-[#D4AF37]/20 bg-white p-4">
               <QRCodeSVG value={sendAddress} size={180} level="H" />
             </div>
           </div>
-
-          {/* Amount */}
           <div className="rounded-lg border border-[#D4AF37]/20 bg-background/50 p-4 text-center">
             <div className="text-xs text-muted-foreground mb-1">{t("lend.modal.sendExactly", "Send exactly")}</div>
             <div className="text-2xl font-bold text-[#D4AF37] font-mono">{amount} {currency.toUpperCase()}</div>
           </div>
-
-          {/* Address */}
           <div className="space-y-1.5">
             <label className="text-xs text-muted-foreground">{t("lend.modal.toAddress", "To this address")}</label>
             <div className="flex items-center gap-2 rounded-lg border border-border bg-background/50 p-3">
@@ -129,14 +134,10 @@ function DepositModal({ open, onClose, sendAddress, amount, currency, txId, type
               </Button>
             </div>
           </div>
-
-          {/* Status */}
           <div className="flex items-center gap-3 rounded-lg border border-border bg-background/50 p-3">
             <StatusIcon className={`h-5 w-5 ${statusConfig[status].color} ${status === "confirming" ? "animate-spin" : status === "waiting" ? "animate-pulse" : ""}`} />
             <span className={`text-sm font-medium ${statusConfig[status].color}`}>{statusConfig[status].label}</span>
           </div>
-
-          {/* MSB Compliance */}
           <p className="text-[10px] text-muted-foreground text-center leading-relaxed">
             {t("lend.modal.compliance", "MRC GlobalPay · MSB Registration C100000015 · FINTRAC Regulated")}
           </p>
@@ -147,7 +148,18 @@ function DepositModal({ open, onClose, sendAddress, amount, currency, txId, type
 }
 
 /* ------------------------------------------------------------------ */
-/*  Loan Calculator                                                    */
+/*  Loan Estimate data shape                                           */
+/* ------------------------------------------------------------------ */
+interface LoanEstimate {
+  amount_to: number;
+  ltv_percent: number;
+  interest_percent: number;
+  liquidation_price?: number;
+  loan_deposit_min_amount?: number;
+}
+
+/* ------------------------------------------------------------------ */
+/*  Loan Calculator – wired to /v2/loans/estimate                      */
 /* ------------------------------------------------------------------ */
 function LoanCalculator() {
   const { t } = useTranslation();
@@ -155,8 +167,9 @@ function LoanCalculator() {
   const [selectedAsset, setSelectedAsset] = useState<CollateralAsset>(COLLATERAL_ASSETS[0]);
   const [amount, setAmount] = useState(1000);
   const [loading, setLoading] = useState(false);
+  const [estimating, setEstimating] = useState(false);
+  const [estimate, setEstimate] = useState<LoanEstimate | null>(null);
 
-  // Deposit modal state
   const [modalOpen, setModalOpen] = useState(false);
   const [depositInfo, setDepositInfo] = useState({ sendAddress: "", amount: "", currency: "", txId: "" });
 
@@ -171,8 +184,50 @@ function LoanCalculator() {
     }
   }, [selectedAsset.riskTier]);
 
-  const borrowable = Math.floor(amount * (selectedLtv / 100));
-  const liquidationPrice = amount > 0 ? ((borrowable / amount) * 100).toFixed(2) : "0";
+  // Debounced values for API calls
+  const debouncedAmount = useDebounce(amount, 500);
+  const debouncedLtv = useDebounce(selectedLtv, 300);
+
+  // Fetch live estimate from API
+  useEffect(() => {
+    if (debouncedAmount < 25) return;
+    let cancelled = false;
+    const fetchEstimate = async () => {
+      setEstimating(true);
+      try {
+        const data = await coinrabbitApi("loan-estimate", {
+          collateral_currency: selectedAsset.ticker.toLowerCase(),
+          collateral_amount: debouncedAmount,
+          ltv: debouncedLtv,
+          loan_currency: "usdt",
+        });
+        if (!cancelled && data && !data.error) {
+          setEstimate({
+            amount_to: data.amount_to ?? data.loan_amount ?? 0,
+            ltv_percent: data.ltv_percent ?? data.ltv ?? debouncedLtv,
+            interest_percent: data.interest_percent ?? data.interest_rate ?? riskConfig.baseRate,
+            liquidation_price: data.liquidation_price ?? data.liquidation_usd ?? undefined,
+            loan_deposit_min_amount: data.loan_deposit_min_amount ?? data.min_amount ?? undefined,
+          });
+        }
+      } catch {
+        // API unavailable — keep using static fallback
+      } finally {
+        if (!cancelled) setEstimating(false);
+      }
+    };
+    fetchEstimate();
+    return () => { cancelled = true; };
+  }, [selectedAsset.ticker, debouncedAmount, debouncedLtv]);
+
+  // Computed values: prefer live estimate, fallback to static calc
+  const borrowable = estimate?.amount_to ?? Math.floor(amount * (selectedLtv / 100));
+  const interestRate = estimate?.interest_percent ?? riskConfig.baseRate;
+  const maxLtv = estimate?.ltv_percent ?? selectedLtv;
+  const liquidationPrice = estimate?.liquidation_price ?? (amount > 0 ? (borrowable / amount) * 100 : 0);
+  const minLoanAmount = estimate?.loan_deposit_min_amount ?? 25;
+  const belowMinimum = amount < minLoanAmount;
+
   const riskLabel = selectedLtv <= 50 ? t("lend.riskLow") : selectedLtv <= 70 ? t("lend.riskMedium") : t("lend.riskHigh");
   const riskColor = selectedLtv <= 50 ? "text-emerald-400" : selectedLtv <= 70 ? "text-[#D4AF37]" : "text-red-400";
 
@@ -184,6 +239,10 @@ function LoanCalculator() {
   };
 
   const handleOpenLoan = async () => {
+    if (belowMinimum) {
+      toast.error(t("lend.belowMinLoan", `Minimum collateral is $${minLoanAmount}`));
+      return;
+    }
     setLoading(true);
     try {
       const data = await coinrabbitApi("create-loan", {
@@ -192,26 +251,17 @@ function LoanCalculator() {
         ltv: selectedLtv,
         loan_currency: "usdt",
       });
-
-      // Extract send_address from API response
       const sendAddress = data?.send_address || data?.deposit_address || data?.address || "";
       const sendAmount = String(data?.collateral_amount || data?.amount || amount);
       const txId = data?.id || data?.loan_id || "";
-
       if (sendAddress) {
-        setDepositInfo({
-          sendAddress,
-          amount: sendAmount,
-          currency: selectedAsset.ticker,
-          txId,
-        });
+        setDepositInfo({ sendAddress, amount: sendAmount, currency: selectedAsset.ticker, txId });
         setModalOpen(true);
       } else {
         toast.success(t("lend.loanSuccess"));
       }
     } catch (e: unknown) {
-      const msg = e instanceof Error ? e.message : "Failed to open loan";
-      toast.error(msg);
+      toast.error(e instanceof Error ? e.message : "Failed to open loan");
     } finally {
       setLoading(false);
     }
@@ -248,7 +298,7 @@ function LoanCalculator() {
               dir="ltr"
             />
             <div className="flex justify-between text-xs text-muted-foreground">
-              <span>$25</span>
+              <span>${minLoanAmount} min</span>
               <span>$50,000</span>
             </div>
           </div>
@@ -256,7 +306,10 @@ function LoanCalculator() {
           <div className="space-y-2">
             <label className="text-sm font-medium text-muted-foreground">
               {t("lend.ltvRatio")}
-              <span className="ms-2 text-xs text-[#D4AF37]">({riskConfig.baseRate}% APR)</span>
+              <span className="ms-2 text-xs text-[#D4AF37]">
+                ({interestRate}% APR)
+                {estimating && <Loader2 className="inline-block ms-1 h-3 w-3 animate-spin" />}
+              </span>
             </label>
             <div className={`grid gap-2 ${ltvOptions.length === 2 ? "grid-cols-2" : "grid-cols-3"}`}>
               {ltvOptions.map((ltv) => (
@@ -276,30 +329,46 @@ function LoanCalculator() {
             </div>
           </div>
 
+          {/* Live results panel */}
           <div className="rounded-lg border border-[#D4AF37]/20 bg-background/50 p-4 space-y-3">
             <div className="flex justify-between">
               <span className="text-sm text-muted-foreground">{t("lend.youCanBorrow")}</span>
-              <span className="text-lg font-bold text-[#D4AF37]">{fmt.usd(borrowable)} USDT</span>
+              <span className="text-lg font-bold text-[#D4AF37]">
+                {estimating ? <Loader2 className="inline h-4 w-4 animate-spin" /> : fmt.usd(borrowable)} USDT
+              </span>
+            </div>
+            <div className="flex justify-between">
+              <span className="text-sm text-muted-foreground">{t("lend.maxLtv", "Max LTV")}</span>
+              <span className="text-sm font-mono text-[#D4AF37]">{maxLtv}%</span>
             </div>
             <div className="flex justify-between">
               <span className="text-sm text-muted-foreground">{t("lend.liquidationPrice")}</span>
-              <span className={`text-sm font-mono ${riskColor}`}>${liquidationPrice}</span>
+              <span className={`text-sm font-mono ${riskColor}`}>${typeof liquidationPrice === "number" ? liquidationPrice.toFixed(2) : liquidationPrice}</span>
             </div>
             <div className="flex justify-between">
               <span className="text-sm text-muted-foreground">{t("lend.riskLevel")}</span>
-              <Badge variant="outline" className={`${riskColor} border-current`}>
-                {riskLabel}
-              </Badge>
+              <Badge variant="outline" className={`${riskColor} border-current`}>{riskLabel}</Badge>
             </div>
             <div className="flex justify-between">
               <span className="text-sm text-muted-foreground">{t("lend.interestRate")}</span>
-              <span className="text-sm font-mono text-[#D4AF37]">{riskConfig.baseRate}% APR</span>
+              <span className="text-sm font-mono text-[#D4AF37]">{interestRate}% APR</span>
             </div>
+            {estimate && (
+              <div className="text-[10px] text-emerald-400/70 text-end">
+                ✓ {t("lend.liveEstimate", "Live estimate from API")}
+              </div>
+            )}
           </div>
+
+          {belowMinimum && (
+            <p className="text-xs text-red-400 text-center">
+              {t("lend.belowMinLoan", `Minimum collateral is $${minLoanAmount}`)}
+            </p>
+          )}
 
           <Button
             onClick={handleOpenLoan}
-            disabled={loading}
+            disabled={loading || belowMinimum}
             className="w-full bg-[#D4AF37] text-background hover:bg-[#D4AF37]/90 font-semibold"
           >
             {loading ? <Loader2 className="h-4 w-4 animate-spin me-2" /> : null}
@@ -322,7 +391,15 @@ function LoanCalculator() {
 }
 
 /* ------------------------------------------------------------------ */
-/*  Yield Dashboard                                                    */
+/*  Earn Estimate data shape                                           */
+/* ------------------------------------------------------------------ */
+interface EarnEstimate {
+  annual_percent: number;
+  earn_min_amount?: number;
+}
+
+/* ------------------------------------------------------------------ */
+/*  Yield Dashboard – wired to /v2/earns/estimate                      */
 /* ------------------------------------------------------------------ */
 function YieldDashboard() {
   const { t } = useTranslation();
@@ -331,9 +408,10 @@ function YieldDashboard() {
   const [depositAmount, setDepositAmount] = useState("");
   const [search, setSearch] = useState("");
   const [loading, setLoading] = useState(false);
+  const [estimating, setEstimating] = useState(false);
+  const [earnEstimate, setEarnEstimate] = useState<EarnEstimate | null>(null);
   const calcRef = useRef<HTMLDivElement>(null);
 
-  // Deposit modal state
   const [modalOpen, setModalOpen] = useState(false);
   const [depositInfo, setDepositInfo] = useState({ sendAddress: "", amount: "", currency: "", txId: "" });
 
@@ -351,8 +429,45 @@ function YieldDashboard() {
   }, [search]);
 
   const numAmount = parseFloat(depositAmount) || 0;
-  const dailyEarning = numAmount * (selected.daily / 100);
-  const annualEarning = numAmount * (selected.apy / 100);
+  const debouncedAmount = useDebounce(numAmount, 500);
+
+  // Fetch live earn estimate
+  useEffect(() => {
+    if (debouncedAmount <= 0) { setEarnEstimate(null); return; }
+    let cancelled = false;
+    const fetchEstimate = async () => {
+      setEstimating(true);
+      try {
+        const data = await coinrabbitApi("earn-estimate", {
+          currency: selected.ticker.toLowerCase(),
+          amount: debouncedAmount,
+        });
+        if (!cancelled && data && !data.error) {
+          setEarnEstimate({
+            annual_percent: data.annual_percent ?? data.apy ?? selected.apy,
+            earn_min_amount: data.earn_min_amount ?? data.min_amount ?? selected.minUsd,
+          });
+        }
+      } catch {
+        // API unavailable — keep static fallback
+      } finally {
+        if (!cancelled) setEstimating(false);
+      }
+    };
+    fetchEstimate();
+    return () => { cancelled = true; };
+  }, [selected.ticker, debouncedAmount]);
+
+  // Use live rate or fallback
+  const apy = earnEstimate?.annual_percent ?? selected.apy;
+  const minEarnAmount = earnEstimate?.earn_min_amount ?? selected.minUsd;
+  const belowMinimum = numAmount > 0 && numAmount < minEarnAmount;
+
+  const dailyRate = apy / 365;
+  const dailyEarning = numAmount * (dailyRate / 100);
+  const weeklyEarning = dailyEarning * 7;
+  const monthlyEarning = numAmount * (apy / 12 / 100);
+  const annualEarning = numAmount * (apy / 100);
 
   const selectAndScroll = (key: string) => {
     setSelectedKey(key);
@@ -360,8 +475,8 @@ function YieldDashboard() {
   };
 
   const handleDeposit = async () => {
-    if (numAmount < selected.minUsd) {
-      toast.error(t("lend.minDeposit", { min: selected.minUsd }));
+    if (belowMinimum) {
+      toast.error(t("lend.minDeposit", { min: minEarnAmount }));
       return;
     }
     setLoading(true);
@@ -370,25 +485,17 @@ function YieldDashboard() {
         currency: selected.ticker.toLowerCase(),
         amount: numAmount,
       });
-
       const sendAddress = data?.send_address || data?.deposit_address || data?.address || "";
       const sendAmount = String(data?.amount || numAmount);
       const txId = data?.id || data?.earn_id || "";
-
       if (sendAddress) {
-        setDepositInfo({
-          sendAddress,
-          amount: sendAmount,
-          currency: selected.ticker,
-          txId,
-        });
+        setDepositInfo({ sendAddress, amount: sendAmount, currency: selected.ticker, txId });
         setModalOpen(true);
       } else {
         toast.success(t("lend.earnSuccess", "Earn deposit initiated!"));
       }
     } catch (e: unknown) {
-      const msg = e instanceof Error ? e.message : "Failed to start earning";
-      toast.error(msg);
+      toast.error(e instanceof Error ? e.message : "Failed to start earning");
     } finally {
       setLoading(false);
     }
@@ -460,36 +567,79 @@ function YieldDashboard() {
                 <TrendingUp className="h-5 w-5 text-[#D4AF37]" />
                 {t("lend.startEarningOn")} {selected.ticker}
                 <span className="text-xs font-normal text-muted-foreground">({selected.network})</span>
+                {estimating && <Loader2 className="h-4 w-4 animate-spin text-[#D4AF37]" />}
               </CardTitle>
             </CardHeader>
             <CardContent className="space-y-4">
+              {/* APY badge */}
+              <div className="flex items-center gap-2">
+                <Badge className="bg-[#D4AF37]/10 text-[#D4AF37] border-[#D4AF37]/30 text-sm">
+                  {apy}% APY
+                </Badge>
+                {earnEstimate && (
+                  <span className="text-[10px] text-emerald-400/70">✓ {t("lend.liveEstimate", "Live rate")}</span>
+                )}
+              </div>
+
               <div className="space-y-2">
                 <label className="text-sm text-muted-foreground">{t("lend.depositAmountUsd")}</label>
                 <Input
                   type="number"
-                  placeholder={`Min $${selected.minUsd}`}
+                  placeholder={`Min $${minEarnAmount}`}
                   value={depositAmount}
                   onChange={(e) => setDepositAmount(e.target.value)}
                   className="border-[#D4AF37]/30 font-mono"
                 />
+                {belowMinimum && (
+                  <p className="text-xs text-red-400">
+                    {t("lend.minDeposit", { min: minEarnAmount })}
+                  </p>
+                )}
               </div>
 
+              {/* Earnings Projection Table */}
               {numAmount > 0 && (
-                <div className="rounded-lg border border-[#D4AF37]/20 bg-background/50 p-4 space-y-2">
-                  <div className="flex justify-between text-sm">
-                    <span className="text-muted-foreground">{t("lend.dailyEarnings")}</span>
-                    <span className="font-mono text-emerald-400">+{fmt.usd(dailyEarning)}</span>
+                <div className="rounded-lg border border-[#D4AF37]/20 bg-background/50 overflow-hidden">
+                  <div className="bg-[#D4AF37]/5 px-4 py-2 border-b border-[#D4AF37]/10">
+                    <h4 className="text-sm font-semibold text-foreground">{t("lend.earningsProjection", "Earnings Projection")}</h4>
                   </div>
-                  <div className="flex justify-between text-sm">
-                    <span className="text-muted-foreground">{t("lend.annualEarnings")}</span>
-                    <span className="font-mono text-[#D4AF37]">+{fmt.usd(annualEarning)}</span>
-                  </div>
+                  <table className="w-full text-sm">
+                    <thead>
+                      <tr className="border-b border-border">
+                        <th className="px-4 py-2 text-start text-xs text-muted-foreground font-medium">{t("lend.period", "Period")}</th>
+                        <th className="px-4 py-2 text-end text-xs text-muted-foreground font-medium">{t("lend.earnings", "Earnings")}</th>
+                        <th className="px-4 py-2 text-end text-xs text-muted-foreground font-medium">{t("lend.total", "Total")}</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr className="border-b border-border/50">
+                        <td className="px-4 py-2.5 text-muted-foreground">{t("lend.periodDaily", "Daily")}</td>
+                        <td className="px-4 py-2.5 text-end font-mono text-emerald-400">+{fmt.usd(dailyEarning)}</td>
+                        <td className="px-4 py-2.5 text-end font-mono text-foreground">{fmt.usd(numAmount + dailyEarning)}</td>
+                      </tr>
+                      <tr className="border-b border-border/50">
+                        <td className="px-4 py-2.5 text-muted-foreground">{t("lend.periodWeekly", "7 Days")}</td>
+                        <td className="px-4 py-2.5 text-end font-mono text-emerald-400">+{fmt.usd(weeklyEarning)}</td>
+                        <td className="px-4 py-2.5 text-end font-mono text-foreground">{fmt.usd(numAmount + weeklyEarning)}</td>
+                      </tr>
+                      <tr className="border-b border-border/50">
+                        <td className="px-4 py-2.5 text-muted-foreground">{t("lend.periodMonthly", "1 Month")}</td>
+                        <td className="px-4 py-2.5 text-end font-mono text-[#D4AF37]">+{fmt.usd(monthlyEarning)}</td>
+                        <td className="px-4 py-2.5 text-end font-mono text-foreground">{fmt.usd(numAmount + monthlyEarning)}</td>
+                      </tr>
+                      <tr>
+                        <td className="px-4 py-2.5 font-medium text-foreground">{t("lend.periodAnnual", "1 Year")}</td>
+                        <td className="px-4 py-2.5 text-end font-mono font-bold text-[#D4AF37]">+{fmt.usd(annualEarning)}</td>
+                        <td className="px-4 py-2.5 text-end font-mono font-bold text-foreground">{fmt.usd(numAmount + annualEarning)}</td>
+                      </tr>
+                    </tbody>
+                  </table>
                 </div>
               )}
 
               <Button
                 onClick={handleDeposit}
-                disabled={loading || numAmount <= 0}
+                disabled={loading || numAmount <= 0 || belowMinimum}
                 className="w-full bg-[#D4AF37] text-background hover:bg-[#D4AF37]/90 font-semibold"
               >
                 {loading ? <Loader2 className="h-4 w-4 animate-spin me-2" /> : null}
@@ -550,10 +700,7 @@ function TransactionTracker() {
   }, [polling, checkStatus]);
 
   const handleTrack = () => {
-    if (!txId.trim()) {
-      toast.error(t("lend.enterTxId"));
-      return;
-    }
+    if (!txId.trim()) { toast.error(t("lend.enterTxId")); return; }
     setPolling(true);
     checkStatus();
   };
@@ -589,25 +736,15 @@ function TransactionTracker() {
               return (
                 <div key={step.label} className="flex items-start gap-4">
                   <div className="flex flex-col items-center">
-                    <div
-                      className={`flex h-10 w-10 items-center justify-center rounded-full border-2 transition-all ${
-                        isDone
-                          ? "border-emerald-400 bg-emerald-400/20"
-                          : isActive
-                          ? "border-[#D4AF37] bg-[#D4AF37]/20 animate-pulse"
-                          : "border-border bg-background"
-                      }`}
-                    >
+                    <div className={`flex h-10 w-10 items-center justify-center rounded-full border-2 transition-all ${
+                      isDone ? "border-emerald-400 bg-emerald-400/20" : isActive ? "border-[#D4AF37] bg-[#D4AF37]/20 animate-pulse" : "border-border bg-background"
+                    }`}>
                       <Icon className={`h-5 w-5 ${isDone ? "text-emerald-400" : isActive ? "text-[#D4AF37]" : "text-muted-foreground"}`} />
                     </div>
-                    {i < STEPS.length - 1 && (
-                      <div className={`h-8 w-0.5 ${isDone ? "bg-emerald-400" : "bg-border"}`} />
-                    )}
+                    {i < STEPS.length - 1 && <div className={`h-8 w-0.5 ${isDone ? "bg-emerald-400" : "bg-border"}`} />}
                   </div>
                   <div className="pt-2">
-                    <div className={`font-medium ${isActive ? "text-[#D4AF37]" : isDone ? "text-emerald-400" : "text-muted-foreground"}`}>
-                      {step.label}
-                    </div>
+                    <div className={`font-medium ${isActive ? "text-[#D4AF37]" : isDone ? "text-emerald-400" : "text-muted-foreground"}`}>{step.label}</div>
                     <div className="text-xs text-muted-foreground">{step.description}</div>
                   </div>
                 </div>
@@ -618,9 +755,7 @@ function TransactionTracker() {
 
         {txData && (
           <div className="rounded-lg border border-border bg-background/50 p-3">
-            <pre className="text-xs text-muted-foreground overflow-auto max-h-32">
-              {JSON.stringify(txData, null, 2)}
-            </pre>
+            <pre className="text-xs text-muted-foreground overflow-auto max-h-32">{JSON.stringify(txData, null, 2)}</pre>
           </div>
         )}
       </CardContent>
@@ -648,7 +783,6 @@ export default function LendEarn() {
       <SiteHeader />
 
       <main className="min-h-screen bg-background">
-        {/* Hero */}
         <section className="relative overflow-hidden border-b border-border">
           <div className="absolute inset-0 bg-gradient-to-b from-[#D4AF37]/5 to-transparent" />
           <div className="relative mx-auto max-w-6xl px-4 py-16 text-center sm:py-24">
@@ -659,13 +793,10 @@ export default function LendEarn() {
               {t("lend.heroTitle")} <span className="text-[#D4AF37]">{t("lend.heroLending")}</span> {t("lend.heroAnd")}{" "}
               <span className="text-[#D4AF37]">{t("lend.heroEarn")}</span>
             </h1>
-            <p className="mx-auto mt-4 max-w-2xl text-lg text-muted-foreground">
-              {t("lend.heroSubtitle")}
-            </p>
+            <p className="mx-auto mt-4 max-w-2xl text-lg text-muted-foreground">{t("lend.heroSubtitle")}</p>
           </div>
         </section>
 
-        {/* Content */}
         <section className="mx-auto max-w-6xl px-4 py-12">
           <Tabs defaultValue={defaultTab} className="space-y-8">
             <TabsList className="grid w-full max-w-md mx-auto grid-cols-3 bg-muted/50">
@@ -683,18 +814,15 @@ export default function LendEarn() {
             <TabsContent value="borrow" className="max-w-xl mx-auto">
               <LoanCalculator />
             </TabsContent>
-
             <TabsContent value="earn">
               <YieldDashboard />
             </TabsContent>
-
             <TabsContent value="track" className="max-w-xl mx-auto">
               <TransactionTracker />
             </TabsContent>
           </Tabs>
         </section>
 
-        {/* Compliance Disclaimer */}
         <section className="border-t border-border bg-muted/30">
           <div className="mx-auto max-w-4xl px-4 py-8">
             <div className="flex items-start gap-3 rounded-lg border border-[#D4AF37]/20 bg-background/50 p-4">
