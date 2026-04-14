@@ -188,12 +188,16 @@ Deno.serve(async (req: Request) => {
       const toNetwork = normalizeNetwork(p.to_network || p.loan_network || 'ETH')
       const exchange = String(p.exchange || 'direct')
 
+      // Round amount to 8 decimal places (standard crypto precision)
+      const roundedAmount = parseFloat(Number(body.collateral_amount).toFixed(8))
+
       const qs = new URLSearchParams({
         from_code: fromCode,
         from_network: fromNetwork,
         to_code: toCode,
         to_network: toNetwork,
-        amount: String(body.collateral_amount),
+        amount: String(roundedAmount),
+        ltv_percent: String(body.ltv || 50),
         exchange,
       })
       const url = `${BASE}/loans/estimate?${qs}`
