@@ -3,6 +3,8 @@ const corsHeaders = {
   'Access-Control-Allow-Headers': 'authorization, x-client-info, apikey, content-type',
 }
 
+// CoinRabbit Partner API v2 base
+// Docs: provided to partners directly — requires active partner API key
 const COINRABBIT_BASE = 'https://api.coinrabbit.io/api/v2'
 
 function json(data: unknown, status = 200) {
