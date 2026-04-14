@@ -30,7 +30,16 @@ Deno.serve(async (req) => {
   }
 
   try {
-    const payload = await req.json()
+    // Support both GET (query params) and POST (body)
+    let payload: Record<string, unknown> = {}
+    if (req.method === 'GET') {
+      const url = new URL(req.url)
+      for (const [k, v] of url.searchParams.entries()) {
+        payload[k] = v
+      }
+    } else {
+      payload = await req.json()
+    }
     const { action } = payload
 
     /* ── Partner auth session ─────────────────────────────── */
