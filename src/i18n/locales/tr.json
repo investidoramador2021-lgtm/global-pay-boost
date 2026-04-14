@@ -857,7 +857,19 @@
       "signIn": "Giriş Yap",
       "noAccount": "Henüz hesabınız yok mu?",
       "register": "Kaydol",
-      "registered": "Hesap oluşturuldu! Doğrulama için e-postanızı kontrol edin."
+      "registered": "Hesap oluşturuldu! Doğrulama için e-postanızı kontrol edin.",
+      "otpTitle": "İki faktörlü doğrulama",
+      "otpSent": "E-postanıza 6 haneli güvenlik kodu gönderildi.",
+      "otpExplain": "Oturum açmayı tamamlamak için {{email}} adresine gönderilen 6 haneli kodu girin.",
+      "otpExpired": "Kodun süresi doldu. Lütfen yeni bir kod isteyin.",
+      "otpInvalid": "Geçersiz kod. Lütfen tekrar deneyin.",
+      "otpResent": "Yeni kod e-postanıza gönderildi.",
+      "otpResendFail": "Kod yeniden gönderilemedi. Tekrar deneyin.",
+      "verifyBtn": "Doğrula ve devam et",
+      "resendIn": "{{secs}}sn sonra tekrar gönder",
+      "resendCode": "Kodu tekrar gönder",
+      "otpExpiry": "Bu kod 10 dakika geçerlidir.",
+      "twoFaNotice": "Ek güvenlik için oturum açtıktan sonra e-postanıza 6 haneli doğrulama kodu gönderilecektir."
     }
   }
 }

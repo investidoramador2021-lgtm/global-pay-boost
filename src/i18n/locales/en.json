@@ -871,7 +871,19 @@
       "signIn": "Sign In",
       "noAccount": "No account yet?",
       "register": "Register",
-      "registered": "Account created! Check your email to verify."
+      "registered": "Account created! Check your email to verify.",
+      "otpTitle": "Two-Factor Verification",
+      "otpSent": "A 6-digit security code was sent to your email.",
+      "otpExplain": "Enter the 6-digit code sent to {{email}} to complete sign-in.",
+      "otpExpired": "Code expired. Please request a new one.",
+      "otpInvalid": "Invalid code. Please try again.",
+      "otpResent": "New code sent to your email.",
+      "otpResendFail": "Failed to resend code. Try again.",
+      "verifyBtn": "Verify & Continue",
+      "resendIn": "Resend in {{secs}}s",
+      "resendCode": "Resend Code",
+      "otpExpiry": "This code is valid for 10 minutes.",
+      "twoFaNotice": "A 6-digit verification code will be sent to your email after login for additional security."
     }
   }
 }

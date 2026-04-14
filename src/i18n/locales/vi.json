@@ -857,7 +857,19 @@
       "signIn": "Đăng nhập",
       "noAccount": "Chưa có tài khoản?",
       "register": "Đăng ký",
-      "registered": "Đã tạo tài khoản! Kiểm tra email để xác minh."
+      "registered": "Đã tạo tài khoản! Kiểm tra email để xác minh.",
+      "otpTitle": "Xác minh hai yếu tố",
+      "otpSent": "Mã bảo mật 6 chữ số đã được gửi đến email của bạn.",
+      "otpExplain": "Nhập mã 6 chữ số đã gửi đến {{email}} để hoàn tất đăng nhập.",
+      "otpExpired": "Mã đã hết hạn. Vui lòng yêu cầu mã mới.",
+      "otpInvalid": "Mã không hợp lệ. Vui lòng thử lại.",
+      "otpResent": "Mã mới đã được gửi đến email của bạn.",
+      "otpResendFail": "Gửi lại mã thất bại. Vui lòng thử lại.",
+      "verifyBtn": "Xác minh và tiếp tục",
+      "resendIn": "Gửi lại sau {{secs}}s",
+      "resendCode": "Gửi lại mã",
+      "otpExpiry": "Mã này có hiệu lực trong 10 phút.",
+      "twoFaNotice": "Mã xác minh 6 chữ số sẽ được gửi đến email của bạn sau khi đăng nhập để tăng cường bảo mật."
     }
   }
 }

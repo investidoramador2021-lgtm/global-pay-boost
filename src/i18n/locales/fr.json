@@ -857,7 +857,19 @@
       "signIn": "Se connecter",
       "noAccount": "Pas encore de compte ?",
       "register": "S'inscrire",
-      "registered": "Compte créé ! Vérifiez votre email."
+      "registered": "Compte créé ! Vérifiez votre email.",
+      "otpTitle": "Vérification à deux facteurs",
+      "otpSent": "Un code à 6 chiffres a été envoyé à votre email.",
+      "otpExplain": "Entrez le code à 6 chiffres envoyé à {{email}} pour compléter la connexion.",
+      "otpExpired": "Code expiré. Veuillez en demander un nouveau.",
+      "otpInvalid": "Code invalide. Veuillez réessayer.",
+      "otpResent": "Nouveau code envoyé à votre email.",
+      "otpResendFail": "Échec du renvoi du code. Réessayez.",
+      "verifyBtn": "Vérifier et continuer",
+      "resendIn": "Renvoyer dans {{secs}}s",
+      "resendCode": "Renvoyer le code",
+      "otpExpiry": "Ce code est valable 10 minutes.",
+      "twoFaNotice": "Un code de vérification à 6 chiffres sera envoyé à votre email après la connexion pour une sécurité renforcée."
     }
   }
 }
