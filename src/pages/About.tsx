@@ -21,7 +21,7 @@ const About = () => (
         name: "MRC GlobalPay",
         url: "https://mrcglobalpay.com",
         description: "Registered Canadian Money Services Business providing non-custodial cryptocurrency exchange services.",
-        address: { "@type": "PostalAddress", addressLocality: "Ottawa", addressCountry: "CA" },
+        address: { "@type": "PostalAddress", streetAddress: "116 Albert Street, Suite 300", addressLocality: "Ottawa", addressRegion: "ON", postalCode: "K1P 5G3", addressCountry: "CA" },
         knowsAbout: ["Cryptocurrency Exchange", "Non-Custodial Trading", "Blockchain", "FINTRAC Compliance"],
         hasCredential: {
           "@type": "EducationalOccupationalCredential",

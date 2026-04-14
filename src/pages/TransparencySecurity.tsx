@@ -19,7 +19,10 @@ const pageJsonLd = {
     url: "https://mrcglobalpay.com",
     address: {
       "@type": "PostalAddress",
+      streetAddress: "116 Albert Street, Suite 300",
       addressLocality: "Ottawa",
+      addressRegion: "ON",
+      postalCode: "K1P 5G3",
       addressCountry: "CA",
     },
   },
