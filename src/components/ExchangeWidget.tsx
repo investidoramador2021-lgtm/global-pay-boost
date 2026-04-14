@@ -994,6 +994,8 @@ const ExchangeWidget = ({ onTabChange }: ExchangeWidgetProps = {}) => {
       setWidgetMode("bridge");
     } else if (tab === "request" || tab === "invoice") {
       setWidgetMode("request");
+    } else if (tab === "loan") {
+      setWidgetMode("loan");
     }
   }, []);
 
