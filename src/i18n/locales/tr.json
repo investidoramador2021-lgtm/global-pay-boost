@@ -699,24 +699,20 @@
     "loanTitle": "Kripto Krediler Nasıl Çalışır",
     "loanSubtitle": "Teminat seçiminden stablecoin ödemesine — kriptonuzu satmadan borç almak için adım adım rehber.",
     "loan": {
-      "step1Title": "Teminat ve LTV Seçimi",
-      "step1Desc": "Teminat varlığınızı (BTC, ETH, BNB ve 130+ diğerleri) seçin ve Kredi/Değer oranınızı ayarlayın. Mevcut seviyeler %50, %70, %80 ve %90'dır.",
-      "step2Title": "Teminat Transfer Et",
-      "step2Desc": "Teminatı sistem tarafından oluşturulan benzersiz yatırma adresine gönderin. 2 ağ onayı gereklidir.",
-      "step3Title": "Stablecoin Ödemesi Al",
-      "step3Desc": "Onaylar alındığında, stablecoinler (USDT veya USDC) belirttiğiniz adrese gönderilir. Genellikle 10 dakika içinde tamamlanır.",
-      "step4Title": "Kredi Yönetimi ve Geri Ödeme",
-      "step4Desc": "Aylık faiz ödemesi gerekmez. Faiz, seçilen varlık ve LTV seviyesine göre APR üzerinden hesaplanır. İstediğiniz zaman ana para ve birikmiş faizi ödeyin — erken ödeme cezası yoktur."
+      "step1Title": "Teminat Seçin",
+      "step1Desc": "Varlığınızı seçin ve LTV tamponunuzu ayarlayın.",
+      "step2Title": "Güvenli Transfer",
+      "step2Desc": "Teminatı altyapı ortağının güvenli soğuk depolama adresine gönderin.",
+      "step3Title": "Anlık Ödeme",
+      "step3Desc": "Aylık ödeme olmadan 10 dakika veya daha kısa sürede stablecoin'lerinizi alın."
     },
     "earn": {
-      "step1Title": "Varlığınızı Seçin",
-      "step1Desc": "Stablecoinler (USDT, USDC) veya ana varlıklardan (BTC, ETH) seçin. Her varlık gerçek zamanlı APY sunar.",
-      "step2Title": "Yatırım Yap",
-      "step2Desc": "Seçtiğiniz varlığı benzersiz yatırma adresine gönderin. $100 eşdeğerinden başlayabilirsiniz.",
-      "step3Title": "Günlük Birikim ve Bileşik Faiz",
-      "step3Desc": "Faiz her gün tahakkuk eder ve bakiyenize otomatik olarak bileşik uygulanır.",
-      "step4Title": "Tam Esneklik",
-      "step4Desc": "Kilitleme süresi veya çekim ücreti yoktur. 7/24 tam anaparanızı ve kazanılan faizi çekin."
+      "step1Title": "Varlık Yatırın",
+      "step1Desc": "USDT, USDC veya BTC'yi benzersiz faiz getiren adresinize aktarın.",
+      "step2Title": "Günlük Birikim",
+      "step2Desc": "Bakiyenizin otomatik günlük bileşik faizle büyümesini izleyin.",
+      "step3Title": "Tam Esneklik",
+      "step3Desc": "Anaparanızı ve kazanılan tüm ödülleri sıfır kilitleme süresiyle istediğiniz zaman çekin."
     },
     "safety": {
       "coldTitle": "Soğuk Depolama Saklama",
@@ -770,6 +766,7 @@
       "instantDesc": "7/24 kilitleme süresi olmadan çekim.",
       "minimumTitle": "Düşük Minimumlar",
       "minimumDesc": "$100 eşdeğerinden başlayın."
-    }
+    },
+    "partnerLiabilityFooter": "İzleme, güvenlik uyarıları ve tasfiye işlemleri yalnızca teknoloji ortağımızın otomatik risk motoru tarafından yönetilmektedir."
   }
 }

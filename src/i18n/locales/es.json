@@ -699,24 +699,20 @@
     "loanTitle": "Cómo Funcionan los Préstamos Cripto",
     "loanSubtitle": "Desde la selección de colateral hasta el desembolso de stablecoins — una guía paso a paso para pedir prestado contra tu cripto sin venderlo.",
     "loan": {
-      "step1Title": "Selección de Colateral y LTV",
-      "step1Desc": "Elige tu activo de colateral (BTC, ETH, BNB y más de 130 otros) y establece tu ratio Préstamo-Valor. Los niveles disponibles son 50%, 70%, 80% y 90%. Un LTV más alto desbloquea más stablecoins por adelantado pero deja un margen de seguridad más estrecho contra caídas del mercado. Un LTV más bajo (50%) ofrece máxima protección y la tasa de interés más baja.",
-      "step2Title": "Transferir Colateral",
-      "step2Desc": "Envía el colateral a la dirección de depósito única generada por el sistema. Nuestra infraestructura monitorea la blockchain y requiere 2 confirmaciones de red antes de proceder. La dirección es de un solo uso y está asegurada por billeteras frías multifirma.",
-      "step3Title": "Recibir Pago en Stablecoin",
-      "step3Desc": "Una vez recibidas las confirmaciones, las stablecoins (USDT o USDC) se envían a tu dirección de pago proporcionada. La entrega normalmente se completa en 10 minutos después de la confirmación en blockchain.",
-      "step4Title": "Gestión y Repago del Préstamo",
-      "step4Desc": "No se requieren pagos mensuales de interés. El interés se calcula según la Tasa Porcentual Anual (APR) para tu activo y nivel LTV seleccionado, y simplemente se agrega al monto total de repago. Repaga el principal más los intereses acumulados en cualquier momento — sin penalidades por repago anticipado — para desbloquear y recibir tu colateral instantáneamente."
+      "step1Title": "Seleccionar Garantía",
+      "step1Desc": "Elige tu activo y establece tu margen LTV.",
+      "step2Title": "Transferencia Segura",
+      "step2Desc": "Envía la garantía a la dirección segura de almacenamiento en frío del socio de infraestructura.",
+      "step3Title": "Pago Instantáneo",
+      "step3Desc": "Recibe tus stablecoins en 10 minutos o menos sin pagos mensuales."
     },
     "earn": {
-      "step1Title": "Elige Tu Activo",
-      "step1Desc": "Selecciona entre stablecoins (USDT, USDC) o activos principales (BTC, ETH) y más. Cada activo ofrece un Rendimiento Porcentual Anual (APY) competitivo mostrado en tiempo real.",
-      "step2Title": "Depositar",
-      "step2Desc": "Envía tu activo elegido a la dirección de depósito única proporcionada. Puedes empezar a ganar con tan solo $100 equivalentes.",
-      "step3Title": "Acumulación Diaria y Capitalización",
-      "step3Desc": "El interés se acumula todos los días y se capitaliza automáticamente en tu saldo. Tus ganancias generan rendimiento adicional con el tiempo sin necesidad de acción alguna.",
-      "step4Title": "Flexibilidad Total",
-      "step4Desc": "No hay períodos de bloqueo ni comisiones de retiro. Retira tu capital completo y todos los intereses ganados las 24 horas, cuando quieras."
+      "step1Title": "Depositar Activo",
+      "step1Desc": "Transfiere USDT, USDC o BTC a tu dirección única que genera intereses.",
+      "step2Title": "Acumulación Diaria",
+      "step2Desc": "Observa cómo crece tu saldo con interés compuesto diario automáticamente.",
+      "step3Title": "Flexibilidad Total",
+      "step3Desc": "Retira tu capital y todas las recompensas ganadas en cualquier momento sin períodos de bloqueo."
     },
     "safety": {
       "coldTitle": "Custodia en Almacenamiento Frío",
@@ -770,6 +766,7 @@
       "instantDesc": "El capital e intereses pueden retirarse 24/7 sin períodos de bloqueo.",
       "minimumTitle": "Mínimos Bajos",
       "minimumDesc": "Empieza a ganar rendimiento con tan solo $100 equivalentes."
-    }
+    },
+    "partnerLiabilityFooter": "El monitoreo, las alertas de seguridad y la ejecución de liquidaciones son gestionados exclusivamente por el motor de riesgo automatizado de nuestro socio tecnológico."
   }
 }
