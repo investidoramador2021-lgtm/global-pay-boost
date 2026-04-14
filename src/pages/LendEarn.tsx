@@ -37,11 +37,27 @@ function useLocaleFormat() {
 /*  API helper                                                         */
 /* ------------------------------------------------------------------ */
 async function coinrabbitApi(action: string, payload: Record<string, unknown> = {}) {
-  const { data, error } = await supabase.functions.invoke("coinrabbit", {
-    body: { action, ...payload },
+  const params = new URLSearchParams({ action });
+  Object.entries(payload).forEach(([k, v]) => {
+    if (v !== undefined && v !== null) params.set(k, String(v));
   });
-  if (error) throw new Error(error.message);
-  return data;
+  const projectId = import.meta.env.VITE_SUPABASE_PROJECT_ID;
+  const anonKey = import.meta.env.VITE_SUPABASE_PUBLISHABLE_KEY;
+  const res = await fetch(
+    `https://${projectId}.supabase.co/functions/v1/coinrabbit?${params}`,
+    {
+      method: "GET",
+      headers: {
+        apikey: anonKey,
+        Authorization: `Bearer ${anonKey}`,
+      },
+    }
+  );
+  if (!res.ok) {
+    const body = await res.text();
+    throw new Error(body || `HTTP ${res.status}`);
+  }
+  return res.json();
 }
 
 /* ------------------------------------------------------------------ */
