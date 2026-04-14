@@ -27,6 +27,27 @@ const pageJsonLd = {
   dateModified: "2026-03-20",
 };
 
+const financialServiceJsonLd = {
+  "@context": "https://schema.org",
+  "@type": "FinancialService",
+  name: "MRC GlobalPay",
+  url: "https://mrcglobalpay.com",
+  parentOrganization: {
+    "@type": "Organization",
+    name: "MRC Pay International Corp",
+  },
+  areaServed: "Global",
+  description:
+    "Registered Canadian Money Services Business (MSB) specializing in non-custodial crypto settlement and foreign exchange.",
+  identifier: "C100000015",
+  knowsAbout: [
+    "Cryptocurrency Exchange",
+    "Foreign Exchange",
+    "Stablecoin Settlement",
+    "Registration-Free Crypto Swaps",
+  ],
+};
+
 const auditItems = [
   { label: "Non-Custodial Architecture Verified", status: "pass" },
   { label: "API Endpoint Penetration Test", status: "pass" },
