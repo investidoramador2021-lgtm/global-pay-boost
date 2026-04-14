@@ -287,7 +287,7 @@ const STATUS_LABEL_KEYS: Record<string, string> = {
 };
 
 interface ExchangeWidgetProps {
-  onTabChange?: (tab: "exchange" | "buysell" | "private" | "bridge" | "request") => void;
+  onTabChange?: (tab: "exchange" | "buysell" | "private" | "bridge" | "request" | "loan") => void;
 }
 
 const ExchangeWidget = ({ onTabChange }: ExchangeWidgetProps = {}) => {
