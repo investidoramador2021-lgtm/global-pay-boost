@@ -1182,10 +1182,10 @@ export default function LendEarn() {
       <HreflangTags />
       <SiteHeader />
 
-      <main className="min-h-screen bg-background">
+      <main className="min-h-screen bg-background pb-20 lg:pb-0">
         <section className="relative overflow-hidden border-b border-border">
           <div className="absolute inset-0 bg-gradient-to-b from-[#D4AF37]/5 to-transparent" />
-          <div className="relative mx-auto max-w-6xl px-4 py-16 text-center sm:py-24">
+          <div className="relative mx-auto max-w-6xl px-4 py-10 text-center sm:py-24">
             <Badge variant="outline" className="mb-4 border-[#D4AF37]/40 text-[#D4AF37]">
               <Lock className="me-1 h-3 w-3" /> {t("lend.heroBadge")}
             </Badge>
