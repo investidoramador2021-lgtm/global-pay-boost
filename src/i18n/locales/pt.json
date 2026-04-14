@@ -727,7 +727,11 @@
       "redZoneDesc": "Para proteger o pool de empréstimos e evitar perdas adicionais, o motor automatizado do parceiro executará uma liquidação se o valor cair abaixo do limite de segurança sem ação.",
       "liabilityNotice": "MRC Global Pay fornece a interface para estes serviços; monitoramento, entrega de alertas e execução de liquidações são gerenciados exclusivamente pelo nosso parceiro tecnológico. Recomendamos manter um buffer de LTV saudável durante a volatilidade do mercado."
     },
-    "liabilityShift": "O monitoramento e os alertas são gerenciados pelo motor de risco automatizado do nosso parceiro de infraestrutura."
+    "liabilityShift": "O monitoramento e os alertas são gerenciados pelo motor de risco automatizado do nosso parceiro de infraestrutura.",
+    "tabDashboard": "Painel",
+    "modal": {
+      "goToDashboard": "Criar conta e gerenciar posição"
+    }
   },
   "lendGuide": {
     "loanTitle": "Como Funcionam os Empréstimos Cripto",
@@ -802,5 +806,58 @@
       "minimumDesc": "Comece a ganhar rendimento com apenas $100 equivalentes."
     },
     "partnerLiabilityFooter": "O monitoramento, alertas de segurança e execução de liquidações são gerenciados exclusivamente pelo motor de risco automatizado do nosso parceiro tecnológico."
+  },
+  "lendDash": {
+    "live": "AO VIVO",
+    "justNow": "agora mesmo",
+    "secsAgo": "há {{secs}}s",
+    "refresh": "Atualizar",
+    "logout": "Sair",
+    "signIn": "Entrar para gerenciar",
+    "addPosition": "Adicione um ID de posição de empréstimo ou ganho:",
+    "txIdPlaceholder": "ID da transação",
+    "addLoan": "Adicionar empréstimo",
+    "addEarn": "Adicionar ganho",
+    "noPositions": "Sem posições ativas. Inicie um empréstimo ou ganho acima e acompanhe aqui.",
+    "activeLoans": "Empréstimos ativos",
+    "activeEarns": "Posições de ganho ativas",
+    "collateral": "Colateral",
+    "loanAmount": "Valor do empréstimo",
+    "currentLtv": "LTV atual",
+    "liqPrice": "Preço de liquidação",
+    "repay": "Pagar",
+    "topUp": "Recarregar",
+    "withdraw": "Retirar",
+    "deposited": "Depositado",
+    "interestEarned": "Juros ganhos",
+    "totalBalance": "Saldo total",
+    "apy": "APY",
+    "safeZone": "Seguro",
+    "yellowZone": "Zona amarela",
+    "redZone": "Zona vermelha",
+    "loggedOut": "Desconectado",
+    "loginRequired": "Login necessário para {{action}}",
+    "comingSoon": "Em breve — entre em contato com o suporte",
+    "authenticated": "Login realizado com sucesso",
+    "disclaimer": "Os dados ao vivo são obtidos da API do nosso parceiro tecnológico e atualizam a cada 60 segundos. Retirar, pagar e recarregar requerem uma conta registrada. MRC GlobalPay · Registro MSB C100000015.",
+    "auth": {
+      "createTitle": "Crie sua conta de gerenciamento",
+      "loginTitle": "Entrar no painel",
+      "whyNeeded": "Uma conta protegida por senha é necessária para gerenciar suas posições — retirar, pagar ou recarregar garantia.",
+      "email": "Endereço de email",
+      "emailLocked": "Deve corresponder ao email enviado à API do parceiro.",
+      "password": "Senha",
+      "minPassword": "Mín. 8 caracteres",
+      "confirmPw": "Confirmar senha",
+      "reenter": "Redigite a senha",
+      "mismatch": "As senhas não coincidem",
+      "createBtn": "Criar conta",
+      "loginBtn": "Entrar",
+      "haveAccount": "Já tem uma conta?",
+      "signIn": "Entrar",
+      "noAccount": "Ainda não tem conta?",
+      "register": "Registrar",
+      "registered": "Conta criada! Verifique seu email."
+    }
   }
 }

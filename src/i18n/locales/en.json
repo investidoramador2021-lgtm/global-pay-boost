@@ -741,7 +741,11 @@
       "redZoneDesc": "To protect the lending pool and prevent further losses, the partner's automated engine will execute a liquidation if the value falls below the safety threshold without action.",
       "liabilityNotice": "MRC Global Pay provides the interface for these services; monitoring, alert delivery, and liquidation execution are managed exclusively by our technology partner. We recommend users maintain a healthy LTV buffer during market volatility."
     },
-    "liabilityShift": "Monitoring and alerts are managed by our infrastructure partner's automated risk engine."
+    "liabilityShift": "Monitoring and alerts are managed by our infrastructure partner's automated risk engine.",
+    "tabDashboard": "Dashboard",
+    "modal": {
+      "goToDashboard": "Create Account & Manage Position"
+    }
   },
   "lendGuide": {
     "loanTitle": "How Crypto Loans Work",
@@ -816,5 +820,58 @@
       "minimumDesc": "Start earning yield with as little as $100 equivalent."
     },
     "partnerLiabilityFooter": "Monitoring, security alerts, and liquidation execution are managed exclusively by our technology partner's automated risk engine."
+  },
+  "lendDash": {
+    "live": "LIVE",
+    "justNow": "just now",
+    "secsAgo": "{{secs}}s ago",
+    "refresh": "Refresh",
+    "logout": "Sign Out",
+    "signIn": "Sign In to Manage",
+    "addPosition": "Add a loan or earn position ID to track:",
+    "txIdPlaceholder": "Transaction ID",
+    "addLoan": "Add Loan",
+    "addEarn": "Add Earn",
+    "noPositions": "No active positions. Start a loan or earn above, then track it here.",
+    "activeLoans": "Active Loans",
+    "activeEarns": "Active Earn Positions",
+    "collateral": "Collateral",
+    "loanAmount": "Loan Amount",
+    "currentLtv": "Current LTV",
+    "liqPrice": "Liquidation Price",
+    "repay": "Repay",
+    "topUp": "Top Up",
+    "withdraw": "Withdraw",
+    "deposited": "Deposited",
+    "interestEarned": "Interest Earned",
+    "totalBalance": "Total Balance",
+    "apy": "APY",
+    "safeZone": "Safe",
+    "yellowZone": "Yellow Zone",
+    "redZone": "Red Zone",
+    "loggedOut": "Signed out",
+    "loginRequired": "Sign in required to {{action}}",
+    "comingSoon": "Coming soon — contact support",
+    "authenticated": "Signed in successfully",
+    "disclaimer": "Live data is sourced from our technology partner's API and refreshes every 60 seconds. Withdraw, Repay, and Top Up require a registered account. MRC GlobalPay · MSB Registration C100000015.",
+    "auth": {
+      "createTitle": "Create Your Management Account",
+      "loginTitle": "Sign In to Dashboard",
+      "whyNeeded": "A password-protected account is required to manage your positions — withdraw, repay, or top up collateral.",
+      "email": "Email Address",
+      "emailLocked": "Must match the email submitted to the partner API.",
+      "password": "Password",
+      "minPassword": "Min. 8 characters",
+      "confirmPw": "Confirm Password",
+      "reenter": "Re-enter password",
+      "mismatch": "Passwords do not match",
+      "createBtn": "Create Account",
+      "loginBtn": "Sign In",
+      "haveAccount": "Already have an account?",
+      "signIn": "Sign In",
+      "noAccount": "No account yet?",
+      "register": "Register",
+      "registered": "Account created! Check your email to verify."
+    }
   }
 }

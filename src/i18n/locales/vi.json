@@ -727,7 +727,11 @@
       "redZoneDesc": "Để bảo vệ quỹ cho vay và ngăn ngừa tổn thất thêm, công cụ tự động của đối tác sẽ thực hiện thanh lý nếu giá trị giảm xuống dưới ngưỡng an toàn mà không có hành động.",
       "liabilityNotice": "MRC Global Pay cung cấp giao diện cho các dịch vụ này; giám sát, gửi cảnh báo và thực hiện thanh lý được quản lý độc quyền bởi đối tác công nghệ."
     },
-    "liabilityShift": "Giám sát và cảnh báo được quản lý bởi công cụ rủi ro tự động của đối tác cơ sở hạ tầng."
+    "liabilityShift": "Giám sát và cảnh báo được quản lý bởi công cụ rủi ro tự động của đối tác cơ sở hạ tầng.",
+    "tabDashboard": "Bảng điều khiển",
+    "modal": {
+      "goToDashboard": "Tạo tài khoản & quản lý vị thế"
+    }
   },
   "lendGuide": {
     "loanTitle": "Cách Hoạt Động Cho Vay Crypto",
@@ -802,5 +806,58 @@
       "minimumDesc": "Bắt đầu từ $100 tương đương."
     },
     "partnerLiabilityFooter": "Giám sát, cảnh báo bảo mật và thực hiện thanh lý được quản lý độc quyền bởi công cụ rủi ro tự động của đối tác công nghệ của chúng tôi."
+  },
+  "lendDash": {
+    "live": "TRỰC TIẾP",
+    "justNow": "vừa xong",
+    "secsAgo": "{{secs}}s trước",
+    "refresh": "Làm mới",
+    "logout": "Đăng xuất",
+    "signIn": "Đăng nhập để quản lý",
+    "addPosition": "Thêm ID vị thế vay hoặc kiếm để theo dõi:",
+    "txIdPlaceholder": "Mã giao dịch",
+    "addLoan": "Thêm khoản vay",
+    "addEarn": "Thêm kiếm",
+    "noPositions": "Không có vị thế nào đang hoạt động. Bắt đầu khoản vay hoặc kiếm ở trên, sau đó theo dõi tại đây.",
+    "activeLoans": "Khoản vay đang hoạt động",
+    "activeEarns": "Vị thế kiếm đang hoạt động",
+    "collateral": "Tài sản thế chấp",
+    "loanAmount": "Số tiền vay",
+    "currentLtv": "LTV hiện tại",
+    "liqPrice": "Giá thanh lý",
+    "repay": "Trả nợ",
+    "topUp": "Nạp thêm",
+    "withdraw": "Rút",
+    "deposited": "Đã nạp",
+    "interestEarned": "Lãi đã kiếm",
+    "totalBalance": "Tổng số dư",
+    "apy": "APY",
+    "safeZone": "An toàn",
+    "yellowZone": "Vùng vàng",
+    "redZone": "Vùng đỏ",
+    "loggedOut": "Đã đăng xuất",
+    "loginRequired": "Yêu cầu đăng nhập để {{action}}",
+    "comingSoon": "Sắp ra mắt — liên hệ hỗ trợ",
+    "authenticated": "Đăng nhập thành công",
+    "disclaimer": "Dữ liệu trực tiếp được lấy từ API của đối tác công nghệ và làm mới mỗi 60 giây. Rút, trả nợ và nạp thêm yêu cầu tài khoản đã đăng ký. MRC GlobalPay · Đăng ký MSB C100000015.",
+    "auth": {
+      "createTitle": "Tạo tài khoản quản lý của bạn",
+      "loginTitle": "Đăng nhập vào bảng điều khiển",
+      "whyNeeded": "Cần tài khoản được bảo vệ bằng mật khẩu để quản lý vị thế — rút, trả nợ hoặc nạp thêm tài sản thế chấp.",
+      "email": "Địa chỉ email",
+      "emailLocked": "Phải khớp với email đã gửi đến API đối tác.",
+      "password": "Mật khẩu",
+      "minPassword": "Tối thiểu 8 ký tự",
+      "confirmPw": "Xác nhận mật khẩu",
+      "reenter": "Nhập lại mật khẩu",
+      "mismatch": "Mật khẩu không khớp",
+      "createBtn": "Tạo tài khoản",
+      "loginBtn": "Đăng nhập",
+      "haveAccount": "Đã có tài khoản?",
+      "signIn": "Đăng nhập",
+      "noAccount": "Chưa có tài khoản?",
+      "register": "Đăng ký",
+      "registered": "Đã tạo tài khoản! Kiểm tra email để xác minh."
+    }
   }
 }
