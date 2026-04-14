@@ -83,13 +83,16 @@ interface DepositModalProps {
   currency: string;
   txId: string;
   type: "loan" | "earn";
+  userEmail?: string;
+  userLang?: string;
 }
 
-function DepositModal({ open, onClose, sendAddress, amount, currency, txId, type }: DepositModalProps) {
+function DepositModal({ open, onClose, sendAddress, amount, currency, txId, type, userEmail, userLang }: DepositModalProps) {
   const { t } = useTranslation();
   const [copied, setCopied] = useState(false);
   const [status, setStatus] = useState<"waiting" | "confirming" | "success">("waiting");
   const pollRef = useRef<ReturnType<typeof setInterval>>();
+  const riskAlertSentRef = useRef<Set<string>>(new Set());
 
   const copyAddress = () => {
     navigator.clipboard.writeText(sendAddress);
