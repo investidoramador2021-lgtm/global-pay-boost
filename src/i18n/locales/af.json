@@ -727,7 +727,11 @@
       "redZoneDesc": "Om die leningspoel te beskerm en verdere verliese te voorkom, sal die vennoot se outomatiese enjin 'n likwidasie uitvoer as die waarde onder die veiligheidsdrempel val.",
       "liabilityNotice": "MRC Global Pay bied die koppelvlak vir hierdie dienste; monitering, waarskuwingsaflewering en likwidasie-uitvoering word uitsluitlik deur ons tegnologievennoot bestuur."
     },
-    "liabilityShift": "Monitering en waarskuwings word bestuur deur ons infrastruktuurvennoot se outomatiese risiko-enjin."
+    "liabilityShift": "Monitering en waarskuwings word bestuur deur ons infrastruktuurvennoot se outomatiese risiko-enjin.",
+    "tabDashboard": "Kontrolepaneel",
+    "modal": {
+      "goToDashboard": "Skep rekening en bestuur posisie"
+    }
   },
   "lendGuide": {
     "loanTitle": "Hoe Kripto-lenings Werk",
@@ -802,5 +806,58 @@
       "minimumDesc": "Begin verdien vanaf $100 ekwivalent."
     },
     "partnerLiabilityFooter": "Monitering, sekuriteitsalarms en likwidasie-uitvoering word uitsluitlik bestuur deur ons tegnologievennoot se outomatiese risiko-enjin."
+  },
+  "lendDash": {
+    "live": "LEWENDIG",
+    "justNow": "sopas",
+    "secsAgo": "{{secs}}s gelede",
+    "refresh": "Verfris",
+    "logout": "Teken uit",
+    "signIn": "Teken in om te bestuur",
+    "addPosition": "Voeg 'n lening- of verdienposisie-ID by om na te spoor:",
+    "txIdPlaceholder": "Transaksie-ID",
+    "addLoan": "Voeg lening by",
+    "addEarn": "Voeg verdienste by",
+    "noPositions": "Geen aktiewe posisies nie. Begin 'n lening of verdienste hierbo, volg dit dan hier.",
+    "activeLoans": "Aktiewe lenings",
+    "activeEarns": "Aktiewe verdienposisies",
+    "collateral": "Onderpand",
+    "loanAmount": "Leningsbedrag",
+    "currentLtv": "Huidige LTV",
+    "liqPrice": "Likwidasieprys",
+    "repay": "Terugbetaal",
+    "topUp": "Herlaai",
+    "withdraw": "Onttrek",
+    "deposited": "Gedeponeer",
+    "interestEarned": "Rente verdien",
+    "totalBalance": "Totale balans",
+    "apy": "APY",
+    "safeZone": "Veilig",
+    "yellowZone": "Geel sone",
+    "redZone": "Rooi sone",
+    "loggedOut": "Afgeteken",
+    "loginRequired": "Aanmelding vereis vir {{action}}",
+    "comingSoon": "Binnekort beskikbaar — kontak ondersteuning",
+    "authenticated": "Suksesvol aangemeld",
+    "disclaimer": "Regstreekse data kom van ons tegnologievennoot se API en word elke 60 sekondes opgedateer. Onttrek, terugbetaal en herlaai vereis 'n geregistreerde rekening. MRC GlobalPay · MSB-registrasie C100000015.",
+    "auth": {
+      "createTitle": "Skep jou bestuursrekening",
+      "loginTitle": "Teken in by kontrolepaneel",
+      "whyNeeded": "'n Wagwoord-beskermde rekening is nodig om jou posisies te bestuur — onttrek, terugbetaal of herlaai onderpand.",
+      "email": "E-posadres",
+      "emailLocked": "Moet ooreenstem met die e-pos wat na die vennoot-API gestuur is.",
+      "password": "Wagwoord",
+      "minPassword": "Min. 8 karakters",
+      "confirmPw": "Bevestig wagwoord",
+      "reenter": "Voer wagwoord weer in",
+      "mismatch": "Wagwoorde stem nie ooreen nie",
+      "createBtn": "Skep rekening",
+      "loginBtn": "Teken in",
+      "haveAccount": "Het jy reeds 'n rekening?",
+      "signIn": "Teken in",
+      "noAccount": "Het jy nog nie 'n rekening nie?",
+      "register": "Registreer",
+      "registered": "Rekening geskep! Gaan kyk jou e-pos vir verifikasie."
+    }
   }
 }

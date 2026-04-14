@@ -727,7 +727,11 @@
       "redZoneDesc": "Kredi havuzunu korumak ve daha fazla kaybı önlemek için, değer güvenlik eşiğinin altına düşerse ortağın otomatik motoru tasfiye gerçekleştirir.",
       "liabilityNotice": "MRC Global Pay bu hizmetler için arayüz sağlar; izleme, uyarı teslimi ve tasfiye yürütmesi yalnızca teknoloji ortağımız tarafından yönetilir."
     },
-    "liabilityShift": "İzleme ve uyarılar altyapı ortağımızın otomatik risk motoru tarafından yönetilmektedir."
+    "liabilityShift": "İzleme ve uyarılar altyapı ortağımızın otomatik risk motoru tarafından yönetilmektedir.",
+    "tabDashboard": "Kontrol Paneli",
+    "modal": {
+      "goToDashboard": "Hesap Oluştur ve Pozisyonu Yönet"
+    }
   },
   "lendGuide": {
     "loanTitle": "Kripto Krediler Nasıl Çalışır",
@@ -802,5 +806,58 @@
       "minimumDesc": "$100 eşdeğerinden başlayın."
     },
     "partnerLiabilityFooter": "İzleme, güvenlik uyarıları ve tasfiye işlemleri yalnızca teknoloji ortağımızın otomatik risk motoru tarafından yönetilmektedir."
+  },
+  "lendDash": {
+    "live": "CANLI",
+    "justNow": "az önce",
+    "secsAgo": "{{secs}}s önce",
+    "refresh": "Yenile",
+    "logout": "Çıkış Yap",
+    "signIn": "Yönetmek için Giriş Yapın",
+    "addPosition": "İzlemek için bir kredi veya kazanç pozisyon ID'si ekleyin:",
+    "txIdPlaceholder": "İşlem ID",
+    "addLoan": "Kredi Ekle",
+    "addEarn": "Kazanç Ekle",
+    "noPositions": "Aktif pozisyon yok. Yukarıda bir kredi veya kazanç başlatın, ardından burada takip edin.",
+    "activeLoans": "Aktif Krediler",
+    "activeEarns": "Aktif Kazanç Pozisyonları",
+    "collateral": "Teminat",
+    "loanAmount": "Kredi Tutarı",
+    "currentLtv": "Mevcut LTV",
+    "liqPrice": "Tasfiye Fiyatı",
+    "repay": "Geri Öde",
+    "topUp": "Yükle",
+    "withdraw": "Çek",
+    "deposited": "Yatırıldı",
+    "interestEarned": "Kazanılan Faiz",
+    "totalBalance": "Toplam Bakiye",
+    "apy": "APY",
+    "safeZone": "Güvenli",
+    "yellowZone": "Sarı Bölge",
+    "redZone": "Kırmızı Bölge",
+    "loggedOut": "Çıkış yapıldı",
+    "loginRequired": "{{action}} için giriş gerekli",
+    "comingSoon": "Yakında — destek ile iletişime geçin",
+    "authenticated": "Başarıyla giriş yapıldı",
+    "disclaimer": "Canlı veriler teknoloji ortağımızın API'sinden alınır ve her 60 saniyede güncellenir. Çekim, geri ödeme ve yükleme kayıtlı bir hesap gerektirir. MRC GlobalPay · MSB Kaydı C100000015.",
+    "auth": {
+      "createTitle": "Yönetim Hesabınızı Oluşturun",
+      "loginTitle": "Panele Giriş Yapın",
+      "whyNeeded": "Pozisyonlarınızı yönetmek için şifre korumalı bir hesap gereklidir — çekim, geri ödeme veya teminat yükleme.",
+      "email": "E-posta Adresi",
+      "emailLocked": "Ortak API'ye gönderilen e-posta ile eşleşmelidir.",
+      "password": "Şifre",
+      "minPassword": "Min. 8 karakter",
+      "confirmPw": "Şifreyi Onayla",
+      "reenter": "Şifreyi tekrar girin",
+      "mismatch": "Şifreler uyuşmuyor",
+      "createBtn": "Hesap Oluştur",
+      "loginBtn": "Giriş Yap",
+      "haveAccount": "Zaten bir hesabınız var mı?",
+      "signIn": "Giriş Yap",
+      "noAccount": "Henüz hesabınız yok mu?",
+      "register": "Kaydol",
+      "registered": "Hesap oluşturuldu! Doğrulama için e-postanızı kontrol edin."
+    }
   }
 }

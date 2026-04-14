@@ -727,7 +727,11 @@
       "redZoneDesc": "貸出プールを保護し、さらなる損失を防ぐために、対応なしに安全閾値を下回った場合、パートナーの自動エンジンが清算を実行します。",
       "liabilityNotice": "MRC Global Payはこれらのサービスのインターフェースを提供します。監視、アラート配信、清算実行は、当社の技術パートナーが独占的に管理します。市場変動時には健全なLTVバッファーを維持することをお勧めします。"
     },
-    "liabilityShift": "監視とアラートはインフラストラクチャパートナーの自動リスクエンジンによって管理されています。"
+    "liabilityShift": "監視とアラートはインフラストラクチャパートナーの自動リスクエンジンによって管理されています。",
+    "tabDashboard": "ダッシュボード",
+    "modal": {
+      "goToDashboard": "アカウント作成＆ポジション管理"
+    }
   },
   "lendGuide": {
     "loanTitle": "暗号通貨ローンの仕組み",
@@ -802,5 +806,58 @@
       "minimumDesc": "100ドル相当から利回りを獲得し始められます。"
     },
     "partnerLiabilityFooter": "監視、セキュリティアラート、清算の実行は、当社のテクノロジーパートナーの自動リスクエンジンによって独占的に管理されています。"
+  },
+  "lendDash": {
+    "live": "ライブ",
+    "justNow": "たった今",
+    "secsAgo": "{{secs}}秒前",
+    "refresh": "更新",
+    "logout": "ログアウト",
+    "signIn": "管理にサインイン",
+    "addPosition": "追跡するローンまたは収益ポジションIDを追加:",
+    "txIdPlaceholder": "トランザクションID",
+    "addLoan": "ローン追加",
+    "addEarn": "収益追加",
+    "noPositions": "アクティブなポジションはありません。上でローンまたは収益を開始し、ここで追跡してください。",
+    "activeLoans": "アクティブローン",
+    "activeEarns": "アクティブ収益ポジション",
+    "collateral": "担保",
+    "loanAmount": "ローン金額",
+    "currentLtv": "現在のLTV",
+    "liqPrice": "清算価格",
+    "repay": "返済",
+    "topUp": "追加入金",
+    "withdraw": "出金",
+    "deposited": "入金済み",
+    "interestEarned": "獲得利息",
+    "totalBalance": "合計残高",
+    "apy": "APY",
+    "safeZone": "安全",
+    "yellowZone": "イエローゾーン",
+    "redZone": "レッドゾーン",
+    "loggedOut": "ログアウトしました",
+    "loginRequired": "{{action}}にはサインインが必要です",
+    "comingSoon": "近日公開 — サポートにお問い合わせください",
+    "authenticated": "サインイン成功",
+    "disclaimer": "ライブデータはテクノロジーパートナーのAPIから取得され、60秒ごとに更新されます。出金、返済、追加入金には登録アカウントが必要です。MRC GlobalPay · MSB登録 C100000015。",
+    "auth": {
+      "createTitle": "管理アカウントを作成",
+      "loginTitle": "ダッシュボードにサインイン",
+      "whyNeeded": "ポジションの管理（出金、返済、担保追加）にはパスワード保護されたアカウントが必要です。",
+      "email": "メールアドレス",
+      "emailLocked": "パートナーAPIに送信されたメールアドレスと一致する必要があります。",
+      "password": "パスワード",
+      "minPassword": "8文字以上",
+      "confirmPw": "パスワード確認",
+      "reenter": "パスワードを再入力",
+      "mismatch": "パスワードが一致しません",
+      "createBtn": "アカウント作成",
+      "loginBtn": "サインイン",
+      "haveAccount": "既にアカウントをお持ちですか？",
+      "signIn": "サインイン",
+      "noAccount": "まだアカウントがありませんか？",
+      "register": "登録",
+      "registered": "アカウント作成完了！メールを確認してください。"
+    }
   }
 }
