@@ -78,7 +78,7 @@ const WhitepaperYield = () => {
           })}
         </script>
       </Helmet>
-      <HreflangTags path="/blog/whitepapers/digital-yield" />
+      <HreflangTags />
       <SiteHeader />
 
       {/* Hero */}

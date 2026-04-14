@@ -78,7 +78,7 @@ const WhitepaperLoans = () => {
           })}
         </script>
       </Helmet>
-      <HreflangTags path="/blog/whitepapers/crypto-loans" />
+      <HreflangTags />
       <SiteHeader />
 
       {/* Hero */}

@@ -57,6 +57,8 @@ const CryptoDustSolutions = lazy(() => import("./pages/CryptoDustSolutions.tsx")
 const Compliance = lazy(() => import("./pages/Compliance.tsx"));
 const CryptoDustManifesto = lazy(() => import("./pages/CryptoDustManifesto.tsx"));
 const LiquidityWhitepaper = lazy(() => import("./pages/LiquidityWhitepaper.tsx"));
+const WhitepaperLoans = lazy(() => import("./pages/WhitepaperLoans.tsx"));
+const WhitepaperYield = lazy(() => import("./pages/WhitepaperYield.tsx"));
 const SovereignWhitepaper = lazy(() => import("./pages/SovereignWhitepaper.tsx"));
 const Partners = lazy(() => import("./pages/Partners.tsx"));
 const PartnerDashboard = lazy(() => import("./pages/PartnerDashboard.tsx"));
@@ -139,6 +141,8 @@ const AppRoutes = () => (
     <Route path="verify-update" element={<VerifyUpdate />} />
     <Route path="verify-email" element={<VerifyEmail />} />
     <Route path="lend" element={<LendEarn />} />
+    <Route path="blog/whitepapers/crypto-loans" element={<WhitepaperLoans />} />
+    <Route path="blog/whitepapers/digital-yield" element={<WhitepaperYield />} />
   </>
 );
 
