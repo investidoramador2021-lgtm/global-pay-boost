@@ -202,6 +202,20 @@
     @apply animate-pulse rounded-md bg-muted;
     height: 1em;
   }
+
+  /* Hide scrollbar for horizontal scroll tabs */
+  .scrollbar-hide {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+  }
+  .scrollbar-hide::-webkit-scrollbar {
+    display: none;
+  }
+
+  /* Bottom nav safe spacing */
+  .pb-safe-nav {
+    padding-bottom: calc(4rem + env(safe-area-inset-bottom, 0px));
+  }
 }
 
 /* Language-specific font families */

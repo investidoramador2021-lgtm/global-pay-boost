@@ -145,7 +145,7 @@ const Index = () => {
       <PullToRefresh onRefresh={handleRefresh}>
         <SiteHeader />
 
-        <main>
+        <main className="pb-20 lg:pb-0">
           <HeroSection onTabChange={setActiveWidgetTab} />
           <TrustBanner />
           <div id="live-swaps">

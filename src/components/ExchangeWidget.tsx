@@ -1780,7 +1780,7 @@ const ExchangeWidget = ({ onTabChange }: ExchangeWidgetProps = {}) => {
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.5, delay: 0.15 }}
       id="exchange-widget"
-      className="relative scroll-mt-24 rounded-2xl border border-border/50 glass p-4 shadow-elevated sm:p-6 lg:p-8 transform-gpu"
+      className="relative scroll-mt-24 rounded-2xl border border-border/50 glass p-3 shadow-elevated sm:p-6 lg:p-8 transform-gpu"
       style={{ backfaceVisibility: "hidden" }}
     >
       <AnimatePresence mode="wait">
@@ -1788,60 +1788,66 @@ const ExchangeWidget = ({ onTabChange }: ExchangeWidgetProps = {}) => {
         {step === "exchange" && (
           <motion.div key="exchange" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}>
             {/* ===== MODE TABS: Exchange | Buy/Sell ===== */}
-            <div className="mb-5 flex items-center justify-between gap-2">
-              <div className="flex w-full rounded-xl border border-border bg-accent p-1 gap-0.5 sm:gap-1 sm:w-auto">
-                {([
-                  { mode: "exchange" as WidgetMode, icon: Repeat, labelKey: "widget.tabs.exchange", onClick: () => { setWidgetMode("exchange"); setGStep("form"); setGCheckoutUrl(""); } },
-                  { mode: "buysell" as WidgetMode, icon: CreditCard, labelKey: "widget.tabs.buy", onClick: () => {
-                    setWidgetMode("buysell");
-                    setGTradeDirection("buy");
-                    setGStep("form");
-                    setGCheckoutUrl("");
-                    setGShowReview(false);
-                    setGEstimateError("");
-                    setGSelectedPaymentMethod("");
-                    setGPayoutAddress("");
-                    setGPayoutEmail("");
-                    setGBankFields({});
-                    setGSepaIban("");
-                    setGSepaBic("");
-                    if (guardarianFiat.length || guardarianCrypto.length) {
-                      applyGuardarianDefaults("buy");
-                    }
-                  }},
-                  { mode: "private" as WidgetMode, icon: EyeOff, labelKey: "widget.tabs.private", onClick: () => { setWidgetMode("private"); } },
-                  { mode: "bridge" as WidgetMode, icon: Link2, labelKey: "widget.tabs.bridge", onClick: () => { setWidgetMode("bridge"); } },
-                  { mode: "request" as WidgetMode, icon: FileText, labelKey: "widget.tabs.invoice", onClick: () => { setWidgetMode("request"); } },
-                  { mode: "loan" as WidgetMode, icon: Landmark, labelKey: "widget.tabs.loan", onClick: () => { setWidgetMode("loan"); } },
-                  { mode: "earn" as WidgetMode, icon: TrendingUp, labelKey: "widget.tabs.earn", onClick: () => { setWidgetMode("earn"); } },
-                ] as const).map((tab) => {
-                  const isActive = tab.mode === "buysell"
-                    ? widgetMode === "buysell" && gTradeDirection === "buy"
-                    : widgetMode === tab.mode;
-                  const TabIcon = tab.icon;
-                  return (
-                    <button
-                      key={tab.mode}
-                      onClick={tab.onClick}
-                      className={`flex flex-1 sm:flex-none items-center justify-center gap-1 rounded-lg px-2 sm:px-3 py-2 font-display text-[11px] sm:text-sm font-semibold whitespace-nowrap transition-colors ${
-                        isActive
-                          ? "bg-primary text-primary-foreground shadow-card"
-                          : "text-muted-foreground hover:text-foreground hover:bg-background"
-                      }`}
-                    >
-                      <TabIcon className="hidden sm:block h-4 w-4" />
-                      {t(tab.labelKey)}
-                    </button>
-                  );
-                })}
+            <div className="mb-5 space-y-2">
+              <div className="flex items-center justify-between gap-2">
+                <div className="flex-1 overflow-x-auto -mx-1 px-1 scrollbar-hide">
+                  <div className="flex rounded-xl border border-border bg-accent p-1 gap-0.5 w-max min-w-full">
+                    {([
+                      { mode: "exchange" as WidgetMode, icon: Repeat, labelKey: "widget.tabs.exchange", onClick: () => { setWidgetMode("exchange"); setGStep("form"); setGCheckoutUrl(""); } },
+                      { mode: "buysell" as WidgetMode, icon: CreditCard, labelKey: "widget.tabs.buy", onClick: () => {
+                        setWidgetMode("buysell");
+                        setGTradeDirection("buy");
+                        setGStep("form");
+                        setGCheckoutUrl("");
+                        setGShowReview(false);
+                        setGEstimateError("");
+                        setGSelectedPaymentMethod("");
+                        setGPayoutAddress("");
+                        setGPayoutEmail("");
+                        setGBankFields({});
+                        setGSepaIban("");
+                        setGSepaBic("");
+                        if (guardarianFiat.length || guardarianCrypto.length) {
+                          applyGuardarianDefaults("buy");
+                        }
+                      }},
+                      { mode: "private" as WidgetMode, icon: EyeOff, labelKey: "widget.tabs.private", onClick: () => { setWidgetMode("private"); } },
+                      { mode: "bridge" as WidgetMode, icon: Link2, labelKey: "widget.tabs.bridge", onClick: () => { setWidgetMode("bridge"); } },
+                      { mode: "request" as WidgetMode, icon: FileText, labelKey: "widget.tabs.invoice", onClick: () => { setWidgetMode("request"); } },
+                      { mode: "loan" as WidgetMode, icon: Landmark, labelKey: "widget.tabs.loan", onClick: () => { setWidgetMode("loan"); } },
+                      { mode: "earn" as WidgetMode, icon: TrendingUp, labelKey: "widget.tabs.earn", onClick: () => { setWidgetMode("earn"); } },
+                    ] as const).map((tab) => {
+                      const isActive = tab.mode === "buysell"
+                        ? widgetMode === "buysell" && gTradeDirection === "buy"
+                        : widgetMode === tab.mode;
+                      const TabIcon = tab.icon;
+                      return (
+                        <button
+                          key={tab.mode}
+                          onClick={tab.onClick}
+                          className={`flex items-center justify-center gap-1 rounded-lg px-2.5 py-2 font-display text-[11px] sm:text-xs font-semibold whitespace-nowrap transition-colors touch-target ${
+                            isActive
+                              ? "bg-primary text-primary-foreground shadow-card"
+                              : "text-muted-foreground hover:text-foreground hover:bg-background"
+                          }`}
+                        >
+                          <TabIcon className="h-3.5 w-3.5 sm:h-4 sm:w-4 shrink-0" />
+                          <span className="hidden min-[480px]:inline">{t(tab.labelKey)}</span>
+                        </button>
+                      );
+                    })}
+                  </div>
+                </div>
               </div>
-              <span className="hidden min-[481px]:flex items-center gap-1.5 rounded-full border border-trust/30 bg-trust/10 px-2.5 py-1 font-body text-[10px] font-semibold uppercase tracking-wider text-trust">
-                <span className="relative flex h-2 w-2">
-                  <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-trust opacity-75"></span>
-                  <span className="relative inline-flex h-2 w-2 rounded-full bg-trust"></span>
+              <div className="flex justify-end">
+                <span className="hidden min-[481px]:flex items-center gap-1.5 rounded-full border border-trust/30 bg-trust/10 px-2.5 py-1 font-body text-[10px] font-semibold uppercase tracking-wider text-trust">
+                  <span className="relative flex h-2 w-2">
+                    <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-trust opacity-75"></span>
+                    <span className="relative inline-flex h-2 w-2 rounded-full bg-trust"></span>
+                  </span>
+                  {t("widget.online")}
                 </span>
-                {t("widget.online")}
-              </span>
+              </div>
             </div>
 
             {/* ===== BUY/SELL MODE (Guardarian) ===== */}
