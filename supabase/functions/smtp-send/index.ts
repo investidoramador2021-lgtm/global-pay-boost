@@ -45,6 +45,11 @@ const LANG_STRINGS: Record<string, {
   depositLabel: string; recipientLabel: string; trackBtn: string;
   footer: string; errorSubject: string;
   verifySubject: string; verifyTitle: string; verifyBody: string; verifyBtn: string;
+  loanConfirmSubject: string; loanConfirmTitle: string; loanConfirmBody: string;
+  earnConfirmSubject: string; earnConfirmTitle: string; earnConfirmBody: string;
+  riskAlertSubject: string; riskAlertTitle: string; riskAlertYellow: string; riskAlertRed: string;
+  collateralLabel: string; ltvLabel: string; amountLabel: string; assetLabel: string; apyLabel: string;
+  viewDashboard: string; liabilityNote: string;
 }> = {
   en: { greeting: 'Hello', receiptTitle: 'Exchange Receipt', pairLabel: 'Exchange Pair', depositLabel: 'Deposit Address', recipientLabel: 'Recipient Address', trackBtn: 'Track Your Exchange', footer: 'MRC GlobalPay is a Registered Canadian MSB. Non-custodial service — we never hold your keys.', errorSubject: 'System Alert: Settlement Delay', verifySubject: 'Action Required: Verify Your MRC GlobalPay Account', verifyTitle: 'Confirm Your Email', verifyBody: 'For your security, you must confirm your email within 48 hours. If not verified by {deadline}, this account and all associated data will be permanently deleted for your protection.', verifyBtn: 'Confirm My Email' },
   es: { greeting: 'Hola', receiptTitle: 'Recibo de Intercambio', pairLabel: 'Par de Intercambio', depositLabel: 'Dirección de Depósito', recipientLabel: 'Dirección del Destinatario', trackBtn: 'Seguir tu Intercambio', footer: 'MRC GlobalPay es una MSB registrada en Canadá. Servicio no custodial — nunca mantenemos tus claves.', errorSubject: 'Alerta del Sistema: Retraso de Liquidación', verifySubject: 'Acción Requerida: Verifique su cuenta MRC GlobalPay', verifyTitle: 'Confirme su Correo', verifyBody: 'Por su seguridad, debe confirmar su correo electrónico en 48 horas. Si no se verifica antes de {deadline}, esta cuenta será eliminada permanentemente.', verifyBtn: 'Confirmar mi Correo' },
