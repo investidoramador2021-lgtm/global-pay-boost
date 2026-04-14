@@ -839,7 +839,7 @@
     "loginRequired": "Yêu cầu đăng nhập để {{action}}",
     "comingSoon": "Sắp ra mắt — liên hệ hỗ trợ",
     "authenticated": "Đăng nhập thành công",
-    "disclaimer": "Dữ liệu trực tiếp được lấy từ API của đối tác công nghệ và làm mới mỗi 60 giây. Rút, trả nợ và nạp thêm yêu cầu tài khoản đã đăng ký. MRC GlobalPay · Đăng ký MSB C100000015.",
+    "disclaimer": "Dữ liệu được lấy từ API của đối tác công nghệ và cập nhật mỗi ngày một lần hoặc khi bạn thực hiện thao tác quản lý (Trả nợ, Nạp thêm, Rút). MRC GlobalPay · Đăng ký MSB C100000015.",
     "auth": {
       "createTitle": "Tạo tài khoản quản lý của bạn",
       "loginTitle": "Đăng nhập vào bảng điều khiển",
