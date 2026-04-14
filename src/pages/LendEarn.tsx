@@ -553,6 +553,14 @@ function LoanCalculator() {
         </CardContent>
       </Card>
 
+      <ContactConfirmModal
+        open={confirmOpen}
+        onClose={() => setConfirmOpen(false)}
+        onConfirm={handleConfirmLoan}
+        loading={loading}
+        type="loan"
+      />
+
       <DepositModal
         open={modalOpen}
         onClose={() => setModalOpen(false)}
