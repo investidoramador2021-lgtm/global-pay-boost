@@ -30,6 +30,7 @@ const BRIDGE_SLUGS = ["eth-to-sol","solana-to-bnb","pulsechain"];
 const STATIC_PAGES = [
   { loc: "/", changefreq: "daily", priority: "1.0" },
   { loc: "/blog", changefreq: "hourly", priority: "0.9" },
+  { loc: "/lend", changefreq: "daily", priority: "0.9" },
   { loc: "/compare", changefreq: "weekly", priority: "0.8" },
   { loc: "/solutions", changefreq: "weekly", priority: "0.8" },
   { loc: "/learn", changefreq: "weekly", priority: "0.7" },
@@ -45,6 +46,10 @@ const STATIC_PAGES = [
   { loc: "/permanent-bridge", changefreq: "monthly", priority: "0.7" },
   { loc: "/permanent-bridge/whitepaper", changefreq: "monthly", priority: "0.6" },
   { loc: "/private-transfer/whitepaper", changefreq: "monthly", priority: "0.6" },
+  { loc: "/liquidity-expansion", changefreq: "monthly", priority: "0.6" },
+  { loc: "/sovereign-settlement", changefreq: "monthly", priority: "0.6" },
+  { loc: "/blog/whitepapers/crypto-loans", changefreq: "monthly", priority: "0.6" },
+  { loc: "/blog/whitepapers/digital-yield", changefreq: "monthly", priority: "0.6" },
   { loc: "/tools/crypto-dust-calculator", changefreq: "monthly", priority: "0.6" },
   { loc: "/compliance", changefreq: "monthly", priority: "0.5" },
   { loc: "/crypto-dust-solutions", changefreq: "monthly", priority: "0.6" },
@@ -138,22 +143,15 @@ ${items}
   /* ── Dynamic Sitemap ── */
   const entries: string[] = [];
 
-  // Static pages
+  // Static pages — only English canonical with hreflang alternates (no separate lang entries)
   for (const p of STATIC_PAGES) {
     entries.push(urlEntry(p.loc, today, p.changefreq, p.priority));
-    // Language variants
-    for (const lang of LANGS) {
-      entries.push(urlEntry(`/${lang}${p.loc === "/" ? "" : p.loc}`, today, p.changefreq, "0.7"));
-    }
   }
 
-  // Swap pairs (changefreq: always — prices update constantly)
+  // Swap pairs — English canonical only, hreflang handles alternates
   const uniqueSwaps = [...new Set(SWAP_SLUGS)];
   for (const slug of uniqueSwaps) {
     entries.push(urlEntry(`/swap/${slug}`, today, "always", "0.8"));
-    for (const lang of LANGS) {
-      entries.push(urlEntry(`/${lang}/swap/${slug}`, today, "always", "0.7"));
-    }
   }
 
   // Solutions

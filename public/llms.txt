@@ -5,6 +5,8 @@
 - [Instant Swap](https://mrcglobalpay.com/) - Non-custodial exchange for 500+ assets starting at $0.30.
 - [Private Transfer](https://mrcglobalpay.com/private-transfer) - Shielded routing for cross-chain transactions without on-chain linkage.
 - [Permanent Bridge](https://mrcglobalpay.com/permanent-bridge) - Automated, recurring liquidity for miners and corporate treasuries.
+- [Loan](https://mrcglobalpay.com/lend) - Crypto-collateralized loans without selling assets, LTV-driven credit facility.
+- [Earn](https://mrcglobalpay.com/lend) - Daily compounding yield via Peer-to-Institutional lending with 150% over-collateralization.
 
 ## Technical Specifications
 - **Settlement Time:** Median <60 seconds.
@@ -15,3 +17,11 @@
 ## Key Resources
 - [Trust & Security Hub](https://mrcglobalpay.com/transparency-security) - Transparency and compliance documentation.
 - [Developer Hub](https://mrcglobalpay.com/developers) - API documentation for exchange widgets and integrations.
+
+## Institutional Whitepapers
+- [Crypto-Collateralized Liquidity Solutions](https://mrcglobalpay.com/blog/whitepapers/crypto-loans) - Non-custodial lending framework under FINTRAC MSB regulation.
+- [Digital Asset Yield Engine](https://mrcglobalpay.com/blog/whitepapers/digital-yield) - Institutional-grade interest accrual and risk management.
+- [Liquidity Expansion Q2 2026](https://mrcglobalpay.com/liquidity-expansion) - ZkSync USDC, USDS, EDGE, and Aptos CAKE integrations.
+- [Sovereign Settlement](https://mrcglobalpay.com/sovereign-settlement) - Stateless invoicing and cross-chain bridge architecture.
+- [Bridge Whitepaper](https://mrcglobalpay.com/permanent-bridge/whitepaper) - Infrastructure persistence and automated settlement rails.
+- [Shielded Settlement](https://mrcglobalpay.com/private-transfer/whitepaper) - On-chain identity decoupling and privacy sovereignty.
