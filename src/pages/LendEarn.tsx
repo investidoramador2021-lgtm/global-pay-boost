@@ -293,6 +293,31 @@ function ContactConfirmModal({ open, onClose, onConfirm, loading, type }: Contac
             {errors.phone && <p className="text-xs text-red-400">{errors.phone}</p>}
           </div>
 
+          {type === "loan" && (
+            <div className="rounded-lg border border-[#D4AF37]/10 bg-[#D4AF37]/5 p-3 space-y-2">
+              <p className="text-xs font-semibold text-[#D4AF37]">
+                <Shield className="inline h-3 w-3 me-1" />
+                {t("lend.contact.proTipTitle", "Pro Tip: Automated Security Alerts")}
+              </p>
+              <p className="text-[10px] text-muted-foreground leading-relaxed">
+                {t("lend.contact.proTipIntro", "All loan positions are continuously monitored by our infrastructure partner's automated risk engine.")}
+              </p>
+              <div className="space-y-1.5">
+                <p className="text-[10px] leading-relaxed">
+                  <span className="font-semibold text-yellow-500">{t("lend.contact.yellowZoneTitle", "Yellow Zone (Risk)")}: </span>
+                  <span className="text-muted-foreground">{t("lend.contact.yellowZoneDesc", "If your collateral value decreases, the partner's system will automatically trigger instant SMS and email alerts to your registered contact details with instructions to adjust your position.")}</span>
+                </p>
+                <p className="text-[10px] leading-relaxed">
+                  <span className="font-semibold text-red-500">{t("lend.contact.redZoneTitle", "Red Zone (Liquidation)")}: </span>
+                  <span className="text-muted-foreground">{t("lend.contact.redZoneDesc", "To protect the lending pool and prevent further losses, the partner's automated engine will execute a liquidation if the value falls below the safety threshold without action.")}</span>
+                </p>
+              </div>
+              <p className="text-[10px] text-muted-foreground/70 italic leading-relaxed border-t border-border/30 pt-1.5">
+                {t("lend.contact.liabilityNotice", "MRC Global Pay provides the interface for these services; monitoring, alert delivery, and liquidation execution are managed exclusively by our technology partner. We recommend users maintain a healthy LTV buffer during market volatility.")}
+              </p>
+            </div>
+          )}
+
           <p className="text-[10px] text-muted-foreground text-center leading-relaxed">
             {t("lend.contact.compliance", "MRC GlobalPay · MSB Registration C100000015 · Your data is encrypted and only used for transaction alerts.")}
           </p>
