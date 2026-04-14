@@ -787,6 +787,115 @@ const AdminPortal = () => {
               </Card>
             </TabsContent>
 
+            {/* ═══ Lending & Earn Tab ═══ */}
+            <TabsContent value="lending" className="mt-6 space-y-6">
+              {/* Stat cards */}
+              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+                <Card className="border-border/40 bg-card/40 backdrop-blur-sm">
+                  <CardContent className="p-5 flex items-center gap-3">
+                    <Landmark className="w-5 h-5 text-primary" />
+                    <div>
+                      <p className="text-xs text-muted-foreground">Total Submissions</p>
+                      <p className="text-2xl font-bold text-foreground">{lendEarnTxs.length}</p>
+                    </div>
+                  </CardContent>
+                </Card>
+                <Card className="border-border/40 bg-card/40 backdrop-blur-sm">
+                  <CardContent className="p-5 flex items-center gap-3">
+                    <Lock className="w-5 h-5 text-primary" />
+                    <div>
+                      <p className="text-xs text-muted-foreground">Loans</p>
+                      <p className="text-2xl font-bold text-foreground">{lendEarnTxs.filter(t => t.tx_type === "loan").length}</p>
+                    </div>
+                  </CardContent>
+                </Card>
+                <Card className="border-border/40 bg-card/40 backdrop-blur-sm">
+                  <CardContent className="p-5 flex items-center gap-3">
+                    <Percent className="w-5 h-5 text-primary" />
+                    <div>
+                      <p className="text-xs text-muted-foreground">Earn Deposits</p>
+                      <p className="text-2xl font-bold text-foreground">{lendEarnTxs.filter(t => t.tx_type === "earn").length}</p>
+                    </div>
+                  </CardContent>
+                </Card>
+                <Card className="border-border/40 bg-card/40 backdrop-blur-sm">
+                  <CardContent className="p-5 flex items-center gap-3">
+                    <Users className="w-5 h-5 text-primary" />
+                    <div>
+                      <p className="text-xs text-muted-foreground">Unique Clients</p>
+                      <p className="text-2xl font-bold text-foreground">{new Set(lendEarnTxs.map(t => t.email)).size}</p>
+                    </div>
+                  </CardContent>
+                </Card>
+              </div>
+
+              <Card className="border-border/40 bg-card/40 backdrop-blur-sm">
+                <CardHeader>
+                  <CardTitle className="text-lg flex items-center gap-2">
+                    <Landmark className="w-5 h-5" /> Loan & Earn Client Directory
+                  </CardTitle>
+                </CardHeader>
+                <CardContent className="overflow-x-auto">
+                  <Table>
+                    <TableHeader>
+                      <TableRow>
+                        <TableHead>Date</TableHead>
+                        <TableHead>Type</TableHead>
+                        <TableHead>Email</TableHead>
+                        <TableHead>Phone</TableHead>
+                        <TableHead>Currency</TableHead>
+                        <TableHead className="text-right">Amount</TableHead>
+                        <TableHead>Loan Currency</TableHead>
+                        <TableHead className="text-right">Loan Amt</TableHead>
+                        <TableHead className="text-right">LTV %</TableHead>
+                        <TableHead className="text-right">APY %</TableHead>
+                        <TableHead>Status</TableHead>
+                        <TableHead>Lang</TableHead>
+                        <TableHead>TX ID</TableHead>
+                      </TableRow>
+                    </TableHeader>
+                    <TableBody>
+                      {lendEarnTxs.length === 0 ? (
+                        <TableRow>
+                          <TableCell colSpan={13} className="text-center text-muted-foreground py-8">
+                            No loan or earn submissions yet.
+                          </TableCell>
+                        </TableRow>
+                      ) : (
+                        lendEarnTxs.map((tx) => (
+                          <TableRow key={tx.id}>
+                            <TableCell className="text-xs text-muted-foreground whitespace-nowrap">
+                              {new Date(tx.created_at).toLocaleString()}
+                            </TableCell>
+                            <TableCell>
+                              <span className={`text-xs font-semibold px-2 py-0.5 rounded ${tx.tx_type === "loan" ? "bg-amber-500/20 text-amber-400" : "bg-emerald-500/20 text-emerald-400"}`}>
+                                {tx.tx_type.toUpperCase()}
+                              </span>
+                            </TableCell>
+                            <TableCell className="text-sm">{tx.email}</TableCell>
+                            <TableCell className="text-sm text-muted-foreground">{tx.phone || "—"}</TableCell>
+                            <TableCell className="uppercase font-mono text-sm">{tx.currency}</TableCell>
+                            <TableCell className="text-right font-mono">{Number(tx.amount).toLocaleString("en-US", { maximumFractionDigits: 8 })}</TableCell>
+                            <TableCell className="uppercase font-mono text-sm">{tx.loan_currency || "—"}</TableCell>
+                            <TableCell className="text-right font-mono">{tx.loan_amount ? `$${Number(tx.loan_amount).toLocaleString("en-US", { minimumFractionDigits: 2 })}` : "—"}</TableCell>
+                            <TableCell className="text-right">{tx.ltv_percent ? `${tx.ltv_percent}%` : "—"}</TableCell>
+                            <TableCell className="text-right">{tx.apy_percent ? `${tx.apy_percent}%` : "—"}</TableCell>
+                            <TableCell>
+                              <span className="text-xs capitalize">{tx.status}</span>
+                            </TableCell>
+                            <TableCell className="text-xs uppercase">{tx.language}</TableCell>
+                            <TableCell className="font-mono text-xs text-muted-foreground max-w-[120px] truncate" title={tx.external_tx_id}>
+                              {tx.external_tx_id || "—"}
+                            </TableCell>
+                          </TableRow>
+                        ))
+                      )}
+                    </TableBody>
+                  </Table>
+                </CardContent>
+              </Card>
+            </TabsContent>
+
             <TabsContent value="support" className="mt-6 space-y-6">
               <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
                 <Card className="border-border/40 bg-card/40 backdrop-blur-sm">
