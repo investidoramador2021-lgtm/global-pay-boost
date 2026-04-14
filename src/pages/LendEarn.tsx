@@ -565,31 +565,40 @@ function YieldDashboard() {
             <CardHeader>
               <CardTitle className="flex items-center gap-2 text-foreground">
                 <TrendingUp className="h-5 w-5 text-[#D4AF37]" />
-                {t("lend.startEarningOn")} {selected.ticker}
-                <span className="text-xs font-normal text-muted-foreground">({selected.network})</span>
+                {t("lend.earnCalculator", "Earn Calculator")}
                 {estimating && <Loader2 className="h-4 w-4 animate-spin text-[#D4AF37]" />}
               </CardTitle>
+              <CardDescription>{t("lend.earnCalcDesc", "Select an asset & enter your deposit to see projected returns.")}</CardDescription>
             </CardHeader>
-            <CardContent className="space-y-4">
-              {/* APY badge */}
-              <div className="flex items-center gap-2">
-                <Badge className="bg-[#D4AF37]/10 text-[#D4AF37] border-[#D4AF37]/30 text-sm">
-                  {apy}% APY
-                </Badge>
-                {earnEstimate && (
-                  <span className="text-[10px] text-emerald-400/70">✓ {t("lend.liveEstimate", "Live rate")}</span>
-                )}
+            <CardContent className="space-y-5">
+              {/* Deposit Asset selector */}
+              <div className="space-y-2">
+                <label className="text-sm font-medium text-muted-foreground">{t("lend.depositAsset", "Deposit Asset")}</label>
+                <select
+                  value={selectedKey}
+                  onChange={(e) => setSelectedKey(e.target.value)}
+                  className="flex h-10 w-full items-center rounded-md border border-[#D4AF37]/30 bg-background px-3 py-2 text-sm ring-offset-background focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2"
+                >
+                  {EARN_ASSETS.map((a) => {
+                    const k = EARN_ASSETS_UNIQUE_KEY(a);
+                    return <option key={k} value={k}>{a.ticker} — {a.name} ({a.network})</option>;
+                  })}
+                </select>
               </div>
 
+              {/* Your Deposit input */}
               <div className="space-y-2">
-                <label className="text-sm text-muted-foreground">{t("lend.depositAmountUsd")}</label>
-                <Input
-                  type="number"
-                  placeholder={`Min $${minEarnAmount}`}
-                  value={depositAmount}
-                  onChange={(e) => setDepositAmount(e.target.value)}
-                  className="border-[#D4AF37]/30 font-mono"
-                />
+                <label className="text-sm font-medium text-muted-foreground">{t("lend.yourDeposit", "Your Deposit")}</label>
+                <div className="relative">
+                  <DollarSign className="absolute start-3 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground" />
+                  <Input
+                    type="number"
+                    placeholder={`Min $${minEarnAmount}`}
+                    value={depositAmount}
+                    onChange={(e) => setDepositAmount(e.target.value)}
+                    className="ps-9 border-[#D4AF37]/30 font-mono text-lg"
+                  />
+                </div>
                 {belowMinimum && (
                   <p className="text-xs text-red-400">
                     {t("lend.minDeposit", { min: minEarnAmount })}
@@ -597,54 +606,67 @@ function YieldDashboard() {
                 )}
               </div>
 
-              {/* Earnings Projection Table */}
+              {/* Live APY display */}
+              <div className="rounded-lg border border-[#D4AF37]/20 bg-[#D4AF37]/5 p-4 text-center space-y-1">
+                <div className="text-xs uppercase tracking-wider text-muted-foreground">{selected.ticker} {t("lend.annualYield", "Annual Yield")}</div>
+                <div className="text-4xl font-bold text-[#D4AF37]">{apy}% <span className="text-lg font-normal">APY</span></div>
+                {earnEstimate && (
+                  <span className="text-[10px] text-emerald-400">✓ {t("lend.liveEstimate", "Live rate from API")}</span>
+                )}
+              </div>
+
+              {/* 1-year projection hero */}
+              {numAmount > 0 && (
+                <div className="rounded-lg border border-emerald-400/20 bg-emerald-400/5 p-4 text-center space-y-1">
+                  <div className="text-xs text-muted-foreground">{t("lend.inOneYear", "In 1 year you will have")}</div>
+                  <div className="text-3xl font-bold text-emerald-400">{fmt.usd(numAmount + annualEarning)}</div>
+                  <div className="text-sm text-emerald-400/80">
+                    {fmt.usd(numAmount)} + {fmt.usd(annualEarning)} {t("lend.interest", "interest")}
+                  </div>
+                </div>
+              )}
+
+              {/* Earnings Breakdown grid */}
               {numAmount > 0 && (
                 <div className="rounded-lg border border-[#D4AF37]/20 bg-background/50 overflow-hidden">
                   <div className="bg-[#D4AF37]/5 px-4 py-2 border-b border-[#D4AF37]/10">
-                    <h4 className="text-sm font-semibold text-foreground">{t("lend.earningsProjection", "Earnings Projection")}</h4>
+                    <h4 className="text-sm font-semibold text-foreground">{t("lend.earningsBreakdown", "Earnings Breakdown")}</h4>
                   </div>
-                  <table className="w-full text-sm">
-                    <thead>
-                      <tr className="border-b border-border">
-                        <th className="px-4 py-2 text-start text-xs text-muted-foreground font-medium">{t("lend.period", "Period")}</th>
-                        <th className="px-4 py-2 text-end text-xs text-muted-foreground font-medium">{t("lend.earnings", "Earnings")}</th>
-                        <th className="px-4 py-2 text-end text-xs text-muted-foreground font-medium">{t("lend.total", "Total")}</th>
-                      </tr>
-                    </thead>
-                    <tbody>
-                      <tr className="border-b border-border/50">
-                        <td className="px-4 py-2.5 text-muted-foreground">{t("lend.periodDaily", "Daily")}</td>
-                        <td className="px-4 py-2.5 text-end font-mono text-emerald-400">+{fmt.usd(dailyEarning)}</td>
-                        <td className="px-4 py-2.5 text-end font-mono text-foreground">{fmt.usd(numAmount + dailyEarning)}</td>
-                      </tr>
-                      <tr className="border-b border-border/50">
-                        <td className="px-4 py-2.5 text-muted-foreground">{t("lend.periodWeekly", "7 Days")}</td>
-                        <td className="px-4 py-2.5 text-end font-mono text-emerald-400">+{fmt.usd(weeklyEarning)}</td>
-                        <td className="px-4 py-2.5 text-end font-mono text-foreground">{fmt.usd(numAmount + weeklyEarning)}</td>
-                      </tr>
-                      <tr className="border-b border-border/50">
-                        <td className="px-4 py-2.5 text-muted-foreground">{t("lend.periodMonthly", "1 Month")}</td>
-                        <td className="px-4 py-2.5 text-end font-mono text-[#D4AF37]">+{fmt.usd(monthlyEarning)}</td>
-                        <td className="px-4 py-2.5 text-end font-mono text-foreground">{fmt.usd(numAmount + monthlyEarning)}</td>
-                      </tr>
-                      <tr>
-                        <td className="px-4 py-2.5 font-medium text-foreground">{t("lend.periodAnnual", "1 Year")}</td>
-                        <td className="px-4 py-2.5 text-end font-mono font-bold text-[#D4AF37]">+{fmt.usd(annualEarning)}</td>
-                        <td className="px-4 py-2.5 text-end font-mono font-bold text-foreground">{fmt.usd(numAmount + annualEarning)}</td>
-                      </tr>
-                    </tbody>
-                  </table>
+                  <div className="grid grid-cols-2 divide-x divide-border">
+                    <div className="p-4 space-y-1 text-center">
+                      <div className="text-xs text-muted-foreground">{t("lend.monthlyReward", "Monthly Reward")}</div>
+                      <div className="text-lg font-bold text-[#D4AF37] font-mono">{fmt.usd(monthlyEarning)}</div>
+                    </div>
+                    <div className="p-4 space-y-1 text-center">
+                      <div className="text-xs text-muted-foreground">{t("lend.interestAccrual", "Interest Accrual")}</div>
+                      <div className="text-lg font-bold text-foreground">{t("lend.daily", "Daily")}</div>
+                    </div>
+                  </div>
+                  <div className="grid grid-cols-2 divide-x divide-border border-t border-border">
+                    <div className="p-4 space-y-1 text-center">
+                      <div className="text-xs text-muted-foreground">{t("lend.term", "Term")}</div>
+                      <div className="text-lg font-bold text-foreground">{t("lend.unlimited", "Unlimited (Flexible)")}</div>
+                    </div>
+                    <div className="p-4 space-y-1 text-center">
+                      <div className="text-xs text-muted-foreground">{t("lend.annualReturn", "Annual Return")}</div>
+                      <div className="text-lg font-bold text-emerald-400 font-mono">+{fmt.usd(annualEarning)}</div>
+                    </div>
+                  </div>
                 </div>
               )}
 
               <Button
                 onClick={handleDeposit}
                 disabled={loading || numAmount <= 0 || belowMinimum}
-                className="w-full bg-[#D4AF37] text-background hover:bg-[#D4AF37]/90 font-semibold"
+                className="w-full h-12 bg-[#D4AF37] text-background hover:bg-[#D4AF37]/90 font-semibold text-base"
               >
-                {loading ? <Loader2 className="h-4 w-4 animate-spin me-2" /> : null}
-                {t("lend.startEarning")} {selected.ticker} <ArrowRight className="h-4 w-4" />
+                {loading ? <Loader2 className="h-4 w-4 animate-spin me-2" /> : <Percent className="h-4 w-4 me-2" />}
+                {t("lend.startEarning", "Start Earning")} <ArrowRight className="h-4 w-4 ms-1" />
               </Button>
+
+              <p className="text-[10px] text-muted-foreground text-center">
+                {t("lend.modal.compliance", "MRC GlobalPay · MSB Registration C100000015 · FINTRAC Regulated")}
+              </p>
             </CardContent>
           </Card>
         </div>
