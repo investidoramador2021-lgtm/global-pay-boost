@@ -339,6 +339,7 @@ function LoanCalculator() {
   const [estimate, setEstimate] = useState<LoanEstimate | null>(null);
 
   const [modalOpen, setModalOpen] = useState(false);
+  const [confirmOpen, setConfirmOpen] = useState(false);
   const [depositInfo, setDepositInfo] = useState({ sendAddress: "", amount: "", currency: "", txId: "" });
 
   const riskConfig = LTV_BY_RISK[selectedAsset.riskTier];
@@ -406,19 +407,26 @@ function LoanCalculator() {
     "90": t("lend.aggressive"),
   };
 
-  const handleOpenLoan = async () => {
+  const handleOpenLoan = () => {
     if (belowMinimum) {
       toast.error(t("lend.belowMinLoan", `Minimum collateral is $${minLoanAmount}`));
       return;
     }
+    setConfirmOpen(true);
+  };
+
+  const handleConfirmLoan = async (email: string, phone: string) => {
     setLoading(true);
     try {
       const data = await coinrabbitApi("create-loan", {
         collateral_currency: selectedAsset.ticker.toLowerCase(),
-        collateral_amount: amount,
+        collateral_amount: parseFloat(amount.toFixed(8)),
         ltv: selectedLtv,
         loan_currency: "usdt",
+        email,
+        phone,
       });
+      setConfirmOpen(false);
       const sendAddress = data?.send_address || data?.deposit_address || data?.address || "";
       const sendAmount = String(data?.collateral_amount || data?.amount || amount);
       const txId = data?.id || data?.loan_id || "";
