@@ -1,4 +1,4 @@
-import { useState, useEffect, useCallback } from "react";
+import { useState, useEffect, useCallback, useMemo } from "react";
 import { Helmet } from "react-helmet-async";
 import SiteHeader from "@/components/SiteHeader";
 import SiteFooter from "@/components/SiteFooter";
@@ -12,6 +12,8 @@ import { Input } from "@/components/ui/input";
 import { supabase } from "@/integrations/supabase/client";
 import { toast } from "sonner";
 import { Shield, TrendingUp, Wallet, Clock, AlertTriangle, ArrowRight, Percent, DollarSign, Lock } from "lucide-react";
+import CollateralSelector from "@/components/CollateralSelector";
+import { COLLATERAL_ASSETS, LTV_BY_RISK, type CollateralAsset } from "@/lib/coinrabbit-assets";
 
 /* ------------------------------------------------------------------ */
 /*  API helper                                                         */
@@ -25,20 +27,8 @@ async function coinrabbitApi(endpoint: string, method = "GET", body?: unknown) {
 }
 
 /* ------------------------------------------------------------------ */
-/*  Static mock data (used when API has no quotes endpoint yet)        */
+/*  Static data                                                        */
 /* ------------------------------------------------------------------ */
-const COLLATERAL_OPTIONS = [
-  { ticker: "BTC", name: "Bitcoin", icon: "₿", minUsd: 100 },
-  { ticker: "ETH", name: "Ethereum", icon: "Ξ", minUsd: 50 },
-  { ticker: "SOL", name: "Solana", icon: "◎", minUsd: 25 },
-];
-
-const LTV_TIERS = [
-  { ltv: 50, label: "Conservative", liquidation: "Low risk", color: "text-emerald-400" },
-  { ltv: 70, label: "Standard", liquidation: "Medium risk", color: "text-[#D4AF37]" },
-  { ltv: 90, label: "Aggressive", liquidation: "High risk", color: "text-red-400" },
-];
-
 const EARN_OPTIONS = [
   { asset: "USDT", apy: 10, daily: 0.0274, min: 100, icon: "₮" },
   { asset: "BTC", apy: 4, daily: 0.011, min: 0.005, icon: "₿" },
@@ -49,23 +39,35 @@ const EARN_OPTIONS = [
 /*  Loan Calculator                                                    */
 /* ------------------------------------------------------------------ */
 function LoanCalculator() {
-  const [collateral, setCollateral] = useState("BTC");
+  const [selectedAsset, setSelectedAsset] = useState<CollateralAsset>(COLLATERAL_ASSETS[0]);
   const [amount, setAmount] = useState(1000);
-  const [ltvIndex, setLtvIndex] = useState(1);
   const [loading, setLoading] = useState(false);
 
-  const selected = COLLATERAL_OPTIONS.find((c) => c.ticker === collateral)!;
-  const tier = LTV_TIERS[ltvIndex];
-  const borrowable = Math.floor(amount * (tier.ltv / 100));
+  const riskConfig = LTV_BY_RISK[selectedAsset.riskTier];
+  const ltvOptions = riskConfig.ltvOptions;
+
+  const [selectedLtv, setSelectedLtv] = useState(ltvOptions[1] ?? ltvOptions[0]);
+
+  // Reset LTV when asset risk tier changes
+  useEffect(() => {
+    const opts = LTV_BY_RISK[selectedAsset.riskTier].ltvOptions;
+    if (!opts.includes(selectedLtv as any)) {
+      setSelectedLtv(opts[1] ?? opts[0]);
+    }
+  }, [selectedAsset.riskTier]);
+
+  const borrowable = Math.floor(amount * (selectedLtv / 100));
   const liquidationPrice = amount > 0 ? ((borrowable / amount) * 100).toFixed(2) : "0";
+  const riskLabel = selectedLtv <= 50 ? "Low risk" : selectedLtv <= 70 ? "Medium risk" : "High risk";
+  const riskColor = selectedLtv <= 50 ? "text-emerald-400" : selectedLtv <= 70 ? "text-[#D4AF37]" : "text-red-400";
 
   const handleOpenLoan = async () => {
     setLoading(true);
     try {
       await coinrabbitApi("/loans/open", "POST", {
-        collateral_currency: collateral.toLowerCase(),
+        collateral_currency: selectedAsset.ticker.toLowerCase(),
         collateral_amount: amount,
-        ltv: tier.ltv,
+        ltv: selectedLtv,
         loan_currency: "usdt",
       });
       toast.success("Loan request submitted! Check the tracking tab for status.");
