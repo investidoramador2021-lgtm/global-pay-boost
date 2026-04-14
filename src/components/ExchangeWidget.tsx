@@ -996,6 +996,8 @@ const ExchangeWidget = ({ onTabChange }: ExchangeWidgetProps = {}) => {
       setWidgetMode("request");
     } else if (tab === "loan") {
       setWidgetMode("loan");
+    } else if (tab === "earn") {
+      setWidgetMode("earn");
     }
   }, []);
 
@@ -1681,7 +1683,7 @@ const ExchangeWidget = ({ onTabChange }: ExchangeWidgetProps = {}) => {
                       }`}
                     >
                       <TabIcon className="hidden sm:block h-4 w-4" />
-                      {tab.mode === "loan" ? tab.labelKey : t(tab.labelKey)}
+                      {tab.mode === "loan" || tab.mode === "earn" ? tab.labelKey : t(tab.labelKey)}
                     </button>
                   );
                 })}
@@ -2510,7 +2512,7 @@ const ExchangeWidget = ({ onTabChange }: ExchangeWidgetProps = {}) => {
             {widgetMode === "loan" && (
               <div className="space-y-4">
                 <div className="space-y-2">
-                  <label className="text-xs font-medium text-muted-foreground">Collateral Asset</label>
+                  <label className="text-xs font-medium text-[#D4AF37]">Collateral Asset</label>
                   <div className="grid grid-cols-3 gap-2">
                     {[
                       { ticker: "BTC", icon: "₿" },
@@ -2519,7 +2521,7 @@ const ExchangeWidget = ({ onTabChange }: ExchangeWidgetProps = {}) => {
                     ].map((c) => (
                       <button
                         key={c.ticker}
-                        className="rounded-lg border border-border bg-accent p-3 text-center transition-colors hover:border-primary/40 focus:border-primary focus:bg-primary/10"
+                        className="rounded-lg border border-[#D4AF37]/20 bg-[#D4AF37]/5 p-3 text-center transition-all hover:border-[#D4AF37]/50 hover:bg-[#D4AF37]/10 focus:border-[#D4AF37] focus:ring-1 focus:ring-[#D4AF37]/30"
                       >
                         <div className="text-xl">{c.icon}</div>
                         <div className="text-xs font-semibold text-foreground">{c.ticker}</div>
@@ -2528,24 +2530,61 @@ const ExchangeWidget = ({ onTabChange }: ExchangeWidgetProps = {}) => {
                   </div>
                 </div>
                 <div className="space-y-1">
-                  <label className="text-xs font-medium text-muted-foreground">Collateral Value (USD)</label>
-                  <Input type="number" placeholder="1,000" defaultValue="1000" className="font-mono" />
+                  <label className="text-xs font-medium text-[#D4AF37]">Collateral Value (USD)</label>
+                  <Input type="number" placeholder="1,000" defaultValue="1000" className="font-mono border-[#D4AF37]/20 focus:border-[#D4AF37] focus:ring-[#D4AF37]/30" />
                 </div>
-                <div className="rounded-lg border border-border bg-accent/50 p-3 space-y-2">
+                <div className="rounded-lg border border-[#D4AF37]/20 bg-[#D4AF37]/5 p-3 space-y-2">
                   <div className="flex justify-between text-sm">
                     <span className="text-muted-foreground">You can borrow</span>
-                    <span className="font-bold text-primary">~$700 USDT</span>
+                    <span className="font-bold text-[#D4AF37]">~$700 USDT</span>
                   </div>
                   <div className="flex justify-between text-xs">
                     <span className="text-muted-foreground">LTV Ratio</span>
-                    <span className="text-foreground">70%</span>
+                    <span className="font-mono text-[#D4AF37]">70%</span>
                   </div>
                 </div>
                 <a
                   href="/lend"
-                  className="flex w-full items-center justify-center gap-2 rounded-lg bg-primary px-4 py-3 font-display text-sm font-bold text-primary-foreground shadow-card transition-colors hover:bg-primary/90"
+                  className="flex w-full items-center justify-center gap-2 rounded-lg bg-[#D4AF37] px-4 py-3 font-display text-sm font-bold text-background shadow-lg transition-colors hover:bg-[#C5A028]"
                 >
                   <Landmark className="h-4 w-4" /> Get Instant Loan
+                </a>
+              </div>
+            )}
+
+            {/* ===== EARN MODE ===== */}
+            {widgetMode === "earn" && (
+              <div className="space-y-4">
+                <p className="text-xs text-muted-foreground">Earn competitive yield on your crypto — no lock-up period.</p>
+                <div className="space-y-2">
+                  {[
+                    { asset: "USDT", icon: "₮", apy: "10%", daily: "0.0274%" },
+                    { asset: "BTC", icon: "₿", apy: "4%", daily: "0.011%" },
+                    { asset: "ETH", icon: "Ξ", apy: "5%", daily: "0.0137%" },
+                  ].map((opt) => (
+                    <div
+                      key={opt.asset}
+                      className="flex items-center justify-between rounded-lg border border-[#D4AF37]/20 bg-[#D4AF37]/5 p-3 transition-all hover:border-[#D4AF37]/40"
+                    >
+                      <div className="flex items-center gap-3">
+                        <span className="flex h-9 w-9 items-center justify-center rounded-full border border-[#D4AF37]/30 bg-[#D4AF37]/10 text-lg">{opt.icon}</span>
+                        <div>
+                          <div className="text-sm font-semibold text-foreground">{opt.asset}</div>
+                          <div className="text-[10px] text-muted-foreground">{opt.daily} daily</div>
+                        </div>
+                      </div>
+                      <div className="text-right">
+                        <div className="text-lg font-bold text-[#D4AF37]">{opt.apy}</div>
+                        <div className="text-[10px] font-medium text-muted-foreground">APY</div>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+                <a
+                  href="/lend?tab=earn"
+                  className="flex w-full items-center justify-center gap-2 rounded-lg bg-[#D4AF37] px-4 py-3 font-display text-sm font-bold text-background shadow-lg transition-colors hover:bg-[#C5A028]"
+                >
+                  <TrendingUp className="h-4 w-4" /> Start Earning
                 </a>
               </div>
             )}
