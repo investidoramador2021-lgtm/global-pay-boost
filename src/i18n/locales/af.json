@@ -685,7 +685,13 @@
       "compliance": "MRC GlobalPay · MSB-registrasie C100000015 · U data is geënkripteer.",
       "cancel": "Kanselleer",
       "confirm": "Bevestig & Gaan Voort",
-      "proTip": "Wenk: U sal SMS- en e-poswaarskuwings ontvang as u lening die Geel (Risiko) of Rooi (Likwidasie) sones bereik."
+      "proTipTitle": "Pro Wenk: Outomatiese Sekuriteitswaarskuwings",
+      "proTipIntro": "Alle leningsposisies word deurlopend gemonitor deur ons infrastruktuurvennoot se outomatiese risiko-enjin.",
+      "yellowZoneTitle": "Geel Sone (Risiko)",
+      "yellowZoneDesc": "As u onderpandwaarde daal, sal die vennoot se stelsel outomaties onmiddellike SMS- en e-poswaarskuwings na u geregistreerde kontakbesonderhede stuur.",
+      "redZoneTitle": "Rooi Sone (Likwidasie)",
+      "redZoneDesc": "Om die leningspoel te beskerm en verdere verliese te voorkom, sal die vennoot se outomatiese enjin 'n likwidasie uitvoer as die waarde onder die veiligheidsdrempel val.",
+      "liabilityNotice": "MRC Global Pay bied die koppelvlak vir hierdie dienste; monitering, waarskuwingsaflewering en likwidasie-uitvoering word uitsluitlik deur ons tegnologievennoot bestuur."
     }
   }
 }

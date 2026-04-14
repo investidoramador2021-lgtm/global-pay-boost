@@ -685,7 +685,13 @@
       "compliance": "MRC GlobalPay · Đăng ký MSB C100000015 · Dữ liệu được mã hóa và chỉ dùng cho cảnh báo.",
       "cancel": "Hủy",
       "confirm": "Xác Nhận & Tiếp Tục",
-      "proTip": "Mẹo: Bạn sẽ nhận cảnh báo SMS và email nếu khoản vay đạt vùng Vàng (Rủi ro) hoặc Đỏ (Thanh lý)."
+      "proTipTitle": "Mẹo Pro: Cảnh Báo An Ninh Tự Động",
+      "proTipIntro": "Tất cả vị thế cho vay được giám sát liên tục bởi công cụ rủi ro tự động của đối tác hạ tầng.",
+      "yellowZoneTitle": "Vùng Vàng (Rủi ro)",
+      "yellowZoneDesc": "Nếu giá trị tài sản thế chấp giảm, hệ thống đối tác sẽ tự động gửi cảnh báo SMS và email tức thì đến thông tin liên hệ đã đăng ký với hướng dẫn điều chỉnh vị thế.",
+      "redZoneTitle": "Vùng Đỏ (Thanh lý)",
+      "redZoneDesc": "Để bảo vệ quỹ cho vay và ngăn ngừa tổn thất thêm, công cụ tự động của đối tác sẽ thực hiện thanh lý nếu giá trị giảm xuống dưới ngưỡng an toàn mà không có hành động.",
+      "liabilityNotice": "MRC Global Pay cung cấp giao diện cho các dịch vụ này; giám sát, gửi cảnh báo và thực hiện thanh lý được quản lý độc quyền bởi đối tác công nghệ."
     }
   }
 }

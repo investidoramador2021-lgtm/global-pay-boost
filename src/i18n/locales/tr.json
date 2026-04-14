@@ -685,7 +685,13 @@
       "compliance": "MRC GlobalPay · MSB Kayıt C100000015 · Verileriniz şifrelenir ve yalnızca uyarılar için kullanılır.",
       "cancel": "İptal",
       "confirm": "Onayla ve Devam Et",
-      "proTip": "İpucu: Krediniz Sarı (Risk) veya Kırmızı (Tasfiye) bölgelerine ulaşırsa SMS ve e-posta uyarıları alırsınız."
+      "proTipTitle": "Pro İpucu: Otomatik Güvenlik Uyarıları",
+      "proTipIntro": "Tüm kredi pozisyonları altyapı ortağımızın otomatik risk motoru tarafından sürekli izlenir.",
+      "yellowZoneTitle": "Sarı Bölge (Risk)",
+      "yellowZoneDesc": "Teminat değeriniz düşerse, ortağın sistemi otomatik olarak kayıtlı iletişim bilgilerinize anında SMS ve e-posta uyarıları gönderir.",
+      "redZoneTitle": "Kırmızı Bölge (Tasfiye)",
+      "redZoneDesc": "Kredi havuzunu korumak ve daha fazla kaybı önlemek için, değer güvenlik eşiğinin altına düşerse ortağın otomatik motoru tasfiye gerçekleştirir.",
+      "liabilityNotice": "MRC Global Pay bu hizmetler için arayüz sağlar; izleme, uyarı teslimi ve tasfiye yürütmesi yalnızca teknoloji ortağımız tarafından yönetilir."
     }
   }
 }
