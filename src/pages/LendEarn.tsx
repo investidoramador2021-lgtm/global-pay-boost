@@ -40,7 +40,15 @@ async function coinrabbitApi(action: string, payload: Record<string, unknown> = 
   const { data, error } = await supabase.functions.invoke("coinrabbit", {
     body: { action, ...payload },
   });
-  if (error) throw new Error(error.message);
+
+  if (error) {
+    throw new Error(error.message);
+  }
+
+  if (data && typeof data === "object" && "message" in data && (data as { result?: boolean }).result === false) {
+    throw new Error(String((data as { message?: string }).message || "CoinRabbit request failed"));
+  }
+
   return data;
 }
 
