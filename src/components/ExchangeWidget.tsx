@@ -288,6 +288,54 @@ const STATUS_LABEL_KEYS: Record<string, string> = {
   overdue: "widget.statusOverdue",
 };
 
+/* ── Compact Loan Widget for homepage ── */
+function LoanWidgetPanel() {
+  const [asset, setAsset] = useState<CollateralAsset>(COLLATERAL_ASSETS[0]);
+  const [usdValue, setUsdValue] = useState("1000");
+  const riskConfig = LTV_BY_RISK[asset.riskTier];
+  const maxLtv = riskConfig.ltvOptions[riskConfig.ltvOptions.length - 1];
+  const borrowable = Math.floor((parseFloat(usdValue) || 0) * (maxLtv / 100));
+
+  return (
+    <div className="space-y-4">
+      <div className="space-y-2">
+        <label className="text-xs font-medium text-[#D4AF37]">Collateral Asset</label>
+        <CollateralSelector value={asset.ticker} onChange={setAsset} compact />
+      </div>
+      <div className="space-y-1">
+        <label className="text-xs font-medium text-[#D4AF37]">Collateral Value (USD)</label>
+        <Input
+          type="number"
+          placeholder="1,000"
+          value={usdValue}
+          onChange={(e) => setUsdValue(e.target.value)}
+          className="font-mono border-[#D4AF37]/20 focus:border-[#D4AF37] focus:ring-[#D4AF37]/30"
+        />
+      </div>
+      <div className="rounded-lg border border-[#D4AF37]/20 bg-[#D4AF37]/5 p-3 space-y-2">
+        <div className="flex justify-between text-sm">
+          <span className="text-muted-foreground">You can borrow</span>
+          <span className="font-bold text-[#D4AF37]">~${borrowable.toLocaleString()} USDT</span>
+        </div>
+        <div className="flex justify-between text-xs">
+          <span className="text-muted-foreground">Max LTV</span>
+          <span className="font-mono text-[#D4AF37]">{maxLtv}%</span>
+        </div>
+        <div className="flex justify-between text-xs">
+          <span className="text-muted-foreground">Interest Rate</span>
+          <span className="font-mono text-[#D4AF37]">{riskConfig.baseRate}% APR</span>
+        </div>
+      </div>
+      <a
+        href="/lend"
+        className="flex w-full items-center justify-center gap-2 rounded-lg bg-[#D4AF37] px-4 py-3 font-display text-sm font-bold text-background shadow-lg transition-colors hover:bg-[#C5A028]"
+      >
+        <Landmark className="h-4 w-4" /> Get Instant Loan
+      </a>
+    </div>
+  );
+}
+
 interface ExchangeWidgetProps {
   onTabChange?: (tab: "exchange" | "buysell" | "private" | "bridge" | "request" | "loan" | "earn") => void;
 }
