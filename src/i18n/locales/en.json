@@ -396,6 +396,40 @@
         "description": "Your client pays in crypto; our engine delivers the exact fiat-equivalent to your wallet. Both parties receive signed digital receipts."
       },
       "cta": "Create Invoice"
+    },
+    "loan": {
+      "heading": "Crypto-Backed Instant Loans.",
+      "subtitle": "Unlock liquidity from your crypto holdings without selling. Set your LTV, send collateral, and receive stablecoins in minutes — with no monthly payments required.",
+      "step1": {
+        "title": "Select Collateral",
+        "description": "Choose your asset and set your LTV buffer."
+      },
+      "step2": {
+        "title": "Secure Transfer",
+        "description": "Send collateral to the infrastructure partner's secure cold-storage address."
+      },
+      "step3": {
+        "title": "Instant Payout",
+        "description": "Receive your stablecoins in 10 minutes or less with no monthly payments."
+      },
+      "cta": "Get Instant Loan"
+    },
+    "earn": {
+      "heading": "Earn Daily Interest.",
+      "subtitle": "Put your idle crypto to work. Deposit USDT, USDC, or BTC and watch your balance grow with daily compounding interest — withdraw anytime with zero lock-up.",
+      "step1": {
+        "title": "Deposit Asset",
+        "description": "Transfer USDT, USDC, or BTC to your unique interest-bearing address."
+      },
+      "step2": {
+        "title": "Daily Accrual",
+        "description": "Watch your balance grow with daily interest compounding automatically."
+      },
+      "step3": {
+        "title": "Total Flexibility",
+        "description": "Withdraw your principal and all earned rewards at any time with zero lock-up periods."
+      },
+      "cta": "Start Earning"
     }
   },
   "whitepaper": {

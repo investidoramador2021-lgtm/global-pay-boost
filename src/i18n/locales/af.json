@@ -394,6 +394,40 @@
         "description": "Jou kliënt betaal in kripto; ons enjin lewer die presiese fiat-ekwivalent na jou beursie. Beide partye ontvang getekende digitale kwitansies."
       },
       "cta": "Skep Faktuur"
+    },
+    "loan": {
+      "heading": "Kitomatiese Kripto-Lenings.",
+      "subtitle": "Ontsluit likiditeit van jou kripto sonder om te verkoop. Stel jou LTV, stuur onderpand en ontvang stablecoins binne minute — sonder maandelikse betalings.",
+      "step1": {
+        "title": "Kies Onderpand",
+        "description": "Kies jou bate en stel jou LTV-buffer."
+      },
+      "step2": {
+        "title": "Veilige Oordrag",
+        "description": "Stuur onderpand na die infrastruktuurvennoot se veilige kouebergingsadres."
+      },
+      "step3": {
+        "title": "Onmiddellike Uitbetaling",
+        "description": "Ontvang jou stablecoins binne 10 minute of minder sonder maandelikse betalings."
+      },
+      "cta": "Kry Lening"
+    },
+    "earn": {
+      "heading": "Verdien Daaglikse Rente.",
+      "subtitle": "Sit jou ledigstaande kripto aan die werk. Deponeer USDT, USDC of BTC en kyk hoe jou saldo groei met daaglikse saamgestelde rente — onttrek enige tyd.",
+      "step1": {
+        "title": "Deponeer Bate",
+        "description": "Dra USDT, USDC of BTC oor na jou unieke rente-verdienende adres."
+      },
+      "step2": {
+        "title": "Daaglikse Ophooping",
+        "description": "Kyk hoe jou saldo outomaties groei met daaglikse saamgestelde rente."
+      },
+      "step3": {
+        "title": "Totale Buigsaamheid",
+        "description": "Onttrek jou kapitaal en alle verdiende belonings enige tyd sonder sluitperiodes."
+      },
+      "cta": "Begin Verdien"
     }
   },
   "whitepaper": {

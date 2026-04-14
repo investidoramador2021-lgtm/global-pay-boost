@@ -394,6 +394,40 @@
         "description": "Khách hàng thanh toán bằng crypto; hệ thống giao chính xác giá trị fiat tương đương vào ví của bạn. Cả hai bên nhận biên lai số có chữ ký."
       },
       "cta": "Tạo Hóa Đơn"
+    },
+    "loan": {
+      "heading": "Vay Tức Thì Bằng Crypto.",
+      "subtitle": "Mở khóa thanh khoản từ tài sản crypto mà không cần bán. Đặt LTV, gửi tài sản thế chấp và nhận stablecoin trong vài phút — không cần thanh toán hàng tháng.",
+      "step1": {
+        "title": "Chọn Tài Sản Thế Chấp",
+        "description": "Chọn tài sản và đặt biên độ LTV của bạn."
+      },
+      "step2": {
+        "title": "Chuyển Khoản An Toàn",
+        "description": "Gửi tài sản thế chấp đến địa chỉ lưu trữ lạnh an toàn của đối tác cơ sở hạ tầng."
+      },
+      "step3": {
+        "title": "Thanh Toán Tức Thì",
+        "description": "Nhận stablecoin trong 10 phút hoặc ít hơn mà không cần thanh toán hàng tháng."
+      },
+      "cta": "Vay Ngay"
+    },
+    "earn": {
+      "heading": "Kiếm Lãi Suất Hàng Ngày.",
+      "subtitle": "Đưa crypto nhàn rỗi vào hoạt động. Gửi USDT, USDC hoặc BTC và xem số dư tăng trưởng với lãi kép hàng ngày — rút bất cứ lúc nào.",
+      "step1": {
+        "title": "Gửi Tài Sản",
+        "description": "Chuyển USDT, USDC hoặc BTC đến địa chỉ sinh lời duy nhất của bạn."
+      },
+      "step2": {
+        "title": "Tích Lũy Hàng Ngày",
+        "description": "Xem số dư tự động tăng trưởng với lãi kép hàng ngày."
+      },
+      "step3": {
+        "title": "Linh Hoạt Tuyệt Đối",
+        "description": "Rút vốn gốc và tất cả phần thưởng đã kiếm được bất cứ lúc nào mà không có thời gian khóa."
+      },
+      "cta": "Bắt Đầu Kiếm"
     }
   },
   "whitepaper": {
