@@ -47,6 +47,24 @@ interface ChatLog {
   created_at: string;
 }
 
+interface LendEarnTx {
+  id: string;
+  tx_type: string;
+  external_tx_id: string;
+  email: string;
+  phone: string;
+  currency: string;
+  amount: number;
+  loan_currency: string;
+  loan_amount: number;
+  ltv_percent: number;
+  apy_percent: number;
+  deposit_address: string;
+  status: string;
+  language: string;
+  created_at: string;
+}
+
 const AdminPortal = () => {
   // Auth state
   const [stage, setStage] = useState<Stage>("login");
