@@ -84,8 +84,9 @@ const AdminPortal = () => {
   const [partners, setPartners] = useState<Partner[]>([]);
   const [transactions, setTransactions] = useState<Tx[]>([]);
   const [tab, setTab] = useState("current");
-  const [adminTab, setAdminTab] = useState<"partners" | "exchanges" | "invoices" | "support">("exchanges");
+  const [adminTab, setAdminTab] = useState<"partners" | "exchanges" | "invoices" | "support" | "lending">("exchanges");
   const [chatLogs, setChatLogs] = useState<ChatLog[]>([]);
+  const [lendEarnTxs, setLendEarnTxs] = useState<LendEarnTx[]>([]);
   const navigate = useNavigate();
   const { toast } = useToast();
   const activityTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
