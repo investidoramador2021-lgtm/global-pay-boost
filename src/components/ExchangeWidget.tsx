@@ -6,6 +6,8 @@ import PrivateTransferTab from "@/components/PrivateTransferTab";
 import PermanentBridgeTab from "@/components/PermanentBridgeTab";
 import InvoiceRequestTab from "@/components/InvoiceRequestTab";
 import DestinationAddressInput, { tickerToAddressType } from "@/components/DestinationAddressInput";
+import CollateralSelector from "@/components/CollateralSelector";
+import { COLLATERAL_ASSETS, LTV_BY_RISK, type CollateralAsset } from "@/lib/coinrabbit-assets";
 import { supabase } from "@/integrations/supabase/client";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
