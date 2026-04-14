@@ -60,7 +60,7 @@
     --shadow-neon: 0 4px 14px -2px hsl(160 84% 39% / 0.25);
 
     font-family: 'Inter', system-ui, sans-serif;
-
+  }
 
   /* Dark mode */
   .dark {
