@@ -629,7 +629,7 @@ interface EarnEstimate {
 /*  Yield Dashboard – wired to /v2/earns/estimate                      */
 /* ------------------------------------------------------------------ */
 function YieldDashboard() {
-  const { t } = useTranslation();
+  const { t, i18n } = useTranslation();
   const fmt = useLocaleFormat();
   const [selectedKey, setSelectedKey] = useState(EARN_ASSETS_UNIQUE_KEY(EARN_ASSETS[0]));
   const [depositAmount, setDepositAmount] = useState("");
