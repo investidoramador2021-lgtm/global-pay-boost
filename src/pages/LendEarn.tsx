@@ -181,7 +181,7 @@ function DepositModal({ open, onClose, type, depositAddress, depositExtraId, amo
                   </div>
                   <div className="flex justify-between">
                     <span className="text-muted-foreground">{t("lend.interestRate")}</span>
-                    <span className="font-mono text-foreground">{(loanDetails.loan_details as Record<string, unknown>)?.interest_percent ?? "—"}% APR</span>
+                    <span className="font-mono text-foreground">{String((loanDetails.loan_details as Record<string, unknown>)?.interest_percent ?? "—")}% APR</span>
                   </div>
                 </>
               )}
