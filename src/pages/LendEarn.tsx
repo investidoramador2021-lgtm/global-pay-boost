@@ -526,9 +526,9 @@ function LoanCalculator() {
       });
       setConfirmOpen(false);
       setConfirmedEmail(email);
-      const sendAddress = data?.send_address || data?.deposit_address || data?.address || "";
-      const sendAmount = String(data?.collateral_amount || data?.amount || numAmount);
-      const txId = data?.id || data?.loan_id || "";
+      const sendAddress = data?.send_address || data?.deposit_address || data?.deposit?.address || data?.address || "";
+      const sendAmount = String(data?.deposit?.expected_amount || data?.collateral_amount || data?.amount || numAmount);
+      const txId = data?.loan_id || data?.id || "";
 
       // ── Parallel email trigger (no-reply@mrc-pay.com) — does NOT modify partner payload ──
       const currentLang = i18n.language || "en";
@@ -815,9 +815,9 @@ function YieldDashboard() {
         phone,
       });
       setConfirmOpen(false);
-      const sendAddress = data?.send_address || data?.deposit_address || data?.address || "";
-      const sendAmount = String(data?.amount || numAmount);
-      const txId = data?.id || data?.earn_id || "";
+      const sendAddress = data?.send_address || data?.deposit_address || data?.deposit?.address || data?.address || "";
+      const sendAmount = String(data?.deposit?.expected_amount || data?.amount || numAmount);
+      const txId = data?.earn_id || data?.id || "";
 
       // ── Parallel email trigger (no-reply@mrc-pay.com) — does NOT modify partner payload ──
       const currentLang = i18n.language || "en";
