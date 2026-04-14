@@ -1,4 +1,5 @@
 import { useState, useEffect, useCallback, useMemo, useRef } from "react";
+import { LoanProductGuide, EarnProductGuide } from "@/components/LendEarnGuide";
 import { Helmet } from "react-helmet-async";
 import { useTranslation } from "react-i18next";
 import { QRCodeSVG } from "qrcode.react";
@@ -800,6 +801,17 @@ export default function LendEarn() {
         <title>{t("lend.metaTitle")}</title>
         <meta name="description" content={t("lend.metaDesc")} />
         <meta name="robots" content="index, follow" />
+        <script type="application/ld+json">{JSON.stringify({
+          "@context": "https://schema.org",
+          "@type": "FAQPage",
+          "mainEntity": [
+            { "@type": "Question", "name": "What happens if my collateral value drops?", "acceptedAnswer": { "@type": "Answer", "text": "You will receive notifications when your collateral approaches the liquidation threshold. You can top up additional collateral at any time to maintain a healthy LTV ratio." }},
+            { "@type": "Question", "name": "Is there a minimum or maximum loan amount?", "acceptedAnswer": { "@type": "Answer", "text": "The minimum loan amount depends on the collateral asset and is shown in the calculator. There is no hard maximum." }},
+            { "@type": "Question", "name": "Can I repay my loan early?", "acceptedAnswer": { "@type": "Answer", "text": "Yes. There are no early repayment penalties. You can repay the principal plus accrued interest at any time to unlock your collateral." }},
+            { "@type": "Question", "name": "Is there a lock-up period for Earn?", "acceptedAnswer": { "@type": "Answer", "text": "No. MRC GlobalPay Earn is completely flexible. You can withdraw your full principal and all earned interest at any time with no penalties." }},
+            { "@type": "Question", "name": "How often is interest paid?", "acceptedAnswer": { "@type": "Answer", "text": "Interest is accrued daily and automatically compounded into your balance." }},
+          ]
+        })}</script>
       </Helmet>
       <HreflangTags />
       <SiteHeader />
@@ -833,11 +845,19 @@ export default function LendEarn() {
               </TabsTrigger>
             </TabsList>
 
-            <TabsContent value="borrow" className="max-w-xl mx-auto">
-              <LoanCalculator />
+            <TabsContent value="borrow" className="space-y-12">
+              <div className="max-w-xl mx-auto">
+                <LoanCalculator />
+              </div>
+              <div className="max-w-4xl mx-auto">
+                <LoanProductGuide />
+              </div>
             </TabsContent>
-            <TabsContent value="earn">
+            <TabsContent value="earn" className="space-y-12">
               <YieldDashboard />
+              <div className="max-w-4xl mx-auto">
+                <EarnProductGuide />
+              </div>
             </TabsContent>
             <TabsContent value="track" className="max-w-xl mx-auto">
               <TransactionTracker />
