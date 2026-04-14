@@ -356,6 +356,7 @@ interface LoanEstimate {
 /* ------------------------------------------------------------------ */
 function LoanCalculator() {
   const { t, i18n } = useTranslation();
+  const fmt = useLocaleFormat();
   const [selectedAsset, setSelectedAsset] = useState<CollateralAsset>(COLLATERAL_ASSETS[0]);
   const [amount, setAmount] = useState<number | "">(1000);
   const [loading, setLoading] = useState(false);
