@@ -307,7 +307,7 @@ Deno.serve(async (req: Request) => {
         deposit: {
           currency_code: fromCode,
           currency_network: fromNetwork,
-          amount: parseFloat(Number(body.collateral_amount).toFixed(8)),
+          expected_amount: parseFloat(Number(body.collateral_amount).toFixed(8)),
         },
         loan: {
           currency_code: toCode,
