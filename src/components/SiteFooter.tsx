@@ -285,7 +285,7 @@ const SiteFooter = () => {
                 e.preventDefault();
                 const input = (e.currentTarget.elements.namedItem("loanId") as HTMLInputElement)?.value;
                 if (input?.trim()) {
-                  window.location.href = `/lend?tab=track&id=${encodeURIComponent(input.trim())}`;
+                  window.location.href = lp(`/lend`) + `?tab=track&id=${encodeURIComponent(input.trim())}`;
                 }
               }}
             >
