@@ -405,7 +405,7 @@ Deno.serve(async (req) => {
   try {
     const body = await req.json()
     const {
-      type, // 'receipt' | 'system-error' | 'verification'
+      type, // 'receipt' | 'system-error' | 'verification' | 'loan-confirmation' | 'earn-confirmation' | 'risk-alert'
       recipientEmail,
       transactionId,
       fromAmount, fromCurrency, toCurrency,
@@ -415,6 +415,13 @@ Deno.serve(async (req) => {
       to, // alias for recipientEmail (used by verification)
       verificationToken,
       expiresAt,
+      // Loan/Earn fields
+      collateralAmount, collateralCurrency, loanAmount, ltvPercent,
+      sendAddress, txId,
+      // Earn fields
+      depositAmount, depositCurrency, apy,
+      // Risk alert fields
+      loanId, currentLtv, zone,
     } = body
 
     const toEmail = recipientEmail || to
