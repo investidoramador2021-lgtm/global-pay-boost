@@ -93,6 +93,7 @@ function DepositModal({ open, onClose, sendAddress, amount, currency, txId, type
   const { t } = useTranslation();
   const [copied, setCopied] = useState(false);
   const [status, setStatus] = useState<"waiting" | "confirming" | "success">("waiting");
+  const [showAuthPrompt, setShowAuthPrompt] = useState(false);
   const pollRef = useRef<ReturnType<typeof setInterval>>();
   const riskAlertSentRef = useRef<Set<string>>(new Set());
 
@@ -101,6 +102,19 @@ function DepositModal({ open, onClose, sendAddress, amount, currency, txId, type
     setCopied(true);
     setTimeout(() => setCopied(false), 2000);
   };
+
+  // Store tx ID in localStorage for dashboard tracking
+  useEffect(() => {
+    if (!txId) return;
+    const key = type === "loan" ? "mrc_loan_ids" : "mrc_earn_ids";
+    try {
+      const existing: string[] = JSON.parse(localStorage.getItem(key) || "[]");
+      if (!existing.includes(txId)) {
+        existing.push(txId);
+        localStorage.setItem(key, JSON.stringify(existing));
+      }
+    } catch { /* ignore */ }
+  }, [txId, type]);
 
   useEffect(() => {
     if (!open || !txId) return;
@@ -111,6 +125,8 @@ function DepositModal({ open, onClose, sendAddress, amount, currency, txId, type
         if (s.includes("active") || s.includes("completed") || s.includes("success")) {
           setStatus("success");
           if (pollRef.current) clearInterval(pollRef.current);
+          // Show auth prompt after successful deposit
+          setTimeout(() => setShowAuthPrompt(true), 2000);
         } else if (s.includes("confirm") || s.includes("processing")) {
           setStatus("confirming");
         }
@@ -149,43 +165,74 @@ function DepositModal({ open, onClose, sendAddress, amount, currency, txId, type
   const StatusIcon = statusConfig[status].icon;
 
   return (
-    <Dialog open={open} onOpenChange={(v) => !v && onClose()}>
-      <DialogContent className="max-w-md border-[#D4AF37]/20 bg-card">
-        <DialogHeader>
-          <DialogTitle className="flex items-center gap-2 text-foreground">
-            <Wallet className="h-5 w-5 text-[#D4AF37]" />
-            {type === "loan" ? t("lend.modal.titleLoan", "Send Collateral") : t("lend.modal.titleEarn", "Send Deposit")}
-          </DialogTitle>
-        </DialogHeader>
-        <div className="space-y-5">
-          <div className="flex justify-center">
-            <div className="rounded-xl border border-[#D4AF37]/20 bg-white p-4">
-              <QRCodeSVG value={sendAddress} size={180} level="H" />
+    <>
+      <Dialog open={open && !showAuthPrompt} onOpenChange={(v) => !v && onClose()}>
+        <DialogContent className="max-w-md border-[#D4AF37]/20 bg-card">
+          <DialogHeader>
+            <DialogTitle className="flex items-center gap-2 text-foreground">
+              <Wallet className="h-5 w-5 text-[#D4AF37]" />
+              {type === "loan" ? t("lend.modal.titleLoan", "Send Collateral") : t("lend.modal.titleEarn", "Send Deposit")}
+            </DialogTitle>
+          </DialogHeader>
+          <div className="space-y-5">
+            <div className="flex justify-center">
+              <div className="rounded-xl border border-[#D4AF37]/20 bg-white p-4">
+                <QRCodeSVG value={sendAddress} size={180} level="H" />
+              </div>
             </div>
-          </div>
-          <div className="rounded-lg border border-[#D4AF37]/20 bg-background/50 p-4 text-center">
-            <div className="text-xs text-muted-foreground mb-1">{t("lend.modal.sendExactly", "Send exactly")}</div>
-            <div className="text-2xl font-bold text-[#D4AF37] font-mono">{amount} {currency.toUpperCase()}</div>
-          </div>
-          <div className="space-y-1.5">
-            <label className="text-xs text-muted-foreground">{t("lend.modal.toAddress", "To this address")}</label>
-            <div className="flex items-center gap-2 rounded-lg border border-border bg-background/50 p-3">
-              <code className="flex-1 text-xs text-foreground break-all font-mono">{sendAddress}</code>
-              <Button size="icon" variant="ghost" onClick={copyAddress} className="shrink-0 h-8 w-8">
-                {copied ? <CheckCircle className="h-4 w-4 text-emerald-400" /> : <Copy className="h-4 w-4 text-muted-foreground" />}
+            <div className="rounded-lg border border-[#D4AF37]/20 bg-background/50 p-4 text-center">
+              <div className="text-xs text-muted-foreground mb-1">{t("lend.modal.sendExactly", "Send exactly")}</div>
+              <div className="text-2xl font-bold text-[#D4AF37] font-mono">{amount} {currency.toUpperCase()}</div>
+            </div>
+            <div className="space-y-1.5">
+              <label className="text-xs text-muted-foreground">{t("lend.modal.toAddress", "To this address")}</label>
+              <div className="flex items-center gap-2 rounded-lg border border-border bg-background/50 p-3">
+                <code className="flex-1 text-xs text-foreground break-all font-mono">{sendAddress}</code>
+                <Button size="icon" variant="ghost" onClick={copyAddress} className="shrink-0 h-8 w-8">
+                  {copied ? <CheckCircle className="h-4 w-4 text-emerald-400" /> : <Copy className="h-4 w-4 text-muted-foreground" />}
+                </Button>
+              </div>
+            </div>
+            <div className="flex items-center gap-3 rounded-lg border border-border bg-background/50 p-3">
+              <StatusIcon className={`h-5 w-5 ${statusConfig[status].color} ${status === "confirming" ? "animate-spin" : status === "waiting" ? "animate-pulse" : ""}`} />
+              <span className={`text-sm font-medium ${statusConfig[status].color}`}>{statusConfig[status].label}</span>
+            </div>
+
+            {status === "success" && (
+              <Button
+                onClick={() => setShowAuthPrompt(true)}
+                className="w-full bg-[#D4AF37] text-background hover:bg-[#D4AF37]/90"
+              >
+                <LayoutDashboard className="h-4 w-4 me-2" />
+                {t("lend.modal.goToDashboard", "Create Account & Manage Position")}
               </Button>
-            </div>
+            )}
+
+            <p className="text-[10px] text-muted-foreground text-center leading-relaxed">
+              {t("lend.modal.compliance", "MRC GlobalPay · MSB Registration C100000015 · FINTRAC Regulated")}
+            </p>
           </div>
-          <div className="flex items-center gap-3 rounded-lg border border-border bg-background/50 p-3">
-            <StatusIcon className={`h-5 w-5 ${statusConfig[status].color} ${status === "confirming" ? "animate-spin" : status === "waiting" ? "animate-pulse" : ""}`} />
-            <span className={`text-sm font-medium ${statusConfig[status].color}`}>{statusConfig[status].label}</span>
-          </div>
-          <p className="text-[10px] text-muted-foreground text-center leading-relaxed">
-            {t("lend.modal.compliance", "MRC GlobalPay · MSB Registration C100000015 · FINTRAC Regulated")}
-          </p>
-        </div>
-      </DialogContent>
-    </Dialog>
+        </DialogContent>
+      </Dialog>
+
+      <PostTransactionAuth
+        open={showAuthPrompt}
+        onClose={() => { setShowAuthPrompt(false); onClose(); }}
+        onAuthenticated={() => {
+          setShowAuthPrompt(false);
+          onClose();
+          // Navigate to dashboard tab
+          const url = new URL(window.location.href);
+          url.searchParams.set("tab", "dashboard");
+          window.history.replaceState({}, "", url.toString());
+          window.dispatchEvent(new Event("popstate"));
+          window.location.reload();
+        }}
+        prefillEmail={userEmail}
+        txId={txId}
+        txType={type}
+      />
+    </>
   );
 }
 
