@@ -350,8 +350,8 @@ export default function LendDashboard() {
           {loans.map((loan) => {
             const ltvBadge = getLtvBadge(loan.ltv_percent);
             return (
-              <Card key={loan.id} className="border-[#D4AF37]/20 bg-card/50">
-                <CardContent className="p-5 space-y-4">
+              <Card key={loan.id} className="border-border/50 glass">
+                <CardContent className="p-4 sm:p-5 space-y-4">
                   <div className="flex items-center justify-between flex-wrap gap-2">
                     <div className="flex items-center gap-2">
                       <Badge variant="outline" className="border-[#D4AF37]/40 text-[#D4AF37] text-[10px]">
@@ -364,7 +364,7 @@ export default function LendDashboard() {
                     </Badge>
                   </div>
 
-                  <div className="grid grid-cols-2 sm:grid-cols-4 gap-4">
+                  <div className="grid grid-cols-1 gap-3 sm:grid-cols-2 lg:grid-cols-4 sm:gap-4">
                     <div>
                       <div className="text-[10px] text-muted-foreground uppercase">{t("lendDash.collateral", "Collateral")}</div>
                       <div className="text-sm font-bold text-foreground">{loan.collateral_amount} {loan.collateral_currency.toUpperCase()}</div>
@@ -389,12 +389,12 @@ export default function LendDashboard() {
                   </div>
 
                   {/* Auth-gated management actions */}
-                  <div className="flex gap-2 flex-wrap pt-2 border-t border-border">
+                  <div className="flex gap-3 flex-wrap pt-2 border-t border-border">
                     <Button
                       size="sm"
                       variant="outline"
                       onClick={() => requireAuth(t("lendDash.repay", "Repay")) && toast.info(t("lendDash.comingSoon", "Coming soon — contact support"))}
-                      className="text-xs border-[#D4AF37]/30"
+                      className="text-xs border-border touch-target"
                     >
                       <Wallet className="h-3 w-3 me-1" /> {t("lendDash.repay", "Repay")}
                       {!user && <Lock className="h-3 w-3 ms-1 text-muted-foreground" />}
@@ -403,7 +403,7 @@ export default function LendDashboard() {
                       size="sm"
                       variant="outline"
                       onClick={() => requireAuth(t("lendDash.topUp", "Top Up")) && toast.info(t("lendDash.comingSoon", "Coming soon — contact support"))}
-                      className="text-xs border-[#D4AF37]/30"
+                      className="text-xs border-border touch-target"
                     >
                       <TrendingUp className="h-3 w-3 me-1" /> {t("lendDash.topUp", "Top Up")}
                       {!user && <Lock className="h-3 w-3 ms-1 text-muted-foreground" />}
@@ -424,8 +424,8 @@ export default function LendDashboard() {
             {t("lendDash.activeEarns", "Active Earn Positions")}
           </h3>
           {earns.map((earn) => (
-            <Card key={earn.id} className="border-[#D4AF37]/20 bg-card/50">
-              <CardContent className="p-5 space-y-4">
+            <Card key={earn.id} className="border-border/50 glass">
+              <CardContent className="p-4 sm:p-5 space-y-4">
                 <div className="flex items-center justify-between flex-wrap gap-2">
                   <div className="flex items-center gap-2">
                     <Badge variant="outline" className="border-emerald-400/40 text-emerald-400 text-[10px]">
@@ -436,7 +436,7 @@ export default function LendDashboard() {
                   <span className="text-xl font-bold text-[#D4AF37]">{earn.annual_percent}% APY</span>
                 </div>
 
-                <div className="grid grid-cols-2 sm:grid-cols-4 gap-4">
+                <div className="grid grid-cols-1 gap-3 sm:grid-cols-2 lg:grid-cols-4 sm:gap-4">
                   <div>
                     <div className="text-[10px] text-muted-foreground uppercase">{t("lendDash.deposited", "Deposited")}</div>
                     <div className="text-sm font-bold text-foreground">{earn.amount} {earn.currency.toUpperCase()}</div>

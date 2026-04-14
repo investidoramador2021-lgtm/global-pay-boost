@@ -38,7 +38,7 @@ const FeaturesSection = () => {
           viewport={{ once: true, amount: 0.3 }}
           transition={SPRING}
         >
-          <h2 className="font-display text-2xl font-bold tracking-tight text-foreground sm:text-3xl lg:text-4xl">
+          <h2 className="font-display font-bold tracking-tight text-foreground">
             {t("features.heading")}
           </h2>
           <p className="mt-3 font-body text-base text-muted-foreground sm:mt-4 sm:text-lg">
