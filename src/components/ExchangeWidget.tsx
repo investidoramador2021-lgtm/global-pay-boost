@@ -338,51 +338,96 @@ function LoanWidgetPanel() {
   );
 }
 
-/* ── Compact Earn Widget Carousel for homepage ── */
+/* ── Compact Earn Widget Calculator for homepage ── */
 function EarnWidgetPanel() {
-  const { t } = useTranslation();
-  const scrollRef = useRef<HTMLDivElement>(null);
-  const topAssets = useMemo(() =>
-    [...EARN_ASSETS_LIST].sort((a, b) => b.apy - a.apy).slice(0, 5),
-    [],
+  const { t, i18n } = useTranslation();
+  const locale = i18n.language === "fa" ? "fa-IR" : i18n.language === "ur" ? "ur-PK" : i18n.language === "he" ? "he-IL" : i18n.language;
+  const fmtUsd = useCallback((v: number) => new Intl.NumberFormat(locale, { style: "currency", currency: "USD", maximumFractionDigits: 2 }).format(v), [locale]);
+
+  const EARN_KEY = (a: typeof EARN_ASSETS_LIST[0]) => `${a.ticker}-${a.network}`;
+  const [selectedKey, setSelectedKey] = useState(EARN_KEY(EARN_ASSETS_LIST[0]));
+  const [deposit, setDeposit] = useState("");
+
+  const selected = useMemo(
+    () => EARN_ASSETS_LIST.find((a) => EARN_KEY(a) === selectedKey) ?? EARN_ASSETS_LIST[0],
+    [selectedKey],
   );
+
+  const numDeposit = parseFloat(deposit) || 0;
+  const apy = selected.apy;
+  const monthlyReward = numDeposit * (apy / 12 / 100);
+  const annualReturn = numDeposit * (apy / 100);
 
   return (
     <div className="space-y-4">
-      <p className="text-xs text-muted-foreground">{t("lend.earnSubtitle")}</p>
-      <div
-        ref={scrollRef}
-        className="flex gap-2 overflow-x-auto pb-2 scrollbar-hide snap-x snap-mandatory"
-        style={{ scrollbarWidth: "none" }}
-      >
-        {topAssets.map((asset, i) => (
-          <div
-            key={`${asset.ticker}-${asset.network}-${i}`}
-            className="flex-shrink-0 w-[140px] snap-start rounded-lg border border-[#D4AF37]/20 bg-[#D4AF37]/5 p-3 transition-all hover:border-[#D4AF37]/40"
-          >
-            <div className="flex items-center gap-2 mb-2">
-              <img
-                src={asset.icon}
-                alt={asset.ticker}
-                className="h-7 w-7 rounded-full"
-                loading="lazy"
-                onError={(e) => { (e.target as HTMLImageElement).style.display = "none"; }}
-              />
-              <div className="min-w-0">
-                <div className="text-sm font-semibold text-foreground truncate">{asset.ticker}</div>
-                <div className="text-[9px] text-muted-foreground truncate">{asset.network}</div>
-              </div>
-            </div>
-            <div className="text-lg font-bold text-[#D4AF37]">{asset.apy}%</div>
-            <div className="text-[10px] text-muted-foreground">APY · {asset.daily}% {t("lend.daily")}</div>
-          </div>
-        ))}
+      {/* Asset selector */}
+      <div className="space-y-1.5">
+        <label className="text-xs font-medium text-muted-foreground">{t("lend.depositAsset", "Deposit Asset")}</label>
+        <select
+          value={selectedKey}
+          onChange={(e) => setSelectedKey(e.target.value)}
+          className="flex h-9 w-full items-center rounded-md border border-[#D4AF37]/30 bg-background px-3 text-sm focus:outline-none focus:ring-2 focus:ring-ring"
+        >
+          {EARN_ASSETS_LIST.map((a) => (
+            <option key={EARN_KEY(a)} value={EARN_KEY(a)}>{a.ticker} — {a.name} ({a.network})</option>
+          ))}
+        </select>
       </div>
+
+      {/* Deposit input */}
+      <div className="space-y-1.5">
+        <label className="text-xs font-medium text-muted-foreground">{t("lend.yourDeposit", "Your Deposit")}</label>
+        <div className="relative">
+          <span className="absolute start-3 top-1/2 -translate-y-1/2 text-sm text-muted-foreground">$</span>
+          <input
+            type="number"
+            value={deposit}
+            onChange={(e) => setDeposit(e.target.value)}
+            placeholder="1,000"
+            className="flex h-10 w-full rounded-md border border-[#D4AF37]/30 bg-background ps-7 pe-3 py-2 text-base font-mono ring-offset-background placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 md:text-sm"
+          />
+        </div>
+      </div>
+
+      {/* Live APY */}
+      <div className="rounded-lg border border-[#D4AF37]/20 bg-[#D4AF37]/5 p-3 text-center">
+        <div className="text-[10px] uppercase tracking-wider text-muted-foreground">{selected.ticker} {t("lend.annualYield", "Annual Yield")}</div>
+        <div className="text-3xl font-bold text-[#D4AF37]">{apy}% <span className="text-sm font-normal">APY</span></div>
+      </div>
+
+      {/* 1-year projection */}
+      {numDeposit > 0 && (
+        <div className="rounded-lg border border-emerald-400/20 bg-emerald-400/5 p-3 text-center space-y-0.5">
+          <div className="text-[10px] text-muted-foreground">{t("lend.inOneYear", "In 1 year you will have")}</div>
+          <div className="text-2xl font-bold text-emerald-400">{fmtUsd(numDeposit + annualReturn)}</div>
+          <div className="text-xs text-emerald-400/80">{fmtUsd(numDeposit)} + {fmtUsd(annualReturn)} {t("lend.interest", "interest")}</div>
+        </div>
+      )}
+
+      {/* Earnings breakdown */}
+      {numDeposit > 0 && (
+        <div className="grid grid-cols-3 gap-px rounded-lg border border-border overflow-hidden bg-border">
+          <div className="bg-card p-2.5 text-center">
+            <div className="text-[10px] text-muted-foreground">{t("lend.monthlyReward", "Monthly Reward")}</div>
+            <div className="text-sm font-bold text-[#D4AF37] font-mono">{fmtUsd(monthlyReward)}</div>
+          </div>
+          <div className="bg-card p-2.5 text-center">
+            <div className="text-[10px] text-muted-foreground">{t("lend.interestAccrual", "Interest Accrual")}</div>
+            <div className="text-sm font-bold text-foreground">{t("lend.daily", "Daily")}</div>
+          </div>
+          <div className="bg-card p-2.5 text-center">
+            <div className="text-[10px] text-muted-foreground">{t("lend.term", "Term")}</div>
+            <div className="text-sm font-bold text-foreground">{t("lend.flexible", "Flexible")}</div>
+          </div>
+        </div>
+      )}
+
+      {/* Start Earning */}
       <a
         href="/lend?tab=earn"
         className="flex w-full items-center justify-center gap-2 rounded-lg bg-[#D4AF37] px-4 py-3 font-display text-sm font-bold text-background shadow-lg transition-colors hover:bg-[#C5A028]"
       >
-        <TrendingUp className="h-4 w-4" /> {t("lend.viewAllEarnAssets")}
+        <TrendingUp className="h-4 w-4" /> {t("lend.startEarning", "Start Earning")}
       </a>
     </div>
   );
