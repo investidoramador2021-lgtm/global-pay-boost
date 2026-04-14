@@ -52,10 +52,10 @@ const Index = () => {
         image: "https://mrcglobalpay.com/og-image.jpg",
         address: {
           "@type": "PostalAddress",
-          streetAddress: "343 Preston Street, Unit R111",
+          streetAddress: "116 Albert Street, Suite 300",
           addressLocality: "Ottawa",
           addressRegion: "ON",
-          postalCode: "K1S 1N4",
+          postalCode: "K1P 5G3",
           addressCountry: "CA"
         },
         parentOrganization: {
