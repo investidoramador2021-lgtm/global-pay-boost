@@ -1171,12 +1171,15 @@ export default function LendEarn() {
 
         <section className="mx-auto max-w-6xl px-4 py-12">
           <Tabs defaultValue={defaultTab} className="space-y-8">
-            <TabsList className="grid w-full max-w-md mx-auto grid-cols-3 bg-muted/50">
+            <TabsList className="grid w-full max-w-lg mx-auto grid-cols-4 bg-muted/50">
               <TabsTrigger value="borrow" className="data-[state=active]:bg-[#D4AF37] data-[state=active]:text-background">
                 <DollarSign className="me-1 h-4 w-4" /> {t("lend.tabBorrow")}
               </TabsTrigger>
               <TabsTrigger value="earn" className="data-[state=active]:bg-[#D4AF37] data-[state=active]:text-background">
                 <Percent className="me-1 h-4 w-4" /> {t("lend.tabEarn")}
+              </TabsTrigger>
+              <TabsTrigger value="dashboard" className="data-[state=active]:bg-[#D4AF37] data-[state=active]:text-background">
+                <LayoutDashboard className="me-1 h-4 w-4" /> {t("lend.tabDashboard", "Dashboard")}
               </TabsTrigger>
               <TabsTrigger value="track" className="data-[state=active]:bg-[#D4AF37] data-[state=active]:text-background">
                 <Clock className="me-1 h-4 w-4" /> {t("lend.tabTrack")}
@@ -1196,6 +1199,9 @@ export default function LendEarn() {
               <div className="max-w-4xl mx-auto">
                 <EarnProductGuide />
               </div>
+            </TabsContent>
+            <TabsContent value="dashboard">
+              <LendDashboard />
             </TabsContent>
             <TabsContent value="track" className="max-w-xl mx-auto">
               <TransactionTracker />
