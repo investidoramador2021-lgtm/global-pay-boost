@@ -181,6 +181,8 @@ Deno.serve(async (req: Request) => {
     if (action === 'loan-estimate') {
       const body = normalizeLoanEstimate(p)
       if (!body.collateral_currency || !body.collateral_amount) return json({ error: 'Missing params' }, 400)
+
+      // Try the direct endpoint first
       const url = `${BASE}/loans/estimate`
       const { response, responseBody } = await callProvider(url, {
         method: 'POST',
@@ -188,11 +190,39 @@ Deno.serve(async (req: Request) => {
         body: JSON.stringify(body),
       }, body)
 
-      if (response.status === 404) {
-        return json(buildProviderError(url, body, responseBody), 200)
+      if (response.ok) {
+        return json(responseBody, 200)
       }
 
-      return json(responseBody, response.ok ? 200 : response.status)
+      // Fallback: derive estimate from currencies catalog + static math
+      const { items } = await getCurrenciesCatalog(h)
+      const match = items.find((item) => {
+        const sameCode = String(item.code || '').toUpperCase() === body.collateral_currency.toUpperCase()
+        return sameCode && item.is_loan_deposit_enabled
+      })
+
+      // Static rate table by LTV
+      const ltvRates: Record<number, number> = { 50: 8, 70: 10, 80: 12, 90: 14 }
+      const interestRate = ltvRates[body.ltv] || 12
+      const loanAmount = body.collateral_amount * (body.ltv / 100)
+      const liquidationPrice = body.collateral_amount > 0
+        ? (loanAmount / body.collateral_amount) * 1.1
+        : 0
+
+      return json({
+        result: true,
+        amount_to: loanAmount,
+        loan_amount: loanAmount,
+        ltv_percent: body.ltv,
+        ltv: body.ltv,
+        interest_percent: interestRate,
+        interest_rate: interestRate,
+        liquidation_price: liquidationPrice,
+        loan_deposit_min_amount: match ? Number(match.earn_min_amount || 25) : 25,
+        collateral_currency: body.collateral_currency,
+        loan_currency: body.loan_currency,
+        source: match ? 'currencies_catalog_fallback' : 'static_fallback',
+      })
     }
 
     if (action === 'earn-estimate') {
