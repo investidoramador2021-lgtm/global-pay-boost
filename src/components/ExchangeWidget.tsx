@@ -1789,9 +1789,12 @@ const ExchangeWidget = ({ onTabChange }: ExchangeWidgetProps = {}) => {
           <motion.div key="exchange" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}>
             {/* ===== MODE TABS: Exchange | Buy/Sell ===== */}
             <div className="mb-5 space-y-2">
-              {/* Sticky tab header on mobile */}
+              {/* Sticky tab header on mobile — premium HNW fintech aesthetic */}
               <div className="sticky top-0 z-20 -mx-3 px-3 sm:-mx-6 sm:px-6 lg:-mx-8 lg:px-8 pt-1 pb-2 bg-card/80 backdrop-blur-md rounded-t-2xl">
-                <div className="grid grid-cols-4 gap-1 sm:flex sm:rounded-xl sm:border sm:border-border sm:bg-accent sm:p-1 sm:gap-0.5">
+                <div
+                  className="flex overflow-x-auto scrollbar-hide snap-x snap-mandatory rounded-xl border border-[hsl(220_20%_18%)] bg-[hsl(220_20%_8%/0.6)] p-1 gap-0.5"
+                  style={{ WebkitOverflowScrolling: "touch" }}
+                >
                   {([
                     { mode: "exchange" as WidgetMode, icon: Repeat, labelKey: "widget.tabs.exchange", onClick: () => { setWidgetMode("exchange"); setGStep("form"); setGCheckoutUrl(""); } },
                     { mode: "buysell" as WidgetMode, icon: CreditCard, labelKey: "widget.tabs.buy", onClick: () => {
@@ -1826,16 +1829,25 @@ const ExchangeWidget = ({ onTabChange }: ExchangeWidgetProps = {}) => {
                       <button
                         key={tab.mode}
                         onClick={tab.onClick}
-                        className={`relative flex flex-col sm:flex-row items-center justify-center gap-0.5 sm:gap-1.5 rounded-lg px-1.5 sm:px-3 py-2.5 sm:py-2 font-display text-[10px] sm:text-xs font-semibold whitespace-nowrap transition-all min-h-[44px] min-w-[44px] ${
+                        className={`group relative flex snap-start shrink-0 flex-row items-center justify-center gap-1.5 rounded-lg px-4 sm:px-5 py-2.5 font-display text-xs font-semibold whitespace-nowrap transition-all duration-200 min-h-[44px] min-w-[44px] ${
                           isActive
-                            ? "bg-primary text-primary-foreground shadow-card"
-                            : "text-muted-foreground hover:text-foreground hover:bg-background border border-transparent sm:border-0 bg-accent/50 sm:bg-transparent"
+                            ? "text-[hsl(160_100%_8%)] shadow-[inset_0_1px_0_rgba(255,255,255,0.25),0_1px_3px_rgba(0,0,0,0.4)]"
+                            : "text-[hsl(220_15%_55%)] hover:text-[hsl(220_15%_80%)] hover:bg-[hsl(0_0%_100%/0.05)]"
                         }`}
+                        style={isActive ? {
+                          background: "linear-gradient(180deg, hsl(160 100% 52%) 0%, hsl(160 100% 38%) 100%)",
+                        } : undefined}
                       >
-                        <TabIcon className="h-4 w-4 shrink-0" />
-                        <span className="leading-tight">{t(tab.labelKey)}</span>
+                        <TabIcon
+                          className={`h-4 w-4 shrink-0 transition-all duration-200 ${
+                            isActive
+                              ? "drop-shadow-[0_0_3px_hsl(160_100%_45%/0.6)]"
+                              : "group-hover:drop-shadow-[0_0_2px_hsl(160_100%_45%/0.3)]"
+                          }`}
+                        />
+                        <span className="leading-tight tracking-wide">{t(tab.labelKey)}</span>
                         {badge && (
-                          <span className="absolute -top-1 -right-0.5 sm:-top-1.5 sm:-right-1.5 rounded-full bg-primary text-primary-foreground px-1 py-px text-[7px] sm:text-[8px] font-bold leading-none shadow-sm">
+                          <span className="absolute -top-1.5 -right-1 rounded-full bg-[hsl(160_100%_45%)] text-[hsl(160_100%_8%)] px-1.5 py-px text-[7px] font-bold leading-none shadow-sm">
                             {badge}
                           </span>
                         )}
