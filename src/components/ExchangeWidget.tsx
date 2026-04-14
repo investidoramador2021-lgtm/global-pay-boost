@@ -289,51 +289,34 @@ const STATUS_LABEL_KEYS: Record<string, string> = {
   overdue: "widget.statusOverdue",
 };
 
-/* ── LTV Gauge: semi-circular dial ── */
+/* ── Compact LTV Gauge: slim horizontal bar with glowing indicator ── */
 function LtvGauge({ value, max = 90 }: { value: number; max?: number }) {
-  const pct = Math.min(value / max, 1);
-  const angle = -90 + pct * 180; // -90 = left, 90 = right
-  const r = 60;
-  const cx = 70;
-  const cy = 70;
-  // Arc path
-  const arcStartX = cx + r * Math.cos((-90 * Math.PI) / 180);
-  const arcStartY = cy + r * Math.sin((-90 * Math.PI) / 180);
-  const arcEndX = cx + r * Math.cos((90 * Math.PI) / 180);
-  const arcEndY = cy + r * Math.sin((90 * Math.PI) / 180);
-  // Needle end
-  const needleX = cx + (r - 8) * Math.cos((angle * Math.PI) / 180);
-  const needleY = cy + (r - 8) * Math.sin((angle * Math.PI) / 180);
-
+  const pct = Math.min(value / max, 1) * 100;
   return (
-    <svg viewBox="0 0 140 85" className="w-full max-w-[200px] mx-auto" aria-label={`LTV ${value}%`}>
-      <defs>
-        <linearGradient id="gaugeGrad" x1="0" y1="0" x2="1" y2="0">
-          <stop offset="0%" stopColor="hsl(160 100% 45%)" />
-          <stop offset="60%" stopColor="hsl(45 100% 55%)" />
-          <stop offset="100%" stopColor="hsl(0 80% 55%)" />
-        </linearGradient>
-        <filter id="needleGlow">
-          <feGaussianBlur stdDeviation="2" result="blur" />
-          <feMerge><feMergeNode in="blur" /><feMergeNode in="SourceGraphic" /></feMerge>
-        </filter>
-      </defs>
-      {/* Track */}
-      <path d={`M ${arcStartX} ${arcStartY} A ${r} ${r} 0 0 1 ${arcEndX} ${arcEndY}`} fill="none" stroke="hsl(220 20% 18%)" strokeWidth="8" strokeLinecap="round" />
-      {/* Filled arc up to pct */}
-      {pct > 0.01 && (() => {
-        const filledAngle = -90 + pct * 180;
-        const fX = cx + r * Math.cos((filledAngle * Math.PI) / 180);
-        const fY = cy + r * Math.sin((filledAngle * Math.PI) / 180);
-        const largeArc = pct > 0.5 ? 1 : 0;
-        return <path d={`M ${arcStartX} ${arcStartY} A ${r} ${r} 0 ${largeArc} 1 ${fX} ${fY}`} fill="none" stroke="url(#gaugeGrad)" strokeWidth="8" strokeLinecap="round" />;
-      })()}
-      {/* Needle */}
-      <line x1={cx} y1={cy} x2={needleX} y2={needleY} stroke="hsl(160 100% 50%)" strokeWidth="2.5" strokeLinecap="round" filter="url(#needleGlow)" />
-      <circle cx={cx} cy={cy} r="4" fill="hsl(160 100% 50%)" opacity="0.8" />
-      {/* Value text */}
-      <text x={cx} y={cy + 2} textAnchor="middle" fill="white" fontSize="16" fontWeight="700" fontFamily="monospace">{value}%</text>
-    </svg>
+    <div className="flex items-center gap-3">
+      <div className="relative flex-1 h-2.5 rounded-full overflow-hidden" style={{ background: "hsl(220 20% 15%)" }}>
+        <div
+          className="absolute inset-y-0 left-0 rounded-full"
+          style={{
+            width: `${pct}%`,
+            background: "linear-gradient(90deg, hsl(160 100% 45%), hsl(45 100% 55%), hsl(0 80% 55%))",
+            boxShadow: "0 0 8px hsl(160 100% 45% / 0.4)",
+            transition: "width 0.4s ease",
+          }}
+        />
+        {/* Needle dot */}
+        <div
+          className="absolute top-1/2 -translate-y-1/2 h-4 w-4 rounded-full border-2 border-background"
+          style={{
+            left: `${pct}%`,
+            transform: `translate(-50%, -50%)`,
+            background: pct > 80 ? "hsl(0 80% 55%)" : pct > 55 ? "hsl(45 100% 55%)" : "hsl(160 100% 45%)",
+            boxShadow: `0 0 6px ${pct > 80 ? "hsl(0 80% 55% / 0.6)" : "hsl(160 100% 45% / 0.5)"}`,
+          }}
+        />
+      </div>
+      <span className="font-mono text-sm font-bold text-[#D4AF37] tabular-nums w-10 text-right">{value}%</span>
+    </div>
   );
 }
 
