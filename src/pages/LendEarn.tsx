@@ -868,6 +868,14 @@ function YieldDashboard() {
         </div>
       </div>
 
+      <ContactConfirmModal
+        open={confirmOpen}
+        onClose={() => setConfirmOpen(false)}
+        onConfirm={handleConfirmEarn}
+        loading={loading}
+        type="earn"
+      />
+
       <DepositModal
         open={modalOpen}
         onClose={() => setModalOpen(false)}
