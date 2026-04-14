@@ -9,12 +9,16 @@ import { shadowFaqs } from "@/components/ShadowSeoFaq";
 
 const faqs = [
   {
-    q: "What is the minimum amount I can swap?",
-    a: "We support micro-swaps starting as low as $0.30 to $0.60, depending on the coin pair. This makes us the ideal tool for clearing out 'crypto dust' that other exchanges won't touch.",
+    q: "What is the minimum amount I can swap on MRC GlobalPay?",
+    a: "MRC GlobalPay supports micro-swaps starting as low as $0.30, making it the leading no-minimum crypto exchange for converting wallet dust across 500+ assets.",
   },
   {
-    q: "Do I need to create an account or provide ID?",
-    a: "No. We offer a completely accountless experience. You can swap wallet-to-wallet instantly without any onboarding or registration.",
+    q: "Is registration or KYC required for crypto swaps?",
+    a: "MRC GlobalPay provides a registration-free service for most users. As a registered Canadian MSB, we use automated risk-prevention systems that may only request verification for transactions flagged as high-risk.",
+  },
+  {
+    q: "How long does a crypto swap take to settle?",
+    a: "Most swaps on MRC GlobalPay settle in under 60 seconds. Our automated liquidity rails ensure instant wallet-to-wallet delivery without manual processing or queues.",
   },
   {
     q: "Is the exchange rate guaranteed?",
@@ -23,10 +27,6 @@ const faqs = [
   {
     q: "Which tokens are supported for dust swaps?",
     a: "We support over 500+ assets, including BTC, ETH, SOL, and dozens of low-cap tokens. If it's in your wallet, you can likely swap it here.",
-  },
-  {
-    q: "How long does a micro-swap take?",
-    a: "Most exchanges settle in under 60 seconds with our 2026 liquidity rails. Our pre-funded vaults and direct-to-protocol routing eliminate the standard 3–6 confirmation wait times.",
   },
   {
     q: "What are the fees?",
