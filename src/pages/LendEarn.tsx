@@ -29,11 +29,7 @@ async function coinrabbitApi(endpoint: string, method = "GET", body?: unknown) {
 /* ------------------------------------------------------------------ */
 /*  Static data                                                        */
 /* ------------------------------------------------------------------ */
-const EARN_OPTIONS = [
-  { asset: "USDT", apy: 10, daily: 0.0274, min: 100, icon: "₮" },
-  { asset: "BTC", apy: 4, daily: 0.011, min: 0.005, icon: "₿" },
-  { asset: "ETH", apy: 5, daily: 0.0137, min: 0.05, icon: "Ξ" },
-];
+/* (Earn data now comes from coinrabbit-earn-assets.ts) */
 
 /* ------------------------------------------------------------------ */
 /*  Loan Calculator                                                    */
