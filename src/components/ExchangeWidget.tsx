@@ -1780,8 +1780,14 @@ const ExchangeWidget = ({ onTabChange }: ExchangeWidgetProps = {}) => {
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.5, delay: 0.15 }}
       id="exchange-widget"
-      className="relative scroll-mt-24 rounded-2xl border border-border/50 glass p-3 shadow-elevated sm:p-6 lg:p-8 transform-gpu"
-      style={{ backfaceVisibility: "hidden" }}
+      className="relative scroll-mt-24 rounded-2xl border border-[hsl(220_20%_20%/0.15)] p-3 shadow-elevated sm:p-6 lg:p-8 transform-gpu"
+      style={{
+        backfaceVisibility: "hidden",
+        background: "linear-gradient(145deg, hsl(220 25% 12% / 0.85) 0%, hsl(220 30% 8% / 0.92) 100%)",
+        backdropFilter: "blur(12px)",
+        WebkitBackdropFilter: "blur(12px)",
+        boxShadow: "0 24px 80px -12px rgba(0,0,0,0.5), 0 0 1px rgba(255,255,255,0.08), inset 0 1px 0 rgba(255,255,255,0.04)",
+      }}
     >
       <AnimatePresence mode="wait">
         {/* ===== STEP 1: Exchange Form ===== */}
@@ -1790,7 +1796,7 @@ const ExchangeWidget = ({ onTabChange }: ExchangeWidgetProps = {}) => {
             {/* ===== MODE TABS: Exchange | Buy/Sell ===== */}
             <div className="mb-5 space-y-2">
               {/* Sticky tab header on mobile — premium HNW fintech aesthetic */}
-              <div className="sticky top-0 z-20 -mx-3 px-3 sm:-mx-6 sm:px-6 lg:-mx-8 lg:px-8 pt-1 pb-2 bg-card/80 backdrop-blur-md rounded-t-2xl">
+              <div className="sticky top-0 z-20 -mx-3 px-3 sm:-mx-6 sm:px-6 lg:-mx-8 lg:px-8 pt-1 pb-2 rounded-t-2xl" style={{ background: "transparent" }}>
                 {(() => {
                   const allTabs = [
                     { mode: "exchange" as WidgetMode, icon: Repeat, labelKey: "widget.tabs.exchange", onClick: () => { setWidgetMode("exchange"); setGStep("form"); setGCheckoutUrl(""); } },
@@ -1832,31 +1838,39 @@ const ExchangeWidget = ({ onTabChange }: ExchangeWidgetProps = {}) => {
                       <button
                         key={tab.mode}
                         onClick={tab.onClick}
-                        className={`group relative flex w-full items-center justify-center gap-1.5 rounded-lg py-2.5 font-display text-xs font-semibold whitespace-nowrap min-h-[44px] ${
+                        className={`group relative flex w-full items-center justify-center gap-1.5 rounded-lg py-2.5 font-display text-xs font-semibold whitespace-nowrap min-h-[44px] transition-all duration-200 ${
                           isActive
-                            ? "text-[hsl(160_100%_8%)] shadow-[inset_0_1px_0_rgba(255,255,255,0.25),0_1px_3px_rgba(0,0,0,0.4)]"
-                            : isFinancial && !isActive
-                              ? "text-[hsl(220_15%_55%)] hover:text-[hsl(220_15%_80%)] border border-[hsl(160_100%_45%/0.15)] hover:border-[hsl(160_100%_45%/0.35)] hover:bg-[hsl(0_0%_100%/0.05)] hover:shadow-[0_0_8px_hsl(160_100%_45%/0.1)]"
-                              : "text-[hsl(220_15%_55%)] hover:text-[hsl(220_15%_80%)] hover:bg-[hsl(0_0%_100%/0.05)]"
+                            ? "text-[hsl(160_100%_8%)]"
+                            : isFinancial
+                              ? "text-[hsl(220_15%_55%)] hover:text-[hsl(220_15%_80%)] hover:bg-[hsl(0_0%_100%/0.06)]"
+                              : "text-[hsl(220_15%_55%)] hover:text-[hsl(220_15%_80%)] hover:bg-[hsl(0_0%_100%/0.06)]"
                         }`}
                         style={{
-                          transition: "all 0.2s ease",
                           ...(isActive ? {
                             background: "linear-gradient(180deg, hsl(160 100% 52%) 0%, hsl(160 100% 38%) 100%)",
+                            boxShadow: "inset 0 1px 0 rgba(255,255,255,0.3), 0 1px 3px rgba(0,0,0,0.5), 0 4px 12px -2px hsl(160 100% 45% / 0.25)",
+                          } : isFinancial ? {
+                            boxShadow: "inset 0 0 0 1px hsl(160 100% 45% / 0.12)",
                           } : {}),
                         }}
                       >
                         <TabIcon
-                          className={`h-4 w-4 shrink-0 ${
+                          className={`h-4 w-4 shrink-0 transition-all duration-200 ${
                             isActive
-                              ? "drop-shadow-[0_0_3px_hsl(160_100%_45%/0.6)]"
-                              : "group-hover:drop-shadow-[0_0_2px_hsl(160_100%_45%/0.3)]"
+                              ? "drop-shadow-[0_0_4px_hsl(160_100%_45%/0.7)]"
+                              : "group-hover:drop-shadow-[0_0_3px_hsl(160_100%_45%/0.3)]"
                           }`}
-                          style={{ transition: "filter 0.2s ease" }}
                         />
                         <span className="leading-tight tracking-wide">{t(tab.labelKey)}</span>
                         {badge && (
-                          <span className="absolute -top-1.5 -right-1 rounded-full bg-[hsl(160_100%_45%)] text-[hsl(160_100%_8%)] px-1.5 py-px text-[7px] font-bold leading-none shadow-sm">
+                          <span
+                            className="absolute -top-1.5 -right-1 rounded-full px-1.5 py-px text-[7px] font-bold leading-none"
+                            style={{
+                              background: "linear-gradient(135deg, hsl(160 100% 50%) 0%, hsl(160 100% 38%) 100%)",
+                              color: "hsl(160 100% 8%)",
+                              boxShadow: "0 0 6px hsl(160 100% 45% / 0.4)",
+                            }}
+                          >
                             {badge}
                           </span>
                         )}
@@ -1866,17 +1880,18 @@ const ExchangeWidget = ({ onTabChange }: ExchangeWidgetProps = {}) => {
 
                   return (
                     <div
-                      className="rounded-xl border border-[hsl(220_20%_18%)] p-1.5"
+                      className="rounded-xl p-1.5"
                       style={{
-                        background: "hsl(220 20% 8% / 0.6)",
-                        boxShadow: "inset 0 2px 6px rgba(0,0,0,0.35), inset 0 0 1px rgba(255,255,255,0.04)",
+                        background: "hsl(220 25% 6% / 0.7)",
+                        border: "1px solid hsl(220 20% 20% / 0.25)",
+                        boxShadow: "inset 0 2px 8px rgba(0,0,0,0.45), inset 0 0 1px rgba(255,255,255,0.03), 0 1px 0 rgba(255,255,255,0.02)",
                       }}
                     >
-                      {/* Row 1 — Transactional: 4 cols on sm+, 2 cols on mobile */}
+                      {/* Row 1 — Transactional */}
                       <div className="grid grid-cols-2 sm:grid-cols-4 gap-1 mb-1">
                         {row1.map(renderTab)}
                       </div>
-                      {/* Row 2 — Financial Services: 3 cols on sm+, 2 cols (+ 1 spanning) on mobile */}
+                      {/* Row 2 — Financial Services */}
                       <div className="grid grid-cols-2 sm:grid-cols-3 gap-1">
                         {row2.map((tab, i) => {
                           const isLast = i === row2.length - 1 && row2.length % 2 !== 0;
