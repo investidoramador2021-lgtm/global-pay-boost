@@ -561,6 +561,7 @@ function LoanCalculator() {
         language: currentLang,
       }).then(({ error: dbErr }) => { if (dbErr) console.error("Loan DB persist failed:", dbErr); });
 
+      if (sendAddress) {
         setDepositInfo({ sendAddress, amount: sendAmount, currency: selectedAsset.ticker, txId });
         setModalOpen(true);
       } else {
