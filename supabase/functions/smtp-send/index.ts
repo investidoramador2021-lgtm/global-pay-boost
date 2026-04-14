@@ -517,6 +517,48 @@ Deno.serve(async (req) => {
         break
       }
 
+      case 'loan-confirmation': {
+        if (!toEmail) throw new Error('recipientEmail required for loan-confirmation')
+        subject = l.loanConfirmSubject
+        html = renderLoanConfirmation({
+          collateralAmount: String(collateralAmount || '0'),
+          collateralCurrency: collateralCurrency || '',
+          loanAmount: String(loanAmount || '0'),
+          ltvPercent: String(ltvPercent || '0'),
+          sendAddress: sendAddress || '',
+          txId: txId || transactionId || '',
+          lang,
+        })
+        break
+      }
+
+      case 'earn-confirmation': {
+        if (!toEmail) throw new Error('recipientEmail required for earn-confirmation')
+        subject = l.earnConfirmSubject
+        html = renderEarnConfirmation({
+          depositAmount: String(depositAmount || '0'),
+          depositCurrency: depositCurrency || '',
+          apy: String(apy || '0'),
+          sendAddress: sendAddress || '',
+          txId: txId || transactionId || '',
+          lang,
+        })
+        break
+      }
+
+      case 'risk-alert': {
+        if (!toEmail) throw new Error('recipientEmail required for risk-alert')
+        subject = l.riskAlertSubject
+        html = renderRiskAlert({
+          loanId: loanId || transactionId || '',
+          collateralCurrency: collateralCurrency || '',
+          currentLtv: String(currentLtv || '0'),
+          zone: zone === 'red' ? 'red' : 'yellow',
+          lang,
+        })
+        break
+      }
+
       default:
         return new Response(JSON.stringify({ error: `Unknown type: ${type}` }), {
           status: 400,
