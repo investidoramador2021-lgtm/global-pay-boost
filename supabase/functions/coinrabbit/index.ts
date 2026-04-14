@@ -343,7 +343,7 @@ Deno.serve(async (req: Request) => {
       const requestBody: Record<string, unknown> = {
         currency_code: currencyCode,
         currency_network: currencyNetwork,
-        expected_amount: body.amount,
+        amount: body.amount,
       }
       if (p.email) requestBody.email = String(p.email)
       if (p.phone) requestBody.phone = String(p.phone)
