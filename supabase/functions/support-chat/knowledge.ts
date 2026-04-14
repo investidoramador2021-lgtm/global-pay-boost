@@ -212,6 +212,8 @@ PRODUCT 6: LOAN (Crypto-Backed Lending)
 **Where:** /lend → "Loan" tab
 **Deep link:** /lend?tab=loan
 
+**Value Proposition:** Access liquidity without selling assets or triggering capital gains tax events. Your crypto stays working for you.
+
 **How it works:**
 1. Go to /lend and select the "Loan" tab.
 2. **Choose your collateral** — 130+ supported assets (BTC, ETH, SOL, and many more). Use the search bar to find your asset.
@@ -224,6 +226,7 @@ PRODUCT 6: LOAN (Crypto-Backed Lending)
 6. **Provide your contact details** — Email (mandatory) and phone (optional, for risk alerts via SMS).
 7. **Confirm.** A unique deposit address is generated. Send your collateral to this address.
 8. Once the deposit is confirmed on-chain, the loan is issued to your specified wallet.
+9. **MANDATORY ACCOUNT:** After the transaction is initiated, you must register a password-protected account to access the 'My Assets' dashboard for management (repay, withdraw, top up).
 
 **Key details:**
 - **No monthly payments.** Interest accrues automatically on the outstanding balance.
