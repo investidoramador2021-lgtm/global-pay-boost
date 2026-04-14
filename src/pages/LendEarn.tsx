@@ -10,9 +10,10 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Input } from "@/components/ui/input";
 import { supabase } from "@/integrations/supabase/client";
 import { toast } from "sonner";
-import { Shield, TrendingUp, Wallet, Clock, AlertTriangle, ArrowRight, Percent, DollarSign, Lock } from "lucide-react";
+import { Shield, TrendingUp, Wallet, Clock, AlertTriangle, ArrowRight, Percent, DollarSign, Lock, Search } from "lucide-react";
 import CollateralSelector from "@/components/CollateralSelector";
 import { COLLATERAL_ASSETS, LTV_BY_RISK, type CollateralAsset } from "@/lib/coinrabbit-assets";
+import { EARN_ASSETS, EARN_ASSETS_UNIQUE_KEY } from "@/lib/coinrabbit-earn-assets";
 
 /* ------------------------------------------------------------------ */
 /*  API helper                                                         */
@@ -28,11 +29,7 @@ async function coinrabbitApi(endpoint: string, method = "GET", body?: unknown) {
 /* ------------------------------------------------------------------ */
 /*  Static data                                                        */
 /* ------------------------------------------------------------------ */
-const EARN_OPTIONS = [
-  { asset: "USDT", apy: 10, daily: 0.0274, min: 100, icon: "₮" },
-  { asset: "BTC", apy: 4, daily: 0.011, min: 0.005, icon: "₿" },
-  { asset: "ETH", apy: 5, daily: 0.0137, min: 0.05, icon: "Ξ" },
-];
+/* (Earn data now comes from coinrabbit-earn-assets.ts) */
 
 /* ------------------------------------------------------------------ */
 /*  Loan Calculator                                                    */
@@ -182,24 +179,37 @@ function LoanCalculator() {
 /*  Yield Dashboard                                                    */
 /* ------------------------------------------------------------------ */
 function YieldDashboard() {
-  const [depositAsset, setDepositAsset] = useState("USDT");
+  const [selectedKey, setSelectedKey] = useState(EARN_ASSETS_UNIQUE_KEY(EARN_ASSETS[0]));
   const [depositAmount, setDepositAmount] = useState("");
   const [loading, setLoading] = useState(false);
+  const [search, setSearch] = useState("");
 
-  const selected = EARN_OPTIONS.find((e) => e.asset === depositAsset)!;
+  const selected = useMemo(
+    () => EARN_ASSETS.find((a) => EARN_ASSETS_UNIQUE_KEY(a) === selectedKey) ?? EARN_ASSETS[0],
+    [selectedKey],
+  );
+
+  const filtered = useMemo(() => {
+    if (!search.trim()) return EARN_ASSETS;
+    const q = search.toLowerCase();
+    return EARN_ASSETS.filter(
+      (a) => a.ticker.toLowerCase().includes(q) || a.name.toLowerCase().includes(q) || a.network.toLowerCase().includes(q),
+    );
+  }, [search]);
+
   const numAmount = parseFloat(depositAmount) || 0;
   const dailyEarning = numAmount * (selected.daily / 100);
   const annualEarning = numAmount * (selected.apy / 100);
 
   const handleDeposit = async () => {
-    if (numAmount < selected.min) {
-      toast.error(`Minimum deposit is ${selected.min} ${selected.asset}`);
+    if (numAmount < selected.minUsd) {
+      toast.error(`Minimum deposit is $${selected.minUsd}`);
       return;
     }
     setLoading(true);
     try {
       await coinrabbitApi("/earn/deposit", "POST", {
-        currency: depositAsset.toLowerCase(),
+        currency: selected.ticker.toLowerCase(),
         amount: numAmount,
       });
       toast.success("Deposit submitted! Your yield starts accruing immediately.");
@@ -213,42 +223,72 @@ function YieldDashboard() {
 
   return (
     <div className="space-y-6">
-      {/* Earn option cards */}
-      <div className="grid gap-4 sm:grid-cols-3">
-        {EARN_OPTIONS.map((opt) => (
-          <Card
-            key={opt.asset}
-            onClick={() => setDepositAsset(opt.asset)}
-            className={`cursor-pointer transition-all border ${
-              depositAsset === opt.asset
-                ? "border-[#D4AF37] bg-[#D4AF37]/5"
-                : "border-border hover:border-[#D4AF37]/40"
-            }`}
-          >
-            <CardContent className="p-4 text-center space-y-2">
-              <div className="text-3xl">{opt.icon}</div>
-              <div className="font-semibold text-foreground">{opt.asset}</div>
-              <div className="text-2xl font-bold text-[#D4AF37]">{opt.apy}% APY</div>
-              <div className="text-xs text-muted-foreground">{opt.daily}% daily</div>
-            </CardContent>
-          </Card>
-        ))}
+      {/* Search */}
+      <div className="relative">
+        <Search className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground" />
+        <Input
+          value={search}
+          onChange={(e) => setSearch(e.target.value)}
+          placeholder="Search 50+ earn assets…"
+          className="pl-10 border-[#D4AF37]/30"
+        />
       </div>
+
+      {/* Asset grid */}
+      <div className="grid gap-3 grid-cols-2 sm:grid-cols-3 lg:grid-cols-4">
+        {filtered.map((asset) => {
+          const key = EARN_ASSETS_UNIQUE_KEY(asset);
+          return (
+            <Card
+              key={key}
+              onClick={() => setSelectedKey(key)}
+              className={`cursor-pointer transition-all border ${
+                selectedKey === key
+                  ? "border-[#D4AF37] bg-[#D4AF37]/5 ring-1 ring-[#D4AF37]/30"
+                  : "border-border hover:border-[#D4AF37]/40"
+              }`}
+            >
+              <CardContent className="p-3 space-y-1.5">
+                <div className="flex items-center gap-2">
+                  <img
+                    src={asset.icon}
+                    alt={asset.ticker}
+                    className="h-7 w-7 rounded-full"
+                    loading="lazy"
+                    onError={(e) => { (e.target as HTMLImageElement).style.display = "none"; }}
+                  />
+                  <div className="min-w-0">
+                    <div className="text-sm font-semibold text-foreground truncate">{asset.ticker}</div>
+                    <div className="text-[10px] text-muted-foreground truncate">{asset.network}</div>
+                  </div>
+                </div>
+                <div className="text-xl font-bold text-[#D4AF37]">{asset.apy}%</div>
+                <div className="text-[10px] text-muted-foreground">APY · {asset.daily}% daily</div>
+              </CardContent>
+            </Card>
+          );
+        })}
+      </div>
+
+      {filtered.length === 0 && (
+        <p className="text-center text-sm text-muted-foreground py-4">No earn assets match your search.</p>
+      )}
 
       {/* Deposit form */}
       <Card className="border-[#D4AF37]/20 bg-card/50 backdrop-blur">
         <CardHeader>
           <CardTitle className="flex items-center gap-2 text-foreground">
             <TrendingUp className="h-5 w-5 text-[#D4AF37]" />
-            Start Earning on {depositAsset}
+            Start Earning on {selected.ticker}
+            <span className="text-xs font-normal text-muted-foreground">({selected.network})</span>
           </CardTitle>
         </CardHeader>
         <CardContent className="space-y-4">
           <div className="space-y-2">
-            <label className="text-sm text-muted-foreground">Deposit Amount</label>
+            <label className="text-sm text-muted-foreground">Deposit Amount (USD)</label>
             <Input
               type="number"
-              placeholder={`Min ${selected.min} ${selected.asset}`}
+              placeholder={`Min $${selected.minUsd}`}
               value={depositAmount}
               onChange={(e) => setDepositAmount(e.target.value)}
               className="border-[#D4AF37]/30 font-mono"
@@ -259,22 +299,18 @@ function YieldDashboard() {
             <div className="rounded-lg border border-[#D4AF37]/20 bg-background/50 p-4 space-y-2">
               <div className="flex justify-between text-sm">
                 <span className="text-muted-foreground">Daily Earnings</span>
-                <span className="font-mono text-emerald-400">
-                  +{dailyEarning.toFixed(6)} {selected.asset}
-                </span>
+                <span className="font-mono text-emerald-400">+${dailyEarning.toFixed(4)}</span>
               </div>
               <div className="flex justify-between text-sm">
                 <span className="text-muted-foreground">Annual Earnings</span>
-                <span className="font-mono text-[#D4AF37]">
-                  +{annualEarning.toFixed(4)} {selected.asset}
-                </span>
+                <span className="font-mono text-[#D4AF37]">+${annualEarning.toFixed(2)}</span>
               </div>
             </div>
           )}
 
           <Button
             onClick={handleDeposit}
-            disabled={loading || numAmount < selected.min}
+            disabled={loading || numAmount < selected.minUsd}
             className="w-full bg-[#D4AF37] text-background hover:bg-[#D4AF37]/90 font-semibold"
           >
             {loading ? "Submitting…" : "Deposit & Earn"} <Wallet className="h-4 w-4" />

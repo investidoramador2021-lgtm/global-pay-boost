@@ -1,4 +1,4 @@
-import { useState, useEffect, useCallback, useRef, forwardRef } from "react";
+import { useState, useEffect, useCallback, useRef, forwardRef, useMemo } from "react";
 import { useTranslation } from "react-i18next";
 import { motion, AnimatePresence } from "framer-motion";
 import { ArrowDownUp, Loader2, Search, Copy, Check, ArrowLeft, ArrowRight, ArrowLeftRight, Clock, CheckCircle2, AlertCircle, ExternalLink, Wallet, QrCode, XCircle, Info, Mail, RefreshCw, Shield, Lock, ChevronDown, Share2, CreditCard, Repeat, EyeOff, Link2, FileText, Landmark, TrendingUp } from "lucide-react";
@@ -8,6 +8,7 @@ import InvoiceRequestTab from "@/components/InvoiceRequestTab";
 import DestinationAddressInput, { tickerToAddressType } from "@/components/DestinationAddressInput";
 import CollateralSelector from "@/components/CollateralSelector";
 import { COLLATERAL_ASSETS, LTV_BY_RISK, type CollateralAsset } from "@/lib/coinrabbit-assets";
+import { EARN_ASSETS as EARN_ASSETS_LIST } from "@/lib/coinrabbit-earn-assets";
 import { supabase } from "@/integrations/supabase/client";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -331,6 +332,55 @@ function LoanWidgetPanel() {
         className="flex w-full items-center justify-center gap-2 rounded-lg bg-[#D4AF37] px-4 py-3 font-display text-sm font-bold text-background shadow-lg transition-colors hover:bg-[#C5A028]"
       >
         <Landmark className="h-4 w-4" /> Get Instant Loan
+      </a>
+    </div>
+  );
+}
+
+/* ── Compact Earn Widget Carousel for homepage ── */
+function EarnWidgetPanel() {
+  const scrollRef = useRef<HTMLDivElement>(null);
+  const topAssets = useMemo(() =>
+    [...EARN_ASSETS_LIST].sort((a, b) => b.apy - a.apy).slice(0, 5),
+    [],
+  );
+
+  return (
+    <div className="space-y-4">
+      <p className="text-xs text-muted-foreground">Earn competitive yield on your crypto — no lock-up period.</p>
+      <div
+        ref={scrollRef}
+        className="flex gap-2 overflow-x-auto pb-2 scrollbar-hide snap-x snap-mandatory"
+        style={{ scrollbarWidth: "none" }}
+      >
+        {topAssets.map((asset, i) => (
+          <div
+            key={`${asset.ticker}-${asset.network}-${i}`}
+            className="flex-shrink-0 w-[140px] snap-start rounded-lg border border-[#D4AF37]/20 bg-[#D4AF37]/5 p-3 transition-all hover:border-[#D4AF37]/40"
+          >
+            <div className="flex items-center gap-2 mb-2">
+              <img
+                src={asset.icon}
+                alt={asset.ticker}
+                className="h-7 w-7 rounded-full"
+                loading="lazy"
+                onError={(e) => { (e.target as HTMLImageElement).style.display = "none"; }}
+              />
+              <div className="min-w-0">
+                <div className="text-sm font-semibold text-foreground truncate">{asset.ticker}</div>
+                <div className="text-[9px] text-muted-foreground truncate">{asset.network}</div>
+              </div>
+            </div>
+            <div className="text-lg font-bold text-[#D4AF37]">{asset.apy}%</div>
+            <div className="text-[10px] text-muted-foreground">APY · {asset.daily}% daily</div>
+          </div>
+        ))}
+      </div>
+      <a
+        href="/lend?tab=earn"
+        className="flex w-full items-center justify-center gap-2 rounded-lg bg-[#D4AF37] px-4 py-3 font-display text-sm font-bold text-background shadow-lg transition-colors hover:bg-[#C5A028]"
+      >
+        <TrendingUp className="h-4 w-4" /> View All 50+ Earn Assets
       </a>
     </div>
   );
@@ -2565,39 +2615,7 @@ const ExchangeWidget = ({ onTabChange }: ExchangeWidgetProps = {}) => {
 
             {/* ===== EARN MODE ===== */}
             {widgetMode === "earn" && (
-              <div className="space-y-4">
-                <p className="text-xs text-muted-foreground">Earn competitive yield on your crypto — no lock-up period.</p>
-                <div className="space-y-2">
-                  {[
-                    { asset: "USDT", icon: "₮", apy: "10%", daily: "0.0274%" },
-                    { asset: "BTC", icon: "₿", apy: "4%", daily: "0.011%" },
-                    { asset: "ETH", icon: "Ξ", apy: "5%", daily: "0.0137%" },
-                  ].map((opt) => (
-                    <div
-                      key={opt.asset}
-                      className="flex items-center justify-between rounded-lg border border-[#D4AF37]/20 bg-[#D4AF37]/5 p-3 transition-all hover:border-[#D4AF37]/40"
-                    >
-                      <div className="flex items-center gap-3">
-                        <span className="flex h-9 w-9 items-center justify-center rounded-full border border-[#D4AF37]/30 bg-[#D4AF37]/10 text-lg">{opt.icon}</span>
-                        <div>
-                          <div className="text-sm font-semibold text-foreground">{opt.asset}</div>
-                          <div className="text-[10px] text-muted-foreground">{opt.daily} daily</div>
-                        </div>
-                      </div>
-                      <div className="text-right">
-                        <div className="text-lg font-bold text-[#D4AF37]">{opt.apy}</div>
-                        <div className="text-[10px] font-medium text-muted-foreground">APY</div>
-                      </div>
-                    </div>
-                  ))}
-                </div>
-                <a
-                  href="/lend?tab=earn"
-                  className="flex w-full items-center justify-center gap-2 rounded-lg bg-[#D4AF37] px-4 py-3 font-display text-sm font-bold text-background shadow-lg transition-colors hover:bg-[#C5A028]"
-                >
-                  <TrendingUp className="h-4 w-4" /> Start Earning
-                </a>
-              </div>
+              <EarnWidgetPanel />
             )}
 
             {/* ===== EXCHANGE MODE (ChangeNOW) ===== */}
