@@ -1789,54 +1789,59 @@ const ExchangeWidget = ({ onTabChange }: ExchangeWidgetProps = {}) => {
           <motion.div key="exchange" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}>
             {/* ===== MODE TABS: Exchange | Buy/Sell ===== */}
             <div className="mb-5 space-y-2">
-              <div className="flex items-center justify-between gap-2">
-                <div className="flex-1 overflow-x-auto -mx-1 px-1 scrollbar-hide">
-                  <div className="flex rounded-xl border border-border bg-accent p-1 gap-0.5 w-max min-w-full">
-                    {([
-                      { mode: "exchange" as WidgetMode, icon: Repeat, labelKey: "widget.tabs.exchange", onClick: () => { setWidgetMode("exchange"); setGStep("form"); setGCheckoutUrl(""); } },
-                      { mode: "buysell" as WidgetMode, icon: CreditCard, labelKey: "widget.tabs.buy", onClick: () => {
-                        setWidgetMode("buysell");
-                        setGTradeDirection("buy");
-                        setGStep("form");
-                        setGCheckoutUrl("");
-                        setGShowReview(false);
-                        setGEstimateError("");
-                        setGSelectedPaymentMethod("");
-                        setGPayoutAddress("");
-                        setGPayoutEmail("");
-                        setGBankFields({});
-                        setGSepaIban("");
-                        setGSepaBic("");
-                        if (guardarianFiat.length || guardarianCrypto.length) {
-                          applyGuardarianDefaults("buy");
-                        }
-                      }},
-                      { mode: "private" as WidgetMode, icon: EyeOff, labelKey: "widget.tabs.private", onClick: () => { setWidgetMode("private"); } },
-                      { mode: "bridge" as WidgetMode, icon: Link2, labelKey: "widget.tabs.bridge", onClick: () => { setWidgetMode("bridge"); } },
-                      { mode: "request" as WidgetMode, icon: FileText, labelKey: "widget.tabs.invoice", onClick: () => { setWidgetMode("request"); } },
-                      { mode: "loan" as WidgetMode, icon: Landmark, labelKey: "widget.tabs.loan", onClick: () => { setWidgetMode("loan"); } },
-                      { mode: "earn" as WidgetMode, icon: TrendingUp, labelKey: "widget.tabs.earn", onClick: () => { setWidgetMode("earn"); } },
-                    ] as const).map((tab) => {
-                      const isActive = tab.mode === "buysell"
-                        ? widgetMode === "buysell" && gTradeDirection === "buy"
-                        : widgetMode === tab.mode;
-                      const TabIcon = tab.icon;
-                      return (
-                        <button
-                          key={tab.mode}
-                          onClick={tab.onClick}
-                          className={`flex items-center justify-center gap-1 rounded-lg px-2.5 py-2 font-display text-[11px] sm:text-xs font-semibold whitespace-nowrap transition-colors touch-target ${
-                            isActive
-                              ? "bg-primary text-primary-foreground shadow-card"
-                              : "text-muted-foreground hover:text-foreground hover:bg-background"
-                          }`}
-                        >
-                          <TabIcon className="h-3.5 w-3.5 sm:h-4 sm:w-4 shrink-0" />
-                          <span className="hidden min-[480px]:inline">{t(tab.labelKey)}</span>
-                        </button>
-                      );
-                    })}
-                  </div>
+              {/* Sticky tab header on mobile */}
+              <div className="sticky top-0 z-20 -mx-3 px-3 sm:-mx-6 sm:px-6 lg:-mx-8 lg:px-8 pt-1 pb-2 bg-card/80 backdrop-blur-md rounded-t-2xl">
+                <div className="grid grid-cols-4 gap-1 sm:flex sm:rounded-xl sm:border sm:border-border sm:bg-accent sm:p-1 sm:gap-0.5">
+                  {([
+                    { mode: "exchange" as WidgetMode, icon: Repeat, labelKey: "widget.tabs.exchange", onClick: () => { setWidgetMode("exchange"); setGStep("form"); setGCheckoutUrl(""); } },
+                    { mode: "buysell" as WidgetMode, icon: CreditCard, labelKey: "widget.tabs.buy", onClick: () => {
+                      setWidgetMode("buysell");
+                      setGTradeDirection("buy");
+                      setGStep("form");
+                      setGCheckoutUrl("");
+                      setGShowReview(false);
+                      setGEstimateError("");
+                      setGSelectedPaymentMethod("");
+                      setGPayoutAddress("");
+                      setGPayoutEmail("");
+                      setGBankFields({});
+                      setGSepaIban("");
+                      setGSepaBic("");
+                      if (guardarianFiat.length || guardarianCrypto.length) {
+                        applyGuardarianDefaults("buy");
+                      }
+                    }},
+                    { mode: "private" as WidgetMode, icon: EyeOff, labelKey: "widget.tabs.private", onClick: () => { setWidgetMode("private"); } },
+                    { mode: "bridge" as WidgetMode, icon: Link2, labelKey: "widget.tabs.bridge", onClick: () => { setWidgetMode("bridge"); } },
+                    { mode: "request" as WidgetMode, icon: FileText, labelKey: "widget.tabs.invoice", onClick: () => { setWidgetMode("request"); } },
+                    { mode: "loan" as WidgetMode, icon: Landmark, labelKey: "widget.tabs.loan", badge: "🔥", onClick: () => { setWidgetMode("loan"); } },
+                    { mode: "earn" as WidgetMode, icon: TrendingUp, labelKey: "widget.tabs.earn", badge: "NEW", onClick: () => { setWidgetMode("earn"); } },
+                  ] as const).map((tab) => {
+                    const isActive = tab.mode === "buysell"
+                      ? widgetMode === "buysell" && gTradeDirection === "buy"
+                      : widgetMode === tab.mode;
+                    const TabIcon = tab.icon;
+                    const badge = "badge" in tab ? tab.badge : null;
+                    return (
+                      <button
+                        key={tab.mode}
+                        onClick={tab.onClick}
+                        className={`relative flex flex-col sm:flex-row items-center justify-center gap-0.5 sm:gap-1.5 rounded-lg px-1.5 sm:px-3 py-2.5 sm:py-2 font-display text-[10px] sm:text-xs font-semibold whitespace-nowrap transition-all min-h-[44px] min-w-[44px] ${
+                          isActive
+                            ? "bg-primary text-primary-foreground shadow-card"
+                            : "text-muted-foreground hover:text-foreground hover:bg-background border border-transparent sm:border-0 bg-accent/50 sm:bg-transparent"
+                        }`}
+                      >
+                        <TabIcon className="h-4 w-4 shrink-0" />
+                        <span className="leading-tight">{t(tab.labelKey)}</span>
+                        {badge && (
+                          <span className="absolute -top-1 -right-0.5 sm:-top-1.5 sm:-right-1.5 rounded-full bg-primary text-primary-foreground px-1 py-px text-[7px] sm:text-[8px] font-bold leading-none shadow-sm">
+                            {badge}
+                          </span>
+                        )}
+                      </button>
+                    );
+                  })}
                 </div>
               </div>
               <div className="flex justify-end">
