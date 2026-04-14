@@ -18,7 +18,6 @@ const NETWORK_ALIASES: Record<string, string> = {
   ARBITRUM: 'ARBITRUM',
   OPTIMISM: 'OP',
   OP: 'OP',
-  MAINNET: 'BTC',
   BTC: 'BTC',
 }
 
@@ -54,6 +53,35 @@ async function readProviderBody(response: Response) {
 function normalizeNetwork(network: unknown) {
   const value = String(network || '').trim().toUpperCase()
   return NETWORK_ALIASES[value] || value
+}
+
+function splitCurrencyId(currencyId: string) {
+  const [code = '', network = ''] = currencyId.split('_')
+  return {
+    code: code.toUpperCase(),
+    network: normalizeNetwork(network),
+  }
+}
+
+function buildCurrencyId(code: unknown, network: unknown) {
+  const normalizedCode = String(code || '').trim().toUpperCase()
+  const normalizedNetwork = normalizeNetwork(network)
+
+  if (!normalizedCode || !normalizedNetwork) return ''
+  return `${normalizedCode}_${normalizedNetwork}`
+}
+
+function buildProviderError(url: string, requestBody: unknown, responseBody: unknown, message = 'Endpoint not found') {
+  return {
+    result: false,
+    message,
+    code: 'COINRABBIT_PROVIDER_ERROR',
+    diagnostics: {
+      requested_url: url,
+      request_body: requestBody,
+      response_body: responseBody,
+    },
+  }
 }
 
 function logProvider404(method: string, url: string, requestBody: unknown, responseBody: unknown) {
@@ -93,9 +121,13 @@ function normalizeLoanEstimate(payload: Record<string, unknown>) {
 }
 
 function normalizeEarnEstimate(payload: Record<string, unknown>) {
+  const currencyId = String(payload.currencyId || '').trim().toUpperCase()
+  const idParts = currencyId ? splitCurrencyId(currencyId) : null
+
   return {
-    currency: String(payload.currency || '').toLowerCase(),
-    network: normalizeNetwork(payload.network),
+    currency: String(payload.currency || idParts?.code || '').trim().toUpperCase(),
+    currencyId,
+    network: normalizeNetwork(payload.network || idParts?.network),
     amount: Number(payload.amount || 0),
   }
 }
@@ -149,11 +181,17 @@ Deno.serve(async (req: Request) => {
     if (action === 'loan-estimate') {
       const body = normalizeLoanEstimate(p)
       if (!body.collateral_currency || !body.collateral_amount) return json({ error: 'Missing params' }, 400)
-      const { response, responseBody } = await callProvider(`${BASE}/loans/estimate`, {
+      const url = `${BASE}/loans/estimate`
+      const { response, responseBody } = await callProvider(url, {
         method: 'POST',
         headers: h,
         body: JSON.stringify(body),
       }, body)
+
+      if (response.status === 404) {
+        return json(buildProviderError(url, body, responseBody), 200)
+      }
+
       return json(responseBody, response.ok ? 200 : response.status)
     }
 
@@ -161,23 +199,42 @@ Deno.serve(async (req: Request) => {
       const body = normalizeEarnEstimate(p)
       if (!body.currency || !body.amount) return json({ error: 'Missing params' }, 400)
 
+      const exactUrl = `${BASE}/earns/estimate`
+      const exactBody = {
+        amount: body.amount,
+        currency: body.currencyId || body.currency,
+      }
+
+      const exactRequest = await callProvider(exactUrl, {
+        method: 'POST',
+        headers: h,
+        body: JSON.stringify(exactBody),
+      }, exactBody)
+
+      if (exactRequest.response.ok) {
+        return json(exactRequest.responseBody, 200)
+      }
+
       const { items } = await getCurrenciesCatalog(h)
       const match = items.find((item) => {
+        const itemCurrencyId = buildCurrencyId(item.code, item.network)
+        const sameCurrencyId = !!body.currencyId && itemCurrencyId === body.currencyId
         const sameCode = String(item.code || '').toUpperCase() === body.currency.toUpperCase()
         const sameNetwork = !body.network || normalizeNetwork(item.network) === body.network
-        return sameCode && sameNetwork && item.is_earn_enabled
+        return item.is_earn_enabled && (sameCurrencyId || (sameCode && sameNetwork))
       })
 
       if (!match) {
-        return json({
-          result: false,
-          message: `No earn product found for ${body.currency.toUpperCase()}${body.network ? ` on ${body.network}` : ''}`,
-          code: 'EARN_ASSET_UNAVAILABLE',
-          diagnostics: {
-            requested_url: `${BASE}/currencies`,
-            request_body: body,
-          },
-        })
+        const fallbackMessage = exactRequest.response.status === 404
+          ? 'Endpoint not found'
+          : `No earn product found for ${body.currency}${body.network ? ` on ${body.network}` : ''}`
+
+        return json(buildProviderError(
+          exactRequest.response.status === 404 ? exactUrl : `${BASE}/currencies`,
+          exactRequest.response.status === 404 ? exactBody : body,
+          exactRequest.response.status === 404 ? exactRequest.responseBody : { catalog_match: false },
+          fallbackMessage,
+        ), 200)
       }
 
       return json({
@@ -186,6 +243,7 @@ Deno.serve(async (req: Request) => {
         earn_min_amount: Number(match.earn_min_amount || 0),
         currency: match.code,
         network: match.network,
+        currency_id: buildCurrencyId(match.code, match.network),
         source: 'currencies_catalog',
       })
     }
@@ -204,11 +262,21 @@ Deno.serve(async (req: Request) => {
     if (action === 'create-earn') {
       const body = normalizeEarnEstimate(p)
       if (!body.currency || !body.amount) return json({ error: 'Missing fields' }, 400)
-      const { response, responseBody } = await callProvider(`${BASE}/earns`, {
+      const requestBody = {
+        amount: body.amount,
+        currency: body.currencyId || body.currency,
+      }
+      const url = `${BASE}/earns`
+      const { response, responseBody } = await callProvider(url, {
         method: 'POST',
         headers: h,
-        body: JSON.stringify(body),
-      }, body)
+        body: JSON.stringify(requestBody),
+      }, requestBody)
+
+      if (response.status === 404) {
+        return json(buildProviderError(url, requestBody, responseBody), 200)
+      }
+
       return json(responseBody, response.ok ? 200 : response.status)
     }
 
