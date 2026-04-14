@@ -197,7 +197,9 @@ Deno.serve(async (req: Request) => {
         exchange,
       })
       const url = `${BASE}/loans/estimate?${qs}`
+      console.log('Loan estimate GET:', url)
       const { response, responseBody } = await callProvider(url, { method: 'GET', headers: h })
+      console.log('Loan estimate response:', response.status, JSON.stringify(responseBody))
 
       if (response.ok) {
         return json(responseBody, 200)
