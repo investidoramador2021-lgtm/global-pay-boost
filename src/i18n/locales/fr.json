@@ -79,7 +79,9 @@
       "buy": "Acheter",
       "private": "Prive",
       "bridge": "Bridge",
-      "invoice": "Facture"
+      "invoice": "Facture",
+      "loan": "Prêt",
+      "earn": "Gagner"
     },
     "online": "En ligne",
     "fixedRate": "Taux Fixe",

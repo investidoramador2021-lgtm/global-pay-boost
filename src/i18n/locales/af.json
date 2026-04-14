@@ -79,7 +79,9 @@
       "buy": "Koop",
       "private": "Privaat",
       "bridge": "Bridge",
-      "invoice": "Faktuur"
+      "invoice": "Faktuur",
+      "loan": "Lening",
+      "earn": "Verdien"
     },
     "online": "Aanlyn",
     "fixedRate": "Vaste Koers",

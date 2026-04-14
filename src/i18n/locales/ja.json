@@ -79,7 +79,9 @@
       "buy": "購入",
       "private": "プライベート",
       "bridge": "ブリッジ",
-      "invoice": "請求書"
+      "invoice": "請求書",
+      "loan": "ローン",
+      "earn": "稼ぐ"
     },
     "online": "オンライン",
     "fixedRate": "固定レート",

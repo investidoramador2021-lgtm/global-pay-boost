@@ -79,7 +79,9 @@
       "buy": "خریدیں",
       "private": "نجی",
       "bridge": "بریج",
-      "invoice": "انوائس"
+      "invoice": "انوائس",
+      "loan": "قرض",
+      "earn": "کمائیں"
     },
     "online": "آن لائن",
     "fixedRate": "مقررہ شرح",

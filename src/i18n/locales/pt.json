@@ -79,7 +79,9 @@
       "buy": "Comprar",
       "private": "Privado",
       "bridge": "Bridge",
-      "invoice": "Fatura"
+      "invoice": "Fatura",
+      "loan": "Empréstimo",
+      "earn": "Ganhar"
     },
     "online": "Online",
     "fixedRate": "Taxa Fixa",

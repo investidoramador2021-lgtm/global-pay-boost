@@ -79,7 +79,9 @@
       "buy": "Satin Al",
       "private": "Gizli",
       "bridge": "Bridge",
-      "invoice": "Fatura"
+      "invoice": "Fatura",
+      "loan": "Kredi",
+      "earn": "Kazan"
     },
     "online": "Cevrimici",
     "fixedRate": "Sabit Oran",

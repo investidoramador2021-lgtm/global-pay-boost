@@ -79,7 +79,9 @@
       "buy": "קנייה",
       "private": "פרטי",
       "bridge": "Bridge",
-      "invoice": "חשבונית"
+      "invoice": "חשבונית",
+      "loan": "הלוואה",
+      "earn": "להרוויח"
     },
     "online": "מקוון",
     "fixedRate": "שער קבוע",

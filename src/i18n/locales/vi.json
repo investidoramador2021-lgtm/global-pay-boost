@@ -79,7 +79,9 @@
       "buy": "Mua",
       "private": "Rieng tu",
       "bridge": "Bridge",
-      "invoice": "Hóa đơn"
+      "invoice": "Hóa đơn",
+      "loan": "Vay",
+      "earn": "Kiếm"
     },
     "online": "Truc tuyen",
     "fixedRate": "Ty gia co dinh",
