@@ -252,7 +252,8 @@ PRODUCT 6: LOAN (Crypto-Backed Lending)
 ────────────────────────────────────────
 PRODUCT 7: EARN (Crypto Interest/Yield)
 ────────────────────────────────────────
-**What it is:** Deposit crypto and earn daily interest. Your assets work for you while you hold them.
+**What it is:** High-yield passive income with daily compound interest. Deposit crypto and earn daily interest — your assets work for you while you hold them.
+**Value Proposition:** Funds are non-locked and available for withdrawal at any time. Interest is calculated daily and updated live on your secure dashboard.
 **Where:** /lend → "Earn" tab
 **Deep link:** /lend?tab=earn
 
