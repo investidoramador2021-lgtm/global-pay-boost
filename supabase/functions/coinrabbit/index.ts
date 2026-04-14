@@ -3,8 +3,7 @@ const corsHeaders = {
   'Access-Control-Allow-Headers': 'authorization, x-client-info, apikey, content-type, x-supabase-client-platform, x-supabase-client-platform-version, x-supabase-client-runtime, x-supabase-client-runtime-version',
 }
 
-// CoinRabbit Partner API v2
-const COINRABBIT_BASE = 'https://api.coinrabbit.io/api/v2'
+const BASE = 'https://api.coinrabbit.io/api/v2'
 
 function json(data: unknown, status = 200) {
   return new Response(JSON.stringify(data), {
@@ -13,166 +12,103 @@ function json(data: unknown, status = 200) {
   })
 }
 
-Deno.serve(async (req) => {
+Deno.serve(async (req: Request) => {
   if (req.method === 'OPTIONS') {
     return new Response('ok', { headers: corsHeaders })
   }
 
   const apiKey = Deno.env.get('COINRABBIT_API_KEY')
-  if (!apiKey) {
-    return json({ error: 'COINRABBIT_API_KEY not configured' }, 500)
-  }
+  if (!apiKey) return json({ error: 'COINRABBIT_API_KEY not configured' }, 500)
 
-  const authHeaders = {
+  const h = {
     'Content-Type': 'application/json',
     'Authorization': `Bearer ${apiKey}`,
     'x-api-key': apiKey,
   }
 
   try {
-    // Support both GET (query params) and POST (body)
-    let payload: Record<string, unknown> = {}
+    let p: Record<string, unknown> = {}
     if (req.method === 'GET') {
       const url = new URL(req.url)
-      for (const [k, v] of url.searchParams.entries()) {
-        payload[k] = v
-      }
+      for (const [k, v] of url.searchParams.entries()) p[k] = v
     } else {
-      payload = await req.json()
+      p = await req.json()
     }
-    const { action } = payload
 
-    /* ── Partner auth session ─────────────────────────────── */
+    const action = String(p.action || '')
+
     if (action === 'auth-partner') {
-      const res = await fetch(`${COINRABBIT_BASE}/auth/partner`, {
-        method: 'POST',
-        headers: authHeaders,
-        body: JSON.stringify({ api_key: apiKey }),
-      })
-      return json(await res.json(), res.ok ? 200 : res.status)
+      const r = await fetch(`${BASE}/auth/partner`, { method: 'POST', headers: h, body: JSON.stringify({ api_key: apiKey }) })
+      return json(await r.json(), r.ok ? 200 : r.status)
     }
 
-    /* ── Currencies list ─────────────────────────────────── */
     if (action === 'currencies') {
-      const { type = 'all' } = payload
-      const endpoint = type === 'earn'
-        ? '/currencies/earn'
-        : type === 'loan'
-        ? '/currencies/loan'
-        : '/currencies'
-      const res = await fetch(`${COINRABBIT_BASE}${endpoint}`, {
-        method: 'GET',
-        headers: authHeaders,
-      })
-      return json(await res.json(), res.ok ? 200 : res.status)
+      const t = String(p.type || 'all')
+      const ep = t === 'earn' ? '/currencies/earn' : t === 'loan' ? '/currencies/loan' : '/currencies'
+      const r = await fetch(`${BASE}${ep}`, { method: 'GET', headers: h })
+      return json(await r.json(), r.ok ? 200 : r.status)
     }
 
-    /* ── Loan estimate (GET /v2/loans/estimate) ──────────── */
     if (action === 'loan-estimate') {
-      const { collateral_currency, collateral_amount, ltv, loan_currency = 'usdt' } = payload
-      if (!collateral_currency || !collateral_amount) {
-        return json({ error: 'Missing collateral_currency or collateral_amount' }, 400)
-      }
-      const params = new URLSearchParams({
-        collateral_currency: String(collateral_currency),
-        collateral_amount: String(collateral_amount),
-        loan_currency: String(loan_currency),
+      if (!p.collateral_currency || !p.collateral_amount) return json({ error: 'Missing params' }, 400)
+      const q = new URLSearchParams({
+        collateral_currency: String(p.collateral_currency),
+        collateral_amount: String(p.collateral_amount),
+        loan_currency: String(p.loan_currency || 'usdt'),
       })
-      if (ltv) params.set('ltv', String(ltv))
-      const res = await fetch(`${COINRABBIT_BASE}/loans/estimate?${params}`, {
-        method: 'GET',
-        headers: authHeaders,
-      })
-      return json(await res.json(), res.ok ? 200 : res.status)
+      if (p.ltv) q.set('ltv', String(p.ltv))
+      const r = await fetch(`${BASE}/loans/estimate?${q}`, { method: 'GET', headers: h })
+      return json(await r.json(), r.ok ? 200 : r.status)
     }
 
-    /* ── Earn estimate (GET /v2/earns/estimate) ──────────── */
     if (action === 'earn-estimate') {
-      const { currency, amount } = payload
-      if (!currency || !amount) {
-        return json({ error: 'Missing currency or amount' }, 400)
-      }
-      const params = new URLSearchParams({
-        currency: String(currency),
-        amount: String(amount),
-      })
-      const res = await fetch(`${COINRABBIT_BASE}/earns/estimate?${params}`, {
-        method: 'GET',
-        headers: authHeaders,
-      })
-      return json(await res.json(), res.ok ? 200 : res.status)
+      if (!p.currency || !p.amount) return json({ error: 'Missing params' }, 400)
+      const q = new URLSearchParams({ currency: String(p.currency), amount: String(p.amount) })
+      const r = await fetch(`${BASE}/earns/estimate?${q}`, { method: 'GET', headers: h })
+      return json(await r.json(), r.ok ? 200 : r.status)
     }
 
-    /* ── Create loan ─────────────────────────────────────── */
     if (action === 'create-loan') {
-      const { collateral_currency, collateral_amount, ltv, loan_currency = 'usdt' } = payload
-      if (!collateral_currency || !collateral_amount || !ltv) {
-        return json({ error: 'Missing required fields' }, 400)
-      }
-      const res = await fetch(`${COINRABBIT_BASE}/loans`, {
-        method: 'POST',
-        headers: authHeaders,
-        body: JSON.stringify({
-          collateral_currency,
-          collateral_amount: Number(collateral_amount),
-          ltv: Number(ltv),
-          loan_currency,
-        }),
+      if (!p.collateral_currency || !p.collateral_amount || !p.ltv) return json({ error: 'Missing fields' }, 400)
+      const r = await fetch(`${BASE}/loans`, {
+        method: 'POST', headers: h,
+        body: JSON.stringify({ collateral_currency: p.collateral_currency, collateral_amount: Number(p.collateral_amount), ltv: Number(p.ltv), loan_currency: p.loan_currency || 'usdt' }),
       })
-      return json(await res.json(), res.ok ? 200 : res.status)
+      return json(await r.json(), r.ok ? 200 : r.status)
     }
 
-    /* ── Create earn deposit ─────────────────────────────── */
     if (action === 'create-earn') {
-      const { currency, amount } = payload
-      if (!currency || !amount) {
-        return json({ error: 'Missing required fields' }, 400)
-      }
-      const res = await fetch(`${COINRABBIT_BASE}/earn`, {
-        method: 'POST',
-        headers: authHeaders,
-        body: JSON.stringify({ currency, amount: Number(amount) }),
-      })
-      return json(await res.json(), res.ok ? 200 : res.status)
+      if (!p.currency || !p.amount) return json({ error: 'Missing fields' }, 400)
+      const r = await fetch(`${BASE}/earn`, { method: 'POST', headers: h, body: JSON.stringify({ currency: p.currency, amount: Number(p.amount) }) })
+      return json(await r.json(), r.ok ? 200 : r.status)
     }
 
-    /* ── Check loan status ───────────────────────────────── */
     if (action === 'loan-status') {
-      const { id } = payload
-      if (!id) return json({ error: 'Missing loan id' }, 400)
-      const res = await fetch(`${COINRABBIT_BASE}/loans/${encodeURIComponent(id)}`, {
-        method: 'GET',
-        headers: authHeaders,
-      })
-      return json(await res.json(), res.ok ? 200 : res.status)
+      if (!p.id) return json({ error: 'Missing id' }, 400)
+      const r = await fetch(`${BASE}/loans/${encodeURIComponent(String(p.id))}`, { method: 'GET', headers: h })
+      return json(await r.json(), r.ok ? 200 : r.status)
     }
 
-    /* ── Check earn status ───────────────────────────────── */
     if (action === 'earn-status') {
-      const { id } = payload
-      if (!id) return json({ error: 'Missing earn id' }, 400)
-      const res = await fetch(`${COINRABBIT_BASE}/earn/${encodeURIComponent(id)}`, {
-        method: 'GET',
-        headers: authHeaders,
-      })
-      return json(await res.json(), res.ok ? 200 : res.status)
+      if (!p.id) return json({ error: 'Missing id' }, 400)
+      const r = await fetch(`${BASE}/earn/${encodeURIComponent(String(p.id))}`, { method: 'GET', headers: h })
+      return json(await r.json(), r.ok ? 200 : r.status)
     }
 
-    /* ── Generic proxy (backward compat) ─────────────────── */
-    const { endpoint, method = 'GET', body } = payload
-    if (endpoint && typeof endpoint === 'string') {
-      const allowedPrefixes = ['/loans', '/earn', '/earns', '/quotes', '/currencies', '/auth']
-      const isAllowed = allowedPrefixes.some((p) => endpoint.startsWith(p))
-      if (!isAllowed) return json({ error: 'Endpoint not allowed' }, 403)
-      const fetchOpts: RequestInit = { method, headers: authHeaders }
-      if (method !== 'GET' && body) fetchOpts.body = JSON.stringify(body)
-      const res = await fetch(`${COINRABBIT_BASE}${endpoint}`, fetchOpts)
-      return json(await res.json(), res.ok ? 200 : res.status)
+    // Generic proxy
+    const ep = p.endpoint
+    if (ep && typeof ep === 'string') {
+      const ok = ['/loans', '/earn', '/earns', '/quotes', '/currencies', '/auth']
+      if (!ok.some((x) => ep.startsWith(x))) return json({ error: 'Not allowed' }, 403)
+      const opts: RequestInit = { method: String(p.method || 'GET'), headers: h }
+      if (opts.method !== 'GET' && p.body) opts.body = JSON.stringify(p.body)
+      const r = await fetch(`${BASE}${ep}`, opts)
+      return json(await r.json(), r.ok ? 200 : r.status)
     }
 
-    return json({ error: 'Missing action or endpoint parameter' }, 400)
-  } catch (error) {
-    const msg = error instanceof Error ? error.message : 'Unknown error'
+    return json({ error: 'Missing action or endpoint' }, 400)
+  } catch (e) {
+    const msg = e instanceof Error ? e.message : 'Unknown error'
     console.error('CoinRabbit proxy error:', msg)
     return json({ error: msg }, 500)
   }
