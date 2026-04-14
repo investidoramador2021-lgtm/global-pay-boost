@@ -30,6 +30,7 @@ const BRIDGE_SLUGS = ["eth-to-sol","solana-to-bnb","pulsechain"];
 const STATIC_PAGES = [
   { loc: "/", changefreq: "daily", priority: "1.0" },
   { loc: "/blog", changefreq: "hourly", priority: "0.9" },
+  { loc: "/lend", changefreq: "daily", priority: "0.9" },
   { loc: "/compare", changefreq: "weekly", priority: "0.8" },
   { loc: "/solutions", changefreq: "weekly", priority: "0.8" },
   { loc: "/learn", changefreq: "weekly", priority: "0.7" },
@@ -45,6 +46,10 @@ const STATIC_PAGES = [
   { loc: "/permanent-bridge", changefreq: "monthly", priority: "0.7" },
   { loc: "/permanent-bridge/whitepaper", changefreq: "monthly", priority: "0.6" },
   { loc: "/private-transfer/whitepaper", changefreq: "monthly", priority: "0.6" },
+  { loc: "/liquidity-expansion", changefreq: "monthly", priority: "0.6" },
+  { loc: "/sovereign-settlement", changefreq: "monthly", priority: "0.6" },
+  { loc: "/blog/whitepapers/crypto-loans", changefreq: "monthly", priority: "0.6" },
+  { loc: "/blog/whitepapers/digital-yield", changefreq: "monthly", priority: "0.6" },
   { loc: "/tools/crypto-dust-calculator", changefreq: "monthly", priority: "0.6" },
   { loc: "/compliance", changefreq: "monthly", priority: "0.5" },
   { loc: "/crypto-dust-solutions", changefreq: "monthly", priority: "0.6" },
