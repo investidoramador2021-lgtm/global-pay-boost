@@ -249,7 +249,16 @@ Deno.serve(async (req: Request) => {
       const exactRequest = await callProvider(exactUrl, { method: 'GET', headers: h })
 
       if (exactRequest.response.ok) {
-        return json(exactRequest.responseBody, 200)
+        const raw = exactRequest.responseBody as Record<string, unknown>
+        const inner = (raw?.response && typeof raw.response === 'object' ? raw.response : raw) as Record<string, unknown>
+        return json({
+          result: true,
+          annual_percent: Number(inner.annual_percent || 0),
+          currency: currencyCode,
+          network: currencyNetwork,
+          currency_id: buildCurrencyId(currencyCode, currencyNetwork),
+          source: 'live_api',
+        }, 200)
       }
 
       const { items } = await getCurrenciesCatalog(h)
