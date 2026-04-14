@@ -389,6 +389,7 @@ function LoanCalculator() {
   const [modalOpen, setModalOpen] = useState(false);
   const [confirmOpen, setConfirmOpen] = useState(false);
   const [depositInfo, setDepositInfo] = useState({ sendAddress: "", amount: "", currency: "", txId: "" });
+  const [confirmedEmail, setConfirmedEmail] = useState("");
 
   const riskConfig = LTV_BY_RISK[selectedAsset.riskTier];
   const ltvOptions = riskConfig.ltvOptions;
