@@ -444,10 +444,25 @@ function EarnWidgetPanel() {
         </div>
       </div>
 
-      {/* Live APY */}
-      <div className="rounded-lg border border-[#D4AF37]/20 bg-[#D4AF37]/5 p-3 text-center">
-        <div className="text-[10px] uppercase tracking-wider text-muted-foreground">{selected.ticker} {t("lend.annualYield", "Annual Yield")}</div>
-        <div className="text-3xl font-bold text-[#D4AF37]">{apy}% <span className="text-sm font-normal">APY</span></div>
+      {/* Live APY with Sparkline */}
+      <div className="rounded-xl border border-[#D4AF37]/20 p-4" style={{ background: "hsl(220 25% 8% / 0.6)", boxShadow: "inset 0 2px 6px rgba(0,0,0,0.35)" }}>
+        <div className="flex items-center justify-between">
+          <div>
+            <div className="text-[10px] uppercase tracking-wider text-muted-foreground">{selected.ticker} {t("lend.annualYield", "Annual Yield")}</div>
+            <div className="text-3xl font-bold text-[#D4AF37]">{apy}% <span className="text-sm font-normal">APY</span></div>
+          </div>
+          {/* Sparkline SVG — yield growth curve */}
+          <svg viewBox="0 0 80 32" className="w-20 h-8 shrink-0" aria-label="Yield trend">
+            <defs>
+              <linearGradient id="sparkGrad" x1="0" y1="0" x2="0" y2="1">
+                <stop offset="0%" stopColor="#D4AF37" stopOpacity="0.3" />
+                <stop offset="100%" stopColor="#D4AF37" stopOpacity="0" />
+              </linearGradient>
+            </defs>
+            <path d="M0 28 Q10 26 16 22 T32 18 T48 12 T64 8 T80 4" fill="none" stroke="#D4AF37" strokeWidth="1.5" strokeLinecap="round" />
+            <path d="M0 28 Q10 26 16 22 T32 18 T48 12 T64 8 T80 4 V32 H0 Z" fill="url(#sparkGrad)" />
+          </svg>
+        </div>
       </div>
 
       {/* 1-year projection */}
