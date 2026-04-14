@@ -297,11 +297,17 @@ Deno.serve(async (req: Request) => {
     if (action === 'create-loan') {
       const body = normalizeLoanEstimate(p)
       if (!body.collateral_currency || !body.collateral_amount || !body.ltv) return json({ error: 'Missing fields' }, 400)
+      const requestBody = {
+        ...body,
+        collateral_amount: parseFloat(Number(body.collateral_amount).toFixed(8)),
+        ...(p.email ? { email: String(p.email) } : {}),
+        ...(p.phone ? { phone: String(p.phone) } : {}),
+      }
       const { response, responseBody } = await callProvider(`${BASE}/loans`, {
         method: 'POST',
         headers: h,
-        body: JSON.stringify(body),
-      }, body)
+        body: JSON.stringify(requestBody),
+      }, requestBody)
       return json(responseBody, response.ok ? 200 : response.status)
     }
 
@@ -311,6 +317,8 @@ Deno.serve(async (req: Request) => {
       const requestBody = {
         amount: body.amount,
         currency: body.currencyId || body.currency,
+        ...(p.email ? { email: String(p.email) } : {}),
+        ...(p.phone ? { phone: String(p.phone) } : {}),
       }
       const url = `${BASE}/earns`
       const { response, responseBody } = await callProvider(url, {
