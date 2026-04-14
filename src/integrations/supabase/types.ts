@@ -452,6 +452,66 @@ export type Database = {
         }
         Relationships: []
       }
+      lend_earn_transactions: {
+        Row: {
+          amount: number
+          apy_percent: number | null
+          created_at: string
+          currency: string
+          deposit_address: string | null
+          email: string
+          external_tx_id: string | null
+          id: string
+          language: string
+          loan_amount: number | null
+          loan_currency: string | null
+          ltv_percent: number | null
+          phone: string | null
+          status: string
+          tx_type: string
+          updated_at: string
+          user_id: string | null
+        }
+        Insert: {
+          amount?: number
+          apy_percent?: number | null
+          created_at?: string
+          currency: string
+          deposit_address?: string | null
+          email: string
+          external_tx_id?: string | null
+          id?: string
+          language?: string
+          loan_amount?: number | null
+          loan_currency?: string | null
+          ltv_percent?: number | null
+          phone?: string | null
+          status?: string
+          tx_type: string
+          updated_at?: string
+          user_id?: string | null
+        }
+        Update: {
+          amount?: number
+          apy_percent?: number | null
+          created_at?: string
+          currency?: string
+          deposit_address?: string | null
+          email?: string
+          external_tx_id?: string | null
+          id?: string
+          language?: string
+          loan_amount?: number | null
+          loan_currency?: string | null
+          ltv_percent?: number | null
+          phone?: string | null
+          status?: string
+          tx_type?: string
+          updated_at?: string
+          user_id?: string | null
+        }
+        Relationships: []
+      }
       partner_profiles: {
         Row: {
           btc_wallet: string

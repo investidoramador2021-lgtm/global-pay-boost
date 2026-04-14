@@ -546,6 +546,21 @@ function LoanCalculator() {
         },
       }).catch((err) => console.error("Loan confirmation email failed (non-blocking):", err));
 
+      // ── Persist to lend_earn_transactions for admin visibility ──
+      supabase.from("lend_earn_transactions" as any).insert({
+        tx_type: "loan",
+        external_tx_id: txId,
+        email,
+        phone,
+        currency: selectedAsset.ticker,
+        amount: numAmount,
+        loan_currency: "USDT",
+        loan_amount: borrowable,
+        ltv_percent: selectedLtv,
+        deposit_address: sendAddress,
+        language: currentLang,
+      }).then(({ error: dbErr }) => { if (dbErr) console.error("Loan DB persist failed:", dbErr); });
+
       if (sendAddress) {
         setDepositInfo({ sendAddress, amount: sendAmount, currency: selectedAsset.ticker, txId });
         setModalOpen(true);
@@ -818,6 +833,19 @@ function YieldDashboard() {
           lang: currentLang,
         },
       }).catch((err) => console.error("Earn confirmation email failed (non-blocking):", err));
+
+      // ── Persist to lend_earn_transactions for admin visibility ──
+      supabase.from("lend_earn_transactions" as any).insert({
+        tx_type: "earn",
+        external_tx_id: txId,
+        email,
+        phone,
+        currency: selected.ticker,
+        amount: numAmount,
+        apy_percent: apy,
+        deposit_address: sendAddress,
+        language: currentLang,
+      }).then(({ error: dbErr }) => { if (dbErr) console.error("Earn DB persist failed:", dbErr); });
 
       if (sendAddress) {
         setDepositInfo({ sendAddress, amount: sendAmount, currency: selected.ticker, txId });
