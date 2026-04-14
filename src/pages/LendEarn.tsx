@@ -112,12 +112,32 @@ function DepositModal({ open, onClose, sendAddress, amount, currency, txId, type
         } else if (s.includes("confirm") || s.includes("processing")) {
           setStatus("confirming");
         }
+
+        // ── Risk Alert wiring (compliance@mrc-pay.com) ──
+        if (type === "loan" && userEmail && data?.ltv_percent) {
+          const ltv = Number(data.ltv_percent);
+          const riskZone = data?.risk_zone || (ltv >= 85 ? "red" : ltv >= 75 ? "yellow" : null);
+          if (riskZone && !riskAlertSentRef.current.has(riskZone)) {
+            riskAlertSentRef.current.add(riskZone);
+            supabase.functions.invoke("smtp-send", {
+              body: {
+                type: "risk-alert",
+                recipientEmail: userEmail,
+                loanId: txId,
+                collateralCurrency: currency,
+                currentLtv: String(ltv),
+                zone: riskZone,
+                lang: userLang || "en",
+              },
+            }).catch((err) => console.error("Risk alert email failed (non-blocking):", err));
+          }
+        }
       } catch { /* silent */ }
     };
     poll();
     pollRef.current = setInterval(poll, 15000);
     return () => { if (pollRef.current) clearInterval(pollRef.current); };
-  }, [open, txId, type]);
+  }, [open, txId, type, userEmail, userLang, currency]);
 
   const statusConfig = {
     waiting: { icon: Clock, label: t("lend.modal.waiting", "Waiting for deposit…"), color: "text-[#D4AF37]" },
