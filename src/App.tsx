@@ -138,6 +138,7 @@ const AppRoutes = () => (
     <Route path="admin-portal-mrc" element={<AdminPortal />} />
     <Route path="verify-update" element={<VerifyUpdate />} />
     <Route path="verify-email" element={<VerifyEmail />} />
+    <Route path="lend" element={<LendEarn />} />
   </>
 );
 
