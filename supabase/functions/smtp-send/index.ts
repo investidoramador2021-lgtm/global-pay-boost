@@ -201,7 +201,179 @@ function renderSystemError(data: { transactionId: string; message: string }): st
 </table></td></tr></table></body></html>`
 }
 
-// ── SMTP send function (multi-account) ──
+// ── Loan Confirmation Template ──
+function renderLoanConfirmation(data: {
+  collateralAmount: string; collateralCurrency: string; loanAmount: string;
+  ltvPercent: string; sendAddress: string; txId: string; lang?: string;
+}): string {
+  const l = getLang(data.lang)
+  const dir = isRtl(data.lang || 'en') ? 'rtl' : 'ltr'
+  return `<!DOCTYPE html>
+<html lang="${(data.lang || 'en').slice(0, 2)}" dir="${dir}">
+<head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"></head>
+<body style="margin:0;padding:0;background:#0f172a;font-family:'Inter','Helvetica Neue',Arial,sans-serif;">
+<table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="background:#0f172a;">
+<tr><td align="center" style="padding:40px 16px;">
+<table role="presentation" width="580" cellpadding="0" cellspacing="0" style="background:#1e293b;border-radius:16px;overflow:hidden;border:1px solid #334155;">
+<tr><td style="padding:32px 32px 24px;text-align:center;border-bottom:1px solid #334155;">
+  <div style="font-size:24px;font-weight:700;color:#D4AF37;letter-spacing:-0.3px;">MRC GlobalPay</div>
+</td></tr>
+<tr><td style="padding:28px 32px 8px;text-align:center;">
+  <div style="font-size:22px;font-weight:700;color:#f1f5f9;">🔒 ${l.loanConfirmTitle}</div>
+</td></tr>
+<tr><td style="padding:16px 32px;">
+  <div style="font-size:15px;color:#94a3b8;line-height:1.7;text-align:center;">${l.loanConfirmBody}</div>
+</td></tr>
+<tr><td style="padding:8px 32px;">
+  <table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="background:#0f172a;border-radius:10px;border:1px solid #334155;">
+  <tr><td style="padding:16px 20px;">
+    <div style="font-size:11px;font-weight:600;color:#64748b;text-transform:uppercase;letter-spacing:0.8px;margin-bottom:6px;">${l.collateralLabel}</div>
+    <div style="font-size:18px;font-weight:700;color:#D4AF37;">${data.collateralAmount} ${(data.collateralCurrency || '').toUpperCase()}</div>
+  </td></tr>
+  </table>
+</td></tr>
+<tr><td style="padding:8px 32px;">
+  <table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="background:#0f172a;border-radius:10px;border:1px solid #334155;">
+  <tr><td style="padding:16px 20px;">
+    <div style="font-size:11px;font-weight:600;color:#64748b;text-transform:uppercase;letter-spacing:0.8px;margin-bottom:6px;">${l.amountLabel} / ${l.ltvLabel}</div>
+    <div style="font-size:18px;font-weight:700;color:#f1f5f9;">${data.loanAmount} USDT <span style="color:#D4AF37;">@ ${data.ltvPercent}% LTV</span></div>
+  </td></tr>
+  </table>
+</td></tr>
+<tr><td style="padding:8px 32px;">
+  <table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="background:#0f172a;border-radius:10px;border:1px solid #334155;">
+  <tr><td style="padding:16px 20px;">
+    <div style="font-size:11px;font-weight:600;color:#64748b;text-transform:uppercase;letter-spacing:0.8px;margin-bottom:6px;">${l.depositLabel}</div>
+    <div style="font-size:13px;font-weight:500;color:#94a3b8;font-family:'Roboto Mono',monospace;word-break:break-all;">${maskAddress(data.sendAddress)}</div>
+  </td></tr>
+  </table>
+</td></tr>
+<tr><td style="padding:8px 32px;">
+  <table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="background:#0f172a;border-radius:10px;border:1px solid #334155;">
+  <tr><td style="padding:16px 20px;">
+    <div style="font-size:11px;font-weight:600;color:#64748b;text-transform:uppercase;">Transaction ID</div>
+    <div style="font-size:14px;font-weight:600;color:#D4AF37;font-family:'Roboto Mono',monospace;margin-top:4px;">${maskTxHash(data.txId)}</div>
+  </td></tr>
+  </table>
+</td></tr>
+<tr><td style="padding:24px 32px;text-align:center;">
+  <a href="https://mrcglobalpay.com/lend?tab=track" style="display:inline-block;background:linear-gradient(135deg,#D4AF37,#B8962E);color:#0f172a;font-size:15px;font-weight:700;padding:14px 36px;border-radius:10px;text-decoration:none;">${l.viewDashboard}</a>
+</td></tr>
+<tr><td style="padding:12px 32px;">
+  <div style="font-size:10px;color:#64748b;line-height:1.6;text-align:center;font-style:italic;">${l.liabilityNote}</div>
+</td></tr>
+<tr><td style="padding:12px 32px 32px;text-align:center;border-top:1px solid #334155;">
+  <div style="font-size:11px;color:#64748b;line-height:1.6;">${l.footer}</div>
+  <div style="font-size:10px;color:#475569;margin-top:8px;">© ${new Date().getFullYear()} MRC GlobalPay. All rights reserved.</div>
+</td></tr>
+</table></td></tr></table></body></html>`
+}
+
+// ── Earn Confirmation Template ──
+function renderEarnConfirmation(data: {
+  depositAmount: string; depositCurrency: string; apy: string;
+  sendAddress: string; txId: string; lang?: string;
+}): string {
+  const l = getLang(data.lang)
+  const dir = isRtl(data.lang || 'en') ? 'rtl' : 'ltr'
+  return `<!DOCTYPE html>
+<html lang="${(data.lang || 'en').slice(0, 2)}" dir="${dir}">
+<head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"></head>
+<body style="margin:0;padding:0;background:#0f172a;font-family:'Inter','Helvetica Neue',Arial,sans-serif;">
+<table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="background:#0f172a;">
+<tr><td align="center" style="padding:40px 16px;">
+<table role="presentation" width="580" cellpadding="0" cellspacing="0" style="background:#1e293b;border-radius:16px;overflow:hidden;border:1px solid #334155;">
+<tr><td style="padding:32px 32px 24px;text-align:center;border-bottom:1px solid #334155;">
+  <div style="font-size:24px;font-weight:700;color:#10b981;letter-spacing:-0.3px;">MRC GlobalPay</div>
+</td></tr>
+<tr><td style="padding:28px 32px 8px;text-align:center;">
+  <div style="font-size:22px;font-weight:700;color:#f1f5f9;">📈 ${l.earnConfirmTitle}</div>
+</td></tr>
+<tr><td style="padding:16px 32px;">
+  <div style="font-size:15px;color:#94a3b8;line-height:1.7;text-align:center;">${l.earnConfirmBody}</div>
+</td></tr>
+<tr><td style="padding:8px 32px;">
+  <table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="background:#0f172a;border-radius:10px;border:1px solid #334155;">
+  <tr><td style="padding:16px 20px;">
+    <div style="font-size:11px;font-weight:600;color:#64748b;text-transform:uppercase;letter-spacing:0.8px;margin-bottom:6px;">${l.assetLabel} / ${l.apyLabel}</div>
+    <div style="font-size:18px;font-weight:700;color:#10b981;">${data.depositAmount} ${(data.depositCurrency || '').toUpperCase()} <span style="color:#f1f5f9;">@ ${data.apy}% APY</span></div>
+  </td></tr>
+  </table>
+</td></tr>
+<tr><td style="padding:8px 32px;">
+  <table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="background:#0f172a;border-radius:10px;border:1px solid #334155;">
+  <tr><td style="padding:16px 20px;">
+    <div style="font-size:11px;font-weight:600;color:#64748b;text-transform:uppercase;letter-spacing:0.8px;margin-bottom:6px;">${l.depositLabel}</div>
+    <div style="font-size:13px;font-weight:500;color:#94a3b8;font-family:'Roboto Mono',monospace;word-break:break-all;">${maskAddress(data.sendAddress)}</div>
+  </td></tr>
+  </table>
+</td></tr>
+<tr><td style="padding:8px 32px;">
+  <table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="background:#0f172a;border-radius:10px;border:1px solid #334155;">
+  <tr><td style="padding:16px 20px;">
+    <div style="font-size:11px;font-weight:600;color:#64748b;text-transform:uppercase;">Transaction ID</div>
+    <div style="font-size:14px;font-weight:600;color:#10b981;font-family:'Roboto Mono',monospace;margin-top:4px;">${maskTxHash(data.txId)}</div>
+  </td></tr>
+  </table>
+</td></tr>
+<tr><td style="padding:24px 32px;text-align:center;">
+  <a href="https://mrcglobalpay.com/lend?tab=earn" style="display:inline-block;background:linear-gradient(135deg,#10b981,#059669);color:#0f172a;font-size:15px;font-weight:700;padding:14px 36px;border-radius:10px;text-decoration:none;">${l.viewDashboard}</a>
+</td></tr>
+<tr><td style="padding:12px 32px 32px;text-align:center;border-top:1px solid #334155;">
+  <div style="font-size:11px;color:#64748b;line-height:1.6;">${l.footer}</div>
+  <div style="font-size:10px;color:#475569;margin-top:8px;">© ${new Date().getFullYear()} MRC GlobalPay. All rights reserved.</div>
+</td></tr>
+</table></td></tr></table></body></html>`
+}
+
+// ── Risk Alert Template ──
+function renderRiskAlert(data: {
+  loanId: string; collateralCurrency: string; currentLtv: string;
+  zone: 'yellow' | 'red'; lang?: string;
+}): string {
+  const l = getLang(data.lang)
+  const dir = isRtl(data.lang || 'en') ? 'rtl' : 'ltr'
+  const isRed = data.zone === 'red'
+  const zoneColor = isRed ? '#ef4444' : '#eab308'
+  const zoneLabel = isRed ? 'RED — LIQUIDATION' : 'YELLOW — RISK'
+  const zoneMsg = isRed ? l.riskAlertRed : l.riskAlertYellow
+  return `<!DOCTYPE html>
+<html lang="${(data.lang || 'en').slice(0, 2)}" dir="${dir}">
+<head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"></head>
+<body style="margin:0;padding:0;background:#0f172a;font-family:'Inter','Helvetica Neue',Arial,sans-serif;">
+<table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="background:#0f172a;">
+<tr><td align="center" style="padding:40px 16px;">
+<table role="presentation" width="580" cellpadding="0" cellspacing="0" style="background:#1e293b;border-radius:16px;overflow:hidden;border:1px solid ${zoneColor};">
+<tr><td style="padding:32px;text-align:center;border-bottom:1px solid #334155;">
+  <div style="font-size:24px;font-weight:700;color:${zoneColor};">⚠️ ${l.riskAlertTitle}</div>
+</td></tr>
+<tr><td style="padding:24px 32px;">
+  <div style="background:${zoneColor}20;border:1px solid ${zoneColor};border-radius:10px;padding:16px;text-align:center;margin-bottom:16px;">
+    <div style="font-size:13px;font-weight:700;color:${zoneColor};letter-spacing:1px;">${zoneLabel}</div>
+    <div style="font-size:28px;font-weight:800;color:${zoneColor};margin-top:4px;">${data.currentLtv}% LTV</div>
+  </div>
+  <div style="font-size:15px;color:#94a3b8;line-height:1.7;">${zoneMsg}</div>
+</td></tr>
+<tr><td style="padding:8px 32px;">
+  <table role="presentation" width="100%" style="background:#0f172a;border-radius:10px;border:1px solid #334155;">
+  <tr><td style="padding:16px 20px;">
+    <div style="font-size:11px;font-weight:600;color:#64748b;text-transform:uppercase;">Loan ID / ${l.collateralLabel}</div>
+    <div style="font-size:14px;font-weight:600;color:#f1f5f9;font-family:'Roboto Mono',monospace;margin-top:4px;">${maskTxHash(data.loanId)} · ${(data.collateralCurrency || '').toUpperCase()}</div>
+  </td></tr>
+  </table>
+</td></tr>
+<tr><td style="padding:24px 32px;text-align:center;">
+  <a href="https://mrcglobalpay.com/lend?tab=track" style="display:inline-block;background:${zoneColor};color:#0f172a;font-size:15px;font-weight:700;padding:14px 36px;border-radius:10px;text-decoration:none;">${l.viewDashboard}</a>
+</td></tr>
+<tr><td style="padding:12px 32px;">
+  <div style="font-size:10px;color:#64748b;line-height:1.6;text-align:center;font-style:italic;">${l.liabilityNote}</div>
+</td></tr>
+<tr><td style="padding:12px 32px 32px;text-align:center;border-top:1px solid #334155;">
+  <div style="font-size:11px;color:#64748b;line-height:1.6;">${l.footer}</div>
+  <div style="font-size:10px;color:#475569;margin-top:8px;">© ${new Date().getFullYear()} MRC GlobalPay</div>
+</td></tr>
+</table></td></tr></table></body></html>`
+}
 async function sendViaSMTP(opts: {
   account: SmtpAccount; to: string; subject: string;
   html: string; bcc?: string;
