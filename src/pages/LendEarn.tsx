@@ -269,13 +269,13 @@ function ContactConfirmModal({ open, onClose, onConfirm, loading, type }: Contac
               {t("lend.contact.phoneLabel", "Phone Number")}
             </Label>
             <div className="flex gap-2">
-              <Select value={countryCode} onValueChange={setCountryCode}>
-                <SelectTrigger className="w-[100px] border-border shrink-0">
+              <Select value={selectedCountryId} onValueChange={setSelectedCountryId}>
+                <SelectTrigger className="w-[110px] border-border shrink-0">
                   <SelectValue />
                 </SelectTrigger>
                 <SelectContent>
-                  {COUNTRY_CODES.map((c, i) => (
-                    <SelectItem key={`${c.code}-${i}`} value={c.code}>
+                  {COUNTRY_CODES.map((c) => (
+                    <SelectItem key={c.id} value={c.id}>
                       {c.label} {c.code}
                     </SelectItem>
                   ))}
