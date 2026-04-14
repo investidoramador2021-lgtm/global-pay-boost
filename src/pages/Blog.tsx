@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import { Helmet } from "react-helmet-async";
 import { Link, useLocation } from "react-router-dom";
-import { Calendar, Clock, ArrowRight, FileText, Shield, Landmark, Zap, ScrollText } from "lucide-react";
+import { Calendar, Clock, ArrowRight, FileText, Shield, Landmark, Zap, ScrollText, DollarSign, TrendingUp } from "lucide-react";
 import SiteHeader from "@/components/SiteHeader";
 import SiteFooter from "@/components/SiteFooter";
 import { fetchAllPosts, type BlogPost } from "@/lib/blog-data";
@@ -47,6 +47,26 @@ const WHITEPAPERS = [
     accent: "32 100% 50%",
     category: "Institutional Whitepaper",
     tags: ["Rate Lock", "Inclusive Pricing", "Monero Privacy", "LTC Settlement"],
+  },
+  {
+    title: "Crypto-Collateralized Liquidity Solutions",
+    subtitle: "Non-Custodial Lending Frameworks",
+    excerpt: "How crypto-collateralized loans work in Canada. LTV-driven credit facilities, non-custodial smart contracts, and three-tier risk management under FINTRAC MSB regulation.",
+    path: "/blog/whitepapers/crypto-loans",
+    icon: DollarSign,
+    accent: "25 100% 55%",
+    category: "Institutional Whitepaper",
+    tags: ["Crypto Loans", "LTV", "Non-Custodial", "FINTRAC"],
+  },
+  {
+    title: "The Digital Asset Yield Engine",
+    subtitle: "Institutional-Grade Interest Accrual",
+    excerpt: "Is the MRC Earn yield guaranteed? Peer-to-Institutional lending with 150% over-collateralization, daily compounding interest, and Source-Back withdrawal security.",
+    path: "/blog/whitepapers/digital-yield",
+    icon: TrendingUp,
+    accent: "160 100% 45%",
+    category: "Institutional Whitepaper",
+    tags: ["Earn Yield", "P2I Lending", "Compound Interest", "Source-Back"],
   },
 ];
 
