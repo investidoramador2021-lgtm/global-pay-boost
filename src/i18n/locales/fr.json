@@ -671,6 +671,21 @@
     "getInstantLoan": "Obtenir un Prêt Instantané",
     "earnSubtitle": "Gagnez un rendement compétitif sur vos cryptos — sans période de blocage.",
     "viewAllEarnAssets": "Voir les 50+ Actifs",
-    "daily": "quotidien"
+    "daily": "quotidien",
+    "contact": {
+      "titleLoan": "Confirmer les Détails du Prêt",
+      "titleEarn": "Confirmer les Détails de Rendement",
+      "alertsNote": "Requis pour les alertes automatisées LTV et sécurité fournies par notre partenaire technologique.",
+      "emailLabel": "Adresse Email",
+      "emailPlaceholder": "votre@email.com",
+      "invalidEmail": "Veuillez entrer une adresse email valide",
+      "phoneLabel": "Numéro de Téléphone",
+      "phonePlaceholder": "123 456 7890",
+      "invalidPhone": "Veuillez entrer un numéro valide",
+      "compliance": "MRC GlobalPay · Enregistrement MSB C100000015 · Vos données sont chiffrées et utilisées uniquement pour les alertes.",
+      "cancel": "Annuler",
+      "confirm": "Confirmer et Continuer",
+      "proTip": "Astuce: Vous recevrez des alertes SMS et email si votre prêt atteint les zones Jaune (Risque) ou Rouge (Liquidation)."
+    }
   }
 }

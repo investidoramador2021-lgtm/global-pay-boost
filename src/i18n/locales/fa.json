@@ -671,6 +671,21 @@
     "getInstantLoan": "دریافت وام فوری",
     "earnSubtitle": "سود رقابتی کسب کنید — بدون دوره قفل.",
     "viewAllEarnAssets": "مشاهده بیش از ۵۰ دارایی",
-    "daily": "روزانه"
+    "daily": "روزانه",
+    "contact": {
+      "titleLoan": "تأیید جزئیات وام",
+      "titleEarn": "تأیید جزئیات درآمد",
+      "alertsNote": "برای هشدارهای خودکار LTV و امنیتی ارائه شده توسط شریک فناوری ما الزامی است.",
+      "emailLabel": "آدرس ایمیل",
+      "emailPlaceholder": "your@email.com",
+      "invalidEmail": "لطفاً یک ایمیل معتبر وارد کنید",
+      "phoneLabel": "شماره تلفن",
+      "phonePlaceholder": "123 456 7890",
+      "invalidPhone": "لطفاً یک شماره معتبر وارد کنید",
+      "compliance": "MRC GlobalPay · ثبت MSB C100000015 · داده‌های شما رمزگذاری شده است.",
+      "cancel": "لغو",
+      "confirm": "تأیید و ادامه",
+      "proTip": "نکته: اگر وام شما به مناطق زرد (خطر) یا قرمز (تسویه) برسد، هشدارهای SMS و ایمیل دریافت خواهید کرد."
+    }
   }
 }

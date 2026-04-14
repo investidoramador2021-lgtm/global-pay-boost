@@ -671,6 +671,21 @@
     "getInstantLoan": "קבל הלוואה מיידית",
     "earnSubtitle": "הרווח תשואה תחרותית על הקריפטו שלך — ללא תקופת נעילה.",
     "viewAllEarnAssets": "צפה בכל 50+ הנכסים",
-    "daily": "יומי"
+    "daily": "יומי",
+    "contact": {
+      "titleLoan": "אישור פרטי הלוואה",
+      "titleEarn": "אישור פרטי רווח",
+      "alertsNote": "נדרש עבור התראות LTV ואבטחה אוטומטיות המסופקות על ידי השותף הטכנולוגי שלנו.",
+      "emailLabel": "כתובת אימייל",
+      "emailPlaceholder": "your@email.com",
+      "invalidEmail": "נא להזין כתובת אימייל תקינה",
+      "phoneLabel": "מספר טלפון",
+      "phonePlaceholder": "123 456 7890",
+      "invalidPhone": "נא להזין מספר תקין",
+      "compliance": "MRC GlobalPay · רישום MSB C100000015 · הנתונים שלך מוצפנים.",
+      "cancel": "ביטול",
+      "confirm": "אישור והמשך",
+      "proTip": "טיפ: תקבלו התראות SMS ואימייל אם ההלוואה שלכם מגיעה לאזור הצהוב (סיכון) או האדום (חיסול)."
+    }
   }
 }
