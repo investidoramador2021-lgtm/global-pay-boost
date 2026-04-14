@@ -329,8 +329,14 @@ Deno.serve(async (req: Request) => {
         if (msg.includes('contact') || msg.includes('validat') || msg.includes('email') || msg.includes('phone')) {
           return json({ error: 'Please check your phone and email format (Include + for country code).', provider_error: responseBody }, 422)
         }
+        return json(responseBody, response.status)
       }
-      return json(responseBody, response.ok ? 200 : response.status)
+
+      // Unwrap nested 'response' from CoinRabbit V2 API so frontend gets flat fields
+      const inner = responseBody && typeof responseBody === 'object' && 'response' in responseBody
+        ? (responseBody as { response: Record<string, unknown> }).response
+        : responseBody
+      return json({ result: true, ...inner }, 200)
     }
 
     if (action === 'create-earn') {
@@ -365,9 +371,14 @@ Deno.serve(async (req: Request) => {
         if (msg.includes('contact') || msg.includes('validat') || msg.includes('email') || msg.includes('phone')) {
           return json({ error: 'Please check your phone and email format (Include + for country code).', provider_error: responseBody }, 422)
         }
+        return json(responseBody, response.status)
       }
 
-      return json(responseBody, response.ok ? 200 : response.status)
+      // Unwrap nested 'response' from CoinRabbit V2 API
+      const inner = responseBody && typeof responseBody === 'object' && 'response' in responseBody
+        ? (responseBody as { response: Record<string, unknown> }).response
+        : responseBody
+      return json({ result: true, ...inner }, 200)
     }
 
     if (action === 'loan-status') {
