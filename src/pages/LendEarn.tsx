@@ -486,23 +486,26 @@ function LoanCalculator() {
           </div>
 
           <div className="space-y-2">
-            <div className="flex justify-between text-sm">
-              <span className="text-muted-foreground">{t("lend.collateralUsd")}</span>
-              <span className="font-mono text-[#D4AF37]">{fmt.usd(amount)}</span>
+            <label className="text-sm font-medium text-muted-foreground">{t("lend.collateralUsd")}</label>
+            <div className="relative">
+              <DollarSign className="absolute start-3 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground" />
+              <Input
+                type="number"
+                placeholder={`Min $${minLoanAmount}`}
+                value={amount}
+                onChange={(e) => {
+                  const v = e.target.value;
+                  setAmount(v === "" ? "" : Math.max(0, parseFloat(v) || 0));
+                }}
+                className="ps-9 border-[#D4AF37]/30 font-mono text-lg"
+                min={0}
+              />
             </div>
-            <Slider
-              value={[amount]}
-              onValueChange={(v) => setAmount(v[0])}
-              min={25}
-              max={50000}
-              step={50}
-              className="[&_[role=slider]]:border-[#D4AF37] [&_[role=slider]]:bg-[#D4AF37]"
-              dir="ltr"
-            />
-            <div className="flex justify-between text-xs text-muted-foreground">
-              <span>${minLoanAmount} min</span>
-              <span>$50,000</span>
-            </div>
+            {numAmount > 0 && numAmount < minLoanAmount && (
+              <p className="text-xs text-red-400">
+                {t("lend.belowMinLoan", `Minimum collateral is $${minLoanAmount}`)}
+              </p>
+            )}
           </div>
 
           <div className="space-y-2">
