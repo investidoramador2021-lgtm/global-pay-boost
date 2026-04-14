@@ -11,6 +11,7 @@ const guideJsonLd = {
   name: "MRC GlobalPay Crypto Dust Swap Service",
   description:
     "Convert unspendable crypto dust into usable assets. $0.30 minimum. No registration required. Non-custodial, 500+ tokens supported.",
+  image: "https://mrcglobalpay.com/icon-512x512.png",
   url: "https://mrcglobalpay.com/resources/crypto-dust-guide",
   brand: {
     "@type": "Brand",
