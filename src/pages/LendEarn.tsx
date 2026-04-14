@@ -92,18 +92,10 @@ function LoanCalculator() {
         {/* Collateral selector */}
         <div className="space-y-2">
           <label className="text-sm font-medium text-muted-foreground">Collateral Asset</label>
-          <Select value={collateral} onValueChange={setCollateral}>
-            <SelectTrigger className="border-[#D4AF37]/30">
-              <SelectValue />
-            </SelectTrigger>
-            <SelectContent>
-              {COLLATERAL_OPTIONS.map((c) => (
-                <SelectItem key={c.ticker} value={c.ticker}>
-                  {c.icon} {c.name} ({c.ticker})
-                </SelectItem>
-              ))}
-            </SelectContent>
-          </Select>
+          <CollateralSelector
+            value={selectedAsset.ticker}
+            onChange={setSelectedAsset}
+          />
         </div>
 
         {/* Amount slider */}
@@ -115,35 +107,41 @@ function LoanCalculator() {
           <Slider
             value={[amount]}
             onValueChange={(v) => setAmount(v[0])}
-            min={selected.minUsd}
+            min={25}
             max={50000}
             step={50}
             className="[&_[role=slider]]:border-[#D4AF37] [&_[role=slider]]:bg-[#D4AF37]"
           />
           <div className="flex justify-between text-xs text-muted-foreground">
-            <span>${selected.minUsd}</span>
+            <span>$25</span>
             <span>$50,000</span>
           </div>
         </div>
 
-        {/* LTV selector */}
+        {/* LTV selector – dynamic based on asset risk tier */}
         <div className="space-y-2">
-          <label className="text-sm font-medium text-muted-foreground">LTV Ratio</label>
-          <div className="grid grid-cols-3 gap-2">
-            {LTV_TIERS.map((t, i) => (
-              <button
-                key={t.ltv}
-                onClick={() => setLtvIndex(i)}
-                className={`rounded-lg border p-3 text-center transition-all ${
-                  ltvIndex === i
-                    ? "border-[#D4AF37] bg-[#D4AF37]/10"
-                    : "border-border hover:border-[#D4AF37]/40"
-                }`}
-              >
-                <div className={`text-lg font-bold ${t.color}`}>{t.ltv}%</div>
-                <div className="text-xs text-muted-foreground">{t.label}</div>
-              </button>
-            ))}
+          <label className="text-sm font-medium text-muted-foreground">
+            LTV Ratio
+            <span className="ml-2 text-xs text-[#D4AF37]">({riskConfig.baseRate}% APR)</span>
+          </label>
+          <div className={`grid gap-2 ${ltvOptions.length === 2 ? "grid-cols-2" : "grid-cols-3"}`}>
+            {ltvOptions.map((ltv) => {
+              const label = ltv <= 50 ? "Conservative" : ltv <= 70 ? "Standard" : ltv <= 80 ? "Moderate" : "Aggressive";
+              return (
+                <button
+                  key={ltv}
+                  onClick={() => setSelectedLtv(ltv)}
+                  className={`rounded-lg border p-3 text-center transition-all ${
+                    selectedLtv === ltv
+                      ? "border-[#D4AF37] bg-[#D4AF37]/10"
+                      : "border-border hover:border-[#D4AF37]/40"
+                  }`}
+                >
+                  <div className={`text-lg font-bold ${ltv <= 50 ? "text-emerald-400" : ltv <= 70 ? "text-[#D4AF37]" : "text-red-400"}`}>{ltv}%</div>
+                  <div className="text-xs text-muted-foreground">{label}</div>
+                </button>
+              );
+            })}
           </div>
         </div>
 
