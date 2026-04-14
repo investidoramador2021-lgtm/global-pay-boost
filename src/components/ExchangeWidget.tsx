@@ -289,6 +289,54 @@ const STATUS_LABEL_KEYS: Record<string, string> = {
   overdue: "widget.statusOverdue",
 };
 
+/* ── LTV Gauge: semi-circular dial ── */
+function LtvGauge({ value, max = 90 }: { value: number; max?: number }) {
+  const pct = Math.min(value / max, 1);
+  const angle = -90 + pct * 180; // -90 = left, 90 = right
+  const r = 60;
+  const cx = 70;
+  const cy = 70;
+  // Arc path
+  const arcStartX = cx + r * Math.cos((-90 * Math.PI) / 180);
+  const arcStartY = cy + r * Math.sin((-90 * Math.PI) / 180);
+  const arcEndX = cx + r * Math.cos((90 * Math.PI) / 180);
+  const arcEndY = cy + r * Math.sin((90 * Math.PI) / 180);
+  // Needle end
+  const needleX = cx + (r - 8) * Math.cos((angle * Math.PI) / 180);
+  const needleY = cy + (r - 8) * Math.sin((angle * Math.PI) / 180);
+
+  return (
+    <svg viewBox="0 0 140 85" className="w-full max-w-[200px] mx-auto" aria-label={`LTV ${value}%`}>
+      <defs>
+        <linearGradient id="gaugeGrad" x1="0" y1="0" x2="1" y2="0">
+          <stop offset="0%" stopColor="hsl(160 100% 45%)" />
+          <stop offset="60%" stopColor="hsl(45 100% 55%)" />
+          <stop offset="100%" stopColor="hsl(0 80% 55%)" />
+        </linearGradient>
+        <filter id="needleGlow">
+          <feGaussianBlur stdDeviation="2" result="blur" />
+          <feMerge><feMergeNode in="blur" /><feMergeNode in="SourceGraphic" /></feMerge>
+        </filter>
+      </defs>
+      {/* Track */}
+      <path d={`M ${arcStartX} ${arcStartY} A ${r} ${r} 0 0 1 ${arcEndX} ${arcEndY}`} fill="none" stroke="hsl(220 20% 18%)" strokeWidth="8" strokeLinecap="round" />
+      {/* Filled arc up to pct */}
+      {pct > 0.01 && (() => {
+        const filledAngle = -90 + pct * 180;
+        const fX = cx + r * Math.cos((filledAngle * Math.PI) / 180);
+        const fY = cy + r * Math.sin((filledAngle * Math.PI) / 180);
+        const largeArc = pct > 0.5 ? 1 : 0;
+        return <path d={`M ${arcStartX} ${arcStartY} A ${r} ${r} 0 ${largeArc} 1 ${fX} ${fY}`} fill="none" stroke="url(#gaugeGrad)" strokeWidth="8" strokeLinecap="round" />;
+      })()}
+      {/* Needle */}
+      <line x1={cx} y1={cy} x2={needleX} y2={needleY} stroke="hsl(160 100% 50%)" strokeWidth="2.5" strokeLinecap="round" filter="url(#needleGlow)" />
+      <circle cx={cx} cy={cy} r="4" fill="hsl(160 100% 50%)" opacity="0.8" />
+      {/* Value text */}
+      <text x={cx} y={cy + 2} textAnchor="middle" fill="white" fontSize="16" fontWeight="700" fontFamily="monospace">{value}%</text>
+    </svg>
+  );
+}
+
 /* ── Compact Loan Widget for homepage ── */
 function LoanWidgetPanel() {
   const { t } = useTranslation();
@@ -314,14 +362,17 @@ function LoanWidgetPanel() {
           className="font-mono border-[#D4AF37]/20 focus:border-[#D4AF37] focus:ring-[#D4AF37]/30"
         />
       </div>
+
+      {/* LTV Gauge */}
+      <div className="rounded-xl border border-[#D4AF37]/20 p-4" style={{ background: "hsl(220 25% 8% / 0.6)", boxShadow: "inset 0 2px 6px rgba(0,0,0,0.35)" }}>
+        <div className="text-[10px] uppercase tracking-wider text-center text-muted-foreground mb-2">{t("lend.maxLtv")} Gauge</div>
+        <LtvGauge value={maxLtv} />
+      </div>
+
       <div className="rounded-lg border border-[#D4AF37]/20 bg-[#D4AF37]/5 p-3 space-y-2">
         <div className="flex justify-between text-sm">
           <span className="text-muted-foreground">{t("lend.youCanBorrow")}</span>
           <span className="font-bold text-[#D4AF37]">~${borrowable.toLocaleString()} USDT</span>
-        </div>
-        <div className="flex justify-between text-xs">
-          <span className="text-muted-foreground">{t("lend.maxLtv")}</span>
-          <span className="font-mono text-[#D4AF37]">{maxLtv}%</span>
         </div>
         <div className="flex justify-between text-xs">
           <span className="text-muted-foreground">{t("lend.interestRate")}</span>
@@ -330,7 +381,11 @@ function LoanWidgetPanel() {
       </div>
       <a
         href="/lend"
-        className="flex w-full items-center justify-center gap-2 rounded-lg bg-[#D4AF37] px-4 py-3 font-display text-sm font-bold text-background shadow-lg transition-colors hover:bg-[#C5A028]"
+        className="flex w-full items-center justify-center gap-2 rounded-lg px-4 py-3 font-display text-sm font-bold text-background shadow-lg transition-all hover:shadow-xl"
+        style={{
+          background: "linear-gradient(135deg, #D4AF37 0%, #C5A028 100%)",
+          boxShadow: "0 4px 16px rgba(212,175,55,0.3)",
+        }}
       >
         <Landmark className="h-4 w-4" /> {t("lend.getInstantLoan")}
       </a>
@@ -389,10 +444,25 @@ function EarnWidgetPanel() {
         </div>
       </div>
 
-      {/* Live APY */}
-      <div className="rounded-lg border border-[#D4AF37]/20 bg-[#D4AF37]/5 p-3 text-center">
-        <div className="text-[10px] uppercase tracking-wider text-muted-foreground">{selected.ticker} {t("lend.annualYield", "Annual Yield")}</div>
-        <div className="text-3xl font-bold text-[#D4AF37]">{apy}% <span className="text-sm font-normal">APY</span></div>
+      {/* Live APY with Sparkline */}
+      <div className="rounded-xl border border-[#D4AF37]/20 p-4" style={{ background: "hsl(220 25% 8% / 0.6)", boxShadow: "inset 0 2px 6px rgba(0,0,0,0.35)" }}>
+        <div className="flex items-center justify-between">
+          <div>
+            <div className="text-[10px] uppercase tracking-wider text-muted-foreground">{selected.ticker} {t("lend.annualYield", "Annual Yield")}</div>
+            <div className="text-3xl font-bold text-[#D4AF37]">{apy}% <span className="text-sm font-normal">APY</span></div>
+          </div>
+          {/* Sparkline SVG — yield growth curve */}
+          <svg viewBox="0 0 80 32" className="w-20 h-8 shrink-0" aria-label="Yield trend">
+            <defs>
+              <linearGradient id="sparkGrad" x1="0" y1="0" x2="0" y2="1">
+                <stop offset="0%" stopColor="#D4AF37" stopOpacity="0.3" />
+                <stop offset="100%" stopColor="#D4AF37" stopOpacity="0" />
+              </linearGradient>
+            </defs>
+            <path d="M0 28 Q10 26 16 22 T32 18 T48 12 T64 8 T80 4" fill="none" stroke="#D4AF37" strokeWidth="1.5" strokeLinecap="round" />
+            <path d="M0 28 Q10 26 16 22 T32 18 T48 12 T64 8 T80 4 V32 H0 Z" fill="url(#sparkGrad)" />
+          </svg>
+        </div>
       </div>
 
       {/* 1-year projection */}
@@ -425,7 +495,11 @@ function EarnWidgetPanel() {
       {/* Start Earning */}
       <a
         href="/lend?tab=earn"
-        className="flex w-full items-center justify-center gap-2 rounded-lg bg-[#D4AF37] px-4 py-3 font-display text-sm font-bold text-background shadow-lg transition-colors hover:bg-[#C5A028]"
+        className="flex w-full items-center justify-center gap-2 rounded-lg px-4 py-3 font-display text-sm font-bold text-background shadow-lg transition-all hover:shadow-xl"
+        style={{
+          background: "linear-gradient(135deg, #D4AF37 0%, #C5A028 100%)",
+          boxShadow: "0 4px 16px rgba(212,175,55,0.3)",
+        }}
       >
         <TrendingUp className="h-4 w-4" /> {t("lend.startEarning", "Start Earning")}
       </a>
@@ -1780,8 +1854,14 @@ const ExchangeWidget = ({ onTabChange }: ExchangeWidgetProps = {}) => {
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.5, delay: 0.15 }}
       id="exchange-widget"
-      className="relative scroll-mt-24 rounded-2xl border border-border/50 glass p-3 shadow-elevated sm:p-6 lg:p-8 transform-gpu"
-      style={{ backfaceVisibility: "hidden" }}
+      className="relative scroll-mt-24 rounded-2xl border border-[hsl(220_20%_20%/0.15)] p-3 shadow-elevated sm:p-6 lg:p-8 transform-gpu"
+      style={{
+        backfaceVisibility: "hidden",
+        background: "linear-gradient(145deg, hsl(220 25% 12% / 0.85) 0%, hsl(220 30% 8% / 0.92) 100%)",
+        backdropFilter: "blur(12px)",
+        WebkitBackdropFilter: "blur(12px)",
+        boxShadow: "0 24px 80px -12px rgba(0,0,0,0.5), 0 0 1px rgba(255,255,255,0.08), inset 0 1px 0 rgba(255,255,255,0.04)",
+      }}
     >
       <AnimatePresence mode="wait">
         {/* ===== STEP 1: Exchange Form ===== */}
@@ -1790,7 +1870,7 @@ const ExchangeWidget = ({ onTabChange }: ExchangeWidgetProps = {}) => {
             {/* ===== MODE TABS: Exchange | Buy/Sell ===== */}
             <div className="mb-5 space-y-2">
               {/* Sticky tab header on mobile — premium HNW fintech aesthetic */}
-              <div className="sticky top-0 z-20 -mx-3 px-3 sm:-mx-6 sm:px-6 lg:-mx-8 lg:px-8 pt-1 pb-2 bg-card/80 backdrop-blur-md rounded-t-2xl">
+              <div className="sticky top-0 z-20 -mx-3 px-3 sm:-mx-6 sm:px-6 lg:-mx-8 lg:px-8 pt-1 pb-2 rounded-t-2xl" style={{ background: "transparent" }}>
                 {(() => {
                   const allTabs = [
                     { mode: "exchange" as WidgetMode, icon: Repeat, labelKey: "widget.tabs.exchange", onClick: () => { setWidgetMode("exchange"); setGStep("form"); setGCheckoutUrl(""); } },
@@ -1832,31 +1912,39 @@ const ExchangeWidget = ({ onTabChange }: ExchangeWidgetProps = {}) => {
                       <button
                         key={tab.mode}
                         onClick={tab.onClick}
-                        className={`group relative flex w-full items-center justify-center gap-1.5 rounded-lg py-2.5 font-display text-xs font-semibold whitespace-nowrap min-h-[44px] ${
+                        className={`group relative flex w-full items-center justify-center gap-1.5 rounded-lg py-2.5 font-display text-xs font-semibold whitespace-nowrap min-h-[44px] transition-all duration-200 ${
                           isActive
-                            ? "text-[hsl(160_100%_8%)] shadow-[inset_0_1px_0_rgba(255,255,255,0.25),0_1px_3px_rgba(0,0,0,0.4)]"
-                            : isFinancial && !isActive
-                              ? "text-[hsl(220_15%_55%)] hover:text-[hsl(220_15%_80%)] border border-[hsl(160_100%_45%/0.15)] hover:border-[hsl(160_100%_45%/0.35)] hover:bg-[hsl(0_0%_100%/0.05)] hover:shadow-[0_0_8px_hsl(160_100%_45%/0.1)]"
-                              : "text-[hsl(220_15%_55%)] hover:text-[hsl(220_15%_80%)] hover:bg-[hsl(0_0%_100%/0.05)]"
+                            ? "text-[hsl(160_100%_8%)]"
+                            : isFinancial
+                              ? "text-[hsl(220_15%_55%)] hover:text-[hsl(220_15%_80%)] hover:bg-[hsl(0_0%_100%/0.06)]"
+                              : "text-[hsl(220_15%_55%)] hover:text-[hsl(220_15%_80%)] hover:bg-[hsl(0_0%_100%/0.06)]"
                         }`}
                         style={{
-                          transition: "all 0.2s ease",
                           ...(isActive ? {
                             background: "linear-gradient(180deg, hsl(160 100% 52%) 0%, hsl(160 100% 38%) 100%)",
+                            boxShadow: "inset 0 1px 0 rgba(255,255,255,0.3), 0 1px 3px rgba(0,0,0,0.5), 0 4px 12px -2px hsl(160 100% 45% / 0.25)",
+                          } : isFinancial ? {
+                            boxShadow: "inset 0 0 0 1px hsl(160 100% 45% / 0.12)",
                           } : {}),
                         }}
                       >
                         <TabIcon
-                          className={`h-4 w-4 shrink-0 ${
+                          className={`h-4 w-4 shrink-0 transition-all duration-200 ${
                             isActive
-                              ? "drop-shadow-[0_0_3px_hsl(160_100%_45%/0.6)]"
-                              : "group-hover:drop-shadow-[0_0_2px_hsl(160_100%_45%/0.3)]"
+                              ? "drop-shadow-[0_0_4px_hsl(160_100%_45%/0.7)]"
+                              : "group-hover:drop-shadow-[0_0_3px_hsl(160_100%_45%/0.3)]"
                           }`}
-                          style={{ transition: "filter 0.2s ease" }}
                         />
                         <span className="leading-tight tracking-wide">{t(tab.labelKey)}</span>
                         {badge && (
-                          <span className="absolute -top-1.5 -right-1 rounded-full bg-[hsl(160_100%_45%)] text-[hsl(160_100%_8%)] px-1.5 py-px text-[7px] font-bold leading-none shadow-sm">
+                          <span
+                            className="absolute -top-1.5 -right-1 rounded-full px-1.5 py-px text-[7px] font-bold leading-none"
+                            style={{
+                              background: "linear-gradient(135deg, hsl(160 100% 50%) 0%, hsl(160 100% 38%) 100%)",
+                              color: "hsl(160 100% 8%)",
+                              boxShadow: "0 0 6px hsl(160 100% 45% / 0.4)",
+                            }}
+                          >
                             {badge}
                           </span>
                         )}
@@ -1866,17 +1954,18 @@ const ExchangeWidget = ({ onTabChange }: ExchangeWidgetProps = {}) => {
 
                   return (
                     <div
-                      className="rounded-xl border border-[hsl(220_20%_18%)] p-1.5"
+                      className="rounded-xl p-1.5"
                       style={{
-                        background: "hsl(220 20% 8% / 0.6)",
-                        boxShadow: "inset 0 2px 6px rgba(0,0,0,0.35), inset 0 0 1px rgba(255,255,255,0.04)",
+                        background: "hsl(220 25% 6% / 0.7)",
+                        border: "1px solid hsl(220 20% 20% / 0.25)",
+                        boxShadow: "inset 0 2px 8px rgba(0,0,0,0.45), inset 0 0 1px rgba(255,255,255,0.03), 0 1px 0 rgba(255,255,255,0.02)",
                       }}
                     >
-                      {/* Row 1 — Transactional: 4 cols on sm+, 2 cols on mobile */}
+                      {/* Row 1 — Transactional */}
                       <div className="grid grid-cols-2 sm:grid-cols-4 gap-1 mb-1">
                         {row1.map(renderTab)}
                       </div>
-                      {/* Row 2 — Financial Services: 3 cols on sm+, 2 cols (+ 1 spanning) on mobile */}
+                      {/* Row 2 — Financial Services */}
                       <div className="grid grid-cols-2 sm:grid-cols-3 gap-1">
                         {row2.map((tab, i) => {
                           const isLast = i === row2.length - 1 && row2.length % 2 !== 0;
@@ -1929,7 +2018,7 @@ const ExchangeWidget = ({ onTabChange }: ExchangeWidgetProps = {}) => {
                       <label className="mb-1.5 block font-body text-xs font-medium uppercase tracking-wider text-muted-foreground">
                         {gTradeDirection === "buy" ? t("widget.youPayFiat") : t("widget.youPayCrypto")}
                       </label>
-                      <div className="flex items-center gap-3 rounded-xl border border-border bg-accent p-4">
+                      <div className="flex items-center gap-3 rounded-xl border border-[hsl(220_20%_20%/0.3)] p-4" style={{ background: "hsl(220 25% 8% / 0.6)", boxShadow: "inset 0 2px 6px rgba(0,0,0,0.35), inset 0 0 1px rgba(255,255,255,0.03)" }}>
                         <Input
                           type="number"
                           value={gSendAmount}
@@ -2029,7 +2118,7 @@ const ExchangeWidget = ({ onTabChange }: ExchangeWidgetProps = {}) => {
                       <label className="mb-1.5 block font-body text-xs font-medium uppercase tracking-wider text-muted-foreground">
                         {gTradeDirection === "buy" ? t("widget.youReceiveCrypto") : t("widget.youGetFiat")}
                       </label>
-                      <div className="flex items-center gap-3 rounded-xl border border-border bg-accent p-4">
+                      <div className="flex items-center gap-3 rounded-xl border border-[hsl(220_20%_20%/0.3)] p-4" style={{ background: "hsl(220 25% 8% / 0.6)", boxShadow: "inset 0 2px 6px rgba(0,0,0,0.35), inset 0 0 1px rgba(255,255,255,0.03)" }}>
                         <span className="flex-1 font-display text-2xl font-bold text-foreground">
                           {gEstimating ? (
                             <Loader2 className="h-6 w-6 animate-spin text-muted-foreground" />
@@ -2778,7 +2867,13 @@ const ExchangeWidget = ({ onTabChange }: ExchangeWidgetProps = {}) => {
 
                 <div className="relative" id="you-send-box">
                   <label className="mb-1.5 block font-body text-xs font-medium uppercase tracking-wider text-muted-foreground">{t("widget.youSend")}</label>
-                  <div className={`flex items-center gap-3 rounded-xl border p-4 sm:p-4 transition-all duration-500 ${sendBoxHighlight ? "border-primary ring-2 ring-primary/40 shadow-[0_0_20px_-4px_hsl(var(--primary)/0.5)] bg-primary/5" : "border-border bg-accent"}`}>
+                  <div
+                    className={`flex items-center gap-3 rounded-xl border p-4 sm:p-4 transition-all duration-500 ${sendBoxHighlight ? "border-primary ring-2 ring-primary/40 shadow-[0_0_20px_-4px_hsl(var(--primary)/0.5)] bg-primary/5" : "border-[hsl(220_20%_20%/0.3)]"}`}
+                    style={!sendBoxHighlight ? {
+                      background: "hsl(220 25% 8% / 0.6)",
+                      boxShadow: "inset 0 2px 6px rgba(0,0,0,0.35), inset 0 0 1px rgba(255,255,255,0.03)",
+                    } : {}}
+                  >
                     <Input
                       type="number"
                       value={sendAmount}
@@ -2824,7 +2919,13 @@ const ExchangeWidget = ({ onTabChange }: ExchangeWidgetProps = {}) => {
                   <label className="mb-1.5 block font-body text-xs font-medium uppercase tracking-wider text-muted-foreground">
                     {t("widget.youGet")} {fixedRate ? <span className="text-trust font-bold">{t("widget.guaranteed")}</span> : t("widget.estimated")}
                   </label>
-                  <div className="flex items-center gap-3 rounded-xl border border-border bg-accent p-4 sm:p-4">
+                  <div
+                    className="flex items-center gap-3 rounded-xl border border-[hsl(220_20%_20%/0.3)] p-4 sm:p-4"
+                    style={{
+                      background: "hsl(220 25% 8% / 0.6)",
+                      boxShadow: "inset 0 2px 6px rgba(0,0,0,0.35), inset 0 0 1px rgba(255,255,255,0.03)",
+                    }}
+                  >
                     <span className="flex-1 font-display text-2xl font-bold text-foreground">
                       {estimating ? <Loader2 className="h-6 w-6 animate-spin text-muted-foreground" /> : estimatedAmount === "syncing" ? <span className="text-sm font-medium text-muted-foreground animate-pulse">Syncing with Global Liquidity Rails…</span> : `≈ ${estimatedAmount || "—"}`}
                     </span>
