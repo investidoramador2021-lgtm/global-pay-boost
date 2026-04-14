@@ -291,6 +291,7 @@ const STATUS_LABEL_KEYS: Record<string, string> = {
 
 /* ── Compact Loan Widget for homepage ── */
 function LoanWidgetPanel() {
+  const { t } = useTranslation();
   const [asset, setAsset] = useState<CollateralAsset>(COLLATERAL_ASSETS[0]);
   const [usdValue, setUsdValue] = useState("1000");
   const riskConfig = LTV_BY_RISK[asset.riskTier];
@@ -300,11 +301,11 @@ function LoanWidgetPanel() {
   return (
     <div className="space-y-4">
       <div className="space-y-2">
-        <label className="text-xs font-medium text-[#D4AF37]">Collateral Asset</label>
+        <label className="text-xs font-medium text-[#D4AF37]">{t("lend.collateralLabel")}</label>
         <CollateralSelector value={asset.ticker} onChange={setAsset} compact />
       </div>
       <div className="space-y-1">
-        <label className="text-xs font-medium text-[#D4AF37]">Collateral Value (USD)</label>
+        <label className="text-xs font-medium text-[#D4AF37]">{t("lend.collateralValueUsd")}</label>
         <Input
           type="number"
           placeholder="1,000"
@@ -315,15 +316,15 @@ function LoanWidgetPanel() {
       </div>
       <div className="rounded-lg border border-[#D4AF37]/20 bg-[#D4AF37]/5 p-3 space-y-2">
         <div className="flex justify-between text-sm">
-          <span className="text-muted-foreground">You can borrow</span>
+          <span className="text-muted-foreground">{t("lend.youCanBorrow")}</span>
           <span className="font-bold text-[#D4AF37]">~${borrowable.toLocaleString()} USDT</span>
         </div>
         <div className="flex justify-between text-xs">
-          <span className="text-muted-foreground">Max LTV</span>
+          <span className="text-muted-foreground">{t("lend.maxLtv")}</span>
           <span className="font-mono text-[#D4AF37]">{maxLtv}%</span>
         </div>
         <div className="flex justify-between text-xs">
-          <span className="text-muted-foreground">Interest Rate</span>
+          <span className="text-muted-foreground">{t("lend.interestRate")}</span>
           <span className="font-mono text-[#D4AF37]">{riskConfig.baseRate}% APR</span>
         </div>
       </div>
@@ -331,7 +332,7 @@ function LoanWidgetPanel() {
         href="/lend"
         className="flex w-full items-center justify-center gap-2 rounded-lg bg-[#D4AF37] px-4 py-3 font-display text-sm font-bold text-background shadow-lg transition-colors hover:bg-[#C5A028]"
       >
-        <Landmark className="h-4 w-4" /> Get Instant Loan
+        <Landmark className="h-4 w-4" /> {t("lend.getInstantLoan")}
       </a>
     </div>
   );
@@ -339,6 +340,7 @@ function LoanWidgetPanel() {
 
 /* ── Compact Earn Widget Carousel for homepage ── */
 function EarnWidgetPanel() {
+  const { t } = useTranslation();
   const scrollRef = useRef<HTMLDivElement>(null);
   const topAssets = useMemo(() =>
     [...EARN_ASSETS_LIST].sort((a, b) => b.apy - a.apy).slice(0, 5),
@@ -347,7 +349,7 @@ function EarnWidgetPanel() {
 
   return (
     <div className="space-y-4">
-      <p className="text-xs text-muted-foreground">Earn competitive yield on your crypto — no lock-up period.</p>
+      <p className="text-xs text-muted-foreground">{t("lend.earnSubtitle")}</p>
       <div
         ref={scrollRef}
         className="flex gap-2 overflow-x-auto pb-2 scrollbar-hide snap-x snap-mandatory"
@@ -372,7 +374,7 @@ function EarnWidgetPanel() {
               </div>
             </div>
             <div className="text-lg font-bold text-[#D4AF37]">{asset.apy}%</div>
-            <div className="text-[10px] text-muted-foreground">APY · {asset.daily}% daily</div>
+            <div className="text-[10px] text-muted-foreground">APY · {asset.daily}% {t("lend.daily")}</div>
           </div>
         ))}
       </div>
@@ -380,7 +382,7 @@ function EarnWidgetPanel() {
         href="/lend?tab=earn"
         className="flex w-full items-center justify-center gap-2 rounded-lg bg-[#D4AF37] px-4 py-3 font-display text-sm font-bold text-background shadow-lg transition-colors hover:bg-[#C5A028]"
       >
-        <TrendingUp className="h-4 w-4" /> View All 50+ Earn Assets
+        <TrendingUp className="h-4 w-4" /> {t("lend.viewAllEarnAssets")}
       </a>
     </div>
   );

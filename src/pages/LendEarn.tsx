@@ -1,5 +1,6 @@
 import { useState, useEffect, useCallback, useMemo, useRef } from "react";
 import { Helmet } from "react-helmet-async";
+import { useTranslation } from "react-i18next";
 import SiteHeader from "@/components/SiteHeader";
 import SiteFooter from "@/components/SiteFooter";
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
@@ -14,6 +15,20 @@ import { Shield, TrendingUp, Wallet, Clock, AlertTriangle, ArrowRight, Percent, 
 import CollateralSelector from "@/components/CollateralSelector";
 import { COLLATERAL_ASSETS, LTV_BY_RISK, type CollateralAsset } from "@/lib/coinrabbit-assets";
 import { EARN_ASSETS, EARN_ASSETS_UNIQUE_KEY } from "@/lib/coinrabbit-earn-assets";
+import HreflangTags from "@/components/HreflangTags";
+
+/* ------------------------------------------------------------------ */
+/*  Locale-aware number formatter                                      */
+/* ------------------------------------------------------------------ */
+function useLocaleFormat() {
+  const { i18n } = useTranslation();
+  const locale = i18n.language === "fa" ? "fa-IR" : i18n.language === "ur" ? "ur-PK" : i18n.language === "he" ? "he-IL" : i18n.language;
+  return useMemo(() => ({
+    usd: (v: number) => new Intl.NumberFormat(locale, { style: "currency", currency: "USD", maximumFractionDigits: 2 }).format(v),
+    num: (v: number, digits = 0) => new Intl.NumberFormat(locale, { maximumFractionDigits: digits }).format(v),
+    pct: (v: number, digits = 2) => new Intl.NumberFormat(locale, { style: "percent", maximumFractionDigits: digits }).format(v / 100),
+  }), [locale]);
+}
 
 /* ------------------------------------------------------------------ */
 /*  API helper                                                         */
@@ -27,14 +42,11 @@ async function coinrabbitApi(endpoint: string, method = "GET", body?: unknown) {
 }
 
 /* ------------------------------------------------------------------ */
-/*  Static data                                                        */
-/* ------------------------------------------------------------------ */
-/* (Earn data now comes from coinrabbit-earn-assets.ts) */
-
-/* ------------------------------------------------------------------ */
 /*  Loan Calculator                                                    */
 /* ------------------------------------------------------------------ */
 function LoanCalculator() {
+  const { t } = useTranslation();
+  const fmt = useLocaleFormat();
   const [selectedAsset, setSelectedAsset] = useState<CollateralAsset>(COLLATERAL_ASSETS[0]);
   const [amount, setAmount] = useState(1000);
   const [loading, setLoading] = useState(false);
@@ -44,7 +56,6 @@ function LoanCalculator() {
 
   const [selectedLtv, setSelectedLtv] = useState(ltvOptions[1] ?? ltvOptions[0]);
 
-  // Reset LTV when asset risk tier changes
   useEffect(() => {
     const opts = LTV_BY_RISK[selectedAsset.riskTier].ltvOptions;
     if (!opts.includes(selectedLtv as any)) {
@@ -54,8 +65,15 @@ function LoanCalculator() {
 
   const borrowable = Math.floor(amount * (selectedLtv / 100));
   const liquidationPrice = amount > 0 ? ((borrowable / amount) * 100).toFixed(2) : "0";
-  const riskLabel = selectedLtv <= 50 ? "Low risk" : selectedLtv <= 70 ? "Medium risk" : "High risk";
+  const riskLabel = selectedLtv <= 50 ? t("lend.riskLow") : selectedLtv <= 70 ? t("lend.riskMedium") : t("lend.riskHigh");
   const riskColor = selectedLtv <= 50 ? "text-emerald-400" : selectedLtv <= 70 ? "text-[#D4AF37]" : "text-red-400";
+
+  const ltvLabels: Record<string, string> = {
+    "50": t("lend.conservative"),
+    "70": t("lend.standard"),
+    "80": t("lend.moderate"),
+    "90": t("lend.aggressive"),
+  };
 
   const handleOpenLoan = async () => {
     setLoading(true);
@@ -66,7 +84,7 @@ function LoanCalculator() {
         ltv: selectedLtv,
         loan_currency: "usdt",
       });
-      toast.success("Loan request submitted! Check the tracking tab for status.");
+      toast.success(t("lend.loanSuccess"));
     } catch (e: unknown) {
       const msg = e instanceof Error ? e.message : "Failed to open loan";
       toast.error(msg);
@@ -80,25 +98,20 @@ function LoanCalculator() {
       <CardHeader>
         <CardTitle className="flex items-center gap-2 text-foreground">
           <DollarSign className="h-5 w-5 text-[#D4AF37]" />
-          Loan Calculator
+          {t("lend.loanCalcTitle")}
         </CardTitle>
-        <CardDescription>Select collateral and LTV to see your borrowing power.</CardDescription>
+        <CardDescription>{t("lend.loanCalcDesc")}</CardDescription>
       </CardHeader>
       <CardContent className="space-y-6">
-        {/* Collateral selector */}
         <div className="space-y-2">
-          <label className="text-sm font-medium text-muted-foreground">Collateral Asset</label>
-          <CollateralSelector
-            value={selectedAsset.ticker}
-            onChange={setSelectedAsset}
-          />
+          <label className="text-sm font-medium text-muted-foreground">{t("lend.collateralAsset")}</label>
+          <CollateralSelector value={selectedAsset.ticker} onChange={setSelectedAsset} />
         </div>
 
-        {/* Amount slider */}
         <div className="space-y-2">
           <div className="flex justify-between text-sm">
-            <span className="text-muted-foreground">Collateral (USD)</span>
-            <span className="font-mono text-[#D4AF37]">${amount.toLocaleString()}</span>
+            <span className="text-muted-foreground">{t("lend.collateralUsd")}</span>
+            <span className="font-mono text-[#D4AF37]">{fmt.usd(amount)}</span>
           </div>
           <Slider
             value={[amount]}
@@ -107,6 +120,7 @@ function LoanCalculator() {
             max={50000}
             step={50}
             className="[&_[role=slider]]:border-[#D4AF37] [&_[role=slider]]:bg-[#D4AF37]"
+            dir="ltr"
           />
           <div className="flex justify-between text-xs text-muted-foreground">
             <span>$25</span>
@@ -114,51 +128,46 @@ function LoanCalculator() {
           </div>
         </div>
 
-        {/* LTV selector – dynamic based on asset risk tier */}
         <div className="space-y-2">
           <label className="text-sm font-medium text-muted-foreground">
-            LTV Ratio
-            <span className="ml-2 text-xs text-[#D4AF37]">({riskConfig.baseRate}% APR)</span>
+            {t("lend.ltvRatio")}
+            <span className="ms-2 text-xs text-[#D4AF37]">({riskConfig.baseRate}% APR)</span>
           </label>
           <div className={`grid gap-2 ${ltvOptions.length === 2 ? "grid-cols-2" : "grid-cols-3"}`}>
-            {ltvOptions.map((ltv) => {
-              const label = ltv <= 50 ? "Conservative" : ltv <= 70 ? "Standard" : ltv <= 80 ? "Moderate" : "Aggressive";
-              return (
-                <button
-                  key={ltv}
-                  onClick={() => setSelectedLtv(ltv)}
-                  className={`rounded-lg border p-3 text-center transition-all ${
-                    selectedLtv === ltv
-                      ? "border-[#D4AF37] bg-[#D4AF37]/10"
-                      : "border-border hover:border-[#D4AF37]/40"
-                  }`}
-                >
-                  <div className={`text-lg font-bold ${ltv <= 50 ? "text-emerald-400" : ltv <= 70 ? "text-[#D4AF37]" : "text-red-400"}`}>{ltv}%</div>
-                  <div className="text-xs text-muted-foreground">{label}</div>
-                </button>
-              );
-            })}
+            {ltvOptions.map((ltv) => (
+              <button
+                key={ltv}
+                onClick={() => setSelectedLtv(ltv)}
+                className={`rounded-lg border p-3 text-center transition-all ${
+                  selectedLtv === ltv
+                    ? "border-[#D4AF37] bg-[#D4AF37]/10"
+                    : "border-border hover:border-[#D4AF37]/40"
+                }`}
+              >
+                <div className={`text-lg font-bold ${ltv <= 50 ? "text-emerald-400" : ltv <= 70 ? "text-[#D4AF37]" : "text-red-400"}`}>{ltv}%</div>
+                <div className="text-xs text-muted-foreground">{ltvLabels[String(ltv)] ?? t("lend.standard")}</div>
+              </button>
+            ))}
           </div>
         </div>
 
-        {/* Results */}
         <div className="rounded-lg border border-[#D4AF37]/20 bg-background/50 p-4 space-y-3">
           <div className="flex justify-between">
-            <span className="text-sm text-muted-foreground">You can borrow</span>
-            <span className="text-lg font-bold text-[#D4AF37]">${borrowable.toLocaleString()} USDT</span>
+            <span className="text-sm text-muted-foreground">{t("lend.youCanBorrow")}</span>
+            <span className="text-lg font-bold text-[#D4AF37]">{fmt.usd(borrowable)} USDT</span>
           </div>
           <div className="flex justify-between">
-            <span className="text-sm text-muted-foreground">Liquidation Price</span>
+            <span className="text-sm text-muted-foreground">{t("lend.liquidationPrice")}</span>
             <span className={`text-sm font-mono ${riskColor}`}>${liquidationPrice}</span>
           </div>
           <div className="flex justify-between">
-            <span className="text-sm text-muted-foreground">Risk Level</span>
+            <span className="text-sm text-muted-foreground">{t("lend.riskLevel")}</span>
             <Badge variant="outline" className={`${riskColor} border-current`}>
               {riskLabel}
             </Badge>
           </div>
           <div className="flex justify-between">
-            <span className="text-sm text-muted-foreground">Interest Rate</span>
+            <span className="text-sm text-muted-foreground">{t("lend.interestRate")}</span>
             <span className="text-sm font-mono text-[#D4AF37]">{riskConfig.baseRate}% APR</span>
           </div>
         </div>
@@ -168,7 +177,7 @@ function LoanCalculator() {
           disabled={loading}
           className="w-full bg-[#D4AF37] text-background hover:bg-[#D4AF37]/90 font-semibold"
         >
-          {loading ? "Submitting…" : "Open Loan"} <ArrowRight className="h-4 w-4" />
+          {loading ? t("lend.submitting") : t("lend.openLoan")} <ArrowRight className="h-4 w-4" />
         </Button>
       </CardContent>
     </Card>
@@ -179,9 +188,10 @@ function LoanCalculator() {
 /*  Yield Dashboard                                                    */
 /* ------------------------------------------------------------------ */
 function YieldDashboard() {
+  const { t } = useTranslation();
+  const fmt = useLocaleFormat();
   const [selectedKey, setSelectedKey] = useState(EARN_ASSETS_UNIQUE_KEY(EARN_ASSETS[0]));
   const [depositAmount, setDepositAmount] = useState("");
-  const [loading, setLoading] = useState(false);
   const [search, setSearch] = useState("");
   const calcRef = useRef<HTMLDivElement>(null);
 
@@ -214,18 +224,16 @@ function YieldDashboard() {
 
   return (
     <div className="space-y-6">
-      {/* Search */}
       <div className="relative">
-        <Search className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground" />
+        <Search className="absolute start-3 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground" />
         <Input
           value={search}
           onChange={(e) => setSearch(e.target.value)}
-          placeholder="Search 50+ earn assets…"
-          className="pl-10 border-[#D4AF37]/30"
+          placeholder={t("lend.searchEarnAssets")}
+          className="ps-10 border-[#D4AF37]/30"
         />
       </div>
 
-      {/* Asset grid */}
       <div className="grid gap-3 grid-cols-2 sm:grid-cols-3 lg:grid-cols-4">
         {filtered.map((asset) => {
           const key = EARN_ASSETS_UNIQUE_KEY(asset);
@@ -254,13 +262,13 @@ function YieldDashboard() {
                   </div>
                 </div>
                 <div className="text-xl font-bold text-[#D4AF37]">{asset.apy}%</div>
-                <div className="text-[10px] text-muted-foreground">APY · {asset.daily}% daily</div>
+                <div className="text-[10px] text-muted-foreground">APY · {asset.daily}% {t("lend.daily")}</div>
                 <Button
                   size="sm"
                   onClick={(e) => { e.stopPropagation(); selectAndScroll(key); }}
                   className="w-full mt-1 bg-[#D4AF37] text-background hover:bg-[#D4AF37]/90 text-xs font-semibold"
                 >
-                  Earn Now <ArrowRight className="ml-1 h-3 w-3" />
+                  {t("lend.earnNow")} <ArrowRight className="ms-1 h-3 w-3" />
                 </Button>
               </CardContent>
             </Card>
@@ -269,22 +277,21 @@ function YieldDashboard() {
       </div>
 
       {filtered.length === 0 && (
-        <p className="text-center text-sm text-muted-foreground py-4">No earn assets match your search.</p>
+        <p className="text-center text-sm text-muted-foreground py-4">{t("lend.noEarnAssets")}</p>
       )}
 
-      {/* Deposit form */}
       <div ref={calcRef}>
         <Card className="border-[#D4AF37]/20 bg-card/50 backdrop-blur">
           <CardHeader>
             <CardTitle className="flex items-center gap-2 text-foreground">
               <TrendingUp className="h-5 w-5 text-[#D4AF37]" />
-              Start Earning on {selected.ticker}
+              {t("lend.startEarningOn")} {selected.ticker}
               <span className="text-xs font-normal text-muted-foreground">({selected.network})</span>
             </CardTitle>
           </CardHeader>
           <CardContent className="space-y-4">
             <div className="space-y-2">
-              <label className="text-sm text-muted-foreground">Deposit Amount (USD)</label>
+              <label className="text-sm text-muted-foreground">{t("lend.depositAmountUsd")}</label>
               <Input
                 type="number"
                 placeholder={`Min $${selected.minUsd}`}
@@ -297,12 +304,12 @@ function YieldDashboard() {
             {numAmount > 0 && (
               <div className="rounded-lg border border-[#D4AF37]/20 bg-background/50 p-4 space-y-2">
                 <div className="flex justify-between text-sm">
-                  <span className="text-muted-foreground">Daily Earnings</span>
-                  <span className="font-mono text-emerald-400">+${dailyEarning.toFixed(4)}</span>
+                  <span className="text-muted-foreground">{t("lend.dailyEarnings")}</span>
+                  <span className="font-mono text-emerald-400">+{fmt.usd(dailyEarning)}</span>
                 </div>
                 <div className="flex justify-between text-sm">
-                  <span className="text-muted-foreground">Annual Earnings</span>
-                  <span className="font-mono text-[#D4AF37]">+${annualEarning.toFixed(2)}</span>
+                  <span className="text-muted-foreground">{t("lend.annualEarnings")}</span>
+                  <span className="font-mono text-[#D4AF37]">+{fmt.usd(annualEarning)}</span>
                 </div>
               </div>
             )}
@@ -311,7 +318,7 @@ function YieldDashboard() {
               onClick={handleDeposit}
               className="w-full bg-[#D4AF37] text-background hover:bg-[#D4AF37]/90 font-semibold"
             >
-              Start Earning {selected.ticker} <ArrowRight className="h-4 w-4" />
+              {t("lend.startEarning")} {selected.ticker} <ArrowRight className="h-4 w-4" />
             </Button>
           </CardContent>
         </Card>
@@ -323,32 +330,32 @@ function YieldDashboard() {
 /* ------------------------------------------------------------------ */
 /*  Transaction Tracker                                                */
 /* ------------------------------------------------------------------ */
-const STEPS = [
-  { label: "Waiting for Deposit", icon: Clock, description: "Send collateral to the provided address" },
-  { label: "Confirming", icon: Shield, description: "Blockchain confirmations in progress" },
-  { label: "Active", icon: TrendingUp, description: "Your position is live" },
-];
-
 function TransactionTracker() {
+  const { t } = useTranslation();
   const [txId, setTxId] = useState("");
   const [currentStep, setCurrentStep] = useState(-1);
   const [polling, setPolling] = useState(false);
   const [txData, setTxData] = useState<Record<string, unknown> | null>(null);
+
+  const STEPS = useMemo(() => [
+    { label: t("lend.stepWaiting"), icon: Clock, description: t("lend.stepWaitingDesc") },
+    { label: t("lend.stepConfirming"), icon: Shield, description: t("lend.stepConfirmingDesc") },
+    { label: t("lend.stepActive"), icon: TrendingUp, description: t("lend.stepActiveDesc") },
+  ], [t]);
 
   const checkStatus = useCallback(async () => {
     if (!txId.trim()) return;
     try {
       const data = await coinrabbitApi(`/loans/list?id=${encodeURIComponent(txId)}`);
       setTxData(data);
-      // Map status to step
       const status = String(data?.status || data?.loan_status || "").toLowerCase();
       if (status.includes("active") || status.includes("completed")) setCurrentStep(2);
       else if (status.includes("confirm") || status.includes("processing")) setCurrentStep(1);
       else setCurrentStep(0);
     } catch {
-      toast.error("Could not fetch transaction status.");
+      toast.error(t("lend.trackError"));
     }
-  }, [txId]);
+  }, [txId, t]);
 
   useEffect(() => {
     if (!polling) return;
@@ -358,7 +365,7 @@ function TransactionTracker() {
 
   const handleTrack = () => {
     if (!txId.trim()) {
-      toast.error("Enter a transaction ID");
+      toast.error(t("lend.enterTxId"));
       return;
     }
     setPolling(true);
@@ -370,24 +377,23 @@ function TransactionTracker() {
       <CardHeader>
         <CardTitle className="flex items-center gap-2 text-foreground">
           <Clock className="h-5 w-5 text-[#D4AF37]" />
-          Track Transaction
+          {t("lend.trackTitle")}
         </CardTitle>
-        <CardDescription>Enter your loan or earn transaction ID to track progress.</CardDescription>
+        <CardDescription>{t("lend.trackDesc")}</CardDescription>
       </CardHeader>
       <CardContent className="space-y-6">
         <div className="flex gap-2">
           <Input
-            placeholder="Transaction ID"
+            placeholder={t("lend.transactionId")}
             value={txId}
             onChange={(e) => setTxId(e.target.value)}
             className="border-[#D4AF37]/30 font-mono"
           />
           <Button onClick={handleTrack} className="bg-[#D4AF37] text-background hover:bg-[#D4AF37]/90">
-            Track
+            {t("lend.trackBtn")}
           </Button>
         </div>
 
-        {/* Stepper */}
         {currentStep >= 0 && (
           <div className="space-y-4">
             {STEPS.map((step, i) => {
@@ -440,6 +446,7 @@ function TransactionTracker() {
 /*  Main Page                                                          */
 /* ------------------------------------------------------------------ */
 export default function LendEarn() {
+  const { t } = useTranslation();
   const urlParams = new URLSearchParams(window.location.search);
   const tabParam = urlParams.get("tab");
   const defaultTab = tabParam === "earn" ? "earn" : tabParam === "track" ? "track" : "borrow";
@@ -447,14 +454,11 @@ export default function LendEarn() {
   return (
     <>
       <Helmet>
-        <title>Crypto Lending & Earn | Borrow USDT Against BTC/ETH/SOL | MRC GlobalPay</title>
-        <meta
-          name="description"
-          content="Borrow stablecoins against your crypto or earn yield on BTC, ETH, and USDT. No KYC required. Powered by MRC GlobalPay — Registered Canadian MSB."
-        />
+        <title>{t("lend.metaTitle")}</title>
+        <meta name="description" content={t("lend.metaDesc")} />
         <meta name="robots" content="index, follow" />
-        <link rel="canonical" href="https://mrcglobalpay.com/lend" />
       </Helmet>
+      <HreflangTags />
       <SiteHeader />
 
       <main className="min-h-screen bg-background">
@@ -463,14 +467,14 @@ export default function LendEarn() {
           <div className="absolute inset-0 bg-gradient-to-b from-[#D4AF37]/5 to-transparent" />
           <div className="relative mx-auto max-w-6xl px-4 py-16 text-center sm:py-24">
             <Badge variant="outline" className="mb-4 border-[#D4AF37]/40 text-[#D4AF37]">
-              <Lock className="mr-1 h-3 w-3" /> MSB Regulated · Non-Custodial
+              <Lock className="me-1 h-3 w-3" /> {t("lend.heroBadge")}
             </Badge>
             <h1 className="text-3xl font-bold tracking-tight text-foreground sm:text-5xl">
-              Crypto <span className="text-[#D4AF37]">Lending</span> &{" "}
-              <span className="text-[#D4AF37]">Earn</span>
+              {t("lend.heroTitle")} <span className="text-[#D4AF37]">{t("lend.heroLending")}</span> {t("lend.heroAnd")}{" "}
+              <span className="text-[#D4AF37]">{t("lend.heroEarn")}</span>
             </h1>
             <p className="mx-auto mt-4 max-w-2xl text-lg text-muted-foreground">
-              Borrow stablecoins against your crypto holdings or earn competitive yield — all without selling your assets.
+              {t("lend.heroSubtitle")}
             </p>
           </div>
         </section>
@@ -480,13 +484,13 @@ export default function LendEarn() {
           <Tabs defaultValue={defaultTab} className="space-y-8">
             <TabsList className="grid w-full max-w-md mx-auto grid-cols-3 bg-muted/50">
               <TabsTrigger value="borrow" className="data-[state=active]:bg-[#D4AF37] data-[state=active]:text-background">
-                <DollarSign className="mr-1 h-4 w-4" /> Borrow
+                <DollarSign className="me-1 h-4 w-4" /> {t("lend.tabBorrow")}
               </TabsTrigger>
               <TabsTrigger value="earn" className="data-[state=active]:bg-[#D4AF37] data-[state=active]:text-background">
-                <Percent className="mr-1 h-4 w-4" /> Earn
+                <Percent className="me-1 h-4 w-4" /> {t("lend.tabEarn")}
               </TabsTrigger>
               <TabsTrigger value="track" className="data-[state=active]:bg-[#D4AF37] data-[state=active]:text-background">
-                <Clock className="mr-1 h-4 w-4" /> Track
+                <Clock className="me-1 h-4 w-4" /> {t("lend.tabTrack")}
               </TabsTrigger>
             </TabsList>
 
@@ -510,13 +514,8 @@ export default function LendEarn() {
             <div className="flex items-start gap-3 rounded-lg border border-[#D4AF37]/20 bg-background/50 p-4">
               <AlertTriangle className="mt-0.5 h-5 w-5 flex-shrink-0 text-[#D4AF37]" />
               <div className="text-xs text-muted-foreground leading-relaxed">
-                <strong className="text-foreground">Compliance Disclaimer:</strong> As a registered Canadian
-                Money Services Business (MSB — Registration No.{" "}
-                <span className="font-mono text-[#D4AF37]">C100000015</span>), all lending operations
-                conducted through MRC GlobalPay follow federal Anti-Money Laundering (AML) and
-                Anti-Terrorist Financing (ATF) guidelines. Cryptocurrency lending involves risk. Collateral
-                may be liquidated if asset prices drop below the liquidation threshold. This is not financial
-                advice.
+                <strong className="text-foreground">{t("lend.complianceTitle")}</strong>{" "}
+                {t("lend.complianceText")}
               </div>
             </div>
           </div>
