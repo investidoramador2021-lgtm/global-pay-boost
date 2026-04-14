@@ -81,7 +81,9 @@
       "buy": "Buy",
       "private": "Private",
       "bridge": "Bridge",
-      "invoice": "Invoice"
+      "invoice": "Invoice",
+      "loan": "Loan",
+      "earn": "Earn"
     },
     "online": "Online",
     "fixedRate": "Fixed Rate",
