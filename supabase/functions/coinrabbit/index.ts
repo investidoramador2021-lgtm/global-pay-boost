@@ -3,7 +3,7 @@ const corsHeaders = {
   'Access-Control-Allow-Headers': 'authorization, x-client-info, apikey, content-type, x-supabase-client-platform, x-supabase-client-platform-version, x-supabase-client-runtime, x-supabase-client-runtime-version',
 }
 
-const BASE = 'https://api.coinrabbit.io/api/v2'
+const BASE = 'https://api.coinrabbit.io/v2'
 
 function json(data: unknown, status = 200) {
   return new Response(JSON.stringify(data), {
