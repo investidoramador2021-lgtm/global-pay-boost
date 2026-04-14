@@ -194,7 +194,6 @@ Deno.serve(async (req: Request) => {
         to_code: toCode,
         to_network: toNetwork,
         amount: String(body.collateral_amount),
-        ltv_percent: String(body.ltv),
         exchange,
       })
       const url = `${BASE}/loans/estimate?${qs}`
