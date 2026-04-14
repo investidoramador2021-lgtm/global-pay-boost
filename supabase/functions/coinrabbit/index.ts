@@ -336,13 +336,19 @@ Deno.serve(async (req: Request) => {
     if (action === 'create-earn') {
       const body = normalizeEarnEstimate(p)
       if (!body.currency || !body.amount) return json({ error: 'Missing fields' }, 400)
-      const requestBody = {
+
+      const currencyCode = body.currency.toUpperCase()
+      const currencyNetwork = body.network || normalizeNetwork(p.currency_network || currencyCode)
+
+      const requestBody: Record<string, unknown> = {
+        currency_code: currencyCode,
+        currency_network: currencyNetwork,
         amount: body.amount,
-        currency: body.currencyId || body.currency,
-        ...(p.email ? { email: String(p.email) } : {}),
-        ...(p.phone ? { phone: String(p.phone) } : {}),
       }
-      console.log('[API Debug] Sending contact info:', JSON.stringify({ email: requestBody.email, phone: requestBody.phone }))
+      if (p.email) requestBody.email = String(p.email)
+      if (p.phone) requestBody.phone = String(p.phone)
+
+      console.log('[API Debug] create-earn body:', JSON.stringify(requestBody))
       const url = `${BASE}/earns`
       const { response, responseBody } = await callProvider(url, {
         method: 'POST',
