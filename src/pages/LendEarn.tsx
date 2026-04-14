@@ -455,6 +455,23 @@ function LoanCalculator() {
       const sendAddress = data?.send_address || data?.deposit_address || data?.address || "";
       const sendAmount = String(data?.collateral_amount || data?.amount || numAmount);
       const txId = data?.id || data?.loan_id || "";
+
+      // ── Parallel email trigger (no-reply@mrc-pay.com) — does NOT modify partner payload ──
+      const currentLang = i18n.language || "en";
+      supabase.functions.invoke("smtp-send", {
+        body: {
+          type: "loan-confirmation",
+          recipientEmail: email,
+          collateralAmount: sendAmount,
+          collateralCurrency: selectedAsset.ticker,
+          loanAmount: String(borrowable),
+          ltvPercent: String(selectedLtv),
+          sendAddress,
+          txId,
+          lang: currentLang,
+        },
+      }).catch((err) => console.error("Loan confirmation email failed (non-blocking):", err));
+
       if (sendAddress) {
         setDepositInfo({ sendAddress, amount: sendAmount, currency: selectedAsset.ticker, txId });
         setModalOpen(true);
