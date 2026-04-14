@@ -309,10 +309,9 @@ function YieldDashboard() {
 
             <Button
               onClick={handleDeposit}
-              disabled={loading || numAmount < selected.minUsd}
               className="w-full bg-[#D4AF37] text-background hover:bg-[#D4AF37]/90 font-semibold"
             >
-              {loading ? "Submitting…" : "Deposit & Earn"} <Wallet className="h-4 w-4" />
+              Start Earning {selected.ticker} <ArrowRight className="h-4 w-4" />
             </Button>
           </CardContent>
         </Card>
