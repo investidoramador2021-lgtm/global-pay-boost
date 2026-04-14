@@ -143,22 +143,15 @@ ${items}
   /* ── Dynamic Sitemap ── */
   const entries: string[] = [];
 
-  // Static pages
+  // Static pages — only English canonical with hreflang alternates (no separate lang entries)
   for (const p of STATIC_PAGES) {
     entries.push(urlEntry(p.loc, today, p.changefreq, p.priority));
-    // Language variants
-    for (const lang of LANGS) {
-      entries.push(urlEntry(`/${lang}${p.loc === "/" ? "" : p.loc}`, today, p.changefreq, "0.7"));
-    }
   }
 
-  // Swap pairs (changefreq: always — prices update constantly)
+  // Swap pairs — English canonical only, hreflang handles alternates
   const uniqueSwaps = [...new Set(SWAP_SLUGS)];
   for (const slug of uniqueSwaps) {
     entries.push(urlEntry(`/swap/${slug}`, today, "always", "0.8"));
-    for (const lang of LANGS) {
-      entries.push(urlEntry(`/${lang}/swap/${slug}`, today, "always", "0.7"));
-    }
   }
 
   // Solutions
