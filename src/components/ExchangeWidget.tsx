@@ -347,8 +347,8 @@ function LoanWidgetPanel() {
       </div>
 
       {/* LTV Gauge */}
-      <div className="rounded-xl border border-[#D4AF37]/20 p-4" style={{ background: "hsl(220 25% 8% / 0.6)", boxShadow: "inset 0 2px 6px rgba(0,0,0,0.35)" }}>
-        <div className="text-[10px] uppercase tracking-wider text-center text-muted-foreground mb-2">{t("lend.maxLtv")} Gauge</div>
+      <div className="rounded-lg border border-[#D4AF37]/15 p-3" style={{ background: "hsl(220 25% 8% / 0.5)" }}>
+        <div className="text-[10px] uppercase tracking-wider text-muted-foreground mb-2">{t("lend.maxLtv")}</div>
         <LtvGauge value={maxLtv} />
       </div>
 
