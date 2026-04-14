@@ -297,13 +297,28 @@ Deno.serve(async (req: Request) => {
     if (action === 'create-loan') {
       const body = normalizeLoanEstimate(p)
       if (!body.collateral_currency || !body.collateral_amount || !body.ltv) return json({ error: 'Missing fields' }, 400)
-      const requestBody = {
-        ...body,
-        collateral_amount: parseFloat(Number(body.collateral_amount).toFixed(8)),
-        ...(p.email ? { email: String(p.email) } : {}),
-        ...(p.phone ? { phone: String(p.phone) } : {}),
+
+      const fromCode = body.collateral_currency.toUpperCase()
+      const fromNetwork = normalizeNetwork(p.from_network || p.collateral_network || fromCode)
+      const toCode = body.loan_currency.toUpperCase()
+      const toNetwork = normalizeNetwork(p.to_network || p.loan_network || 'ETH')
+
+      const requestBody: Record<string, unknown> = {
+        deposit: {
+          currency_code: fromCode,
+          currency_network: fromNetwork,
+          expected_amount: parseFloat(Number(body.collateral_amount).toFixed(8)),
+        },
+        loan: {
+          currency_code: toCode,
+          currency_network: toNetwork,
+        },
+        ltv_percent: body.ltv / 100,
       }
-      console.log('[API Debug] Sending contact info:', JSON.stringify({ email: requestBody.email, phone: requestBody.phone }))
+      if (p.email) requestBody.email = String(p.email)
+      if (p.phone) requestBody.phone = String(p.phone)
+
+      console.log('[API Debug] create-loan body:', JSON.stringify(requestBody))
       const { response, responseBody } = await callProvider(`${BASE}/loans`, {
         method: 'POST',
         headers: h,
