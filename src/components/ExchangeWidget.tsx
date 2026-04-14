@@ -2923,8 +2923,22 @@ const ExchangeWidget = ({ onTabChange }: ExchangeWidgetProps = {}) => {
                   <CurrencyPicker show={showToPicker} onSelect={setToCurrency} onClose={() => setShowToPicker(false)} exclude={fromCurrency?.ticker} />
                 </div>
 
-                <Button className="mt-5 w-full min-h-[52px] bg-primary text-primary-foreground hover:bg-primary/90 hover:shadow-neon shadow-card text-base font-bold transition-shadow duration-300" size="lg" disabled={!canExchangeNow} onClick={handleExchangeNow}>
-                  {t("widget.exchangeNow")}
+                <Button
+                  className="group relative mt-5 w-full min-h-[52px] overflow-hidden text-base font-bold transition-all duration-100 shadow-card hover:shadow-neon"
+                  size="lg"
+                  disabled={!canExchangeNow}
+                  onClick={handleExchangeNow}
+                  style={{
+                    background: "linear-gradient(135deg, hsl(160 100% 45%), hsl(145 90% 50%))",
+                    color: "hsl(220 25% 8%)",
+                  }}
+                >
+                  <span className="absolute inset-0 pointer-events-none" style={{
+                    background: "linear-gradient(90deg, transparent 0%, rgba(255,255,255,0.35) 50%, transparent 100%)",
+                    backgroundSize: "200% 100%",
+                    animation: "shimmer 3s ease-in-out infinite",
+                  }} />
+                  <span className="relative z-10">{t("widget.exchangeNow")}</span>
                 </Button>
                 <p className="mt-1.5 flex items-center justify-center gap-1.5 font-body text-[11px] text-muted-foreground">
                   <Shield className="h-3 w-3 text-primary" />

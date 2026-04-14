@@ -60,7 +60,7 @@
     --shadow-neon: 0 4px 14px -2px hsl(160 84% 39% / 0.25);
 
     font-family: 'Inter', system-ui, sans-serif;
-  }
+
 
   /* Dark mode */
   .dark {
@@ -228,4 +228,9 @@ html[lang='fa'] body { font-family: 'Vazirmatn', 'Inter', sans-serif; }
 .cv-auto {
   content-visibility: auto;
   contain-intrinsic-size: auto 600px;
+}
+
+@keyframes shimmer {
+  0% { background-position: 200% 0; }
+  100% { background-position: -200% 0; }
 }
