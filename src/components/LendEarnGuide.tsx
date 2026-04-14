@@ -153,7 +153,7 @@ const LOAN_FAQ = [
     aKey: "lendGuide.loanFaq.a1",
     fallbackQ: "What happens if the price of my collateral drops?",
     fallbackA:
-      "MRC GlobalPay actively monitors all open loan positions. If your collateral value enters the Yellow (Risk) zone, you will receive instant SMS and email alerts with instructions to top up. If the value declines further into the Red (Liquidation) zone without action, the system will automatically sell enough collateral to repay the loan — protecting you from further losses.",
+      "All loan positions are monitored 24/7 by our infrastructure partner's automated risk engine. If your collateral value enters the Yellow (Risk) zone, the partner's system will automatically trigger instant SMS and email alerts to your registered contact details with instructions to adjust your position. To protect the lending pool, the partner's engine will execute a liquidation if the value falls into the Red (Liquidation) zone without action. Disclaimer: MRC Global Pay provides the interface for these services; monitoring, alert delivery, and liquidation execution are managed exclusively by our technology partner.",
   },
   {
     qKey: "lendGuide.loanFaq.q2",
@@ -344,7 +344,13 @@ function RiskZoneWarning() {
           <p className="mt-1 text-xs leading-relaxed text-muted-foreground">
             {t(
               "lendGuide.riskZoneTip",
-              "MRC GlobalPay actively monitors all open loan positions. If your collateral value enters the Yellow (Risk) zone, you will receive instant SMS and email alerts with instructions to top up. If the value declines further into the Red (Liquidation) zone without action, the system will automatically sell enough collateral to repay the loan — protecting you from further losses."
+              "All loan positions are monitored 24/7 by our infrastructure partner's automated risk engine. If your collateral value enters the Yellow (Risk) zone, the partner's system will automatically trigger instant SMS and email alerts to your registered contact details with instructions to adjust your position. To protect the lending pool, the partner's engine will execute a liquidation if the value falls into the Red (Liquidation) zone without action."
+            )}
+          </p>
+          <p className="mt-1 text-xs leading-relaxed text-muted-foreground italic">
+            {t(
+              "lendGuide.riskZoneDisclaimer",
+              "Disclaimer: MRC Global Pay provides the interface for these services; monitoring, alert delivery, and liquidation execution are managed exclusively by our technology partner."
             )}
           </p>
         </div>
