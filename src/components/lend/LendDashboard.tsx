@@ -250,6 +250,8 @@ export default function LendDashboard() {
       toast.info(t("lendDash.loginRequired", "Sign in required to {{action}}", { action }));
       return false;
     }
+    // Refresh data on management action
+    fetchPositions().then(() => localStorage.setItem("mrc_dash_last_refresh", String(Date.now())));
     return true;
   };
 
