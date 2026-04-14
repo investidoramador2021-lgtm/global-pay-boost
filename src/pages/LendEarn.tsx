@@ -565,20 +565,18 @@ function LoanCalculator() {
             )}
           </div>
 
-          {belowMinimum && (
-            <p className="text-xs text-red-400 text-center">
-              {t("lend.belowMinLoan", `Minimum collateral is $${minLoanAmount}`)}
-            </p>
-          )}
-
           <Button
             onClick={handleOpenLoan}
-            disabled={loading || belowMinimum}
+            disabled={loading || belowMinimum || numAmount <= 0}
             className="w-full bg-[#D4AF37] text-background hover:bg-[#D4AF37]/90 font-semibold"
           >
             {loading ? <Loader2 className="h-4 w-4 animate-spin me-2" /> : null}
             {loading ? t("lend.submitting") : t("lend.openLoan")} <ArrowRight className="h-4 w-4" />
           </Button>
+
+          <p className="text-[10px] text-muted-foreground text-center leading-relaxed italic">
+            {t("lend.liabilityShift", "Monitoring and alerts are managed by our infrastructure partner's automated risk engine.")}
+          </p>
         </CardContent>
       </Card>
 
