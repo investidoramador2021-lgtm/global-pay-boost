@@ -673,6 +673,18 @@
     "getInstantLoan": "Get Instant Loan",
     "earnSubtitle": "Earn competitive yield on your crypto — no lock-up period.",
     "viewAllEarnAssets": "View All 50+ Earn Assets",
-    "daily": "daily"
+    "daily": "daily",
+    "liveEstimate": "Live estimate from API",
+    "belowMinLoan": "Minimum collateral is ${{min}}",
+    "minDeposit": "Minimum deposit is ${{min}}",
+    "earningsProjection": "Earnings Projection",
+    "period": "Period",
+    "earnings": "Earnings",
+    "total": "Total",
+    "periodDaily": "Daily",
+    "periodWeekly": "7 Days",
+    "periodMonthly": "1 Month",
+    "periodAnnual": "1 Year",
+    "earnSuccess": "Earn deposit initiated!"
   }
 }
