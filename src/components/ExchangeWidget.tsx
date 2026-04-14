@@ -2510,46 +2510,7 @@ const ExchangeWidget = ({ onTabChange }: ExchangeWidgetProps = {}) => {
 
             {/* ===== INSTANT LOAN MODE ===== */}
             {widgetMode === "loan" && (
-              <div className="space-y-4">
-                <div className="space-y-2">
-                  <label className="text-xs font-medium text-[#D4AF37]">Collateral Asset</label>
-                  <div className="grid grid-cols-3 gap-2">
-                    {[
-                      { ticker: "BTC", icon: "₿" },
-                      { ticker: "ETH", icon: "Ξ" },
-                      { ticker: "SOL", icon: "◎" },
-                    ].map((c) => (
-                      <button
-                        key={c.ticker}
-                        className="rounded-lg border border-[#D4AF37]/20 bg-[#D4AF37]/5 p-3 text-center transition-all hover:border-[#D4AF37]/50 hover:bg-[#D4AF37]/10 focus:border-[#D4AF37] focus:ring-1 focus:ring-[#D4AF37]/30"
-                      >
-                        <div className="text-xl">{c.icon}</div>
-                        <div className="text-xs font-semibold text-foreground">{c.ticker}</div>
-                      </button>
-                    ))}
-                  </div>
-                </div>
-                <div className="space-y-1">
-                  <label className="text-xs font-medium text-[#D4AF37]">Collateral Value (USD)</label>
-                  <Input type="number" placeholder="1,000" defaultValue="1000" className="font-mono border-[#D4AF37]/20 focus:border-[#D4AF37] focus:ring-[#D4AF37]/30" />
-                </div>
-                <div className="rounded-lg border border-[#D4AF37]/20 bg-[#D4AF37]/5 p-3 space-y-2">
-                  <div className="flex justify-between text-sm">
-                    <span className="text-muted-foreground">You can borrow</span>
-                    <span className="font-bold text-[#D4AF37]">~$700 USDT</span>
-                  </div>
-                  <div className="flex justify-between text-xs">
-                    <span className="text-muted-foreground">LTV Ratio</span>
-                    <span className="font-mono text-[#D4AF37]">70%</span>
-                  </div>
-                </div>
-                <a
-                  href="/lend"
-                  className="flex w-full items-center justify-center gap-2 rounded-lg bg-[#D4AF37] px-4 py-3 font-display text-sm font-bold text-background shadow-lg transition-colors hover:bg-[#C5A028]"
-                >
-                  <Landmark className="h-4 w-4" /> Get Instant Loan
-                </a>
-              </div>
+              <LoanWidgetPanel />
             )}
 
             {/* ===== EARN MODE ===== */}
