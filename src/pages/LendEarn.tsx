@@ -637,6 +637,8 @@ function LoanCalculator() {
         currency={depositInfo.currency}
         txId={depositInfo.txId}
         type="loan"
+        userEmail={confirmedEmail}
+        userLang={i18n.language}
       />
     </>
   );
