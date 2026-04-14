@@ -676,7 +676,7 @@ const AdminPortal = () => {
                     <TableHeader>
                       <TableRow>
                         <TableHead>Name</TableHead>
-                        <TableHead>Referral Code</TableHead>
+                        <TableHead>Affiliate Link</TableHead>
                         <TableHead>BTC Wallet</TableHead>
                         <TableHead className="text-right">Total Volume</TableHead>
                         <TableHead className="text-right">Earned BTC</TableHead>
@@ -691,10 +691,25 @@ const AdminPortal = () => {
                         const pEarned = ptxs.reduce((s, t) => s + Number(t.commission_btc), 0);
                         const pUnpaid = ptxs.filter((t) => !t.is_paid).reduce((s, t) => s + Number(t.commission_btc), 0);
                         const pPaid = ptxs.filter((t) => t.is_paid).reduce((s, t) => s + Number(t.commission_btc), 0);
+                        const affiliateLink = `https://mrcglobalpay.com/?ref=${p.referral_code}`;
                         return (
                           <TableRow key={p.id}>
                             <TableCell className="font-medium">{p.first_name} {p.last_name}</TableCell>
-                            <TableCell className="font-mono text-sm text-muted-foreground">{p.referral_code}</TableCell>
+                            <TableCell className="font-mono text-xs text-muted-foreground max-w-[320px]">
+                              <div className="flex items-center gap-1.5">
+                                <span className="truncate">{affiliateLink}</span>
+                                <button
+                                  onClick={() => {
+                                    navigator.clipboard.writeText(affiliateLink);
+                                    toast({ title: "Copied", description: `Affiliate link for ${p.first_name} copied.` });
+                                  }}
+                                  className="flex-shrink-0 p-1 rounded hover:bg-muted/50 transition-colors"
+                                  title="Copy affiliate link"
+                                >
+                                  <Copy className="w-3.5 h-3.5" />
+                                </button>
+                              </div>
+                            </TableCell>
                             <TableCell className="font-mono text-xs text-muted-foreground max-w-[300px]">
                               <div className="flex items-center gap-1">
                                 <span className="break-all">{p.btc_wallet}</span>
