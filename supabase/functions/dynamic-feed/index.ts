@@ -50,6 +50,7 @@ const STATIC_PAGES = [
   { loc: "/sovereign-settlement", changefreq: "monthly", priority: "0.6" },
   { loc: "/blog/whitepapers/crypto-loans", changefreq: "monthly", priority: "0.6" },
   { loc: "/blog/whitepapers/digital-yield", changefreq: "monthly", priority: "0.6" },
+  { loc: "/research/paxg-vs-xaut-2026", changefreq: "monthly", priority: "0.8" },
   { loc: "/tools/crypto-dust-calculator", changefreq: "monthly", priority: "0.6" },
   { loc: "/compliance", changefreq: "monthly", priority: "0.5" },
   { loc: "/crypto-dust-solutions", changefreq: "monthly", priority: "0.6" },
