@@ -70,6 +70,7 @@ const RegulatoryReport = lazy(() => import("./pages/RegulatoryReport.tsx"));
 const InvoicePay = lazy(() => import("./pages/InvoicePay.tsx"));
 const InvoiceStatus = lazy(() => import("./pages/InvoiceStatus.tsx"));
 const LendEarn = lazy(() => import("./pages/LendEarn.tsx"));
+const ResearchPaxgVsXaut = lazy(() => import("./pages/ResearchPaxgVsXaut.tsx"));
 const NotFound = lazy(() => import("./pages/NotFound.tsx"));
 
 const queryClient = new QueryClient();
@@ -143,6 +144,7 @@ const AppRoutes = () => (
     <Route path="lend" element={<LendEarn />} />
     <Route path="blog/whitepapers/crypto-loans" element={<WhitepaperLoans />} />
     <Route path="blog/whitepapers/digital-yield" element={<WhitepaperYield />} />
+    <Route path="research/paxg-vs-xaut-2026" element={<ResearchPaxgVsXaut />} />
   </>
 );
 
