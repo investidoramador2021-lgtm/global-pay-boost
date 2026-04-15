@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import { Helmet } from "react-helmet-async";
 import { Link, useLocation } from "react-router-dom";
-import { Calendar, Clock, ArrowRight, FileText, Shield, Landmark, Zap, ScrollText, DollarSign, TrendingUp } from "lucide-react";
+import { Calendar, Clock, ArrowRight, FileText, Shield, Landmark, Zap, ScrollText, DollarSign, TrendingUp, Coins } from "lucide-react";
 import SiteHeader from "@/components/SiteHeader";
 import SiteFooter from "@/components/SiteFooter";
 import { fetchAllPosts, type BlogPost } from "@/lib/blog-data";
@@ -67,6 +67,16 @@ const WHITEPAPERS = [
     accent: "160 100% 45%",
     category: "Institutional Whitepaper",
     tags: ["Earn Yield", "P2I Lending", "Compound Interest", "Source-Back"],
+  },
+  {
+    title: "PAXG vs. XAUt in 2026: Which Gold-Backed Token Belongs in Your Portfolio?",
+    subtitle: "Tokenized Gold Research",
+    excerpt: "The institutional guide to tokenized gold. Compare NYDFS regulation vs. Swiss offshore liquidity, on-chain fees, DeFi yield strategies, and physical redemption mechanics.",
+    path: "/research/paxg-vs-xaut-2026",
+    icon: Coins,
+    accent: "45 100% 55%",
+    category: "Research",
+    tags: ["PAXG", "XAUt", "Tokenized Gold", "DeFi Yield"],
   },
 ];
 
