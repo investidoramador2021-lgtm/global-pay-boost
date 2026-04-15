@@ -144,6 +144,7 @@ const AppRoutes = () => (
     <Route path="lend" element={<LendEarn />} />
     <Route path="blog/whitepapers/crypto-loans" element={<WhitepaperLoans />} />
     <Route path="blog/whitepapers/digital-yield" element={<WhitepaperYield />} />
+    <Route path="research/paxg-vs-xaut-2026" element={<ResearchPaxgVsXaut />} />
   </>
 );
 
