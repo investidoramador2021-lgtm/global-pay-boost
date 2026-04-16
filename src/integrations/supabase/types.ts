@@ -293,6 +293,41 @@ export type Database = {
         }
         Relationships: []
       }
+      developer_profiles: {
+        Row: {
+          created_at: string
+          id: string
+          partner_id: string
+          tier: string
+          totp_configured: boolean
+          updated_at: string
+        }
+        Insert: {
+          created_at?: string
+          id?: string
+          partner_id: string
+          tier?: string
+          totp_configured?: boolean
+          updated_at?: string
+        }
+        Update: {
+          created_at?: string
+          id?: string
+          partner_id?: string
+          tier?: string
+          totp_configured?: boolean
+          updated_at?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "developer_profiles_partner_id_fkey"
+            columns: ["partner_id"]
+            isOneToOne: true
+            referencedRelation: "partner_profiles"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       email_send_log: {
         Row: {
           created_at: string
