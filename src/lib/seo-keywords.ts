@@ -6,6 +6,10 @@ export interface SeoKeyword {
   benefitHook: string;
   cluster: string;
   canonicalUrl?: string;
+  customTitle?: string;
+  customDescription?: string;
+  customFaqs?: { q: string; a: string }[];
+  customSections?: { heading: string; body: string }[];
 }
 
 function getCluster(keyword: string, url: string): string {
@@ -33,7 +37,23 @@ export const seoKeywords = [
   { keyword: "usdt to sol", intentType: "Commercial", targetUrl: "/swap/usdt-to-sol", primaryH1: "Convert USDT to Solana (SOL)", benefitHook: "Low-fee Solana ecosystem entry." },
   { keyword: "coin exchange near me", intentType: "Commercial", targetUrl: "/local-crypto-exchange", primaryH1: "Best Digital Coin Exchange Near Me", benefitHook: "The global alternative to local kiosks." },
   { keyword: "is solana a good investment", intentType: "Informational", targetUrl: "/guides/is-solana-a-good-investment", primaryH1: "Is Solana a Good Investment in 2026?", benefitHook: "Market analysis plus instant SOL swap tool." },
-  { keyword: "ltc transaction tracker", intentType: "Utility", targetUrl: "/tools/ltc-tracker", primaryH1: "Litecoin (LTC) Transaction Tracker", benefitHook: "Track and swap Litecoin in one dashboard." },
+  { keyword: "ltc transaction tracker", intentType: "Utility", targetUrl: "/tools/ltc-tracker", primaryH1: "Litecoin (LTC) Transaction Tracker — Monitor & Swap LTC Instantly", benefitHook: "Track any Litecoin transaction in real time and swap LTC from $0.30 — no account, no KYC, non-custodial.",
+    customTitle: "LTC Transaction Tracker — Track Litecoin Transactions in Real Time | MRC GlobalPay",
+    customDescription: "Free Litecoin (LTC) transaction tracker. Monitor confirmations, block height, and status for any LTC transaction. Swap Litecoin instantly from $0.30 with no account. Canadian MSB-registered.",
+    customFaqs: [
+      { q: "How do I track a Litecoin (LTC) transaction?", a: "To track a Litecoin transaction, enter your LTC transaction ID (TXID) into a Litecoin block explorer like Blockchair or Litecoin.net. The TXID is a 64-character hexadecimal string generated when you send LTC. It shows sender/receiver addresses, amount, fee, block height, and confirmation count. On MRC GlobalPay, your swap status page auto-tracks your LTC deposit in real time." },
+      { q: "How many confirmations does a Litecoin transaction need?", a: "Most exchanges and services require 6 Litecoin confirmations before crediting your deposit. Each LTC block takes approximately 2.5 minutes, so 6 confirmations take about 15 minutes. MRC GlobalPay credits LTC swaps after just 6 confirmations — significantly faster than the 2-confirmation requirement for Bitcoin (which takes 20+ minutes)." },
+      { q: "Why is my Litecoin transaction unconfirmed or stuck?", a: "An unconfirmed LTC transaction is usually caused by a low mining fee. Litecoin's average block time is 2.5 minutes, but during network congestion, low-fee transactions may wait longer. Unlike Bitcoin, LTC rarely experiences severe congestion. If your transaction has been pending for over 30 minutes, the fee may be below the minimum relay threshold. You can use a transaction accelerator or wait for the mempool to clear." },
+      { q: "What is the average Litecoin transaction fee in 2026?", a: "The average Litecoin transaction fee in 2026 is approximately $0.01–$0.05 USD, making it one of the cheapest UTXO-based networks for transfers. This is significantly lower than Bitcoin's average fee of $1–$5. MRC GlobalPay includes all network fees in the displayed swap rate — no hidden charges." },
+      { q: "Can I track a Litecoin transaction on my phone?", a: "Yes. Any mobile browser can access Litecoin block explorers like blockchair.com/litecoin or lite-coin.info. Simply paste your TXID to see real-time status. MRC GlobalPay's swap tracker is also fully mobile-optimized — track your LTC swap status from any device without downloading an app." },
+      { q: "How long does a Litecoin transaction take?", a: "A Litecoin transaction typically takes 2.5 minutes per confirmation. For most services, 6 confirmations (about 15 minutes) are required. MRC GlobalPay processes LTC swaps in 2–10 minutes on average, depending on network conditions. Litecoin's faster block time (2.5 min vs Bitcoin's 10 min) makes it ideal for quick transfers and payments." },
+    ],
+    customSections: [
+      { heading: "How Does the Litecoin Transaction Tracker Work?", body: "Every Litecoin transaction is recorded on the LTC blockchain — a public, immutable ledger. When you send LTC, the network broadcasts your transaction to miners who include it in the next block. Each subsequent block adds one confirmation. Our LTC transaction tracker integrates with the Litecoin network to show you real-time confirmation status, block height, timestamp, fee paid, and the total amount transferred. Unlike centralized tracking tools, MRC GlobalPay also lets you instantly swap your LTC for 500+ other cryptocurrencies directly from the same interface — no separate exchange account needed." },
+      { heading: "Litecoin Network Specifications (2026)", body: "Litecoin (LTC) uses the Scrypt proof-of-work algorithm with a 2.5-minute target block time — 4× faster than Bitcoin. The maximum supply is capped at 84 million LTC (4× Bitcoin's 21M cap). The most recent halving occurred in August 2023, reducing the block reward to 6.25 LTC. Litecoin supports SegWit and has activated MimbleWimble Extension Blocks (MWEB) for optional privacy-enhanced transactions. The network processes approximately 100,000 transactions daily with an average fee under $0.03." },
+      { heading: "Why Swap Litecoin on MRC GlobalPay?", body: "MRC GlobalPay offers the lowest minimum LTC swap in the industry at just $0.30 USD equivalent — perfect for converting small Litecoin balances (crypto dust) that other exchanges won't process. As a FINTRAC-registered Canadian MSB (C100000015), we operate a fully non-custodial service: your LTC flows directly to your destination wallet without us ever holding your funds. Fixed-rate swaps lock your exchange rate for 60 seconds, protecting you from volatility. We aggregate liquidity from 700+ sources to ensure you always get the best available rate." },
+    ],
+  },
   { keyword: "best way to buy monero no kyc", intentType: "Commercial", targetUrl: "/buy/monero-no-kyc", primaryH1: "Buy Monero No KYC — Registration-Free XMR Exchange 2026", benefitHook: "Swap to Monero (XMR) privately with no registration, no KYC, and no account. Non-custodial settlement from $0.30 in under 60 seconds." },
   { keyword: "eth to sol", intentType: "Commercial", targetUrl: "/swap/eth-to-sol", primaryH1: "Swap ETH to SOL Bridge", benefitHook: "Instant Ethereum to Solana cross-chain bridge.", canonicalUrl: "/swap/eth-sol" },
   { keyword: "buy solana no kyc", intentType: "Commercial", targetUrl: "/buy/solana-no-kyc", primaryH1: "Buy Solana — Registration-Free", benefitHook: "Non-custodial SOL swaps starting at $0.30." },
