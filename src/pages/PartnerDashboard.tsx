@@ -36,7 +36,7 @@ interface PartnerTx { id: string; partner_id: string; asset: string; volume: num
 interface ApiKey { id: string; key_id: string; webhook_url: string; ip_whitelist: string[]; is_active: boolean; last_used_at: string | null; created_at: string; }
 interface PartnerBalance { available_btc: number; pending_btc: number; total_earned_btc: number; last_credited_at: string | null; }
 
-type Section = "overview" | "referrals" | "earnings" | "account" | "dev-setup" | "api-keys" | "api-ledger" | "webhooks";
+type Section = "overview" | "referrals" | "earnings" | "account" | "dev-setup" | "api-keys" | "api-ledger" | "webhooks" | "docs";
 
 /* ── Status Pipeline ── */
 const PIPELINE = ["waiting", "confirming", "exchanging", "sending", "finished"] as const;
