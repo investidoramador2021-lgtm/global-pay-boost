@@ -166,7 +166,7 @@ const CodeBlock = ({ code, lang = "bash" }: { code: string; lang?: string }) => 
 
 const EarningsEstimator = () => {
   const [volume, setVolume] = useState([500000]);
-  const monthlyRevenue = useMemo(() => volume[0] * 0.005, [volume]);
+  const monthlyRevenue = useMemo(() => volume[0] * 0.004, [volume]);
   const annualRevenue = useMemo(() => monthlyRevenue * 12, [monthlyRevenue]);
   const fmt = (n: number) => n >= 1000 ? `$${(n / 1000).toFixed(n >= 10000 ? 0 : 1)}k` : `$${n.toFixed(0)}`;
 
@@ -177,7 +177,7 @@ const EarningsEstimator = () => {
           <label className="font-display text-sm font-semibold text-foreground block mb-1">
             Monthly Transaction Volume
           </label>
-          <p className="text-xs text-muted-foreground mb-4">Drag the slider to estimate your partner revenue at 0.5% commission.</p>
+          <p className="text-xs text-muted-foreground mb-4">Drag the slider to estimate your partner revenue at 0.4% commission.</p>
           <Slider
             min={10000}
             max={5000000}
@@ -458,7 +458,7 @@ const DeveloperHub = () => (
               { q: "Can I pre-fill the swap pair via URL parameters?", a: "Yes. Use ?from=BTC&to=USDT query parameters on the widget URL or the main exchange to pre-select trading pairs for your users." },
               { q: "Does MRC GlobalPay require an account?", a: "MRC GlobalPay is a registration-free platform. You can swap crypto directly from your wallet without creating an account. We are a Canadian-registered MSB with FINTRAC." },
               { q: "Is there a rate limit on the widget?", a: "The embedded widget uses the same live pricing engine as our main site. There are no API keys or rate limits — it works out of the box." },
-              { q: "How does the partner revenue model work?", a: "Partners earn a 0.5% commission on all transaction volume routed through their integration. Revenue is settled in BTC to your designated wallet on a recurring basis." },
+              { q: "How does the partner revenue model work?", a: "Partners earn up to 0.4% commission on all API-driven transaction volume routed through their integration. Revenue is settled in BTC to your designated wallet on a recurring basis." },
             ].map((faq) => (
               <details key={faq.q} className="rounded-xl border border-border bg-card group">
                 <summary className="cursor-pointer px-5 py-4 font-display text-sm font-semibold text-foreground flex items-center justify-between">
