@@ -85,8 +85,8 @@ export default function DynamicExchange() {
 
   // Parse "from-to-to"
   const match = pair?.match(/^([a-z0-9]+)-to-([a-z0-9]+)$/i);
-  if (!match) return <Navigate to={lp("/")} replace />;
-  const [, fromTicker, toTicker] = match;
+  const fromTicker = match?.[1] || "";
+  const toTicker = match?.[2] || "";
   const fromLower = fromTicker.toLowerCase();
   const toLower = toTicker.toLowerCase();
 
@@ -94,6 +94,7 @@ export default function DynamicExchange() {
   const { data: fromAsset, isLoading: loadingFrom } = useQuery({
     queryKey: ["exchange-asset", fromLower],
     queryFn: async () => {
+      if (!fromLower) return null;
       const { data } = await supabase
         .from("exchange_assets")
         .select("*")
@@ -103,12 +104,14 @@ export default function DynamicExchange() {
         .maybeSingle();
       return data;
     },
+    enabled: !!fromLower,
     staleTime: 1000 * 60 * 30,
   });
 
   const { data: toAsset, isLoading: loadingTo } = useQuery({
     queryKey: ["exchange-asset", toLower],
     queryFn: async () => {
+      if (!toLower) return null;
       const { data } = await supabase
         .from("exchange_assets")
         .select("*")
@@ -118,6 +121,7 @@ export default function DynamicExchange() {
         .maybeSingle();
       return data;
     },
+    enabled: !!toLower,
     staleTime: 1000 * 60 * 30,
   });
 
