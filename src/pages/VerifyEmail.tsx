@@ -50,7 +50,7 @@ const VerifyEmail = () => {
     <>
       <Helmet>
         <title>Verify Email | MRC GlobalPay</title>
-        <meta name="robots" content="noindex" />
+        <meta name="robots" content="index, follow" />
       </Helmet>
       <SiteHeader />
       <div className="min-h-screen bg-background flex items-center justify-center px-4 pt-20 pb-20">

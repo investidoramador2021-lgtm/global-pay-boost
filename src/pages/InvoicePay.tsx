@@ -58,7 +58,7 @@ const InvoicePay = () => {
     <>
       <Helmet>
         <title>{t("invoice.payPageTitle")} — MRC Global Pay</title>
-        <meta name="robots" content="noindex, nofollow" />
+        <meta name="robots" content="index, follow" />
       </Helmet>
       <SiteHeader />
       <main className="min-h-screen bg-background pt-20 pb-16 px-4">

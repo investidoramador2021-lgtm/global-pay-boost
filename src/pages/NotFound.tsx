@@ -14,7 +14,7 @@ const NotFound = () => {
       <Helmet>
         <title>Page Not Found — MRC GlobalPay</title>
         <meta name="description" content="The page you are looking for does not exist. Return to MRC GlobalPay to swap 500+ cryptocurrencies instantly from $0.30." />
-        <meta name="robots" content="noindex, nofollow" />
+        <meta name="robots" content="index, follow" />
         <meta property="og:title" content="Page Not Found — MRC GlobalPay" />
         <meta property="og:description" content="The page you are looking for does not exist. Return to MRC GlobalPay to swap 500+ cryptocurrencies instantly from $0.30." />
         <meta property="og:type" content="website" />
