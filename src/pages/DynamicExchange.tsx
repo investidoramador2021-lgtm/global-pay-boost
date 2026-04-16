@@ -122,6 +122,9 @@ export default function DynamicExchange() {
   const fromLower = fromTicker.toLowerCase();
   const toLower = toTicker.toLowerCase();
 
+  // Case-insensitive normalization: 301-style redirect any non-lowercase URL to its lowercase canonical
+  const needsLowercaseRedirect = !!pair && pair !== pair.toLowerCase() && !!match;
+
   const { data: fromAsset, isLoading: loadingFrom } = useQuery({
     queryKey: ["exchange-asset", fromLower],
     queryFn: async () => {
