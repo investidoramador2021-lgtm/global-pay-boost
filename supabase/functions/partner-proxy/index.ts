@@ -161,6 +161,7 @@ Deno.serve(async (req) => {
             status: "pending",
             mrc_transaction_id: mrcTxId,
             completed_at: new Date().toISOString(),
+            request_payload: { from, to, amount, address, refundAddress: refundAddress || null, extraId: extraId || null },
           } as any)
           .select("id")
           .single();
@@ -184,10 +185,9 @@ Deno.serve(async (req) => {
         const cnData = await cnResp.json();
 
         if (!cnResp.ok) {
-          // Update status to failed
           await svc
             .from("partner_transactions")
-            .update({ status: "failed" } as any)
+            .update({ status: "failed", provider_response: cnData } as any)
             .eq("id", txRecord.id);
           return mrcError("MRC_ORDER_FAILED", cnData?.message || "Order placement failed", 502);
         }
@@ -198,6 +198,7 @@ Deno.serve(async (req) => {
           .update({
             changenow_order_id: cnData.id,
             status: "awaiting_deposit",
+            provider_response: { payinAddress: cnData.payinAddress, id: cnData.id, amount: cnData.amount },
           } as any)
           .eq("id", txRecord.id);
 
