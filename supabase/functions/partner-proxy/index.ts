@@ -280,6 +280,39 @@ Deno.serve(async (req) => {
               liveStatus = statusMap[cnData.status] || cnData.status;
               amountReceive = cnData.amountReceive;
 
+              // Auto-flag compliance holds for hold/kyc/aml statuses
+              const complianceStatuses = ["hold", "kyc", "aml", "verifying"];
+              if (complianceStatuses.includes(cnData.status?.toLowerCase())) {
+                liveStatus = "action_required";
+                // Check if hold already exists
+                const { data: existingHold } = await svc
+                  .from("compliance_holds")
+                  .select("id")
+                  .eq("partner_transaction_id", txAny.id)
+                  .maybeSingle();
+
+                if (!existingHold) {
+                  await svc.from("compliance_holds").insert({
+                    partner_transaction_id: txAny.id,
+                    partner_id: auth.partnerId,
+                    hold_type: cnData.status?.toLowerCase() || "hold",
+                    provider_case_id: cnData.id || "",
+                  } as any);
+
+                  // Telegram alert
+                  const telegramToken = Deno.env.get("TELEGRAM_BOT_TOKEN");
+                  const chatId = Deno.env.get("TELEGRAM_CHAT_ID");
+                  if (telegramToken && chatId) {
+                    const msg = `🛡️ *Auto-Compliance Hold*\n\nMRC ID: ${txAny.mrc_transaction_id}\nType: ${cnData.status?.toUpperCase()}\nPartner: ${auth.partnerId}\nAsset: ${txAny.asset}`;
+                    await fetch(`https://api.telegram.org/bot${telegramToken}/sendMessage`, {
+                      method: "POST",
+                      headers: { "Content-Type": "application/json" },
+                      body: JSON.stringify({ chat_id: chatId, text: msg, parse_mode: "Markdown" }),
+                    }).catch(() => {});
+                  }
+                }
+              }
+
               // Update local status
               await svc
                 .from("partner_transactions")

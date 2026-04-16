@@ -257,6 +257,107 @@ export type Database = {
           },
         ]
       }
+      compliance_documents: {
+        Row: {
+          created_at: string
+          file_name: string
+          file_url: string
+          hold_id: string
+          id: string
+          metadata: Json | null
+          uploaded_by: string
+        }
+        Insert: {
+          created_at?: string
+          file_name: string
+          file_url?: string
+          hold_id: string
+          id?: string
+          metadata?: Json | null
+          uploaded_by?: string
+        }
+        Update: {
+          created_at?: string
+          file_name?: string
+          file_url?: string
+          hold_id?: string
+          id?: string
+          metadata?: Json | null
+          uploaded_by?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "compliance_documents_hold_id_fkey"
+            columns: ["hold_id"]
+            isOneToOne: false
+            referencedRelation: "compliance_holds"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      compliance_holds: {
+        Row: {
+          admin_notes: string | null
+          created_at: string
+          hold_type: string
+          id: string
+          partner_id: string
+          partner_notified_at: string | null
+          partner_transaction_id: string | null
+          provider_case_id: string | null
+          resolved_at: string | null
+          status: string
+          updated_at: string
+          upload_token: string | null
+          upload_token_expires_at: string | null
+        }
+        Insert: {
+          admin_notes?: string | null
+          created_at?: string
+          hold_type?: string
+          id?: string
+          partner_id: string
+          partner_notified_at?: string | null
+          partner_transaction_id?: string | null
+          provider_case_id?: string | null
+          resolved_at?: string | null
+          status?: string
+          updated_at?: string
+          upload_token?: string | null
+          upload_token_expires_at?: string | null
+        }
+        Update: {
+          admin_notes?: string | null
+          created_at?: string
+          hold_type?: string
+          id?: string
+          partner_id?: string
+          partner_notified_at?: string | null
+          partner_transaction_id?: string | null
+          provider_case_id?: string | null
+          resolved_at?: string | null
+          status?: string
+          updated_at?: string
+          upload_token?: string | null
+          upload_token_expires_at?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "compliance_holds_partner_id_fkey"
+            columns: ["partner_id"]
+            isOneToOne: false
+            referencedRelation: "partner_profiles"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "compliance_holds_partner_transaction_id_fkey"
+            columns: ["partner_transaction_id"]
+            isOneToOne: false
+            referencedRelation: "partner_transactions"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       customers: {
         Row: {
           created_at: string
