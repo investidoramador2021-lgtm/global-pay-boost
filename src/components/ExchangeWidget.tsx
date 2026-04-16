@@ -643,11 +643,16 @@ const ExchangeWidget = ({ onTabChange, defaultFrom, defaultTo }: ExchangeWidgetP
   const [emailSubmitting, setEmailSubmitting] = useState(false);
   const statusPollRef = useRef<ReturnType<typeof setInterval>>();
 
-  // Price lock timer state
+  // Price lock timer state (post-address-entry, 60s confirmation window)
   const [rateLockSeconds, setRateLockSeconds] = useState(60);
   const [rateExpired, setRateExpired] = useState(false);
   const [refreshingRate, setRefreshingRate] = useState(false);
   const rateLockRef = useRef<ReturnType<typeof setInterval>>();
+
+  // Fixed-Rate pre-confirmation lock — 15-minute guaranteed window from quote
+  const FIXED_LOCK_DURATION = 15 * 60;
+  const [fixedLockSeconds, setFixedLockSeconds] = useState(FIXED_LOCK_DURATION);
+  const fixedLockRef = useRef<ReturnType<typeof setInterval>>();
 
   // Wallet connection handlers
   const connectMetaMask = async () => {
@@ -1444,6 +1449,34 @@ const ExchangeWidget = ({ onTabChange, defaultFrom, defaultTo }: ExchangeWidgetP
       if (rateLockRef.current) clearInterval(rateLockRef.current);
     }
   }, [step, addressValid]);
+
+  // 15-minute Fixed-Rate price lock — refreshes whenever a new fixed quote is received
+  useEffect(() => {
+    if (fixedLockRef.current) clearInterval(fixedLockRef.current);
+    if (
+      widgetMode === "exchange" &&
+      fixedRate &&
+      step !== "address" &&
+      estimatedAmount &&
+      estimatedAmount !== "—" &&
+      estimatedAmount !== "syncing" &&
+      !estimating
+    ) {
+      setFixedLockSeconds(FIXED_LOCK_DURATION);
+      fixedLockRef.current = setInterval(() => {
+        setFixedLockSeconds((prev) => {
+          if (prev <= 1) {
+            clearInterval(fixedLockRef.current!);
+            // Auto-refresh quote when lock expires
+            fetchEstimate();
+            return FIXED_LOCK_DURATION;
+          }
+          return prev - 1;
+        });
+      }, 1000);
+      return () => { if (fixedLockRef.current) clearInterval(fixedLockRef.current); };
+    }
+  }, [fixedRate, estimatedAmount, estimating, step, widgetMode, fetchEstimate, FIXED_LOCK_DURATION]);
 
   const handleRefreshRate = async () => {
     setRefreshingRate(true);
@@ -2833,12 +2866,14 @@ const ExchangeWidget = ({ onTabChange, defaultFrom, defaultTo }: ExchangeWidgetP
                     {t("widget.expectedRate")}
                   </button>
                 </div>
-                {/* Canadian Fixed-Rate roadmap notice — gauges interest, signals regulated jurisdiction */}
-                <div className="mb-4 -mt-2 flex items-center gap-1.5 rounded-md border border-trust/15 bg-trust/[0.04] px-2.5 py-1.5">
-                  <span className="text-[10px]" aria-hidden>🇨🇦</span>
+                {/* MSB compliance note — applies to both rate modes */}
+                <div className="mb-4 -mt-2 flex items-start gap-1.5 rounded-md border border-trust/15 bg-trust/[0.04] px-2.5 py-1.5">
+                  <Shield className="mt-0.5 h-3 w-3 shrink-0 text-trust" />
                   <p className="font-body text-[10px] leading-tight text-muted-foreground sm:text-[11px]">
-                    <strong className="text-trust">{t("widget.fixedRateRoadmapTitle", "Locked-In Fixed Rate")}</strong>{" "}
-                    {t("widget.fixedRateRoadmapBody", "— Coming soon for Canadian residents under our FINTRAC MSB framework.")}
+                    {t(
+                      "widget.msbRateNote",
+                      "As a Registered Canadian MSB, MRC GlobalPay provides transparent, non-custodial rate locking for high-value transactions."
+                    )}
                   </p>
                 </div>
 
@@ -2940,6 +2975,32 @@ const ExchangeWidget = ({ onTabChange, defaultFrom, defaultTo }: ExchangeWidgetP
                   </div>
                   <CurrencyPicker show={showToPicker} onSelect={setToCurrency} onClose={() => setShowToPicker(false)} exclude={fromCurrency?.ticker} />
                 </div>
+
+                {/* Rate-mode disclaimer / 15-min Fixed-Rate countdown */}
+                {fromCurrency && toCurrency && estimatedAmount && estimatedAmount !== "—" && estimatedAmount !== "syncing" && (
+                  fixedRate ? (
+                    <div className="mt-2 flex items-center gap-2 rounded-md border border-trust/25 bg-trust/[0.06] px-3 py-2">
+                      <Lock className="h-3.5 w-3.5 shrink-0 text-trust" />
+                      <p className="font-body text-[11px] leading-tight text-trust sm:text-xs">
+                        {t("widget.fixedRateLockedFor", "Rate locked for")}{" "}
+                        <span style={{ fontFamily: "'Roboto Mono', monospace" }} className="font-bold">
+                          {String(Math.floor(fixedLockSeconds / 60)).padStart(2, "0")}:{String(fixedLockSeconds % 60).padStart(2, "0")}
+                        </span>{" "}
+                        {t("widget.minutes", "minutes")} · {t("widget.guaranteedOutput", "guaranteed output amount")}
+                      </p>
+                    </div>
+                  ) : (
+                    <div className="mt-2 flex items-start gap-2 rounded-md border border-border bg-accent/40 px-3 py-2">
+                      <Info className="mt-0.5 h-3.5 w-3.5 shrink-0 text-muted-foreground" />
+                      <p className="font-body text-[11px] leading-tight text-muted-foreground sm:text-xs">
+                        {t(
+                          "widget.floatingRateDisclaimer",
+                          "Final amount depends on market price at time of confirmation."
+                        )}
+                      </p>
+                    </div>
+                  )
+                )}
 
                 <Button
                   className="group relative mt-5 w-full min-h-[52px] overflow-hidden text-base font-bold transition-all duration-100 shadow-card hover:shadow-neon"

@@ -379,6 +379,7 @@ export default function DynamicExchange() {
         <title>{title}</title>
         <meta name="description" content={description} />
         <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1" />
+        <meta name="keywords" content={`${fromUp} to ${toUp}, swap ${fromUp} ${toUp}, ${fromName} to ${toName}, fixed rate crypto swap Canada, guaranteed crypto exchange rates, FINTRAC MSB crypto exchange, non-custodial crypto swap, instant ${fromUp} exchange`} />
         <link rel="canonical" href={canonicalUrl} />
         <meta property="og:title" content={title} />
         <meta property="og:description" content={description} />
