@@ -72,6 +72,21 @@ interface PayoutReq {
   processed_at: string | null;
 }
 
+interface ComplianceHold {
+  id: string;
+  partner_transaction_id: string | null;
+  partner_id: string;
+  hold_type: string;
+  provider_case_id: string;
+  status: string;
+  upload_token: string;
+  upload_token_expires_at: string | null;
+  admin_notes: string;
+  partner_notified_at: string | null;
+  resolved_at: string | null;
+  created_at: string;
+}
+
 type Stage = "login" | "mfa-enroll" | "mfa-verify" | "dashboard";
 
 interface ChatLog {
