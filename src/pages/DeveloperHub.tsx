@@ -166,7 +166,7 @@ const CodeBlock = ({ code, lang = "bash" }: { code: string; lang?: string }) => 
 
 const EarningsEstimator = () => {
   const [volume, setVolume] = useState([500000]);
-  const monthlyRevenue = useMemo(() => volume[0] * 0.005, [volume]);
+  const monthlyRevenue = useMemo(() => volume[0] * 0.004, [volume]);
   const annualRevenue = useMemo(() => monthlyRevenue * 12, [monthlyRevenue]);
   const fmt = (n: number) => n >= 1000 ? `$${(n / 1000).toFixed(n >= 10000 ? 0 : 1)}k` : `$${n.toFixed(0)}`;
 
@@ -177,7 +177,7 @@ const EarningsEstimator = () => {
           <label className="font-display text-sm font-semibold text-foreground block mb-1">
             Monthly Transaction Volume
           </label>
-          <p className="text-xs text-muted-foreground mb-4">Drag the slider to estimate your partner revenue at 0.5% commission.</p>
+          <p className="text-xs text-muted-foreground mb-4">Drag the slider to estimate your partner revenue at 0.4% commission.</p>
           <Slider
             min={10000}
             max={5000000}

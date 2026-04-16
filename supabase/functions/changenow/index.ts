@@ -201,8 +201,8 @@ Deno.serve(async (req) => {
             if (apiKeyRow) {
               // Update last_used_at
               await svc.from('partner_api_keys').update({ last_used_at: new Date().toISOString() }).eq('key_id', partnerKeyId);
-              // Log commission (0.5% of amount)
-              const commission = amountNum * 0.005;
+              // Log commission (0.4% cap for API-driven volume)
+              const commission = amountNum * 0.004;
               await svc.from('partner_transactions').insert({
                 partner_id: apiKeyRow.partner_id,
                 asset: fromC.toLowerCase(),
