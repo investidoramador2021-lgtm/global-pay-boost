@@ -643,11 +643,16 @@ const ExchangeWidget = ({ onTabChange, defaultFrom, defaultTo }: ExchangeWidgetP
   const [emailSubmitting, setEmailSubmitting] = useState(false);
   const statusPollRef = useRef<ReturnType<typeof setInterval>>();
 
-  // Price lock timer state
+  // Price lock timer state (post-address-entry, 60s confirmation window)
   const [rateLockSeconds, setRateLockSeconds] = useState(60);
   const [rateExpired, setRateExpired] = useState(false);
   const [refreshingRate, setRefreshingRate] = useState(false);
   const rateLockRef = useRef<ReturnType<typeof setInterval>>();
+
+  // Fixed-Rate pre-confirmation lock — 15-minute guaranteed window from quote
+  const FIXED_LOCK_DURATION = 15 * 60;
+  const [fixedLockSeconds, setFixedLockSeconds] = useState(FIXED_LOCK_DURATION);
+  const fixedLockRef = useRef<ReturnType<typeof setInterval>>();
 
   // Wallet connection handlers
   const connectMetaMask = async () => {
@@ -2833,12 +2838,14 @@ const ExchangeWidget = ({ onTabChange, defaultFrom, defaultTo }: ExchangeWidgetP
                     {t("widget.expectedRate")}
                   </button>
                 </div>
-                {/* Canadian Fixed-Rate roadmap notice — gauges interest, signals regulated jurisdiction */}
-                <div className="mb-4 -mt-2 flex items-center gap-1.5 rounded-md border border-trust/15 bg-trust/[0.04] px-2.5 py-1.5">
-                  <span className="text-[10px]" aria-hidden>🇨🇦</span>
+                {/* MSB compliance note — applies to both rate modes */}
+                <div className="mb-4 -mt-2 flex items-start gap-1.5 rounded-md border border-trust/15 bg-trust/[0.04] px-2.5 py-1.5">
+                  <Shield className="mt-0.5 h-3 w-3 shrink-0 text-trust" />
                   <p className="font-body text-[10px] leading-tight text-muted-foreground sm:text-[11px]">
-                    <strong className="text-trust">{t("widget.fixedRateRoadmapTitle", "Locked-In Fixed Rate")}</strong>{" "}
-                    {t("widget.fixedRateRoadmapBody", "— Coming soon for Canadian residents under our FINTRAC MSB framework.")}
+                    {t(
+                      "widget.msbRateNote",
+                      "As a Registered Canadian MSB, MRC GlobalPay provides transparent, non-custodial rate locking for high-value transactions."
+                    )}
                   </p>
                 </div>
 
