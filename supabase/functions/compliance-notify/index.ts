@@ -25,7 +25,6 @@ Deno.serve(async (req) => {
     const serviceKey = Deno.env.get("SUPABASE_SERVICE_ROLE_KEY")!;
     const anonKey = Deno.env.get("SUPABASE_ANON_KEY")!;
 
-    // Verify the caller is an admin
     const userClient = createClient(supabaseUrl, anonKey, {
       global: { headers: { Authorization: authHeader } },
     });
@@ -40,11 +39,21 @@ Deno.serve(async (req) => {
     const body = await req.json();
     const { action } = body;
 
+    // Helper: log compliance event
+    const logEvent = async (holdId: string, eventType: string, details: string, metadata: Record<string, unknown> = {}) => {
+      await svc.from("compliance_logs").insert({
+        hold_id: holdId,
+        event_type: eventType,
+        actor: user.email || user.id,
+        details,
+        metadata,
+      });
+    };
+
     if (action === "notify-partner") {
       const { hold_id, partner_id } = body;
       if (!hold_id || !partner_id) return json({ error: "hold_id and partner_id required" }, 400);
 
-      // Get partner email from auth
       const { data: partner } = await svc
         .from("partner_profiles")
         .select("user_id, first_name, last_name")
@@ -53,11 +62,9 @@ Deno.serve(async (req) => {
 
       if (!partner) return json({ error: "Partner not found" }, 404);
 
-      // Get user email
       const { data: { user: partnerUser } } = await svc.auth.admin.getUserById(partner.user_id);
       if (!partnerUser?.email) return json({ error: "Partner email not found" }, 404);
 
-      // Get hold details
       const { data: hold } = await svc
         .from("compliance_holds")
         .select("*")
@@ -78,19 +85,20 @@ Deno.serve(async (req) => {
         });
       }
 
-      // Update hold with notification timestamp
       await svc
         .from("compliance_holds")
         .update({ partner_notified_at: new Date().toISOString() } as any)
         .eq("id", hold_id);
 
-      // Update partner transaction status to action_required
       if ((hold as any).partner_transaction_id) {
         await svc
           .from("partner_transactions")
           .update({ status: "action_required" } as any)
           .eq("id", (hold as any).partner_transaction_id);
       }
+
+      // Log event
+      await logEvent(hold_id, "partner_notified", `Notified ${partner.first_name} ${partner.last_name} at ${partnerUser.email}`);
 
       return json({
         success: true,
@@ -103,7 +111,6 @@ Deno.serve(async (req) => {
       const { hold_id } = body;
       if (!hold_id) return json({ error: "hold_id required" }, 400);
 
-      // Refresh the upload token
       const newToken = crypto.randomUUID().replace(/-/g, "") + crypto.randomUUID().replace(/-/g, "");
       const expiresAt = new Date(Date.now() + 72 * 60 * 60 * 1000).toISOString();
 
@@ -115,7 +122,10 @@ Deno.serve(async (req) => {
         } as any)
         .eq("id", hold_id);
 
-      const uploadUrl = `https://mrcglobalpay.com/compliance-upload?token=${newToken}`;
+      const uploadUrl = `https://mrcglobalpay.com/verify/${newToken}`;
+
+      // Log event
+      await logEvent(hold_id, "upload_link_generated", `Secure verification link created, expires ${expiresAt}`);
 
       return json({ success: true, upload_url: uploadUrl, expires_at: expiresAt, token: newToken });
     }
@@ -133,7 +143,6 @@ Deno.serve(async (req) => {
         } as any)
         .eq("id", hold_id);
 
-      // Get hold to update the linked transaction
       const { data: hold } = await svc
         .from("compliance_holds")
         .select("partner_transaction_id")
@@ -145,6 +154,21 @@ Deno.serve(async (req) => {
           .from("partner_transactions")
           .update({ status: "success" } as any)
           .eq("id", (hold as any).partner_transaction_id);
+      }
+
+      // Log event
+      await logEvent(hold_id, "funds_released", resolution_notes || "Hold resolved, funds released");
+
+      // Telegram notification
+      const telegramToken = Deno.env.get("TELEGRAM_BOT_TOKEN");
+      const chatId = Deno.env.get("TELEGRAM_CHAT_ID");
+      if (telegramToken && chatId) {
+        const msg = `✅ *Compliance Hold Resolved*\n\nHold ID: ${hold_id.slice(0, 8)}\nNotes: ${resolution_notes || "N/A"}\nFunds released.`;
+        await fetch(`https://api.telegram.org/bot${telegramToken}/sendMessage`, {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ chat_id: chatId, text: msg, parse_mode: "Markdown" }),
+        });
       }
 
       return json({ success: true });
