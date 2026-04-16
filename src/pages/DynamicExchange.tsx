@@ -198,33 +198,34 @@ export default function DynamicExchange() {
   });
 
   const { data: trendingPairs } = useQuery({
-    queryKey: ["exchange-trending-pairs", fromLower, toLower],
+    queryKey: ["exchange-random-pairs", fromLower, toLower],
     queryFn: async () => {
+      // Pull a wide sample from the live pairs table, then shuffle client-side
+      // to give every page a fresh "Related Swaps" set on each render.
       const { data } = await supabase
         .from("pairs")
         .select("from_ticker, to_ticker")
         .eq("is_valid", true)
-        .order("last_synced_at", { ascending: false })
-        .limit(30);
+        .limit(500);
 
       const seen = new Set<string>();
+      const filtered = (data || []).filter((item) => {
+        const from = item.from_ticker.toLowerCase();
+        const to = item.to_ticker.toLowerCase();
+        const slug = `${from}-to-${to}`;
+        if (!from || !to || slug === `${fromLower}-to-${toLower}` || seen.has(slug)) return false;
+        seen.add(slug);
+        return true;
+      });
 
-      return (data || [])
-        .filter((item) => {
-          const from = item.from_ticker.toLowerCase();
-          const to = item.to_ticker.toLowerCase();
-          const slug = `${from}-to-${to}`;
-
-          if (!from || !to || slug === `${fromLower}-to-${toLower}` || seen.has(slug)) {
-            return false;
-          }
-
-          seen.add(slug);
-          return true;
-        })
-        .slice(0, 10);
+      // Fisher-Yates shuffle for true randomness across all 1,000+ pairs
+      for (let i = filtered.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [filtered[i], filtered[j]] = [filtered[j], filtered[i]];
+      }
+      return filtered.slice(0, 10);
     },
-    staleTime: 1000 * 60 * 60,
+    staleTime: 1000 * 60 * 5,
   });
 
   if (needsLowercaseRedirect) {
