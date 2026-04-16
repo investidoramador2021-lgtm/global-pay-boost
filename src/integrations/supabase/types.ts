@@ -512,6 +512,53 @@ export type Database = {
         }
         Relationships: []
       }
+      partner_api_keys: {
+        Row: {
+          api_secret_hash: string
+          created_at: string
+          id: string
+          ip_whitelist: string[] | null
+          is_active: boolean
+          key_id: string
+          last_used_at: string | null
+          partner_id: string
+          updated_at: string
+          webhook_url: string | null
+        }
+        Insert: {
+          api_secret_hash: string
+          created_at?: string
+          id?: string
+          ip_whitelist?: string[] | null
+          is_active?: boolean
+          key_id?: string
+          last_used_at?: string | null
+          partner_id: string
+          updated_at?: string
+          webhook_url?: string | null
+        }
+        Update: {
+          api_secret_hash?: string
+          created_at?: string
+          id?: string
+          ip_whitelist?: string[] | null
+          is_active?: boolean
+          key_id?: string
+          last_used_at?: string | null
+          partner_id?: string
+          updated_at?: string
+          webhook_url?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "partner_api_keys_partner_id_fkey"
+            columns: ["partner_id"]
+            isOneToOne: false
+            referencedRelation: "partner_profiles"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       partner_profiles: {
         Row: {
           btc_wallet: string
@@ -551,6 +598,36 @@ export type Database = {
           verification_expires_at?: string | null
           verification_status?: string
           verification_token?: string | null
+        }
+        Relationships: []
+      }
+      partner_totp_secrets: {
+        Row: {
+          backup_codes: string[] | null
+          created_at: string
+          encrypted_secret: string
+          id: string
+          is_verified: boolean
+          updated_at: string
+          user_id: string
+        }
+        Insert: {
+          backup_codes?: string[] | null
+          created_at?: string
+          encrypted_secret: string
+          id?: string
+          is_verified?: boolean
+          updated_at?: string
+          user_id: string
+        }
+        Update: {
+          backup_codes?: string[] | null
+          created_at?: string
+          encrypted_secret?: string
+          id?: string
+          is_verified?: boolean
+          updated_at?: string
+          user_id?: string
         }
         Relationships: []
       }
