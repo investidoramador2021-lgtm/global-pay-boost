@@ -492,9 +492,11 @@ function EarnWidgetPanel() {
 
 interface ExchangeWidgetProps {
   onTabChange?: (tab: "exchange" | "buysell" | "private" | "bridge" | "request" | "loan" | "earn") => void;
+  defaultFrom?: string;
+  defaultTo?: string;
 }
 
-const ExchangeWidget = ({ onTabChange }: ExchangeWidgetProps = {}) => {
+const ExchangeWidget = ({ onTabChange, defaultFrom, defaultTo }: ExchangeWidgetProps = {}) => {
   const { toast } = useToast();
   const { t } = useTranslation();
   const { subscribe: subscribePush, supported: pushSupported } = usePushNotifications();
@@ -870,8 +872,8 @@ const ExchangeWidget = ({ onTabChange }: ExchangeWidgetProps = {}) => {
     const loadCurrencies = () => {
       setLoading(true);
       const params = new URLSearchParams(window.location.search);
-      const paramFrom = params.get("from")?.toLowerCase();
-      const rawTo = params.get("to")?.toLowerCase();
+      const paramFrom = (params.get("from") || defaultFrom)?.toLowerCase();
+      const rawTo = (params.get("to") || defaultTo)?.toLowerCase();
       const paramAmount = params.get("amount");
 
       // Solana AI & DePIN ticker mapping — "clean URL" to "widget ticker" auto-correct
