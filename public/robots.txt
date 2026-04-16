@@ -211,7 +211,6 @@ Allow: /uk/
 # FAQ: https://mrcglobalpay.com/#faq
 
 Sitemap: https://mrcglobalpay.com/sitemap.xml
-Sitemap: https://tjikwxkmsfmyjkssvyoh.supabase.co/functions/v1/dynamic-sitemap/index.xml
 
 # Syndication feeds
 # Blog RSS: https://mrcglobalpay.com/rss.xml
