@@ -45,13 +45,23 @@ Deno.serve(async (req) => {
   const supabaseKey = Deno.env.get("SUPABASE_ANON_KEY")!;
   const supabase = createClient(supabaseUrl, supabaseKey);
 
-  // Fetch latest 100 valid pairs from the pairs table
-  const { data: latestPairs } = await supabase
-    .from("pairs")
-    .select("from_ticker, to_ticker, seo_title, seo_description, updated_at")
-    .eq("is_valid", true)
-    .order("updated_at", { ascending: false })
-    .limit(100);
+  // Fetch ALL valid pairs from the pairs table (paginated)
+  const allPairs: any[] = [];
+  const PAGE_SIZE = 1000;
+  let page = 0;
+  while (true) {
+    const { data: batch } = await supabase
+      .from("pairs")
+      .select("from_ticker, to_ticker, seo_title, seo_description, updated_at")
+      .eq("is_valid", true)
+      .order("updated_at", { ascending: false })
+      .range(page * PAGE_SIZE, (page + 1) * PAGE_SIZE - 1);
+    if (!batch || batch.length === 0) break;
+    allPairs.push(...batch);
+    if (batch.length < PAGE_SIZE) break;
+    page++;
+  }
+  const latestPairs = allPairs;
 
   // Fetch recent swap transactions for "live events"
   const { data: recentSwaps } = await supabase
