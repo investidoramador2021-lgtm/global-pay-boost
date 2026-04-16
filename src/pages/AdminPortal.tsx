@@ -978,6 +978,203 @@ const AdminPortal = () => {
                 </CardContent>
               </Card>
             </TabsContent>
+
+            {/* ═══ COMPLIANCE INTERCEPT ═══ */}
+            <TabsContent value="compliance" className="mt-6 space-y-6">
+              {/* KPIs */}
+              <div className="grid grid-cols-1 sm:grid-cols-4 gap-4">
+                <Card className="border-border/40 bg-card/40 backdrop-blur-sm" style={{ borderColor: `${COMPLIANCE_BLUE}30` }}><CardContent className="p-5 flex items-center gap-3"><ShieldAlert className="w-5 h-5" style={{ color: COMPLIANCE_BLUE }} /><div><p className="text-xs text-muted-foreground">Action Required</p><p className="text-2xl font-bold text-foreground">{complianceHolds.filter(h => h.status === "action_required").length}</p></div></CardContent></Card>
+                <Card className="border-border/40 bg-card/40 backdrop-blur-sm"><CardContent className="p-5 flex items-center gap-3"><Shield className="w-5 h-5" style={{ color: COMPLIANCE_BLUE }} /><div><p className="text-xs text-muted-foreground">Total Holds</p><p className="text-2xl font-bold text-foreground">{complianceHolds.length}</p></div></CardContent></Card>
+                <Card className="border-border/40 bg-card/40 backdrop-blur-sm"><CardContent className="p-5 flex items-center gap-3"><Check className="w-5 h-5 text-emerald-400" /><div><p className="text-xs text-muted-foreground">Resolved</p><p className="text-2xl font-bold text-foreground">{complianceHolds.filter(h => h.status === "resolved").length}</p></div></CardContent></Card>
+                <Card className="border-border/40 bg-card/40 backdrop-blur-sm"><CardContent className="p-5 flex items-center gap-3"><Mail className="w-5 h-5" style={{ color: COMPLIANCE_BLUE }} /><div><p className="text-xs text-muted-foreground">Partners Notified</p><p className="text-2xl font-bold text-foreground">{complianceHolds.filter(h => h.partner_notified_at).length}</p></div></CardContent></Card>
+              </div>
+
+              {/* Manual Flag Button */}
+              <Card className="border-border/40 bg-card/40 backdrop-blur-sm">
+                <CardHeader className="flex flex-row items-center justify-between">
+                  <CardTitle className="text-lg flex items-center gap-2" style={{ color: COMPLIANCE_BLUE }}>
+                    <ShieldAlert className="w-5 h-5" /> Compliance Queue
+                  </CardTitle>
+                  <Button
+                    size="sm"
+                    className="gap-1 text-xs"
+                    style={{ background: COMPLIANCE_BLUE, color: "#fff" }}
+                    onClick={async () => {
+                      const txId = prompt("Enter Partner Transaction ID to flag:");
+                      if (!txId) return;
+                      const tx = transactions.find(t => t.mrc_transaction_id === txId || t.id === txId);
+                      if (!tx) { toast({ title: "Transaction not found", variant: "destructive" }); return; }
+                      const holdType = prompt("Hold type (hold / kyc / aml):", "hold") || "hold";
+                      const caseId = prompt("Provider Case ID (optional):", "") || "";
+                      const { data, error } = await supabase.from("compliance_holds" as any).insert({
+                        partner_transaction_id: tx.id,
+                        partner_id: tx.partner_id,
+                        hold_type: holdType,
+                        provider_case_id: caseId,
+                      } as any).select().single();
+                      if (error) { toast({ title: "Error", description: error.message, variant: "destructive" }); return; }
+                      setComplianceHolds(prev => [data as unknown as ComplianceHold, ...prev]);
+                      // Update tx status
+                      await supabase.from("partner_transactions").update({ status: "action_required" } as any).eq("id", tx.id);
+                      setTransactions(prev => prev.map(t => t.id === tx.id ? { ...t, status: "action_required" } : t));
+                      toast({ title: "Transaction flagged for compliance review" });
+                    }}
+                  >
+                    <AlertTriangle className="w-3 h-3" /> Flag Transaction
+                  </Button>
+                </CardHeader>
+                <CardContent className="overflow-x-auto">
+                  <Table>
+                    <TableHeader><TableRow>
+                      <TableHead style={{ color: COMPLIANCE_BLUE }}>Type</TableHead>
+                      <TableHead>Partner</TableHead>
+                      <TableHead>Transaction</TableHead>
+                      <TableHead>Case ID</TableHead>
+                      <TableHead>Status</TableHead>
+                      <TableHead>Notified</TableHead>
+                      <TableHead>Created</TableHead>
+                      <TableHead>Actions</TableHead>
+                    </TableRow></TableHeader>
+                    <TableBody>
+                      {complianceHolds.length === 0 ? (
+                        <TableRow><TableCell colSpan={8} className="text-center text-muted-foreground py-8">No compliance holds. Transactions are flagged automatically when the provider returns hold/kyc/aml status.</TableCell></TableRow>
+                      ) : complianceHolds.map(hold => {
+                        const linkedTx = transactions.find(t => t.id === hold.partner_transaction_id);
+                        return (
+                          <TableRow key={hold.id} style={{ borderColor: hold.status === "action_required" ? `${COMPLIANCE_BLUE}30` : undefined }}>
+                            <TableCell>
+                              <span className="text-xs font-semibold px-2 py-0.5 rounded uppercase" style={{
+                                background: `${COMPLIANCE_BLUE}20`,
+                                color: COMPLIANCE_BLUE,
+                              }}>
+                                {hold.hold_type}
+                              </span>
+                            </TableCell>
+                            <TableCell className="text-sm">{getPartnerName(hold.partner_id)}</TableCell>
+                            <TableCell className="font-mono text-xs" style={{ color: COMPLIANCE_BLUE }}>{linkedTx?.mrc_transaction_id || "—"}</TableCell>
+                            <TableCell className="font-mono text-xs text-muted-foreground">{hold.provider_case_id || "—"}</TableCell>
+                            <TableCell>
+                              <span className={`text-xs font-semibold px-2 py-0.5 rounded ${
+                                hold.status === "action_required" ? "" :
+                                hold.status === "resolved" ? "bg-emerald-500/20 text-emerald-400" :
+                                "bg-amber-500/20 text-amber-400"
+                              }`} style={hold.status === "action_required" ? { background: `${COMPLIANCE_BLUE}20`, color: COMPLIANCE_BLUE } : {}}>
+                                {hold.status === "action_required" ? "Action Required" : hold.status.charAt(0).toUpperCase() + hold.status.slice(1)}
+                              </span>
+                            </TableCell>
+                            <TableCell className="text-xs text-muted-foreground">
+                              {hold.partner_notified_at ? new Date(hold.partner_notified_at).toLocaleString() : "—"}
+                            </TableCell>
+                            <TableCell className="text-xs text-muted-foreground">{new Date(hold.created_at).toLocaleString()}</TableCell>
+                            <TableCell>
+                              {hold.status === "action_required" && (
+                                <div className="flex items-center gap-1.5 flex-wrap">
+                                  {/* Contact Partner */}
+                                  <Button size="sm" variant="outline" className="text-xs h-7 gap-1" style={{ borderColor: `${COMPLIANCE_BLUE}40`, color: COMPLIANCE_BLUE }}
+                                    onClick={async () => {
+                                      const { data: { session } } = await supabase.auth.getSession();
+                                      if (!session) return;
+                                      try {
+                                        const resp = await fetch(`${import.meta.env.VITE_SUPABASE_URL}/functions/v1/compliance-notify`, {
+                                          method: "POST",
+                                          headers: { Authorization: `Bearer ${session.access_token}`, "Content-Type": "application/json", apikey: import.meta.env.VITE_SUPABASE_PUBLISHABLE_KEY },
+                                          body: JSON.stringify({ action: "notify-partner", hold_id: hold.id, partner_id: hold.partner_id }),
+                                        });
+                                        const data = await resp.json();
+                                        if (data.success) {
+                                          setComplianceHolds(prev => prev.map(h => h.id === hold.id ? { ...h, partner_notified_at: new Date().toISOString() } : h));
+                                          toast({ title: "Partner notified", description: `Email notification sent to ${data.partner_name}` });
+                                        } else { toast({ title: "Error", description: data.error, variant: "destructive" }); }
+                                      } catch (err: any) { toast({ title: "Error", description: err.message, variant: "destructive" }); }
+                                    }}
+                                  >
+                                    <Mail className="w-3 h-3" /> Notify
+                                  </Button>
+                                  {/* Generate Upload Link */}
+                                  <Button size="sm" variant="outline" className="text-xs h-7 gap-1" style={{ borderColor: `${COMPLIANCE_BLUE}40`, color: COMPLIANCE_BLUE }}
+                                    onClick={async () => {
+                                      const { data: { session } } = await supabase.auth.getSession();
+                                      if (!session) return;
+                                      try {
+                                        const resp = await fetch(`${import.meta.env.VITE_SUPABASE_URL}/functions/v1/compliance-notify`, {
+                                          method: "POST",
+                                          headers: { Authorization: `Bearer ${session.access_token}`, "Content-Type": "application/json", apikey: import.meta.env.VITE_SUPABASE_PUBLISHABLE_KEY },
+                                          body: JSON.stringify({ action: "generate-upload-link", hold_id: hold.id }),
+                                        });
+                                        const data = await resp.json();
+                                        if (data.success) {
+                                          navigator.clipboard.writeText(data.upload_url);
+                                          toast({ title: "Upload link copied", description: `Expires: ${new Date(data.expires_at).toLocaleString()}` });
+                                        } else { toast({ title: "Error", description: data.error, variant: "destructive" }); }
+                                      } catch (err: any) { toast({ title: "Error", description: err.message, variant: "destructive" }); }
+                                    }}
+                                  >
+                                    <Upload className="w-3 h-3" /> Link
+                                  </Button>
+                                  {/* Resolve */}
+                                  <Button size="sm" variant="outline" className="text-xs h-7 gap-1 border-emerald-500/40 text-emerald-400"
+                                    onClick={async () => {
+                                      const notes = prompt("Resolution notes (optional):", "") || "";
+                                      const { data: { session } } = await supabase.auth.getSession();
+                                      if (!session) return;
+                                      try {
+                                        const resp = await fetch(`${import.meta.env.VITE_SUPABASE_URL}/functions/v1/compliance-notify`, {
+                                          method: "POST",
+                                          headers: { Authorization: `Bearer ${session.access_token}`, "Content-Type": "application/json", apikey: import.meta.env.VITE_SUPABASE_PUBLISHABLE_KEY },
+                                          body: JSON.stringify({ action: "resolve-hold", hold_id: hold.id, resolution_notes: notes }),
+                                        });
+                                        const data = await resp.json();
+                                        if (data.success) {
+                                          setComplianceHolds(prev => prev.map(h => h.id === hold.id ? { ...h, status: "resolved", admin_notes: notes, resolved_at: new Date().toISOString() } : h));
+                                          if (hold.partner_transaction_id) {
+                                            setTransactions(prev => prev.map(t => t.id === hold.partner_transaction_id ? { ...t, status: "success" } : t));
+                                          }
+                                          toast({ title: "Hold resolved" });
+                                        } else { toast({ title: "Error", description: data.error, variant: "destructive" }); }
+                                      } catch (err: any) { toast({ title: "Error", description: err.message, variant: "destructive" }); }
+                                    }}
+                                  >
+                                    <Check className="w-3 h-3" /> Resolve
+                                  </Button>
+                                </div>
+                              )}
+                              {hold.status === "resolved" && (
+                                <span className="text-xs text-emerald-400 flex items-center gap-1"><Check className="w-3 h-3" /> Cleared</span>
+                              )}
+                            </TableCell>
+                          </TableRow>
+                        );
+                      })}
+                    </TableBody>
+                  </Table>
+                </CardContent>
+              </Card>
+
+              {/* Resolution Notes / Admin Notes */}
+              {complianceHolds.filter(h => h.admin_notes && h.status === "resolved").length > 0 && (
+                <Card className="border-border/40 bg-card/40 backdrop-blur-sm">
+                  <CardHeader><CardTitle className="text-lg flex items-center gap-2"><FileText className="w-5 h-5" style={{ color: COMPLIANCE_BLUE }} /> Resolution Log</CardTitle></CardHeader>
+                  <CardContent className="space-y-2">
+                    {complianceHolds.filter(h => h.admin_notes && h.status === "resolved").map(h => {
+                      const linkedTx = transactions.find(t => t.id === h.partner_transaction_id);
+                      return (
+                        <div key={`res-${h.id}`} className="rounded-lg p-3 bg-background/50 border border-border/30 flex items-start justify-between gap-4">
+                          <div>
+                            <div className="flex items-center gap-2 mb-1">
+                              <code className="text-xs font-mono" style={{ color: COMPLIANCE_BLUE }}>{linkedTx?.mrc_transaction_id || h.id.slice(0, 8)}</code>
+                              <span className="text-xs uppercase font-semibold px-1.5 py-0.5 rounded" style={{ background: `${COMPLIANCE_BLUE}20`, color: COMPLIANCE_BLUE }}>{h.hold_type}</span>
+                              <span className="text-xs text-muted-foreground">{getPartnerName(h.partner_id)}</span>
+                            </div>
+                            <p className="text-xs text-muted-foreground">{h.admin_notes}</p>
+                          </div>
+                          <span className="text-[10px] text-muted-foreground whitespace-nowrap">{h.resolved_at ? new Date(h.resolved_at).toLocaleString() : ""}</span>
+                        </div>
+                      );
+                    })}
+                  </CardContent>
+                </Card>
+              )}
+            </TabsContent>
           </Tabs>
         </main>
       </div>
