@@ -339,7 +339,7 @@ export default function DynamicExchange() {
               </nav>
 
               <h1 className="font-display text-3xl font-extrabold tracking-tight text-white sm:text-4xl lg:text-5xl">
-                {dx("heroTitle", { from: fromUp, to: toUp })} <span className="text-[#00E676]">{dx("heroInstantly")}</span>
+                {seoH1 ? <>{seoH1} <span className="text-[#00E676]">{dx("heroInstantly")}</span></> : <>{dx("heroTitle", { from: fromUp, to: toUp })} <span className="text-[#00E676]">{dx("heroInstantly")}</span></>}
               </h1>
 
               {/* Snippet-optimized answer block — visible to crawlers */}
