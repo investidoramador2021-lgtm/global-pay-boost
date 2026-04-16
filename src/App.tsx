@@ -72,6 +72,7 @@ const InvoiceStatus = lazy(() => import("./pages/InvoiceStatus.tsx"));
 const LendEarn = lazy(() => import("./pages/LendEarn.tsx"));
 const ResearchPaxgVsXaut = lazy(() => import("./pages/ResearchPaxgVsXaut.tsx"));
 const PartnerPortal = lazy(() => import("./pages/PartnerPortal.tsx"));
+const DynamicExchange = lazy(() => import("./pages/DynamicExchange.tsx"));
 const NotFound = lazy(() => import("./pages/NotFound.tsx"));
 
 const queryClient = new QueryClient();
@@ -146,6 +147,8 @@ const AppRoutes = () => (
     <Route path="blog/whitepapers/crypto-loans" element={<WhitepaperLoans />} />
     <Route path="blog/whitepapers/digital-yield" element={<WhitepaperYield />} />
     <Route path="research/paxg-vs-xaut-2026" element={<ResearchPaxgVsXaut />} />
+    {/* Dynamic programmatic SEO exchange pairs */}
+    <Route path="exchange/:pair" element={<DynamicExchange />} />
   </>
 );
 

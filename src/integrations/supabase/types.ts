@@ -554,6 +554,57 @@ export type Database = {
         }
         Relationships: []
       }
+      exchange_assets: {
+        Row: {
+          created_at: string
+          has_external_id: boolean
+          id: string
+          image_url: string
+          is_active: boolean
+          is_featured: boolean
+          is_stable: boolean
+          name: string
+          network: string
+          supports_fixed_rate: boolean
+          ticker: string
+          tier: number
+          token_contract: string | null
+          updated_at: string
+        }
+        Insert: {
+          created_at?: string
+          has_external_id?: boolean
+          id?: string
+          image_url?: string
+          is_active?: boolean
+          is_featured?: boolean
+          is_stable?: boolean
+          name: string
+          network?: string
+          supports_fixed_rate?: boolean
+          ticker: string
+          tier?: number
+          token_contract?: string | null
+          updated_at?: string
+        }
+        Update: {
+          created_at?: string
+          has_external_id?: boolean
+          id?: string
+          image_url?: string
+          is_active?: boolean
+          is_featured?: boolean
+          is_stable?: boolean
+          name?: string
+          network?: string
+          supports_fixed_rate?: boolean
+          ticker?: string
+          tier?: number
+          token_contract?: string | null
+          updated_at?: string
+        }
+        Relationships: []
+      }
       invoices: {
         Row: {
           created_at: string
