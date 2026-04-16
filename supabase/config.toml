@@ -62,3 +62,9 @@ verify_jwt = false
 
 [functions.partner-proxy]
 verify_jwt = false
+
+[functions.sync-assets]
+verify_jwt = false
+
+[functions.dynamic-sitemap]
+verify_jwt = false
