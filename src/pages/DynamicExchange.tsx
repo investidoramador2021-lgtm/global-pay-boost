@@ -426,6 +426,11 @@ export default function DynamicExchange() {
           <div className="container mx-auto px-4">
             <div className="mx-auto max-w-5xl">
               <ExchangeWidget key={`${fromLower}-${toLower}`} defaultFrom={fromLower} defaultTo={toLower} />
+
+              {/* SEO content injection — dynamic per-pair pitch directly under the calculator */}
+              <p className="mt-4 text-center text-sm text-[#C4C8D0] leading-relaxed sm:text-base">
+                Securely swap <strong className="text-white">{fromUp}</strong> for <strong className="text-white">{toUp}</strong> at the best live rates. MRC GlobalPay provides regulated liquidity for {fromName} holders looking to diversify into {toName} instantly.
+              </p>
             </div>
           </div>
         </section>
