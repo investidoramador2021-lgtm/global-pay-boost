@@ -12,7 +12,8 @@ import { useToast } from "@/hooks/use-toast";
 import {
   Shield, Users, Bitcoin, TrendingUp, Check, LogOut, Lock, MessageCircle,
   Trash2, DollarSign, Copy, FileText, Landmark, Percent, Key, Activity,
-  AlertTriangle, Search, Code2, Link2, Zap, XCircle,
+  AlertTriangle, Search, Code2, Link2, Zap, XCircle, Upload, Mail, ExternalLink,
+  ShieldAlert,
 } from "lucide-react";
 import SiteHeader from "@/components/SiteHeader";
 import SiteFooter from "@/components/SiteFooter";
