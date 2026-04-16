@@ -125,6 +125,9 @@ export default function DynamicExchange() {
     staleTime: 1000 * 60 * 30,
   });
 
+  // Invalid pair format
+  if (!match) return <Navigate to={lp("/")} replace />;
+
   // If either asset is deprecated/not found, redirect to home (SEO 301 effect via client)
   if (!loadingFrom && !loadingTo && (!fromAsset || !toAsset)) {
     return <Navigate to={lp("/")} replace />;
