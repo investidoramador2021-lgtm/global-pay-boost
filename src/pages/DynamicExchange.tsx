@@ -801,37 +801,82 @@ export default function DynamicExchange() {
           </section>
         )}
 
-        {trendingPairs && trendingPairs.length > 0 && (
+        {(popularPairs.length > 0 || (relatedPairs && relatedPairs.length > 0)) && (
           <section className="border-t border-border py-12" aria-labelledby="related-swaps-heading">
             <div className="container mx-auto px-4">
               <div className="mx-auto max-w-5xl">
                 <h2 id="related-swaps-heading" className="mb-2 font-display text-xl font-bold text-foreground sm:text-2xl">
-                  Related Swaps — Popular in Canada
+                  Trending &amp; Related Pairs
                 </h2>
-                <p className="mb-6 text-sm text-muted-foreground">
-                  Browse 10 randomly selected pairs from our live database of 1,000+ active exchange routes.
+                <p className="mb-8 text-sm text-muted-foreground">
+                  Hand-picked popular routes, plus pairs correlated with {fromUp} or {toUp} from our live database of 1,000+ active exchange routes.
                 </p>
-                <nav aria-label="Related crypto swap pairs" className="grid gap-3 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5">
-                  {trendingPairs.map((item) => {
-                    const from = item.from_ticker.toLowerCase();
-                    const to = item.to_ticker.toLowerCase();
-                    const href = lp(`/exchange/${from}-to-${to}`);
 
-                    return (
-                      <Link
-                        key={`${from}-${to}`}
-                        to={href}
-                        className="rounded-xl border border-border bg-card px-4 py-3 transition-colors hover:border-primary/40 hover:bg-accent"
-                        title={`Swap ${from.toUpperCase()} to ${to.toUpperCase()}`}
-                      >
-                        <div className="text-xs uppercase tracking-wider text-muted-foreground">Active pair</div>
-                        <div className="mt-1 font-display text-sm font-bold text-foreground">
-                          {from.toUpperCase()} <ArrowRight className="mx-1 inline h-3.5 w-3.5 text-muted-foreground" /> {to.toUpperCase()}
-                        </div>
-                      </Link>
-                    );
-                  })}
-                </nav>
+                {popularPairs.length > 0 && (
+                  <>
+                    <h3 className="mb-3 font-display text-xs font-semibold uppercase tracking-wider text-muted-foreground">
+                      Popular Pairs
+                    </h3>
+                    <nav aria-label="Popular crypto swap pairs" className="mb-8 grid gap-3 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5">
+                      {popularPairs.map((item) => {
+                        const from = item.from.toLowerCase();
+                        const to = item.to.toLowerCase();
+                        const href = lp(`/exchange/${from}-to-${to}`);
+                        return (
+                          <a
+                            key={`pop-${from}-${to}`}
+                            href={href}
+                            className="rounded-xl border border-primary/30 bg-primary/5 px-4 py-3 transition-colors hover:border-primary/60 hover:bg-primary/10"
+                            title={`Swap ${from.toUpperCase()} to ${to.toUpperCase()} instantly on MRC GlobalPay`}
+                          >
+                            <div className="text-[10px] uppercase tracking-wider text-primary">Popular</div>
+                            <div className="mt-1 font-display text-sm font-bold text-foreground">
+                              {from.toUpperCase()} <ArrowRight className="mx-1 inline h-3.5 w-3.5 text-muted-foreground" /> {to.toUpperCase()}
+                            </div>
+                          </a>
+                        );
+                      })}
+                    </nav>
+                  </>
+                )}
+
+                {relatedPairs && relatedPairs.length > 0 && (
+                  <>
+                    <h3 className="mb-3 font-display text-xs font-semibold uppercase tracking-wider text-muted-foreground">
+                      Related to {fromUp} &amp; {toUp}
+                    </h3>
+                    <nav aria-label={`Pairs related to ${fromUp} and ${toUp}`} className="grid gap-3 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5">
+                      {relatedPairs.map((item) => {
+                        const from = item.from_ticker.toLowerCase();
+                        const to = item.to_ticker.toLowerCase();
+                        const href = lp(`/exchange/${from}-to-${to}`);
+                        return (
+                          <a
+                            key={`rel-${from}-${to}`}
+                            href={href}
+                            className="rounded-xl border border-border bg-card px-4 py-3 transition-colors hover:border-primary/40 hover:bg-accent"
+                            title={`Swap ${from.toUpperCase()} to ${to.toUpperCase()} — related to ${fromUp}/${toUp}`}
+                          >
+                            <div className="text-[10px] uppercase tracking-wider text-muted-foreground">Related</div>
+                            <div className="mt-1 font-display text-sm font-bold text-foreground">
+                              {from.toUpperCase()} <ArrowRight className="mx-1 inline h-3.5 w-3.5 text-muted-foreground" /> {to.toUpperCase()}
+                            </div>
+                          </a>
+                        );
+                      })}
+                    </nav>
+                  </>
+                )}
+
+                <div className="mt-8 text-center">
+                  <a
+                    href={lp("/directory")}
+                    className="inline-flex items-center gap-2 rounded-full border border-primary/30 bg-primary/5 px-5 py-2.5 font-display text-sm font-semibold text-foreground transition-colors hover:border-primary/60 hover:bg-primary/10"
+                    title="Browse the full directory of every supported crypto swap pair"
+                  >
+                    View All Pairs <ArrowRight className="h-4 w-4 text-primary" />
+                  </a>
+                </div>
               </div>
             </div>
           </section>
