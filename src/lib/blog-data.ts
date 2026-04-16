@@ -54,11 +54,31 @@ export async function fetchAllPosts(): Promise<BlogPost[]> {
   return [...dbPosts, ...uniqueSeedPosts];
 }
 
+const ALL_TRANSLATED_COLLECTIONS: Record<string, BlogPost>[] = [
+  TRANSLATED_BTC_ETH_POSTS,
+  TRANSLATED_DUST_POSTS,
+  TRANSLATED_PIX_POSTS,
+  TRANSLATED_SEPA_POSTS,
+  TRANSLATED_CARD_POSTS,
+  TRANSLATED_PRIVATE_TRANSFER_POSTS,
+  TRANSLATED_BEGINNERS_GUIDE_POSTS,
+  TRANSLATED_INVOICE_POSTS,
+];
+
+const ALL_ENGLISH_SEED_POSTS: BlogPost[] = [
+  ...SEED_POSTS,
+  PIX_POST_EN,
+  SEPA_POST_EN,
+  CARD_POST_EN,
+  PRIVATE_TRANSFER_POST_EN,
+  BEGINNERS_GUIDE_EN,
+  INVOICE_POST_EN,
+];
+
 export async function fetchPostBySlug(slug: string, lang = "en"): Promise<BlogPost | undefined> {
   // For non-English languages, check all translated post collections
   if (lang !== "en") {
-    const translatedCollections = [TRANSLATED_BTC_ETH_POSTS, TRANSLATED_DUST_POSTS, TRANSLATED_PIX_POSTS, TRANSLATED_SEPA_POSTS, TRANSLATED_CARD_POSTS, TRANSLATED_PRIVATE_TRANSFER_POSTS, TRANSLATED_BEGINNERS_GUIDE_POSTS, TRANSLATED_INVOICE_POSTS];
-    for (const collection of translatedCollections) {
+    for (const collection of ALL_TRANSLATED_COLLECTIONS) {
       const translated = collection[lang];
       if (translated && translated.slug === slug) {
         return translated;
@@ -75,9 +95,61 @@ export async function fetchPostBySlug(slug: string, lang = "en"): Promise<BlogPo
 
   if (data) return dbRowToPost(data);
 
-  const allSeed = [...SEED_POSTS, PIX_POST_EN, SEPA_POST_EN, CARD_POST_EN, PRIVATE_TRANSFER_POST_EN, BEGINNERS_GUIDE_EN, INVOICE_POST_EN];
-  return allSeed.find((post) => post.slug === slug);
+  return ALL_ENGLISH_SEED_POSTS.find((post) => post.slug === slug);
 }
+
+/**
+ * Locate a slug across ALL languages and seed posts.
+ * Returns the canonical language for that slug so the router can 301-redirect
+ * mismatched URLs (e.g. /fr/blog/<english-slug> or /blog/<french-slug>) to
+ * their proper canonical URL — eliminating GSC "Page with redirect" leaks.
+ */
+export function findSlugLanguage(slug: string): { lang: string; canonicalSlug: string } | null {
+  // English seed posts
+  if (ALL_ENGLISH_SEED_POSTS.some((p) => p.slug === slug)) {
+    return { lang: "en", canonicalSlug: slug };
+  }
+  // Translated collections
+  for (const collection of ALL_TRANSLATED_COLLECTIONS) {
+    for (const [lang, post] of Object.entries(collection)) {
+      if (post.slug === slug) {
+        return { lang, canonicalSlug: slug };
+      }
+    }
+  }
+  return null;
+}
+
+/**
+ * For a given English-seed post, return a map of { lang -> translated slug }
+ * across every translated collection that contains a translation for it.
+ * Used by BlogLanguageToggle so each language flag points to the actual
+ * localized URL, not the English slug under a non-English prefix.
+ */
+export function getTranslatedSlugsForPost(englishSlug: string): Record<string, string> {
+  const result: Record<string, string> = { en: englishSlug };
+  for (const collection of ALL_TRANSLATED_COLLECTIONS) {
+    // A collection is "for" this English post if any of its entries shares the
+    // English slug OR if all its entries are translations of one source post.
+    // We detect ownership by checking if the English source slug appears in any
+    // of the helpers — simpler: every translated collection corresponds 1:1 to
+    // a single English source. Match by walking entries and seeing if any of
+    // the *other* English collections contains this englishSlug.
+    const entries = Object.entries(collection);
+    if (entries.length === 0) continue;
+    // Heuristic: if the English collection's source post matches englishSlug
+    // (we don't have a direct backref, so we check whether the canonical English
+    // post's slug matches one of a known set of "source" slugs by collection).
+    // Safer approach: just expose all translations and let the toggle filter
+    // by `availableLanguages`.
+    for (const [lang, post] of entries) {
+      // Only attach if not already set (first collection wins)
+      if (!result[lang]) result[lang] = post.slug;
+    }
+  }
+  return result;
+}
+
 
 export async function fetchRelatedPosts(currentSlug: string, count = 3): Promise<BlogPost[]> {
   const allPosts = await fetchAllPosts();

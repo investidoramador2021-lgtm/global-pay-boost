@@ -4,7 +4,6 @@ import {
   supportedLanguages,
   languageMeta,
   getLangFromPath,
-  langPath,
   type SupportedLanguage,
 } from "@/i18n";
 
@@ -19,25 +18,40 @@ function flagUrl(lang: string): string {
 }
 
 interface BlogLanguageToggleProps {
-  /** Set of lang codes this post has translations for */
+  /** Set of lang codes this post has translations for (must include "en") */
   availableLanguages: Set<string>;
-  slug: string;
+  /** The English source post's slug — used as the URL for `en`. */
+  englishSlug: string;
+  /** Map of { lang -> localized slug } for non-English translations. */
+  translatedSlugs: Record<string, string>;
 }
 
-const BlogLanguageToggle = ({ availableLanguages, slug }: BlogLanguageToggleProps) => {
+/**
+ * Renders one button per available language. Each button navigates to the
+ * canonical URL for that language: `/blog/<en-slug>` for English, or
+ * `/${lang}/blog/<localized-slug>` for translations. This avoids generating
+ * cross-language URL combinations (e.g. /fr/blog/<en-slug>) that would
+ * 404-redirect and pollute GSC with "Page with redirect" entries.
+ */
+const BlogLanguageToggle = ({
+  availableLanguages,
+  englishSlug,
+  translatedSlugs,
+}: BlogLanguageToggleProps) => {
   const navigate = useNavigate();
   const { pathname } = useLocation();
   const currentLang = getLangFromPath(pathname);
 
-  const langs = supportedLanguages.filter(
-    (l) => l === "en" || availableLanguages.has(l)
-  );
+  const langs = supportedLanguages.filter((l) => availableLanguages.has(l));
 
   if (langs.length < 2) return null;
 
   const switchLang = (lang: SupportedLanguage) => {
     if (lang === currentLang) return;
-    const newPath = langPath(lang, `/blog/${slug}`);
+    const newPath =
+      lang === "en"
+        ? `/blog/${englishSlug}`
+        : `/${lang}/blog/${translatedSlugs[lang] ?? englishSlug}`;
     navigate(newPath);
   };
 
