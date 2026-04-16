@@ -9,15 +9,24 @@ const MsbTrustBar = () => (
           to="/transparency-security"
           className="inline-flex items-center gap-2 rounded-full border border-primary/30 bg-primary/5 px-3 py-1.5 text-xs font-semibold text-foreground transition-colors hover:bg-primary/10 sm:text-sm"
           title="View MRC GlobalPay Canadian MSB registration details"
+          aria-label="Official Canadian MSB registration badge for MRC GlobalPay, registration number C100000015"
         >
           <ShieldCheck className="h-4 w-4 text-primary" aria-hidden="true" />
           <span>Registered Canadian MSB&nbsp;·&nbsp;<span className="font-mono">#C100000015</span></span>
         </Link>
-        <span className="inline-flex items-center gap-2 rounded-full border border-border/60 bg-background/60 px-3 py-1.5 text-xs font-semibold text-foreground sm:text-sm">
+        <span
+          className="inline-flex items-center gap-2 rounded-full border border-border/60 bg-background/60 px-3 py-1.5 text-xs font-semibold text-foreground sm:text-sm"
+          aria-label="Official FINTRAC compliance badge for MRC GlobalPay"
+          role="img"
+        >
           <BadgeCheck className="h-4 w-4 text-primary" aria-hidden="true" />
           FINTRAC Compliant
         </span>
-        <span className="inline-flex items-center gap-2 rounded-full border border-border/60 bg-background/60 px-3 py-1.5 text-xs font-semibold text-foreground sm:text-sm">
+        <span
+          className="inline-flex items-center gap-2 rounded-full border border-border/60 bg-background/60 px-3 py-1.5 text-xs font-semibold text-foreground sm:text-sm"
+          aria-label="Non-custodial swap engine badge — MRC GlobalPay never holds user funds"
+          role="img"
+        >
           <Lock className="h-4 w-4 text-primary" aria-hidden="true" />
           Non-Custodial Swaps
         </span>
