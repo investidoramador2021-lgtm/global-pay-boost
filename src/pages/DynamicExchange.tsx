@@ -361,7 +361,7 @@ export default function DynamicExchange() {
         <section className="pb-12" id="exchange">
           <div className="container mx-auto px-4">
             <div className="mx-auto max-w-5xl">
-              <ExchangeWidget defaultFrom={fromLower} defaultTo={toLower} />
+              <ExchangeWidget key={`${fromLower}-${toLower}`} defaultFrom={fromLower} defaultTo={toLower} />
             </div>
           </div>
         </section>
