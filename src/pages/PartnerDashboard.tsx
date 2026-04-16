@@ -36,7 +36,7 @@ interface PartnerTx { id: string; partner_id: string; asset: string; volume: num
 interface ApiKey { id: string; key_id: string; webhook_url: string; ip_whitelist: string[]; is_active: boolean; last_used_at: string | null; created_at: string; }
 interface PartnerBalance { available_btc: number; pending_btc: number; total_earned_btc: number; last_credited_at: string | null; }
 
-type Section = "overview" | "referrals" | "earnings" | "account" | "dev-setup" | "api-keys" | "api-ledger" | "webhooks";
+type Section = "overview" | "referrals" | "earnings" | "account" | "dev-setup" | "api-keys" | "api-ledger" | "webhooks" | "docs";
 
 /* ── Status Pipeline ── */
 const PIPELINE = ["waiting", "confirming", "exchanging", "sending", "finished"] as const;
@@ -117,6 +117,7 @@ function Sidebar({ active, onNavigate, isDeveloper, mobileOpen, onClose }: { act
     { id: "api-keys", label: t("portal.apiKeys", "API Keys"), icon: Key },
     { id: "api-ledger", label: t("portal.apiLedger", "API Ledger"), icon: Terminal },
     { id: "webhooks", label: t("portal.webhooks", "Webhook Tester"), icon: Globe },
+    { id: "docs", label: t("portal.docs", "API Docs"), icon: Code2 },
   ];
 
   const NavItem = ({ id, label, icon: Icon }: { id: Section; label: string; icon: typeof Link2 }) => (
@@ -778,6 +779,380 @@ function ApiLedgerSection({ partnerId }: { partnerId: string }) {
 }
 
 /* ════════════════════════════════════════════════════════════ */
+/*  SECTION: DEVELOPER DOCUMENTATION                           */
+/* ════════════════════════════════════════════════════════════ */
+type DocTab = "auth" | "swap" | "webhooks" | "commission";
+
+const CODE_BG = "#050507";
+const CODE_BLUE = "#60A5FA";
+const CODE_CYAN = "#22D3EE";
+const CODE_STRING = "#A5F3FC";
+const CODE_COMMENT = "#4B5563";
+
+function CodeBlock({ title, language, children }: { title?: string; language: string; children: string }) {
+  const { toast } = useToast();
+  const copy = () => { navigator.clipboard.writeText(children); toast({ title: "Copied" }); };
+  return (
+    <div className="rounded-xl overflow-hidden" style={{ border: `0.5px solid ${OBS.border}` }}>
+      {title && (
+        <div className="flex items-center justify-between px-4 py-2" style={{ background: "rgba(255,255,255,0.03)", borderBottom: `0.5px solid ${OBS.border}` }}>
+          <span className="text-xs font-mono" style={{ color: OBS.muted }}>{title}</span>
+          <div className="flex items-center gap-2">
+            <span className="text-[10px] uppercase tracking-wider px-2 py-0.5 rounded" style={{ color: CODE_CYAN, background: "rgba(34,211,238,0.1)" }}>{language}</span>
+            <button onClick={copy} className="p-1 rounded hover:bg-white/5"><Copy className="w-3.5 h-3.5" style={{ color: OBS.muted }} /></button>
+          </div>
+        </div>
+      )}
+      <pre className="p-4 overflow-x-auto text-xs font-mono leading-relaxed" style={{ background: CODE_BG, color: "#E2E8F0" }}>
+        {children}
+      </pre>
+    </div>
+  );
+}
+
+function Prose({ children }: { children: React.ReactNode }) {
+  return <div className="prose-obsidian space-y-4 text-sm leading-relaxed" style={{ color: OBS.text }}>{children}</div>;
+}
+
+function DocHeading({ children }: { children: React.ReactNode }) {
+  return <h4 className="text-base font-semibold mt-6 mb-3 flex items-center gap-2" style={{ color: OBS.text }}>{children}</h4>;
+}
+
+function ParamRow({ name, type, required, desc }: { name: string; type: string; required?: boolean; desc: string }) {
+  return (
+    <div className="flex items-start gap-3 py-2" style={{ borderBottom: `0.5px solid rgba(255,255,255,0.04)` }}>
+      <code className="text-xs font-mono shrink-0 px-1.5 py-0.5 rounded" style={{ color: CODE_CYAN, background: "rgba(34,211,238,0.08)" }}>{name}</code>
+      <span className="text-[10px] uppercase tracking-wider shrink-0 mt-0.5" style={{ color: OBS.muted }}>{type}</span>
+      {required && <span className="text-[10px] uppercase tracking-wider shrink-0 mt-0.5 px-1.5 rounded" style={{ color: OBS.danger, background: "rgba(239,68,68,0.1)" }}>required</span>}
+      <span className="text-xs flex-1" style={{ color: OBS.muted }}>{desc}</span>
+    </div>
+  );
+}
+
+function DevDocsSection() {
+  const { t } = useTranslation();
+  const { toast } = useToast();
+  const [activeTab, setActiveTab] = useState<DocTab>("auth");
+  const [tryItLoading, setTryItLoading] = useState(false);
+  const [tryItResponse, setTryItResponse] = useState<string | null>(null);
+
+  const tabs: { id: DocTab; label: string; icon: typeof Shield }[] = [
+    { id: "auth", label: t("portal.docsAuth", "Authentication"), icon: Shield },
+    { id: "swap", label: t("portal.docsSwap", "Swap Endpoint"), icon: ArrowRightLeft },
+    { id: "webhooks", label: t("portal.docsWebhooks", "Webhook Security"), icon: Globe },
+    { id: "commission", label: t("portal.docsCommission", "Commission Logic"), icon: TrendingUp },
+  ];
+
+  const handleTryIt = async () => {
+    setTryItLoading(true);
+    setTryItResponse(null);
+    try {
+      const { data: { session } } = await supabase.auth.getSession();
+      if (!session) return;
+      const resp = await fetch(`${import.meta.env.VITE_SUPABASE_URL}/functions/v1/webhook-dispatcher?action=test-webhook`, {
+        method: "POST",
+        headers: { Authorization: `Bearer ${session.access_token}`, "Content-Type": "application/json", apikey: import.meta.env.VITE_SUPABASE_PUBLISHABLE_KEY },
+        body: "{}",
+      });
+      const data = await resp.json();
+      setTryItResponse(JSON.stringify({
+        status: 200,
+        mock_response: {
+          mrc_transaction_id: "MRC-MOCK-" + Math.random().toString(36).slice(2, 10),
+          status: "finished",
+          from_currency: "eth",
+          to_currency: "btc",
+          amount_in: 1.5,
+          amount_out: 0.0621,
+          partner_commission: 0.000248,
+          webhook_dispatched: data.success || false,
+          timestamp: new Date().toISOString(),
+        }
+      }, null, 2));
+      toast({ title: t("portal.mockSwapSent", "Mock swap executed successfully") });
+    } catch (e: any) {
+      setTryItResponse(JSON.stringify({ error: e.message }, null, 2));
+    }
+    setTryItLoading(false);
+  };
+
+  return (
+    <div className="space-y-6">
+      {/* Tab bar */}
+      <div className="flex items-center gap-1 overflow-x-auto pb-1" style={{ borderBottom: `0.5px solid ${OBS.border}` }}>
+        {tabs.map(tab => (
+          <button
+            key={tab.id}
+            onClick={() => setActiveTab(tab.id)}
+            className="flex items-center gap-1.5 px-4 py-2.5 text-xs font-medium transition-colors whitespace-nowrap"
+            style={{
+              color: activeTab === tab.id ? OBS.text : OBS.muted,
+              borderBottom: activeTab === tab.id ? `2px solid ${CODE_CYAN}` : "2px solid transparent",
+            }}
+          >
+            <tab.icon className="w-3.5 h-3.5" />
+            {tab.label}
+          </button>
+        ))}
+      </div>
+
+      {/* Two-column layout */}
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+        {/* LEFT: Prose */}
+        <div className="space-y-4">
+          {activeTab === "auth" && (
+            <Prose>
+              <DocHeading><Shield className="w-4 h-4" style={{ color: CODE_CYAN }} /> {t("portal.docsAuthTitle", "Authentication")}</DocHeading>
+              <p style={{ color: OBS.muted }}>{t("portal.docsAuthDesc", "All API requests must include two headers to identify and authenticate your integration. Requests missing either header will receive a 401 Unauthorized response.")}</p>
+              <div className="rounded-xl p-4 space-y-1" style={{ background: OBS.card, border: `0.5px solid ${OBS.border}` }}>
+                <ParamRow name="X-MRC-Partner-ID" type="header" required desc={t("portal.docsPartnerIdDesc", "Your unique Partner ID from the Partner Hub overview.")} />
+                <ParamRow name="X-MRC-API-Key" type="header" required desc={t("portal.docsApiKeyDesc", "An active API key generated in the API Keys section.")} />
+              </div>
+              <p className="text-xs" style={{ color: OBS.muted }}>{t("portal.docsAuthNote", "API keys are bound to your partner account. Each key can optionally be restricted to specific IP addresses via the whitelist in API Keys settings.")}</p>
+              <DocHeading>{t("portal.docsBaseUrl", "Base URL")}</DocHeading>
+              <div className="rounded-lg px-3 py-2 font-mono text-sm" style={{ background: OBS.card, border: `0.5px solid ${OBS.border}`, color: CODE_CYAN }}>
+                https://api.mrcglobalpay.com/v1
+              </div>
+            </Prose>
+          )}
+
+          {activeTab === "swap" && (
+            <Prose>
+              <DocHeading><ArrowRightLeft className="w-4 h-4" style={{ color: CODE_CYAN }} /> POST /v1/swap</DocHeading>
+              <p style={{ color: OBS.muted }}>{t("portal.docsSwapDesc", "Initiate a swap order through the MRC liquidity proxy. The system validates your credentials, logs the transaction internally, and relays the order to our liquidity network.")}</p>
+              <DocHeading>{t("portal.docsRequestBody", "Request Body")}</DocHeading>
+              <div className="rounded-xl p-4 space-y-1" style={{ background: OBS.card, border: `0.5px solid ${OBS.border}` }}>
+                <ParamRow name="from_currency" type="string" required desc={t("portal.docsFromDesc", "Source currency ticker (e.g., 'eth', 'btc', 'usdt').")} />
+                <ParamRow name="to_currency" type="string" required desc={t("portal.docsToDesc", "Destination currency ticker.")} />
+                <ParamRow name="amount" type="number" required desc={t("portal.docsAmountDesc", "Amount of from_currency to swap. Minimum $0.30 equivalent.")} />
+                <ParamRow name="recipient_address" type="string" required desc={t("portal.docsRecipientDesc", "Destination wallet address for the converted funds.")} />
+              </div>
+              <DocHeading>{t("portal.docsResponse", "Response")}</DocHeading>
+              <p style={{ color: OBS.muted }}>{t("portal.docsResponseDesc", "On success, returns 200 with the internal MRC transaction ID and a deposit address. The partner must instruct the end-user to send funds to the payin_address.")}</p>
+            </Prose>
+          )}
+
+          {activeTab === "webhooks" && (
+            <Prose>
+              <DocHeading><Globe className="w-4 h-4" style={{ color: CODE_CYAN }} /> {t("portal.docsWebhookTitle", "Webhook Security")}</DocHeading>
+              <p style={{ color: OBS.muted }}>{t("portal.docsWebhookDesc", "When a transaction status changes, MRC dispatches a POST request to your configured Webhook URL. Each payload is signed with HMAC-SHA256 using your API Secret as the key.")}</p>
+              <DocHeading>{t("portal.docsVerifySteps", "Verification Steps")}</DocHeading>
+              <ol className="list-decimal list-inside space-y-2 text-xs" style={{ color: OBS.muted }}>
+                <li>{t("portal.docsStep1", "Extract the X-MRC-Signature header from the incoming request.")}</li>
+                <li>{t("portal.docsStep2", "Compute HMAC-SHA256 of the raw JSON body using your API Secret.")}</li>
+                <li>{t("portal.docsStep3", "Compare your computed signature with the header value. Reject if they differ.")}</li>
+              </ol>
+              <DocHeading>{t("portal.docsPayloadFields", "Payload Fields")}</DocHeading>
+              <div className="rounded-xl p-4 space-y-1" style={{ background: OBS.card, border: `0.5px solid ${OBS.border}` }}>
+                <ParamRow name="mrc_tx_id" type="string" desc={t("portal.docsMrcTxDesc", "Internal MRC transaction reference.")} />
+                <ParamRow name="status" type="string" desc="waiting | confirming | exchanging | finished | failed" />
+                <ParamRow name="amount_out" type="number" desc={t("portal.docsAmountOutDesc", "Final amount delivered to the recipient.")} />
+                <ParamRow name="partner_commission" type="number" desc={t("portal.docsCommissionDesc", "Your earned commission on this transaction (BTC).")} />
+              </div>
+            </Prose>
+          )}
+
+          {activeTab === "commission" && (
+            <Prose>
+              <DocHeading><TrendingUp className="w-4 h-4" style={{ color: CODE_CYAN }} /> {t("portal.docsCommissionTitle", "Commission Logic")}</DocHeading>
+              <p style={{ color: OBS.muted }}>{t("portal.docsCommissionDesc2", "All transactions routed through the Partner API are subject to an automated 0.4% commission, calculated on the total transaction volume and credited in BTC.")}</p>
+              <div className="rounded-xl p-5 space-y-3" style={{ background: "rgba(34,211,238,0.04)", border: `0.5px solid rgba(34,211,238,0.15)` }}>
+                <div className="flex items-center gap-2">
+                  <Activity className="w-4 h-4" style={{ color: CODE_CYAN }} />
+                  <span className="text-sm font-medium" style={{ color: OBS.text }}>{t("portal.docsRateFormula", "Commission Formula")}</span>
+                </div>
+                <code className="block text-sm font-mono" style={{ color: CODE_CYAN }}>commission_btc = volume_usd × 0.004 ÷ btc_price</code>
+              </div>
+              <DocHeading>{t("portal.docsSettlement", "Settlement")}</DocHeading>
+              <ul className="list-disc list-inside space-y-2 text-xs" style={{ color: OBS.muted }}>
+                <li>{t("portal.docsSettlement1", "Commissions accrue in real-time to your Available Balance.")}</li>
+                <li>{t("portal.docsSettlement2", "Completed transactions auto-credit to the BTC wallet on your partner profile.")}</li>
+                <li>{t("portal.docsSettlement3", "Pending settlements are visible in the API Ledger under 'Pending Settlement'.")}</li>
+              </ul>
+              <DocHeading>{t("portal.docsLedgerTracking", "Ledger Tracking")}</DocHeading>
+              <p style={{ color: OBS.muted }}>{t("portal.docsLedgerDesc", "Each transaction is logged with a unique MRC Transaction ID, volume, commission, and payment status. Review your full ledger in the API Ledger section.")}</p>
+            </Prose>
+          )}
+        </div>
+
+        {/* RIGHT: Code blocks */}
+        <div className="space-y-4">
+          {activeTab === "auth" && (
+            <>
+              <CodeBlock title="Authentication Headers" language="HTTP">
+{`GET /v1/status HTTP/1.1
+Host: api.mrcglobalpay.com
+X-MRC-Partner-ID: your_partner_id
+X-MRC-API-Key: pk_live_xxxxxxxxxxxxxxxx
+Content-Type: application/json`}
+              </CodeBlock>
+              <CodeBlock title="cURL Example" language="bash">
+{`curl -X GET https://api.mrcglobalpay.com/v1/status \\
+  -H "X-MRC-Partner-ID: your_partner_id" \\
+  -H "X-MRC-API-Key: pk_live_xxxxxxxxxxxxxxxx" \\
+  -H "Content-Type: application/json"`}
+              </CodeBlock>
+              <CodeBlock title="Error Response (401)" language="JSON">
+{`{
+  "error": "MRC_AUTH_FAILED",
+  "message": "Invalid or missing API credentials.",
+  "code": 401
+}`}
+              </CodeBlock>
+            </>
+          )}
+
+          {activeTab === "swap" && (
+            <>
+              <CodeBlock title="Request" language="bash">
+{`curl -X POST https://api.mrcglobalpay.com/v1/swap \\
+  -H "X-MRC-Partner-ID: your_partner_id" \\
+  -H "X-MRC-API-Key: pk_live_xxxxxxxxxxxxxxxx" \\
+  -H "Content-Type: application/json" \\
+  -d '{
+    "from_currency": "eth",
+    "to_currency": "btc",
+    "amount": 1.5,
+    "recipient_address": "bc1q..."
+  }'`}
+              </CodeBlock>
+              <CodeBlock title="Success Response (200)" language="JSON">
+{`{
+  "mrc_transaction_id": "MRC-a1b2c3d4e5f6",
+  "status": "waiting",
+  "payin_address": "0x7a250d563...",
+  "amount_expected": 1.5,
+  "from_currency": "eth",
+  "to_currency": "btc",
+  "estimated_arrival": "10-30 minutes"
+}`}
+              </CodeBlock>
+              <CodeBlock title="Error Response (400)" language="JSON">
+{`{
+  "error": "MRC_MINIMUM_AMOUNT",
+  "message": "Minimum swap amount is $0.30 equivalent.",
+  "code": 400
+}`}
+              </CodeBlock>
+            </>
+          )}
+
+          {activeTab === "webhooks" && (
+            <>
+              <CodeBlock title="Node.js — Verify Signature" language="JavaScript">
+{`const crypto = require('crypto');
+
+function verifySignature(body, signature, secret) {
+  const hmac = crypto
+    .createHmac('sha256', secret)
+    .update(body)
+    .digest('hex');
+  return hmac === signature;
+}
+
+// Express middleware
+app.post('/webhook', (req, res) => {
+  const sig = req.headers['x-mrc-signature'];
+  const raw = JSON.stringify(req.body);
+
+  if (!verifySignature(raw, sig, API_SECRET)) {
+    return res.status(401).json({
+      error: 'Invalid signature'
+    });
+  }
+
+  const { mrc_tx_id, status } = req.body;
+  console.log(\`TX \${mrc_tx_id}: \${status}\`);
+  res.sendStatus(200);
+});`}
+              </CodeBlock>
+              <CodeBlock title="Python — Verify Signature" language="Python">
+{`import hmac
+import hashlib
+
+def verify_signature(body: bytes, signature: str,
+                     secret: str) -> bool:
+    computed = hmac.new(
+        secret.encode(),
+        body,
+        hashlib.sha256
+    ).hexdigest()
+    return hmac.compare_digest(computed, signature)
+
+# Flask route
+@app.route('/webhook', methods=['POST'])
+def webhook():
+    sig = request.headers.get('X-MRC-Signature')
+    if not verify_signature(
+        request.data, sig, API_SECRET
+    ):
+        return jsonify(error='Invalid'), 401
+
+    data = request.json
+    print(f"TX {data['mrc_tx_id']}: {data['status']}")
+    return '', 200`}
+              </CodeBlock>
+            </>
+          )}
+
+          {activeTab === "commission" && (
+            <>
+              <CodeBlock title="Commission Calculation" language="JSON">
+{`// Example: 1.5 ETH swap at $3,200/ETH
+// BTC price: $67,400
+
+{
+  "volume_usd": 4800.00,
+  "commission_rate": 0.004,
+  "commission_usd": 19.20,
+  "btc_price": 67400,
+  "commission_btc": 0.00028487
+}`}
+              </CodeBlock>
+              <CodeBlock title="Webhook Commission Payload" language="JSON">
+{`{
+  "event": "transaction.updated",
+  "mrc_transaction_id": "MRC-a1b2c3d4e5f6",
+  "status": "finished",
+  "amount_out": 0.0621,
+  "partner_commission": 0.00028487,
+  "asset": "btc",
+  "volume": 4800.00,
+  "timestamp": "2026-04-16T01:45:00.000Z"
+}`}
+              </CodeBlock>
+            </>
+          )}
+
+          {/* Try It Now Console */}
+          <div className="rounded-xl overflow-hidden" style={{ border: `0.5px solid ${OBS.border}` }}>
+            <div className="flex items-center justify-between px-4 py-2.5" style={{ background: "rgba(255,255,255,0.03)", borderBottom: `0.5px solid ${OBS.border}` }}>
+              <div className="flex items-center gap-2">
+                <Terminal className="w-3.5 h-3.5" style={{ color: CODE_CYAN }} />
+                <span className="text-xs font-medium" style={{ color: OBS.text }}>{t("portal.tryItNow", "Try It Now")}</span>
+              </div>
+              <span className="text-[10px] uppercase tracking-wider px-2 py-0.5 rounded" style={{ color: "#22C55E", background: "rgba(34,197,94,0.1)" }}>SANDBOX</span>
+            </div>
+            <div className="p-4 space-y-3" style={{ background: CODE_BG }}>
+              <p className="text-xs" style={{ color: OBS.muted }}>{t("portal.tryItDesc", "Execute a mock swap to preview the JSON response and webhook dispatch behavior.")}</p>
+              <Button onClick={handleTryIt} disabled={tryItLoading} className="bg-white text-black hover:bg-gray-200 transition-all duration-100 h-9 text-xs">
+                {tryItLoading ? <Loader2 className="w-3.5 h-3.5 animate-spin me-1.5" /> : <ArrowRightLeft className="w-3.5 h-3.5 me-1.5" />}
+                {t("portal.executeMockSwap", "Execute Mock Swap")}
+              </Button>
+              {tryItResponse && (
+                <pre className="text-xs font-mono p-3 rounded-lg overflow-x-auto" style={{ background: "rgba(0,0,0,0.5)", color: "#E2E8F0" }}>
+                  {tryItResponse}
+                </pre>
+              )}
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+/* ════════════════════════════════════════════════════════════ */
 /*  SECTION: WEBHOOK TESTER                                    */
 /* ════════════════════════════════════════════════════════════ */
 function WebhookTesterSection() {
@@ -971,6 +1346,7 @@ function DashboardContent() {
     "api-keys": t("portal.apiKeys", "API Keys"),
     "api-ledger": t("portal.apiLedger", "API Ledger"),
     webhooks: t("portal.webhooks", "Webhook Tester"),
+    docs: t("portal.docs", "API Documentation"),
   };
 
   return (
@@ -1001,6 +1377,7 @@ function DashboardContent() {
             {activeSection === "api-keys" && (isDeveloper ? <ApiKeysSection partnerId={profile.id} /> : <DevSetupSection partnerId={profile.id} isDeveloper={isDeveloper} onActivated={() => setIsDeveloper(true)} />)}
             {activeSection === "api-ledger" && (isDeveloper ? <ApiLedgerSection partnerId={profile.id} /> : <DevSetupSection partnerId={profile.id} isDeveloper={isDeveloper} onActivated={() => setIsDeveloper(true)} />)}
             {activeSection === "webhooks" && (isDeveloper ? <WebhookTesterSection /> : <DevSetupSection partnerId={profile.id} isDeveloper={isDeveloper} onActivated={() => setIsDeveloper(true)} />)}
+            {activeSection === "docs" && (isDeveloper ? <DevDocsSection /> : <DevSetupSection partnerId={profile.id} isDeveloper={isDeveloper} onActivated={() => setIsDeveloper(true)} />)}
           </div>
         </main>
       </div>
