@@ -1,8 +1,9 @@
 import "jsr:@supabase/functions-js/edge-runtime.d.ts";
+import { createClient } from "https://esm.sh/@supabase/supabase-js@2.49.1";
 
 const corsHeaders = {
   'Access-Control-Allow-Origin': '*',
-  'Access-Control-Allow-Headers': 'authorization, x-client-info, apikey, content-type, x-supabase-client-platform, x-supabase-client-platform-version, x-supabase-client-runtime, x-supabase-client-runtime-version',
+  'Access-Control-Allow-Headers': 'authorization, x-client-info, apikey, content-type, x-supabase-client-platform, x-supabase-client-platform-version, x-supabase-client-runtime, x-supabase-client-runtime-version, x-mrc-partner-id',
   'Access-Control-Allow-Methods': 'GET, POST, OPTIONS',
 };
 
@@ -185,6 +186,36 @@ Deno.serve(async (req) => {
           ? `🚨 HIGH VALUE\n${telegramMsg}`
           : telegramMsg
         );
+
+        // ── Partner Attribution Engine ──
+        const partnerKeyId = req.headers.get('x-mrc-partner-id');
+        if (partnerKeyId) {
+          try {
+            const svc = createClient(Deno.env.get('SUPABASE_URL')!, Deno.env.get('SUPABASE_SERVICE_ROLE_KEY')!);
+            const { data: apiKeyRow } = await svc
+              .from('partner_api_keys')
+              .select('partner_id, is_active')
+              .eq('key_id', partnerKeyId)
+              .eq('is_active', true)
+              .maybeSingle();
+            if (apiKeyRow) {
+              // Update last_used_at
+              await svc.from('partner_api_keys').update({ last_used_at: new Date().toISOString() }).eq('key_id', partnerKeyId);
+              // Log commission (0.5% of amount)
+              const commission = amountNum * 0.005;
+              await svc.from('partner_transactions').insert({
+                partner_id: apiKeyRow.partner_id,
+                asset: fromC.toLowerCase(),
+                volume: amountNum,
+                commission_btc: commission,
+                completed_at: new Date().toISOString(),
+              });
+              console.log(`Partner attribution logged: ${partnerKeyId} → ${commission} commission`);
+            }
+          } catch (e) {
+            console.error('Partner attribution error:', e);
+          }
+        }
 
         return jsonResponse(parsed.data);
       }
