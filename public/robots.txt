@@ -2,12 +2,24 @@
 User-agent: Googlebot
 Allow: /
 Disallow: /admin-portal-mrc
+Disallow: /admin/
 Disallow: /dashboard
+Disallow: /pay/
+Disallow: /status/
+Disallow: /verify-email
+Disallow: /verify-update
+Disallow: /regulatory-report/
 
 User-agent: Bingbot
 Allow: /
 Disallow: /admin-portal-mrc
+Disallow: /admin/
 Disallow: /dashboard
+Disallow: /pay/
+Disallow: /status/
+Disallow: /verify-email
+Disallow: /verify-update
+Disallow: /regulatory-report/
 
 User-agent: Applebot
 Allow: /
@@ -24,23 +36,33 @@ Allow: /
 # === AI & LLM Crawlers (Allowed) ===
 User-agent: GPTBot
 Allow: /
-Allow: /guide/
+Allow: /exchange/
 Allow: /blog/
+Allow: /learn/
+Allow: /compare/
+Allow: /solutions/
 Disallow: /admin-portal-mrc
+Disallow: /admin/
 Disallow: /dashboard
+Disallow: /pay/
+Disallow: /status/
 
 User-agent: ChatGPT-User
 Allow: /
-Allow: /guide/
+Allow: /exchange/
 Allow: /blog/
+Allow: /learn/
 Disallow: /admin-portal-mrc
+Disallow: /admin/
 Disallow: /dashboard
 
 User-agent: OAI-SearchBot
 Allow: /
-Allow: /guide/
+Allow: /exchange/
 Allow: /blog/
+Allow: /learn/
 Disallow: /admin-portal-mrc
+Disallow: /admin/
 Disallow: /dashboard
 
 User-agent: Google-Extended
@@ -48,7 +70,9 @@ Allow: /
 
 User-agent: ClaudeBot
 Allow: /
+Allow: /exchange/
 Disallow: /admin-portal-mrc
+Disallow: /admin/
 Disallow: /dashboard
 
 User-agent: Claude-Web
@@ -59,9 +83,11 @@ Allow: /
 
 User-agent: PerplexityBot
 Allow: /
-Allow: /guide/
+Allow: /exchange/
 Allow: /blog/
+Allow: /learn/
 Disallow: /admin-portal-mrc
+Disallow: /admin/
 Disallow: /dashboard
 
 User-agent: cohere-ai
@@ -69,12 +95,21 @@ Allow: /
 
 User-agent: meta-externalagent
 Allow: /
-Allow: /guide/
+Allow: /exchange/
 
 User-agent: Amazonbot
 Allow: /
 
 User-agent: YouBot
+Allow: /
+
+User-agent: Phind
+Allow: /
+
+User-agent: Brave
+Allow: /
+
+User-agent: ICC-Crawler
 Allow: /
 
 # === Low-Utility Scrapers (Blocked) ===
@@ -107,18 +142,21 @@ User-agent: *
 Allow: /
 Allow: /blog
 Allow: /blog/
+Allow: /exchange/
 Allow: /swap/
 Allow: /buy/
 Allow: /guides/
 Allow: /bridge/
 Allow: /resources/
-Disallow: /sell
-Disallow: /payout
-Disallow: /admin-portal-mrc
-Disallow: /dashboard
-Disallow: /pay/
-Disallow: /status/
-
+Allow: /compare
+Allow: /compare/
+Allow: /solutions
+Allow: /solutions/
+Allow: /learn
+Allow: /learn/
+Allow: /ecosystem
+Allow: /ecosystem/
+Allow: /developers
 Allow: /private-transfer
 Allow: /permanent-bridge
 Allow: /permanent-bridge/whitepaper
@@ -131,21 +169,23 @@ Allow: /compliance
 Allow: /partners
 Allow: /crypto-dust-solutions
 Allow: /guide/crypto-dust
-
-# Priority sections for AI indexing
-# LLMs.txt: https://mrcglobalpay.com/llms.txt
-# Instant Rates: https://mrcglobalpay.com/#exchange
-# Blog: https://mrcglobalpay.com/blog
-# FAQ: https://mrcglobalpay.com/#faq
-
-Sitemap: https://mrcglobalpay.com/sitemap.xml
-
-# Syndication feeds
-# Blog RSS: https://mrcglobalpay.com/rss.xml
-# Blog Feed: https://mrcglobalpay.com/blog/feed.xml
-# Live Rates API: https://mrcglobalpay.com/api/v1/rates
-# Rates JSON: https://mrcglobalpay.com/api/rates.json
-# Rates XML: https://mrcglobalpay.com/export/rates.xml
+Allow: /get-widget
+Allow: /embed/widget
+Allow: /trading-bot-manifest.json
+Allow: /about
+Allow: /status
+Allow: /referral
+Allow: /export/
+Disallow: /sell
+Disallow: /payout
+Disallow: /admin-portal-mrc
+Disallow: /admin/
+Disallow: /dashboard
+Disallow: /pay/
+Disallow: /status/
+Disallow: /verify-email
+Disallow: /verify-update
+Disallow: /regulatory-report/
 
 # Language subdirectories
 Allow: /es/
@@ -161,22 +201,18 @@ Allow: /vi/
 Allow: /tr/
 Allow: /uk/
 
-# Widget pages
-Allow: /get-widget
-Allow: /embed/widget
-Allow: /trading-bot-manifest.json
+# Priority sections for AI indexing
+# LLMs.txt: https://mrcglobalpay.com/llms.txt
+# Instant Rates: https://mrcglobalpay.com/#exchange
+# Blog: https://mrcglobalpay.com/blog
+# FAQ: https://mrcglobalpay.com/#faq
 
-# Directories
-Allow: /compare
-Allow: /compare/
-Allow: /solutions
-Allow: /solutions/
-Allow: /learn
-Allow: /learn/
-Allow: /ecosystem
-Allow: /ecosystem/
-Allow: /developers
-Allow: /status
-Allow: /referral
-Allow: /about
-Allow: /export/
+Sitemap: https://mrcglobalpay.com/sitemap.xml
+Sitemap: https://tjikwxkmsfmyjkssvyoh.supabase.co/functions/v1/dynamic-sitemap/index.xml
+
+# Syndication feeds
+# Blog RSS: https://mrcglobalpay.com/rss.xml
+# Blog Feed: https://mrcglobalpay.com/blog/feed.xml
+# Live Rates API: https://mrcglobalpay.com/api/v1/rates
+# Rates JSON: https://mrcglobalpay.com/api/rates.json
+# Rates XML: https://mrcglobalpay.com/export/rates.xml
