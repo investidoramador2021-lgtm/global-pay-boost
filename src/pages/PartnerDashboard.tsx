@@ -880,6 +880,7 @@ function DashboardContent() {
     "dev-setup": t("portal.devSetup", "Developer Setup"),
     "api-keys": t("portal.apiKeys", "API Keys"),
     "api-ledger": t("portal.apiLedger", "API Ledger"),
+    webhooks: t("portal.webhooks", "Webhook Tester"),
   };
 
   return (
@@ -909,6 +910,7 @@ function DashboardContent() {
             {activeSection === "dev-setup" && <DevSetupSection partnerId={profile.id} isDeveloper={isDeveloper} onActivated={() => setIsDeveloper(true)} />}
             {activeSection === "api-keys" && (isDeveloper ? <ApiKeysSection partnerId={profile.id} /> : <DevSetupSection partnerId={profile.id} isDeveloper={isDeveloper} onActivated={() => setIsDeveloper(true)} />)}
             {activeSection === "api-ledger" && (isDeveloper ? <ApiLedgerSection partnerId={profile.id} /> : <DevSetupSection partnerId={profile.id} isDeveloper={isDeveloper} onActivated={() => setIsDeveloper(true)} />)}
+            {activeSection === "webhooks" && (isDeveloper ? <WebhookTesterSection /> : <DevSetupSection partnerId={profile.id} isDeveloper={isDeveloper} onActivated={() => setIsDeveloper(true)} />)}
           </div>
         </main>
       </div>
