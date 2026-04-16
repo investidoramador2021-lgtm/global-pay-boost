@@ -155,6 +155,23 @@ export default function DynamicExchange() {
     staleTime: 1000 * 60 * 30,
   });
 
+  // Fetch pre-generated SEO content from the pairs table
+  const { data: pairSeo } = useQuery({
+    queryKey: ["pair-seo", fromLower, toLower],
+    queryFn: async () => {
+      if (!fromLower || !toLower) return null;
+      const { data } = await supabase
+        .from("pairs")
+        .select("seo_title, seo_description, seo_h1, content_json")
+        .eq("from_ticker", fromLower)
+        .eq("to_ticker", toLower)
+        .maybeSingle();
+      return data;
+    },
+    enabled: !!fromLower && !!toLower,
+    staleTime: 1000 * 60 * 60,
+  });
+
   const { data: relatedAssets } = useQuery({
     queryKey: ["exchange-related-assets"],
     queryFn: async () => {
@@ -186,8 +203,14 @@ export default function DynamicExchange() {
   const fromUp = fromTicker.toUpperCase();
   const toUp = toTicker.toUpperCase();
 
-  const title = `${dx("heroTitle", { from: fromUp, to: toUp })} — ${dx("ctaSubtitle")} | MRC GlobalPay`;
-  const description = `Convert ${fromName} (${fromUp}) to ${toName} (${toUp}) in under 60 seconds with no account required. Compare rates from 700+ liquidity sources. Canadian MSB-registered (C100000015). Step-by-step guide, network details, and live rates.`;
+  // Use pre-generated SEO content from pairs table when available, with lang-aware fallback
+  const pairLangContent = pairSeo?.content_json && typeof pairSeo.content_json === "object"
+    ? (pairSeo.content_json as Record<string, { title?: string; description?: string; h1?: string }>)[lang]
+    : null;
+
+  const title = pairLangContent?.title || `${dx("heroTitle", { from: fromUp, to: toUp })} — ${dx("ctaSubtitle")} | MRC GlobalPay`;
+  const description = pairLangContent?.description || `Convert ${fromName} (${fromUp}) to ${toName} (${toUp}) in under 60 seconds with no account required. Compare rates from 700+ liquidity sources. Canadian MSB-registered (C100000015). Step-by-step guide, network details, and live rates.`;
+  const seoH1 = pairLangContent?.h1 || null;
   const canonicalUrl = `https://mrcglobalpay.com/exchange/${fromLower}-to-${toLower}`;
 
   const fromNetwork = fromAsset?.network || "";
@@ -316,7 +339,7 @@ export default function DynamicExchange() {
               </nav>
 
               <h1 className="font-display text-3xl font-extrabold tracking-tight text-white sm:text-4xl lg:text-5xl">
-                {dx("heroTitle", { from: fromUp, to: toUp })} <span className="text-[#00E676]">{dx("heroInstantly")}</span>
+                {seoH1 ? <>{seoH1} <span className="text-[#00E676]">{dx("heroInstantly")}</span></> : <>{dx("heroTitle", { from: fromUp, to: toUp })} <span className="text-[#00E676]">{dx("heroInstantly")}</span></>}
               </h1>
 
               {/* Snippet-optimized answer block — visible to crawlers */}
