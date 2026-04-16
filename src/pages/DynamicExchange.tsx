@@ -771,16 +771,16 @@ export default function DynamicExchange() {
         )}
 
         {trendingPairs && trendingPairs.length > 0 && (
-          <section className="border-t border-border py-12">
+          <section className="border-t border-border py-12" aria-labelledby="related-swaps-heading">
             <div className="container mx-auto px-4">
               <div className="mx-auto max-w-5xl">
-                <h2 className="mb-2 font-display text-xl font-bold text-foreground sm:text-2xl">
+                <h2 id="related-swaps-heading" className="mb-2 font-display text-xl font-bold text-foreground sm:text-2xl">
                   Related Swaps — Popular in Canada
                 </h2>
                 <p className="mb-6 text-sm text-muted-foreground">
                   Browse 10 randomly selected pairs from our live database of 1,000+ active exchange routes.
                 </p>
-                <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5">
+                <nav aria-label="Related crypto swap pairs" className="grid gap-3 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5">
                   {trendingPairs.map((item) => {
                     const from = item.from_ticker.toLowerCase();
                     const to = item.to_ticker.toLowerCase();
