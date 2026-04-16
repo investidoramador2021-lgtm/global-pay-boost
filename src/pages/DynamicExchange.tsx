@@ -8,6 +8,7 @@ import SiteHeader from "@/components/SiteHeader";
 import SiteFooter from "@/components/SiteFooter";
 import ExchangeWidget from "@/components/ExchangeWidget";
 import LiveSwapTicker from "@/components/LiveSwapTicker";
+import TokenIcon from "@/components/TokenIcon";
 import {
   Accordion,
   AccordionContent,
@@ -407,7 +408,7 @@ export default function DynamicExchange() {
                 {fromDesc && (
                   <article>
                     <h3 className="font-display text-base font-bold text-white mb-2 flex items-center gap-2">
-                      {fromAsset?.image_url && <img src={fromAsset.image_url} alt={fromName} className="h-5 w-5 rounded-full" />}
+                      <TokenIcon src={fromAsset?.image_url} ticker={fromLower} alt={fromName} className="h-5 w-5" />
                       What is {fromName} ({fromUp})?
                     </h3>
                     <p className="text-sm text-[#C4C8D0] leading-relaxed">{fromDesc}</p>
@@ -416,7 +417,7 @@ export default function DynamicExchange() {
                 {toDesc && (
                   <article>
                     <h3 className="font-display text-base font-bold text-white mb-2 flex items-center gap-2">
-                      {toAsset?.image_url && <img src={toAsset.image_url} alt={toName} className="h-5 w-5 rounded-full" />}
+                      <TokenIcon src={toAsset?.image_url} ticker={toLower} alt={toName} className="h-5 w-5" />
                       What is {toName} ({toUp})?
                     </h3>
                     <p className="text-sm text-[#C4C8D0] leading-relaxed">{toDesc}</p>
@@ -466,7 +467,7 @@ export default function DynamicExchange() {
                   ].filter((a) => a.asset).map((a) => (
                     <div key={a.up} className="rounded-xl border border-[#2A2D35] bg-[#12141A] p-5">
                       <div className="flex items-center gap-3 mb-4">
-                        {a.asset!.image_url && <img src={a.asset!.image_url} alt={a.name} className="h-8 w-8 rounded-full" loading="lazy" />}
+                        <TokenIcon src={a.asset!.image_url} ticker={a.up.toLowerCase()} alt={a.name} className="h-8 w-8" />
                         <div>
                           <h3 className="font-display text-sm font-bold text-white">{a.name} ({a.up})</h3>
                           <span className="text-xs text-[#8A8F98]">{getNetworkLabel(a.network)}</span>
@@ -632,7 +633,7 @@ export default function DynamicExchange() {
                     .map((a) => (
                       <Link key={a.ticker} to={lp(`/exchange/${fromLower}-to-${a.ticker.toLowerCase()}`)}
                         className="inline-flex items-center gap-1.5 rounded-lg border border-border bg-card px-3 py-2 text-xs font-medium text-foreground transition-colors hover:border-primary/40 hover:bg-accent">
-                        {a.image_url && <img src={a.image_url} alt={a.name} className="h-4 w-4 rounded-full" loading="lazy" />}
+<TokenIcon src={a.image_url} ticker={a.ticker} alt={a.name} className="h-4 w-4" />
                         {a.ticker.toUpperCase()}
                       </Link>
                     ))}
@@ -648,7 +649,7 @@ export default function DynamicExchange() {
                     .map((a) => (
                       <Link key={a.ticker} to={lp(`/exchange/${a.ticker.toLowerCase()}-to-${toLower}`)}
                         className="inline-flex items-center gap-1.5 rounded-lg border border-border bg-card px-3 py-2 text-xs font-medium text-foreground transition-colors hover:border-primary/40 hover:bg-accent">
-                        {a.image_url && <img src={a.image_url} alt={a.name} className="h-4 w-4 rounded-full" loading="lazy" />}
+                        <TokenIcon src={a.image_url} ticker={a.ticker} alt={a.name} className="h-4 w-4" />
                         {a.ticker.toUpperCase()}
                       </Link>
                     ))}
@@ -661,8 +662,8 @@ export default function DynamicExchange() {
                       <Link key={`${from.ticker}-${to.ticker}`} to={lp(`/exchange/${from.ticker.toLowerCase()}-to-${to.ticker.toLowerCase()}`)}
                         className="flex items-center gap-2 rounded-lg border border-border bg-card px-3 py-2.5 text-xs transition-colors hover:border-primary/40 hover:bg-accent">
                         <div className="flex -space-x-1">
-                          {from.image_url && <img src={from.image_url} alt="" className="h-4 w-4 rounded-full ring-1 ring-background" loading="lazy" />}
-                          {to.image_url && <img src={to.image_url} alt="" className="h-4 w-4 rounded-full ring-1 ring-background" loading="lazy" />}
+                          <TokenIcon src={from.image_url} ticker={from.ticker} className="h-4 w-4 ring-1 ring-background" />
+                          <TokenIcon src={to.image_url} ticker={to.ticker} className="h-4 w-4 ring-1 ring-background" />
                         </div>
                         <span className="font-medium text-foreground">{from.ticker.toUpperCase()}</span>
                         <ArrowRight className="h-3 w-3 text-muted-foreground" />
