@@ -36,7 +36,7 @@ interface PartnerTx { id: string; partner_id: string; asset: string; volume: num
 interface ApiKey { id: string; key_id: string; webhook_url: string; ip_whitelist: string[]; is_active: boolean; last_used_at: string | null; created_at: string; }
 interface PartnerBalance { available_btc: number; pending_btc: number; total_earned_btc: number; last_credited_at: string | null; }
 
-type Section = "overview" | "referrals" | "earnings" | "account" | "dev-setup" | "api-keys" | "api-ledger";
+type Section = "overview" | "referrals" | "earnings" | "account" | "dev-setup" | "api-keys" | "api-ledger" | "webhooks";
 
 /* ── Status Pipeline ── */
 const PIPELINE = ["waiting", "confirming", "exchanging", "sending", "finished"] as const;
@@ -116,6 +116,7 @@ function Sidebar({ active, onNavigate, isDeveloper, mobileOpen, onClose }: { act
     { id: "dev-setup", label: t("portal.devSetup", "2FA & Setup"), icon: Shield },
     { id: "api-keys", label: t("portal.apiKeys", "API Keys"), icon: Key },
     { id: "api-ledger", label: t("portal.apiLedger", "API Ledger"), icon: Terminal },
+    { id: "webhooks", label: t("portal.webhooks", "Webhook Tester"), icon: Globe },
   ];
 
   const NavItem = ({ id, label, icon: Icon }: { id: Section; label: string; icon: typeof Link2 }) => (
@@ -777,6 +778,96 @@ function ApiLedgerSection({ partnerId }: { partnerId: string }) {
 }
 
 /* ════════════════════════════════════════════════════════════ */
+/*  SECTION: WEBHOOK TESTER                                    */
+/* ════════════════════════════════════════════════════════════ */
+function WebhookTesterSection() {
+  const { t } = useTranslation();
+  const { toast } = useToast();
+  const [testing, setTesting] = useState(false);
+  const [result, setResult] = useState<{ success: boolean; status_code?: number; error?: string; webhook_url?: string } | null>(null);
+
+  const sendTest = async () => {
+    setTesting(true);
+    setResult(null);
+    try {
+      const { data: { session } } = await supabase.auth.getSession();
+      if (!session) return;
+      const resp = await fetch(`${import.meta.env.VITE_SUPABASE_URL}/functions/v1/webhook-dispatcher?action=test-webhook`, {
+        method: "POST",
+        headers: { Authorization: `Bearer ${session.access_token}`, "Content-Type": "application/json", apikey: import.meta.env.VITE_SUPABASE_PUBLISHABLE_KEY },
+        body: "{}",
+      });
+      const data = await resp.json();
+      setResult(data);
+      if (data.success) toast({ title: t("portal.webhookSuccess", "Webhook delivered successfully!") });
+      else toast({ title: t("portal.webhookFailed", "Webhook delivery failed"), variant: "destructive" });
+    } catch (e: any) {
+      setResult({ success: false, error: e.message });
+      toast({ title: e.message, variant: "destructive" });
+    }
+    setTesting(false);
+  };
+
+  return (
+    <div className="space-y-6">
+      <div className="rounded-xl p-6 space-y-4" style={{ background: OBS.card, border: `0.5px solid ${OBS.border}` }}>
+        <div className="flex items-center gap-3">
+          <Globe className="w-5 h-5" style={{ color: OBS.accent }} />
+          <span className="text-sm font-medium" style={{ color: OBS.text }}>{t("portal.webhookTester", "Webhook Integration Tester")}</span>
+        </div>
+        <p className="text-xs" style={{ color: OBS.muted }}>
+          {t("portal.webhookTesterDesc", "Send a dummy 'transaction.updated' payload to your configured webhook URL to verify your server receives and processes it correctly. The payload will be HMAC-signed with your API secret.")}
+        </p>
+        <Button onClick={sendTest} disabled={testing} className="bg-white text-black hover:bg-gray-200 transition-all duration-100">
+          {testing ? <Loader2 className="w-4 h-4 animate-spin me-1.5" /> : <Globe className="w-4 h-4 me-1.5" />}
+          {t("portal.sendTestWebhook", "Send Test Webhook")}
+        </Button>
+      </div>
+
+      {result && (
+        <div className="rounded-xl p-5 space-y-3" style={{
+          background: result.success ? "rgba(34,211,238,0.05)" : "rgba(239,68,68,0.05)",
+          border: `0.5px solid ${result.success ? "rgba(34,211,238,0.3)" : "rgba(239,68,68,0.3)"}`,
+        }}>
+          <div className="flex items-center gap-2">
+            {result.success ? <CheckCircle2 className="w-4 h-4" style={{ color: OBS.success }} /> : <XCircle className="w-4 h-4" style={{ color: OBS.danger }} />}
+            <span className="text-sm font-medium" style={{ color: result.success ? OBS.success : OBS.danger }}>
+              {result.success ? "Delivered Successfully" : "Delivery Failed"}
+            </span>
+          </div>
+          <div className="text-xs space-y-1" style={{ color: OBS.muted }}>
+            {result.webhook_url && <p>URL: <code className="font-mono" style={{ color: OBS.text }}>{result.webhook_url}</code></p>}
+            {result.status_code && <p>Response: <code className="font-mono" style={{ color: OBS.text }}>{result.status_code}</code></p>}
+            {result.error && <p>Error: <code className="font-mono" style={{ color: OBS.danger }}>{result.error}</code></p>}
+          </div>
+        </div>
+      )}
+
+      {/* Payload preview */}
+      <div className="rounded-xl p-5 space-y-3" style={{ background: OBS.card, border: `0.5px solid ${OBS.border}` }}>
+        <span className="text-xs uppercase tracking-wider" style={{ color: OBS.muted }}>Sample Payload</span>
+        <pre className="text-xs font-mono p-4 rounded-lg overflow-x-auto" style={{ background: "rgba(0,0,0,0.3)", color: OBS.text }}>
+          {JSON.stringify({
+            event: "transaction.updated",
+            mrc_transaction_id: "MRC-TEST-a1b2c3d4",
+            status: "finished",
+            amount_out: 0.05,
+            partner_commission: 0.0002,
+            asset: "btc",
+            volume: 50,
+            timestamp: new Date().toISOString(),
+          }, null, 2)}
+        </pre>
+        <div className="space-y-1.5 text-xs" style={{ color: OBS.muted }}>
+          <p><strong style={{ color: OBS.text }}>X-MRC-Signature</strong> — HMAC-SHA256 of the JSON body, signed with your API secret</p>
+          <p><strong style={{ color: OBS.text }}>X-MRC-Event</strong> — Always <code className="font-mono" style={{ color: OBS.success }}>transaction.updated</code></p>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+/* ════════════════════════════════════════════════════════════ */
 /*  MAIN DASHBOARD CONTENT                                     */
 /* ════════════════════════════════════════════════════════════ */
 function DashboardContent() {
@@ -879,6 +970,7 @@ function DashboardContent() {
     "dev-setup": t("portal.devSetup", "Developer Setup"),
     "api-keys": t("portal.apiKeys", "API Keys"),
     "api-ledger": t("portal.apiLedger", "API Ledger"),
+    webhooks: t("portal.webhooks", "Webhook Tester"),
   };
 
   return (
@@ -908,6 +1000,7 @@ function DashboardContent() {
             {activeSection === "dev-setup" && <DevSetupSection partnerId={profile.id} isDeveloper={isDeveloper} onActivated={() => setIsDeveloper(true)} />}
             {activeSection === "api-keys" && (isDeveloper ? <ApiKeysSection partnerId={profile.id} /> : <DevSetupSection partnerId={profile.id} isDeveloper={isDeveloper} onActivated={() => setIsDeveloper(true)} />)}
             {activeSection === "api-ledger" && (isDeveloper ? <ApiLedgerSection partnerId={profile.id} /> : <DevSetupSection partnerId={profile.id} isDeveloper={isDeveloper} onActivated={() => setIsDeveloper(true)} />)}
+            {activeSection === "webhooks" && (isDeveloper ? <WebhookTesterSection /> : <DevSetupSection partnerId={profile.id} isDeveloper={isDeveloper} onActivated={() => setIsDeveloper(true)} />)}
           </div>
         </main>
       </div>

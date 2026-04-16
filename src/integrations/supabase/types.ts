@@ -946,6 +946,65 @@ export type Database = {
         }
         Relationships: []
       }
+      webhook_deliveries: {
+        Row: {
+          attempts: number
+          created_at: string
+          error_message: string | null
+          id: string
+          last_attempt_at: string | null
+          max_attempts: number
+          mrc_transaction_id: string
+          next_retry_at: string | null
+          partner_id: string
+          payload: Json
+          response_code: number | null
+          status: string
+          updated_at: string
+          webhook_url: string
+        }
+        Insert: {
+          attempts?: number
+          created_at?: string
+          error_message?: string | null
+          id?: string
+          last_attempt_at?: string | null
+          max_attempts?: number
+          mrc_transaction_id: string
+          next_retry_at?: string | null
+          partner_id: string
+          payload?: Json
+          response_code?: number | null
+          status?: string
+          updated_at?: string
+          webhook_url: string
+        }
+        Update: {
+          attempts?: number
+          created_at?: string
+          error_message?: string | null
+          id?: string
+          last_attempt_at?: string | null
+          max_attempts?: number
+          mrc_transaction_id?: string
+          next_retry_at?: string | null
+          partner_id?: string
+          payload?: Json
+          response_code?: number | null
+          status?: string
+          updated_at?: string
+          webhook_url?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "webhook_deliveries_partner_id_fkey"
+            columns: ["partner_id"]
+            isOneToOne: false
+            referencedRelation: "partner_profiles"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       x_bot_logs: {
         Row: {
           author_username: string
