@@ -9,6 +9,21 @@ const corsHeaders = {
 
 const CHANGENOW_BASE = "https://api.changenow.io/v1";
 const COMMISSION_RATE = 0.004; // 0.4% cap
+const RATE_LIMIT_MAX = 10;
+const RATE_LIMIT_WINDOW_MS = 60_000;
+const rateLimitMap = new Map<string, { count: number; resetAt: number }>();
+
+function checkRateLimit(partnerId: string): boolean {
+  const now = Date.now();
+  const entry = rateLimitMap.get(partnerId);
+  if (!entry || now > entry.resetAt) {
+    rateLimitMap.set(partnerId, { count: 1, resetAt: now + RATE_LIMIT_WINDOW_MS });
+    return true;
+  }
+  if (entry.count >= RATE_LIMIT_MAX) return false;
+  entry.count++;
+  return true;
+}
 
 function json(data: unknown, status = 200) {
   return new Response(JSON.stringify(data), {
