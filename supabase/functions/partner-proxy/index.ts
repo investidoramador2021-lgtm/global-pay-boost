@@ -99,6 +99,11 @@ Deno.serve(async (req) => {
     return mrcError("MRC_AUTH_FAILED", "Invalid credentials or 2FA not configured", 401);
   }
 
+  // Rate limiting
+  if (!checkRateLimit(auth.partnerId)) {
+    return json({ error: "Rate limit exceeded. Please contact strategic support." }, 429);
+  }
+
   try {
     const url = new URL(req.url);
     const action = url.searchParams.get("action");
