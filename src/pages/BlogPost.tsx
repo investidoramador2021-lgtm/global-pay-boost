@@ -7,7 +7,7 @@ import SiteFooter from "@/components/SiteFooter";
 import BlogMarkdown from "@/components/blog/BlogMarkdown";
 import BlogLanguageToggle from "@/components/blog/BlogLanguageToggle";
 import TableOfContents, { extractHeadings } from "@/components/blog/TableOfContents";
-import { fetchPostBySlug, fetchRelatedPosts, type BlogPost } from "@/lib/blog-data";
+import { fetchPostBySlug, fetchRelatedPosts, findSlugLanguage, type BlogPost } from "@/lib/blog-data";
 import { getLangFromPath, langPath, supportedLanguages } from "@/i18n";
 import { TRANSLATED_BEGINNERS_GUIDE_POSTS } from "@/lib/blog/translated-beginners-guide-posts";
 
@@ -72,6 +72,23 @@ const BlogPostPage = () => {
     );
   }
 
+  // If the slug isn't valid for the current language, look it up across ALL
+  // languages. If found in another language, redirect to that language's
+  // canonical URL — this turns GSC "Page with redirect" entries into proper
+  // 200s on the right URL instead of soft-bouncing everyone to /blog.
+  if (!post && slug) {
+    const match = findSlugLanguage(slug);
+    if (match) {
+      const correctPath = match.lang === "en"
+        ? `/blog/${match.canonicalSlug}`
+        : `/${match.lang}/blog/${match.canonicalSlug}`;
+      // Avoid redirect loop: only redirect if we're not already there
+      if (location.pathname !== correctPath) {
+        return <Navigate to={correctPath} replace />;
+      }
+    }
+    return <Navigate to={lp("/blog")} replace />;
+  }
   if (!post) return <Navigate to={lp("/blog")} replace />;
 
   // Canonical always points to English URL to avoid "duplicate canonical" in GSC
@@ -259,8 +276,11 @@ const BlogPostPage = () => {
 
               {slug === "beginners-guide-digital-assets-wallet-to-swap" && (
                 <BlogLanguageToggle
-                  availableLanguages={new Set(Object.keys(TRANSLATED_BEGINNERS_GUIDE_POSTS))}
-                  slug={slug}
+                  availableLanguages={new Set(["en", ...Object.keys(TRANSLATED_BEGINNERS_GUIDE_POSTS)])}
+                  englishSlug="beginners-guide-digital-assets-wallet-to-swap"
+                  translatedSlugs={Object.fromEntries(
+                    Object.entries(TRANSLATED_BEGINNERS_GUIDE_POSTS).map(([l, p]) => [l, p.slug])
+                  )}
                 />
               )}
 
