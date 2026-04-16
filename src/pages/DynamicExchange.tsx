@@ -126,6 +126,28 @@ export default function DynamicExchange() {
     staleTime: 1000 * 60 * 30,
   });
 
+  // Fetch related tier-1 assets for the "Related Pairs" section
+  const { data: relatedAssets } = useQuery({
+    queryKey: ["exchange-related-assets"],
+    queryFn: async () => {
+      const { data } = await supabase
+        .from("exchange_assets")
+        .select("ticker, name, image_url")
+        .eq("is_active", true)
+        .eq("tier", 1)
+        .order("ticker");
+      // Deduplicate by ticker
+      const seen = new Set<string>();
+      return (data || []).filter((a) => {
+        const t = a.ticker.toLowerCase();
+        if (seen.has(t)) return false;
+        seen.add(t);
+        return true;
+      });
+    },
+    staleTime: 1000 * 60 * 60,
+  });
+
   // Invalid pair format
   if (!match) return <Navigate to={lp("/")} replace />;
 
