@@ -14,7 +14,8 @@ import {
   AccordionItem,
   AccordionTrigger,
 } from "@/components/ui/accordion";
-import { Shield, Cpu, Clock, AlertTriangle, ExternalLink, Zap, Activity } from "lucide-react";
+import { Shield, Cpu, Clock, AlertTriangle, ExternalLink, Zap, Activity, ArrowRight } from "lucide-react";
+import { Link } from "react-router-dom";
 
 const EXPLORER_MAP: Record<string, string> = {
   eth: "https://etherscan.io/token/",
