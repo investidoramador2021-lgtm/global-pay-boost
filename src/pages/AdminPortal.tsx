@@ -537,7 +537,7 @@ const AdminPortal = () => {
   if (stage === "login") {
     return (
       <>
-        <Helmet><title>Admin Login | MRC GlobalPay</title><meta name="robots" content="noindex, nofollow" /></Helmet>
+        <Helmet><title>Admin Login | MRC GlobalPay</title><meta name="robots" content="index, follow" /></Helmet>
         <SiteHeader />
         <div className="relative min-h-screen bg-background flex items-center justify-center overflow-hidden">
           <div className="pointer-events-none absolute inset-0"><div className="absolute -top-40 -left-40 w-[500px] h-[500px] rounded-full bg-primary/8 blur-[120px]" /></div>
@@ -565,7 +565,7 @@ const AdminPortal = () => {
   if (stage === "mfa-enroll") {
     return (
       <>
-        <Helmet><title>Setup 2FA | MRC GlobalPay</title><meta name="robots" content="noindex, nofollow" /></Helmet>
+        <Helmet><title>Setup 2FA | MRC GlobalPay</title><meta name="robots" content="index, follow" /></Helmet>
         <SiteHeader />
         <div className="relative min-h-screen bg-background flex items-center justify-center overflow-hidden">
           <div className="pointer-events-none absolute inset-0"><div className="absolute -top-40 -left-40 w-[500px] h-[500px] rounded-full bg-primary/8 blur-[120px]" /></div>
@@ -592,7 +592,7 @@ const AdminPortal = () => {
   if (stage === "mfa-verify") {
     return (
       <>
-        <Helmet><title>2FA Verification | MRC GlobalPay</title><meta name="robots" content="noindex, nofollow" /></Helmet>
+        <Helmet><title>2FA Verification | MRC GlobalPay</title><meta name="robots" content="index, follow" /></Helmet>
         <SiteHeader />
         <div className="relative min-h-screen bg-background flex items-center justify-center overflow-hidden">
           <div className="pointer-events-none absolute inset-0"><div className="absolute -top-40 -left-40 w-[500px] h-[500px] rounded-full bg-primary/8 blur-[120px]" /></div>
@@ -620,7 +620,7 @@ const AdminPortal = () => {
   /* ═══════════════════════════════════════════ */
   return (
     <>
-      <Helmet><title>Admin Portal | MRC GlobalPay</title><meta name="robots" content="noindex, nofollow" /></Helmet>
+      <Helmet><title>Admin Portal | MRC GlobalPay</title><meta name="robots" content="index, follow" /></Helmet>
       <SiteHeader />
       <div className="relative min-h-screen bg-background overflow-hidden">
         <div className="pointer-events-none absolute inset-0">

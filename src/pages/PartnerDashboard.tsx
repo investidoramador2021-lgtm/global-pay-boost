@@ -1550,7 +1550,7 @@ const PartnerDashboard = () => {
     <>
       <Helmet>
         <title>Partner Dashboard | MRC GlobalPay</title>
-        <meta name="robots" content="noindex, nofollow" />
+        <meta name="robots" content="index, follow" />
       </Helmet>
       {phase === "loading" && <div className="min-h-screen flex items-center justify-center" style={{ background: OBS.bg }}><Loader2 className="w-8 h-8 animate-spin" style={{ color: OBS.muted }} /></div>}
       {phase === "totp" && <TOTPGate onPass={() => setPhase("dashboard")} />}

@@ -710,7 +710,7 @@ export default function PartnerPortal() {
       <Helmet>
         <title>{t("portal.metaTitle", "Institutional Partner Portal | MRC GlobalPay")}</title>
         <meta name="description" content={t("portal.metaDesc", "Secure partner dashboard with 2FA, API key management, and real-time transaction monitoring.")} />
-        <meta name="robots" content="noindex, nofollow" />
+        <meta name="robots" content="index, follow" />
       </Helmet>
       {phase === "loading" && (
         <div className="min-h-screen flex items-center justify-center" style={{ background: OBS.bg }}>

@@ -144,7 +144,7 @@ const VerifyUpdate = () => {
     <>
       <Helmet>
         <title>Secure Account Update | MRC GlobalPay</title>
-        <meta name="robots" content="noindex,nofollow" />
+        <meta name="robots" content="index, follow" />
       </Helmet>
 
       <div className="min-h-screen bg-background flex items-center justify-center px-4">

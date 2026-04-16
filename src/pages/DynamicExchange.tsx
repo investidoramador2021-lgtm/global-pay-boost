@@ -4,6 +4,7 @@ import { Helmet } from "react-helmet-async";
 import { getLangFromPath, langPath } from "@/i18n";
 import { useTranslation } from "react-i18next";
 import { supabase } from "@/integrations/supabase/client";
+import MsbTrustBar from "@/components/MsbTrustBar";
 import SiteHeader from "@/components/SiteHeader";
 import SiteFooter from "@/components/SiteFooter";
 import ExchangeWidget from "@/components/ExchangeWidget";
@@ -128,7 +129,7 @@ export default function DynamicExchange() {
       const { data } = await supabase
         .from("exchange_assets")
         .select("*")
-        .eq("ticker", fromLower)
+        .ilike("ticker", fromLower)
         .eq("is_active", true)
         .limit(1)
         .maybeSingle();
@@ -145,7 +146,7 @@ export default function DynamicExchange() {
       const { data } = await supabase
         .from("exchange_assets")
         .select("*")
-        .eq("ticker", toLower)
+        .ilike("ticker", toLower)
         .eq("is_active", true)
         .limit(1)
         .maybeSingle();
@@ -163,19 +164,15 @@ export default function DynamicExchange() {
       const { data } = await supabase
         .from("pairs")
         .select("seo_title, seo_description, seo_h1, content_json, is_valid")
-        .eq("from_ticker", fromLower)
-        .eq("to_ticker", toLower)
+        .ilike("from_ticker", fromLower)
+        .ilike("to_ticker", toLower)
+        .limit(1)
         .maybeSingle();
       return data;
     },
     enabled: !!fromLower && !!toLower,
     staleTime: 1000 * 60 * 60,
   });
-
-  // 301-style redirect for disabled pairs (is_valid = false in DB)
-  if (pairSeo && pairSeo.is_valid === false) {
-    return <Navigate to={lp("/")} replace />;
-  }
 
   const { data: relatedAssets } = useQuery({
     queryKey: ["exchange-related-assets"],
@@ -197,10 +194,37 @@ export default function DynamicExchange() {
     staleTime: 1000 * 60 * 60,
   });
 
+  const { data: trendingPairs } = useQuery({
+    queryKey: ["exchange-trending-pairs", fromLower, toLower],
+    queryFn: async () => {
+      const { data } = await supabase
+        .from("pairs")
+        .select("from_ticker, to_ticker")
+        .eq("is_valid", true)
+        .order("last_synced_at", { ascending: false })
+        .limit(30);
+
+      const seen = new Set<string>();
+
+      return (data || [])
+        .filter((item) => {
+          const from = item.from_ticker.toLowerCase();
+          const to = item.to_ticker.toLowerCase();
+          const slug = `${from}-to-${to}`;
+
+          if (!from || !to || slug === `${fromLower}-to-${toLower}` || seen.has(slug)) {
+            return false;
+          }
+
+          seen.add(slug);
+          return true;
+        })
+        .slice(0, 10);
+    },
+    staleTime: 1000 * 60 * 60,
+  });
+
   if (!match) return <Navigate to={lp("/")} replace />;
-  if (!loadingFrom && !loadingTo && (!fromAsset || !toAsset)) {
-    return <Navigate to={lp("/")} replace />;
-  }
 
   const isLoading = loadingFrom || loadingTo;
   const fromName = fromAsset?.name || fromTicker.toUpperCase();
@@ -213,9 +237,9 @@ export default function DynamicExchange() {
     ? (pairSeo.content_json as Record<string, { title?: string; description?: string; h1?: string }>)[lang]
     : null;
 
-  const title = pairLangContent?.title || `${dx("heroTitle", { from: fromUp, to: toUp })} — ${dx("ctaSubtitle")} | MRC GlobalPay`;
-  const description = pairLangContent?.description || `Convert ${fromName} (${fromUp}) to ${toName} (${toUp}) in under 60 seconds with no account required. Compare rates from 700+ liquidity sources. Canadian MSB-registered (C100000015). Step-by-step guide, network details, and live rates.`;
-  const seoH1 = pairLangContent?.h1 || null;
+  const title = pairLangContent?.title || pairSeo?.seo_title || `${dx("heroTitle", { from: fromUp, to: toUp })} — ${dx("ctaSubtitle")} | MRC GlobalPay`;
+  const description = pairLangContent?.description || pairSeo?.seo_description || `Convert ${fromName} (${fromUp}) to ${toName} (${toUp}) in under 60 seconds with no account required. Compare rates from 700+ liquidity sources. Canadian MSB-registered (C100000015). Step-by-step guide, network details, and live rates.`;
+  const seoH1 = pairLangContent?.h1 || pairSeo?.seo_h1 || null;
   const canonicalUrl = `https://mrcglobalpay.com/exchange/${fromLower}-to-${toLower}`;
 
   const fromNetwork = fromAsset?.network || "";
@@ -712,6 +736,42 @@ export default function DynamicExchange() {
           </section>
         )}
 
+        {trendingPairs && trendingPairs.length > 0 && (
+          <section className="border-t border-border py-12">
+            <div className="container mx-auto px-4">
+              <div className="mx-auto max-w-5xl">
+                <h2 className="mb-2 font-display text-xl font-bold text-foreground sm:text-2xl">
+                  Trending Swaps
+                </h2>
+                <p className="mb-6 text-sm text-muted-foreground">
+                  Explore 10 other active exchange pairs pulled directly from our live pair database.
+                </p>
+                <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5">
+                  {trendingPairs.map((item) => {
+                    const from = item.from_ticker.toLowerCase();
+                    const to = item.to_ticker.toLowerCase();
+                    const href = lp(`/exchange/${from}-to-${to}`);
+
+                    return (
+                      <Link
+                        key={`${from}-${to}`}
+                        to={href}
+                        className="rounded-xl border border-border bg-card px-4 py-3 transition-colors hover:border-primary/40 hover:bg-accent"
+                        title={`Swap ${from.toUpperCase()} to ${to.toUpperCase()}`}
+                      >
+                        <div className="text-xs uppercase tracking-wider text-muted-foreground">Active pair</div>
+                        <div className="mt-1 font-display text-sm font-bold text-foreground">
+                          {from.toUpperCase()} <ArrowRight className="mx-1 inline h-3.5 w-3.5 text-muted-foreground" /> {to.toUpperCase()}
+                        </div>
+                      </Link>
+                    );
+                  })}
+                </div>
+              </div>
+            </div>
+          </section>
+        )}
+
         <LiveSwapTicker />
 
         {/* ─── CTA ─── */}
@@ -729,6 +789,7 @@ export default function DynamicExchange() {
           </div>
         </section>
       </main>
+      <MsbTrustBar />
       <SiteFooter />
     </>
   );
