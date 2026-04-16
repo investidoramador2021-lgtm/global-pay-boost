@@ -753,10 +753,10 @@ export default function DynamicExchange() {
             <div className="container mx-auto px-4">
               <div className="mx-auto max-w-5xl">
                 <h2 className="mb-2 font-display text-xl font-bold text-foreground sm:text-2xl">
-                  Trending Swaps
+                  Related Swaps — Popular in Canada
                 </h2>
                 <p className="mb-6 text-sm text-muted-foreground">
-                  Explore 10 other active exchange pairs pulled directly from our live pair database.
+                  Browse 10 randomly selected pairs from our live database of 1,000+ active exchange routes.
                 </p>
                 <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5">
                   {trendingPairs.map((item) => {
