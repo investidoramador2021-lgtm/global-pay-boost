@@ -938,8 +938,13 @@ const ExchangeWidget = ({ onTabChange, defaultFrom, defaultTo }: ExchangeWidgetP
               if (!mapped) return null;
               const exact = data.find((c) => c.ticker === mapped);
               if (exact) return exact;
-              if (raw && raw !== mapped) return data.find((c) => c.ticker === raw) || null;
-              return null;
+              if (raw && raw !== mapped) {
+                const rawMatch = data.find((c) => c.ticker === raw);
+                if (rawMatch) return rawMatch;
+              }
+              // Fuzzy: match tickers that start with the query (e.g. "usdt" → "usdterc20")
+              const prefix = data.find((c) => c.ticker.startsWith(mapped));
+              return prefix || null;
             };
 
             const fromMatch = findCurrency(paramFromMapped, paramFrom);
