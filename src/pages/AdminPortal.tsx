@@ -1114,7 +1114,7 @@ const AdminPortal = () => {
                       ) : complianceHolds.map(hold => {
                         const linkedTx = transactions.find(t => t.id === hold.partner_transaction_id);
                         return (
-                          <TableRow key={hold.id} style={{ borderColor: hold.status === "action_required" ? `${COMPLIANCE_BLUE}30` : undefined }}>
+                          <TableRow key={hold.id} className={hold.status === "action_required" ? "cursor-pointer hover:bg-[#00A3FF]/5" : ""} style={{ borderColor: hold.status === "action_required" ? `${COMPLIANCE_BLUE}30` : undefined }} onClick={() => hold.status === "action_required" && openComplianceDrawer(hold)}>
                             <TableCell>
                               <span className="text-xs font-semibold px-2 py-0.5 rounded uppercase" style={{
                                 background: `${COMPLIANCE_BLUE}20`,
