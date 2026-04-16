@@ -122,6 +122,9 @@ export default function DynamicExchange() {
   const fromLower = fromTicker.toLowerCase();
   const toLower = toTicker.toLowerCase();
 
+  // Case-insensitive normalization: 301-style redirect any non-lowercase URL to its lowercase canonical
+  const needsLowercaseRedirect = !!pair && pair !== pair.toLowerCase() && !!match;
+
   const { data: fromAsset, isLoading: loadingFrom } = useQuery({
     queryKey: ["exchange-asset", fromLower],
     queryFn: async () => {
@@ -195,35 +198,39 @@ export default function DynamicExchange() {
   });
 
   const { data: trendingPairs } = useQuery({
-    queryKey: ["exchange-trending-pairs", fromLower, toLower],
+    queryKey: ["exchange-random-pairs", fromLower, toLower],
     queryFn: async () => {
+      // Pull a wide sample from the live pairs table, then shuffle client-side
+      // to give every page a fresh "Related Swaps" set on each render.
       const { data } = await supabase
         .from("pairs")
         .select("from_ticker, to_ticker")
         .eq("is_valid", true)
-        .order("last_synced_at", { ascending: false })
-        .limit(30);
+        .limit(500);
 
       const seen = new Set<string>();
+      const filtered = (data || []).filter((item) => {
+        const from = item.from_ticker.toLowerCase();
+        const to = item.to_ticker.toLowerCase();
+        const slug = `${from}-to-${to}`;
+        if (!from || !to || slug === `${fromLower}-to-${toLower}` || seen.has(slug)) return false;
+        seen.add(slug);
+        return true;
+      });
 
-      return (data || [])
-        .filter((item) => {
-          const from = item.from_ticker.toLowerCase();
-          const to = item.to_ticker.toLowerCase();
-          const slug = `${from}-to-${to}`;
-
-          if (!from || !to || slug === `${fromLower}-to-${toLower}` || seen.has(slug)) {
-            return false;
-          }
-
-          seen.add(slug);
-          return true;
-        })
-        .slice(0, 10);
+      // Fisher-Yates shuffle for true randomness across all 1,000+ pairs
+      for (let i = filtered.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [filtered[i], filtered[j]] = [filtered[j], filtered[i]];
+      }
+      return filtered.slice(0, 10);
     },
-    staleTime: 1000 * 60 * 60,
+    staleTime: 1000 * 60 * 5,
   });
 
+  if (needsLowercaseRedirect) {
+    return <Navigate to={lp(`/exchange/${fromLower}-to-${toLower}`)} replace />;
+  }
   if (!match) return <Navigate to={lp("/")} replace />;
 
   const isLoading = loadingFrom || loadingTo;
@@ -419,6 +426,11 @@ export default function DynamicExchange() {
           <div className="container mx-auto px-4">
             <div className="mx-auto max-w-5xl">
               <ExchangeWidget key={`${fromLower}-${toLower}`} defaultFrom={fromLower} defaultTo={toLower} />
+
+              {/* SEO content injection — dynamic per-pair pitch directly under the calculator */}
+              <p className="mt-4 text-center text-sm text-[#C4C8D0] leading-relaxed sm:text-base">
+                Securely swap <strong className="text-white">{fromUp}</strong> for <strong className="text-white">{toUp}</strong> at the best live rates. MRC GlobalPay provides regulated liquidity for {fromName} holders looking to diversify into {toName} instantly.
+              </p>
             </div>
           </div>
         </section>
@@ -601,6 +613,28 @@ export default function DynamicExchange() {
                   </div>
                 ))}
               </div>
+
+              {/* Hard-coded Canadian Compliance & Security block — always renders, no i18n dependency */}
+              <div className="mt-6 rounded-2xl border border-[#00E676]/20 bg-gradient-to-br from-[#0F1A14] to-[#12141A] p-5 sm:p-6">
+                <div className="mb-3 flex items-center gap-2">
+                  <Shield className="h-5 w-5 text-[#00E676]" />
+                  <h3 className="font-display text-base font-bold text-white">Compliance &amp; Security</h3>
+                </div>
+                <ul className="grid gap-2.5 sm:grid-cols-3">
+                  <li className="flex items-start gap-2 text-sm text-[#C4C8D0]">
+                    <CheckCircle2 className="mt-0.5 h-4 w-4 shrink-0 text-[#00E676]" />
+                    <span><strong className="text-white">Registered Canadian Money Services Business (MSB)</strong> — MRC Pay International Corp., FINTRAC #C100000015.</span>
+                  </li>
+                  <li className="flex items-start gap-2 text-sm text-[#C4C8D0]">
+                    <CheckCircle2 className="mt-0.5 h-4 w-4 shrink-0 text-[#00E676]" />
+                    <span><strong className="text-white">FINTRAC Compliant</strong> — Operating under Canadian AML/CTF reporting standards.</span>
+                  </li>
+                  <li className="flex items-start gap-2 text-sm text-[#C4C8D0]">
+                    <CheckCircle2 className="mt-0.5 h-4 w-4 shrink-0 text-[#00E676]" />
+                    <span><strong className="text-white">Secure Non-Custodial Swaps</strong> — We never hold your funds or private keys.</span>
+                  </li>
+                </ul>
+              </div>
             </div>
           </div>
         </section>
@@ -741,10 +775,10 @@ export default function DynamicExchange() {
             <div className="container mx-auto px-4">
               <div className="mx-auto max-w-5xl">
                 <h2 className="mb-2 font-display text-xl font-bold text-foreground sm:text-2xl">
-                  Trending Swaps
+                  Related Swaps — Popular in Canada
                 </h2>
                 <p className="mb-6 text-sm text-muted-foreground">
-                  Explore 10 other active exchange pairs pulled directly from our live pair database.
+                  Browse 10 randomly selected pairs from our live database of 1,000+ active exchange routes.
                 </p>
                 <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5">
                   {trendingPairs.map((item) => {
