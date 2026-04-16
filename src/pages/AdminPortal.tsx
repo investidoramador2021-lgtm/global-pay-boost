@@ -822,9 +822,9 @@ const AdminPortal = () => {
                       </TableRow>
                     </TableHeader>
                     <TableBody>
-                      {filteredProxyTxs.length === 0 ? (
+                      {sortedFilteredProxyTxs.length === 0 ? (
                         <TableRow><TableCell colSpan={9} className="text-center text-muted-foreground py-8">No proxy transactions yet.</TableCell></TableRow>
-                      ) : filteredProxyTxs.map(tx => {
+                      ) : sortedFilteredProxyTxs.map(tx => {
                         const whd = webhookDeliveries.find((w: any) => w.mrc_transaction_id === tx.mrc_transaction_id);
                         const whStatus = whd ? whd.status : "—";
                         return (
