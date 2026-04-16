@@ -1,7 +1,7 @@
 import { lazy, Suspense } from "react";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import SupportChatWidget from "@/components/SupportChatWidget";
-import { BrowserRouter, Route, Routes, Navigate } from "react-router-dom";
+import { BrowserRouter, Route, Routes, Navigate, useLocation } from "react-router-dom";
 import { HelmetProvider } from "react-helmet-async";
 import { Toaster as Sonner } from "@/components/ui/sonner";
 import { Toaster } from "@/components/ui/toaster";
@@ -76,6 +76,21 @@ const DynamicExchange = lazy(() => import("./pages/DynamicExchange.tsx"));
 const NotFound = lazy(() => import("./pages/NotFound.tsx"));
 
 const queryClient = new QueryClient();
+
+const EdgeFunctionAliasRedirect = () => {
+  const { pathname, search } = useLocation();
+  const params = new URLSearchParams(search);
+
+  if (pathname.endsWith("/live-feed")) {
+    return <Navigate to={params.get("format") === "rss" ? "/feed.rss" : "/feed.xml"} replace />;
+  }
+
+  if (pathname.endsWith("/dynamic-feed")) {
+    return <Navigate to="/sitemap.xml" replace />;
+  }
+
+  return <Navigate to="/" replace />;
+};
 
 /** All app routes — rendered once at root and once per language prefix */
 const AppRoutes = () => (
@@ -185,6 +200,8 @@ const App = () => (
                   <Route path="/admin/audit-inspector" element={<AuditInspector />} />
                   {/* Regulatory Report — read-only printable page */}
                   <Route path="/regulatory-report/:token" element={<RegulatoryReport />} />
+                  <Route path="/functions/v1/live-feed" element={<EdgeFunctionAliasRedirect />} />
+                  <Route path="/functions/v1/dynamic-feed" element={<EdgeFunctionAliasRedirect />} />
                   {/* Legacy route redirect */}
                   <Route path="/admin/compliance-vault" element={<Navigate to="/admin/audit-inspector" replace />} />
                   <Route path="/audit-report/:token" element={<Navigate to="/admin/audit-inspector" replace />} />
