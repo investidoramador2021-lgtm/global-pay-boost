@@ -719,6 +719,8 @@ export type Database = {
           mrc_transaction_id: string | null
           paid_at: string | null
           partner_id: string
+          provider_response: Json | null
+          request_payload: Json | null
           status: string
           volume: number
         }
@@ -733,6 +735,8 @@ export type Database = {
           mrc_transaction_id?: string | null
           paid_at?: string | null
           partner_id: string
+          provider_response?: Json | null
+          request_payload?: Json | null
           status?: string
           volume?: number
         }
@@ -747,6 +751,8 @@ export type Database = {
           mrc_transaction_id?: string | null
           paid_at?: string | null
           partner_id?: string
+          provider_response?: Json | null
+          request_payload?: Json | null
           status?: string
           volume?: number
         }
@@ -789,6 +795,56 @@ export type Database = {
           user_id?: string
         }
         Relationships: []
+      }
+      payout_requests: {
+        Row: {
+          admin_notes: string | null
+          amount_btc: number
+          created_at: string
+          id: string
+          partner_id: string
+          payout_txid: string | null
+          processed_at: string | null
+          requested_at: string
+          status: string
+          updated_at: string
+          wallet_address: string
+        }
+        Insert: {
+          admin_notes?: string | null
+          amount_btc?: number
+          created_at?: string
+          id?: string
+          partner_id: string
+          payout_txid?: string | null
+          processed_at?: string | null
+          requested_at?: string
+          status?: string
+          updated_at?: string
+          wallet_address?: string
+        }
+        Update: {
+          admin_notes?: string | null
+          amount_btc?: number
+          created_at?: string
+          id?: string
+          partner_id?: string
+          payout_txid?: string | null
+          processed_at?: string | null
+          requested_at?: string
+          status?: string
+          updated_at?: string
+          wallet_address?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "payout_requests_partner_id_fkey"
+            columns: ["partner_id"]
+            isOneToOne: false
+            referencedRelation: "partner_profiles"
+            referencedColumns: ["id"]
+          },
+        ]
       }
       push_subscriptions: {
         Row: {
