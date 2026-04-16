@@ -1323,7 +1323,7 @@ const AdminPortal = () => {
                   <h3 className="text-xs uppercase tracking-wider text-muted-foreground flex items-center gap-1.5"><FileUp className="w-3.5 h-3.5" /> Document Relay</h3>
                   <p className="text-xs text-muted-foreground">Upload partner-provided ID or Proof of Funds for relay to the liquidity provider.</p>
                   <div
-                    className="border-2 border-dashed rounded-lg p-6 text-center transition-colors"
+                    className="relative border-2 border-dashed rounded-lg p-6 text-center transition-colors"
                     style={{ borderColor: uploadFile ? COMPLIANCE_BLUE : "#2a2d35" }}
                     onDragOver={e => { e.preventDefault(); e.stopPropagation(); }}
                     onDrop={e => { e.preventDefault(); e.stopPropagation(); const f = e.dataTransfer.files[0]; if (f) setUploadFile(f); }}
