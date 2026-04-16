@@ -36,7 +36,7 @@ interface PartnerTx { id: string; partner_id: string; asset: string; volume: num
 interface ApiKey { id: string; key_id: string; webhook_url: string; ip_whitelist: string[]; is_active: boolean; last_used_at: string | null; created_at: string; }
 interface PartnerBalance { available_btc: number; pending_btc: number; total_earned_btc: number; last_credited_at: string | null; }
 
-type Section = "overview" | "referrals" | "earnings" | "account" | "dev-setup" | "api-keys" | "api-ledger" | "webhooks" | "docs";
+type Section = "overview" | "referrals" | "earnings" | "account" | "dev-setup" | "api-keys" | "api-ledger" | "webhooks" | "docs" | "payouts";
 
 /* ── Status Pipeline ── */
 const PIPELINE = ["waiting", "confirming", "exchanging", "sending", "finished"] as const;
@@ -116,6 +116,7 @@ function Sidebar({ active, onNavigate, isDeveloper, mobileOpen, onClose }: { act
     { id: "dev-setup", label: t("portal.devSetup", "2FA & Setup"), icon: Shield },
     { id: "api-keys", label: t("portal.apiKeys", "API Keys"), icon: Key },
     { id: "api-ledger", label: t("portal.apiLedger", "API Ledger"), icon: Terminal },
+    { id: "payouts", label: t("portal.payouts", "Balances & Payouts"), icon: Wallet },
     { id: "webhooks", label: t("portal.webhooks", "Webhook Tester"), icon: Globe },
     { id: "docs", label: t("portal.docs", "API Docs"), icon: Code2 },
   ];
@@ -779,6 +780,138 @@ function ApiLedgerSection({ partnerId }: { partnerId: string }) {
 }
 
 /* ════════════════════════════════════════════════════════════ */
+/*  SECTION: BALANCES & PAYOUTS                                */
+/* ════════════════════════════════════════════════════════════ */
+interface PayoutRequest { id: string; amount_btc: number; wallet_address: string; status: string; payout_txid: string; requested_at: string; processed_at: string | null; }
+
+function PayoutsSection({ partnerId, btcWallet }: { partnerId: string; btcWallet: string }) {
+  const { t } = useTranslation();
+  const { toast } = useToast();
+  const [balance, setBalance] = useState<PartnerBalance>({ available_btc: 0, pending_btc: 0, total_earned_btc: 0, last_credited_at: null });
+  const [payouts, setPayouts] = useState<PayoutRequest[]>([]);
+  const [loading, setLoading] = useState(true);
+  const [requesting, setRequesting] = useState(false);
+  const [payoutAmount, setPayoutAmount] = useState("");
+
+  useEffect(() => {
+    (async () => {
+      const [balRes, payRes] = await Promise.all([
+        supabase.from("partner_balances").select("*").eq("partner_id", partnerId).maybeSingle(),
+        supabase.from("payout_requests" as any).select("*").eq("partner_id", partnerId).order("requested_at", { ascending: false }),
+      ]);
+      if (balRes.data) setBalance(balRes.data as unknown as PartnerBalance);
+      setPayouts((payRes.data || []) as unknown as PayoutRequest[]);
+      setLoading(false);
+    })();
+  }, [partnerId]);
+
+  const requestPayout = async () => {
+    const amount = parseFloat(payoutAmount);
+    if (isNaN(amount) || amount <= 0 || amount > balance.available_btc) {
+      toast({ title: t("portal.invalidAmount", "Invalid amount"), variant: "destructive" });
+      return;
+    }
+    setRequesting(true);
+    const { error } = await supabase.from("payout_requests" as any).insert({
+      partner_id: partnerId,
+      amount_btc: amount,
+      wallet_address: btcWallet,
+      status: "pending",
+    } as any);
+    if (error) {
+      toast({ title: error.message, variant: "destructive" });
+    } else {
+      toast({ title: t("portal.payoutRequested", "Payout request submitted") });
+      setPayoutAmount("");
+      // Refresh
+      const { data } = await supabase.from("payout_requests" as any).select("*").eq("partner_id", partnerId).order("requested_at", { ascending: false });
+      setPayouts((data || []) as unknown as PayoutRequest[]);
+    }
+    setRequesting(false);
+  };
+
+  if (loading) return <div className="flex justify-center py-12"><Loader2 className="w-6 h-6 animate-spin" style={{ color: OBS.muted }} /></div>;
+
+  const totalVolume = balance.total_earned_btc / 0.004; // Reverse from 0.4% commission
+  const lifetimePaid = payouts.filter(p => p.status === "paid").reduce((s, p) => s + p.amount_btc, 0);
+
+  return (
+    <div className="space-y-6">
+      {/* Metrics */}
+      <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
+        {[
+          { label: t("portal.totalApiVolume", "Total Volume (API)"), value: `$${totalVolume.toLocaleString("en", { minimumFractionDigits: 2 })}`, color: OBS.accent },
+          { label: t("portal.currentEarnings", "Current Earnings (0.4%)"), value: `${balance.available_btc.toFixed(8)} BTC`, color: OBS.success },
+          { label: t("portal.lifetimePaid", "Lifetime Paid"), value: `${lifetimePaid.toFixed(8)} BTC`, color: OBS.text },
+        ].map(m => (
+          <div key={m.label} className="rounded-xl p-5" style={{ background: OBS.card, border: `0.5px solid ${OBS.border}` }}>
+            <span className="text-xs uppercase tracking-wider block mb-2" style={{ color: OBS.muted }}>{m.label}</span>
+            <p className="text-xl font-bold font-mono" style={{ color: m.color }}>{m.value}</p>
+          </div>
+        ))}
+      </div>
+
+      {/* Request Payout */}
+      <div className="rounded-xl p-6 space-y-4" style={{ background: OBS.card, border: `0.5px solid ${OBS.border}` }}>
+        <div className="flex items-center gap-2">
+          <Wallet className="w-4 h-4" style={{ color: OBS.accent }} />
+          <span className="text-sm font-medium" style={{ color: OBS.text }}>{t("portal.requestPayout", "Request Payout")}</span>
+        </div>
+        <div className="flex items-center gap-2 text-xs" style={{ color: OBS.muted }}>
+          <span>{t("portal.payoutWallet", "Destination")}:</span>
+          <code className="font-mono" style={{ color: OBS.success }}>{btcWallet.slice(0, 12)}…{btcWallet.slice(-6)}</code>
+        </div>
+        <div className="flex items-center gap-3">
+          <Input
+            value={payoutAmount}
+            onChange={e => setPayoutAmount(e.target.value)}
+            placeholder={`Max: ${balance.available_btc.toFixed(8)} BTC`}
+            className="border-0 bg-white/5 text-white placeholder:text-gray-600 focus-visible:ring-1 focus-visible:ring-cyan-500/50 font-mono max-w-xs"
+          />
+          <Button onClick={requestPayout} disabled={requesting || !payoutAmount} className="bg-white text-black hover:bg-gray-200 transition-all duration-100">
+            {requesting ? <Loader2 className="w-4 h-4 animate-spin me-1.5" /> : <Wallet className="w-4 h-4 me-1.5" />}
+            {t("portal.submitPayout", "Submit Request")}
+          </Button>
+        </div>
+      </div>
+
+      {/* Payout history */}
+      <div className="rounded-xl overflow-hidden" style={{ border: `0.5px solid ${OBS.border}` }}>
+        <Table>
+          <TableHeader>
+            <TableRow style={{ borderColor: OBS.border }}>
+              <TableHead className="text-xs uppercase" style={{ color: OBS.muted }}>{t("portal.status", "Status")}</TableHead>
+              <TableHead className="text-xs uppercase" style={{ color: OBS.muted }}>{t("portal.amount", "Amount")}</TableHead>
+              <TableHead className="text-xs uppercase" style={{ color: OBS.muted }}>{t("portal.wallet", "Wallet")}</TableHead>
+              <TableHead className="text-xs uppercase" style={{ color: OBS.muted }}>TXID</TableHead>
+              <TableHead className="text-xs uppercase" style={{ color: OBS.muted }}>{t("portal.date", "Date")}</TableHead>
+            </TableRow>
+          </TableHeader>
+          <TableBody>
+            {payouts.length === 0 ? (
+              <TableRow><TableCell colSpan={5} className="text-center py-12 text-sm" style={{ color: OBS.muted }}>{t("portal.noPayouts", "No payout requests yet.")}</TableCell></TableRow>
+            ) : payouts.map(p => (
+              <TableRow key={p.id} style={{ borderColor: OBS.border }}>
+                <TableCell>
+                  <span className="text-xs font-semibold px-2 py-0.5 rounded" style={{
+                    background: p.status === "paid" ? "rgba(34,211,238,0.1)" : p.status === "rejected" ? "rgba(239,68,68,0.1)" : "rgba(251,191,36,0.1)",
+                    color: p.status === "paid" ? OBS.success : p.status === "rejected" ? OBS.danger : "#FBBF24",
+                  }}>{p.status.charAt(0).toUpperCase() + p.status.slice(1)}</span>
+                </TableCell>
+                <TableCell className="font-mono text-xs" style={{ color: OBS.text }}>{p.amount_btc.toFixed(8)} BTC</TableCell>
+                <TableCell className="font-mono text-xs" style={{ color: OBS.muted }}>{p.wallet_address.slice(0, 10)}…</TableCell>
+                <TableCell className="font-mono text-xs" style={{ color: OBS.success }}>{p.payout_txid || "—"}</TableCell>
+                <TableCell className="text-xs" style={{ color: OBS.muted }}>{new Date(p.requested_at).toLocaleDateString()}</TableCell>
+              </TableRow>
+            ))}
+          </TableBody>
+        </Table>
+      </div>
+    </div>
+  );
+}
+
+/* ════════════════════════════════════════════════════════════ */
 /*  SECTION: DEVELOPER DOCUMENTATION                           */
 /* ════════════════════════════════════════════════════════════ */
 type DocTab = "auth" | "swap" | "webhooks" | "commission";
@@ -1345,6 +1478,7 @@ function DashboardContent() {
     "dev-setup": t("portal.devSetup", "Developer Setup"),
     "api-keys": t("portal.apiKeys", "API Keys"),
     "api-ledger": t("portal.apiLedger", "API Ledger"),
+    payouts: t("portal.payouts", "Balances & Payouts"),
     webhooks: t("portal.webhooks", "Webhook Tester"),
     docs: t("portal.docs", "API Documentation"),
   };
@@ -1376,6 +1510,7 @@ function DashboardContent() {
             {activeSection === "dev-setup" && <DevSetupSection partnerId={profile.id} isDeveloper={isDeveloper} onActivated={() => setIsDeveloper(true)} />}
             {activeSection === "api-keys" && (isDeveloper ? <ApiKeysSection partnerId={profile.id} /> : <DevSetupSection partnerId={profile.id} isDeveloper={isDeveloper} onActivated={() => setIsDeveloper(true)} />)}
             {activeSection === "api-ledger" && (isDeveloper ? <ApiLedgerSection partnerId={profile.id} /> : <DevSetupSection partnerId={profile.id} isDeveloper={isDeveloper} onActivated={() => setIsDeveloper(true)} />)}
+            {activeSection === "payouts" && (isDeveloper ? <PayoutsSection partnerId={profile.id} btcWallet={profile.btc_wallet} /> : <DevSetupSection partnerId={profile.id} isDeveloper={isDeveloper} onActivated={() => setIsDeveloper(true)} />)}
             {activeSection === "webhooks" && (isDeveloper ? <WebhookTesterSection /> : <DevSetupSection partnerId={profile.id} isDeveloper={isDeveloper} onActivated={() => setIsDeveloper(true)} />)}
             {activeSection === "docs" && (isDeveloper ? <DevDocsSection /> : <DevSetupSection partnerId={profile.id} isDeveloper={isDeveloper} onActivated={() => setIsDeveloper(true)} />)}
           </div>

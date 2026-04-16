@@ -9,6 +9,21 @@ const corsHeaders = {
 
 const CHANGENOW_BASE = "https://api.changenow.io/v1";
 const COMMISSION_RATE = 0.004; // 0.4% cap
+const RATE_LIMIT_MAX = 10;
+const RATE_LIMIT_WINDOW_MS = 60_000;
+const rateLimitMap = new Map<string, { count: number; resetAt: number }>();
+
+function checkRateLimit(partnerId: string): boolean {
+  const now = Date.now();
+  const entry = rateLimitMap.get(partnerId);
+  if (!entry || now > entry.resetAt) {
+    rateLimitMap.set(partnerId, { count: 1, resetAt: now + RATE_LIMIT_WINDOW_MS });
+    return true;
+  }
+  if (entry.count >= RATE_LIMIT_MAX) return false;
+  entry.count++;
+  return true;
+}
 
 function json(data: unknown, status = 200) {
   return new Response(JSON.stringify(data), {
@@ -84,6 +99,11 @@ Deno.serve(async (req) => {
     return mrcError("MRC_AUTH_FAILED", "Invalid credentials or 2FA not configured", 401);
   }
 
+  // Rate limiting
+  if (!checkRateLimit(auth.partnerId)) {
+    return json({ error: "Rate limit exceeded. Please contact strategic support." }, 429);
+  }
+
   try {
     const url = new URL(req.url);
     const action = url.searchParams.get("action");
@@ -141,6 +161,7 @@ Deno.serve(async (req) => {
             status: "pending",
             mrc_transaction_id: mrcTxId,
             completed_at: new Date().toISOString(),
+            request_payload: { from, to, amount, address, refundAddress: refundAddress || null, extraId: extraId || null },
           } as any)
           .select("id")
           .single();
@@ -164,10 +185,9 @@ Deno.serve(async (req) => {
         const cnData = await cnResp.json();
 
         if (!cnResp.ok) {
-          // Update status to failed
           await svc
             .from("partner_transactions")
-            .update({ status: "failed" } as any)
+            .update({ status: "failed", provider_response: cnData } as any)
             .eq("id", txRecord.id);
           return mrcError("MRC_ORDER_FAILED", cnData?.message || "Order placement failed", 502);
         }
@@ -178,6 +198,7 @@ Deno.serve(async (req) => {
           .update({
             changenow_order_id: cnData.id,
             status: "awaiting_deposit",
+            provider_response: { payinAddress: cnData.payinAddress, id: cnData.id, amount: cnData.amount },
           } as any)
           .eq("id", txRecord.id);
 
