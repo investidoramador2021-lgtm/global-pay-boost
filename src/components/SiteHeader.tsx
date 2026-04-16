@@ -7,6 +7,7 @@ import { useLocation } from "react-router-dom";
 import { getLangFromPath, langPath } from "@/i18n";
 import LanguageSwitcher from "@/components/LanguageSwitcher";
 import GetTheAppBadges from "@/components/GetTheAppBadges";
+import TopTrustStrip from "@/components/TopTrustStrip";
 
 const SiteHeader = () => {
   const [mobileOpen, setMobileOpen] = useState(false);
@@ -51,6 +52,7 @@ const SiteHeader = () => {
           : "bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/80"
       }`}
     >
+      <TopTrustStrip />
       <div className="container mx-auto flex h-14 items-center justify-between px-4 sm:h-16">
         <a href={lp("/")} className="font-display text-lg font-bold tracking-tight text-foreground sm:text-xl">
           MRC<span className="text-primary">GlobalPay</span>
