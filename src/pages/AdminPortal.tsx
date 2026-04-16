@@ -535,6 +535,7 @@ const AdminPortal = () => {
               <TabsTrigger value="invoices" className="gap-2 data-[state=active]:bg-primary/10"><FileText className="w-4 h-4" /> Invoices</TabsTrigger>
               <TabsTrigger value="partners" className="gap-2 data-[state=active]:bg-primary/10"><Users className="w-4 h-4" /> Partners</TabsTrigger>
               <TabsTrigger value="proxy" className="gap-2 data-[state=active]:bg-primary/10"><Zap className="w-4 h-4" /> Proxy Bridge</TabsTrigger>
+              <TabsTrigger value="payouts" className="gap-2 data-[state=active]:bg-primary/10"><DollarSign className="w-4 h-4" /> Payouts ({payoutRequests.filter(p => p.status === "pending").length})</TabsTrigger>
               <TabsTrigger value="lending" className="gap-2 data-[state=active]:bg-primary/10"><Landmark className="w-4 h-4" /> Lending ({lendEarnTxs.length})</TabsTrigger>
               <TabsTrigger value="support" className="gap-2 data-[state=active]:bg-primary/10"><MessageCircle className="w-4 h-4" /> Support ({chatLogs.length})</TabsTrigger>
             </TabsList>
