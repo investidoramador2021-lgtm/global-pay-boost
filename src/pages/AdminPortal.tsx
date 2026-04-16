@@ -1251,6 +1251,160 @@ const AdminPortal = () => {
           </Tabs>
         </main>
       </div>
+
+      {/* ═══ COMPLIANCE ACTION DRAWER ═══ */}
+      <Sheet open={complianceDrawerOpen} onOpenChange={setComplianceDrawerOpen}>
+        <SheetContent side="right" className="w-full sm:max-w-lg border-l bg-[#0B0D10] border-[#2a2d35]/60 overflow-y-auto">
+          <SheetHeader>
+            <SheetTitle className="flex items-center gap-2 text-foreground">
+              <ShieldAlert className="w-5 h-5" style={{ color: COMPLIANCE_BLUE }} />
+              Compliance Action
+            </SheetTitle>
+            <SheetDescription className="text-muted-foreground">
+              Review hold details, generate verification links, and relay documents.
+            </SheetDescription>
+          </SheetHeader>
+
+          {selectedHold && (() => {
+            const linkedTx = transactions.find(t => t.id === selectedHold.partner_transaction_id);
+            return (
+              <div className="mt-6 space-y-6">
+                {/* Transaction Metadata */}
+                <div className="rounded-lg border border-[#2a2d35]/60 p-4 space-y-3 bg-black/30">
+                  <h3 className="text-xs uppercase tracking-wider text-muted-foreground flex items-center gap-1.5"><Eye className="w-3.5 h-3.5" /> Hold Metadata</h3>
+                  <div className="grid grid-cols-2 gap-3 text-sm">
+                    <div><span className="text-[10px] uppercase text-muted-foreground block">Hold Type</span><span className="uppercase font-semibold" style={{ color: COMPLIANCE_BLUE }}>{selectedHold.hold_type}</span></div>
+                    <div><span className="text-[10px] uppercase text-muted-foreground block">Status</span><span style={{ color: COMPLIANCE_BLUE }}>{selectedHold.status === "action_required" ? "In-Progress Verification" : selectedHold.status}</span></div>
+                    <div><span className="text-[10px] uppercase text-muted-foreground block">Case ID</span><span className="font-mono text-xs">{selectedHold.provider_case_id || "N/A"}</span></div>
+                    <div><span className="text-[10px] uppercase text-muted-foreground block">Partner</span><span>{getPartnerName(selectedHold.partner_id)}</span></div>
+                    {linkedTx && <>
+                      <div><span className="text-[10px] uppercase text-muted-foreground block">MRC ID</span><span className="font-mono text-xs" style={{ color: COMPLIANCE_BLUE }}>{linkedTx.mrc_transaction_id}</span></div>
+                      <div><span className="text-[10px] uppercase text-muted-foreground block">Volume</span><span className="font-mono">${Number(linkedTx.volume).toLocaleString()}</span></div>
+                      <div><span className="text-[10px] uppercase text-muted-foreground block">Asset</span><span className="uppercase">{linkedTx.asset}</span></div>
+                      <div><span className="text-[10px] uppercase text-muted-foreground block">CN Order</span><span className="font-mono text-xs">{linkedTx.changenow_order_id || "—"}</span></div>
+                    </>}
+                  </div>
+                  {linkedTx?.provider_response && Object.keys(linkedTx.provider_response).length > 0 && (
+                    <div>
+                      <span className="text-[10px] uppercase text-muted-foreground block mb-1">Provider Hold Reason</span>
+                      <pre className="text-xs font-mono text-muted-foreground p-2 rounded bg-black/40 overflow-x-auto max-h-28">{JSON.stringify(linkedTx.provider_response, null, 2)}</pre>
+                    </div>
+                  )}
+                </div>
+
+                {/* Secure Link Generator */}
+                <div className="rounded-lg border border-[#2a2d35]/60 p-4 space-y-3 bg-black/30">
+                  <h3 className="text-xs uppercase tracking-wider text-muted-foreground flex items-center gap-1.5"><Link2 className="w-3.5 h-3.5" /> Secure Verification Link</h3>
+                  <p className="text-xs text-muted-foreground">Generate a unique, time-limited URL for the partner to submit identity documents.</p>
+                  <Button size="sm" className="w-full gap-2 text-xs" style={{ background: COMPLIANCE_BLUE }}
+                    onClick={async () => {
+                      const { data: { session } } = await supabase.auth.getSession();
+                      if (!session) return;
+                      try {
+                        const resp = await fetch(`${import.meta.env.VITE_SUPABASE_URL}/functions/v1/compliance-notify`, {
+                          method: "POST",
+                          headers: { Authorization: `Bearer ${session.access_token}`, "Content-Type": "application/json", apikey: import.meta.env.VITE_SUPABASE_PUBLISHABLE_KEY },
+                          body: JSON.stringify({ action: "generate-upload-link", hold_id: selectedHold.id }),
+                        });
+                        const data = await resp.json();
+                        if (data.success) {
+                          navigator.clipboard.writeText(data.upload_url);
+                          toast({ title: "Verification link copied", description: `Expires: ${new Date(data.expires_at).toLocaleString()}` });
+                        } else { toast({ title: "Error", description: data.error, variant: "destructive" }); }
+                      } catch (err: any) { toast({ title: "Error", description: err.message, variant: "destructive" }); }
+                    }}
+                  >
+                    <ExternalLink className="w-3.5 h-3.5" /> Generate & Copy Link
+                  </Button>
+                </div>
+
+                {/* Document Relay */}
+                <div className="rounded-lg border border-[#2a2d35]/60 p-4 space-y-3 bg-black/30">
+                  <h3 className="text-xs uppercase tracking-wider text-muted-foreground flex items-center gap-1.5"><FileUp className="w-3.5 h-3.5" /> Document Relay</h3>
+                  <p className="text-xs text-muted-foreground">Upload partner-provided ID or Proof of Funds for relay to the liquidity provider.</p>
+                  <div
+                    className="border-2 border-dashed rounded-lg p-6 text-center transition-colors"
+                    style={{ borderColor: uploadFile ? COMPLIANCE_BLUE : "#2a2d35" }}
+                    onDragOver={e => { e.preventDefault(); e.stopPropagation(); }}
+                    onDrop={e => { e.preventDefault(); e.stopPropagation(); const f = e.dataTransfer.files[0]; if (f) setUploadFile(f); }}
+                  >
+                    {uploadFile ? (
+                      <div className="space-y-2">
+                        <FileText className="w-8 h-8 mx-auto" style={{ color: COMPLIANCE_BLUE }} />
+                        <p className="text-sm font-medium">{uploadFile.name}</p>
+                        <p className="text-xs text-muted-foreground">{(uploadFile.size / 1024).toFixed(1)} KB</p>
+                      </div>
+                    ) : (
+                      <div className="space-y-2">
+                        <Upload className="w-8 h-8 mx-auto text-muted-foreground" />
+                        <p className="text-xs text-muted-foreground">Drag & drop file here, or click to browse</p>
+                      </div>
+                    )}
+                    <input type="file" className="absolute inset-0 opacity-0 cursor-pointer" style={{ position: "absolute", inset: 0 }}
+                      onChange={e => { const f = e.target.files?.[0]; if (f) setUploadFile(f); }}
+                    />
+                  </div>
+                  {uploadFile && (
+                    <Button size="sm" className="w-full gap-2 text-xs" style={{ background: COMPLIANCE_BLUE }} disabled={uploadLoading} onClick={handleComplianceUpload}>
+                      <Upload className="w-3.5 h-3.5" /> {uploadLoading ? "Uploading…" : "Relay Document"}
+                    </Button>
+                  )}
+                </div>
+
+                {/* Audit Trail */}
+                <div className="rounded-lg border border-[#2a2d35]/60 p-4 space-y-3 bg-black/30">
+                  <h3 className="text-xs uppercase tracking-wider text-muted-foreground flex items-center gap-1.5"><Clock className="w-3.5 h-3.5" /> FINTRAC Audit Trail</h3>
+                  {complianceLogs.length === 0 ? (
+                    <p className="text-xs text-muted-foreground text-center py-3">No audit events recorded yet.</p>
+                  ) : (
+                    <div className="space-y-2 max-h-40 overflow-y-auto">
+                      {complianceLogs.map((log: any) => (
+                        <div key={log.id} className="flex items-start justify-between gap-2 text-xs">
+                          <div>
+                            <span className="font-semibold" style={{ color: COMPLIANCE_BLUE }}>{log.event_type}</span>
+                            <span className="text-muted-foreground ml-2">{log.details}</span>
+                          </div>
+                          <span className="text-[10px] text-muted-foreground whitespace-nowrap">{new Date(log.created_at).toLocaleString()}</span>
+                        </div>
+                      ))}
+                    </div>
+                  )}
+                </div>
+
+                {/* Release Funds */}
+                {selectedHold.status === "action_required" && (
+                  <Button className="w-full h-11 text-sm font-semibold gap-2 bg-foreground text-background hover:bg-foreground/90"
+                    onClick={async () => {
+                      const notes = prompt("Resolution notes (optional):", "") || "";
+                      const { data: { session } } = await supabase.auth.getSession();
+                      if (!session) return;
+                      try {
+                        const resp = await fetch(`${import.meta.env.VITE_SUPABASE_URL}/functions/v1/compliance-notify`, {
+                          method: "POST",
+                          headers: { Authorization: `Bearer ${session.access_token}`, "Content-Type": "application/json", apikey: import.meta.env.VITE_SUPABASE_PUBLISHABLE_KEY },
+                          body: JSON.stringify({ action: "resolve-hold", hold_id: selectedHold.id, resolution_notes: notes }),
+                        });
+                        const data = await resp.json();
+                        if (data.success) {
+                          setComplianceHolds(prev => prev.map(h => h.id === selectedHold.id ? { ...h, status: "resolved", admin_notes: notes, resolved_at: new Date().toISOString() } : h));
+                          if (selectedHold.partner_transaction_id) {
+                            setTransactions(prev => prev.map(t => t.id === selectedHold.partner_transaction_id ? { ...t, status: "success" } : t));
+                          }
+                          setComplianceDrawerOpen(false);
+                          toast({ title: "Funds released — hold resolved" });
+                        } else { toast({ title: "Error", description: data.error, variant: "destructive" }); }
+                      } catch (err: any) { toast({ title: "Error", description: err.message, variant: "destructive" }); }
+                    }}
+                  >
+                    <Check className="w-4 h-4" /> Release Funds
+                  </Button>
+                )}
+              </div>
+            );
+          })()}
+        </SheetContent>
+      </Sheet>
+
       <SiteFooter />
     </>
   );
