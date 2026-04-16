@@ -117,6 +117,7 @@ function Sidebar({ active, onNavigate, isDeveloper, mobileOpen, onClose }: { act
     { id: "api-keys", label: t("portal.apiKeys", "API Keys"), icon: Key },
     { id: "api-ledger", label: t("portal.apiLedger", "API Ledger"), icon: Terminal },
     { id: "webhooks", label: t("portal.webhooks", "Webhook Tester"), icon: Globe },
+    { id: "docs", label: t("portal.docs", "API Docs"), icon: Code2 },
   ];
 
   const NavItem = ({ id, label, icon: Icon }: { id: Section; label: string; icon: typeof Link2 }) => (
@@ -971,6 +972,7 @@ function DashboardContent() {
     "api-keys": t("portal.apiKeys", "API Keys"),
     "api-ledger": t("portal.apiLedger", "API Ledger"),
     webhooks: t("portal.webhooks", "Webhook Tester"),
+    docs: t("portal.docs", "API Documentation"),
   };
 
   return (
@@ -1001,6 +1003,7 @@ function DashboardContent() {
             {activeSection === "api-keys" && (isDeveloper ? <ApiKeysSection partnerId={profile.id} /> : <DevSetupSection partnerId={profile.id} isDeveloper={isDeveloper} onActivated={() => setIsDeveloper(true)} />)}
             {activeSection === "api-ledger" && (isDeveloper ? <ApiLedgerSection partnerId={profile.id} /> : <DevSetupSection partnerId={profile.id} isDeveloper={isDeveloper} onActivated={() => setIsDeveloper(true)} />)}
             {activeSection === "webhooks" && (isDeveloper ? <WebhookTesterSection /> : <DevSetupSection partnerId={profile.id} isDeveloper={isDeveloper} onActivated={() => setIsDeveloper(true)} />)}
+            {activeSection === "docs" && (isDeveloper ? <DevDocsSection /> : <DevSetupSection partnerId={profile.id} isDeveloper={isDeveloper} onActivated={() => setIsDeveloper(true)} />)}
           </div>
         </main>
       </div>
