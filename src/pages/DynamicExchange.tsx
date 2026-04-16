@@ -298,8 +298,8 @@ export default function DynamicExchange() {
         "@type": "BreadcrumbList",
         itemListElement: [
           { "@type": "ListItem", position: 1, name: "Home", item: "https://mrcglobalpay.com" },
-          { "@type": "ListItem", position: 2, name: "Exchange", item: "https://mrcglobalpay.com/exchange/btc-to-eth" },
-          { "@type": "ListItem", position: 3, name: `${fromUp} to ${toUp}`, item: canonicalUrl },
+          { "@type": "ListItem", position: 2, name: "Exchange", item: "https://mrcglobalpay.com/directory" },
+          { "@type": "ListItem", position: 3, name: `Swap ${fromUp} to ${toUp}`, item: canonicalUrl },
         ],
       },
       {
@@ -404,7 +404,7 @@ export default function DynamicExchange() {
                 <ol className="flex items-center gap-1.5 text-xs text-[#8A8F98]">
                   <li><a href={lp("/")} className="hover:text-white transition-colors">{dx("breadcrumbHome")}</a></li>
                   <li>/</li>
-                  <li>{dx("breadcrumbExchange")}</li>
+                  <li><a href={lp("/directory")} className="hover:text-white transition-colors">{dx("breadcrumbExchange")}</a></li>
                   <li>/</li>
                   <li className="text-white">{fromUp} → {toUp}</li>
                 </ol>
