@@ -197,6 +197,7 @@ const AdminPortal = () => {
     setApiKeys((keyRes.data || []) as unknown as ApiKeyRow[]);
     setWebhookDeliveries((whRes.data || []) as any[]);
     setPayoutRequests((poRes.data || []) as unknown as PayoutReq[]);
+    setComplianceHolds((chRes.data || []) as unknown as ComplianceHold[]);
     setLoading(false);
   }, []);
 
