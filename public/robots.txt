@@ -9,6 +9,7 @@ Disallow: /status/
 Disallow: /verify-email
 Disallow: /verify-update
 Disallow: /regulatory-report/
+Disallow: /functions/
 
 User-agent: Bingbot
 Allow: /
@@ -20,6 +21,7 @@ Disallow: /status/
 Disallow: /verify-email
 Disallow: /verify-update
 Disallow: /regulatory-report/
+Disallow: /functions/
 
 User-agent: Applebot
 Allow: /
@@ -186,6 +188,7 @@ Disallow: /status/
 Disallow: /verify-email
 Disallow: /verify-update
 Disallow: /regulatory-report/
+Disallow: /functions/
 
 # Language subdirectories
 Allow: /es/
