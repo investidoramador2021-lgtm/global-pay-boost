@@ -71,8 +71,10 @@ const EmbedWidget = () => {
         if (!Array.isArray(data) || cancelled) return;
 
         const filtered = data.filter((currency) => QUICK_TICKERS.includes(currency.ticker));
-        const from = filtered.find((currency) => currency.ticker === DEFAULT_FROM) || filtered[0] || null;
-        const to = filtered.find((currency) => currency.ticker === DEFAULT_TO) || filtered[1] || null;
+        const paramFrom = searchParams.get("from")?.toLowerCase() || DEFAULT_FROM;
+        const paramTo = searchParams.get("to")?.toLowerCase() || DEFAULT_TO;
+        const from = filtered.find((currency) => currency.ticker === paramFrom) || filtered.find((currency) => currency.ticker === DEFAULT_FROM) || filtered[0] || null;
+        const to = filtered.find((currency) => currency.ticker === paramTo) || filtered.find((currency) => currency.ticker === DEFAULT_TO) || filtered[1] || null;
 
         setCurrencies(filtered);
         setFromCurrency(from);
@@ -138,8 +140,11 @@ const EmbedWidget = () => {
     if (!fromCurrency || !toCurrency || !amount) return;
 
     const base = "https://mrcglobalpay.com";
-    const url = `${base}/?from=${fromCurrency.ticker}&to=${toCurrency.ticker}&amount=${amount}`;
-    window.open(url, "_blank", "noopener");
+    const params = new URLSearchParams({ from: fromCurrency.ticker, to: toCurrency.ticker, amount });
+    if (refId) params.set("ref", refId);
+    const source = searchParams.get("source");
+    if (source) params.set("source", source);
+    window.open(`${base}/?${params.toString()}`, "_blank", "noopener");
   };
 
   const handleTokenSelect = (currency: Currency) => {
