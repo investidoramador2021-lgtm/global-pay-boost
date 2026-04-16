@@ -20,8 +20,9 @@ Deno.serve(async (req) => {
   const serviceKey = Deno.env.get("SUPABASE_SERVICE_ROLE_KEY") || "";
   const authHeader = req.headers.get("authorization") || "";
   const apikeyHeader = req.headers.get("apikey") || "";
-  const isCron = cronSecret && authHeader === `Bearer ${cronSecret}`;
-  const isServiceRole = apikeyHeader === serviceKey || authHeader === `Bearer ${serviceKey}`;
+  const bearerToken = authHeader.replace("Bearer ", "");
+  const isCron = cronSecret && bearerToken === cronSecret;
+  const isServiceRole = bearerToken === serviceKey || apikeyHeader === serviceKey;
 
   if (!isCron && !isServiceRole) {
     // Check admin role via JWT
