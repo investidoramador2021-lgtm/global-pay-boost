@@ -197,35 +197,66 @@ export default function DynamicExchange() {
     staleTime: 1000 * 60 * 60,
   });
 
-  const { data: trendingPairs } = useQuery({
-    queryKey: ["exchange-random-pairs", fromLower, toLower],
-    queryFn: async () => {
-      // Pull a wide sample from the live pairs table, then shuffle client-side
-      // to give every page a fresh "Related Swaps" set on each render.
-      const { data } = await supabase
-        .from("pairs")
-        .select("from_ticker, to_ticker")
-        .eq("is_valid", true)
-        .limit(500);
+  // POPULAR pairs — fixed canonical set, anchored to high-volume routes
+  const POPULAR_SLUGS: Array<{ from: string; to: string }> = [
+    { from: "btc", to: "usdt" },
+    { from: "eth", to: "usdt" },
+    { from: "sol", to: "usdt" },
+    { from: "xrp", to: "usdt" },
+    { from: "btc", to: "eth" },
+    { from: "usdt", to: "btc" },
+    { from: "bnb", to: "usdt" },
+    { from: "doge", to: "usdt" },
+  ];
 
+  const popularPairs = POPULAR_SLUGS
+    .filter((p) => `${p.from}-to-${p.to}` !== `${fromLower}-to-${toLower}`)
+    .slice(0, 5);
+
+  // RELATED pairs — pairs sharing either the source or destination ticker (semantic correlation)
+  const { data: relatedPairs } = useQuery({
+    queryKey: ["exchange-related-pairs", fromLower, toLower],
+    queryFn: async () => {
+      if (!fromLower || !toLower) return [];
+
+      // Pull pairs that share `from` ticker OR share `to` ticker (correlation)
+      const [fromShared, toShared] = await Promise.all([
+        supabase
+          .from("pairs")
+          .select("from_ticker, to_ticker")
+          .eq("is_valid", true)
+          .ilike("from_ticker", fromLower)
+          .limit(40),
+        supabase
+          .from("pairs")
+          .select("from_ticker, to_ticker")
+          .eq("is_valid", true)
+          .ilike("to_ticker", toLower)
+          .limit(40),
+      ]);
+
+      const merged = [...(fromShared.data || []), ...(toShared.data || [])];
       const seen = new Set<string>();
-      const filtered = (data || []).filter((item) => {
-        const from = item.from_ticker.toLowerCase();
-        const to = item.to_ticker.toLowerCase();
-        const slug = `${from}-to-${to}`;
-        if (!from || !to || slug === `${fromLower}-to-${toLower}` || seen.has(slug)) return false;
+      const filtered = merged.filter((item) => {
+        const f = item.from_ticker.toLowerCase();
+        const t2 = item.to_ticker.toLowerCase();
+        const slug = `${f}-to-${t2}`;
+        if (!f || !t2 || slug === `${fromLower}-to-${toLower}` || seen.has(slug)) return false;
+        // Skip popular pairs to avoid duplicate cards
+        if (POPULAR_SLUGS.some((p) => `${p.from}-to-${p.to}` === slug)) return false;
         seen.add(slug);
         return true;
       });
 
-      // Fisher-Yates shuffle for true randomness across all 1,000+ pairs
+      // Lightweight shuffle for variety
       for (let i = filtered.length - 1; i > 0; i--) {
         const j = Math.floor(Math.random() * (i + 1));
         [filtered[i], filtered[j]] = [filtered[j], filtered[i]];
       }
-      return filtered.slice(0, 10);
+      return filtered.slice(0, 5);
     },
-    staleTime: 1000 * 60 * 5,
+    staleTime: 1000 * 60 * 10,
+    enabled: !!fromLower && !!toLower,
   });
 
   if (needsLowercaseRedirect) {
