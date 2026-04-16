@@ -140,7 +140,8 @@ const AdminPortal = () => {
   const [apiKeys, setApiKeys] = useState<ApiKeyRow[]>([]);
   const [transactions, setTransactions] = useState<Tx[]>([]);
   const [tab, setTab] = useState("current");
-  const [adminTab, setAdminTab] = useState<"partners" | "exchanges" | "invoices" | "support" | "lending" | "proxy" | "payouts">("exchanges");
+  const [adminTab, setAdminTab] = useState<"partners" | "exchanges" | "invoices" | "support" | "lending" | "proxy" | "payouts" | "compliance">("exchanges");
+  const [complianceHolds, setComplianceHolds] = useState<ComplianceHold[]>([]);
   const [chatLogs, setChatLogs] = useState<ChatLog[]>([]);
   const [lendEarnTxs, setLendEarnTxs] = useState<LendEarnTx[]>([]);
   const [webhookDeliveries, setWebhookDeliveries] = useState<any[]>([]);
@@ -177,7 +178,7 @@ const AdminPortal = () => {
   }, [stage, resetInactivityTimer]);
 
   const loadDashboard = useCallback(async () => {
-    const [pRes, txRes, logRes, leRes, devRes, keyRes, whRes, poRes] = await Promise.all([
+    const [pRes, txRes, logRes, leRes, devRes, keyRes, whRes, poRes, chRes] = await Promise.all([
       supabase.from("partner_profiles").select("*"),
       supabase.from("partner_transactions").select("*").order("completed_at", { ascending: false }),
       supabase.from("support_chat_logs" as any).select("*").order("created_at", { ascending: false }).limit(200),
@@ -186,6 +187,7 @@ const AdminPortal = () => {
       supabase.from("partner_api_keys").select("*").order("created_at", { ascending: false }),
       supabase.from("webhook_deliveries" as any).select("*").order("created_at", { ascending: false }).limit(500),
       supabase.from("payout_requests" as any).select("*").order("requested_at", { ascending: false }),
+      supabase.from("compliance_holds" as any).select("*").order("created_at", { ascending: false }),
     ]);
     setPartners((pRes.data || []) as Partner[]);
     setTransactions((txRes.data || []) as Tx[]);
