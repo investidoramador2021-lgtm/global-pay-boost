@@ -1486,6 +1486,7 @@ function DashboardContent() {
     payouts: t("portal.payouts", "Balances & Payouts"),
     webhooks: t("portal.webhooks", "Webhook Tester"),
     docs: t("portal.docs", "API Documentation"),
+    "widget-lab": t("portal.widgetLab", "Widget Lab"),
   };
 
   return (
@@ -1518,6 +1519,7 @@ function DashboardContent() {
             {activeSection === "payouts" && (isDeveloper ? <PayoutsSection partnerId={profile.id} btcWallet={profile.btc_wallet} /> : <DevSetupSection partnerId={profile.id} isDeveloper={isDeveloper} onActivated={() => setIsDeveloper(true)} />)}
             {activeSection === "webhooks" && (isDeveloper ? <WebhookTesterSection /> : <DevSetupSection partnerId={profile.id} isDeveloper={isDeveloper} onActivated={() => setIsDeveloper(true)} />)}
             {activeSection === "docs" && (isDeveloper ? <DevDocsSection /> : <DevSetupSection partnerId={profile.id} isDeveloper={isDeveloper} onActivated={() => setIsDeveloper(true)} />)}
+            {activeSection === "widget-lab" && (isDeveloper ? <WidgetLabSection referralCode={profile.referral_code} partnerId={profile.id} /> : <DevSetupSection partnerId={profile.id} isDeveloper={isDeveloper} onActivated={() => setIsDeveloper(true)} />)}
           </div>
         </main>
       </div>
