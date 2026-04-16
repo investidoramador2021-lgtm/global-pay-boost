@@ -793,6 +793,93 @@ const AdminPortal = () => {
                   </CardContent>
                 </Card>
               )}
+
+              {/* Strategic Intervention Logs */}
+              <Card className="border-border/40 bg-card/40 backdrop-blur-sm">
+                <CardHeader><CardTitle className="text-lg flex items-center gap-2"><FileText className="w-5 h-5" /> Strategic Intervention Logs</CardTitle></CardHeader>
+                <CardContent className="space-y-3">
+                  {proxyTxs.filter(tx => tx.request_payload && Object.keys(tx.request_payload).length > 0).length === 0 ? (
+                    <p className="text-sm text-muted-foreground text-center py-6">No payload traces recorded yet. Traces are logged automatically for all API transactions.</p>
+                  ) : proxyTxs.filter(tx => tx.request_payload && Object.keys(tx.request_payload).length > 0).slice(0, 20).map(tx => (
+                    <div key={`trace-${tx.id}`} className="rounded-lg p-4 bg-background/50 border border-border/30 space-y-2">
+                      <div className="flex items-center justify-between">
+                        <div className="flex items-center gap-2">
+                          <code className="text-xs font-mono text-primary">{tx.mrc_transaction_id}</code>
+                          <span className={`text-xs font-semibold px-2 py-0.5 rounded ${tx.status === "success" ? "bg-emerald-500/20 text-emerald-400" : tx.status === "failed" ? "bg-red-500/20 text-red-400" : "bg-amber-500/20 text-amber-400"}`}>{tx.status || "pending"}</span>
+                        </div>
+                        <span className="text-xs text-muted-foreground">{getPartnerName(tx.partner_id)}</span>
+                      </div>
+                      <div className="grid grid-cols-1 lg:grid-cols-2 gap-2">
+                        <div>
+                          <span className="text-[10px] uppercase tracking-wider text-muted-foreground block mb-1">Partner Request</span>
+                          <pre className="text-xs font-mono text-muted-foreground p-2 rounded bg-black/30 overflow-x-auto max-h-32">{JSON.stringify(tx.request_payload, null, 2)}</pre>
+                        </div>
+                        <div>
+                          <span className="text-[10px] uppercase tracking-wider text-muted-foreground block mb-1">Provider Response</span>
+                          <pre className="text-xs font-mono text-muted-foreground p-2 rounded bg-black/30 overflow-x-auto max-h-32">{JSON.stringify(tx.provider_response, null, 2)}</pre>
+                        </div>
+                      </div>
+                    </div>
+                  ))}
+                </CardContent>
+              </Card>
+            </TabsContent>
+
+            {/* ═══ PAYOUTS ═══ */}
+            <TabsContent value="payouts" className="mt-6 space-y-6">
+              <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
+                <Card className="border-border/40 bg-card/40 backdrop-blur-sm"><CardContent className="p-5 flex items-center gap-3"><DollarSign className="w-5 h-5 text-primary" /><div><p className="text-xs text-muted-foreground">Pending Requests</p><p className="text-2xl font-bold text-foreground">{payoutRequests.filter(p => p.status === "pending").length}</p></div></CardContent></Card>
+                <Card className="border-border/40 bg-card/40 backdrop-blur-sm"><CardContent className="p-5 flex items-center gap-3"><Check className="w-5 h-5 text-emerald-400" /><div><p className="text-xs text-muted-foreground">Completed Payouts</p><p className="text-2xl font-bold text-foreground">{payoutRequests.filter(p => p.status === "paid").length}</p></div></CardContent></Card>
+                <Card className="border-border/40 bg-card/40 backdrop-blur-sm"><CardContent className="p-5 flex items-center gap-3"><Bitcoin className="w-5 h-5 text-amber-400" /><div><p className="text-xs text-muted-foreground">Total Paid Out</p><p className="text-xl font-bold text-foreground font-mono">{payoutRequests.filter(p => p.status === "paid").reduce((s, p) => s + p.amount_btc, 0).toFixed(8)} BTC</p></div></CardContent></Card>
+              </div>
+
+              <Card className="border-border/40 bg-card/40 backdrop-blur-sm">
+                <CardHeader><CardTitle className="text-lg flex items-center gap-2"><DollarSign className="w-5 h-5" /> Payout Requests</CardTitle></CardHeader>
+                <CardContent className="overflow-x-auto">
+                  <Table>
+                    <TableHeader><TableRow>
+                      <TableHead>Status</TableHead><TableHead>Partner</TableHead><TableHead className="text-right">Amount</TableHead><TableHead>Wallet</TableHead><TableHead>Payout TXID</TableHead><TableHead>Requested</TableHead><TableHead>Actions</TableHead>
+                    </TableRow></TableHeader>
+                    <TableBody>
+                      {payoutRequests.length === 0 ? (
+                        <TableRow><TableCell colSpan={7} className="text-center text-muted-foreground py-8">No payout requests.</TableCell></TableRow>
+                      ) : payoutRequests.map(p => (
+                        <TableRow key={p.id}>
+                          <TableCell>
+                            <span className={`text-xs font-semibold px-2 py-0.5 rounded ${p.status === "paid" ? "bg-emerald-500/20 text-emerald-400" : p.status === "rejected" ? "bg-red-500/20 text-red-400" : "bg-amber-500/20 text-amber-400"}`}>
+                              {p.status.charAt(0).toUpperCase() + p.status.slice(1)}
+                            </span>
+                          </TableCell>
+                          <TableCell className="text-sm">{getPartnerName(p.partner_id)}</TableCell>
+                          <TableCell className="text-right font-mono text-sm">{p.amount_btc.toFixed(8)} BTC</TableCell>
+                          <TableCell className="font-mono text-xs text-muted-foreground max-w-[180px]">
+                            <div className="flex items-center gap-1">
+                              <span className="truncate">{p.wallet_address}</span>
+                              <button onClick={() => { navigator.clipboard.writeText(p.wallet_address); toast({ title: "Copied" }); }} className="shrink-0 p-1 rounded hover:bg-muted/50"><Copy className="w-3 h-3" /></button>
+                            </div>
+                          </TableCell>
+                          <TableCell className="font-mono text-xs">{p.payout_txid || "—"}</TableCell>
+                          <TableCell className="text-xs text-muted-foreground whitespace-nowrap">{new Date(p.requested_at).toLocaleString()}</TableCell>
+                          <TableCell>
+                            {p.status === "pending" && (
+                              <div className="flex items-center gap-2">
+                                <Input
+                                  value={payoutTxidInputs[p.id] || ""}
+                                  onChange={e => setPayoutTxidInputs(prev => ({ ...prev, [p.id]: e.target.value }))}
+                                  placeholder="Payout TXID"
+                                  className="h-7 text-xs w-40 bg-background/50 border-border/50"
+                                />
+                                <Button size="sm" variant="outline" className="text-xs h-7 gap-1" disabled={!payoutTxidInputs[p.id]} onClick={() => markPayoutPaid(p.id, payoutTxidInputs[p.id] || "")}><Check className="w-3 h-3" /> Paid</Button>
+                                <Button size="sm" variant="destructive" className="text-xs h-7 gap-1" onClick={() => rejectPayout(p.id)}><XCircle className="w-3 h-3" /> Reject</Button>
+                              </div>
+                            )}
+                          </TableCell>
+                        </TableRow>
+                      ))}
+                    </TableBody>
+                  </Table>
+                </CardContent>
+              </Card>
             </TabsContent>
 
             {/* ═══ LENDING ═══ */}
