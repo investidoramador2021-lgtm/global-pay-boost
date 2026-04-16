@@ -138,8 +138,11 @@ const EmbedWidget = () => {
     if (!fromCurrency || !toCurrency || !amount) return;
 
     const base = "https://mrcglobalpay.com";
-    const url = `${base}/?from=${fromCurrency.ticker}&to=${toCurrency.ticker}&amount=${amount}`;
-    window.open(url, "_blank", "noopener");
+    const params = new URLSearchParams({ from: fromCurrency.ticker, to: toCurrency.ticker, amount });
+    if (refId) params.set("ref", refId);
+    const source = searchParams.get("source");
+    if (source) params.set("source", source);
+    window.open(`${base}/?${params.toString()}`, "_blank", "noopener");
   };
 
   const handleTokenSelect = (currency: Currency) => {
