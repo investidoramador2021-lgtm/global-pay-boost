@@ -113,6 +113,7 @@ export default function DynamicExchange() {
   const lang = getLangFromPath(pathname);
   const { t } = useTranslation();
   const lp = (p: string) => langPath(lang, p);
+  const dx = (key: string, vars?: Record<string, string | number>) => t(`dynamicExchange.${key}`, vars);
 
   const match = pair?.match(/^([a-z0-9]+)-to-([a-z0-9]+)$/i);
   const fromTicker = match?.[1] || "";
@@ -185,7 +186,7 @@ export default function DynamicExchange() {
   const fromUp = fromTicker.toUpperCase();
   const toUp = toTicker.toUpperCase();
 
-  const title = `How to Swap ${fromUp} to ${toUp} Instantly — No KYC, Best Rate | MRC GlobalPay`;
+  const title = `${dx("heroTitle", { from: fromUp, to: toUp })} — ${dx("ctaSubtitle")} | MRC GlobalPay`;
   const description = `Convert ${fromName} (${fromUp}) to ${toName} (${toUp}) in under 60 seconds with no account required. Compare rates from 700+ liquidity sources. Canadian MSB-registered (C100000015). Step-by-step guide, network details, and live rates.`;
   const canonicalUrl = `https://mrcglobalpay.com/exchange/${fromLower}-to-${toLower}`;
 
@@ -306,25 +307,26 @@ export default function DynamicExchange() {
             <div className="mx-auto max-w-5xl">
               <nav aria-label="Breadcrumb" className="mb-6">
                 <ol className="flex items-center gap-1.5 text-xs text-[#8A8F98]">
-                  <li><a href={lp("/")} className="hover:text-white transition-colors">Home</a></li>
+                  <li><a href={lp("/")} className="hover:text-white transition-colors">{dx("breadcrumbHome")}</a></li>
                   <li>/</li>
-                  <li>Exchange</li>
+                  <li>{dx("breadcrumbExchange")}</li>
                   <li>/</li>
                   <li className="text-white">{fromUp} → {toUp}</li>
                 </ol>
               </nav>
 
               <h1 className="font-display text-3xl font-extrabold tracking-tight text-white sm:text-4xl lg:text-5xl">
-                How to Swap {fromUp} to {toUp} <span className="text-[#00E676]">Instantly</span>
+                {dx("heroTitle", { from: fromUp, to: toUp })} <span className="text-[#00E676]">{dx("heroInstantly")}</span>
               </h1>
 
               {/* Snippet-optimized answer block — visible to crawlers */}
               <div className="mt-4 max-w-3xl space-y-3">
                 <p className="text-base text-[#C4C8D0] sm:text-lg leading-relaxed">
-                  <strong className="text-white">To swap {fromUp} to {toUp}:</strong> Enter your amount, paste your {toUp} wallet address, and send {fromUp} to the deposit address. Your {toUp} arrives in {toSettlement}. No account, no KYC, no minimum beyond $0.30 USD.
+                  <strong className="text-white">{dx("snippetIntro", { from: fromUp, to: toUp })}</strong>{" "}
+                  {dx("snippetBody", { from: fromUp, to: toUp, settlement: toSettlement })}
                 </p>
                 <p className="text-sm text-[#8A8F98] leading-relaxed">
-                  MRC GlobalPay aggregates rates from 700+ liquidity sources to find the best {fromUp}/{toUp} exchange rate in real time. We are a Canadian MSB (C100000015) operating non-custodial swaps — your funds are never held by us.
+                  {dx("aggregatorNote", { from: fromUp, to: toUp })}
                 </p>
               </div>
 
@@ -332,22 +334,22 @@ export default function DynamicExchange() {
               <div className="mt-6 grid grid-cols-2 sm:grid-cols-4 gap-3">
                 <div className="rounded-xl border border-[#2A2D35] bg-[#12141A] p-3.5 text-center">
                   <Timer className="mx-auto h-5 w-5 text-[#00E676] mb-1.5" />
-                  <p className="text-xs text-[#8A8F98]">Settlement</p>
+                  <p className="text-xs text-[#8A8F98]">{dx("factSettlement")}</p>
                   <p className="font-display text-sm font-bold text-white">{toSettlement}</p>
                 </div>
                 <div className="rounded-xl border border-[#2A2D35] bg-[#12141A] p-3.5 text-center">
                   <Wallet className="mx-auto h-5 w-5 text-[#00E676] mb-1.5" />
-                  <p className="text-xs text-[#8A8F98]">Minimum</p>
+                  <p className="text-xs text-[#8A8F98]">{dx("factMinimum")}</p>
                   <p className="font-display text-sm font-bold text-white">~$0.30</p>
                 </div>
                 <div className="rounded-xl border border-[#2A2D35] bg-[#12141A] p-3.5 text-center">
                   <Lock className="mx-auto h-5 w-5 text-[#00E676] mb-1.5" />
-                  <p className="text-xs text-[#8A8F98]">KYC Required</p>
-                  <p className="font-display text-sm font-bold text-white">No</p>
+                  <p className="text-xs text-[#8A8F98]">{dx("factKyc")}</p>
+                  <p className="font-display text-sm font-bold text-white">{dx("factNo")}</p>
                 </div>
                 <div className="rounded-xl border border-[#2A2D35] bg-[#12141A] p-3.5 text-center">
                   <BarChart3 className="mx-auto h-5 w-5 text-[#00E676] mb-1.5" />
-                  <p className="text-xs text-[#8A8F98]">Liquidity Sources</p>
+                  <p className="text-xs text-[#8A8F98]">{dx("factLiquidity")}</p>
                   <p className="font-display text-sm font-bold text-white">700+</p>
                 </div>
               </div>
@@ -369,17 +371,17 @@ export default function DynamicExchange() {
           <div className="container mx-auto px-4">
             <div className="mx-auto max-w-3xl">
               <h2 className="font-display text-xl font-bold text-white sm:text-2xl mb-2">
-                How to Convert {fromName} to {toName} — Step by Step
+                {dx("howToTitle", { from: fromName, to: toName })}
               </h2>
               <p className="text-sm text-[#8A8F98] mb-8">
-                Complete your {fromUp} to {toUp} swap in 4 simple steps. No downloads, no sign-ups, no identity checks.
+                {dx("howToSubtitle", { from: fromUp, to: toUp })}
               </p>
               <ol className="space-y-6">
                 {[
-                  { step: "1", title: `Select ${fromUp} → ${toUp}`, desc: `Choose ${fromName} as the source and ${toName} as the destination in the swap widget above. The exchange rate updates in real time.` },
-                  { step: "2", title: "Enter your amount", desc: `Type the amount of ${fromUp} you want to convert. The minimum is ~$0.30 USD equivalent — we support micro-swaps for converting dust balances.` },
-                  { step: "3", title: `Paste your ${toUp} wallet address`, desc: `Provide the ${toName} address where you want to receive funds.${toAsset?.has_external_id ? ` Important: ${toName} requires a Memo/Destination Tag — you'll be prompted to enter it.` : ""} Double-check the address — blockchain transactions are irreversible.` },
-                  { step: "4", title: `Send ${fromUp} and receive ${toUp}`, desc: `Send your ${fromUp} to the one-time deposit address we generate. After ${fromConfirmations} network confirmation(s) (typically ${fromSettlement}), your ${toUp} is sent to your wallet automatically. Expected delivery: ${toSettlement}.` },
+                  { step: "1", title: dx("step1Title", { from: fromUp, to: toUp }), desc: dx("step1Desc", { fromName, toName }) },
+                  { step: "2", title: dx("step2Title"), desc: dx("step2Desc", { from: fromUp }) },
+                  { step: "3", title: dx("step3Title", { to: toUp }), desc: `${dx("step3Desc", { toName })}${toAsset?.has_external_id ? ` ${dx("step3MemoNote", { toName })}` : ""}` },
+                  { step: "4", title: dx("step4Title", { from: fromUp, to: toUp }), desc: dx("step4Desc", { from: fromUp, to: toUp, confirmations: fromConfirmations, fromSettlement, toSettlement }) },
                 ].map((s) => (
                   <li key={s.step} className="flex gap-4">
                     <div className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-[#00E676]/10 font-display text-sm font-bold text-[#00E676]">
@@ -403,13 +405,13 @@ export default function DynamicExchange() {
               <div className="mx-auto max-w-3xl space-y-8">
                 <h2 className="font-display text-xl font-bold text-white sm:text-2xl">
                   <BookOpen className="inline-block h-5 w-5 text-[#00E676] me-2 align-text-bottom" />
-                  Understanding {fromUp} and {toUp}
+                  {dx("understandingTitle", { from: fromUp, to: toUp })}
                 </h2>
                 {fromDesc && (
                   <article>
                     <h3 className="font-display text-base font-bold text-white mb-2 flex items-center gap-2">
                       <TokenIcon src={fromAsset?.image_url} ticker={fromLower} alt={fromName} className="h-5 w-5" />
-                      What is {fromName} ({fromUp})?
+                      {dx("whatIs", { name: fromName, ticker: fromUp })}
                     </h3>
                     <p className="text-sm text-[#C4C8D0] leading-relaxed">{fromDesc}</p>
                   </article>
@@ -418,7 +420,7 @@ export default function DynamicExchange() {
                   <article>
                     <h3 className="font-display text-base font-bold text-white mb-2 flex items-center gap-2">
                       <TokenIcon src={toAsset?.image_url} ticker={toLower} alt={toName} className="h-5 w-5" />
-                      What is {toName} ({toUp})?
+                      {dx("whatIs", { name: toName, ticker: toUp })}
                     </h3>
                     <p className="text-sm text-[#C4C8D0] leading-relaxed">{toDesc}</p>
                   </article>
@@ -427,21 +429,21 @@ export default function DynamicExchange() {
                 {/* Why swap these two? — unique paragraph per pair */}
                 <article>
                   <h3 className="font-display text-base font-bold text-white mb-2">
-                    Why Swap {fromUp} to {toUp}?
+                    {dx("whySwapTitle", { from: fromUp, to: toUp })}
                   </h3>
                   <p className="text-sm text-[#C4C8D0] leading-relaxed">
-                    Converting {fromName} to {toName} allows you to
+                    {dx("whySwapIntro", { fromName, toName })}{" "}
                     {fromAsset?.is_stable && !toAsset?.is_stable
-                      ? ` exit a stable position and gain exposure to ${toName}'s price movements.`
+                      ? dx("whyStableToVolatile", { toName })
                       : !fromAsset?.is_stable && toAsset?.is_stable
-                      ? ` lock in your ${fromUp} gains by moving into a stable, dollar-pegged asset.`
+                      ? dx("whyVolatileToStable", { from: fromUp })
                       : fromLower === "btc"
-                      ? ` diversify beyond Bitcoin into ${toName}'s ecosystem and use cases.`
+                      ? dx("whyFromBtc", { toName })
                       : toLower === "btc"
-                      ? ` consolidate your holdings into Bitcoin, the most liquid and widely-accepted cryptocurrency.`
-                      : ` rebalance your portfolio between two distinct blockchain ecosystems with different utility and risk profiles.`
+                      ? dx("whyToBtc")
+                      : dx("whyGeneric")
                     }
-                    {" "}On MRC GlobalPay, this swap settles in {toSettlement} with no slippage beyond the rate shown — what you see is what you get.
+                    {" "}{dx("whySwapOutro", { settlement: toSettlement })}
                   </p>
                 </article>
               </div>
@@ -455,10 +457,10 @@ export default function DynamicExchange() {
             <div className="container mx-auto px-4">
               <div className="mx-auto max-w-5xl">
                 <h2 className="font-display text-xl font-bold text-white sm:text-2xl mb-2">
-                  Network &amp; Security Details
+                  {dx("networkTitle")}
                 </h2>
                 <p className="text-sm text-[#8A8F98] mb-6">
-                  Technical specifications for the {fromUp}/{toUp} swap pair. Verify contract addresses before sending funds.
+                  {dx("networkSubtitle", { from: fromUp, to: toUp })}
                 </p>
                 <div className="grid gap-4 sm:grid-cols-2">
                   {[
@@ -476,17 +478,17 @@ export default function DynamicExchange() {
                       <dl className="space-y-2.5 text-sm">
                         <div className="flex items-start gap-2">
                           <Cpu className="mt-0.5 h-4 w-4 shrink-0 text-[#00E676]" />
-                          <div><dt className="sr-only">Network</dt><dd className="text-[#C4C8D0]"><strong className="text-white">Network:</strong> {getNetworkLabel(a.network)}</dd></div>
+                          <div><dt className="sr-only">Network</dt><dd className="text-[#C4C8D0]"><strong className="text-white">{dx("networkLabel")}</strong> {getNetworkLabel(a.network)}</dd></div>
                         </div>
                         <div className="flex items-start gap-2">
                           <Clock className="mt-0.5 h-4 w-4 shrink-0 text-[#00E676]" />
-                          <div><dt className="sr-only">Confirmations</dt><dd className="text-[#C4C8D0]"><strong className="text-white">Confirmations:</strong> {a.confs} ({a.settlement})</dd></div>
+                          <div><dt className="sr-only">Confirmations</dt><dd className="text-[#C4C8D0]"><strong className="text-white">{dx("confirmationsLabel")}</strong> {a.confs} ({a.settlement})</dd></div>
                         </div>
                         {a.contract && (
                           <div className="flex items-start gap-2">
                             <Shield className="mt-0.5 h-4 w-4 shrink-0 text-[#00E676]" />
                             <div className="break-all"><dt className="sr-only">Contract</dt><dd className="text-[#C4C8D0]">
-                              <strong className="text-white">Contract:</strong>{" "}
+                              <strong className="text-white">{dx("contractLabel")}</strong>{" "}
                               {getExplorerUrl(a.network, a.contract) ? (
                                 <a href={getExplorerUrl(a.network, a.contract)!} target="_blank" rel="noopener noreferrer" className="text-[#00A3FF] hover:underline inline-flex items-center gap-1">
                                   {a.contract.slice(0, 10)}…{a.contract.slice(-6)} <ExternalLink className="h-3 w-3" />
@@ -500,7 +502,7 @@ export default function DynamicExchange() {
                         {a.asset!.has_external_id && (
                           <div className="flex items-start gap-2">
                             <AlertTriangle className="mt-0.5 h-4 w-4 shrink-0 text-yellow-500" />
-                            <dd className="text-yellow-400/80 text-xs"><strong>{a.name}</strong> requires a Memo/Destination Tag.</dd>
+                            <dd className="text-yellow-400/80 text-xs"><strong>{dx("memoWarning", { name: a.name })}</strong></dd>
                           </div>
                         )}
                       </dl>
@@ -510,7 +512,7 @@ export default function DynamicExchange() {
                 <div className="mt-4 rounded-xl border border-[#2A2D35] bg-[#12141A] p-4 flex items-start gap-3">
                   <Zap className="mt-0.5 h-5 w-5 shrink-0 text-[#00E676]" />
                   <p className="text-sm text-[#C4C8D0]">
-                    <strong className="text-white">Settlement Infrastructure:</strong> This swap is executed through institutional-grade liquidity rails aggregating 700+ providers. The process is non-custodial (your funds transit directly between wallets), forensic-verified, and compliant with Canadian FINTRAC regulations.
+                    <strong className="text-white">{dx("settlementInfra")}</strong> {dx("settlementInfraDesc")}
                   </p>
                 </div>
               </div>
@@ -524,14 +526,14 @@ export default function DynamicExchange() {
             <div className="mx-auto max-w-3xl">
               <h2 className="font-display text-xl font-bold text-white sm:text-2xl mb-6">
                 <Shield className="inline-block h-5 w-5 text-[#00E676] me-2 align-text-bottom" />
-                Why Trade {fromUp}/{toUp} on MRC GlobalPay?
+                {dx("trustTitle", { from: fromUp, to: toUp })}
               </h2>
               <div className="grid gap-4 sm:grid-cols-2">
                 {[
-                  { icon: <Globe className="h-5 w-5" />, title: "No Account Required", desc: "Start swapping in seconds. No email, no phone number, no selfie. Just enter your amount and wallet address." },
-                  { icon: <Lock className="h-5 w-5" />, title: "Non-Custodial & Secure", desc: "Your private keys stay with you. We never hold your funds — every swap is a direct wallet-to-wallet settlement." },
-                  { icon: <CheckCircle2 className="h-5 w-5" />, title: "Canadian MSB Registered", desc: "Operated by MRC Pay International Corp., registered with FINTRAC (MSB #C100000015). Fully compliant, fully transparent." },
-                  { icon: <BarChart3 className="h-5 w-5" />, title: "Best Available Rate", desc: "Our engine queries 700+ liquidity sources in real time and routes your swap to the best rate. No hidden fees or spreads." },
+                  { icon: <Globe className="h-5 w-5" />, title: dx("trustNoAccount"), desc: dx("trustNoAccountDesc") },
+                  { icon: <Lock className="h-5 w-5" />, title: dx("trustNonCustodial"), desc: dx("trustNonCustodialDesc") },
+                  { icon: <CheckCircle2 className="h-5 w-5" />, title: dx("trustMsb"), desc: dx("trustMsbDesc") },
+                  { icon: <BarChart3 className="h-5 w-5" />, title: dx("trustBestRate"), desc: dx("trustBestRateDesc") },
                 ].map((card) => (
                   <div key={card.title} className="rounded-xl border border-[#2A2D35] bg-[#12141A] p-4 flex gap-3">
                     <div className="shrink-0 text-[#00E676]">{card.icon}</div>
@@ -552,49 +554,49 @@ export default function DynamicExchange() {
             <div className="mx-auto max-w-3xl">
               <h2 className="font-display text-xl font-bold text-white sm:text-2xl mb-2">
                 <HelpCircle className="inline-block h-5 w-5 text-[#00E676] me-2 align-text-bottom" />
-                {fromUp} to {toUp} — Frequently Asked Questions
+                {dx("faqTitle", { from: fromUp, to: toUp })}
               </h2>
               <p className="text-sm text-[#8A8F98] mb-6">
-                Everything you need to know about converting {fromName} to {toName}.
+                {dx("faqSubtitle", { fromName, toName })}
               </p>
               <Accordion type="single" collapsible className="space-y-3">
                 {[
                   {
                     value: "faq-min",
-                    q: `What is the minimum amount of ${fromUp} I can swap for ${toUp}?`,
-                    a: `The minimum swap amount is approximately $0.30 USD equivalent in ${fromUp}. MRC GlobalPay is specifically designed to handle micro-swaps and "crypto dust" — small leftover balances that other exchanges refuse to process. The exact minimum fluctuates with market prices and is always displayed in the swap widget before you confirm.`,
+                    q: dx("faqMinQ", { from: fromUp, to: toUp }),
+                    a: dx("faqMinA", { from: fromUp }),
                   },
                   {
                     value: "faq-time",
-                    q: `How long does a ${fromUp} to ${toUp} swap take?`,
-                    a: `The total time depends on ${fromName}'s network confirmation speed. ${fromUp} typically requires ${fromConfirmations} confirmation(s), which takes ${fromSettlement}. Once confirmed, your ${toUp} is sent within seconds. End-to-end, most swaps complete in under 2 minutes.`,
+                    q: dx("faqTimeQ", { from: fromUp, to: toUp }),
+                    a: dx("faqTimeA", { fromName, from: fromUp, to: toUp, confirmations: fromConfirmations, fromSettlement }),
                   },
                   {
                     value: "faq-memo",
-                    q: `Does ${toUp} require a Memo, Tag, or Extra ID?`,
+                    q: dx("faqMemoQ", { to: toUp }),
                     a: toAsset?.has_external_id
-                      ? `Yes. ${toName} uses an additional identifier (called a Memo, Destination Tag, or Extra ID depending on the network). You will be prompted to enter it during the swap process. Failing to include this identifier will result in permanent loss of funds — there is no way to recover them.`
-                      : `No. ${toName} does not require a Memo, Destination Tag, or Extra ID. You only need to provide your ${toUp} wallet address. However, always double-check the address — blockchain transactions are irreversible.`,
+                      ? dx("faqMemoYes", { toName })
+                      : dx("faqMemoNo", { toName, to: toUp }),
                   },
                   {
                     value: "faq-kyc",
-                    q: `Do I need to create an account or verify my identity to swap ${fromUp} to ${toUp}?`,
-                    a: `No. MRC GlobalPay does not require account creation, email registration, or identity verification (KYC) for standard cryptocurrency swaps. We are a registered Canadian Money Services Business (MSB Identifier: C100000015, FINTRAC-supervised), which allows us to provide fully compliant non-custodial swap services without imposing KYC requirements on individual users.`,
+                    q: dx("faqKycQ", { from: fromUp, to: toUp }),
+                    a: dx("faqKycA"),
                   },
                   {
                     value: "faq-fees",
-                    q: `What fees does MRC GlobalPay charge for ${fromUp} to ${toUp}?`,
-                    a: `There are no hidden fees. The exchange rate displayed in the swap widget includes a small service fee and the blockchain network fee required to send your ${toUp}. There is no withdrawal fee, no deposit fee, and no spread markup beyond what is shown. The rate you see is the rate you get.`,
+                    q: dx("faqFeesQ", { from: fromUp, to: toUp }),
+                    a: dx("faqFeesA", { to: toUp }),
                   },
                   {
                     value: "faq-safe",
-                    q: `Is it safe to use MRC GlobalPay to swap ${fromUp} to ${toUp}?`,
-                    a: `Yes. MRC GlobalPay operates a fully non-custodial service — we never take custody of your funds or private keys. Your ${fromUp} is exchanged directly through audited liquidity partners and sent to your ${toUp} address. The platform is operated by MRC Pay International Corp., a FINTRAC-registered MSB headquartered in Ottawa, Ontario, Canada.`,
+                    q: dx("faqSafeQ", { from: fromUp, to: toUp }),
+                    a: dx("faqSafeA", { from: fromUp, to: toUp }),
                   },
                   {
                     value: "faq-network",
-                    q: `What blockchain network should I use to send ${fromUp}?`,
-                    a: `For this swap, ${fromName} uses the ${getNetworkLabel(fromNetwork)} network. Ensure your sending wallet is compatible with this network. Sending ${fromUp} on an incompatible network (e.g., sending ERC-20 tokens to a BEP-20 address) will result in permanent loss of funds. ${fromContract ? `The verified contract address is: ${fromContract}` : ""}`,
+                    q: dx("faqNetworkQ", { from: fromUp }),
+                    a: `${dx("faqNetworkA", { fromName, network: getNetworkLabel(fromNetwork) })}${fromContract ? ` ${dx("faqNetworkContract", { contract: fromContract })}` : ""}`,
                   },
                 ].map((faq) => (
                   <AccordionItem key={faq.value} value={faq.value} className="rounded-xl border border-[#2A2D35] bg-[#12141A] px-5">
@@ -617,14 +619,14 @@ export default function DynamicExchange() {
             <div className="container mx-auto px-4">
               <div className="mx-auto max-w-5xl">
                 <h2 className="font-display text-xl font-bold text-foreground sm:text-2xl mb-2">
-                  Explore {relatedAssets.length * (relatedAssets.length - 1)}+ Trading Pairs
+                  {dx("relatedTitle", { count: String(relatedAssets.length * (relatedAssets.length - 1)) })}
                 </h2>
                 <p className="text-sm text-muted-foreground mb-6">
-                  Swap between any of the {relatedAssets.length} most popular cryptocurrencies — instantly, no registration.
+                  {dx("relatedSubtitle", { assetCount: String(relatedAssets.length) })}
                 </p>
 
                 <h3 className="font-display text-sm font-semibold text-muted-foreground uppercase tracking-wider mb-3">
-                  Swap {fromUp} to
+                  {dx("swapFromTo", { from: fromUp })}
                 </h3>
                 <div className="flex flex-wrap gap-2 mb-8">
                   {relatedAssets
@@ -633,14 +635,14 @@ export default function DynamicExchange() {
                     .map((a) => (
                       <Link key={a.ticker} to={lp(`/exchange/${fromLower}-to-${a.ticker.toLowerCase()}`)}
                         className="inline-flex items-center gap-1.5 rounded-lg border border-border bg-card px-3 py-2 text-xs font-medium text-foreground transition-colors hover:border-primary/40 hover:bg-accent">
-<TokenIcon src={a.image_url} ticker={a.ticker} alt={a.name} className="h-4 w-4" />
+                        <TokenIcon src={a.image_url} ticker={a.ticker} alt={a.name} className="h-4 w-4" />
                         {a.ticker.toUpperCase()}
                       </Link>
                     ))}
                 </div>
 
                 <h3 className="font-display text-sm font-semibold text-muted-foreground uppercase tracking-wider mb-3">
-                  Swap to {toUp} from
+                  {dx("swapToFrom", { to: toUp })}
                 </h3>
                 <div className="flex flex-wrap gap-2 mb-8">
                   {relatedAssets
@@ -655,7 +657,7 @@ export default function DynamicExchange() {
                     ))}
                 </div>
 
-                <h3 className="font-display text-sm font-semibold text-muted-foreground uppercase tracking-wider mb-3">Popular Pairs</h3>
+                <h3 className="font-display text-sm font-semibold text-muted-foreground uppercase tracking-wider mb-3">{dx("popularPairs")}</h3>
                 <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-2">
                   {relatedAssets.slice(0, 8).flatMap((from) =>
                     relatedAssets.filter((to) => to.ticker !== from.ticker).slice(0, 3).map((to) => (
@@ -683,13 +685,13 @@ export default function DynamicExchange() {
         <section className="py-12 border-t border-[#1E2028]">
           <div className="container mx-auto px-4 text-center">
             <h2 className="font-display text-xl font-bold text-white sm:text-2xl">
-              Ready to swap {fromUp} for {toUp}?
+              {dx("ctaTitle", { from: fromUp, to: toUp })}
             </h2>
             <p className="mt-2 text-sm text-[#8A8F98]">
-              No registration. No KYC. Under 60 seconds. Canadian MSB-registered.
+              {dx("ctaSubtitle")}
             </p>
             <a href="#exchange" className="mt-6 inline-flex items-center gap-2 rounded-lg bg-[#00E676] px-6 py-3 font-display text-sm font-bold text-[#0B0D10] transition-all hover:bg-[#00C853]">
-              <Zap className="h-4 w-4" /> Swap Now
+              <Zap className="h-4 w-4" /> {dx("ctaButton")}
             </a>
           </div>
         </section>
