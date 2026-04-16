@@ -613,6 +613,28 @@ export default function DynamicExchange() {
                   </div>
                 ))}
               </div>
+
+              {/* Hard-coded Canadian Compliance & Security block — always renders, no i18n dependency */}
+              <div className="mt-6 rounded-2xl border border-[#00E676]/20 bg-gradient-to-br from-[#0F1A14] to-[#12141A] p-5 sm:p-6">
+                <div className="mb-3 flex items-center gap-2">
+                  <Shield className="h-5 w-5 text-[#00E676]" />
+                  <h3 className="font-display text-base font-bold text-white">Compliance &amp; Security</h3>
+                </div>
+                <ul className="grid gap-2.5 sm:grid-cols-3">
+                  <li className="flex items-start gap-2 text-sm text-[#C4C8D0]">
+                    <CheckCircle2 className="mt-0.5 h-4 w-4 shrink-0 text-[#00E676]" />
+                    <span><strong className="text-white">Registered Canadian Money Services Business (MSB)</strong> — MRC Pay International Corp., FINTRAC #C100000015.</span>
+                  </li>
+                  <li className="flex items-start gap-2 text-sm text-[#C4C8D0]">
+                    <CheckCircle2 className="mt-0.5 h-4 w-4 shrink-0 text-[#00E676]" />
+                    <span><strong className="text-white">FINTRAC Compliant</strong> — Operating under Canadian AML/CTF reporting standards.</span>
+                  </li>
+                  <li className="flex items-start gap-2 text-sm text-[#C4C8D0]">
+                    <CheckCircle2 className="mt-0.5 h-4 w-4 shrink-0 text-[#00E676]" />
+                    <span><strong className="text-white">Secure Non-Custodial Swaps</strong> — We never hold your funds or private keys.</span>
+                  </li>
+                </ul>
+              </div>
             </div>
           </div>
         </section>
