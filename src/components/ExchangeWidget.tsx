@@ -5,6 +5,8 @@ import { ArrowDownUp, Loader2, Search, Copy, Check, ArrowLeft, ArrowRight, Arrow
 import PrivateTransferTab from "@/components/PrivateTransferTab";
 import PermanentBridgeTab from "@/components/PermanentBridgeTab";
 import InvoiceRequestTab from "@/components/InvoiceRequestTab";
+import FeeBreakdown from "@/components/FeeBreakdown";
+import SystemPulse from "@/components/SystemPulse";
 import DestinationAddressInput, { tickerToAddressType } from "@/components/DestinationAddressInput";
 import CollateralSelector from "@/components/CollateralSelector";
 import { COLLATERAL_ASSETS, LTV_BY_RISK, type CollateralAsset } from "@/lib/coinrabbit-assets";
@@ -2894,6 +2896,7 @@ const ExchangeWidget = ({ onTabChange, defaultFrom, defaultTo }: ExchangeWidgetP
                     <span className="flex items-center gap-1 rounded-md border border-trust/20 bg-trust/5 px-2 py-1 font-body text-[10px] font-medium text-trust sm:text-[11px]">
                       <CheckCircle2 className="h-3 w-3" /> {t("widget.allFeesIncluded")}
                     </span>
+                    <FeeBreakdown sendTicker={fromCurrency ? displayTicker(fromCurrency) : undefined} receiveTicker={toCurrency ? displayTicker(toCurrency) : undefined} />
                     {fromCurrency && toCurrency && estimatedAmount && estimatedAmount !== "—" && estimatedAmount !== "syncing" && parseFloat(sendAmount) > 0 && (
                       <span className="font-body text-[10px] text-muted-foreground sm:text-[11px]">
                         1 {displayTicker(fromCurrency)} ≈ {(parseFloat(estimatedAmount) / parseFloat(sendAmount)).toFixed(6)} {displayTicker(toCurrency)}
@@ -2951,6 +2954,7 @@ const ExchangeWidget = ({ onTabChange, defaultFrom, defaultTo }: ExchangeWidgetP
                   <Shield className="h-3 w-3 text-primary" />
                   {t("widget.secureSwap")}
                 </p>
+                <SystemPulse />
               </>
             )}
 
