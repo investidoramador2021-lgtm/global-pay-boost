@@ -647,42 +647,131 @@ function ApiKeysSection({ partnerId }: { partnerId: string }) {
 /* ════════════════════════════════════════════════════════════ */
 /*  SECTION: API LEDGER (API-driven transactions)              */
 /* ════════════════════════════════════════════════════════════ */
+const MRC_STATUS_LABELS: Record<string, string> = {
+  pending: "Pending", awaiting_deposit: "Awaiting Funds", confirming_deposit: "Confirming Deposit",
+  exchanging: "Exchanging", sending_payout: "Sending Payout", success: "Success", failed: "Failed",
+  refunded: "Refunded", expired: "Expired",
+};
+const MRC_PIPELINE = ["awaiting_deposit", "confirming_deposit", "exchanging", "sending_payout", "success"] as const;
+
+function MrcStatusPipeline({ status }: { status?: string }) {
+  const current = status || "pending";
+  const isFailed = ["failed", "refunded", "expired"].includes(current);
+  const activeIdx = MRC_PIPELINE.indexOf(current as typeof MRC_PIPELINE[number]);
+  if (isFailed) return <div className="flex items-center gap-2"><XCircle className="w-4 h-4" style={{ color: OBS.danger }} /><span className="text-xs font-medium" style={{ color: OBS.danger }}>{MRC_STATUS_LABELS[current] || current}</span></div>;
+  return (
+    <div className="flex items-center gap-1">
+      {MRC_PIPELINE.map((step, i) => {
+        const done = i <= activeIdx;
+        return (
+          <div key={step} className="flex items-center gap-1">
+            <div className={`w-2 h-2 rounded-full ${i === activeIdx ? "animate-pulse" : ""}`} style={{ background: done ? OBS.success : "rgba(255,255,255,0.1)" }} title={MRC_STATUS_LABELS[step]} />
+            {i < MRC_PIPELINE.length - 1 && <div className="w-3 h-px" style={{ background: done ? OBS.success : "rgba(255,255,255,0.1)" }} />}
+          </div>
+        );
+      })}
+      <span className="text-xs ms-2" style={{ color: activeIdx >= 0 ? OBS.success : OBS.muted }}>{MRC_STATUS_LABELS[current] || current}</span>
+    </div>
+  );
+}
+
 function ApiLedgerSection({ partnerId }: { partnerId: string }) {
   const { t } = useTranslation();
   const [txs, setTxs] = useState<PartnerTx[]>([]);
+  const [balance, setBalance] = useState<PartnerBalance>({ available_btc: 0, pending_btc: 0, total_earned_btc: 0, last_credited_at: null });
   const [loading, setLoading] = useState(true);
+  const [expandedTx, setExpandedTx] = useState<string | null>(null);
+  const [searchQuery, setSearchQuery] = useState("");
 
   useEffect(() => {
     (async () => {
-      const { data } = await supabase.from("partner_transactions").select("*").eq("partner_id", partnerId).order("completed_at", { ascending: false }).limit(200);
-      setTxs((data || []) as PartnerTx[]);
+      const [txRes, balRes] = await Promise.all([
+        supabase.from("partner_transactions").select("*").eq("partner_id", partnerId).order("completed_at", { ascending: false }).limit(200),
+        supabase.from("partner_balances").select("*").eq("partner_id", partnerId).maybeSingle(),
+      ]);
+      setTxs((txRes.data || []) as PartnerTx[]);
+      if (balRes.data) setBalance(balRes.data as unknown as PartnerBalance);
       setLoading(false);
     })();
   }, [partnerId]);
 
+  const filtered = useMemo(() => {
+    if (!searchQuery.trim()) return txs;
+    const q = searchQuery.toLowerCase();
+    return txs.filter(t => (t.mrc_transaction_id || "").toLowerCase().includes(q) || t.asset.includes(q));
+  }, [txs, searchQuery]);
+
   if (loading) return <div className="flex justify-center py-12"><Loader2 className="w-6 h-6 animate-spin" style={{ color: OBS.muted }} /></div>;
 
   return (
-    <div className="space-y-4">
+    <div className="space-y-6">
       <h3 className="text-lg font-semibold" style={{ color: OBS.text }}>{t("portal.apiLedger", "API Transaction Ledger")}</h3>
-      <p className="text-xs" style={{ color: OBS.muted }}>{t("portal.apiLedgerDesc", "Live JSON logs for all API-driven swap traffic attributed to your Partner ID.")}</p>
 
-      {txs.length === 0 ? (
-        <div className="rounded-xl p-8 text-center" style={{ background: OBS.card, border: `0.5px solid ${OBS.border}` }}>
-          <Terminal className="w-8 h-8 mx-auto mb-3" style={{ color: OBS.muted }} />
-          <p className="text-sm" style={{ color: OBS.muted }}>{t("portal.noApiTxs", "No API transactions yet. Use your API key to create swaps.")}</p>
-        </div>
-      ) : (
-        <div className="space-y-2">
-          {txs.map(tx => (
-            <div key={tx.id} className="rounded-lg p-4" style={{ background: OBS.card, border: `0.5px solid ${OBS.border}` }}>
-              <pre className="text-xs font-mono overflow-x-auto" style={{ color: OBS.text }}>
-                {JSON.stringify({ id: tx.id, asset: tx.asset, volume: tx.volume, commission_btc: tx.commission_btc, is_paid: tx.is_paid, completed_at: tx.completed_at }, null, 2)}
-              </pre>
-            </div>
-          ))}
-        </div>
-      )}
+      {/* Balance cards */}
+      <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
+        {[
+          { label: "Available Balance", value: `${balance.available_btc.toFixed(8)} BTC`, color: OBS.success },
+          { label: "Pending Settlement", value: `${balance.pending_btc.toFixed(8)} BTC`, color: "#FBBF24" },
+          { label: "Lifetime Earned", value: `${balance.total_earned_btc.toFixed(8)} BTC`, color: OBS.text },
+        ].map(m => (
+          <div key={m.label} className="rounded-xl p-5" style={{ background: OBS.card, border: `0.5px solid ${OBS.border}` }}>
+            <span className="text-xs uppercase tracking-wider" style={{ color: OBS.muted }}>{m.label}</span>
+            <p className="text-lg font-bold font-mono mt-2" style={{ color: m.color }}>{m.value}</p>
+          </div>
+        ))}
+      </div>
+
+      {/* Search */}
+      <div className="relative">
+        <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4" style={{ color: OBS.muted }} />
+        <Input value={searchQuery} onChange={e => setSearchQuery(e.target.value)} placeholder="Search by MRC Transaction ID…" className="ps-9 border-0 bg-white/5 text-white placeholder:text-gray-600 focus-visible:ring-1 focus-visible:ring-cyan-500/50" />
+      </div>
+
+      {/* Transaction table */}
+      <div className="rounded-xl overflow-hidden" style={{ border: `0.5px solid ${OBS.border}` }}>
+        <Table>
+          <TableHeader>
+            <TableRow style={{ borderColor: OBS.border }}>
+              <TableHead className="text-xs uppercase" style={{ color: OBS.muted }}>Status</TableHead>
+              <TableHead className="text-xs uppercase" style={{ color: OBS.muted }}>MRC ID</TableHead>
+              <TableHead className="text-xs uppercase" style={{ color: OBS.muted }}>Asset</TableHead>
+              <TableHead className="text-xs uppercase text-right" style={{ color: OBS.muted }}>Volume</TableHead>
+              <TableHead className="text-xs uppercase text-right" style={{ color: OBS.muted }}>Commission</TableHead>
+              <TableHead className="text-xs uppercase" style={{ color: OBS.muted }}>Date</TableHead>
+              <TableHead className="text-xs uppercase" style={{ color: OBS.muted }}></TableHead>
+            </TableRow>
+          </TableHeader>
+          <TableBody>
+            {filtered.length === 0 ? (
+              <TableRow><TableCell colSpan={7} className="text-center py-12">
+                <Terminal className="w-8 h-8 mx-auto mb-3" style={{ color: OBS.muted }} />
+                <p className="text-sm" style={{ color: OBS.muted }}>{t("portal.noApiTxs", "No API transactions yet.")}</p>
+              </TableCell></TableRow>
+            ) : filtered.map(tx => (
+              <>
+                <TableRow key={tx.id} className="cursor-pointer hover:bg-white/[0.02]" style={{ borderColor: OBS.border }} onClick={() => setExpandedTx(expandedTx === tx.id ? null : tx.id)}>
+                  <TableCell><MrcStatusPipeline status={tx.status} /></TableCell>
+                  <TableCell className="font-mono text-xs" style={{ color: OBS.text }}>{tx.mrc_transaction_id || tx.id.slice(0, 12)}</TableCell>
+                  <TableCell className="text-xs uppercase" style={{ color: OBS.text }}>{tx.asset}</TableCell>
+                  <TableCell className="text-right text-xs font-mono" style={{ color: OBS.text }}>${tx.volume.toLocaleString("en", { minimumFractionDigits: 2 })}</TableCell>
+                  <TableCell className="text-right text-xs font-mono" style={{ color: OBS.success }}>{tx.commission_btc.toFixed(8)}</TableCell>
+                  <TableCell className="text-xs" style={{ color: OBS.muted }}>{new Date(tx.completed_at).toLocaleDateString()}</TableCell>
+                  <TableCell>{expandedTx === tx.id ? <ChevronUp className="w-4 h-4" style={{ color: OBS.muted }} /> : <ChevronDown className="w-4 h-4" style={{ color: OBS.muted }} />}</TableCell>
+                </TableRow>
+                {expandedTx === tx.id && (
+                  <TableRow key={`${tx.id}-json`} style={{ borderColor: OBS.border }}>
+                    <TableCell colSpan={7}>
+                      <pre className="text-xs font-mono p-4 rounded-lg overflow-x-auto" style={{ background: "rgba(0,0,0,0.3)", color: OBS.text }}>
+                        {JSON.stringify({ mrc_transaction_id: tx.mrc_transaction_id, status: tx.status, asset: tx.asset, volume: tx.volume, commission_btc: tx.commission_btc, is_paid: tx.is_paid, completed_at: tx.completed_at }, null, 2)}
+                      </pre>
+                    </TableCell>
+                  </TableRow>
+                )}
+              </>
+            ))}
+          </TableBody>
+        </Table>
+      </div>
     </div>
   );
 }
