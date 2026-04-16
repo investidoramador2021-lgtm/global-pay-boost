@@ -564,16 +564,19 @@ Deno.serve(async (req) => {
       throw e;
     }
 
+    console.log(`ChangeNow returned ${Array.isArray(assets) ? assets.length : 'non-array'} assets`);
+
     // Deduplicate by base ticker (take first occurrence)
     const seen = new Set<string>();
     const uniqueTickers: string[] = [];
     for (const a of assets) {
-      const t = a.ticker.toLowerCase();
-      if (!seen.has(t) && a.isActive) {
+      const t = a.ticker?.toLowerCase();
+      if (t && !seen.has(t) && a.isActive !== false) {
         seen.add(t);
         uniqueTickers.push(t);
       }
     }
+    console.log(`Unique tickers: ${uniqueTickers.length}`);
 
     // ── 3. Find new pairs not yet in the DB ──
     // Get all existing pairs to compare
