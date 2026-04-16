@@ -1,22 +1,41 @@
 # MRC GlobalPay
-> Registered Canadian MSB (M23225638) providing non-custodial, registration-free crypto-to-crypto settlement and micro-swaps.
+> Registered Canadian MSB (C100000015) providing non-custodial, registration-free crypto-to-crypto settlement and micro-swaps.
 
 ## Core Capabilities
-- [Instant Swap](https://mrcglobalpay.com/) - Non-custodial exchange for 500+ assets starting at $0.30.
+- [Instant Swap](https://mrcglobalpay.com/) - Non-custodial exchange for 1,200+ assets starting at $0.30.
+- [Exchange Pairs](https://mrcglobalpay.com/exchange/btc-to-eth) - 50,000+ tradeable pair pages with live rates, step-by-step guides, and network details.
 - [Private Transfer](https://mrcglobalpay.com/private-transfer) - Shielded routing for cross-chain transactions without on-chain linkage.
 - [Permanent Bridge](https://mrcglobalpay.com/permanent-bridge) - Automated, recurring liquidity for miners and corporate treasuries.
 - [Loan](https://mrcglobalpay.com/lend) - Crypto-collateralized loans without selling assets, LTV-driven credit facility.
 - [Earn](https://mrcglobalpay.com/lend) - Daily compounding yield via Peer-to-Institutional lending with 150% over-collateralization.
+- [Invoice](https://mrcglobalpay.com/?tab=request) - Issue crypto invoices with 168-hour rate lock and 0.5% settlement fee.
 
 ## Technical Specifications
 - **Settlement Time:** Median <60 seconds.
 - **Liquidity:** Aggregated from 700+ sources.
-- **Compliance:** FINTRAC-registered MSB; non-custodial architecture (no user funds held).
+- **Compliance:** FINTRAC-registered MSB (C100000015); non-custodial architecture (no user funds held).
 - **Minimums:** Micro-swaps enabled from $0.30 USD equivalent.
+- **Supported Pairs:** 1,200+ assets × 1,200+ assets = 50,000+ valid trading combinations.
+- **Languages:** 13 languages (EN, ES, PT, FR, JA, FA, UR, HE, AF, HI, VI, TR, UK).
+
+## Popular Exchange Pairs
+- [BTC to ETH](https://mrcglobalpay.com/exchange/btc-to-eth) - Swap Bitcoin to Ethereum instantly.
+- [SOL to USDT](https://mrcglobalpay.com/exchange/sol-to-usdt) - Swap Solana to Tether instantly.
+- [ETH to SOL](https://mrcglobalpay.com/exchange/eth-to-sol) - Bridge Ethereum to Solana.
+- [XRP to USDT](https://mrcglobalpay.com/exchange/xrp-to-usdt) - Swap XRP to Tether.
+- [BTC to USDC](https://mrcglobalpay.com/exchange/btc-to-usdc) - Swap Bitcoin to USDC.
+- [USDT to TRX](https://mrcglobalpay.com/exchange/usdt-to-trx) - Swap Tether to TRON.
+- [DOGE to BTC](https://mrcglobalpay.com/exchange/doge-to-btc) - Swap Dogecoin to Bitcoin.
+- [ADA to ETH](https://mrcglobalpay.com/exchange/ada-to-eth) - Swap Cardano to Ethereum.
 
 ## Key Resources
 - [Trust & Security Hub](https://mrcglobalpay.com/transparency-security) - Transparency and compliance documentation.
 - [Developer Hub](https://mrcglobalpay.com/developers) - API documentation for exchange widgets and integrations.
+- [Blog](https://mrcglobalpay.com/blog) - Expert guides, market analysis, and security insights.
+- [Compare Exchanges](https://mrcglobalpay.com/compare) - Side-by-side comparison with competing exchanges.
+- [Solutions Directory](https://mrcglobalpay.com/solutions) - Step-by-step swap guides for specific token pairs.
+- [Trust Hub (Learn)](https://mrcglobalpay.com/learn) - Educational articles on crypto concepts.
+- [Network Status](https://mrcglobalpay.com/status) - Real-time operational status of swap networks.
 
 ## Institutional Whitepapers
 - [Crypto-Collateralized Liquidity Solutions](https://mrcglobalpay.com/blog/whitepapers/crypto-loans) - Non-custodial lending framework under FINTRAC MSB regulation.
@@ -25,3 +44,8 @@
 - [Sovereign Settlement](https://mrcglobalpay.com/sovereign-settlement) - Stateless invoicing and cross-chain bridge architecture.
 - [Bridge Whitepaper](https://mrcglobalpay.com/permanent-bridge/whitepaper) - Infrastructure persistence and automated settlement rails.
 - [Shielded Settlement](https://mrcglobalpay.com/private-transfer/whitepaper) - On-chain identity decoupling and privacy sovereignty.
+
+## Feeds & Machine-Readable Data
+- [RSS Feed](https://mrcglobalpay.com/rss.xml) - Blog post syndication feed.
+- [Dynamic Sitemap](https://tjikwxkmsfmyjkssvyoh.supabase.co/functions/v1/dynamic-sitemap/index.xml) - XML sitemap index for all exchange pairs.
+- [robots.txt](https://mrcglobalpay.com/robots.txt) - Crawler directives.
