@@ -203,8 +203,14 @@ export default function DynamicExchange() {
   const fromUp = fromTicker.toUpperCase();
   const toUp = toTicker.toUpperCase();
 
-  const title = `${dx("heroTitle", { from: fromUp, to: toUp })} — ${dx("ctaSubtitle")} | MRC GlobalPay`;
-  const description = `Convert ${fromName} (${fromUp}) to ${toName} (${toUp}) in under 60 seconds with no account required. Compare rates from 700+ liquidity sources. Canadian MSB-registered (C100000015). Step-by-step guide, network details, and live rates.`;
+  // Use pre-generated SEO content from pairs table when available, with lang-aware fallback
+  const pairLangContent = pairSeo?.content_json && typeof pairSeo.content_json === "object"
+    ? (pairSeo.content_json as Record<string, { title?: string; description?: string; h1?: string }>)[lang]
+    : null;
+
+  const title = pairLangContent?.title || `${dx("heroTitle", { from: fromUp, to: toUp })} — ${dx("ctaSubtitle")} | MRC GlobalPay`;
+  const description = pairLangContent?.description || `Convert ${fromName} (${fromUp}) to ${toName} (${toUp}) in under 60 seconds with no account required. Compare rates from 700+ liquidity sources. Canadian MSB-registered (C100000015). Step-by-step guide, network details, and live rates.`;
+  const seoH1 = pairLangContent?.h1 || null;
   const canonicalUrl = `https://mrcglobalpay.com/exchange/${fromLower}-to-${toLower}`;
 
   const fromNetwork = fromAsset?.network || "";
