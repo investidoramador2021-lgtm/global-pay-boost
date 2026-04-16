@@ -141,15 +141,24 @@ ${items}
 
   /* ── Dynamic Sitemap ── */
 
-  // Fetch valid pairs from DB with their actual lastmod timestamps
-  const { data: dbPairs } = await supabase
-    .from("pairs")
-    .select("from_ticker, to_ticker, updated_at")
-    .eq("is_valid", true)
-    .order("updated_at", { ascending: false })
-    .limit(1000);
+  // Fetch ALL valid pairs from DB with their actual lastmod timestamps (paginated)
+  const allPairs: any[] = [];
+  const PAGE_SIZE = 1000;
+  let page = 0;
+  while (true) {
+    const { data: batch } = await supabase
+      .from("pairs")
+      .select("from_ticker, to_ticker, updated_at")
+      .eq("is_valid", true)
+      .order("updated_at", { ascending: false })
+      .range(page * PAGE_SIZE, (page + 1) * PAGE_SIZE - 1);
+    if (!batch || batch.length === 0) break;
+    allPairs.push(...batch);
+    if (batch.length < PAGE_SIZE) break;
+    page++;
+  }
 
-  const validPairs = dbPairs || [];
+  const validPairs = allPairs;
 
   // Build a set of valid pair slugs for quick lookup
   const validPairSet = new Set(validPairs.map((p: any) => `${p.from_ticker}-to-${p.to_ticker}`));
