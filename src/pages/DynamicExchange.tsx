@@ -155,6 +155,23 @@ export default function DynamicExchange() {
     staleTime: 1000 * 60 * 30,
   });
 
+  // Fetch pre-generated SEO content from the pairs table
+  const { data: pairSeo } = useQuery({
+    queryKey: ["pair-seo", fromLower, toLower],
+    queryFn: async () => {
+      if (!fromLower || !toLower) return null;
+      const { data } = await supabase
+        .from("pairs")
+        .select("seo_title, seo_description, seo_h1, content_json")
+        .eq("from_ticker", fromLower)
+        .eq("to_ticker", toLower)
+        .maybeSingle();
+      return data;
+    },
+    enabled: !!fromLower && !!toLower,
+    staleTime: 1000 * 60 * 60,
+  });
+
   const { data: relatedAssets } = useQuery({
     queryKey: ["exchange-related-assets"],
     queryFn: async () => {
