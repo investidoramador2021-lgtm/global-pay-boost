@@ -36,11 +36,11 @@ const SiteHeader = () => {
   const navLinks = [
     { label: t("nav.howItWorks"), href: lp("/") + "#how-it-works" },
     { label: t("nav.features"), href: lp("/") + "#features" },
+    { label: "Exchange", href: lp("/exchange/btc-to-eth") },
     { label: "Borrow", href: lp("/lend") },
     { label: "Earn", href: lp("/lend") + "?tab=earn" },
     { label: t("nav.blog"), href: lp("/blog") },
     { label: t("nav.faq"), href: lp("/") + "#faq" },
-    { label: "Developers", href: lp("/developer") },
   ];
 
   return (
