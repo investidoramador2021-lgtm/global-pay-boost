@@ -4,6 +4,7 @@ import SiteHeader from "@/components/SiteHeader";
 import SiteFooter from "@/components/SiteFooter";
 import MsbTrustBar from "@/components/MsbTrustBar";
 import { ArrowRight, AlertTriangle, TrendingUp, ShieldCheck } from "lucide-react";
+import ogRavedaoImage from "@/assets/og-ravedao-research.jpg";
 
 const BASE_URL = "https://mrcglobalpay.com";
 const PAGE_PATH = "/research/ravedao-rave-token-analysis-2026";
@@ -122,10 +123,16 @@ const ResearchRavedao = () => {
         <meta property="og:title" content={META_TITLE} />
         <meta property="og:description" content={META_DESCRIPTION} />
         <meta property="og:url" content={CANONICAL} />
+        <meta property="og:image" content={`${BASE_URL}${ogRavedaoImage}`} />
+        <meta property="og:image:width" content="1200" />
+        <meta property="og:image:height" content="630" />
+        <meta property="og:image:alt" content="RaveDAO (RAVE) Research — 6,000% Rally & Risk Report by MRC GlobalPay" />
         <meta property="article:published_time" content={PUBLISHED} />
         <meta name="twitter:card" content="summary_large_image" />
         <meta name="twitter:title" content={META_TITLE} />
         <meta name="twitter:description" content={META_DESCRIPTION} />
+        <meta name="twitter:image" content={`${BASE_URL}${ogRavedaoImage}`} />
+        <meta name="twitter:image:alt" content="RaveDAO (RAVE) Research — 6,000% Rally & Risk Report by MRC GlobalPay" />
         <script type="application/ld+json">{JSON.stringify(articleSchema)}</script>
         <script type="application/ld+json">{JSON.stringify(softwareSchema)}</script>
         <script type="application/ld+json">{JSON.stringify(faqSchema)}</script>
