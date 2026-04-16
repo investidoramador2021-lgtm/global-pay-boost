@@ -691,13 +691,17 @@ const AdminPortal = () => {
                         <TableHead className="text-right">Volume</TableHead>
                         <TableHead className="text-right">Commission</TableHead>
                         <TableHead>Status</TableHead>
+                        <TableHead>Webhook</TableHead>
                         <TableHead>Date</TableHead>
                       </TableRow>
                     </TableHeader>
                     <TableBody>
                       {filteredProxyTxs.length === 0 ? (
-                        <TableRow><TableCell colSpan={8} className="text-center text-muted-foreground py-8">No proxy transactions yet.</TableCell></TableRow>
-                      ) : filteredProxyTxs.map(tx => (
+                        <TableRow><TableCell colSpan={9} className="text-center text-muted-foreground py-8">No proxy transactions yet.</TableCell></TableRow>
+                      ) : filteredProxyTxs.map(tx => {
+                        const whd = webhookDeliveries.find((w: any) => w.mrc_transaction_id === tx.mrc_transaction_id);
+                        const whStatus = whd ? whd.status : "—";
+                        return (
                         <TableRow key={tx.id}>
                           <TableCell className="font-mono text-xs text-primary">{tx.mrc_transaction_id || "—"}</TableCell>
                           <TableCell className="font-mono text-xs text-muted-foreground">{tx.changenow_order_id || "—"}</TableCell>
@@ -714,9 +718,20 @@ const AdminPortal = () => {
                               {tx.status || "pending"}
                             </span>
                           </TableCell>
+                          <TableCell>
+                            <span className={`text-xs font-semibold px-2 py-0.5 rounded ${
+                              whStatus === "delivered" ? "bg-emerald-500/20 text-emerald-400" :
+                              whStatus === "failed" ? "bg-red-500/20 text-red-400" :
+                              whStatus === "pending" ? "bg-amber-500/20 text-amber-400" :
+                              "text-muted-foreground"
+                            }`}>
+                              {whStatus === "—" ? "—" : whStatus.charAt(0).toUpperCase() + whStatus.slice(1)}
+                            </span>
+                          </TableCell>
                           <TableCell className="text-xs text-muted-foreground">{new Date(tx.completed_at).toLocaleString()}</TableCell>
                         </TableRow>
-                      ))}
+                        );
+                      })}
                     </TableBody>
                   </Table>
                 </CardContent>
