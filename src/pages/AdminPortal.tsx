@@ -89,6 +89,8 @@ interface ComplianceHold {
 
 type Stage = "login" | "mfa-enroll" | "mfa-verify" | "dashboard";
 
+const COMPLIANCE_BLUE = "#00A3FF";
+
 interface ChatLog {
   id: string;
   session_id: string;
