@@ -36,7 +36,7 @@ interface PartnerTx { id: string; partner_id: string; asset: string; volume: num
 interface ApiKey { id: string; key_id: string; webhook_url: string; ip_whitelist: string[]; is_active: boolean; last_used_at: string | null; created_at: string; }
 interface PartnerBalance { available_btc: number; pending_btc: number; total_earned_btc: number; last_credited_at: string | null; }
 
-type Section = "overview" | "referrals" | "earnings" | "account" | "dev-setup" | "api-keys" | "api-ledger" | "webhooks" | "docs";
+type Section = "overview" | "referrals" | "earnings" | "account" | "dev-setup" | "api-keys" | "api-ledger" | "webhooks" | "docs" | "payouts";
 
 /* ── Status Pipeline ── */
 const PIPELINE = ["waiting", "confirming", "exchanging", "sending", "finished"] as const;
@@ -116,6 +116,7 @@ function Sidebar({ active, onNavigate, isDeveloper, mobileOpen, onClose }: { act
     { id: "dev-setup", label: t("portal.devSetup", "2FA & Setup"), icon: Shield },
     { id: "api-keys", label: t("portal.apiKeys", "API Keys"), icon: Key },
     { id: "api-ledger", label: t("portal.apiLedger", "API Ledger"), icon: Terminal },
+    { id: "payouts", label: t("portal.payouts", "Balances & Payouts"), icon: Wallet },
     { id: "webhooks", label: t("portal.webhooks", "Webhook Tester"), icon: Globe },
     { id: "docs", label: t("portal.docs", "API Docs"), icon: Code2 },
   ];
