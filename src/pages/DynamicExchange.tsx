@@ -10,6 +10,8 @@ import SiteFooter from "@/components/SiteFooter";
 import ExchangeWidget from "@/components/ExchangeWidget";
 import LiveSwapTicker from "@/components/LiveSwapTicker";
 import TokenIcon from "@/components/TokenIcon";
+import GoldSecurityBlock, { isGoldPair } from "@/components/GoldSecurityBlock";
+import AEOAssetBlock from "@/components/AEOAssetBlock";
 import {
   Accordion,
   AccordionContent,
