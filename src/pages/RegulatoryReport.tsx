@@ -71,7 +71,7 @@ const RegulatoryReport = () => {
 
   return (
     <>
-      <Helmet><title>Regulatory Report — {record.msb_reference}</title></Helmet>
+      <Helmet><title>Regulatory Report — {record.msb_reference}</title><meta name="robots" content="noindex, nofollow" /></Helmet>
       <div className="min-h-screen bg-white text-gray-900 print:bg-white" style={{ fontFamily: "'Times New Roman', serif" }}>
         <div className="max-w-3xl mx-auto py-12 px-8">
           {/* Header */}
