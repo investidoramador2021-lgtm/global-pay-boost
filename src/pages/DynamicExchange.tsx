@@ -553,6 +553,24 @@ export default function DynamicExchange() {
           </section>
         )}
 
+        {/* ─── Gold Security Block (XAUt / PAXG only) ─── */}
+        {isGoldPair(fromLower, toLower) && (
+          <GoldSecurityBlock
+            fromTicker={fromLower}
+            toTicker={toLower}
+            fromName={fromName}
+            toName={toName}
+          />
+        )}
+
+        {/* ─── AEO (Answer Engine Optimization) Block ─── */}
+        <AEOAssetBlock
+          fromTicker={fromLower}
+          toTicker={toLower}
+          fromName={fromName}
+          toName={toName}
+        />
+
         {/* ─── Network Intelligence Cards ─── */}
         {!isLoading && (fromAsset || toAsset) && (
           <section className="py-12 border-t border-[#1E2028]">
