@@ -71,6 +71,7 @@ const InvoicePay = lazy(() => import("./pages/InvoicePay.tsx"));
 const InvoiceStatus = lazy(() => import("./pages/InvoiceStatus.tsx"));
 const LendEarn = lazy(() => import("./pages/LendEarn.tsx"));
 const ResearchPaxgVsXaut = lazy(() => import("./pages/ResearchPaxgVsXaut.tsx"));
+const PartnerPortal = lazy(() => import("./pages/PartnerPortal.tsx"));
 const NotFound = lazy(() => import("./pages/NotFound.tsx"));
 
 const queryClient = new QueryClient();
@@ -172,6 +173,8 @@ const App = () => (
                   ))}
                   {/* Standalone embed widget (no header/footer/nav) */}
                   <Route path="/embed/widget" element={<EmbedWidget />} />
+                  {/* Institutional Partner Portal — standalone, own auth */}
+                  <Route path="/partner-portal" element={<PartnerPortal />} />
                   {/* Invoice public pages — no auth required */}
                   <Route path="/pay/:token" element={<InvoicePay />} />
                   <Route path="/status/:token" element={<InvoiceStatus />} />
