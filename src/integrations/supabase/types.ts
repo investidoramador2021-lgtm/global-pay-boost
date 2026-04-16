@@ -358,6 +358,44 @@ export type Database = {
           },
         ]
       }
+      compliance_logs: {
+        Row: {
+          actor: string
+          created_at: string
+          details: string | null
+          event_type: string
+          hold_id: string
+          id: string
+          metadata: Json | null
+        }
+        Insert: {
+          actor?: string
+          created_at?: string
+          details?: string | null
+          event_type?: string
+          hold_id: string
+          id?: string
+          metadata?: Json | null
+        }
+        Update: {
+          actor?: string
+          created_at?: string
+          details?: string | null
+          event_type?: string
+          hold_id?: string
+          id?: string
+          metadata?: Json | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "compliance_logs_hold_id_fkey"
+            columns: ["hold_id"]
+            isOneToOne: false
+            referencedRelation: "compliance_holds"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       customers: {
         Row: {
           created_at: string
