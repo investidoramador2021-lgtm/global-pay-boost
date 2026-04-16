@@ -1457,9 +1457,6 @@ const ExchangeWidget = ({ onTabChange, defaultFrom, defaultTo }: ExchangeWidgetP
       widgetMode === "exchange" &&
       fixedRate &&
       step !== "address" &&
-      step !== "deposit" &&
-      step !== "processing" &&
-      step !== "complete" &&
       estimatedAmount &&
       estimatedAmount !== "—" &&
       estimatedAmount !== "syncing" &&
