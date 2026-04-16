@@ -1,7 +1,5 @@
 /api/rates.json https://tjikwxkmsfmyjkssvyoh.supabase.co/functions/v1/live-rates 200
-/functions/v1/live-feed https://tjikwxkmsfmyjkssvyoh.supabase.co/functions/v1/live-feed 200
-/functions/v1/live-feed?format=rss https://tjikwxkmsfmyjkssvyoh.supabase.co/functions/v1/live-feed?format=rss 200
-/functions/v1/dynamic-feed https://tjikwxkmsfmyjkssvyoh.supabase.co/functions/v1/dynamic-feed 200
+/functions/v1/:fn https://tjikwxkmsfmyjkssvyoh.supabase.co/functions/v1/:fn 200
 /api/v1/rates https://tjikwxkmsfmyjkssvyoh.supabase.co/functions/v1/bot-rates 200
 /export/rates.xml https://tjikwxkmsfmyjkssvyoh.supabase.co/functions/v1/rates-xml 200
 /feed.xml https://tjikwxkmsfmyjkssvyoh.supabase.co/functions/v1/live-feed 200
