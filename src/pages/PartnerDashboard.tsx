@@ -32,8 +32,9 @@ const OBS = {
 interface PartnerProfile { id: string; first_name: string; last_name: string; btc_wallet: string; referral_code: string; verification_status: string; }
 interface LiveStatus { status: string; amountSend: number | null; amountReceive: number | null; payinHash: string | null; payoutHash: string | null; }
 interface SwapRow { id: string; transaction_id: string; from_currency: string; to_currency: string; amount: number; recipient_address: string; payin_address: string; created_at: string; ref_code: string | null; live?: LiveStatus; }
-interface PartnerTx { id: string; partner_id: string; asset: string; volume: number; commission_btc: number; completed_at: string; is_paid: boolean; paid_at: string | null; }
+interface PartnerTx { id: string; partner_id: string; asset: string; volume: number; commission_btc: number; completed_at: string; is_paid: boolean; paid_at: string | null; status?: string; mrc_transaction_id?: string; changenow_order_id?: string; }
 interface ApiKey { id: string; key_id: string; webhook_url: string; ip_whitelist: string[]; is_active: boolean; last_used_at: string | null; created_at: string; }
+interface PartnerBalance { available_btc: number; pending_btc: number; total_earned_btc: number; last_credited_at: string | null; }
 
 type Section = "overview" | "referrals" | "earnings" | "account" | "dev-setup" | "api-keys" | "api-ledger";
 
