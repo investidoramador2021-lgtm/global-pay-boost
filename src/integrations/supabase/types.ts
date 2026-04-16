@@ -737,6 +737,54 @@ export type Database = {
         }
         Relationships: []
       }
+      pairs: {
+        Row: {
+          content_json: Json
+          created_at: string
+          from_ticker: string
+          id: string
+          is_valid: boolean
+          last_synced_at: string
+          partner_fee_percent: number
+          seo_description: string
+          seo_h1: string
+          seo_template_id: number
+          seo_title: string
+          to_ticker: string
+          updated_at: string
+        }
+        Insert: {
+          content_json?: Json
+          created_at?: string
+          from_ticker: string
+          id?: string
+          is_valid?: boolean
+          last_synced_at?: string
+          partner_fee_percent?: number
+          seo_description?: string
+          seo_h1?: string
+          seo_template_id?: number
+          seo_title?: string
+          to_ticker: string
+          updated_at?: string
+        }
+        Update: {
+          content_json?: Json
+          created_at?: string
+          from_ticker?: string
+          id?: string
+          is_valid?: boolean
+          last_synced_at?: string
+          partner_fee_percent?: number
+          seo_description?: string
+          seo_h1?: string
+          seo_template_id?: number
+          seo_title?: string
+          to_ticker?: string
+          updated_at?: string
+        }
+        Relationships: []
+      }
       partner_api_keys: {
         Row: {
           api_secret_hash: string
@@ -1153,6 +1201,36 @@ export type Database = {
           ref_code?: string | null
           to_currency?: string
           transaction_id?: string
+        }
+        Relationships: []
+      }
+      sync_engine_state: {
+        Row: {
+          id: number
+          last_batch_size: number
+          last_error: string | null
+          last_run_at: string
+          pairs_count: number
+          status: string
+          updated_at: string
+        }
+        Insert: {
+          id?: number
+          last_batch_size?: number
+          last_error?: string | null
+          last_run_at?: string
+          pairs_count?: number
+          status?: string
+          updated_at?: string
+        }
+        Update: {
+          id?: number
+          last_batch_size?: number
+          last_error?: string | null
+          last_run_at?: string
+          pairs_count?: number
+          status?: string
+          updated_at?: string
         }
         Relationships: []
       }
