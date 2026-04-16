@@ -833,61 +833,65 @@ export default function DynamicExchange() {
                   Hand-picked popular routes, plus pairs correlated with {fromUp} or {toUp} from our live database of 1,000+ active exchange routes.
                 </p>
 
-                {popularPairs.length > 0 && (
-                  <>
-                    <h3 className="mb-3 font-display text-xs font-semibold uppercase tracking-wider text-muted-foreground">
-                      Popular Pairs
-                    </h3>
-                    <nav aria-label="Popular crypto swap pairs" className="mb-8 grid gap-3 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5">
-                      {popularPairs.map((item) => {
-                        const from = item.from.toLowerCase();
-                        const to = item.to.toLowerCase();
-                        const href = lp(`/exchange/${from}-to-${to}`);
-                        return (
-                          <a
-                            key={`pop-${from}-${to}`}
-                            href={href}
-                            className="rounded-xl border border-primary/30 bg-primary/5 px-4 py-3 transition-colors hover:border-primary/60 hover:bg-primary/10"
-                            title={`Swap ${from.toUpperCase()} to ${to.toUpperCase()} instantly on MRC GlobalPay`}
-                          >
-                            <div className="text-[10px] uppercase tracking-wider text-primary">Popular</div>
-                            <div className="mt-1 font-display text-sm font-bold text-foreground">
-                              {from.toUpperCase()} <ArrowRight className="mx-1 inline h-3.5 w-3.5 text-muted-foreground" /> {to.toUpperCase()}
-                            </div>
-                          </a>
-                        );
-                      })}
-                    </nav>
-                  </>
-                )}
+                <nav aria-label="Exchange Navigation">
+                  {popularPairs.length > 0 && (
+                    <>
+                      <h3 className="mb-3 font-display text-xs font-semibold uppercase tracking-wider text-muted-foreground">
+                        Popular Pairs
+                      </h3>
+                      <ul className="mb-8 grid list-none gap-3 p-0 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5">
+                        {popularPairs.map((item) => {
+                          const from = item.from.toLowerCase();
+                          const to = item.to.toLowerCase();
+                          const href = lp(`/exchange/${from}-to-${to}`);
+                          return (
+                            <li key={`pop-${from}-${to}`}>
+                              <a
+                                href={href}
+                                className="block rounded-xl border border-primary/30 bg-primary/5 px-4 py-3 transition-colors hover:border-primary/60 hover:bg-primary/10"
+                                title={`Swap ${from.toUpperCase()} to ${to.toUpperCase()} instantly on MRC GlobalPay`}
+                              >
+                                <div className="text-[10px] uppercase tracking-wider text-primary">Popular</div>
+                                <div className="mt-1 font-display text-sm font-bold text-foreground">
+                                  {from.toUpperCase()} <ArrowRight className="mx-1 inline h-3.5 w-3.5 text-muted-foreground" /> {to.toUpperCase()}
+                                </div>
+                              </a>
+                            </li>
+                          );
+                        })}
+                      </ul>
+                    </>
+                  )}
 
-                {relatedPairs && relatedPairs.length > 0 && (
-                  <>
-                    <h3 className="mb-3 font-display text-xs font-semibold uppercase tracking-wider text-muted-foreground">
-                      Related to {fromUp} &amp; {toUp}
-                    </h3>
-                    <nav aria-label={`Pairs related to ${fromUp} and ${toUp}`} className="grid gap-3 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5">
-                      {relatedPairs.map((item) => {
-                        const from = item.from_ticker.toLowerCase();
-                        const to = item.to_ticker.toLowerCase();
-                        const href = lp(`/exchange/${from}-to-${to}`);
-                        return (
-                          <a
-                            key={`rel-${from}-${to}`}
-                            href={href}
-                            className="rounded-xl border border-border bg-card px-4 py-3 transition-colors hover:border-primary/40 hover:bg-accent"
-                            title={`Swap ${from.toUpperCase()} to ${to.toUpperCase()} — related to ${fromUp}/${toUp}`}
-                          >
-                            <div className="text-[10px] uppercase tracking-wider text-muted-foreground">Related</div>
-                            <div className="mt-1 font-display text-sm font-bold text-foreground">
-                              {from.toUpperCase()} <ArrowRight className="mx-1 inline h-3.5 w-3.5 text-muted-foreground" /> {to.toUpperCase()}
-                            </div>
-                          </a>
-                        );
-                      })}
-                    </nav>
-                  </>
-                )}
+                  {relatedPairs && relatedPairs.length > 0 && (
+                    <>
+                      <h3 className="mb-3 font-display text-xs font-semibold uppercase tracking-wider text-muted-foreground">
+                        Related to {fromUp} &amp; {toUp}
+                      </h3>
+                      <ul className="grid list-none gap-3 p-0 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5">
+                        {relatedPairs.map((item) => {
+                          const from = item.from_ticker.toLowerCase();
+                          const to = item.to_ticker.toLowerCase();
+                          const href = lp(`/exchange/${from}-to-${to}`);
+                          return (
+                            <li key={`rel-${from}-${to}`}>
+                              <a
+                                href={href}
+                                className="block rounded-xl border border-border bg-card px-4 py-3 transition-colors hover:border-primary/40 hover:bg-accent"
+                                title={`Swap ${from.toUpperCase()} to ${to.toUpperCase()} — related to ${fromUp}/${toUp}`}
+                              >
+                                <div className="text-[10px] uppercase tracking-wider text-muted-foreground">Related</div>
+                                <div className="mt-1 font-display text-sm font-bold text-foreground">
+                                  {from.toUpperCase()} <ArrowRight className="mx-1 inline h-3.5 w-3.5 text-muted-foreground" /> {to.toUpperCase()}
+                                </div>
+                              </a>
+                            </li>
+                          );
+                        })}
+                      </ul>
+                    </>
+                  )}
+                </nav>
 
                 <div className="mt-8 text-center">
                   <a
