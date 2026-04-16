@@ -594,6 +594,47 @@ export type Database = {
           },
         ]
       }
+      partner_balances: {
+        Row: {
+          available_btc: number
+          created_at: string
+          id: string
+          last_credited_at: string | null
+          partner_id: string
+          pending_btc: number
+          total_earned_btc: number
+          updated_at: string
+        }
+        Insert: {
+          available_btc?: number
+          created_at?: string
+          id?: string
+          last_credited_at?: string | null
+          partner_id: string
+          pending_btc?: number
+          total_earned_btc?: number
+          updated_at?: string
+        }
+        Update: {
+          available_btc?: number
+          created_at?: string
+          id?: string
+          last_credited_at?: string | null
+          partner_id?: string
+          pending_btc?: number
+          total_earned_btc?: number
+          updated_at?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "partner_balances_partner_id_fkey"
+            columns: ["partner_id"]
+            isOneToOne: true
+            referencedRelation: "partner_profiles"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       partner_profiles: {
         Row: {
           btc_wallet: string
@@ -669,35 +710,44 @@ export type Database = {
       partner_transactions: {
         Row: {
           asset: string
+          changenow_order_id: string | null
           commission_btc: number
           completed_at: string
           created_at: string
           id: string
           is_paid: boolean
+          mrc_transaction_id: string | null
           paid_at: string | null
           partner_id: string
+          status: string
           volume: number
         }
         Insert: {
           asset: string
+          changenow_order_id?: string | null
           commission_btc?: number
           completed_at?: string
           created_at?: string
           id?: string
           is_paid?: boolean
+          mrc_transaction_id?: string | null
           paid_at?: string | null
           partner_id: string
+          status?: string
           volume?: number
         }
         Update: {
           asset?: string
+          changenow_order_id?: string | null
           commission_btc?: number
           completed_at?: string
           created_at?: string
           id?: string
           is_paid?: boolean
+          mrc_transaction_id?: string | null
           paid_at?: string | null
           partner_id?: string
+          status?: string
           volume?: number
         }
         Relationships: [
