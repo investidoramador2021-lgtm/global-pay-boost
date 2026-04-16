@@ -159,7 +159,7 @@ const AdminPortal = () => {
   }, [stage, resetInactivityTimer]);
 
   const loadDashboard = useCallback(async () => {
-    const [pRes, txRes, logRes, leRes, devRes, keyRes, whRes] = await Promise.all([
+    const [pRes, txRes, logRes, leRes, devRes, keyRes, whRes, poRes] = await Promise.all([
       supabase.from("partner_profiles").select("*"),
       supabase.from("partner_transactions").select("*").order("completed_at", { ascending: false }),
       supabase.from("support_chat_logs" as any).select("*").order("created_at", { ascending: false }).limit(200),
@@ -167,6 +167,7 @@ const AdminPortal = () => {
       supabase.from("developer_profiles").select("*"),
       supabase.from("partner_api_keys").select("*").order("created_at", { ascending: false }),
       supabase.from("webhook_deliveries" as any).select("*").order("created_at", { ascending: false }).limit(500),
+      supabase.from("payout_requests" as any).select("*").order("requested_at", { ascending: false }),
     ]);
     setPartners((pRes.data || []) as Partner[]);
     setTransactions((txRes.data || []) as Tx[]);
@@ -175,6 +176,7 @@ const AdminPortal = () => {
     setDevProfiles((devRes.data || []) as unknown as DevProfile[]);
     setApiKeys((keyRes.data || []) as unknown as ApiKeyRow[]);
     setWebhookDeliveries((whRes.data || []) as any[]);
+    setPayoutRequests((poRes.data || []) as unknown as PayoutReq[]);
     setLoading(false);
   }, []);
 
