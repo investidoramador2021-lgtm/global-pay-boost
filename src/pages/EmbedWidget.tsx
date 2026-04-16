@@ -71,8 +71,10 @@ const EmbedWidget = () => {
         if (!Array.isArray(data) || cancelled) return;
 
         const filtered = data.filter((currency) => QUICK_TICKERS.includes(currency.ticker));
-        const from = filtered.find((currency) => currency.ticker === DEFAULT_FROM) || filtered[0] || null;
-        const to = filtered.find((currency) => currency.ticker === DEFAULT_TO) || filtered[1] || null;
+        const paramFrom = searchParams.get("from")?.toLowerCase() || DEFAULT_FROM;
+        const paramTo = searchParams.get("to")?.toLowerCase() || DEFAULT_TO;
+        const from = filtered.find((currency) => currency.ticker === paramFrom) || filtered.find((currency) => currency.ticker === DEFAULT_FROM) || filtered[0] || null;
+        const to = filtered.find((currency) => currency.ticker === paramTo) || filtered.find((currency) => currency.ticker === DEFAULT_TO) || filtered[1] || null;
 
         setCurrencies(filtered);
         setFromCurrency(from);
