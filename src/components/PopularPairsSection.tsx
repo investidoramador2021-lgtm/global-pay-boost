@@ -15,14 +15,14 @@ interface PairData {
 }
 
 const PAIRS_CONFIG = [
-  { from: "btc", to: "eth", fromName: "Bitcoin", toName: "Ethereum", href: "/swap/btc-usdc", fromTicker: "BTC", toTicker: "ETH", amount: "1" },
-  { from: "eth", to: "btc", fromName: "Ethereum", toName: "Bitcoin", href: "/swap/eth-sol", fromTicker: "ETH", toTicker: "BTC", amount: "1" },
-  { from: "btc", to: "usdterc20", fromName: "Bitcoin", toName: "Tether", href: "/swap/btc-usdc", fromTicker: "BTC", toTicker: "USDT", amount: "1" },
-  { from: "eth", to: "usdterc20", fromName: "Ethereum", toName: "Tether", href: "/swap/eth-sol", fromTicker: "ETH", toTicker: "USDT", amount: "1" },
-  { from: "xrp", to: "btc", fromName: "XRP", toName: "Bitcoin", href: "/swap/xrp-usdt", fromTicker: "XRP", toTicker: "BTC", amount: "500" },
-  { from: "ltc", to: "btc", fromName: "Litecoin", toName: "Bitcoin", href: "/swap/btc-usdc", fromTicker: "LTC", toTicker: "BTC", amount: "1" },
-  { from: "doge", to: "btc", fromName: "Dogecoin", toName: "Bitcoin", href: "/swap/btc-usdc", fromTicker: "DOGE", toTicker: "BTC", amount: "100" },
-  { from: "trx", to: "usdterc20", fromName: "TRON", toName: "Tether", href: "/swap/btc-usdc", fromTicker: "TRX", toTicker: "USDT", amount: "500" },
+  { from: "btc", to: "eth", fromName: "Bitcoin", toName: "Ethereum", href: "/exchange/btc-to-eth", fromTicker: "BTC", toTicker: "ETH", amount: "1" },
+  { from: "eth", to: "btc", fromName: "Ethereum", toName: "Bitcoin", href: "/exchange/eth-to-btc", fromTicker: "ETH", toTicker: "BTC", amount: "1" },
+  { from: "btc", to: "usdterc20", fromName: "Bitcoin", toName: "Tether", href: "/exchange/btc-to-usdt", fromTicker: "BTC", toTicker: "USDT", amount: "1" },
+  { from: "eth", to: "usdterc20", fromName: "Ethereum", toName: "Tether", href: "/exchange/eth-to-usdt", fromTicker: "ETH", toTicker: "USDT", amount: "1" },
+  { from: "xrp", to: "btc", fromName: "XRP", toName: "Bitcoin", href: "/exchange/xrp-to-btc", fromTicker: "XRP", toTicker: "BTC", amount: "500" },
+  { from: "ltc", to: "btc", fromName: "Litecoin", toName: "Bitcoin", href: "/exchange/ltc-to-btc", fromTicker: "LTC", toTicker: "BTC", amount: "1" },
+  { from: "doge", to: "btc", fromName: "Dogecoin", toName: "Bitcoin", href: "/exchange/doge-to-btc", fromTicker: "DOGE", toTicker: "BTC", amount: "100" },
+  { from: "trx", to: "usdterc20", fromName: "TRON", toName: "Tether", href: "/exchange/trx-to-usdt", fromTicker: "TRX", toTicker: "USDT", amount: "500" },
 ];
 
 const PopularPairsSection = () => {
