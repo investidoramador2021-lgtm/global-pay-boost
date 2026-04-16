@@ -14,7 +14,8 @@ import {
   AccordionItem,
   AccordionTrigger,
 } from "@/components/ui/accordion";
-import { Shield, Cpu, Clock, AlertTriangle, ExternalLink, Zap, Activity } from "lucide-react";
+import { Shield, Cpu, Clock, AlertTriangle, ExternalLink, Zap, Activity, ArrowRight } from "lucide-react";
+import { Link } from "react-router-dom";
 
 const EXPLORER_MAP: Record<string, string> = {
   eth: "https://etherscan.io/token/",
@@ -123,6 +124,28 @@ export default function DynamicExchange() {
     },
     enabled: !!toLower,
     staleTime: 1000 * 60 * 30,
+  });
+
+  // Fetch related tier-1 assets for the "Related Pairs" section
+  const { data: relatedAssets } = useQuery({
+    queryKey: ["exchange-related-assets"],
+    queryFn: async () => {
+      const { data } = await supabase
+        .from("exchange_assets")
+        .select("ticker, name, image_url")
+        .eq("is_active", true)
+        .eq("tier", 1)
+        .order("ticker");
+      // Deduplicate by ticker
+      const seen = new Set<string>();
+      return (data || []).filter((a) => {
+        const t = a.ticker.toLowerCase();
+        if (seen.has(t)) return false;
+        seen.add(t);
+        return true;
+      });
+    },
+    staleTime: 1000 * 60 * 60,
   });
 
   // Invalid pair format
@@ -418,7 +441,90 @@ export default function DynamicExchange() {
           </div>
         </section>
 
-        {/* Live Swap Ticker — pair-filtered social proof */}
+        {/* Related Trading Pairs */}
+        {relatedAssets && relatedAssets.length > 0 && (
+          <section className="py-12 border-t border-border">
+            <div className="container mx-auto px-4">
+              <div className="mx-auto max-w-5xl">
+                <h2 className="font-display text-xl font-bold text-foreground sm:text-2xl mb-2">
+                  Explore {relatedAssets.length * (relatedAssets.length - 1)}+ Trading Pairs
+                </h2>
+                <p className="text-sm text-muted-foreground mb-6">
+                  Swap between any of the {relatedAssets.length} most popular cryptocurrencies — instantly, with no registration.
+                </p>
+
+                {/* "Swap FROM" grid */}
+                <h3 className="font-display text-sm font-semibold text-muted-foreground uppercase tracking-wider mb-3">
+                  Swap {fromUp} to
+                </h3>
+                <div className="flex flex-wrap gap-2 mb-8">
+                  {relatedAssets
+                    .filter((a) => a.ticker.toLowerCase() !== fromLower)
+                    .slice(0, 20)
+                    .map((a) => (
+                      <Link
+                        key={a.ticker}
+                        to={lp(`/exchange/${fromLower}-to-${a.ticker.toLowerCase()}`)}
+                        className="inline-flex items-center gap-1.5 rounded-lg border border-border bg-card px-3 py-2 text-xs font-medium text-foreground transition-colors hover:border-primary/40 hover:bg-accent"
+                      >
+                        {a.image_url && <img src={a.image_url} alt={a.name} className="h-4 w-4 rounded-full" loading="lazy" />}
+                        {a.ticker.toUpperCase()}
+                      </Link>
+                    ))}
+                </div>
+
+                {/* "Swap TO" grid */}
+                <h3 className="font-display text-sm font-semibold text-muted-foreground uppercase tracking-wider mb-3">
+                  Swap to {toUp} from
+                </h3>
+                <div className="flex flex-wrap gap-2 mb-8">
+                  {relatedAssets
+                    .filter((a) => a.ticker.toLowerCase() !== toLower)
+                    .slice(0, 20)
+                    .map((a) => (
+                      <Link
+                        key={a.ticker}
+                        to={lp(`/exchange/${a.ticker.toLowerCase()}-to-${toLower}`)}
+                        className="inline-flex items-center gap-1.5 rounded-lg border border-border bg-card px-3 py-2 text-xs font-medium text-foreground transition-colors hover:border-primary/40 hover:bg-accent"
+                      >
+                        {a.image_url && <img src={a.image_url} alt={a.name} className="h-4 w-4 rounded-full" loading="lazy" />}
+                        {a.ticker.toUpperCase()}
+                      </Link>
+                    ))}
+                </div>
+
+                {/* Top pairs grid */}
+                <h3 className="font-display text-sm font-semibold text-muted-foreground uppercase tracking-wider mb-3">
+                  Popular Pairs
+                </h3>
+                <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-2">
+                  {relatedAssets.slice(0, 8).flatMap((from) =>
+                    relatedAssets
+                      .filter((to) => to.ticker !== from.ticker)
+                      .slice(0, 3)
+                      .map((to) => (
+                        <Link
+                          key={`${from.ticker}-${to.ticker}`}
+                          to={lp(`/exchange/${from.ticker.toLowerCase()}-to-${to.ticker.toLowerCase()}`)}
+                          className="flex items-center gap-2 rounded-lg border border-border bg-card px-3 py-2.5 text-xs transition-colors hover:border-primary/40 hover:bg-accent"
+                        >
+                          <div className="flex -space-x-1">
+                            {from.image_url && <img src={from.image_url} alt="" className="h-4 w-4 rounded-full ring-1 ring-background" loading="lazy" />}
+                            {to.image_url && <img src={to.image_url} alt="" className="h-4 w-4 rounded-full ring-1 ring-background" loading="lazy" />}
+                          </div>
+                          <span className="font-medium text-foreground">{from.ticker.toUpperCase()}</span>
+                          <ArrowRight className="h-3 w-3 text-muted-foreground" />
+                          <span className="font-medium text-foreground">{to.ticker.toUpperCase()}</span>
+                        </Link>
+                      ))
+                  )}
+                </div>
+              </div>
+            </div>
+          </section>
+        )}
+
+
         <LiveSwapTicker />
 
         {/* CTA */}
