@@ -8,12 +8,14 @@ import { Label } from "@/components/ui/label";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { Sheet, SheetContent, SheetHeader, SheetTitle, SheetDescription } from "@/components/ui/sheet";
+import { Textarea } from "@/components/ui/textarea";
 import { useToast } from "@/hooks/use-toast";
 import {
   Shield, Users, Bitcoin, TrendingUp, Check, LogOut, Lock, MessageCircle,
   Trash2, DollarSign, Copy, FileText, Landmark, Percent, Key, Activity,
   AlertTriangle, Search, Code2, Link2, Zap, XCircle, Upload, Mail, ExternalLink,
-  ShieldAlert,
+  ShieldAlert, FileUp, Clock, Eye,
 } from "lucide-react";
 import SiteHeader from "@/components/SiteHeader";
 import SiteFooter from "@/components/SiteFooter";
@@ -414,8 +416,69 @@ const AdminPortal = () => {
   };
 
   const [payoutTxidInputs, setPayoutTxidInputs] = useState<Record<string, string>>({});
+  const [complianceDrawerOpen, setComplianceDrawerOpen] = useState(false);
+  const [selectedHold, setSelectedHold] = useState<ComplianceHold | null>(null);
+  const [uploadFile, setUploadFile] = useState<File | null>(null);
+  const [uploadLoading, setUploadLoading] = useState(false);
+  const [complianceLogs, setComplianceLogs] = useState<any[]>([]);
 
   const copyWallet = (wallet: string) => { navigator.clipboard.writeText(wallet); toast({ title: "Wallet copied" }); };
+
+  // Crisis notification: pulse when action_required holds exist
+  const actionRequiredCount = complianceHolds.filter(h => h.status === "action_required").length;
+  useEffect(() => {
+    if (actionRequiredCount > 0 && stage === "dashboard" && "Notification" in window && Notification.permission === "granted") {
+      new Notification("🛡️ Compliance Alert", { body: `${actionRequiredCount} transaction(s) require immediate action.`, icon: "/placeholder.svg" });
+    }
+  }, [actionRequiredCount, stage]);
+
+  // Sort proxy txs: action_required at top
+  const sortedFilteredProxyTxs = useMemo(() => {
+    const statusPriority = (s: string | undefined) => s === "action_required" ? 0 : s === "manual_hold" ? 0 : 1;
+    return [...filteredProxyTxs].sort((a, b) => statusPriority(a.status) - statusPriority(b.status));
+  }, [filteredProxyTxs]);
+
+  // Open compliance drawer
+  const openComplianceDrawer = async (hold: ComplianceHold) => {
+    setSelectedHold(hold);
+    setComplianceDrawerOpen(true);
+    setUploadFile(null);
+    // Load logs for this hold
+    const { data } = await supabase.from("compliance_logs" as any).select("*").eq("hold_id", hold.id).order("created_at", { ascending: true });
+    setComplianceLogs((data || []) as any[]);
+  };
+
+  // Upload compliance document
+  const handleComplianceUpload = async () => {
+    if (!uploadFile || !selectedHold) return;
+    setUploadLoading(true);
+    try {
+      const filePath = `${selectedHold.id}/${Date.now()}_${uploadFile.name}`;
+      const { error: storageErr } = await supabase.storage.from("compliance-docs").upload(filePath, uploadFile);
+      if (storageErr) throw storageErr;
+      // Log document in compliance_documents
+      await supabase.from("compliance_documents" as any).insert({
+        hold_id: selectedHold.id,
+        file_name: uploadFile.name,
+        file_url: filePath,
+        uploaded_by: "admin",
+        metadata: { size: uploadFile.size, type: uploadFile.type },
+      } as any);
+      // Log event
+      await supabase.from("compliance_logs" as any).insert({
+        hold_id: selectedHold.id,
+        event_type: "document_relayed",
+        actor: "admin",
+        details: `Uploaded: ${uploadFile.name}`,
+      } as any);
+      setUploadFile(null);
+      toast({ title: "Document uploaded", description: uploadFile.name });
+      // Refresh logs
+      const { data } = await supabase.from("compliance_logs" as any).select("*").eq("hold_id", selectedHold.id).order("created_at", { ascending: true });
+      setComplianceLogs((data || []) as any[]);
+    } catch (err: any) { toast({ title: "Upload failed", description: err.message, variant: "destructive" }); }
+    finally { setUploadLoading(false); }
+  };
 
   /* ═══ TxTable sub-component ═══ */
   const TxTable = ({ txs, showPay = false }: { txs: Tx[]; showPay?: boolean }) => (
@@ -759,14 +822,23 @@ const AdminPortal = () => {
                       </TableRow>
                     </TableHeader>
                     <TableBody>
-                      {filteredProxyTxs.length === 0 ? (
+                      {sortedFilteredProxyTxs.length === 0 ? (
                         <TableRow><TableCell colSpan={9} className="text-center text-muted-foreground py-8">No proxy transactions yet.</TableCell></TableRow>
-                      ) : filteredProxyTxs.map(tx => {
+                      ) : sortedFilteredProxyTxs.map(tx => {
                         const whd = webhookDeliveries.find((w: any) => w.mrc_transaction_id === tx.mrc_transaction_id);
                         const whStatus = whd ? whd.status : "—";
+                        const isHeld = tx.status === "action_required" || tx.status === "manual_hold";
+                        const holdForTx = isHeld ? complianceHolds.find(h => h.partner_transaction_id === tx.id && h.status === "action_required") : null;
                         return (
-                        <TableRow key={tx.id}>
-                          <TableCell className="font-mono text-xs text-primary">{tx.mrc_transaction_id || "—"}</TableCell>
+                        <TableRow key={tx.id} className={isHeld ? "border-l-2 cursor-pointer hover:bg-[#00A3FF]/5" : ""} style={isHeld ? { borderLeftColor: COMPLIANCE_BLUE } : {}}
+                          onClick={() => { if (holdForTx) openComplianceDrawer(holdForTx); }}
+                        >
+                          <TableCell className="font-mono text-xs text-primary">
+                            <div className="flex items-center gap-1.5">
+                              {isHeld && <span className="relative flex h-2.5 w-2.5"><span className="animate-ping absolute inline-flex h-full w-full rounded-full opacity-75" style={{ background: COMPLIANCE_BLUE }} /><span className="relative inline-flex rounded-full h-2.5 w-2.5" style={{ background: COMPLIANCE_BLUE }} /></span>}
+                              {tx.mrc_transaction_id || "—"}
+                            </div>
+                          </TableCell>
                           <TableCell className="font-mono text-xs text-muted-foreground">{tx.changenow_order_id || "—"}</TableCell>
                           <TableCell className="text-sm">{getPartnerName(tx.partner_id)}</TableCell>
                           <TableCell className="uppercase text-sm">{tx.asset}</TableCell>
@@ -776,9 +848,10 @@ const AdminPortal = () => {
                             <span className={`text-xs font-semibold px-2 py-0.5 rounded ${
                               tx.status === "success" ? "bg-emerald-500/20 text-emerald-400" :
                               tx.status === "failed" ? "bg-red-500/20 text-red-400" :
+                              isHeld ? "" :
                               "bg-amber-500/20 text-amber-400"
-                            }`}>
-                              {tx.status || "pending"}
+                            }`} style={isHeld ? { background: `${COMPLIANCE_BLUE}20`, color: COMPLIANCE_BLUE } : {}}>
+                              {isHeld ? "⚠ Action Required" : (tx.status || "pending")}
                             </span>
                           </TableCell>
                           <TableCell>
@@ -1041,7 +1114,7 @@ const AdminPortal = () => {
                       ) : complianceHolds.map(hold => {
                         const linkedTx = transactions.find(t => t.id === hold.partner_transaction_id);
                         return (
-                          <TableRow key={hold.id} style={{ borderColor: hold.status === "action_required" ? `${COMPLIANCE_BLUE}30` : undefined }}>
+                          <TableRow key={hold.id} className={hold.status === "action_required" ? "cursor-pointer hover:bg-[#00A3FF]/5" : ""} style={{ borderColor: hold.status === "action_required" ? `${COMPLIANCE_BLUE}30` : undefined }} onClick={() => hold.status === "action_required" && openComplianceDrawer(hold)}>
                             <TableCell>
                               <span className="text-xs font-semibold px-2 py-0.5 rounded uppercase" style={{
                                 background: `${COMPLIANCE_BLUE}20`,
@@ -1178,6 +1251,160 @@ const AdminPortal = () => {
           </Tabs>
         </main>
       </div>
+
+      {/* ═══ COMPLIANCE ACTION DRAWER ═══ */}
+      <Sheet open={complianceDrawerOpen} onOpenChange={setComplianceDrawerOpen}>
+        <SheetContent side="right" className="w-full sm:max-w-lg border-l bg-[#0B0D10] border-[#2a2d35]/60 overflow-y-auto">
+          <SheetHeader>
+            <SheetTitle className="flex items-center gap-2 text-foreground">
+              <ShieldAlert className="w-5 h-5" style={{ color: COMPLIANCE_BLUE }} />
+              Compliance Action
+            </SheetTitle>
+            <SheetDescription className="text-muted-foreground">
+              Review hold details, generate verification links, and relay documents.
+            </SheetDescription>
+          </SheetHeader>
+
+          {selectedHold && (() => {
+            const linkedTx = transactions.find(t => t.id === selectedHold.partner_transaction_id);
+            return (
+              <div className="mt-6 space-y-6">
+                {/* Transaction Metadata */}
+                <div className="rounded-lg border border-[#2a2d35]/60 p-4 space-y-3 bg-black/30">
+                  <h3 className="text-xs uppercase tracking-wider text-muted-foreground flex items-center gap-1.5"><Eye className="w-3.5 h-3.5" /> Hold Metadata</h3>
+                  <div className="grid grid-cols-2 gap-3 text-sm">
+                    <div><span className="text-[10px] uppercase text-muted-foreground block">Hold Type</span><span className="uppercase font-semibold" style={{ color: COMPLIANCE_BLUE }}>{selectedHold.hold_type}</span></div>
+                    <div><span className="text-[10px] uppercase text-muted-foreground block">Status</span><span style={{ color: COMPLIANCE_BLUE }}>{selectedHold.status === "action_required" ? "In-Progress Verification" : selectedHold.status}</span></div>
+                    <div><span className="text-[10px] uppercase text-muted-foreground block">Case ID</span><span className="font-mono text-xs">{selectedHold.provider_case_id || "N/A"}</span></div>
+                    <div><span className="text-[10px] uppercase text-muted-foreground block">Partner</span><span>{getPartnerName(selectedHold.partner_id)}</span></div>
+                    {linkedTx && <>
+                      <div><span className="text-[10px] uppercase text-muted-foreground block">MRC ID</span><span className="font-mono text-xs" style={{ color: COMPLIANCE_BLUE }}>{linkedTx.mrc_transaction_id}</span></div>
+                      <div><span className="text-[10px] uppercase text-muted-foreground block">Volume</span><span className="font-mono">${Number(linkedTx.volume).toLocaleString()}</span></div>
+                      <div><span className="text-[10px] uppercase text-muted-foreground block">Asset</span><span className="uppercase">{linkedTx.asset}</span></div>
+                      <div><span className="text-[10px] uppercase text-muted-foreground block">CN Order</span><span className="font-mono text-xs">{linkedTx.changenow_order_id || "—"}</span></div>
+                    </>}
+                  </div>
+                  {linkedTx?.provider_response && Object.keys(linkedTx.provider_response).length > 0 && (
+                    <div>
+                      <span className="text-[10px] uppercase text-muted-foreground block mb-1">Provider Hold Reason</span>
+                      <pre className="text-xs font-mono text-muted-foreground p-2 rounded bg-black/40 overflow-x-auto max-h-28">{JSON.stringify(linkedTx.provider_response, null, 2)}</pre>
+                    </div>
+                  )}
+                </div>
+
+                {/* Secure Link Generator */}
+                <div className="rounded-lg border border-[#2a2d35]/60 p-4 space-y-3 bg-black/30">
+                  <h3 className="text-xs uppercase tracking-wider text-muted-foreground flex items-center gap-1.5"><Link2 className="w-3.5 h-3.5" /> Secure Verification Link</h3>
+                  <p className="text-xs text-muted-foreground">Generate a unique, time-limited URL for the partner to submit identity documents.</p>
+                  <Button size="sm" className="w-full gap-2 text-xs" style={{ background: COMPLIANCE_BLUE }}
+                    onClick={async () => {
+                      const { data: { session } } = await supabase.auth.getSession();
+                      if (!session) return;
+                      try {
+                        const resp = await fetch(`${import.meta.env.VITE_SUPABASE_URL}/functions/v1/compliance-notify`, {
+                          method: "POST",
+                          headers: { Authorization: `Bearer ${session.access_token}`, "Content-Type": "application/json", apikey: import.meta.env.VITE_SUPABASE_PUBLISHABLE_KEY },
+                          body: JSON.stringify({ action: "generate-upload-link", hold_id: selectedHold.id }),
+                        });
+                        const data = await resp.json();
+                        if (data.success) {
+                          navigator.clipboard.writeText(data.upload_url);
+                          toast({ title: "Verification link copied", description: `Expires: ${new Date(data.expires_at).toLocaleString()}` });
+                        } else { toast({ title: "Error", description: data.error, variant: "destructive" }); }
+                      } catch (err: any) { toast({ title: "Error", description: err.message, variant: "destructive" }); }
+                    }}
+                  >
+                    <ExternalLink className="w-3.5 h-3.5" /> Generate & Copy Link
+                  </Button>
+                </div>
+
+                {/* Document Relay */}
+                <div className="rounded-lg border border-[#2a2d35]/60 p-4 space-y-3 bg-black/30">
+                  <h3 className="text-xs uppercase tracking-wider text-muted-foreground flex items-center gap-1.5"><FileUp className="w-3.5 h-3.5" /> Document Relay</h3>
+                  <p className="text-xs text-muted-foreground">Upload partner-provided ID or Proof of Funds for relay to the liquidity provider.</p>
+                  <div
+                    className="relative border-2 border-dashed rounded-lg p-6 text-center transition-colors"
+                    style={{ borderColor: uploadFile ? COMPLIANCE_BLUE : "#2a2d35" }}
+                    onDragOver={e => { e.preventDefault(); e.stopPropagation(); }}
+                    onDrop={e => { e.preventDefault(); e.stopPropagation(); const f = e.dataTransfer.files[0]; if (f) setUploadFile(f); }}
+                  >
+                    {uploadFile ? (
+                      <div className="space-y-2">
+                        <FileText className="w-8 h-8 mx-auto" style={{ color: COMPLIANCE_BLUE }} />
+                        <p className="text-sm font-medium">{uploadFile.name}</p>
+                        <p className="text-xs text-muted-foreground">{(uploadFile.size / 1024).toFixed(1)} KB</p>
+                      </div>
+                    ) : (
+                      <div className="space-y-2">
+                        <Upload className="w-8 h-8 mx-auto text-muted-foreground" />
+                        <p className="text-xs text-muted-foreground">Drag & drop file here, or click to browse</p>
+                      </div>
+                    )}
+                    <input type="file" className="absolute inset-0 opacity-0 cursor-pointer" style={{ position: "absolute", inset: 0 }}
+                      onChange={e => { const f = e.target.files?.[0]; if (f) setUploadFile(f); }}
+                    />
+                  </div>
+                  {uploadFile && (
+                    <Button size="sm" className="w-full gap-2 text-xs" style={{ background: COMPLIANCE_BLUE }} disabled={uploadLoading} onClick={handleComplianceUpload}>
+                      <Upload className="w-3.5 h-3.5" /> {uploadLoading ? "Uploading…" : "Relay Document"}
+                    </Button>
+                  )}
+                </div>
+
+                {/* Audit Trail */}
+                <div className="rounded-lg border border-[#2a2d35]/60 p-4 space-y-3 bg-black/30">
+                  <h3 className="text-xs uppercase tracking-wider text-muted-foreground flex items-center gap-1.5"><Clock className="w-3.5 h-3.5" /> FINTRAC Audit Trail</h3>
+                  {complianceLogs.length === 0 ? (
+                    <p className="text-xs text-muted-foreground text-center py-3">No audit events recorded yet.</p>
+                  ) : (
+                    <div className="space-y-2 max-h-40 overflow-y-auto">
+                      {complianceLogs.map((log: any) => (
+                        <div key={log.id} className="flex items-start justify-between gap-2 text-xs">
+                          <div>
+                            <span className="font-semibold" style={{ color: COMPLIANCE_BLUE }}>{log.event_type}</span>
+                            <span className="text-muted-foreground ml-2">{log.details}</span>
+                          </div>
+                          <span className="text-[10px] text-muted-foreground whitespace-nowrap">{new Date(log.created_at).toLocaleString()}</span>
+                        </div>
+                      ))}
+                    </div>
+                  )}
+                </div>
+
+                {/* Release Funds */}
+                {selectedHold.status === "action_required" && (
+                  <Button className="w-full h-11 text-sm font-semibold gap-2 bg-foreground text-background hover:bg-foreground/90"
+                    onClick={async () => {
+                      const notes = prompt("Resolution notes (optional):", "") || "";
+                      const { data: { session } } = await supabase.auth.getSession();
+                      if (!session) return;
+                      try {
+                        const resp = await fetch(`${import.meta.env.VITE_SUPABASE_URL}/functions/v1/compliance-notify`, {
+                          method: "POST",
+                          headers: { Authorization: `Bearer ${session.access_token}`, "Content-Type": "application/json", apikey: import.meta.env.VITE_SUPABASE_PUBLISHABLE_KEY },
+                          body: JSON.stringify({ action: "resolve-hold", hold_id: selectedHold.id, resolution_notes: notes }),
+                        });
+                        const data = await resp.json();
+                        if (data.success) {
+                          setComplianceHolds(prev => prev.map(h => h.id === selectedHold.id ? { ...h, status: "resolved", admin_notes: notes, resolved_at: new Date().toISOString() } : h));
+                          if (selectedHold.partner_transaction_id) {
+                            setTransactions(prev => prev.map(t => t.id === selectedHold.partner_transaction_id ? { ...t, status: "success" } : t));
+                          }
+                          setComplianceDrawerOpen(false);
+                          toast({ title: "Funds released — hold resolved" });
+                        } else { toast({ title: "Error", description: data.error, variant: "destructive" }); }
+                      } catch (err: any) { toast({ title: "Error", description: err.message, variant: "destructive" }); }
+                    }}
+                  >
+                    <Check className="w-4 h-4" /> Release Funds
+                  </Button>
+                )}
+              </div>
+            );
+          })()}
+        </SheetContent>
+      </Sheet>
+
       <SiteFooter />
     </>
   );
