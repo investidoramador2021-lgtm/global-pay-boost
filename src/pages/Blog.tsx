@@ -78,6 +78,16 @@ const WHITEPAPERS = [
     category: "Research",
     tags: ["PAXG", "XAUt", "Tokenized Gold", "DeFi Yield"],
   },
+  {
+    title: "RaveDAO (RAVE) Research: 6,000% Rally Analysis & Risk Report",
+    subtitle: "Web3 Music · High-Risk Token Analysis",
+    excerpt: "A deep dive into RaveDAO (RAVE) tokenomics, the April 2026 short squeeze, and critical supply concentration risks. 90% of supply sits in 3 wallets — read before you buy.",
+    path: "/research/ravedao-rave-token-analysis-2026",
+    icon: TrendingUp,
+    accent: "320 90% 60%",
+    category: "Research",
+    tags: ["RaveDAO", "RAVE Token", "Short Squeeze", "Supply Risk"],
+  },
 ];
 
 const Blog = () => {
