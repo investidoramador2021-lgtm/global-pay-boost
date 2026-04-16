@@ -492,9 +492,11 @@ function EarnWidgetPanel() {
 
 interface ExchangeWidgetProps {
   onTabChange?: (tab: "exchange" | "buysell" | "private" | "bridge" | "request" | "loan" | "earn") => void;
+  defaultFrom?: string;
+  defaultTo?: string;
 }
 
-const ExchangeWidget = ({ onTabChange }: ExchangeWidgetProps = {}) => {
+const ExchangeWidget = ({ onTabChange, defaultFrom, defaultTo }: ExchangeWidgetProps = {}) => {
   const { toast } = useToast();
   const { t } = useTranslation();
   const { subscribe: subscribePush, supported: pushSupported } = usePushNotifications();
