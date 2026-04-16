@@ -11,7 +11,6 @@ const SWAP_SLUGS = [
   "usdt-to-solana","usdc-sol","usdc-solana","usd-to-xmr","xmr-to-eth","bnb-to-sol",
   "bnb","shiba-to-usdt","vinu","eth-to-sol","btc-to-sol-instant","30-trx-to-usdt",
   "usdt-trx-instant","solana-to-idr",
-  /* swap-solutions-data slugs */
   "btc-to-usdc","btc-to-usdt","btc-to-sol","eth-to-usdt","eth-to-sol","sol-to-usdc",
   "xrp-to-usdt","ltc-to-btc","trx-to-usdt","hype-to-usdt","bera-to-usdt","doge-to-btc",
   "bonk-to-sol","pepe-to-usdc","xmr-to-eth","shib-to-usdt","sol-to-ondo","sol-to-nos",
@@ -70,7 +69,6 @@ function escapeXml(str: string): string {
 }
 
 function hreflangBlock(path: string): string {
-  // Only generate hreflang for base (non-lang-prefixed) paths
   const isLangPrefixed = LANGS.some(l => path === `/${l}` || path.startsWith(`/${l}/`));
   if (isLangPrefixed) return "";
   
@@ -142,17 +140,40 @@ ${items}
   }
 
   /* ── Dynamic Sitemap ── */
+
+  // Fetch valid pairs from DB with their actual lastmod timestamps
+  const { data: dbPairs } = await supabase
+    .from("pairs")
+    .select("from_ticker, to_ticker, updated_at")
+    .eq("is_valid", true)
+    .order("updated_at", { ascending: false })
+    .limit(1000);
+
+  const validPairs = dbPairs || [];
+
+  // Build a set of valid pair slugs for quick lookup
+  const validPairSet = new Set(validPairs.map((p: any) => `${p.from_ticker}-to-${p.to_ticker}`));
+
   const entries: string[] = [];
 
-  // Static pages — only English canonical with hreflang alternates (no separate lang entries)
+  // Static pages
   for (const p of STATIC_PAGES) {
     entries.push(urlEntry(p.loc, today, p.changefreq, p.priority));
   }
 
-  // Swap pairs — English canonical only, hreflang handles alternates
+  // DB pairs — use actual updated_at as lastmod (smart timestamping)
+  for (const p of validPairs) {
+    const slug = `${p.from_ticker}-to-${p.to_ticker}`;
+    const lastmod = p.updated_at ? new Date(p.updated_at).toISOString().split("T")[0] : today;
+    entries.push(urlEntry(`/exchange/${slug}`, lastmod, "weekly", "0.7"));
+  }
+
+  // Swap pairs (hardcoded) — only if not already covered by DB pairs
   const uniqueSwaps = [...new Set(SWAP_SLUGS)];
   for (const slug of uniqueSwaps) {
-    entries.push(urlEntry(`/swap/${slug}`, today, "always", "0.8"));
+    if (!validPairSet.has(slug)) {
+      entries.push(urlEntry(`/swap/${slug}`, today, "always", "0.8"));
+    }
   }
 
   // Solutions
