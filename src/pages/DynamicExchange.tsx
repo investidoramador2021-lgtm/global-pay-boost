@@ -162,7 +162,7 @@ export default function DynamicExchange() {
       if (!fromLower || !toLower) return null;
       const { data } = await supabase
         .from("pairs")
-        .select("seo_title, seo_description, seo_h1, content_json")
+        .select("seo_title, seo_description, seo_h1, content_json, is_valid")
         .eq("from_ticker", fromLower)
         .eq("to_ticker", toLower)
         .maybeSingle();
@@ -171,6 +171,11 @@ export default function DynamicExchange() {
     enabled: !!fromLower && !!toLower,
     staleTime: 1000 * 60 * 60,
   });
+
+  // 301-style redirect for disabled pairs (is_valid = false in DB)
+  if (pairSeo && pairSeo.is_valid === false) {
+    return <Navigate to={lp("/")} replace />;
+  }
 
   const { data: relatedAssets } = useQuery({
     queryKey: ["exchange-related-assets"],

@@ -632,6 +632,34 @@ Deno.serve(async (req) => {
       }
     }
 
+    // ── 4b. Cleanup: mark unsupported pairs as invalid ──
+    // Get all valid pairs from DB and check if both tickers still exist in the API
+    const { data: allValidPairs } = await supabase
+      .from("pairs")
+      .select("id, from_ticker, to_ticker")
+      .eq("is_valid", true)
+      .limit(1000);
+
+    if (allValidPairs && allValidPairs.length > 0) {
+      const invalidIds: string[] = [];
+      for (const p of allValidPairs) {
+        if (!seen.has(p.from_ticker) || !seen.has(p.to_ticker)) {
+          invalidIds.push(p.id);
+        }
+      }
+      if (invalidIds.length > 0) {
+        // Mark in batches of 100
+        for (let i = 0; i < invalidIds.length; i += 100) {
+          const batch = invalidIds.slice(i, i + 100);
+          await supabase
+            .from("pairs")
+            .update({ is_valid: false, updated_at: new Date().toISOString() })
+            .in("id", batch);
+        }
+        console.log(`Cleanup: marked ${invalidIds.length} pairs as invalid`);
+      }
+    }
+
     // ── 5. Update engine state ──
     const finalCount = currentCount + newPairs.length;
     await supabase.from("sync_engine_state").update({
