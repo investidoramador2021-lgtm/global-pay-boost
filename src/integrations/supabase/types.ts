@@ -721,6 +721,7 @@ export type Database = {
           partner_id: string
           provider_response: Json | null
           request_payload: Json | null
+          source: string
           status: string
           volume: number
         }
@@ -737,6 +738,7 @@ export type Database = {
           partner_id: string
           provider_response?: Json | null
           request_payload?: Json | null
+          source?: string
           status?: string
           volume?: number
         }
@@ -753,6 +755,7 @@ export type Database = {
           partner_id?: string
           provider_response?: Json | null
           request_payload?: Json | null
+          source?: string
           status?: string
           volume?: number
         }
