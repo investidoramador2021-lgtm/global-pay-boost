@@ -59,10 +59,14 @@ const KeywordLanding = ({ data }: Props) => {
 
   const isMoneroNoKyc = targetUrl === "/buy/monero-no-kyc";
 
-  const title = isMoneroNoKyc
+  const title = data.customTitle
+    ? data.customTitle
+    : isMoneroNoKyc
     ? "Buy Monero No KYC – Private XMR Swap, No Registration | MRC GlobalPay"
     : `${keyword.length > 30 ? keyword.slice(0, 30).trim() : keyword} | MRC GlobalPay`;
-  const description = isMoneroNoKyc
+  const description = data.customDescription
+    ? data.customDescription
+    : isMoneroNoKyc
     ? "Buy Monero (XMR) with no KYC, no registration, and no account. Non-custodial swap from $0.30 with 0.5% flat fee. The most private way to acquire XMR in 2026."
     : `${benefitHook} Swap from $0.30 with no account. 500+ tokens on MRC GlobalPay.`;
 
@@ -100,7 +104,7 @@ const KeywordLanding = ({ data }: Props) => {
     },
   ];
 
-  const faqs = isMoneroNoKyc ? moneroFaqs : defaultFaqs;
+  const faqs = data.customFaqs || (isMoneroNoKyc ? moneroFaqs : defaultFaqs);
 
   const jsonLd = [
     {
@@ -210,6 +214,11 @@ const KeywordLanding = ({ data }: Props) => {
               <TableOfContents
                 items={[
                   { id: "how-does-mrc-globalpay-compare-to-other-exchanges", text: "How Does MRC GlobalPay Compare to Other Exchanges?", level: 2 },
+                  ...(data.customSections || []).map(s => ({
+                    id: s.heading.toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/(^-|-$)/g, ""),
+                    text: s.heading,
+                    level: 2,
+                  })),
                   { id: `why-should-i-choose-mrc-globalpay-for-${keyword.toLowerCase().replace(/\s+/g, "-")}`, text: `Why Should I Choose MRC GlobalPay for ${keyword}?`, level: 2 },
                   { id: "what-are-the-most-common-questions", text: "What Are the Most Common Questions?", level: 2 },
                   ...(related.length > 0 ? [{ id: "what-other-swaps-are-available", text: "What Other Swaps Are Available?", level: 2 }] : []),
@@ -249,6 +258,27 @@ const KeywordLanding = ({ data }: Props) => {
         </section>
 
         {/* Content Section */}
+        <section className="border-t border-border bg-muted/20 py-12 sm:py-20">
+          <div className="container mx-auto max-w-3xl px-4">
+            {/* Custom deep-content sections */}
+            {data.customSections && data.customSections.length > 0 && (
+              <div className="space-y-12 mb-12">
+                {data.customSections.map((section, i) => (
+                  <div key={i}>
+                    <h2
+                      id={section.heading.toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/(^-|-$)/g, "")}
+                      className="mb-4 scroll-mt-24 font-display text-2xl font-bold text-foreground"
+                    >
+                      {section.heading}
+                    </h2>
+                    <p className="font-body leading-relaxed text-muted-foreground">{section.body}</p>
+                  </div>
+                ))}
+              </div>
+            )}
+          </div>
+        </section>
+
         <section className="border-t border-border bg-muted/20 py-12 sm:py-20">
           <div className="container mx-auto max-w-3xl px-4">
             <h2 id={`why-should-i-choose-mrc-globalpay-for-${keyword.toLowerCase().replace(/\s+/g, "-")}`} className="mb-6 scroll-mt-24 font-display text-2xl font-bold text-foreground">
