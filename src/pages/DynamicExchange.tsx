@@ -227,6 +227,9 @@ export default function DynamicExchange() {
     staleTime: 1000 * 60 * 60,
   });
 
+  if (needsLowercaseRedirect) {
+    return <Navigate to={lp(`/exchange/${fromLower}-to-${toLower}`)} replace />;
+  }
   if (!match) return <Navigate to={lp("/")} replace />;
 
   const isLoading = loadingFrom || loadingTo;
