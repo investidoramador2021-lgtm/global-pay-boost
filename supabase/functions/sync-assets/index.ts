@@ -14,16 +14,20 @@ const TIER1_TICKERS = new Set([
 Deno.serve(async (req) => {
   if (req.method === "OPTIONS") return new Response(null, { headers: corsHeaders });
 
-  // Auth: cron secret or admin
+  // Auth: cron secret, service_role key, or admin JWT
   const cronSecret = Deno.env.get("CRON_SECRET");
+  const anonKey = Deno.env.get("SUPABASE_ANON_KEY") || "";
+  const serviceKey = Deno.env.get("SUPABASE_SERVICE_ROLE_KEY") || "";
   const authHeader = req.headers.get("authorization") || "";
+  const apikeyHeader = req.headers.get("apikey") || "";
   const isCron = cronSecret && authHeader === `Bearer ${cronSecret}`;
+  const isServiceRole = apikeyHeader === serviceKey || authHeader === `Bearer ${serviceKey}`;
 
-  if (!isCron) {
+  if (!isCron && !isServiceRole) {
     // Check admin role via JWT
     const svc = createClient(
       Deno.env.get("SUPABASE_URL")!,
-      Deno.env.get("SUPABASE_ANON_KEY")!,
+      anonKey,
       { global: { headers: { Authorization: authHeader } } }
     );
     const { data: { user } } = await svc.auth.getUser();
@@ -33,7 +37,7 @@ Deno.serve(async (req) => {
         headers: { ...corsHeaders, "Content-Type": "application/json" },
       });
     }
-    const adminClient = createClient(Deno.env.get("SUPABASE_URL")!, Deno.env.get("SUPABASE_SERVICE_ROLE_KEY")!);
+    const adminClient = createClient(Deno.env.get("SUPABASE_URL")!, serviceKey);
     const { data: isAdmin } = await adminClient.rpc("has_role", { _user_id: user.id, _role: "admin" });
     if (!isAdmin) {
       return new Response(JSON.stringify({ error: "Forbidden" }), {
