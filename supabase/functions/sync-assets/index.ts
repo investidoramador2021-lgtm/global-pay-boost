@@ -52,8 +52,8 @@ Deno.serve(async (req) => {
     const apiKey = Deno.env.get("CHANGENOW_API_KEY");
     if (!apiKey) throw new Error("CHANGENOW_API_KEY not configured");
 
-    // Fetch all active currencies from ChangeNOW
-    const resp = await fetch(`https://api.changenow.io/v1/currencies?active=true&fixedRate=true`);
+    // Fetch all active currencies from ChangeNOW v2 (includes network + tokenContract)
+    const resp = await fetch(`https://api.changenow.io/v2/exchange/currencies?active=true&fixedRate=true`);
     if (!resp.ok) throw new Error(`ChangeNOW API error: ${resp.status}`);
     const currencies: Array<{
       ticker: string;
