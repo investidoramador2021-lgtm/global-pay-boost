@@ -800,7 +800,7 @@ export default function DynamicExchange() {
                       </Link>
                     );
                   })}
-                </div>
+                </nav>
               </div>
             </div>
           </section>
