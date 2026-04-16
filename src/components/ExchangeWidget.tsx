@@ -1450,6 +1450,37 @@ const ExchangeWidget = ({ onTabChange, defaultFrom, defaultTo }: ExchangeWidgetP
     }
   }, [step, addressValid]);
 
+  // 15-minute Fixed-Rate price lock — refreshes whenever a new fixed quote is received
+  useEffect(() => {
+    if (fixedLockRef.current) clearInterval(fixedLockRef.current);
+    if (
+      widgetMode === "exchange" &&
+      fixedRate &&
+      step !== "address" &&
+      step !== "deposit" &&
+      step !== "processing" &&
+      step !== "complete" &&
+      estimatedAmount &&
+      estimatedAmount !== "—" &&
+      estimatedAmount !== "syncing" &&
+      !estimating
+    ) {
+      setFixedLockSeconds(FIXED_LOCK_DURATION);
+      fixedLockRef.current = setInterval(() => {
+        setFixedLockSeconds((prev) => {
+          if (prev <= 1) {
+            clearInterval(fixedLockRef.current!);
+            // Auto-refresh quote when lock expires
+            fetchEstimate();
+            return FIXED_LOCK_DURATION;
+          }
+          return prev - 1;
+        });
+      }, 1000);
+      return () => { if (fixedLockRef.current) clearInterval(fixedLockRef.current); };
+    }
+  }, [fixedRate, estimatedAmount, estimating, step, widgetMode, fetchEstimate, FIXED_LOCK_DURATION]);
+
   const handleRefreshRate = async () => {
     setRefreshingRate(true);
     try {
