@@ -218,9 +218,19 @@ const SiteFooter = () => {
 
         {/* Swap pairs categorized grid */}
         <div className="mt-10 border-t border-border pt-8">
-          <h3 className="mb-6 text-center font-display text-sm font-semibold uppercase tracking-wider text-foreground/70 sm:text-left">
-            Swap Pairs Directory
-          </h3>
+          <div className="mb-6 flex flex-col items-center justify-between gap-3 sm:flex-row sm:items-end">
+            <h3 className="font-display text-sm font-semibold uppercase tracking-wider text-foreground/70">
+              Swap Pairs Directory
+            </h3>
+            <a
+              href={lp("/directory")}
+              title="Browse the full directory of every supported swap pair"
+              className="inline-flex items-center gap-1.5 rounded-full border border-primary/30 bg-primary/5 px-3 py-1.5 font-display text-xs font-semibold text-foreground transition-colors hover:border-primary/60 hover:bg-primary/10"
+            >
+              View All 1,101 Pairs
+              <span aria-hidden="true">→</span>
+            </a>
+          </div>
           <div className="grid gap-8 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
             <FooterLinkList langPrefix={lp} title="Popular Crypto Swaps" links={popularCryptoSwaps} />
             <FooterLinkList langPrefix={lp} title="Stablecoin Bridges" links={stablecoinBridges} />
