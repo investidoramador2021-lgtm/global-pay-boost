@@ -2833,6 +2833,14 @@ const ExchangeWidget = ({ onTabChange, defaultFrom, defaultTo }: ExchangeWidgetP
                     {t("widget.expectedRate")}
                   </button>
                 </div>
+                {/* Canadian Fixed-Rate roadmap notice — gauges interest, signals regulated jurisdiction */}
+                <div className="mb-4 -mt-2 flex items-center gap-1.5 rounded-md border border-trust/15 bg-trust/[0.04] px-2.5 py-1.5">
+                  <span className="text-[10px]" aria-hidden>🇨🇦</span>
+                  <p className="font-body text-[10px] leading-tight text-muted-foreground sm:text-[11px]">
+                    <strong className="text-trust">{t("widget.fixedRateRoadmapTitle", "Locked-In Fixed Rate")}</strong>{" "}
+                    {t("widget.fixedRateRoadmapBody", "— Coming soon for Canadian residents under our FINTRAC MSB framework.")}
+                  </p>
+                </div>
 
                 {/* Popular Assets Quick Select */}
                 <div className="mb-4 flex items-center gap-2">

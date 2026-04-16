@@ -10,6 +10,8 @@ import SiteFooter from "@/components/SiteFooter";
 import ExchangeWidget from "@/components/ExchangeWidget";
 import LiveSwapTicker from "@/components/LiveSwapTicker";
 import TokenIcon from "@/components/TokenIcon";
+import GoldSecurityBlock, { isGoldPair } from "@/components/GoldSecurityBlock";
+import AEOAssetBlock from "@/components/AEOAssetBlock";
 import {
   Accordion,
   AccordionContent,
@@ -550,6 +552,24 @@ export default function DynamicExchange() {
             </div>
           </section>
         )}
+
+        {/* ─── Gold Security Block (XAUt / PAXG only) ─── */}
+        {isGoldPair(fromLower, toLower) && (
+          <GoldSecurityBlock
+            fromTicker={fromLower}
+            toTicker={toLower}
+            fromName={fromName}
+            toName={toName}
+          />
+        )}
+
+        {/* ─── AEO (Answer Engine Optimization) Block ─── */}
+        <AEOAssetBlock
+          fromTicker={fromLower}
+          toTicker={toLower}
+          fromName={fromName}
+          toName={toName}
+        />
 
         {/* ─── Network Intelligence Cards ─── */}
         {!isLoading && (fromAsset || toAsset) && (
