@@ -872,8 +872,8 @@ const ExchangeWidget = ({ onTabChange, defaultFrom, defaultTo }: ExchangeWidgetP
     const loadCurrencies = () => {
       setLoading(true);
       const params = new URLSearchParams(window.location.search);
-      const paramFrom = params.get("from")?.toLowerCase();
-      const rawTo = params.get("to")?.toLowerCase();
+      const paramFrom = (params.get("from") || defaultFrom)?.toLowerCase();
+      const rawTo = (params.get("to") || defaultTo)?.toLowerCase();
       const paramAmount = params.get("amount");
 
       // Solana AI & DePIN ticker mapping — "clean URL" to "widget ticker" auto-correct
