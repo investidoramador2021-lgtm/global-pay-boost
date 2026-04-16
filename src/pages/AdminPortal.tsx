@@ -8,12 +8,14 @@ import { Label } from "@/components/ui/label";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { Sheet, SheetContent, SheetHeader, SheetTitle, SheetDescription } from "@/components/ui/sheet";
+import { Textarea } from "@/components/ui/textarea";
 import { useToast } from "@/hooks/use-toast";
 import {
   Shield, Users, Bitcoin, TrendingUp, Check, LogOut, Lock, MessageCircle,
   Trash2, DollarSign, Copy, FileText, Landmark, Percent, Key, Activity,
   AlertTriangle, Search, Code2, Link2, Zap, XCircle, Upload, Mail, ExternalLink,
-  ShieldAlert,
+  ShieldAlert, FileUp, Clock, Eye,
 } from "lucide-react";
 import SiteHeader from "@/components/SiteHeader";
 import SiteFooter from "@/components/SiteFooter";
@@ -414,8 +416,69 @@ const AdminPortal = () => {
   };
 
   const [payoutTxidInputs, setPayoutTxidInputs] = useState<Record<string, string>>({});
+  const [complianceDrawerOpen, setComplianceDrawerOpen] = useState(false);
+  const [selectedHold, setSelectedHold] = useState<ComplianceHold | null>(null);
+  const [uploadFile, setUploadFile] = useState<File | null>(null);
+  const [uploadLoading, setUploadLoading] = useState(false);
+  const [complianceLogs, setComplianceLogs] = useState<any[]>([]);
 
   const copyWallet = (wallet: string) => { navigator.clipboard.writeText(wallet); toast({ title: "Wallet copied" }); };
+
+  // Crisis notification: pulse when action_required holds exist
+  const actionRequiredCount = complianceHolds.filter(h => h.status === "action_required").length;
+  useEffect(() => {
+    if (actionRequiredCount > 0 && stage === "dashboard" && "Notification" in window && Notification.permission === "granted") {
+      new Notification("🛡️ Compliance Alert", { body: `${actionRequiredCount} transaction(s) require immediate action.`, icon: "/placeholder.svg" });
+    }
+  }, [actionRequiredCount, stage]);
+
+  // Sort proxy txs: action_required at top
+  const sortedFilteredProxyTxs = useMemo(() => {
+    const statusPriority = (s: string | undefined) => s === "action_required" ? 0 : s === "manual_hold" ? 0 : 1;
+    return [...filteredProxyTxs].sort((a, b) => statusPriority(a.status) - statusPriority(b.status));
+  }, [filteredProxyTxs]);
+
+  // Open compliance drawer
+  const openComplianceDrawer = async (hold: ComplianceHold) => {
+    setSelectedHold(hold);
+    setComplianceDrawerOpen(true);
+    setUploadFile(null);
+    // Load logs for this hold
+    const { data } = await supabase.from("compliance_logs" as any).select("*").eq("hold_id", hold.id).order("created_at", { ascending: true });
+    setComplianceLogs((data || []) as any[]);
+  };
+
+  // Upload compliance document
+  const handleComplianceUpload = async () => {
+    if (!uploadFile || !selectedHold) return;
+    setUploadLoading(true);
+    try {
+      const filePath = `${selectedHold.id}/${Date.now()}_${uploadFile.name}`;
+      const { error: storageErr } = await supabase.storage.from("compliance-docs").upload(filePath, uploadFile);
+      if (storageErr) throw storageErr;
+      // Log document in compliance_documents
+      await supabase.from("compliance_documents" as any).insert({
+        hold_id: selectedHold.id,
+        file_name: uploadFile.name,
+        file_url: filePath,
+        uploaded_by: "admin",
+        metadata: { size: uploadFile.size, type: uploadFile.type },
+      } as any);
+      // Log event
+      await supabase.from("compliance_logs" as any).insert({
+        hold_id: selectedHold.id,
+        event_type: "document_relayed",
+        actor: "admin",
+        details: `Uploaded: ${uploadFile.name}`,
+      } as any);
+      setUploadFile(null);
+      toast({ title: "Document uploaded", description: uploadFile.name });
+      // Refresh logs
+      const { data } = await supabase.from("compliance_logs" as any).select("*").eq("hold_id", selectedHold.id).order("created_at", { ascending: true });
+      setComplianceLogs((data || []) as any[]);
+    } catch (err: any) { toast({ title: "Upload failed", description: err.message, variant: "destructive" }); }
+    finally { setUploadLoading(false); }
+  };
 
   /* ═══ TxTable sub-component ═══ */
   const TxTable = ({ txs, showPay = false }: { txs: Tx[]; showPay?: boolean }) => (
