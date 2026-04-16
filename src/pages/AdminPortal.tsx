@@ -111,6 +111,7 @@ const AdminPortal = () => {
   const [adminTab, setAdminTab] = useState<"partners" | "exchanges" | "invoices" | "support" | "lending" | "proxy">("exchanges");
   const [chatLogs, setChatLogs] = useState<ChatLog[]>([]);
   const [lendEarnTxs, setLendEarnTxs] = useState<LendEarnTx[]>([]);
+  const [webhookDeliveries, setWebhookDeliveries] = useState<any[]>([]);
   const [partnerSearch, setPartnerSearch] = useState("");
   const [proxySearch, setProxySearch] = useState("");
   const navigate = useNavigate();
@@ -143,13 +144,14 @@ const AdminPortal = () => {
   }, [stage, resetInactivityTimer]);
 
   const loadDashboard = useCallback(async () => {
-    const [pRes, txRes, logRes, leRes, devRes, keyRes] = await Promise.all([
+    const [pRes, txRes, logRes, leRes, devRes, keyRes, whRes] = await Promise.all([
       supabase.from("partner_profiles").select("*"),
       supabase.from("partner_transactions").select("*").order("completed_at", { ascending: false }),
       supabase.from("support_chat_logs" as any).select("*").order("created_at", { ascending: false }).limit(200),
       supabase.from("lend_earn_transactions" as any).select("*").order("created_at", { ascending: false }).limit(500),
       supabase.from("developer_profiles").select("*"),
       supabase.from("partner_api_keys").select("*").order("created_at", { ascending: false }),
+      supabase.from("webhook_deliveries" as any).select("*").order("created_at", { ascending: false }).limit(500),
     ]);
     setPartners((pRes.data || []) as Partner[]);
     setTransactions((txRes.data || []) as Tx[]);
@@ -157,6 +159,7 @@ const AdminPortal = () => {
     setLendEarnTxs((leRes.data as unknown as LendEarnTx[]) || []);
     setDevProfiles((devRes.data || []) as unknown as DevProfile[]);
     setApiKeys((keyRes.data || []) as unknown as ApiKeyRow[]);
+    setWebhookDeliveries((whRes.data || []) as any[]);
     setLoading(false);
   }, []);
 
