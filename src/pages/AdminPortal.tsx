@@ -55,6 +55,20 @@ interface Tx {
   status?: string;
   mrc_transaction_id?: string;
   changenow_order_id?: string;
+  request_payload?: any;
+  provider_response?: any;
+}
+
+interface PayoutReq {
+  id: string;
+  partner_id: string;
+  amount_btc: number;
+  wallet_address: string;
+  status: string;
+  payout_txid: string;
+  admin_notes: string;
+  requested_at: string;
+  processed_at: string | null;
 }
 
 type Stage = "login" | "mfa-enroll" | "mfa-verify" | "dashboard";
@@ -108,10 +122,11 @@ const AdminPortal = () => {
   const [apiKeys, setApiKeys] = useState<ApiKeyRow[]>([]);
   const [transactions, setTransactions] = useState<Tx[]>([]);
   const [tab, setTab] = useState("current");
-  const [adminTab, setAdminTab] = useState<"partners" | "exchanges" | "invoices" | "support" | "lending" | "proxy">("exchanges");
+  const [adminTab, setAdminTab] = useState<"partners" | "exchanges" | "invoices" | "support" | "lending" | "proxy" | "payouts">("exchanges");
   const [chatLogs, setChatLogs] = useState<ChatLog[]>([]);
   const [lendEarnTxs, setLendEarnTxs] = useState<LendEarnTx[]>([]);
   const [webhookDeliveries, setWebhookDeliveries] = useState<any[]>([]);
+  const [payoutRequests, setPayoutRequests] = useState<PayoutReq[]>([]);
   const [partnerSearch, setPartnerSearch] = useState("");
   const [proxySearch, setProxySearch] = useState("");
   const navigate = useNavigate();
