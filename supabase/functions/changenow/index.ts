@@ -203,14 +203,27 @@ Deno.serve(async (req) => {
               await svc.from('partner_api_keys').update({ last_used_at: new Date().toISOString() }).eq('key_id', partnerKeyId);
               // Log commission (0.4% cap for API-driven volume)
               const commission = amountNum * 0.004;
+              const mrcTxId = `MRC-${txData?.id?.slice(0, 12) || crypto.randomUUID().slice(0, 12)}`;
               await svc.from('partner_transactions').insert({
                 partner_id: apiKeyRow.partner_id,
                 asset: fromC.toLowerCase(),
                 volume: amountNum,
                 commission_btc: commission,
                 completed_at: new Date().toISOString(),
+                status: 'awaiting_deposit',
+                mrc_transaction_id: mrcTxId,
+                changenow_order_id: txData?.id || null,
               });
-              console.log(`Partner attribution logged: ${partnerKeyId} → ${commission} commission`);
+
+              // Upsert partner balance (add to pending)
+              const { data: bal } = await svc.from('partner_balances').select('id, pending_btc').eq('partner_id', apiKeyRow.partner_id).maybeSingle();
+              if (bal) {
+                await svc.from('partner_balances').update({ pending_btc: (bal as any).pending_btc + commission, updated_at: new Date().toISOString() }).eq('id', (bal as any).id);
+              } else {
+                await svc.from('partner_balances').insert({ partner_id: apiKeyRow.partner_id, pending_btc: commission });
+              }
+
+              console.log(`Partner attribution logged: ${partnerKeyId} → ${commission} commission, MRC ID: ${mrcTxId}`);
             }
           } catch (e) {
             console.error('Partner attribution error:', e);
