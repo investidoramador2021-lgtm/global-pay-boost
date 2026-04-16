@@ -14,7 +14,9 @@ import {
   Activity, Key, ChevronDown, ChevronUp, Loader2, Shield,
   Link2, Code2, Terminal, Globe, Trash2, Eye, EyeOff, Plus,
   BarChart3, Menu, X,
+  Boxes,
 } from "lucide-react";
+import WidgetLabSection from "@/components/partner/WidgetLabSection";
 
 /* ── Obsidian Design Tokens ── */
 const OBS = {
@@ -36,7 +38,7 @@ interface PartnerTx { id: string; partner_id: string; asset: string; volume: num
 interface ApiKey { id: string; key_id: string; webhook_url: string; ip_whitelist: string[]; is_active: boolean; last_used_at: string | null; created_at: string; }
 interface PartnerBalance { available_btc: number; pending_btc: number; total_earned_btc: number; last_credited_at: string | null; }
 
-type Section = "overview" | "referrals" | "earnings" | "account" | "dev-setup" | "api-keys" | "api-ledger" | "webhooks" | "docs" | "payouts";
+type Section = "overview" | "referrals" | "earnings" | "account" | "dev-setup" | "api-keys" | "api-ledger" | "webhooks" | "docs" | "payouts" | "widget-lab";
 
 /* ── Status Pipeline ── */
 const PIPELINE = ["waiting", "confirming", "exchanging", "sending", "finished"] as const;
@@ -119,6 +121,7 @@ function Sidebar({ active, onNavigate, isDeveloper, mobileOpen, onClose }: { act
     { id: "payouts", label: t("portal.payouts", "Balances & Payouts"), icon: Wallet },
     { id: "webhooks", label: t("portal.webhooks", "Webhook Tester"), icon: Globe },
     { id: "docs", label: t("portal.docs", "API Docs"), icon: Code2 },
+    { id: "widget-lab", label: t("portal.widgetLab", "Widget Lab"), icon: Boxes },
   ];
 
   const NavItem = ({ id, label, icon: Icon }: { id: Section; label: string; icon: typeof Link2 }) => (
@@ -325,6 +328,7 @@ function EarningsSection({ commissions }: { commissions: PartnerTx[] }) {
             <TableRow style={{ borderColor: OBS.border }}>
               <TableHead className="text-xs uppercase" style={{ color: OBS.muted }}>Date</TableHead>
               <TableHead className="text-xs uppercase" style={{ color: OBS.muted }}>Asset</TableHead>
+              <TableHead className="text-xs uppercase" style={{ color: OBS.muted }}>Source</TableHead>
               <TableHead className="text-xs uppercase text-right" style={{ color: OBS.muted }}>Volume</TableHead>
               <TableHead className="text-xs uppercase text-right" style={{ color: OBS.muted }}>Commission</TableHead>
               <TableHead className="text-xs uppercase" style={{ color: OBS.muted }}>Status</TableHead>
@@ -332,11 +336,12 @@ function EarningsSection({ commissions }: { commissions: PartnerTx[] }) {
           </TableHeader>
           <TableBody>
             {commissions.length === 0 ? (
-              <TableRow><TableCell colSpan={5} className="text-center py-8 text-sm" style={{ color: OBS.muted }}>No commission records yet.</TableCell></TableRow>
+              <TableRow><TableCell colSpan={6} className="text-center py-8 text-sm" style={{ color: OBS.muted }}>No commission records yet.</TableCell></TableRow>
             ) : commissions.map(c => (
               <TableRow key={c.id} style={{ borderColor: OBS.border }}>
                 <TableCell className="text-xs" style={{ color: OBS.muted }}>{new Date(c.completed_at).toLocaleDateString()}</TableCell>
                 <TableCell className="text-xs uppercase" style={{ color: OBS.text }}>{c.asset}</TableCell>
+                <TableCell><span className="text-[10px] uppercase tracking-wider px-2 py-0.5 rounded-full font-medium" style={{ background: (c as any).source === "widget" ? "rgba(59,130,246,0.15)" : (c as any).source === "referral" ? "rgba(34,211,238,0.15)" : "rgba(255,255,255,0.05)", color: (c as any).source === "widget" ? OBS.accent : (c as any).source === "referral" ? OBS.success : OBS.muted }}>{(c as any).source || "api"}</span></TableCell>
                 <TableCell className="text-right text-xs font-mono" style={{ color: OBS.text }}>${c.volume.toLocaleString("en", { minimumFractionDigits: 2 })}</TableCell>
                 <TableCell className="text-right text-xs font-mono" style={{ color: OBS.success }}>{c.commission_btc.toFixed(8)}</TableCell>
                 <TableCell>{c.is_paid ? <span className="text-xs flex items-center gap-1" style={{ color: OBS.success }}><Check className="w-3 h-3" /> Paid</span> : <span className="text-xs" style={{ color: "#FBBF24" }}>Pending</span>}</TableCell>
