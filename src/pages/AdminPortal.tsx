@@ -371,6 +371,29 @@ const AdminPortal = () => {
     toast({ title: "All logs cleared" });
   };
 
+  const markPayoutPaid = async (payoutId: string, txid: string) => {
+    const { error } = await supabase.from("payout_requests" as any).update({
+      status: "paid",
+      payout_txid: txid,
+      processed_at: new Date().toISOString(),
+    } as any).eq("id", payoutId);
+    if (error) { toast({ title: "Error", description: error.message, variant: "destructive" }); return; }
+    setPayoutRequests(prev => prev.map(p => p.id === payoutId ? { ...p, status: "paid", payout_txid: txid, processed_at: new Date().toISOString() } : p));
+    toast({ title: "Payout marked as Paid" });
+  };
+
+  const rejectPayout = async (payoutId: string) => {
+    const { error } = await supabase.from("payout_requests" as any).update({
+      status: "rejected",
+      processed_at: new Date().toISOString(),
+    } as any).eq("id", payoutId);
+    if (error) { toast({ title: "Error", description: error.message, variant: "destructive" }); return; }
+    setPayoutRequests(prev => prev.map(p => p.id === payoutId ? { ...p, status: "rejected", processed_at: new Date().toISOString() } : p));
+    toast({ title: "Payout rejected" });
+  };
+
+  const [payoutTxidInputs, setPayoutTxidInputs] = useState<Record<string, string>>({});
+
   const copyWallet = (wallet: string) => { navigator.clipboard.writeText(wallet); toast({ title: "Wallet copied" }); };
 
   /* ═══ TxTable sub-component ═══ */
