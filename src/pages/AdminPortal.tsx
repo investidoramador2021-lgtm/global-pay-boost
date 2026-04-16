@@ -582,6 +582,7 @@ const AdminPortal = () => {
               <TabsTrigger value="payouts" className="gap-2 data-[state=active]:bg-primary/10"><DollarSign className="w-4 h-4" /> Payouts ({payoutRequests.filter(p => p.status === "pending").length})</TabsTrigger>
               <TabsTrigger value="lending" className="gap-2 data-[state=active]:bg-primary/10"><Landmark className="w-4 h-4" /> Lending ({lendEarnTxs.length})</TabsTrigger>
               <TabsTrigger value="support" className="gap-2 data-[state=active]:bg-primary/10"><MessageCircle className="w-4 h-4" /> Support ({chatLogs.length})</TabsTrigger>
+              <TabsTrigger value="compliance" className="gap-2" style={{ color: adminTab === "compliance" ? COMPLIANCE_BLUE : undefined }} data-state={adminTab === "compliance" ? "active" : "inactive"}><ShieldAlert className="w-4 h-4" style={{ color: COMPLIANCE_BLUE }} /> Compliance ({complianceHolds.filter(h => h.status === "action_required").length})</TabsTrigger>
             </TabsList>
 
             {/* ═══ EXCHANGES ═══ */}
