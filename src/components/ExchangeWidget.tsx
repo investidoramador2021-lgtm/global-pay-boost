@@ -2976,6 +2976,32 @@ const ExchangeWidget = ({ onTabChange, defaultFrom, defaultTo }: ExchangeWidgetP
                   <CurrencyPicker show={showToPicker} onSelect={setToCurrency} onClose={() => setShowToPicker(false)} exclude={fromCurrency?.ticker} />
                 </div>
 
+                {/* Rate-mode disclaimer / 15-min Fixed-Rate countdown */}
+                {fromCurrency && toCurrency && estimatedAmount && estimatedAmount !== "—" && estimatedAmount !== "syncing" && (
+                  fixedRate ? (
+                    <div className="mt-2 flex items-center gap-2 rounded-md border border-trust/25 bg-trust/[0.06] px-3 py-2">
+                      <Lock className="h-3.5 w-3.5 shrink-0 text-trust" />
+                      <p className="font-body text-[11px] leading-tight text-trust sm:text-xs">
+                        {t("widget.fixedRateLockedFor", "Rate locked for")}{" "}
+                        <span style={{ fontFamily: "'Roboto Mono', monospace" }} className="font-bold">
+                          {String(Math.floor(fixedLockSeconds / 60)).padStart(2, "0")}:{String(fixedLockSeconds % 60).padStart(2, "0")}
+                        </span>{" "}
+                        {t("widget.minutes", "minutes")} · {t("widget.guaranteedOutput", "guaranteed output amount")}
+                      </p>
+                    </div>
+                  ) : (
+                    <div className="mt-2 flex items-start gap-2 rounded-md border border-border bg-accent/40 px-3 py-2">
+                      <Info className="mt-0.5 h-3.5 w-3.5 shrink-0 text-muted-foreground" />
+                      <p className="font-body text-[11px] leading-tight text-muted-foreground sm:text-xs">
+                        {t(
+                          "widget.floatingRateDisclaimer",
+                          "Final amount depends on market price at time of confirmation."
+                        )}
+                      </p>
+                    </div>
+                  )
+                )}
+
                 <Button
                   className="group relative mt-5 w-full min-h-[52px] overflow-hidden text-base font-bold transition-all duration-100 shadow-card hover:shadow-neon"
                   size="lg"
