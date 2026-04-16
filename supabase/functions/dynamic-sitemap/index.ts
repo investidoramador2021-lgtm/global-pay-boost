@@ -3,14 +3,13 @@ import { createClient } from "https://esm.sh/@supabase/supabase-js@2.49.1";
 
 const BASE_URL = "https://mrcglobalpay.com";
 const BATCH_SIZE = 5000;
+// "" = English (default, no prefix). Listed langs match the i18n config.
 const LANGS = ["", "es", "pt", "fr", "ja", "fa", "ur", "he", "af", "hi", "vi", "tr", "uk"];
 
-// Pull ALL valid pairs from the live `pairs` table, paginating past Postgres' 1000-row default.
 async function fetchAllValidPairs(svc: ReturnType<typeof createClient>) {
   const all: Array<{ from_ticker: string; to_ticker: string; updated_at: string }> = [];
   const pageSize = 1000;
   let from = 0;
-  // Hard ceiling at 50k rows for safety.
   while (from < 50000) {
     const { data, error } = await svc
       .from("pairs")
@@ -26,6 +25,28 @@ async function fetchAllValidPairs(svc: ReturnType<typeof createClient>) {
   return all;
 }
 
+/**
+ * Build the full hreflang block for a given pair slug.
+ * Every URL block (English + each translation) emits the SAME set of
+ * <xhtml:link> alternates — including a self-referential one and an
+ * x-default pointing to the English version. This is the bidirectional
+ * pattern Google requires; without it, language variants get reported as
+ * "Duplicate, Google chose different canonical".
+ */
+function buildAlternates(slug: string): string {
+  let block = "";
+  for (const lang of LANGS) {
+    const hreflang = lang || "en";
+    const prefix = lang ? `/${lang}` : "";
+    block += `
+    <xhtml:link rel="alternate" hreflang="${hreflang}" href="${BASE_URL}${prefix}/exchange/${slug}" />`;
+  }
+  // x-default → English version
+  block += `
+    <xhtml:link rel="alternate" hreflang="x-default" href="${BASE_URL}/exchange/${slug}" />`;
+  return block;
+}
+
 Deno.serve(async (req) => {
   const url = new URL(req.url);
   const path = url.pathname.replace(/^\/dynamic-sitemap/, "") || "/";
@@ -35,10 +56,12 @@ Deno.serve(async (req) => {
     Deno.env.get("SUPABASE_SERVICE_ROLE_KEY")!
   );
 
-  // Sitemap index
+  // Sitemap index — split by URL count, accounting for the fact that each pair
+  // now produces LANGS.length URL entries (13 by default).
   if (path === "/" || path === "/index.xml") {
     const allPairs = await fetchAllValidPairs(svc);
-    const batchCount = Math.max(1, Math.ceil(allPairs.length / BATCH_SIZE));
+    const totalUrls = allPairs.length * LANGS.length;
+    const batchCount = Math.max(1, Math.ceil(totalUrls / BATCH_SIZE));
     const today = new Date().toISOString().split("T")[0];
 
     let xml = `<?xml version="1.0" encoding="UTF-8"?>
@@ -56,38 +79,45 @@ Deno.serve(async (req) => {
     });
   }
 
-  // Batch sitemaps — sourced directly from the live `pairs` table
+  // Batch sitemaps — emit one <url> entry per (pair × language) combination,
+  // each with the full bidirectional hreflang alternates set.
   const batchMatch = path.match(/^\/batch-(\d+)\.xml$/);
   if (batchMatch) {
     const batchIndex = parseInt(batchMatch[1]);
     const allPairs = await fetchAllValidPairs(svc);
-    const start = batchIndex * BATCH_SIZE;
-    const slice = allPairs.slice(start, start + BATCH_SIZE);
 
-    let xml = `<?xml version="1.0" encoding="UTF-8"?>
-<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
-        xmlns:xhtml="http://www.w3.org/1999/xhtml">`;
-
-    for (const p of slice) {
+    // Flatten into one logical entry per (pair, lang) so batching stays even.
+    type Entry = { slug: string; lang: string; lastmod: string };
+    const entries: Entry[] = [];
+    for (const p of allPairs) {
       const from = (p.from_ticker || "").toLowerCase();
       const to = (p.to_ticker || "").toLowerCase();
       if (!from || !to) continue;
       const slug = `${from}-to-${to}`;
       const lastmod = (p.updated_at || new Date().toISOString()).split("T")[0];
+      for (const lang of LANGS) {
+        entries.push({ slug, lang, lastmod });
+      }
+    }
 
+    const start = batchIndex * BATCH_SIZE;
+    const slice = entries.slice(start, start + BATCH_SIZE);
+
+    let xml = `<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
+        xmlns:xhtml="http://www.w3.org/1999/xhtml">`;
+
+    for (const e of slice) {
+      const prefix = e.lang ? `/${e.lang}` : "";
+      const loc = `${BASE_URL}${prefix}/exchange/${e.slug}`;
+      // English version gets higher priority since it's the canonical.
+      const priority = e.lang ? "0.5" : "0.7";
       xml += `
   <url>
-    <loc>${BASE_URL}/exchange/${slug}</loc>
-    <lastmod>${lastmod}</lastmod>
+    <loc>${loc}</loc>
+    <lastmod>${e.lastmod}</lastmod>
     <changefreq>daily</changefreq>
-    <priority>0.7</priority>`;
-      for (const lang of LANGS) {
-        const hreflang = lang || "en";
-        const prefix = lang ? `/${lang}` : "";
-        xml += `
-    <xhtml:link rel="alternate" hreflang="${hreflang}" href="${BASE_URL}${prefix}/exchange/${slug}" />`;
-      }
-      xml += `
+    <priority>${priority}</priority>${buildAlternates(e.slug)}
   </url>`;
     }
     xml += `\n</urlset>`;
