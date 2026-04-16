@@ -827,9 +827,18 @@ const AdminPortal = () => {
                       ) : sortedFilteredProxyTxs.map(tx => {
                         const whd = webhookDeliveries.find((w: any) => w.mrc_transaction_id === tx.mrc_transaction_id);
                         const whStatus = whd ? whd.status : "—";
+                        const isHeld = tx.status === "action_required" || tx.status === "manual_hold";
+                        const holdForTx = isHeld ? complianceHolds.find(h => h.partner_transaction_id === tx.id && h.status === "action_required") : null;
                         return (
-                        <TableRow key={tx.id}>
-                          <TableCell className="font-mono text-xs text-primary">{tx.mrc_transaction_id || "—"}</TableCell>
+                        <TableRow key={tx.id} className={isHeld ? "border-l-2 cursor-pointer hover:bg-[#00A3FF]/5" : ""} style={isHeld ? { borderLeftColor: COMPLIANCE_BLUE } : {}}
+                          onClick={() => { if (holdForTx) openComplianceDrawer(holdForTx); }}
+                        >
+                          <TableCell className="font-mono text-xs text-primary">
+                            <div className="flex items-center gap-1.5">
+                              {isHeld && <span className="relative flex h-2.5 w-2.5"><span className="animate-ping absolute inline-flex h-full w-full rounded-full opacity-75" style={{ background: COMPLIANCE_BLUE }} /><span className="relative inline-flex rounded-full h-2.5 w-2.5" style={{ background: COMPLIANCE_BLUE }} /></span>}
+                              {tx.mrc_transaction_id || "—"}
+                            </div>
+                          </TableCell>
                           <TableCell className="font-mono text-xs text-muted-foreground">{tx.changenow_order_id || "—"}</TableCell>
                           <TableCell className="text-sm">{getPartnerName(tx.partner_id)}</TableCell>
                           <TableCell className="uppercase text-sm">{tx.asset}</TableCell>
@@ -839,9 +848,10 @@ const AdminPortal = () => {
                             <span className={`text-xs font-semibold px-2 py-0.5 rounded ${
                               tx.status === "success" ? "bg-emerald-500/20 text-emerald-400" :
                               tx.status === "failed" ? "bg-red-500/20 text-red-400" :
+                              isHeld ? "" :
                               "bg-amber-500/20 text-amber-400"
-                            }`}>
-                              {tx.status || "pending"}
+                            }`} style={isHeld ? { background: `${COMPLIANCE_BLUE}20`, color: COMPLIANCE_BLUE } : {}}>
+                              {isHeld ? "⚠ Action Required" : (tx.status || "pending")}
                             </span>
                           </TableCell>
                           <TableCell>
