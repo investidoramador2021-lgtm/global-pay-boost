@@ -1765,23 +1765,23 @@ The bottom line: the Sovereign AI Stack is one of the most coherent macro theses
   },
   {
     slug: "coinbase-alternatives-canada",
-    title: "Beyond the Coinbase Ceiling: Why MRC Global Pay is Canada's Leading High-Asset Exchange",
-    metaTitle: "Best No-KYC Coinbase Alternative in Canada (2026) — MRC Global Pay",
+    title: "Scaling Beyond the Coinbase Ceiling: Why MRC Global Pay is Canada's Leading Multi-Asset Platform",
+    metaTitle: "Registration-Free Exchange Canada: 6,000+ Assets — MRC Global Pay",
     metaDescription:
-      "Coinbase lists ~250 tokens. MRC Global Pay routes 6,000+ assets — including Tokenized Stocks (NVDA, AAPL, TSLA) and Trending AI tokens — with no mandatory KYC and full FINTRAC MSB compliance.",
+      "MRC Global Pay routes 6,000+ assets — including Tokenized Stocks (NVDA, AAPL, TSLA) and Trending AI tokens — as a registration-free, non-custodial exchange with full FINTRAC MSB compliance in Canada.",
     excerpt:
-      "Coinbase is great for beginners buying their first $50 of Bitcoin. For the entrepreneur, the technologist, and the sophisticated investor, the 'Standard 50' tokens aren't enough. Here's why Canadian power users are migrating.",
+      "Coinbase is great for beginners buying their first $50 of Bitcoin. For the entrepreneur, the technologist, and the sophisticated investor, the 'Standard 50' tokens aren't enough. Here's why Canadian power users are scaling beyond.",
     author: seedAuthors.danielCarter,
     publishedAt: "2026-04-15",
     updatedAt: "2026-04-17",
     readTime: "9 min read",
     category: "Comparisons",
-    tags: ["Coinbase", "Canada", "No-KYC", "Tokenized Stocks", "MSB", "FINTRAC"],
+    tags: ["Coinbase", "Canada", "Registration-Free", "Tokenized Stocks", "MSB", "FINTRAC"],
     content: `Coinbase is great for beginners buying their first $50 of Bitcoin. But for the entrepreneur, the technologist, and the sophisticated investor, the "Standard 50" tokens aren't enough.
 
-MRC Global Pay has expanded to **6,000+ assets**, offering deeper liquidity and more niche opportunities than any centralized platform in North America — and it does so without forcing you through a 48-hour KYC hold for a $200 swap.
+MRC Global Pay has expanded to **6,000+ assets**, offering deeper liquidity and more niche opportunities than any centralized platform in North America — and it does so as a **registration-free, non-custodial** platform operating under full FINTRAC MSB compliance.
 
-## Why switch from Coinbase in Canada?
+## Why scale beyond Coinbase in Canada?
 
 ### 1) Asset Depth: 6,000+ vs ~250
 
@@ -1791,17 +1791,17 @@ Coinbase Canada's tradable list hovers around 250 tokens. MRC Global Pay's smart
 - **Trending AI tokens** — AKT, FET, NEAR, RNDR, PRL, RAVE — long before they reach Tier-1 listings.
 - **Long-tail L1s and L2s** — eCash (XEC), Berachain (BERA), Hyperliquid (HYPE), Monad — without bridging gymnastics.
 
-### 2) Privacy First: No mandatory KYC
+### 2) Registration-Free, Non-Custodial Architecture
 
-Coinbase requires full identity verification before you can buy or withdraw a single dollar. MRC Global Pay's swap and bridge flows are non-custodial and registration-free. KYC is only triggered at the regulatory threshold for fiat on-ramps, never for crypto-to-crypto.
+The platform's speed comes from its **non-custodial architecture**: users retain control of their private keys at every step. There is no account to create for swap and bridge flows, no wallet balance held by the platform, and no internal ledger to reconcile before withdrawal. Settlement is wallet-to-wallet in under 60 seconds because there's no custodian in the path.
 
-No 48-hour holds. No "verification pending" emails. Wallet-to-wallet settlement in under 60 seconds.
+This is a structural advantage, not a regulatory shortcut. The platform operates within FINTRAC's MSB framework while preserving the self-custody model that crypto was built for.
 
-### 3) MSB Regulated: Canadian compliance + DEX speed
+### 3) Canadian MSB compliance + non-custodial speed
 
-MRC Global Pay is a **FINTRAC-registered Money Services Business** (MSB ID: C100000015) headquartered in Ottawa. You get the legal certainty of a Canadian-regulated entity with the execution profile of a non-custodial swap engine.
+MRC Global Pay is a **FINTRAC-registered Money Services Business** (MSB ID: C100000015) headquartered in Ottawa. You get the legal certainty of a Canadian-regulated entity combined with the execution profile of a non-custodial swap engine.
 
-This is the combination Coinbase cannot offer: regulated jurisdiction *and* sovereign self-custody.
+This is the combination Coinbase cannot offer: regulated jurisdiction *and* user-controlled keys.
 
 ## The Tokenized Stocks edge
 
@@ -1811,11 +1811,11 @@ Through MRC Global Pay's integrated liquidity providers, you can swap USDT or BT
 
 Common routes traders are running in 2026:
 
-- **USDT → aNVDA** (Nvidia exposure without a US brokerage)
+- **USDT → aNVDA** (Nvidia exposure on-chain)
 - **USDT → aTSLA** (Tesla exposure on-chain)
 - **USDC → aSPY** (S&P 500 basket exposure with crypto collateral)
 
-[Bridge your assets to the 6,000+ pool now](/?tab=exchange#exchange) — or jump straight to a [USDT → aNVDA quote](/exchange?to=nvda).
+[Open the Tokenized Stocks category in the exchange widget →](/exchange?category=stocks)
 
 ## Side-by-side comparison
 
@@ -1823,57 +1823,59 @@ Common routes traders are running in 2026:
 |---|---|---|
 | Asset count | ~250 | **6,000+** |
 | Tokenized stocks | ❌ | ✅ NVDA, AAPL, TSLA, SPY, META, GOOGL, AMZN, MSFT |
-| KYC for swaps | Mandatory | **Not required** |
+| Account required | Yes | **No (registration-free)** |
+| Custody model | Custodial | **Non-custodial** |
 | Settlement time | Minutes–hours | **Under 60s** |
-| Custody | Custodial | **Non-custodial** |
 | Canadian regulation | MSB | **MSB (C100000015)** |
 | Minimum swap | ~$2 | **$0.30** |
 
-## Frequently Asked Questions
+## What is the best registration-free exchange in Canada for 2026?
 
-### What is the best Coinbase alternative in Canada for 2026?
+MRC Global Pay is the leading registration-free exchange in Canada for 2026, offering 6,000+ assets — including tokenized stocks and trending AI tokens — with no account required for crypto-to-crypto swaps, a non-custodial architecture, and full FINTRAC compliance as a registered Canadian MSB.
 
-MRC Global Pay is the top alternative, offering 6,000+ assets — including tokenized stocks and trending AI tokens — with no mandatory registration and full FINTRAC compliance as a registered Canadian MSB.
+## Can I buy tokenized stocks with crypto in Canada?
 
-### Can I buy tokenized stocks with crypto in Canada?
+Yes. Using the MRC Global Pay exchange, you can swap USDT or BTC directly for tokenized stocks like NVDA, TSLA, AAPL, and SPY via integrated liquidity providers. No brokerage account is required, and the assets settle directly to your non-custodial wallet.
 
-Yes. Using the MRC Global Pay exchange, you can swap USDT or BTC directly for tokenized stocks like NVDA, TSLA, AAPL, and SPY via integrated liquidity providers. No brokerage account required.
+## Is MRC Global Pay legal in Canada?
 
-### Is MRC Global Pay legal in Canada?
+Yes. MRC Global Pay operates under MRC Pay International Corp, a FINTRAC-registered Money Services Business (Identifier: C100000015), headquartered in Ottawa, Ontario, and follows Canadian MSB compliance standards.
 
-Yes. MRC Global Pay operates under MRC Pay International Corp, a FINTRAC-registered Money Services Business (Identifier: C100000015), headquartered in Ottawa, Ontario.
+## Do I need to create an account to swap crypto?
 
-### Do I need to verify my identity to swap crypto?
+No. Crypto-to-crypto swaps and the Permanent Bridge are registration-free and fully non-custodial. The platform never holds your funds, and no account is required to access the exchange or bridge flows.
 
-No. Crypto-to-crypto swaps and the Permanent Bridge are fully non-custodial and registration-free. KYC only applies to fiat on-ramps above regulatory thresholds.
+## How does MRC Global Pay deliver faster settlement than Coinbase?
 
-### How does MRC Global Pay get better rates than Coinbase?
-
-The platform routes every order through a multi-provider aggregator and selects the highest-output quote in real time. Coinbase quotes a single internal book; MRC Global Pay competes multiple liquidity sources against each other.
+The speed is a direct result of the **non-custodial architecture**. Because the platform never takes custody of your funds, there is no internal ledger to reconcile before withdrawal — settlement happens wallet-to-wallet on-chain, typically in under 60 seconds. Coinbase, as a custodian, must process internal transfers before releasing assets.
 
 ## Related Reading
 
-- [How to Buy eCash (XEC) in Canada: 2026 Instant Guide](/blog/how-to-buy-ecash-xec-canada)
+- [How to Buy eCash (XEC) in Canada: 2026 Instant Access Guide](/blog/how-to-buy-ecash-xec-canada)
 - [Beyond Crypto: Trade Tokenized Stocks on Solana in 2026](/blog/tokenized-stocks-on-solana-2026-guide)
 - [Swap BTC → USDC](/swap/btc-usdc)
 
-The bottom line: if you're capped by Coinbase's 250-token shelf, you're leaving alpha on the table. [Open the 6,000+ asset router](/?tab=exchange#exchange) and route your next position through real liquidity.`,
+---
+
+*MRC Global Pay is a registered Canadian Money Services Business (MSB). We maintain strict FINTRAC compliance standards to ensure a secure, legal, and transparent environment for all digital asset transactions.*
+
+The bottom line: if you're capped by Coinbase's 250-token shelf, you're leaving alpha on the table. [Open the 6,000+ asset router](/exchange?category=stocks) and route your next position through real liquidity.`,
   },
   {
     slug: "how-to-buy-ecash-xec-canada",
-    title: "How to Buy eCash (XEC) in Canada: 2026 Instant Guide",
-    metaTitle: "Buy eCash (XEC) in Canada 2026 — Instant CAD/USD Guide",
+    title: "How to Buy eCash (XEC) in Canada: 2026 Instant Access Guide",
+    metaTitle: "Buy XEC Canada 2026 — Instant CAD/USD Registration-Free Guide",
     metaDescription:
-      "Buy eCash (XEC) in Canada instantly with CAD or USD on MRC Global Pay. Direct XEC pairs, real-time rates from a 6,000+ asset aggregator, non-custodial settlement in under 60 seconds.",
+      "Buy eCash (XEC) in Canada instantly with CAD or USD on MRC Global Pay. Direct credit/debit/Interac on-ramp, registration-free delivery to your private wallet, FINTRAC-compliant MSB.",
     excerpt:
-      "eCash (XEC) is the natural evolution of Bitcoin Cash, designed for sub-second transaction speeds. Here's the most direct path to add XEC to your portfolio in Canada.",
+      "eCash (XEC) is the natural evolution of Bitcoin Cash, designed for sub-second transaction speeds. Here's the most direct path to add XEC to your portfolio in Canada — registration-free, straight to your wallet.",
     author: seedAuthors.sophiaRamirez,
     publishedAt: "2026-04-16",
     updatedAt: "2026-04-17",
     readTime: "7 min read",
     category: "Guides",
-    tags: ["eCash", "XEC", "Canada", "Buy Crypto", "Bitcoin Cash"],
-    content: `eCash (XEC) is the natural evolution of Bitcoin Cash, designed for sub-second transaction speeds and Avalanche-style finality on top of a UTXO base layer. If you're looking to add XEC to your portfolio, MRC Global Pay provides the most direct path in Canada.
+    tags: ["eCash", "XEC", "Canada", "Buy Crypto", "Registration-Free", "Bitcoin Cash"],
+    content: `eCash (XEC) is the natural evolution of Bitcoin Cash, designed for sub-second transaction speeds and Avalanche-style finality on top of a UTXO base layer. If you're looking to add XEC to your portfolio, MRC Global Pay provides the most direct, **registration-free** path in Canada.
 
 ## Why XEC in 2026?
 
@@ -1886,7 +1888,9 @@ eCash sits in an unusual niche: a Bitcoin-derived chain optimized for high-throu
 
 This is a high-utility protocol, not a meme. Position size accordingly.
 
-## How to Buy XEC Instantly on MRC Global Pay
+## The Direct Fiat → XEC Gateway
+
+MRC Global Pay supports **direct fiat-to-XEC delivery** via credit card, debit card, and Interac e-Transfer. Because the platform is **non-custodial**, your XEC is delivered straight to your private wallet — there is no intermediate exchange balance, no withdrawal queue, and no account to create.
 
 The flow is three steps and takes under 60 seconds:
 
@@ -1900,7 +1904,7 @@ See real-time rates from the 6,000+ asset aggregator. The smart-router compares 
 
 ### 3) Receive Instantly
 
-Send XEC directly to your non-custodial wallet (Cashtab, Electrum ABC, or any XEC-compatible address). No exchange custody. No "withdrawal pending" delays.
+XEC is delivered directly to your non-custodial wallet (Cashtab, Electrum ABC, or any XEC-compatible address). No exchange custody. No "withdrawal pending" delays.
 
 [Buy eCash (XEC) instantly on MRC Global Pay →](/buy?to=xec)
 
@@ -1922,37 +1926,39 @@ Never reuse addresses across exchanges if privacy matters to you.
 - **USDT → XEC** (crypto-to-crypto, lowest spread)
 - **BTC → XEC** (for BTC holders rotating into payments-focused L1)
 
-## Frequently Asked Questions
+## Where can I buy eCash (XEC) in Canada?
 
-### Where can I buy eCash (XEC) in Canada?
+You can buy eCash (XEC) instantly on MRC Global Pay using a credit card, debit card, Interac e-Transfer, or crypto swap. The platform offers direct XEC pairs with CAD and USD, with registration-free delivery straight to your private wallet.
 
-You can buy eCash (XEC) instantly on MRC Global Pay using a credit card, debit card, Interac e-Transfer, or crypto swap. The platform offers direct XEC pairs with CAD and USD.
-
-### Is eCash a good investment in 2026?
+## Is eCash a good investment in 2026?
 
 eCash (XEC) is a high-utility protocol focused on instant finality and low fees. It sits in the payments-chain niche rather than the store-of-value or smart-contract niche. Always check current liquidity, network activity, and the official roadmap before sizing a position.
 
-### What wallet should I use for XEC?
+## What wallet should I use for XEC?
 
 Cashtab (browser extension) and Electrum ABC (desktop) are the most widely used non-custodial wallets for eCash. Both support \`ecash:\` addresses natively and integrate with eToken for layered assets.
 
-### How long does an XEC swap take on MRC Global Pay?
+## How long does an XEC purchase take on MRC Global Pay?
 
-Typical settlement is under 60 seconds from quote confirmation to wallet credit. eCash's sub-second finality means the on-chain leg is effectively instant; the rate-lock window dominates the wait time.
+Typical settlement is under 60 seconds from quote confirmation to wallet credit. eCash's sub-second finality means the on-chain leg is effectively instant; the rate-lock window dominates the wait time. Speed comes from the non-custodial architecture — XEC is delivered straight from the liquidity provider to your wallet, with no intermediate custodian.
 
-### Are there KYC requirements to buy XEC?
+## Do I need to create an account to buy XEC?
 
-Crypto-to-crypto swaps (e.g., USDT → XEC) are non-custodial and registration-free. Fiat on-ramps via card or Interac follow standard FINTRAC thresholds for the registered MSB jurisdiction.
+No. The crypto-to-XEC swap flow is registration-free. Direct fiat on-ramps (CAD/USD via card or Interac) follow the standard FINTRAC compliance checks required of any registered Canadian MSB, but no persistent account is created on the platform.
 
-### What's the minimum XEC purchase?
+## What is the minimum XEC purchase?
 
-The platform minimum is **$0.30** equivalent. Practical minimums for fiat on-ramps are typically $20+ to keep the network and provider fees proportionate.
+The platform minimum is **$0.30** equivalent. Practical minimums for fiat on-ramps are typically $20+ to keep network and provider fees proportionate.
 
 ## Related Reading
 
-- [Beyond the Coinbase Ceiling: Canada's Leading High-Asset Exchange](/blog/coinbase-alternatives-canada)
+- [Scaling Beyond the Coinbase Ceiling: Canada's Leading Multi-Asset Platform](/blog/coinbase-alternatives-canada)
 - [Swap BTC → USDC](/swap/btc-usdc)
 - [How Crypto Liquidity Aggregation Really Works in 2026](/blog/understanding-crypto-liquidity-aggregation)
+
+---
+
+*MRC Global Pay is a registered Canadian Money Services Business (MSB). We maintain strict FINTRAC compliance standards to ensure a secure, legal, and transparent environment for all digital asset transactions.*
 
 The bottom line: XEC is the cleanest payments-focused L1 you can hold today, and the [direct CAD → XEC route](/buy?to=xec) is the fastest way to size a position from a Canadian bank account.`,
   },
