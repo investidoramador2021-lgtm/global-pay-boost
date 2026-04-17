@@ -1392,6 +1392,7 @@ function DashboardContent() {
   const [commissions, setCommissions] = useState<PartnerTx[]>([]);
   const [activeKeys, setActiveKeys] = useState(0);
   const [isDeveloper, setIsDeveloper] = useState(false);
+  const [affiliateLeads, setAffiliateLeads] = useState<Array<{ ref_token: string; theme: string; source: string; created_at: string }>>([]);
   const [loading, setLoading] = useState(true);
   const [statusLoading, setStatusLoading] = useState(false);
   const [activeSection, setActiveSection] = useState<Section>("overview");
