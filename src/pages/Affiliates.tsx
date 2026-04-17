@@ -463,10 +463,108 @@ const Affiliates = () => (
               );
             })}
           </div>
+
+          {/* Embeddable widget snippet */}
+          <div className="mt-12 mx-auto max-w-3xl rounded-2xl border border-border bg-card p-6 sm:p-8 transition-all hover:border-primary/40 hover:shadow-lg">
+            <div className="flex items-start gap-3">
+              <Code2 className="h-6 w-6 text-primary shrink-0" aria-hidden />
+              <div>
+                <h3 className="font-display text-lg font-semibold text-foreground">
+                  Embeddable Instant Swap Widget
+                </h3>
+                <p className="mt-1.5 text-sm text-muted-foreground leading-relaxed">
+                  Drop this iframe into any website, blog, or landing page. Copy and paste this code
+                  after registering to get your personalized tracking version with your unique
+                  affiliate ID baked in.
+                </p>
+              </div>
+            </div>
+            <WidgetSnippet />
+          </div>
         </div>
       </section>
 
-      {/* ═══ WHY CHOOSE MRC GLOBALPAY ═══ */}
+      {/* ═══ PARTNER DASHBOARD TEASER ═══ */}
+      <section className="border-b border-border bg-muted/30 py-16 sm:py-20">
+        <div className="container mx-auto max-w-5xl px-4">
+          <div className="grid gap-8 md:grid-cols-2 md:items-center">
+            <div>
+              <div className="inline-flex items-center gap-2 rounded-full border border-primary/30 bg-primary/10 px-3 py-1 text-xs font-display font-semibold text-primary">
+                <BarChart3 className="h-3.5 w-3.5" /> Real-Time Analytics
+              </div>
+              <h2 className="mt-4 font-display text-3xl font-bold text-foreground sm:text-4xl">
+                Track Everything in Your Personal Partner Dashboard
+              </h2>
+              <p className="mt-4 font-body text-muted-foreground leading-relaxed">
+                After registration you'll get access to a real-time dashboard where you can see all
+                referred swaps, commissions earned, payouts, and performance stats — updated live
+                with on-chain attribution.
+              </p>
+              <ul className="mt-5 space-y-2.5">
+                {[
+                  "Live click → swap → commission funnel",
+                  "Per-link, per-banner, per-widget attribution",
+                  "Crypto and fiat payout history",
+                  "Conversion stats by region and asset",
+                ].map((item) => (
+                  <li key={item} className="flex items-start gap-2 text-sm text-foreground">
+                    <CheckCircle2 className="mt-0.5 h-4 w-4 text-primary shrink-0" />
+                    <span>{item}</span>
+                  </li>
+                ))}
+              </ul>
+              <div className="mt-7">
+                <a
+                  href="/partner-dashboard"
+                  className="btn-shimmer inline-flex items-center justify-center gap-2 rounded-xl bg-primary px-7 py-3.5 font-display text-sm font-bold text-primary-foreground shadow-neon transition-all duration-100 hover:bg-primary/90 hover:-translate-y-0.5"
+                >
+                  Go to Partner Dashboard <ArrowRight className="h-4 w-4" />
+                </a>
+              </div>
+            </div>
+
+            {/* Mock dashboard preview */}
+            <div className="rounded-2xl border border-border bg-[hsl(230_15%_6%)] p-5 shadow-lg">
+              <div className="flex items-center justify-between border-b border-border/60 pb-3">
+                <span className="font-display text-xs font-semibold text-foreground">Partner Dashboard</span>
+                <span className="inline-flex items-center gap-1 text-[10px] font-mono text-primary">
+                  <span className="h-1.5 w-1.5 rounded-full bg-primary animate-pulse" /> LIVE
+                </span>
+              </div>
+              <div className="mt-4 grid grid-cols-2 gap-3">
+                {[
+                  { label: "Referred Volume", value: "$182,430" },
+                  { label: "Earnings (30d)", value: "$546.20" },
+                  { label: "Active Referrals", value: "1,247" },
+                  { label: "Conversion Rate", value: "4.8%" },
+                ].map((s) => (
+                  <div key={s.label} className="rounded-lg border border-border/60 bg-card/40 p-3">
+                    <p className="text-[10px] uppercase tracking-wider text-muted-foreground font-display">
+                      {s.label}
+                    </p>
+                    <p className="mt-1 font-display text-lg font-bold text-foreground">{s.value}</p>
+                  </div>
+                ))}
+              </div>
+              <div className="mt-4 rounded-lg border border-border/60 bg-card/40 p-3">
+                <div className="flex items-end justify-between gap-1.5 h-16">
+                  {[40, 65, 50, 80, 55, 90, 75, 95, 70, 85, 100, 88].map((h, i) => (
+                    <div
+                      key={i}
+                      className="flex-1 rounded-sm bg-primary/70"
+                      style={{ height: `${h}%` }}
+                    />
+                  ))}
+                </div>
+                <p className="mt-2 text-[10px] text-muted-foreground font-mono text-center">
+                  Last 12 days · referred swaps
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
       <section className="border-b border-border bg-muted/30 py-16 sm:py-20">
         <div className="container mx-auto max-w-6xl px-4">
           <div className="mx-auto max-w-2xl text-center">
