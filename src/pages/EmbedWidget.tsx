@@ -345,11 +345,11 @@ const EmbedWidget = () => {
 
         {belowMin ? (
           <div className="mb-4 rounded-lg border border-amber-400/20 bg-amber-400/10 px-3 py-2 text-[11px] text-amber-100">
-            Minimum amount: {formatQuoteAmount(String(minAmount))} {fromCurrency?.ticker?.toUpperCase()}
+            {t("widget.minimumAmount", "Minimum amount:")} {formatQuoteAmount(String(minAmount))} {fromCurrency?.ticker?.toUpperCase()}
           </div>
         ) : (
           <div className="mb-4 text-right text-[10px] uppercase tracking-wider text-white/30">
-            Live fixed-rate pricing
+            {t("widget.fixedRate", "Live fixed-rate pricing")}
           </div>
         )}
 
