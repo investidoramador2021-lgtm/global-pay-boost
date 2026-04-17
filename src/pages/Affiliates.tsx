@@ -117,8 +117,8 @@ const WidgetPreview = () => (
   <div className="rounded-2xl border border-border bg-card shadow-lg overflow-hidden">
     {/* Browser chrome */}
     <div className="flex items-center gap-1.5 border-b border-border/60 bg-muted/40 px-3 py-2">
-      <span className="h-2.5 w-2.5 rounded-full bg-destructive/70" />
-      <span className="h-2.5 w-2.5 rounded-full bg-amber-500/70" />
+      <span className="h-2.5 w-2.5 rounded-full bg-[hsl(0_70%_60%)]/70" />
+      <span className="h-2.5 w-2.5 rounded-full bg-[hsl(45_90%_55%)]/70" />
       <span className="h-2.5 w-2.5 rounded-full bg-primary/70" />
       <span className="ms-3 font-mono text-[10px] text-muted-foreground truncate">
         mrcglobalpay.com/embed/widget
