@@ -323,6 +323,9 @@ const Affiliates = () => (
               >
                 Join the Affiliate Program — Free & Instant <ArrowRight className="h-4 w-4" />
               </a>
+              <p className="mt-3 text-xs text-muted-foreground max-w-md mx-auto">
+                Create your free Partner Account to get your referral tools and start tracking earnings immediately.
+              </p>
             </div>
 
             <p className="mt-5 text-xs text-muted-foreground">
