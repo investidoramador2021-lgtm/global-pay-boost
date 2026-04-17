@@ -9,7 +9,16 @@ import {
   type Currency,
 } from "@/lib/changenow";
 
-const SUPPORTED_LANGS = ["en", "es", "pt", "fr", "ja", "fa", "ur", "he", "af", "hi", "vi", "tr", "uk"];
+export const SUPPORTED_LANGS = ["en", "es", "pt", "fr", "ja", "fa", "ur", "he", "af", "hi", "vi", "tr", "uk"];
+
+export const pickSupportedLang = (candidates: readonly (string | undefined | null)[]): string => {
+  for (const raw of candidates) {
+    if (!raw) continue;
+    const base = raw.toLowerCase().split("-")[0];
+    if (SUPPORTED_LANGS.includes(base)) return base;
+  }
+  return "en";
+};
 
 const DEFAULT_FROM = "btc";
 const DEFAULT_TO = "usdt";
