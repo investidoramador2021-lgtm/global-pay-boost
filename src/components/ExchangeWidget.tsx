@@ -259,7 +259,93 @@ function networkLabel(c: { ticker: string; name: string }): string | null {
   return null;
 }
 
-function getPreferredGuardarianNetworkCode(currency: GuardarianCurrency | null): string | undefined {
+function normalizeTokenSearchValue(value: string): string {
+  return value.toLowerCase().replace(/[^a-z0-9]/g, "");
+}
+
+function matchesExchangeCurrencySearch(c: Currency, query: string): boolean {
+  if (!query) return true;
+
+  const q = query.toLowerCase().trim();
+  const qNormalized = normalizeTokenSearchValue(query);
+  const display = displayTicker(c);
+  const network = networkLabel(c) || "";
+  const searchable = [
+    c.ticker,
+    c.name,
+    display,
+    network,
+    `${display} ${network}`,
+    `${c.name} ${network}`,
+  ];
+
+  return searchable.some((value) => {
+    const raw = value.toLowerCase();
+    return raw.includes(q) || normalizeTokenSearchValue(value).includes(qNormalized);
+  });
+}
+
+const ExchangeCurrencyPickerView = ({
+  show,
+  currencies,
+  exclude,
+  searchQuery,
+  onSearchChange,
+  searchPlaceholder,
+  onSelect,
+  onClose,
+}: {
+  show: boolean;
+  currencies: Currency[];
+  exclude?: string;
+  searchQuery: string;
+  onSearchChange: (value: string) => void;
+  searchPlaceholder: string;
+  onSelect: (c: Currency) => void;
+  onClose: () => void;
+}) => {
+  if (!show) return null;
+
+  return (
+    <div className="fixed inset-0 z-50 flex items-center justify-center bg-foreground/40 p-4" onClick={onClose}>
+      <div className="w-full max-w-md rounded-2xl border border-border bg-card shadow-elevated" onClick={(e) => e.stopPropagation()}>
+        <div className="flex items-center gap-2 border-b border-border p-4">
+          <Search className="h-4 w-4 text-muted-foreground" />
+          <input
+            autoFocus
+            placeholder={searchPlaceholder}
+            className="flex-1 bg-transparent font-body text-sm text-foreground outline-none placeholder:text-muted-foreground"
+            value={searchQuery}
+            onChange={(e) => onSearchChange(e.target.value)}
+          />
+          <button onClick={onClose} className="font-body text-xs text-muted-foreground hover:text-foreground">
+            Cancel
+          </button>
+        </div>
+        <div className="flex gap-2 border-b border-border px-4 pb-3">
+          {["btc", "eth", "sol", "usdc"].map((ticker) => {
+            const c = currencies.find((cur) => cur.ticker === ticker);
+            if (!c || c.ticker === exclude) return null;
+            return (
+              <button
+                key={ticker}
+                onClick={() => onSelect(c)}
+                className="flex items-center gap-1.5 rounded-lg border border-border bg-accent px-3 py-1.5 font-display text-xs font-semibold uppercase text-foreground transition-colors hover:border-primary/40"
+              >
+                {c.image && <img src={c.image} alt="" className="h-4 w-4 rounded-full" />}
+                {ticker}
+              </button>
+            );
+          })}
+        </div>
+        <CurrencyListView
+          currencies={currencies.filter((c) => c.ticker !== exclude)}
+          onSelect={onSelect}
+        />
+      </div>
+    </div>
+  );
+}
   if (!currency || currency.currency_type === "FIAT") return undefined;
 
   const ticker = currency.ticker.trim().toUpperCase();
