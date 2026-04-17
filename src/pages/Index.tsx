@@ -65,7 +65,7 @@ const Index = () => {
         areaServed: "Worldwide",
         serviceType: "Cryptocurrency Exchange",
         identifier: "C100000015",
-        knowsAbout: ["Cryptocurrency Exchange", "Non-Custodial Swap", "Crypto Invoice Settlement", "Foreign Exchange", "Stablecoin Settlement"],
+        knowsAbout: ["Cryptocurrency Exchange", "Non-Custodial Swap", "6,000+ Crypto Assets", "Trending AI Tokens", "Tokenized Stocks (xStocks)", "Crypto Invoice Settlement", "Foreign Exchange", "Stablecoin Settlement"],
         hasOfferCatalog: {
           "@type": "OfferCatalog",
           name: "Crypto Exchange Services",
