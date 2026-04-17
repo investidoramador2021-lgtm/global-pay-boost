@@ -1352,64 +1352,153 @@ const AdminPortal = () => {
               </Card>
 
 
-              {/* ═══ COMMISSIONS LEDGER + CRON CONTROL ═══ */}
+              {/* ═══ COMMISSIONS LEDGER + REVIEW QUEUE ═══ */}
+              {(() => {
+                const pendingRows = commissions.filter(c => (c.status ?? "pending_review") === "pending_review");
+                const approvedRows = commissions.filter(c => c.status === "approved");
+                const rejectedRows = commissions.filter(c => c.status === "rejected");
+                const filtered = commissionFilter === "all"
+                  ? commissions
+                  : commissions.filter(c => (c.status ?? "pending_review") === commissionFilter);
+                const pendingBtc = pendingRows.reduce((s, c) => s + Number(c.commission_btc || 0), 0);
+                const approvedBtc = approvedRows.reduce((s, c) => s + Number(c.commission_btc || 0), 0);
+
+                const callApprove = async (body: Record<string, unknown>) => {
+                  const { data: { session } } = await supabase.auth.getSession();
+                  const resp = await fetch(`${import.meta.env.VITE_SUPABASE_URL}/functions/v1/approve-affiliate-commission`, {
+                    method: "POST",
+                    headers: {
+                      "Content-Type": "application/json",
+                      ...(session?.access_token ? { Authorization: `Bearer ${session.access_token}` } : {}),
+                    },
+                    body: JSON.stringify(body),
+                  });
+                  return resp.json();
+                };
+
+                const handleApprove = async (id: string) => {
+                  setApprovingIds(prev => new Set(prev).add(id));
+                  try {
+                    const json = await callApprove({ action: "approve", commission_id: id });
+                    toast({
+                      title: json.ok ? "Commission approved" : "Approval failed",
+                      description: json.ok
+                        ? `Credited ${Number(json.total_btc || 0).toFixed(8)} BTC to partner balance.`
+                        : String(json.error || "Unknown error"),
+                      variant: json.ok ? "default" : "destructive",
+                    });
+                    await loadDashboard();
+                  } finally {
+                    setApprovingIds(prev => { const n = new Set(prev); n.delete(id); return n; });
+                  }
+                };
+
+                const handleReject = async (id: string) => {
+                  const reason = window.prompt("Rejection reason (optional)") ?? "";
+                  setApprovingIds(prev => new Set(prev).add(id));
+                  try {
+                    const json = await callApprove({ action: "reject", commission_id: id, reason });
+                    toast({
+                      title: json.ok ? "Commission rejected" : "Rejection failed",
+                      description: json.ok ? "Row marked rejected. Partner balance not changed." : String(json.error || ""),
+                      variant: json.ok ? "default" : "destructive",
+                    });
+                    await loadDashboard();
+                  } finally {
+                    setApprovingIds(prev => { const n = new Set(prev); n.delete(id); return n; });
+                  }
+                };
+
+                const handleApproveAll = async () => {
+                  if (pendingRows.length === 0) return;
+                  if (!window.confirm(`Approve ALL ${pendingRows.length} pending commissions (${pendingBtc.toFixed(8)} BTC)? Partner balances will be credited immediately.`)) return;
+                  setBulkApproving(true);
+                  try {
+                    const json = await callApprove({ action: "approve_all" });
+                    toast({
+                      title: json.ok ? "Bulk approval complete" : "Bulk approval failed",
+                      description: json.ok
+                        ? `Approved ${json.processed} rows · Credited ${Number(json.total_btc || 0).toFixed(8)} BTC across ${json.partners_credited} partners.`
+                        : String(json.error || ""),
+                      variant: json.ok ? "default" : "destructive",
+                    });
+                    await loadDashboard();
+                  } finally {
+                    setBulkApproving(false);
+                  }
+                };
+
+                return (
               <Card className="border-border/40 bg-card/40 backdrop-blur-sm">
-                <CardHeader className="flex flex-row items-start justify-between gap-4">
+                <CardHeader className="flex flex-col sm:flex-row items-start justify-between gap-4">
                   <div>
                     <CardTitle className="text-lg flex items-center gap-2">
-                      <DollarSign className="w-5 h-5" /> Affiliate Commissions Ledger
+                      <DollarSign className="w-5 h-5" /> Affiliate Commissions — Review Queue
                     </CardTitle>
                     <p className="text-xs text-muted-foreground mt-1">
-                      Auto-credited every 2 days at 00:05 UTC. Rates: <code className="text-primary">0.3% ChangeNOW</code> · <code className="text-primary">0.1% LetsExchange</code>. Idempotent per swap.
+                      Cron writes <span className="text-amber-400 font-semibold">pending_review</span> rows every 2 days at 00:05 UTC. Partner balances credit only after admin approval. Rates: <code className="text-primary">0.3% CN</code> · <code className="text-primary">0.1% LE</code>.
                     </p>
                   </div>
-                  <Button
-                    size="sm"
-                    className="gap-2"
-                    disabled={runningCron}
-                    onClick={async () => {
-                      setRunningCron(true);
-                      try {
-                        const { data: { session } } = await supabase.auth.getSession();
-                        const resp = await fetch(`${import.meta.env.VITE_SUPABASE_URL}/functions/v1/credit-affiliate-commissions`, {
-                          method: "POST",
-                          headers: {
-                            "Content-Type": "application/json",
-                            ...(session?.access_token ? { Authorization: `Bearer ${session.access_token}` } : {}),
-                          },
-                        });
-                        const json = await resp.json();
-                        toast({
-                          title: json.ok ? "Commissions cron run complete" : "Cron run failed",
-                          description: json.ok
-                            ? `Scanned ${json.scanned} · Credited ${json.credited} · ${Number(json.total_btc_credited || 0).toFixed(8)} BTC`
-                            : String(json.error || "Unknown error"),
-                          variant: json.ok ? "default" : "destructive",
-                        });
-                        await loadDashboard();
-                      } catch (e: any) {
-                        toast({ title: "Cron run failed", description: String(e?.message || e), variant: "destructive" });
-                      } finally {
-                        setRunningCron(false);
-                      }
-                    }}
-                  >
-                    <Zap className="w-3.5 h-3.5" /> {runningCron ? "Running…" : "Run cron now"}
-                  </Button>
+                  <div className="flex flex-wrap gap-2">
+                    <Button
+                      size="sm"
+                      variant="outline"
+                      className="gap-2"
+                      disabled={runningCron}
+                      onClick={async () => {
+                        setRunningCron(true);
+                        try {
+                          const { data: { session } } = await supabase.auth.getSession();
+                          const resp = await fetch(`${import.meta.env.VITE_SUPABASE_URL}/functions/v1/credit-affiliate-commissions`, {
+                            method: "POST",
+                            headers: {
+                              "Content-Type": "application/json",
+                              ...(session?.access_token ? { Authorization: `Bearer ${session.access_token}` } : {}),
+                            },
+                          });
+                          const json = await resp.json();
+                          toast({
+                            title: json.ok ? "Scan complete" : "Scan failed",
+                            description: json.ok
+                              ? `Scanned ${json.scanned} · ${json.pending_created} new pending · ${Number(json.total_btc_pending || 0).toFixed(8)} BTC awaiting approval.`
+                              : String(json.error || "Unknown error"),
+                            variant: json.ok ? "default" : "destructive",
+                          });
+                          await loadDashboard();
+                        } catch (e: any) {
+                          toast({ title: "Scan failed", description: String(e?.message || e), variant: "destructive" });
+                        } finally {
+                          setRunningCron(false);
+                        }
+                      }}
+                    >
+                      <Zap className="w-3.5 h-3.5" /> {runningCron ? "Scanning…" : "Scan now"}
+                    </Button>
+                    <Button
+                      size="sm"
+                      className="gap-2"
+                      disabled={bulkApproving || pendingRows.length === 0}
+                      onClick={handleApproveAll}
+                    >
+                      <Check className="w-3.5 h-3.5" /> {bulkApproving ? "Approving…" : `Approve All (${pendingRows.length})`}
+                    </Button>
+                  </div>
                 </CardHeader>
                 <CardContent className="space-y-4">
                   <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
-                    <div className="rounded-lg border border-border/40 p-3 bg-black/20">
-                      <p className="text-[10px] uppercase text-muted-foreground">Total Credits</p>
-                      <p className="text-xl font-bold text-foreground">{commissions.length}</p>
+                    <div className="rounded-lg border border-amber-500/30 p-3 bg-amber-500/5">
+                      <p className="text-[10px] uppercase text-amber-400">Pending Review</p>
+                      <p className="text-xl font-bold text-amber-400">{pendingRows.length}</p>
+                      <p className="text-[10px] font-mono text-amber-400/70 mt-0.5">{pendingBtc.toFixed(8)} BTC</p>
+                    </div>
+                    <div className="rounded-lg border border-emerald-500/30 p-3 bg-emerald-500/5">
+                      <p className="text-[10px] uppercase text-emerald-400">Approved</p>
+                      <p className="text-xl font-bold text-emerald-400">{approvedRows.length}</p>
+                      <p className="text-[10px] font-mono text-emerald-400/70 mt-0.5">{approvedBtc.toFixed(8)} BTC</p>
                     </div>
                     <div className="rounded-lg border border-border/40 p-3 bg-black/20">
-                      <p className="text-[10px] uppercase text-muted-foreground">Total BTC Paid</p>
-                      <p className="text-xl font-bold text-primary font-mono">{commissions.reduce((s, c) => s + Number(c.commission_btc || 0), 0).toFixed(8)}</p>
-                    </div>
-                    <div className="rounded-lg border border-border/40 p-3 bg-black/20">
-                      <p className="text-[10px] uppercase text-muted-foreground">Total Volume USD</p>
-                      <p className="text-xl font-bold text-foreground font-mono">${commissions.reduce((s, c) => s + Number(c.volume_usd || 0), 0).toLocaleString(undefined, { maximumFractionDigits: 2 })}</p>
+                      <p className="text-[10px] uppercase text-muted-foreground">Rejected</p>
+                      <p className="text-xl font-bold text-foreground">{rejectedRows.length}</p>
                     </div>
                     <div className="rounded-lg border border-border/40 p-3 bg-black/20">
                       <p className="text-[10px] uppercase text-muted-foreground">Unique Partners</p>
@@ -1417,49 +1506,97 @@ const AdminPortal = () => {
                     </div>
                   </div>
 
-                  {commissions.length === 0 ? (
-                    <p className="text-sm text-muted-foreground py-8 text-center">No commissions credited yet. Click "Run cron now" to scan recent swaps.</p>
+                  <div className="flex flex-wrap gap-2 border-b border-border/40 pb-2">
+                    {(["pending_review", "approved", "rejected", "all"] as const).map(f => (
+                      <button
+                        key={f}
+                        onClick={() => setCommissionFilter(f)}
+                        className={`text-xs px-3 py-1 rounded-md uppercase tracking-wide transition ${
+                          commissionFilter === f ? "bg-primary text-primary-foreground" : "bg-muted/30 text-muted-foreground hover:bg-muted/50"
+                        }`}
+                      >
+                        {f.replace("_", " ")} ({f === "all" ? commissions.length : commissions.filter(c => (c.status ?? "pending_review") === f).length})
+                      </button>
+                    ))}
+                  </div>
+
+                  {filtered.length === 0 ? (
+                    <p className="text-sm text-muted-foreground py-8 text-center">
+                      {commissionFilter === "pending_review"
+                        ? "No commissions awaiting review. Click \"Scan now\" to check recent swaps."
+                        : `No ${commissionFilter.replace("_", " ")} commissions.`}
+                    </p>
                   ) : (
-                    <Table>
-                      <TableHeader>
-                        <TableRow>
-                          <TableHead>Date</TableHead>
-                          <TableHead>Partner</TableHead>
-                          <TableHead>Source</TableHead>
-                          <TableHead>Provider</TableHead>
-                          <TableHead>Pair</TableHead>
-                          <TableHead className="text-right">Volume USD</TableHead>
-                          <TableHead className="text-right">Rate</TableHead>
-                          <TableHead className="text-right">BTC Credited</TableHead>
-                          <TableHead>Ref</TableHead>
-                        </TableRow>
-                      </TableHeader>
-                      <TableBody>
-                        {commissions.slice(0, 100).map((c) => {
-                          const partner = partners.find((p) => p.id === c.partner_id);
-                          return (
-                            <TableRow key={c.id}>
-                              <TableCell className="text-xs whitespace-nowrap">{new Date(c.created_at).toLocaleString()}</TableCell>
-                              <TableCell className="text-xs">{partner ? `${partner.first_name} ${partner.last_name}` : <span className="text-muted-foreground font-mono">{c.partner_id.slice(0, 8)}…</span>}</TableCell>
-                              <TableCell>
-                                <span className={`text-[10px] px-2 py-0.5 rounded-md uppercase ${c.source === "affiliate_widget" ? "bg-blue-500/15 text-blue-400" : "bg-cyan-500/15 text-cyan-400"}`}>
-                                  {c.source === "affiliate_widget" ? "widget" : "referral"}
-                                </span>
-                              </TableCell>
-                              <TableCell><span className="text-[10px] uppercase font-mono text-muted-foreground">{c.provider}</span></TableCell>
-                              <TableCell className="text-xs uppercase font-mono">{c.from_currency} → {c.to_currency}</TableCell>
-                              <TableCell className="text-right font-mono text-xs">${Number(c.volume_usd).toLocaleString(undefined, { maximumFractionDigits: 2 })}</TableCell>
-                              <TableCell className="text-right font-mono text-xs">{(Number(c.commission_rate) * 100).toFixed(2)}%</TableCell>
-                              <TableCell className="text-right font-mono text-xs text-primary">{Number(c.commission_btc).toFixed(8)}</TableCell>
-                              <TableCell><code className="text-[10px] text-muted-foreground">{c.ref_code}</code></TableCell>
-                            </TableRow>
-                          );
-                        })}
-                      </TableBody>
-                    </Table>
+                    <div className="overflow-x-auto">
+                      <Table>
+                        <TableHeader>
+                          <TableRow>
+                            <TableHead>Date</TableHead>
+                            <TableHead>Partner</TableHead>
+                            <TableHead>Status</TableHead>
+                            <TableHead>Source</TableHead>
+                            <TableHead>Provider</TableHead>
+                            <TableHead>Pair</TableHead>
+                            <TableHead className="text-right">Volume USD</TableHead>
+                            <TableHead className="text-right">BTC</TableHead>
+                            <TableHead className="text-right">Action</TableHead>
+                          </TableRow>
+                        </TableHeader>
+                        <TableBody>
+                          {filtered.slice(0, 200).map((c) => {
+                            const partner = partners.find((p) => p.id === c.partner_id);
+                            const status = c.status ?? "pending_review";
+                            const isBusy = approvingIds.has(c.id);
+                            return (
+                              <TableRow key={c.id}>
+                                <TableCell className="text-xs whitespace-nowrap">{new Date(c.created_at).toLocaleDateString()}</TableCell>
+                                <TableCell className="text-xs">{partner ? `${partner.first_name} ${partner.last_name}` : <span className="text-muted-foreground font-mono">{c.partner_id.slice(0, 8)}…</span>}</TableCell>
+                                <TableCell>
+                                  <span className={`text-[10px] px-2 py-0.5 rounded-md uppercase font-semibold ${
+                                    status === "approved" ? "bg-emerald-500/15 text-emerald-400" :
+                                    status === "rejected" ? "bg-red-500/15 text-red-400" :
+                                    "bg-amber-500/15 text-amber-400"
+                                  }`}>
+                                    {status.replace("_", " ")}
+                                  </span>
+                                </TableCell>
+                                <TableCell>
+                                  <span className={`text-[10px] px-2 py-0.5 rounded-md uppercase ${c.source === "affiliate_widget" ? "bg-blue-500/15 text-blue-400" : "bg-cyan-500/15 text-cyan-400"}`}>
+                                    {c.source === "affiliate_widget" ? "widget" : "referral"}
+                                  </span>
+                                </TableCell>
+                                <TableCell><span className="text-[10px] uppercase font-mono text-muted-foreground">{c.provider}</span></TableCell>
+                                <TableCell className="text-xs uppercase font-mono">{c.from_currency} → {c.to_currency}</TableCell>
+                                <TableCell className="text-right font-mono text-xs">${Number(c.volume_usd).toLocaleString(undefined, { maximumFractionDigits: 2 })}</TableCell>
+                                <TableCell className="text-right font-mono text-xs text-primary">{Number(c.commission_btc).toFixed(8)}</TableCell>
+                                <TableCell className="text-right">
+                                  {status === "pending_review" ? (
+                                    <div className="flex justify-end gap-1">
+                                      <Button size="sm" variant="default" className="h-7 px-2 gap-1" disabled={isBusy} onClick={() => handleApprove(c.id)}>
+                                        <Check className="w-3 h-3" />
+                                      </Button>
+                                      <Button size="sm" variant="outline" className="h-7 px-2 gap-1" disabled={isBusy} onClick={() => handleReject(c.id)}>
+                                        <XCircle className="w-3 h-3" />
+                                      </Button>
+                                    </div>
+                                  ) : (
+                                    <span className="text-[10px] text-muted-foreground">
+                                      {status === "approved" && c.approved_at ? new Date(c.approved_at).toLocaleDateString() : ""}
+                                      {status === "rejected" && c.rejection_reason ? c.rejection_reason.slice(0, 30) : ""}
+                                    </span>
+                                  )}
+                                </TableCell>
+                              </TableRow>
+                            );
+                          })}
+                        </TableBody>
+                      </Table>
+                    </div>
                   )}
                 </CardContent>
               </Card>
+                );
+              })()}
             </TabsContent>
           </Tabs>
         </main>
