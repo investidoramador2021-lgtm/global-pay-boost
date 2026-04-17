@@ -72,8 +72,8 @@ const Index = () => {
           itemListElement: [
             {
               "@type": "Offer",
-              name: "Instant Crypto Swap",
-              description: "Non-custodial crypto-to-crypto swap from $0.30 with 0.5% inclusive service fee",
+              name: "Instant Crypto Swap — 6,000+ Assets",
+              description: "Non-custodial swap across 6,000+ cryptocurrencies, Trending AI tokens, and Tokenized Stocks (xStocks) from $0.30 with 0.5% inclusive service fee",
               priceSpecification: {
                 "@type": "UnitPriceSpecification",
                 price: "0.5",
