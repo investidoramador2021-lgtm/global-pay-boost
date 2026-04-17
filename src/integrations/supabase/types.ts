@@ -14,6 +14,42 @@ export type Database = {
   }
   public: {
     Tables: {
+      affiliate_leads: {
+        Row: {
+          btc_wallet: string
+          created_at: string
+          email: string
+          id: string
+          ref_token: string
+          source: string
+          theme: string
+          updated_at: string
+          user_agent: string | null
+        }
+        Insert: {
+          btc_wallet: string
+          created_at?: string
+          email: string
+          id?: string
+          ref_token: string
+          source?: string
+          theme?: string
+          updated_at?: string
+          user_agent?: string | null
+        }
+        Update: {
+          btc_wallet?: string
+          created_at?: string
+          email?: string
+          id?: string
+          ref_token?: string
+          source?: string
+          theme?: string
+          updated_at?: string
+          user_agent?: string | null
+        }
+        Relationships: []
+      }
       audit_access_logs: {
         Row: {
           accessed_at: string
