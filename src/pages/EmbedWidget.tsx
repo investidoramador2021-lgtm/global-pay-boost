@@ -271,7 +271,7 @@ const EmbedWidget = () => {
         </div>
 
         <div className="mb-2 rounded-xl border border-white/[0.06] bg-white/[0.04] p-3">
-          <label className="mb-1.5 block text-[10px] uppercase tracking-wider text-white/40">You Send</label>
+          <label className="mb-1.5 block text-[10px] uppercase tracking-wider text-white/40">{t("widget.youSend", "You Send")}</label>
           <div className="flex items-center gap-3">
             <button
               type="button"
