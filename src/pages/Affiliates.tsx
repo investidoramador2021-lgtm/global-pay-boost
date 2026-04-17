@@ -142,9 +142,9 @@ const CopyButton = ({ text, label }: { text: string; label: string }) => {
   return (
     <button
       onClick={onClick}
-      className="btn-shimmer inline-flex items-center justify-center gap-2 rounded-xl bg-primary px-5 py-2.5 font-display text-sm font-bold text-primary-foreground shadow-neon transition-all duration-100 hover:bg-primary/90 hover:-translate-y-0.5"
+      className="btn-shimmer inline-flex w-full items-center justify-center gap-2 rounded-xl bg-primary px-6 py-3.5 font-display text-base font-bold text-primary-foreground shadow-neon transition-all duration-100 hover:bg-primary/90 hover:-translate-y-0.5"
     >
-      {copied ? <Check className="h-4 w-4" /> : <Copy className="h-4 w-4" />}
+      {copied ? <Check className="h-5 w-5" /> : <Copy className="h-5 w-5" />}
       {copied ? "Copied!" : label}
     </button>
   );
@@ -264,7 +264,7 @@ const WidgetGenerator = () => {
   const activeEmail = emailValid ? email.trim() : "";
   const activeBtc = btcValid ? btc.trim() : "";
 
-  const link = useMemo(() => buildLink(activeEmail), [activeEmail]);
+  const link = useMemo(() => buildLink(activeEmail, activeBtc), [activeEmail, activeBtc]);
   const snippet = useMemo(() => buildSnippet(activeEmail, activeBtc, mode), [activeEmail, activeBtc, mode]);
 
   return (
