@@ -1,7 +1,7 @@
 {
   "meta": {
     "title": "MRC GlobalPay | Cambio Instantáneo de Criptomonedas desde $0.30 — Sin Registro",
-    "description": "Intercambia más de 500 criptomonedas al instante desde $0.30. Intercambios sin registro. Liquidación en menos de 60 segundos.",
+    "description": "Accede a más de 6.000 criptomonedas y acciones tokenizadas al instante, sin registro. MRC GlobalPay es un exchange cripto no custodial sin mínimo de swap, liquidado en menos de 60 segundos. MSB canadiense registrado.",
     "ogTitle": "MRC GlobalPay | Cambio Instantáneo de Cripto desde $0.30"
   },
   "footer": {
@@ -22,14 +22,14 @@
     "help": "Ayuda"
   },
   "hero": {
-    "heading": "Cambio Instantáneo de Criptomonedas.",
+    "heading": "Accede a más de 6.000 Criptomonedas y Acciones Tokenizadas.",
     "headingAccent": "Sin Registro. Desde $0.30.",
-    "subtitle": "Intercambios rápidos, seguros y privados. Sin registro ni verificación. Desde $0.30.",
+    "subtitle": "Intercambia más de 6.000 activos —incluidos tokens de IA en tendencia y Acciones Tokenizadas— al instante. Sin registro, liquidación directa de wallet a wallet.",
     "trustNoAccount": "Sin Registro",
     "trustNonCustodial": "No Custodial",
     "trustSettlement": "Liquidación Directa",
     "dustTitle": "🧹 Limpia Tu Billetera",
-    "dustDescription": "¿Cansado del polvo cripto? La mayoría de plataformas tienen mínimos altos. MRC GlobalPay permite micro-intercambios desde $0.30. Convierte saldos residuales de más de 500 tokens al instante."
+    "dustDescription": "La mayoría de las plataformas tienen mínimos altos. MRC GlobalPay admite micro-swaps desde $0.30. Convierte el polvo sobrante de más de 6.000 tokens al instante. Sin registro."
   },
   "howItWorks": {
     "heading": "Cómo Funciona",
@@ -63,8 +63,8 @@
       "description": "Trading sin permisos — comienza a intercambiar de inmediato. Sin registros, sin datos personales."
     },
     "assets": {
-      "title": "500+ Criptoactivos",
-      "description": "Intercambia Bitcoin, Ethereum, Solana, USDT y cientos más en todas las principales blockchains."
+      "title": "Más de 6.000 Activos Cripto",
+      "description": "Intercambia Bitcoin, Ethereum, Solana, USDT, tokens de IA en tendencia y Acciones Tokenizadas en todas las principales blockchains."
     },
     "global": {
       "title": "Global, Siempre Activo",
