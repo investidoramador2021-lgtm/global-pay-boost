@@ -309,10 +309,11 @@ const Affiliates = () => (
                 href="/partners"
                 className="btn-shimmer inline-flex items-center justify-center gap-2 rounded-xl bg-primary px-8 py-4 font-display text-base font-bold text-primary-foreground shadow-neon transition-all duration-100 hover:bg-primary/90 hover:-translate-y-0.5"
               >
-                Join the Affiliate Program — Free & Instant <ArrowRight className="h-4 w-4" />
+                Join the Affiliate Program — Free <ArrowRight className="h-4 w-4" />
               </a>
               <p className="mt-3 text-xs text-muted-foreground max-w-md mx-auto">
-                Create your free Partner Account to get your referral tools and start tracking earnings immediately.
+                Registration gives you easy access to your Partner Dashboard for tracking profits.
+                No registration needed to start promoting.
               </p>
             </div>
 
