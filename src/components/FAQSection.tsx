@@ -10,7 +10,7 @@ import { shadowFaqs } from "@/components/ShadowSeoFaq";
 const faqs = [
   {
     q: "What is the minimum amount I can swap on MRC GlobalPay?",
-    a: "MRC GlobalPay supports micro-swaps starting as low as $0.30, making it the leading no-minimum crypto exchange for converting wallet dust across 6,000+ assets.",
+    a: "MRC GlobalPay supports micro-swaps starting as low as $0.30, making it the leading no-minimum crypto exchange for converting wallet dust across 6,000+ Cryptocurrencies & Tokenized Stocks.",
   },
   {
     q: "Is registration or KYC required for crypto swaps?",
@@ -26,7 +26,7 @@ const faqs = [
   },
   {
     q: "Which tokens are supported for dust swaps?",
-    a: "We support over 6,000+ assets, including BTC, ETH, SOL, and dozens of low-cap tokens. If it's in your wallet, you can likely swap it here.",
+    a: "We support 6,000+ Cryptocurrencies & Tokenized Stocks, including BTC, ETH, SOL, and dozens of low-cap tokens. If it's in your wallet, you can likely swap it here.",
   },
   {
     q: "What are the fees?",
