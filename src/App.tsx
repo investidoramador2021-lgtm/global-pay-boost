@@ -94,6 +94,23 @@ const EdgeFunctionAliasRedirect = () => {
   return <Navigate to="/" replace />;
 };
 
+/**
+ * Tab alias redirect: /buy and /exchange route to home with the
+ * appropriate `tab` query param so the ExchangeWidget pre-selects the
+ * correct mode. Preserves all other params (to, from, crypto, fiat, amount).
+ */
+const TabAliasRedirect = ({ tab }: { tab: "buy" | "exchange" }) => {
+  const { search } = useLocation();
+  const params = new URLSearchParams(search);
+  if (tab === "buy") {
+    params.set("tab", "buy");
+  } else {
+    params.delete("tab");
+  }
+  const qs = params.toString();
+  return <Navigate to={`/${qs ? `?${qs}` : ""}#exchange`} replace />;
+};
+
 /** All app routes — rendered once at root and once per language prefix */
 const AppRoutes = () => (
   <>
@@ -207,6 +224,9 @@ const App = () => (
                   <Route path="/regulatory-report/:token" element={<RegulatoryReport />} />
                   <Route path="/functions/v1/live-feed" element={<EdgeFunctionAliasRedirect />} />
                   <Route path="/functions/v1/dynamic-feed" element={<EdgeFunctionAliasRedirect />} />
+                  {/* Deep-link aliases: /buy?to=xec and /exchange?to=nvda → home with pre-selected tab */}
+                  <Route path="/buy" element={<TabAliasRedirect tab="buy" />} />
+                  <Route path="/exchange" element={<TabAliasRedirect tab="exchange" />} />
                   {/* Legacy route redirect */}
                   <Route path="/admin/compliance-vault" element={<Navigate to="/admin/audit-inspector" replace />} />
                   <Route path="/audit-report/:token" element={<Navigate to="/admin/audit-inspector" replace />} />
