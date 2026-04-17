@@ -4,6 +4,7 @@ import {
   AccordionItem,
   AccordionTrigger,
 } from "@/components/ui/accordion";
+import { Helmet } from "react-helmet-async";
 
 const swapPairs = [
   {
@@ -48,9 +49,22 @@ const swapPairs = [
   },
 ];
 
+const swapPairsFaqJsonLd = {
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  mainEntity: swapPairs.map((p) => ({
+    "@type": "Question",
+    name: p.q,
+    acceptedAnswer: { "@type": "Answer", text: p.a },
+  })),
+};
+
 const SwapPairsQA = () => {
   return (
     <section id="swap-pairs" className="bg-accent py-14 sm:py-20 lg:py-28">
+      <Helmet>
+        <script type="application/ld+json">{JSON.stringify(swapPairsFaqJsonLd)}</script>
+      </Helmet>
       <div className="container mx-auto px-4">
         <div className="mx-auto max-w-2xl text-center">
           <h2 className="font-display text-2xl font-bold tracking-tight text-foreground sm:text-3xl lg:text-4xl">
