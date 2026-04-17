@@ -504,7 +504,9 @@ const SupportChatWidget = () => {
               <div className="flex-1 min-w-0">
                 <p className="text-xs font-semibold text-foreground mb-1">{p.name} · <span className="text-primary">{p.role}</span></p>
                 <p className="text-sm text-muted-foreground leading-relaxed">
-                  {(PROACTIVE_MESSAGES[lang] || PROACTIVE_MESSAGES.en)(p.name)}
+                  {isAffiliateRoute(location.pathname)
+                    ? (AFFILIATE_WELCOME[lang] || AFFILIATE_WELCOME.en)(p.name)
+                    : (PROACTIVE_MESSAGES[lang] || PROACTIVE_MESSAGES.en)(p.name)}
                 </p>
               </div>
             </div>
