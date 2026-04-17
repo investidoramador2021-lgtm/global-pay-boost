@@ -243,8 +243,9 @@ const WidgetGenerator = () => {
     if (canGenerate) setSubmitted(true);
   };
 
-  const activeEmail = submitted ? email.trim() : "";
-  const activeBtc = submitted ? btc.trim() : "";
+  // Live updates the moment inputs are valid (no need to click Generate).
+  const activeEmail = emailValid ? email.trim() : "";
+  const activeBtc = btcValid ? btc.trim() : "";
 
   const link = useMemo(() => buildLink(activeEmail), [activeEmail]);
   const snippet = useMemo(() => buildSnippet(activeEmail, activeBtc, mode), [activeEmail, activeBtc, mode]);
@@ -355,11 +356,10 @@ const WidgetGenerator = () => {
         </button>
       </div>
 
-      {!submitted && (
-        <p className="mt-2 text-xs text-muted-foreground">
-          Enter a valid email and BTC wallet, then generate. Preview, link, and code update instantly.
-        </p>
-      )}
+      <p className="mt-2 text-xs text-muted-foreground">
+        Preview, affiliate link and embed code update <span className="text-foreground font-semibold">live</span> as you type.
+        Click <span className="text-primary font-semibold">Generate</span> to confirm and copy.
+      </p>
 
       {/* Preview + outputs */}
       <div className="mt-8 grid gap-6 lg:grid-cols-2">
@@ -499,46 +499,74 @@ const Affiliates = () => (
         />
         <div className="container relative mx-auto max-w-4xl px-4 text-center animate-fade-in">
           <div className="inline-flex items-center gap-2 rounded-full border border-primary/30 bg-primary/10 px-3 py-1 text-xs font-display font-semibold text-primary">
-            <Shield className="h-3.5 w-3.5" /> Affiliate Program
+            <Shield className="h-3.5 w-3.5" /> Affiliate Program · Lifetime Payouts
           </div>
-          <h1 className="mt-5 font-display text-3xl font-bold tracking-tight text-foreground sm:text-5xl">
-            Earn <span className="text-primary">0.1% – 0.4% Lifetime Commissions</span>
+          <h1 className="mt-6 font-display text-4xl font-extrabold tracking-tight text-foreground sm:text-6xl leading-[1.05]">
+            Earn{" "}
+            <span className="bg-gradient-to-r from-primary to-[hsl(var(--neon))] bg-clip-text text-transparent">
+              0.1% – 0.4%
+            </span>
+            <br className="hidden sm:block" />
+            <span className="text-foreground"> Lifetime Commissions</span>
           </h1>
-          <p className="mt-4 font-body text-base sm:text-lg text-muted-foreground max-w-2xl mx-auto">
+          <p className="mt-5 font-body text-base sm:text-xl text-muted-foreground max-w-2xl mx-auto leading-relaxed">
             Promote MRC GlobalPay with our instant swap widget or affiliate link and get paid
-            automatically to your wallet.
+            <span className="text-foreground font-semibold"> automatically to your BTC wallet</span>.
           </p>
-          <p className="mt-4 text-xs text-muted-foreground">
-            Registration is recommended for the full Partner Dashboard, but completely optional.
-          </p>
-          <div className="mt-7">
+          <div className="mt-5 flex flex-wrap items-center justify-center gap-2 text-[11px] font-display font-semibold">
+            <span className="inline-flex items-center gap-1.5 rounded-full border border-border bg-card px-3 py-1 text-muted-foreground">
+              <Check className="h-3 w-3 text-primary" /> No registration required
+            </span>
+            <span className="inline-flex items-center gap-1.5 rounded-full border border-border bg-card px-3 py-1 text-muted-foreground">
+              <Check className="h-3 w-3 text-primary" /> Paid in BTC, automatically
+            </span>
+            <span className="inline-flex items-center gap-1.5 rounded-full border border-border bg-card px-3 py-1 text-muted-foreground">
+              <Check className="h-3 w-3 text-primary" /> Lifetime — no expiry
+            </span>
+          </div>
+          <div className="mt-8 flex flex-col sm:flex-row items-center justify-center gap-3">
             <a
               href="#generate"
-              className="btn-shimmer inline-flex items-center justify-center gap-2 rounded-xl bg-primary px-7 py-3 font-display text-sm font-bold text-primary-foreground shadow-neon transition-all duration-100 hover:bg-primary/90 hover:-translate-y-0.5"
+              className="btn-shimmer inline-flex items-center justify-center gap-2 rounded-xl bg-primary px-7 py-3.5 font-display text-sm font-bold text-primary-foreground shadow-neon transition-all duration-100 hover:bg-primary/90 hover:-translate-y-0.5"
             >
               <Sparkles className="h-4 w-4" /> Generate Your Widget
             </a>
+            <a
+              href="/partners"
+              className="inline-flex items-center justify-center gap-2 rounded-xl border border-border bg-card px-6 py-3.5 font-display text-sm font-semibold text-foreground transition-colors hover:border-primary/40 hover:text-primary"
+            >
+              Open Partner Dashboard <ArrowRight className="h-4 w-4" />
+            </a>
           </div>
+          <p className="mt-4 text-xs text-muted-foreground">
+            Registration is recommended for the full Partner Dashboard, but completely optional.
+          </p>
         </div>
       </section>
 
       <MsbTrustBar />
 
       {/* ═══ WIDGET GENERATOR (centerpiece) ═══ */}
-      <section id="generate" className="border-b border-border bg-muted/30 py-16 sm:py-20">
-        <div className="container mx-auto max-w-5xl px-4">
+      <section id="generate" className="relative border-b border-border bg-muted/30 py-16 sm:py-24">
+        <div className="container mx-auto max-w-6xl px-4">
           <div className="text-center max-w-2xl mx-auto">
-            <h2 className="font-display text-3xl font-bold text-foreground sm:text-4xl">
-              Generate Your Personalized Swap Widget in Seconds
+            <div className="inline-flex items-center gap-2 rounded-full border border-primary/30 bg-primary/10 px-3 py-1 text-[11px] font-display font-semibold text-primary">
+              <Sparkles className="h-3 w-3" /> The Star of the Show
+            </div>
+            <h2 className="mt-4 font-display text-3xl font-extrabold text-foreground sm:text-5xl tracking-tight">
+              Generate Your Personalized <span className="text-primary">Swap Widget</span> in Seconds
             </h2>
-            <p className="mt-3 font-body text-muted-foreground">
-              Enter your email and BTC wallet address, choose Light or Dark mode. The preview and
-              code update automatically. Copy and paste — that's all you need to start earning.
+            <p className="mt-4 font-body text-muted-foreground sm:text-lg">
+              Enter your email and BTC wallet, choose Light or Dark. Preview, link and embed code
+              update <span className="text-foreground font-semibold">live</span> as you type.
             </p>
           </div>
 
-          <div className="mt-10">
-            <WidgetGenerator />
+          <div className="mt-10 relative">
+            <div className="absolute -inset-px rounded-3xl bg-gradient-to-r from-primary/40 via-[hsl(var(--neon))]/30 to-primary/40 opacity-60 blur-md" aria-hidden />
+            <div className="relative">
+              <WidgetGenerator />
+            </div>
           </div>
         </div>
       </section>
@@ -570,22 +598,36 @@ const Affiliates = () => (
 
       {/* ═══ TRACKING & PAYOUTS ═══ */}
       <section className="border-b border-border bg-muted/30 py-16 sm:py-20">
-        <div className="container mx-auto max-w-3xl px-4 text-center">
-          <h2 className="font-display text-3xl font-bold text-foreground sm:text-4xl">
-            Tracking &amp; Payouts
-          </h2>
-          <p className="mt-4 font-body text-muted-foreground leading-relaxed">
-            Your widget tracks swaps using your email. Commissions are paid automatically to the
-            BTC wallet you provide. For detailed real-time stats, register for free to access your
-            Partner Dashboard.
-          </p>
-          <div className="mt-7">
-            <a
-              href="/partners"
-              className="btn-shimmer inline-flex items-center justify-center gap-2 rounded-xl bg-primary px-7 py-3 font-display text-sm font-bold text-primary-foreground shadow-neon transition-all duration-100 hover:bg-primary/90 hover:-translate-y-0.5"
-            >
-              Go to Partner Dashboard <ArrowRight className="h-4 w-4" />
-            </a>
+        <div className="container mx-auto max-w-4xl px-4">
+          <div className="rounded-3xl border border-primary/20 bg-card p-8 sm:p-12 text-center shadow-lg relative overflow-hidden">
+            <div className="absolute inset-0 bg-gradient-to-br from-primary/5 via-transparent to-[hsl(var(--neon))]/5" aria-hidden />
+            <div className="relative">
+              <div className="inline-flex items-center gap-2 rounded-full border border-primary/30 bg-primary/10 px-3 py-1 text-[11px] font-display font-semibold text-primary">
+                <Wallet className="h-3 w-3" /> Tracking &amp; Payouts
+              </div>
+              <h2 className="mt-4 font-display text-3xl font-extrabold text-foreground sm:text-4xl tracking-tight">
+                Track every swap. Get paid automatically.
+              </h2>
+              <p className="mt-4 font-body text-muted-foreground leading-relaxed max-w-2xl mx-auto">
+                Your widget tracks swaps using your email. Commissions are paid directly to the BTC
+                wallet you provide — no minimums, no manual claims. For detailed real-time stats,
+                register for free to unlock your Partner Dashboard.
+              </p>
+              <div className="mt-7 flex flex-col sm:flex-row items-center justify-center gap-3">
+                <a
+                  href="/partners"
+                  className="btn-shimmer inline-flex items-center justify-center gap-2 rounded-xl bg-primary px-8 py-3.5 font-display text-base font-bold text-primary-foreground shadow-neon transition-all duration-100 hover:bg-primary/90 hover:-translate-y-0.5"
+                >
+                  Go to Partner Dashboard <ArrowRight className="h-4 w-4" />
+                </a>
+                <a
+                  href="#generate"
+                  className="inline-flex items-center justify-center gap-2 rounded-xl border border-border bg-background px-6 py-3.5 font-display text-sm font-semibold text-foreground transition-colors hover:border-primary/40 hover:text-primary"
+                >
+                  Generate Widget Instead
+                </a>
+              </div>
+            </div>
           </div>
         </div>
       </section>
@@ -626,14 +668,18 @@ const Affiliates = () => (
             </h2>
           </div>
 
-          <div className="mt-10 grid gap-3 sm:grid-cols-2">
+          <div className="mt-10 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
             {WHY.map((w) => (
               <div
                 key={w.label}
-                className="flex items-center gap-3 rounded-xl border border-border bg-card px-4 py-3 transition-colors hover:border-primary/40"
+                className="flex items-start gap-3 rounded-2xl border border-border bg-card p-5 transition-all hover:-translate-y-1 hover:border-primary/40 hover:shadow-lg"
               >
-                <w.icon className="h-5 w-5 text-primary shrink-0" aria-hidden />
-                <span className="font-body text-sm text-foreground">{w.label}</span>
+                <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-primary/10">
+                  <w.icon className="h-5 w-5 text-primary" aria-hidden />
+                </div>
+                <span className="font-body text-sm font-medium text-foreground leading-snug pt-1.5">
+                  {w.label}
+                </span>
               </div>
             ))}
           </div>
