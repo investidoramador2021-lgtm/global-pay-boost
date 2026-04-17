@@ -156,10 +156,10 @@ const HERO_BENEFITS = [
 ];
 
 const STEPS = [
-  { n: 1, title: "Sign up free", desc: "Create your partner account in under 2 minutes — no KYC for affiliates." },
-  { n: 2, title: "Get your tools", desc: "Receive your unique referral links, banners, and embeddable swap widget." },
-  { n: 3, title: "Promote anywhere", desc: "Share on your blog, YouTube, website, wallet, or Telegram channel." },
-  { n: 4, title: "Earn for life", desc: "Get lifetime commissions on every swap your audience makes." },
+  { n: 1, title: "Sign up (optional)", desc: "Registration is optional but recommended — get your personalized tools and instant Partner Dashboard access in under 2 minutes." },
+  { n: 2, title: "Get your tools", desc: "Receive your unique referral link, downloadable banners, and an embeddable instant swap widget." },
+  { n: 3, title: "Promote anywhere", desc: "Share on your website, blog, YouTube, Telegram, or anywhere your audience hangs out." },
+  { n: 4, title: "Earn & track", desc: "Earn commissions on every referred swap — track them in your dashboard or via email/wallet." },
 ];
 
 const TOOLS = [
