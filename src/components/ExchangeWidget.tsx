@@ -853,7 +853,7 @@ const ExchangeWidget = ({ onTabChange, defaultFrom, defaultTo }: ExchangeWidgetP
     return direction === "sell"
       ? { from: cryptoSelection, to: fiatSelection, amount: "0.01" }
       : { from: fiatSelection, to: cryptoSelection, amount: "100" };
-  }, []);
+  }, [i18n.language]);
 
   const applyGuardarianDefaults = useCallback((
     direction: FiatFlow,
