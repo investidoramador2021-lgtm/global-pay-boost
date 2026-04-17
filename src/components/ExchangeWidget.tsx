@@ -285,6 +285,37 @@ function matchesExchangeCurrencySearch(c: Currency, query: string): boolean {
   });
 }
 
+// Curated category filters for the swap picker. Tickers are matched case-insensitively
+// against Currency.ticker — values that are LE-only will simply not appear if the
+// aggregator hasn't loaded LE coverage yet, which is the desired graceful-degradation.
+const PICKER_CATEGORIES = [
+  { id: "all", label: "All", tickers: null as string[] | null },
+  {
+    id: "ai",
+    label: "Trending AI",
+    tickers: ["prl", "prlsol", "rave", "raveerc20", "fet", "agix", "rndr", "render", "tao", "ocean", "akt", "wld", "near", "inj", "grt", "vana"],
+  },
+  {
+    id: "stocks",
+    label: "Tokenized Stocks",
+    tickers: ["nvda", "nvdaonerc20", "msft", "msftonerc20", "spy", "spyonerc20", "tsla", "tslaonerc20", "aapl", "aaplonerc20", "googl", "googlonerc20", "amzn", "amznonerc20", "meta", "metaonerc20"],
+  },
+  {
+    id: "stables",
+    label: "Stables",
+    tickers: ["usdt", "usdterc20", "usdttrc20", "usdtbsc", "usdtsol", "usdtarb", "usdtop", "usdtmatic", "usdc", "usdcerc20", "usdcsol", "usdcbsc", "usdcarb", "usdcop", "usdcmatic", "usdcspl", "dai", "daierc20", "pyusd", "fdusd", "tusd", "usde"],
+  },
+] as const;
+
+type PickerCategoryId = typeof PICKER_CATEGORIES[number]["id"];
+
+function matchesPickerCategory(c: Currency, categoryId: PickerCategoryId): boolean {
+  const cat = PICKER_CATEGORIES.find((x) => x.id === categoryId);
+  if (!cat || !cat.tickers) return true;
+  const ticker = c.ticker.toLowerCase();
+  return cat.tickers.includes(ticker);
+}
+
 function matchesGuardarianCurrencySearch(c: GuardarianCurrency, query: string): boolean {
   if (!query) return true;
 
