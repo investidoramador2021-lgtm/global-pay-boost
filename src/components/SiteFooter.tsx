@@ -107,7 +107,7 @@ const walletReviews = [
 ];
 
 const expertiseLinks = [
-  { label: "Instant Crypto Exchange", href: "/#exchange", title: "Swap 6,000+ cryptocurrencies and Tokenized Stocks instantly with zero registration" },
+  { label: "Instant Crypto Exchange", href: "/#exchange", title: "Swap 6,000+ Cryptocurrencies & Tokenized Stocks instantly with zero registration" },
   { label: "Professional Crypto Invoicing", href: "/?tab=request", title: "Issue professional crypto invoices with 168-hour rate lock" },
   { label: "Permanent Crypto Bridge", href: "/permanent-bridge", title: "Generate reusable deposit addresses for recurring crypto conversions" },
   { label: "Global Crypto Settlement", href: "/private-transfer", title: "Send crypto with shielded routing — no wallet exposure" },
@@ -183,7 +183,7 @@ const SiteFooter = () => {
               MRC<span className="text-primary">GlobalPay</span>
             </a>
             <p className="mt-3 font-body text-sm leading-relaxed text-muted-foreground sm:mt-4">
-              Instant crypto-to-crypto swaps with zero delays. 6,000+ assets including Trending AI tokens and Tokenized Stocks. No registration. Best market rates.
+              Instant crypto-to-crypto swaps with zero delays. 6,000+ Cryptocurrencies & Tokenized Stocks. No registration. Best market rates.
             </p>
           </div>
 

@@ -31,7 +31,7 @@ const comparisonRows = [
   { feature: "Minimum Swap", mrc: "$0.30", competitor: "$15.00+" },
   { feature: "Account Required", mrc: false, competitor: true },
   { feature: "Non-Custodial", mrc: true, competitor: false },
-  { feature: "6,000+ Assets", mrc: true, competitor: true },
+  { feature: "6,000+ Cryptocurrencies & Tokenized Stocks", mrc: true, competitor: true },
   { feature: "Fractal BTC Support", mrc: true, competitor: false },
   { feature: "Micro-Swap Optimized", mrc: true, competitor: false },
   { feature: "Processing Speed", mrc: "< 60s", competitor: "5–30 min" },

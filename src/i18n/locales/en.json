@@ -1,7 +1,7 @@
 {
   "meta": {
     "title": "MRC GlobalPay | Registration-Free Crypto Swap from $0.30",
-    "description": "Access 6,000+ cryptocurrencies and tokenized stocks instantly with no registration. MRC GlobalPay is a non-custodial crypto exchange with no minimum swap — settled in under 60 seconds. Registered Canadian MSB.",
+    "description": "Access 6,000+ Cryptocurrencies & Tokenized Stocks instantly with no registration. MRC GlobalPay is a non-custodial crypto exchange with no minimum swap — settled in under 60 seconds. Registered Canadian MSB.",
     "ogTitle": "Non-Custodial Crypto Exchange — No Minimum Swap from $0.30 | MRC GlobalPay"
   },
   "footer": {
@@ -314,7 +314,7 @@
   "explainer": {
     "exchange": {
       "heading": "Non-Custodial Crypto Swap.",
-      "subtitle": "Swap 6,000+ assets instantly with zero registration. Direct wallet-to-wallet settlement with transparent rates and no hidden fees.",
+      "subtitle": "Swap 6,000+ Cryptocurrencies & Tokenized Stocks instantly with zero registration. Direct wallet-to-wallet settlement with transparent rates and no hidden fees.",
       "step1": {
         "title": "Select Assets",
         "description": "Choose from our Tier-1 liquidity pairs including BTC, ETH, and stablecoins."
@@ -645,7 +645,7 @@
     "specAdaAdv": "Secure DEX-integrated liquidity",
     "specBsvAdv": "Legacy chain liquidity support",
     "sovereignBadge": "Sovereign & Non-Custodial Architecture",
-    "ctaDesc": "Generate a rate-locked invoice in under 30 seconds. 6,000+ assets, 168-hour certainty, zero registration.",
+    "ctaDesc": "Generate a rate-locked invoice in under 30 seconds. 6,000+ Cryptocurrencies & Tokenized Stocks, 168-hour certainty, zero registration.",
     "cta": "Generate Sovereign Invoice"
   },
   "lend": {
