@@ -1,11 +1,18 @@
 import { useState, useEffect } from "react";
 import { Helmet } from "react-helmet-async";
 import { Link, useLocation } from "react-router-dom";
-import { Calendar, Clock, ArrowRight, FileText, Shield, Landmark, Zap, ScrollText, DollarSign, TrendingUp, Coins } from "lucide-react";
+import { Calendar, Clock, ArrowRight, FileText, Shield, Landmark, Zap, ScrollText, DollarSign, TrendingUp, Coins, Sparkles } from "lucide-react";
 import SiteHeader from "@/components/SiteHeader";
 import SiteFooter from "@/components/SiteFooter";
 import { fetchAllPosts, type BlogPost } from "@/lib/blog-data";
 import { getLangFromPath, langPath } from "@/i18n";
+import heroApiIntegration from "@/assets/blog-api-integration-2026.jpg";
+import heroBtcAtm from "@/assets/blog-btc-atm-vs-mrc.jpg";
+
+const FEATURED_HERO_IMAGES: Record<string, string> = {
+  "crypto-exchange-api-integration-2026-guide": heroApiIntegration,
+  "bitcoin-atms-vs-mrc-globalpay-honest-comparison": heroBtcAtm,
+};
 
 const WHITEPAPERS = [
   {
@@ -239,60 +246,125 @@ const Blog = () => {
                 ))}
               </div>
             ) : (
-              <div className="grid gap-8 md:grid-cols-2">
-                {posts.map((post) => (
-                  <article
-                    key={post.slug}
-                    className="group rounded-2xl border border-border bg-card p-6 transition-all hover:border-primary/40 hover:shadow-lg sm:p-8"
-                  >
-                    <div className="mb-3 flex items-center gap-3">
-                      <span className="rounded-full bg-primary/10 px-3 py-1 font-body text-xs font-medium text-primary">
-                        {post.category}
-                      </span>
-                      <span className="flex items-center gap-1 font-body text-xs text-muted-foreground">
-                        <Clock className="h-3 w-3" /> {post.readTime}
-                      </span>
+              <>
+                {/* Featured 2026 posts with hero imagery */}
+                {posts.some((p) => FEATURED_HERO_IMAGES[p.slug]) && (
+                  <div className="mb-12">
+                    <div className="mb-6 flex items-center gap-3">
+                      <Sparkles className="h-5 w-5 text-primary" />
+                      <h2 className="font-display text-xl font-bold text-foreground sm:text-2xl">Featured 2026 Reads</h2>
                     </div>
+                    <div className="grid gap-6 md:grid-cols-2">
+                      {posts
+                        .filter((p) => FEATURED_HERO_IMAGES[p.slug])
+                        .map((post) => (
+                          <Link
+                            key={post.slug}
+                            to={lp(`/blog/${post.slug}`)}
+                            className="group relative overflow-hidden rounded-2xl border border-primary/20 bg-card transition-all hover:border-primary/50 hover:shadow-2xl"
+                          >
+                            <div className="relative aspect-[16/9] overflow-hidden">
+                              <img
+                                src={FEATURED_HERO_IMAGES[post.slug]}
+                                alt={post.title}
+                                width={1536}
+                                height={864}
+                                loading="lazy"
+                                className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105"
+                              />
+                              <div className="absolute inset-0 bg-gradient-to-t from-background via-background/40 to-transparent" />
+                              <span className="absolute left-4 top-4 rounded-full bg-primary/90 px-3 py-1 font-body text-xs font-semibold text-primary-foreground">
+                                {post.category}
+                              </span>
+                            </div>
+                            <div className="p-6 sm:p-7">
+                              <h3 className="font-display text-lg font-bold text-foreground transition-colors group-hover:text-primary sm:text-xl">
+                                {post.title}
+                              </h3>
+                              <p className="mt-3 font-body text-sm leading-relaxed text-muted-foreground line-clamp-3">
+                                {post.excerpt}
+                              </p>
+                              <div className="mt-5 flex items-center justify-between text-xs text-muted-foreground">
+                                <span className="flex items-center gap-2">
+                                  <Calendar className="h-3 w-3" />
+                                  <time dateTime={post.publishedAt}>
+                                    {new Date(post.publishedAt).toLocaleDateString("en-US", {
+                                      month: "short",
+                                      day: "numeric",
+                                      year: "numeric",
+                                    })}
+                                  </time>
+                                  <span className="text-border">•</span>
+                                  <Clock className="h-3 w-3" /> {post.readTime}
+                                </span>
+                                <span className="flex items-center gap-1 font-body text-sm font-medium text-primary">
+                                  Read <ArrowRight className="h-3.5 w-3.5" />
+                                </span>
+                              </div>
+                            </div>
+                          </Link>
+                        ))}
+                    </div>
+                  </div>
+                )}
 
-                    <h2 className="font-display text-lg font-bold text-foreground transition-colors group-hover:text-primary sm:text-xl">
-                      <Link to={`/blog/${post.slug}`}>{post.title}</Link>
-                    </h2>
-
-                    <p className="mt-3 font-body text-sm leading-relaxed text-muted-foreground">
-                      {post.excerpt}
-                    </p>
-
-                    <div className="mt-5 flex items-center justify-between">
-                      <div className="flex items-center gap-2 text-xs text-muted-foreground">
-                        <Calendar className="h-3 w-3" />
-                        <time dateTime={post.publishedAt}>
-                          {new Date(post.publishedAt).toLocaleDateString("en-US", {
-                            month: "short",
-                            day: "numeric",
-                            year: "numeric",
-                          })}
-                        </time>
-                        <span className="text-border">•</span>
-                        <span>{post.author.name}</span>
-                      </div>
-                      <Link
-                        to={`/blog/${post.slug}`}
-                        className="flex items-center gap-1 font-body text-sm font-medium text-primary transition-colors hover:text-primary/80"
+                <div className="grid gap-8 md:grid-cols-2">
+                  {posts
+                    .filter((p) => !FEATURED_HERO_IMAGES[p.slug])
+                    .map((post) => (
+                      <article
+                        key={post.slug}
+                        className="group rounded-2xl border border-border bg-card p-6 transition-all hover:border-primary/40 hover:shadow-lg sm:p-8"
                       >
-                        Read <ArrowRight className="h-3.5 w-3.5" />
-                      </Link>
-                    </div>
+                        <div className="mb-3 flex items-center gap-3">
+                          <span className="rounded-full bg-primary/10 px-3 py-1 font-body text-xs font-medium text-primary">
+                            {post.category}
+                          </span>
+                          <span className="flex items-center gap-1 font-body text-xs text-muted-foreground">
+                            <Clock className="h-3 w-3" /> {post.readTime}
+                          </span>
+                        </div>
 
-                    <div className="mt-4 flex flex-wrap gap-2">
-                      {post.tags.map((tag) => (
-                        <span key={tag} className="rounded-md bg-muted px-2 py-0.5 font-body text-xs text-muted-foreground">
-                          {tag}
-                        </span>
-                      ))}
-                    </div>
-                  </article>
-                ))}
-              </div>
+                        <h2 className="font-display text-lg font-bold text-foreground transition-colors group-hover:text-primary sm:text-xl">
+                          <Link to={lp(`/blog/${post.slug}`)}>{post.title}</Link>
+                        </h2>
+
+                        <p className="mt-3 font-body text-sm leading-relaxed text-muted-foreground">
+                          {post.excerpt}
+                        </p>
+
+                        <div className="mt-5 flex items-center justify-between">
+                          <div className="flex items-center gap-2 text-xs text-muted-foreground">
+                            <Calendar className="h-3 w-3" />
+                            <time dateTime={post.publishedAt}>
+                              {new Date(post.publishedAt).toLocaleDateString("en-US", {
+                                month: "short",
+                                day: "numeric",
+                                year: "numeric",
+                              })}
+                            </time>
+                            <span className="text-border">•</span>
+                            <span>{post.author.name}</span>
+                          </div>
+                          <Link
+                            to={lp(`/blog/${post.slug}`)}
+                            className="flex items-center gap-1 font-body text-sm font-medium text-primary transition-colors hover:text-primary/80"
+                          >
+                            Read <ArrowRight className="h-3.5 w-3.5" />
+                          </Link>
+                        </div>
+
+                        <div className="mt-4 flex flex-wrap gap-2">
+                          {post.tags.map((tag) => (
+                            <span key={tag} className="rounded-md bg-muted px-2 py-0.5 font-body text-xs text-muted-foreground">
+                              {tag}
+                            </span>
+                          ))}
+                        </div>
+                      </article>
+                    ))}
+                </div>
+              </>
             )}
           </div>
         </section>
