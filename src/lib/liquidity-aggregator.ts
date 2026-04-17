@@ -33,8 +33,9 @@ export type Provider = "cn" | "le";
 
 export interface AggregatedEstimate extends EstimateResult {
   provider: Provider;
-  altAmount?: number | null; // Loser's amount, for badge display
-  isBestRate?: boolean;      // True when LE wins (i.e., not the default cn)
+  altAmount?: number | null; // Other provider's amount, for badge display
+  isBestRate?: boolean;      // True when LE is used (coverage extension)
+  coverageFallback?: boolean; // True when CN couldn't quote and LE filled in
 }
 
 export interface AggregatedTransaction extends TransactionResult {
