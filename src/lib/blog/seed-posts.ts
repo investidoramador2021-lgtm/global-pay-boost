@@ -1363,7 +1363,7 @@ You do not need an account, KYC for small sizes, or a bank wire to access on-cha
 
 ### Step 1 — Pick your source asset
 
-Open the [exchange widget](/?from=btc&to=nvdaonerc20#exchange) with BTC pre-selected as the source and tokenized NVIDIA as the destination. You can also rotate from ETH, USDC, USDT, SOL, or any of the 500+ supported assets.
+Open the [exchange widget](/?from=btc&to=nvdaonerc20#exchange) with BTC pre-selected as the source and tokenized NVIDIA as the destination. You can also rotate from ETH, USDC, USDT, SOL, or any of the 6,000+ supported Cryptocurrencies & Tokenized Stocks.
 
 ### Step 2 — Validate the route quote
 
