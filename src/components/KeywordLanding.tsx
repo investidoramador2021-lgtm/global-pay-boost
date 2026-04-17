@@ -62,12 +62,12 @@ const KeywordLanding = ({ data }: Props) => {
   const title = data.customTitle
     ? data.customTitle
     : isMoneroNoKyc
-    ? "Buy Monero No KYC – Private XMR Swap, No Registration | MRC GlobalPay"
+    ? "Buy Monero – Registration-Free XMR Swap | MRC GlobalPay"
     : `${keyword.length > 30 ? keyword.slice(0, 30).trim() : keyword} | MRC GlobalPay`;
   const description = data.customDescription
     ? data.customDescription
     : isMoneroNoKyc
-    ? "Buy Monero (XMR) with no KYC, no registration, and no account. Non-custodial swap from $0.30 with 0.5% flat fee. The most private way to acquire XMR in 2026."
+    ? "Buy Monero (XMR) with no registration required. Non-custodial swap from $0.30 with 0.5% flat fee. The most private way to acquire XMR in 2026."
     : `${benefitHook} Swap from $0.30 with no account. 500+ tokens on MRC GlobalPay.`;
 
   const defaultFaqs = [
@@ -87,11 +87,11 @@ const KeywordLanding = ({ data }: Props) => {
 
   const moneroFaqs = [
     {
-      q: "Can I buy Monero without KYC or identity verification?",
-      a: "Yes. MRC GlobalPay is completely registration-free. Swap any supported crypto to Monero (XMR) without providing an email, photo ID, or any personal information. Our non-custodial architecture means we never hold your funds.",
+      q: "Can I buy Monero without registration?",
+      a: "Yes. MRC GlobalPay is completely registration-free. Swap any supported crypto to Monero (XMR) without providing an email or creating an account. Our non-custodial architecture means we never hold your funds.",
     },
     {
-      q: "What is the fastest way to buy Monero no KYC in 2026?",
+      q: "What is the fastest way to buy Monero registration-free in 2026?",
       a: "MRC GlobalPay settles most XMR swaps in under 60 seconds. Simply enter your Monero wallet address, send any of 500+ supported cryptocurrencies, and receive XMR directly — no account, no waiting period, no limits.",
     },
     {
