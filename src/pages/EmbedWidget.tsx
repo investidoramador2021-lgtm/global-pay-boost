@@ -150,7 +150,13 @@ const EmbedWidget = () => {
         const data = await getCurrencies();
         if (!Array.isArray(data) || cancelled) return;
 
-        const filtered = data.filter((currency) => QUICK_TICKERS.includes(currency.ticker));
+        // Show ALL crypto assets (exclude fiat). Featured tokens float to the top.
+        const filtered = data
+          .filter((currency) => !currency.isFiat)
+          .sort((a, b) => {
+            if (a.featured !== b.featured) return a.featured ? -1 : 1;
+            return a.ticker.localeCompare(b.ticker);
+          });
         const paramFrom = searchParams.get("from")?.toLowerCase() || DEFAULT_FROM;
         const paramTo = searchParams.get("to")?.toLowerCase() || DEFAULT_TO;
         const from = filtered.find((currency) => currency.ticker === paramFrom) || filtered.find((currency) => currency.ticker === DEFAULT_FROM) || filtered[0] || null;
