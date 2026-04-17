@@ -428,7 +428,7 @@ const WidgetGenerator = () => {
         </div>
 
         {/* Embed Code */}
-        <div className="rounded-xl border border-border bg-background/40 p-5">
+        <div className="rounded-xl border-2 border-primary/40 bg-background/40 p-5 shadow-[0_0_24px_-8px_hsl(var(--primary)/0.4)]">
           <div className="flex items-center gap-2 mb-3">
             <Code2 className="h-4 w-4 text-primary" />
             <span className="font-display text-sm font-semibold text-foreground">Your Embed Code</span>
@@ -447,15 +447,15 @@ const WidgetGenerator = () => {
 
       {/* Parity note */}
       <div className="mt-6 rounded-xl border border-primary/30 bg-primary/5 p-4 text-sm text-foreground/90 leading-relaxed">
-        <strong className="font-display text-primary">Works exactly like ChangeNOW's widget.</strong>{" "}
-        Users can freely change any tokens, see live rates, and complete the full non-custodial swap
-        inside the widget — no registration needed. It follows our exact flow (instant settlement,
-        micro-swaps from $0.30, under 60 seconds) and is fully responsive on desktop, tablets, and mobile.
+        This widget uses the same embed code for all affiliates. We identify the source of each swap
+        using a secure internal reference. Users can freely change any tokens and complete the full
+        swap inside the widget using our exact non-custodial flow. Fully responsive on desktop,
+        tablets, and mobile. We handle all tracking and payouts privately on our side.
       </div>
 
       <p className="mt-3 text-[11px] text-muted-foreground">
         🔒 Privacy: your email and BTC wallet are <span className="font-semibold text-foreground">never exposed</span> in the public embed code.
-        We only emit an opaque referral token and keep tracking + payouts on our side.
+        We map the <code className="font-mono">ref</code> token to your account internally for tracking and payouts.
       </p>
     </div>
   );
