@@ -271,13 +271,20 @@ const SiteFooter = () => {
                 Technical Partners
               </h3>
               <div className="flex flex-wrap items-center justify-center gap-6 sm:justify-start">
-                {["ChangeNOW", "Fireblocks"].map((partner) => (
-                  <span
-                    key={partner}
-                    className="rounded border border-border bg-muted/50 px-3 py-1.5 font-body text-xs font-medium text-muted-foreground grayscale"
+                {[
+                  { name: "ChangeNOW", href: "https://changenow.io/" },
+                  { name: "LetsExchange", href: "https://letsexchange.io/" },
+                  { name: "Fireblocks", href: "https://www.fireblocks.com/" },
+                ].map((partner) => (
+                  <a
+                    key={partner.name}
+                    href={partner.href}
+                    target="_blank"
+                    rel="noopener noreferrer nofollow"
+                    className="rounded border border-border bg-muted/50 px-3 py-1.5 font-body text-xs font-medium text-muted-foreground grayscale transition-colors hover:text-foreground"
                   >
-                    {partner}
-                  </span>
+                    {partner.name}
+                  </a>
                 ))}
               </div>
             </div>
