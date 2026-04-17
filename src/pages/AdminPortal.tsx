@@ -1252,6 +1252,98 @@ const AdminPortal = () => {
                 </Card>
               )}
             </TabsContent>
+
+            {/* ═══ AFFILIATE LEADS ═══ */}
+            <TabsContent value="affiliates" className="mt-6 space-y-6">
+              <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
+                <Card className="border-border/40 bg-card/40 backdrop-blur-sm">
+                  <CardContent className="p-5 flex items-center gap-3">
+                    <Wallet className="w-5 h-5 text-primary" />
+                    <div>
+                      <p className="text-xs text-muted-foreground">Total Signups</p>
+                      <p className="text-2xl font-bold text-foreground">{affiliateLeads.length}</p>
+                    </div>
+                  </CardContent>
+                </Card>
+                <Card className="border-border/40 bg-card/40 backdrop-blur-sm">
+                  <CardContent className="p-5 flex items-center gap-3">
+                    <Users className="w-5 h-5 text-primary" />
+                    <div>
+                      <p className="text-xs text-muted-foreground">Unique Wallets</p>
+                      <p className="text-2xl font-bold text-foreground">{new Set(affiliateLeads.map((l) => l.btc_wallet)).size}</p>
+                    </div>
+                  </CardContent>
+                </Card>
+                <Card className="border-border/40 bg-card/40 backdrop-blur-sm">
+                  <CardContent className="p-5 flex items-center gap-3">
+                    <TrendingUp className="w-5 h-5 text-primary" />
+                    <div>
+                      <p className="text-xs text-muted-foreground">Today</p>
+                      <p className="text-2xl font-bold text-foreground">{affiliateLeads.filter((l) => new Date(l.created_at).toDateString() === new Date().toDateString()).length}</p>
+                    </div>
+                  </CardContent>
+                </Card>
+              </div>
+
+              <Card className="border-border/40 bg-card/40 backdrop-blur-sm">
+                <CardHeader>
+                  <CardTitle className="text-lg flex items-center gap-2">
+                    <Wallet className="w-5 h-5" /> Affiliate Signups
+                  </CardTitle>
+                  <p className="text-xs text-muted-foreground">
+                    Generated from <code className="text-primary">/affiliates</code>. Maps each opaque <code>ref_token</code> to the affiliate's email and BTC payout wallet.
+                  </p>
+                </CardHeader>
+                <CardContent>
+                  {affiliateLeads.length === 0 ? (
+                    <p className="text-sm text-muted-foreground py-8 text-center">No affiliate signups yet.</p>
+                  ) : (
+                    <Table>
+                      <TableHeader>
+                        <TableRow>
+                          <TableHead>Created</TableHead>
+                          <TableHead>Email</TableHead>
+                          <TableHead>BTC Wallet</TableHead>
+                          <TableHead>Ref Token</TableHead>
+                          <TableHead>Theme</TableHead>
+                          <TableHead>Source</TableHead>
+                          <TableHead></TableHead>
+                        </TableRow>
+                      </TableHeader>
+                      <TableBody>
+                        {affiliateLeads.map((lead) => (
+                          <TableRow key={lead.id}>
+                            <TableCell className="text-xs whitespace-nowrap">{new Date(lead.created_at).toLocaleString()}</TableCell>
+                            <TableCell className="text-xs">{lead.email}</TableCell>
+                            <TableCell className="font-mono text-[11px] break-all max-w-[200px]">{lead.btc_wallet}</TableCell>
+                            <TableCell>
+                              <code className="text-xs text-primary font-mono">{lead.ref_token}</code>
+                            </TableCell>
+                            <TableCell>
+                              <span className="text-xs px-2 py-0.5 rounded-md bg-muted text-foreground capitalize">{lead.theme}</span>
+                            </TableCell>
+                            <TableCell className="text-xs text-muted-foreground">{lead.source}</TableCell>
+                            <TableCell>
+                              <Button
+                                size="sm"
+                                variant="ghost"
+                                className="h-7 px-2"
+                                onClick={() => {
+                                  navigator.clipboard.writeText(lead.ref_token);
+                                  toast({ title: "Ref token copied", description: lead.ref_token });
+                                }}
+                              >
+                                <Copy className="w-3 h-3" />
+                              </Button>
+                            </TableCell>
+                          </TableRow>
+                        ))}
+                      </TableBody>
+                    </Table>
+                  )}
+                </CardContent>
+              </Card>
+            </TabsContent>
           </Tabs>
         </main>
       </div>
