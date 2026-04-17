@@ -446,8 +446,8 @@ const EmbedWidget = () => {
         )}
 
         <button
-          onClick={handleSwap}
-          disabled={!amount || Number.parseFloat(amount) <= 0 || belowMin}
+          onClick={handleProceedToWallet}
+          disabled={!amount || Number.parseFloat(amount) <= 0 || belowMin || !estimatedAmount}
           className="w-full rounded-xl py-3 text-sm font-bold uppercase tracking-wider transition-all disabled:cursor-not-allowed disabled:opacity-40"
           style={{
             background: "linear-gradient(135deg, hsl(160 100% 45%) 0%, hsl(200 100% 45%) 100%)",
@@ -457,6 +457,146 @@ const EmbedWidget = () => {
         >
           {t("widget.exchangeNow", "Swap Now")} →
         </button>
+        </>)}
+
+        {step === "wallet" && (
+          <div className="space-y-3">
+            <div className="rounded-xl border border-white/[0.06] bg-white/[0.04] p-3 text-[11px] text-white/60">
+              <div className="flex items-center justify-between mb-1">
+                <span className="text-white/40 uppercase tracking-wider text-[10px]">{t("widget.youSend", "You Send")}</span>
+                <span className="text-white/90 font-semibold">{amount} {fromCurrency?.ticker?.toUpperCase()}</span>
+              </div>
+              <div className="flex items-center justify-between">
+                <span className="text-white/40 uppercase tracking-wider text-[10px]">{t("widget.youGet", "You Get")}</span>
+                <span className="text-white/90 font-semibold">≈ {formatQuoteAmount(estimatedAmount)} {toCurrency?.ticker?.toUpperCase()}</span>
+              </div>
+            </div>
+
+            <div>
+              <label className="mb-1.5 block text-[10px] uppercase tracking-wider text-white/40">
+                {t("widget.recipientAddress", "Recipient Wallet")} ({toCurrency?.ticker?.toUpperCase()})
+              </label>
+              <input
+                type="text"
+                value={destinationAddress}
+                onChange={(e) => setDestinationAddress(e.target.value)}
+                placeholder={`Your ${toCurrency?.ticker?.toUpperCase()} address`}
+                className="w-full rounded-lg border border-white/[0.08] bg-white/[0.06] px-3 py-2.5 text-xs text-white placeholder:text-white/30 outline-none focus:border-emerald-400/40"
+              />
+            </div>
+
+            {toCurrency?.hasExternalId && (
+              <div>
+                <label className="mb-1.5 block text-[10px] uppercase tracking-wider text-white/40">
+                  Memo / Tag (optional)
+                </label>
+                <input
+                  type="text"
+                  value={extraId}
+                  onChange={(e) => setExtraId(e.target.value)}
+                  className="w-full rounded-lg border border-white/[0.08] bg-white/[0.06] px-3 py-2.5 text-xs text-white outline-none focus:border-emerald-400/40"
+                />
+              </div>
+            )}
+
+            {txError && (
+              <div className="rounded-lg border border-red-400/20 bg-red-400/10 px-3 py-2 text-[11px] text-red-100">
+                {txError}
+              </div>
+            )}
+
+            <button
+              onClick={handleCreateTransaction}
+              disabled={!destinationAddress.trim() || creatingTx}
+              className="w-full rounded-xl py-3 text-sm font-bold uppercase tracking-wider transition-all disabled:cursor-not-allowed disabled:opacity-40 flex items-center justify-center gap-2"
+              style={{
+                background: "linear-gradient(135deg, hsl(160 100% 45%) 0%, hsl(200 100% 45%) 100%)",
+                color: "#0a0c14",
+                boxShadow: "0 4px 16px rgba(0,200,150,0.3)",
+              }}
+            >
+              {creatingTx ? <Loader2 className="h-4 w-4 animate-spin" /> : null}
+              {creatingTx ? t("widget.loading", "Loading...") : t("widget.continue", "Continue")}
+            </button>
+          </div>
+        )}
+
+        {step === "deposit" && transaction && (
+          <div className="space-y-3">
+            <div className="rounded-xl border border-emerald-400/20 bg-emerald-400/5 p-3">
+              <div className="text-[10px] uppercase tracking-wider text-emerald-300/80 mb-1">
+                {t("widget.sendExactly", "Send exactly")}
+              </div>
+              <div className="flex items-center justify-between gap-2">
+                <span className="text-base font-bold text-white">{amount} {fromCurrency?.ticker?.toUpperCase()}</span>
+                <button
+                  onClick={() => copyToClipboard(amount, "amount")}
+                  className="rounded-md border border-white/[0.1] bg-white/[0.06] p-1.5 text-white/70 hover:bg-white/[0.1]"
+                  aria-label="Copy amount"
+                >
+                  {copied === "amount" ? <Check className="h-3.5 w-3.5 text-emerald-300" /> : <Copy className="h-3.5 w-3.5" />}
+                </button>
+              </div>
+            </div>
+
+            <div className="rounded-xl border border-white/[0.08] bg-white/[0.04] p-3">
+              <div className="text-[10px] uppercase tracking-wider text-white/40 mb-1.5">
+                {t("widget.depositAddress", "Deposit Address")} ({fromCurrency?.ticker?.toUpperCase()})
+              </div>
+              <div className="flex items-center justify-center mb-2">
+                <img
+                  src={`https://api.qrserver.com/v1/create-qr-code/?size=140x140&data=${encodeURIComponent(transaction.payinAddress)}&bgcolor=ffffff&color=0a0c14&margin=4`}
+                  alt="QR"
+                  className="rounded-md"
+                  width={140}
+                  height={140}
+                />
+              </div>
+              <div className="flex items-center justify-between gap-2">
+                <code className="text-[10px] text-white/80 break-all flex-1">{transaction.payinAddress}</code>
+                <button
+                  onClick={() => copyToClipboard(transaction.payinAddress, "address")}
+                  className="shrink-0 rounded-md border border-white/[0.1] bg-white/[0.06] p-1.5 text-white/70 hover:bg-white/[0.1]"
+                  aria-label="Copy address"
+                >
+                  {copied === "address" ? <Check className="h-3.5 w-3.5 text-emerald-300" /> : <Copy className="h-3.5 w-3.5" />}
+                </button>
+              </div>
+            </div>
+
+            {transaction.payinExtraId && (
+              <div className="rounded-xl border border-amber-400/20 bg-amber-400/5 p-3">
+                <div className="text-[10px] uppercase tracking-wider text-amber-200/80 mb-1">Memo / Tag (required)</div>
+                <div className="flex items-center justify-between gap-2">
+                  <code className="text-[11px] text-white/90 break-all flex-1">{transaction.payinExtraId}</code>
+                  <button
+                    onClick={() => copyToClipboard(transaction.payinExtraId!, "extra")}
+                    className="shrink-0 rounded-md border border-white/[0.1] bg-white/[0.06] p-1.5 text-white/70 hover:bg-white/[0.1]"
+                  >
+                    {copied === "extra" ? <Check className="h-3.5 w-3.5 text-emerald-300" /> : <Copy className="h-3.5 w-3.5" />}
+                  </button>
+                </div>
+              </div>
+            )}
+
+            <div className="flex items-center justify-between rounded-lg border border-white/[0.06] bg-white/[0.03] px-3 py-2">
+              <div className="flex items-center gap-2">
+                <Loader2 className="h-3 w-3 animate-spin text-emerald-300" />
+                <span className="text-[11px] text-white/60 uppercase tracking-wider">
+                  {txStatus?.status || "waiting"}
+                </span>
+              </div>
+              <span className="text-[10px] text-white/40">ID: {transaction.id.slice(0, 10)}…</span>
+            </div>
+
+            <button
+              onClick={resetFlow}
+              className="w-full rounded-xl border border-white/[0.1] bg-white/[0.04] py-2.5 text-xs font-medium text-white/70 hover:bg-white/[0.08]"
+            >
+              {t("widget.newSwap", "New Swap")}
+            </button>
+          </div>
+        )}
 
         <div className="mt-3 text-center">
           <a
