@@ -363,7 +363,7 @@ const EmbedWidget = () => {
             boxShadow: "0 4px 16px rgba(0,200,150,0.3)",
           }}
         >
-          Swap Now →
+          {t("widget.exchangeNow", "Swap Now")} →
         </button>
 
         <div className="mt-3 text-center">
