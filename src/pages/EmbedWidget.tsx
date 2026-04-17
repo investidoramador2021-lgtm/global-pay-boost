@@ -61,13 +61,20 @@ const formatQuoteAmount = (value: string) => {
 const EmbedWidget = () => {
   const [searchParams] = useSearchParams();
   const { t, i18n } = useTranslation();
+  const { pathname } = useLocation();
+  // Standalone = served at /embed/widget (iframe). When nested inside another page
+  // (e.g. /affiliates preview), do NOT touch <html lang/dir/class> or call
+  // i18n.changeLanguage — the parent LangLayout already manages those.
+  const isStandalone = pathname === "/embed/widget" || pathname.startsWith("/embed/widget");
   const refId = searchParams.get("ref") || "";
   const detectBrowserLang = (): string => {
     if (typeof navigator === "undefined") return "en";
     return pickSupportedLang([...(navigator.languages || []), navigator.language]);
   };
   const rawLangParam = searchParams.get("lang");
-  const langParam = (rawLangParam || detectBrowserLang()).toLowerCase();
+  // When nested, fall back to current i18n.language (set by LangLayout from URL).
+  const fallbackLang = isStandalone ? detectBrowserLang() : (i18n.language || "en");
+  const langParam = (rawLangParam || fallbackLang).toLowerCase().split("-")[0];
   const lang = SUPPORTED_LANGS.includes(langParam) ? langParam : "en";
   // Theme: accept ?mode=light|dark (preferred) or ?theme=light|dark (legacy). Default: dark.
   const themeParam = (searchParams.get("mode") || searchParams.get("theme") || "dark").toLowerCase();
