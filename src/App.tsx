@@ -207,6 +207,9 @@ const App = () => (
                   <Route path="/regulatory-report/:token" element={<RegulatoryReport />} />
                   <Route path="/functions/v1/live-feed" element={<EdgeFunctionAliasRedirect />} />
                   <Route path="/functions/v1/dynamic-feed" element={<EdgeFunctionAliasRedirect />} />
+                  {/* Deep-link aliases: /buy?to=xec and /exchange?to=nvda → home with pre-selected tab */}
+                  <Route path="/buy" element={<TabAliasRedirect tab="buy" />} />
+                  <Route path="/exchange" element={<TabAliasRedirect tab="exchange" />} />
                   {/* Legacy route redirect */}
                   <Route path="/admin/compliance-vault" element={<Navigate to="/admin/audit-inspector" replace />} />
                   <Route path="/audit-report/:token" element={<Navigate to="/admin/audit-inspector" replace />} />
