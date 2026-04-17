@@ -193,6 +193,10 @@ const DISPLAY_TICKER_MAP: Record<string, string> = {
   ethlna: "ETH",
   ethmanta: "ETH",
   bnbbsc: "BNB",
+  // New 2026 listings — show clean tickers in UI while keeping API ticker intact
+  prlsol: "PRL",
+  raveerc20: "RAVE",
+  stablebsc: "STABLE",
 };
 
 function displayTicker(c: { ticker: string; name?: string }): string {
@@ -223,15 +227,27 @@ const NETWORK_FRIENDLY_NAME: Record<string, string> = {
   "HyperEVM": "Hyperliquid",
 };
 
+// Force-network mapping for tickers whose API metadata omits a network field
+const FORCED_NETWORK_BY_TICKER: Record<string, string> = {
+  prlsol: "Solana",
+  raveerc20: "Ethereum",
+  stablebsc: "BNB Chain",
+  msftonerc20: "Ethereum",
+  spyonerc20: "Ethereum",
+  metaonerc20: "Ethereum",
+};
+
 function networkLabel(c: { ticker: string; name: string }): string | null {
+  const tickerLower = c.ticker.toLowerCase();
+  if (FORCED_NETWORK_BY_TICKER[tickerLower]) return FORCED_NETWORK_BY_TICKER[tickerLower];
   // Extract network from name in parentheses, e.g. "Tether (TRC20)" → "TRC20"
   const match = c.name.match(/\(([^)]+)\)/);
   if (match) {
     return NETWORK_FRIENDLY_NAME[match[1]] || match[1];
   }
   // If display ticker differs from raw ticker, there's a network suffix but no parenthetical
-  if (DISPLAY_TICKER_MAP[c.ticker.toLowerCase()]) {
-    const raw = c.ticker.toLowerCase();
+  if (DISPLAY_TICKER_MAP[tickerLower]) {
+    const raw = tickerLower;
     const base = DISPLAY_TICKER_MAP[raw].toLowerCase();
     const suffix = raw.replace(base, "");
     return suffix ? suffix.toUpperCase() : null;
@@ -1744,13 +1760,19 @@ const ExchangeWidget = ({ onTabChange, defaultFrom, defaultTo }: ExchangeWidgetP
             onClick={() => onSelect(c)}
             className="flex w-full items-center gap-3 rounded-lg px-3 py-2.5 text-left transition-colors hover:bg-accent"
           >
-            {c.image && <img src={c.image} alt={c.name} className="h-6 w-6 rounded-full" loading="lazy" />}
-            <div>
-              <span className="font-display text-sm font-semibold uppercase text-foreground">{displayTicker(c)}</span>
+            {c.image ? (
+              <img src={c.image} alt={c.name} className="h-6 w-6 rounded-full shrink-0" loading="lazy" onError={(e) => { (e.currentTarget as HTMLImageElement).style.display = 'none'; }} />
+            ) : (
+              <span className="flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-muted text-[10px] font-bold uppercase text-muted-foreground" aria-hidden>
+                {c.ticker.slice(0, 2)}
+              </span>
+            )}
+            <div className="flex min-w-0 flex-1 items-center">
+              <span className="font-display text-sm font-semibold uppercase text-foreground shrink-0">{displayTicker(c)}</span>
               {networkLabel(c) && (
-                <span className="ms-1.5 rounded bg-muted px-1.5 py-0.5 font-body text-[10px] uppercase text-muted-foreground">{networkLabel(c)}</span>
+                <span className="ms-1.5 shrink-0 rounded bg-muted px-1.5 py-0.5 font-body text-[10px] uppercase text-muted-foreground">{networkLabel(c)}</span>
               )}
-              <span className="ms-2 font-body text-xs text-muted-foreground">{c.name}</span>
+              <span className="ms-2 truncate font-body text-xs text-muted-foreground">{c.name}</span>
             </div>
           </button>
         ))}
