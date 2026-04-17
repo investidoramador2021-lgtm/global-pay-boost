@@ -373,7 +373,7 @@ const SupportChatWidget = () => {
           "Content-Type": "application/json",
           Authorization: `Bearer ${import.meta.env.VITE_SUPABASE_PUBLISHABLE_KEY}`,
         },
-        body: JSON.stringify({ messages: allMessages, persona: currentPersona.name, language: lang }),
+        body: JSON.stringify({ messages: allMessages, persona: currentPersona.name, language: lang, pageUrl: location.pathname }),
       });
 
       if (!resp.ok || !resp.body) throw new Error("Failed");
