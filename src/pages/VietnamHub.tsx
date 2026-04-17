@@ -212,10 +212,23 @@ const VietnamHub = () => {
       <section className="border-b border-border">
         <div className="container mx-auto max-w-6xl px-4 py-10">
           <h2 className="mb-4 font-display text-lg font-semibold text-foreground">
-            Liên kết nhanh — Trung tâm tài nguyên Việt Nam
+            Hướng dẫn nhanh — Trung tâm tài nguyên Việt Nam
           </h2>
           <nav aria-label="Vietnam Hub Quick Links">
             <ul className="grid gap-3 sm:grid-cols-2 lg:grid-cols-4">
+              <li>
+                <a
+                  href="/vi/blog"
+                  className="block rounded-lg border border-primary/30 bg-primary/[0.05] px-4 py-3 transition-colors hover:border-primary/60"
+                >
+                  <span className="font-display text-sm font-semibold text-foreground">
+                    Hướng dẫn dọn sạch ví GameFi
+                  </span>
+                  <span className="mt-1 block text-xs text-muted-foreground">
+                    Gom dust từ Axie, Sipher & airdrop Solana
+                  </span>
+                </a>
+              </li>
               <li>
                 <a
                   href="/vi/exchange/usdt-to-sol"
