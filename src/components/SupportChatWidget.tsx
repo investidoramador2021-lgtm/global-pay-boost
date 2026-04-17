@@ -264,13 +264,15 @@ const SupportChatWidget = () => {
     scrollRef.current?.scrollTo({ top: scrollRef.current.scrollHeight, behavior: "smooth" });
   }, [messages]);
 
-  // Welcome message — reset when language changes
+  // Welcome message — reset when language or route changes; affiliates page gets a sales-pitch greeting
   useEffect(() => {
     if (open && messages.length === 0) {
-      const greet = WELCOME_MESSAGES[lang] || WELCOME_MESSAGES.en;
+      const onAffiliates = isAffiliateRoute(location.pathname);
+      const greetMap = onAffiliates ? AFFILIATE_WELCOME : WELCOME_MESSAGES;
+      const greet = greetMap[lang] || greetMap.en;
       setMessages([{ role: "assistant", content: greet(currentPersona.name) }]);
     }
-  }, [open, lang]);
+  }, [open, lang, location.pathname]);
 
   /* ── Listen for widget tab changes and inject contextual message ── */
   useEffect(() => {
