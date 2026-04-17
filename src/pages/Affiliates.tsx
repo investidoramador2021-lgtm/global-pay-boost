@@ -386,20 +386,20 @@ const WidgetGenerator = () => {
             <span className="h-2.5 w-2.5 rounded-full bg-[hsl(45_90%_55%)]/70" />
             <span className="h-2.5 w-2.5 rounded-full bg-primary/70" />
             <span className="ms-3 font-mono text-[10px] truncate text-muted-foreground">
-              mrcglobalpay.com/embed/widget?theme={mode}
+              mrcglobalpay.com/embed/widget?mode={mode}
             </span>
           </div>
           <div className="overflow-hidden rounded-xl border border-border/60 bg-background">
             <iframe
               key={`${mode}-${activeEmail}-${activeBtc}`}
-              src={`/embed/widget?ref=${
+              src={`/embed/widget?mode=${mode}&ref=${
                 activeEmail || activeBtc ? buildRefToken(activeEmail, activeBtc) : "preview"
-              }&theme=${mode}`}
+              }`}
               title="Live MRC GlobalPay swap widget preview"
               loading="lazy"
               allow="clipboard-write"
               className="block w-full"
-              style={{ height: 680, border: 0, background: "transparent" }}
+              style={{ height: 720, border: 0, background: "transparent" }}
             />
           </div>
           <p className="mt-3 text-center text-[11px] text-muted-foreground">
