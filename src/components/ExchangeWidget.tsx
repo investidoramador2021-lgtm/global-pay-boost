@@ -3234,9 +3234,9 @@ const ExchangeWidget = ({ onTabChange, defaultFrom, defaultTo }: ExchangeWidgetP
             </div>
             <div className="mt-3 flex items-center justify-center gap-3">
               <p className="font-body text-xs text-muted-foreground">{t("widget.noHiddenFees")}</p>
-              {speedForecast && (
+              {(speedForecast || fromCurrency) && (
                 <span className="flex items-center gap-1 font-body text-xs text-primary">
-                  <Clock className="h-3 w-3" /> ~{speedForecast}
+                  <Clock className="h-3 w-3" /> ~{speedForecast || (winningProvider === "le" ? "5–15 min" : "10–30 min")}
                 </span>
               )}
             </div>
