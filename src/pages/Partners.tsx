@@ -131,18 +131,41 @@ const Partners = () => {
       const verificationToken = crypto.randomUUID() + '-' + crypto.randomUUID();
       const expiresAt = new Date(Date.now() + 48 * 60 * 60 * 1000).toISOString();
 
-      const { error: profileError } = await supabase.from("partner_profiles").insert({
-        user_id: data.user.id,
-        first_name: firstName.trim(),
-        last_name: lastName.trim(),
-        btc_wallet: btcWallet.trim(),
-        referral_code: "temp",
-        verification_status: "pending_verification",
-        verification_token: verificationToken,
-        verification_expires_at: expiresAt,
-      });
+      const { data: profileRow, error: profileError } = await supabase
+        .from("partner_profiles")
+        .insert({
+          user_id: data.user.id,
+          first_name: firstName.trim(),
+          last_name: lastName.trim(),
+          btc_wallet: btcWallet.trim(),
+          referral_code: "temp",
+          verification_status: "pending_verification",
+          verification_token: verificationToken,
+          verification_expires_at: expiresAt,
+        })
+        .select("id")
+        .maybeSingle();
 
       if (profileError) throw profileError;
+
+      // CLAIM any existing affiliate widget/link signups generated from /affiliates
+      // with the same email — so all prior commissions and traffic are now attributed
+      // to this partner account and visible on their dashboard.
+      if (profileRow?.id) {
+        const { data: claimedLeads } = await supabase
+          .from("affiliate_leads" as any)
+          .update({ partner_id: profileRow.id })
+          .ilike("email", email.trim())
+          .is("partner_id", null)
+          .select("ref_token");
+        const claimedCount = (claimedLeads as any[] | null)?.length || 0;
+        if (claimedCount > 0) {
+          toast({
+            title: `${claimedCount} affiliate widget${claimedCount > 1 ? "s" : ""} linked`,
+            description: "Your existing widget/link traffic will now be tracked on your dashboard.",
+          });
+        }
+      }
 
       // Send verification email via smtp-send
       const lang = localStorage.getItem("user-lang") || navigator.language?.slice(0, 2) || "en";

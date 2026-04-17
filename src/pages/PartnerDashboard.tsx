@@ -1449,8 +1449,28 @@ function DashboardContent() {
       }
       setProfile(p as PartnerProfile);
 
+      // Fetch the partner's claimed affiliate widget/link signups so we can also
+      // attribute swaps that came in via opaque ref_tokens (not just referral_code).
+      const { data: leadsRes } = await supabase
+        .from("affiliate_leads" as any)
+        .select("ref_token, theme, source, created_at")
+        .eq("partner_id", (p as PartnerProfile).id)
+        .order("created_at", { ascending: false });
+      const affiliateLeads = (leadsRes as any[] | null) || [];
+      setAffiliateLeads(affiliateLeads);
+
+      // Build full list of ref identifiers attributed to this partner
+      const refIdentifiers = [
+        (p as PartnerProfile).referral_code,
+        ...affiliateLeads.map((l: any) => l.ref_token),
+      ].filter(Boolean);
+
       const [swapRes, commRes, keyRes, devRes] = await Promise.all([
-        supabase.from("swap_transactions").select("*").eq("ref_code", (p as PartnerProfile).referral_code).order("created_at", { ascending: false }),
+        supabase
+          .from("swap_transactions")
+          .select("*")
+          .in("ref_code", refIdentifiers as string[])
+          .order("created_at", { ascending: false }),
         supabase.from("partner_transactions").select("*").eq("partner_id", (p as PartnerProfile).id).order("completed_at", { ascending: false }),
         supabase.from("partner_api_keys").select("id", { count: "exact", head: true }).eq("partner_id", (p as PartnerProfile).id).eq("is_active", true),
         supabase.from("developer_profiles").select("id").eq("partner_id", (p as PartnerProfile).id).maybeSingle(),
