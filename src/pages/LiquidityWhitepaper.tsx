@@ -367,8 +367,8 @@ const LiquidityWhitepaper = () => {
               language.
             </p>
             <p className="text-muted-foreground">
-              Key keywords: Zero-Data Swap, Non-Custodial Bridge, No KYC
-              Exchange, ZkSync Era USDC, Aptos CAKE Swap.
+              Key keywords: Zero-Data Swap, Non-Custodial Bridge,
+              Registration-Free Exchange, ZkSync Era USDC, Aptos CAKE Swap.
             </p>
 
             <h3 className="text-xl font-medium text-foreground mt-8">

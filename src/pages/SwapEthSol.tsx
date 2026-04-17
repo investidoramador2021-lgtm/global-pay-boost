@@ -8,8 +8,8 @@ const SwapEthSol = () => (
     assetBName="Solana"
     slug="eth-sol"
     avgSpeed="48s"
-    metaTitle="ETH to SOL – Swap Ethereum to Solana in 48s | No KYC | MRC GlobalPay"
-    metaDescription="Swap ETH to SOL instantly with no registration or KYC. Cross-chain settlement in under 48 seconds, 0.5% flat fee, 500+ assets. Best ETH to SOL exchange 2026."
+    metaTitle="ETH to SOL – Swap Ethereum to Solana in 48s | Registration-Free | MRC GlobalPay"
+    metaDescription="Swap ETH to SOL instantly with no registration required. Cross-chain settlement in under 48 seconds, 0.5% flat fee, 500+ assets. Best ETH to SOL exchange 2026."
     headline={<>Swap ETH to SOL Instantly – <span className="text-gradient-neon">No 2026 Network Delays</span></>}
     subHeadline="Processing: under 60 seconds. Settlement: immediate on-chain finality. Zero confirmation delays. The top cross-chain bridge-swap for DeFi traders — no wrapped tokens, no bridges."
     whyText="ETH/SOL is the top cross-chain bridge-swap for DeFi traders in March 2026. As Solana's ecosystem matures, traders constantly rotate between Ethereum's deep liquidity and Solana's high-speed execution. MRC GlobalPay eliminates cross-chain bridge complexity — our direct liquidity routing delivers native SOL to your wallet with processing under 60 seconds and immediate on-chain finality. Zero bridging risk."

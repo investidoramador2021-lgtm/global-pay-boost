@@ -368,7 +368,7 @@ export default function DynamicExchange() {
         applicationCategory: "FinanceApplication",
         operatingSystem: "Web, Android, iOS",
         offers: { "@type": "Offer", price: "0", priceCurrency: "USD" },
-        description: `Instant ${fromUp} to ${toUp} cryptocurrency exchange. No registration, no KYC, best rates from 700+ liquidity sources.`,
+        description: `Instant ${fromUp} to ${toUp} cryptocurrency exchange. No registration required. Best rates from 700+ liquidity sources.`,
       },
     ],
   };
