@@ -346,7 +346,7 @@ const WidgetGenerator = () => {
         </div>
 
         <button
-          onClick={() => canGenerate && setSubmitted(true)}
+          onClick={handleGenerate}
           disabled={!canGenerate}
           className="btn-shimmer inline-flex items-center justify-center gap-2 rounded-xl bg-primary px-6 py-3 font-display text-sm font-bold text-primary-foreground shadow-neon transition-all duration-100 hover:bg-primary/90 hover:-translate-y-0.5 disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:translate-y-0"
         >
