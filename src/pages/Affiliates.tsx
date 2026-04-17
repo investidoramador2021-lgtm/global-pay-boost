@@ -3,7 +3,7 @@ import { Helmet } from "react-helmet-async";
 import {
   Shield, Zap, Link2, DollarSign, Clock, ArrowRight, Infinity as InfinityIcon,
   LayoutDashboard, Wallet, Megaphone, Image as ImageIcon, Code2, FileText,
-  Globe, Lock, CheckCircle2,
+  Globe, Lock, CheckCircle2, AlertCircle, Copy, Check, BarChart3,
 } from "lucide-react";
 import { Slider } from "@/components/ui/slider";
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
@@ -180,26 +180,84 @@ const WHY_CHOOSE = [
 
 const FAQS = [
   {
-    q: "How much can I earn with the MRC GlobalPay Affiliate Program?",
-    a: "Affiliates earn between 0.1% and 0.4% revenue share on the total swap volume they refer. Higher rates apply based on volume and performance — custom rates are available for top partners.",
+    q: "Is the commission lifetime?",
+    a: "Yes. Once a user swaps through your unique referral link or embedded widget, you earn commission on every future swap they make — with no expiration date. Lifetime means lifetime.",
   },
   {
-    q: "Are commissions truly lifetime?",
-    a: "Yes. Once a user swaps through your unique referral link or embedded widget, you earn commission on every future swap they make — with no expiration date.",
+    q: "How do I get paid?",
+    a: "Payouts are fast and flexible. You can withdraw in crypto (BTC, USDT, USDC and more) or fiat directly from your Partner Dashboard. There is no minimum payout threshold for most assets.",
+  },
+  {
+    q: "Do I need to register to use the widget and track profits?",
+    a: "Yes. Tracking and commissions require a free Partner Account. Once registered, you'll get your unique affiliate ID, personalized referral links, and a tracking-enabled version of the embed widget so every swap is attributed to you.",
+  },
+  {
+    q: "Can I embed the widget on my site?",
+    a: "Absolutely. After registration you'll receive a personalized iframe snippet you can paste into any website, blog, or landing page. The widget is fully responsive, themeable, and works on every modern browser.",
+  },
+  {
+    q: "What traffic is allowed?",
+    a: "Organic traffic from blogs, YouTube, social media, Telegram channels, wallets, and crypto communities is welcome. Incentivized traffic, fraudulent clicks, malware, spam, and unauthorized brand bidding on paid search are not permitted.",
+  },
+  {
+    q: "How much can I earn with the MRC GlobalPay Affiliate Program?",
+    a: "Affiliates earn between 0.1% and 0.4% revenue share on the total swap volume they refer. Higher rates apply based on volume and performance — custom rates are available for top partners.",
   },
   {
     q: "Is there a minimum referred volume to qualify?",
     a: "No. There is no minimum volume requirement. You start earning from your very first referred swap.",
   },
   {
-    q: "How and when am I paid?",
-    a: "Payouts are fast and flexible. You can choose to be paid in crypto (BTC, USDT, USDC and more) or fiat. Balances are settled directly from the partner dashboard.",
-  },
-  {
     q: "Do my users need to register to swap?",
     a: "No. MRC GlobalPay is a non-custodial, registration-free exchange — users swap directly from their wallets, which dramatically increases your conversion rate.",
   },
 ];
+
+const WIDGET_SNIPPET = `<iframe
+  src="https://mrcglobalpay.com/embed/widget?ref=YOUR_AFFILIATE_ID"
+  width="100%"
+  height="640"
+  frameborder="0"
+  allow="clipboard-write"
+  title="MRC GlobalPay Instant Swap Widget"
+  style="border-radius:16px;max-width:480px;">
+</iframe>
+<p><a href="https://mrcglobalpay.com/?ref=YOUR_AFFILIATE_ID">
+  Powered by MRC GlobalPay
+</a></p>`;
+
+const WidgetSnippet = () => {
+  const [copied, setCopied] = useState(false);
+  const handleCopy = async () => {
+    try {
+      await navigator.clipboard.writeText(WIDGET_SNIPPET);
+      setCopied(true);
+      setTimeout(() => setCopied(false), 2000);
+    } catch {
+      /* noop */
+    }
+  };
+  return (
+    <div className="mt-6 rounded-xl border border-border bg-[hsl(230_15%_6%)] overflow-hidden">
+      <div className="flex items-center justify-between border-b border-border/60 px-4 py-2">
+        <span className="font-mono text-[11px] uppercase tracking-wider text-muted-foreground">
+          embed-widget.html
+        </span>
+        <button
+          onClick={handleCopy}
+          className="inline-flex items-center gap-1.5 rounded-md border border-border/60 bg-card/40 px-2.5 py-1 font-display text-[11px] font-semibold text-foreground transition-colors hover:bg-card"
+          aria-label="Copy widget code"
+        >
+          {copied ? <Check className="h-3 w-3 text-primary" /> : <Copy className="h-3 w-3" />}
+          {copied ? "Copied" : "Copy"}
+        </button>
+      </div>
+      <pre className="overflow-x-auto p-4 font-mono text-[11.5px] leading-relaxed text-foreground/90">
+        <code>{WIDGET_SNIPPET}</code>
+      </pre>
+    </div>
+  );
+};
 
 /* ─── Main Page ─── */
 const Affiliates = () => (
@@ -265,6 +323,9 @@ const Affiliates = () => (
               >
                 Join the Affiliate Program — Free & Instant <ArrowRight className="h-4 w-4" />
               </a>
+              <p className="mt-3 text-xs text-muted-foreground max-w-md mx-auto">
+                Create your free Partner Account to get your referral tools and start tracking earnings immediately.
+              </p>
             </div>
 
             <p className="mt-5 text-xs text-muted-foreground">
@@ -289,6 +350,33 @@ const Affiliates = () => (
       </section>
 
       <MsbTrustBar />
+
+      {/* ═══ REGISTRATION REQUIREMENT BANNER ═══ */}
+      <section className="border-b border-border bg-background py-10">
+        <div className="container mx-auto max-w-4xl px-4">
+          <div className="flex flex-col sm:flex-row items-start gap-4 rounded-2xl border border-primary/30 bg-primary/[0.06] p-5 sm:p-6 transition-all hover:border-primary/50">
+            <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-primary/15">
+              <AlertCircle className="h-5 w-5 text-primary" aria-hidden />
+            </div>
+            <div className="flex-1">
+              <h2 className="font-display text-base sm:text-lg font-bold text-foreground">
+                Important: A Free Partner Account is Required
+              </h2>
+              <p className="mt-1.5 font-body text-sm text-muted-foreground leading-relaxed">
+                To track your commissions and access your Partner Dashboard you must register a free
+                Partner Account. Once registered you will receive your unique affiliate ID, links,
+                and a personalized embeddable widget.
+              </p>
+              <a
+                href="/partners"
+                className="mt-3 inline-flex items-center gap-1.5 font-display text-sm font-semibold text-primary hover:underline"
+              >
+                Register your free Partner Account <ArrowRight className="h-3.5 w-3.5" />
+              </a>
+            </div>
+          </div>
+        </div>
+      </section>
 
       {/* ═══ HOW IT WORKS ═══ */}
       <section className="border-b border-border py-16 sm:py-20">
@@ -375,10 +463,108 @@ const Affiliates = () => (
               );
             })}
           </div>
+
+          {/* Embeddable widget snippet */}
+          <div className="mt-12 mx-auto max-w-3xl rounded-2xl border border-border bg-card p-6 sm:p-8 transition-all hover:border-primary/40 hover:shadow-lg">
+            <div className="flex items-start gap-3">
+              <Code2 className="h-6 w-6 text-primary shrink-0" aria-hidden />
+              <div>
+                <h3 className="font-display text-lg font-semibold text-foreground">
+                  Embeddable Instant Swap Widget
+                </h3>
+                <p className="mt-1.5 text-sm text-muted-foreground leading-relaxed">
+                  Drop this iframe into any website, blog, or landing page. Copy and paste this code
+                  after registering to get your personalized tracking version with your unique
+                  affiliate ID baked in.
+                </p>
+              </div>
+            </div>
+            <WidgetSnippet />
+          </div>
         </div>
       </section>
 
-      {/* ═══ WHY CHOOSE MRC GLOBALPAY ═══ */}
+      {/* ═══ PARTNER DASHBOARD TEASER ═══ */}
+      <section className="border-b border-border bg-muted/30 py-16 sm:py-20">
+        <div className="container mx-auto max-w-5xl px-4">
+          <div className="grid gap-8 md:grid-cols-2 md:items-center">
+            <div>
+              <div className="inline-flex items-center gap-2 rounded-full border border-primary/30 bg-primary/10 px-3 py-1 text-xs font-display font-semibold text-primary">
+                <BarChart3 className="h-3.5 w-3.5" /> Real-Time Analytics
+              </div>
+              <h2 className="mt-4 font-display text-3xl font-bold text-foreground sm:text-4xl">
+                Track Everything in Your Personal Partner Dashboard
+              </h2>
+              <p className="mt-4 font-body text-muted-foreground leading-relaxed">
+                After registration you'll get access to a real-time dashboard where you can see all
+                referred swaps, commissions earned, payouts, and performance stats — updated live
+                with on-chain attribution.
+              </p>
+              <ul className="mt-5 space-y-2.5">
+                {[
+                  "Live click → swap → commission funnel",
+                  "Per-link, per-banner, per-widget attribution",
+                  "Crypto and fiat payout history",
+                  "Conversion stats by region and asset",
+                ].map((item) => (
+                  <li key={item} className="flex items-start gap-2 text-sm text-foreground">
+                    <CheckCircle2 className="mt-0.5 h-4 w-4 text-primary shrink-0" />
+                    <span>{item}</span>
+                  </li>
+                ))}
+              </ul>
+              <div className="mt-7">
+                <a
+                  href="/partner-dashboard"
+                  className="btn-shimmer inline-flex items-center justify-center gap-2 rounded-xl bg-primary px-7 py-3.5 font-display text-sm font-bold text-primary-foreground shadow-neon transition-all duration-100 hover:bg-primary/90 hover:-translate-y-0.5"
+                >
+                  Go to Partner Dashboard <ArrowRight className="h-4 w-4" />
+                </a>
+              </div>
+            </div>
+
+            {/* Mock dashboard preview */}
+            <div className="rounded-2xl border border-border bg-[hsl(230_15%_6%)] p-5 shadow-lg">
+              <div className="flex items-center justify-between border-b border-border/60 pb-3">
+                <span className="font-display text-xs font-semibold text-foreground">Partner Dashboard</span>
+                <span className="inline-flex items-center gap-1 text-[10px] font-mono text-primary">
+                  <span className="h-1.5 w-1.5 rounded-full bg-primary animate-pulse" /> LIVE
+                </span>
+              </div>
+              <div className="mt-4 grid grid-cols-2 gap-3">
+                {[
+                  { label: "Referred Volume", value: "$182,430" },
+                  { label: "Earnings (30d)", value: "$546.20" },
+                  { label: "Active Referrals", value: "1,247" },
+                  { label: "Conversion Rate", value: "4.8%" },
+                ].map((s) => (
+                  <div key={s.label} className="rounded-lg border border-border/60 bg-card/40 p-3">
+                    <p className="text-[10px] uppercase tracking-wider text-muted-foreground font-display">
+                      {s.label}
+                    </p>
+                    <p className="mt-1 font-display text-lg font-bold text-foreground">{s.value}</p>
+                  </div>
+                ))}
+              </div>
+              <div className="mt-4 rounded-lg border border-border/60 bg-card/40 p-3">
+                <div className="flex items-end justify-between gap-1.5 h-16">
+                  {[40, 65, 50, 80, 55, 90, 75, 95, 70, 85, 100, 88].map((h, i) => (
+                    <div
+                      key={i}
+                      className="flex-1 rounded-sm bg-primary/70"
+                      style={{ height: `${h}%` }}
+                    />
+                  ))}
+                </div>
+                <p className="mt-2 text-[10px] text-muted-foreground font-mono text-center">
+                  Last 12 days · referred swaps
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
       <section className="border-b border-border bg-muted/30 py-16 sm:py-20">
         <div className="container mx-auto max-w-6xl px-4">
           <div className="mx-auto max-w-2xl text-center">
