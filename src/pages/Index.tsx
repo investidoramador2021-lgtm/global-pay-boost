@@ -65,15 +65,15 @@ const Index = () => {
         areaServed: "Worldwide",
         serviceType: "Cryptocurrency Exchange",
         identifier: "C100000015",
-        knowsAbout: ["Cryptocurrency Exchange", "Non-Custodial Swap", "Crypto Invoice Settlement", "Foreign Exchange", "Stablecoin Settlement"],
+        knowsAbout: ["Cryptocurrency Exchange", "Non-Custodial Swap", "6,000+ Crypto Assets", "Trending AI Tokens", "Tokenized Stocks (xStocks)", "Crypto Invoice Settlement", "Foreign Exchange", "Stablecoin Settlement"],
         hasOfferCatalog: {
           "@type": "OfferCatalog",
           name: "Crypto Exchange Services",
           itemListElement: [
             {
               "@type": "Offer",
-              name: "Instant Crypto Swap",
-              description: "Non-custodial crypto-to-crypto swap from $0.30 with 0.5% inclusive service fee",
+              name: "Instant Crypto Swap — 6,000+ Assets",
+              description: "Non-custodial swap across 6,000+ cryptocurrencies, Trending AI tokens, and Tokenized Stocks (xStocks) from $0.30 with 0.5% inclusive service fee",
               priceSpecification: {
                 "@type": "UnitPriceSpecification",
                 price: "0.5",
@@ -85,7 +85,7 @@ const Index = () => {
             {
               "@type": "Offer",
               name: "Professional Crypto Invoice",
-              description: "Issue crypto invoices with 168-hour rate lock guarantee and 0.5% settlement fee",
+              description: "Issue crypto invoices payable in 6,000+ assets including Trending AI tokens and Tokenized Stocks, with 168-hour rate lock guarantee and 0.5% settlement fee",
               priceSpecification: {
                 "@type": "UnitPriceSpecification",
                 price: "0.5",
@@ -103,11 +103,11 @@ const Index = () => {
         name: "MRC GlobalPay Currency Conversion",
         provider: { "@id": `${homeUrl}#organization` },
         serviceType: "CurrencyConversionService",
-        description: "Instant non-custodial cryptocurrency conversion with 0.5% inclusive fee and 168-hour rate lock on invoices",
+        description: "Instant non-custodial conversion across 6,000+ cryptocurrencies, Trending AI tokens, and Tokenized Stocks (xStocks) with 0.5% inclusive fee and 168-hour rate lock on invoices",
         areaServed: "Worldwide",
         termsOfService: "https://mrcglobalpay.com/terms",
         additionalType: "https://schema.org/FinancialProduct",
-        slogan: "Registration-Free Crypto Swap from $0.30"
+        slogan: "Registration-Free Swap Across 6,000+ Crypto Assets & Tokenized Stocks from $0.30"
       },
       {
         "@type": "SoftwareApplication",
