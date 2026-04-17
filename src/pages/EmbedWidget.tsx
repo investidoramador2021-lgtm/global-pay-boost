@@ -45,6 +45,9 @@ const formatQuoteAmount = (value: string) => {
 const EmbedWidget = () => {
   const [searchParams] = useSearchParams();
   const refId = searchParams.get("ref") || "";
+  // Theme: accept ?mode=light|dark (preferred) or ?theme=light|dark (legacy). Default: dark.
+  const themeParam = (searchParams.get("mode") || searchParams.get("theme") || "dark").toLowerCase();
+  const isLight = themeParam === "light";
   const [currencies, setCurrencies] = useState<Currency[]>([]);
   const [fromCurrency, setFromCurrency] = useState<Currency | null>(null);
   const [toCurrency, setToCurrency] = useState<Currency | null>(null);
@@ -57,10 +60,26 @@ const EmbedWidget = () => {
   const [minAmount, setMinAmount] = useState<number>(0);
 
   useEffect(() => {
-    document.documentElement.classList.add("dark");
+    // Apply theme from ?mode= / ?theme= so the embedded widget matches the host site.
+    if (isLight) {
+      document.documentElement.classList.remove("dark");
+      document.documentElement.classList.add("light");
+    } else {
+      document.documentElement.classList.remove("light");
+      document.documentElement.classList.add("dark");
+    }
     document.body.style.margin = "0";
     document.body.style.background = "transparent";
-  }, []);
+
+    // Persist the affiliate ref token so any swap created in this browsing
+    // session (including the new tab opened by handleSwap) is attributed.
+    if (refId) {
+      try {
+        sessionStorage.setItem("mrc_partner_ref", refId);
+        localStorage.setItem("mrc_partner_ref", refId);
+      } catch { /* sessionStorage may be blocked in some embed contexts */ }
+    }
+  }, [isLight, refId]);
 
   useEffect(() => {
     let cancelled = false;
@@ -214,11 +233,18 @@ const EmbedWidget = () => {
       }}
     >
       <div
-        className="relative w-full max-w-[360px] overflow-hidden rounded-2xl border border-white/[0.12] p-5"
+        className={`relative w-full max-w-[360px] overflow-hidden rounded-2xl border p-5 ${
+          isLight ? "border-slate-200" : "border-white/[0.12]"
+        }`}
         style={{
-          background: "linear-gradient(135deg, rgba(20,22,36,0.92) 0%, rgba(14,16,28,0.96) 100%)",
+          background: isLight
+            ? "linear-gradient(135deg, #ffffff 0%, #f8fafc 100%)"
+            : "linear-gradient(135deg, rgba(20,22,36,0.92) 0%, rgba(14,16,28,0.96) 100%)",
           backdropFilter: "blur(24px)",
-          boxShadow: "0 8px 32px rgba(0,0,0,0.4), inset 0 1px 0 rgba(255,255,255,0.05)",
+          boxShadow: isLight
+            ? "0 8px 32px rgba(15,23,42,0.08), inset 0 1px 0 rgba(255,255,255,0.6)"
+            : "0 8px 32px rgba(0,0,0,0.4), inset 0 1px 0 rgba(255,255,255,0.05)",
+          color: isLight ? "#0f172a" : undefined,
         }}
       >
         <div className="mb-4 flex items-center justify-between gap-3">
