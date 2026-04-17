@@ -119,25 +119,28 @@ const EmbedWidget = () => {
   };
 
   useEffect(() => {
+    if (!isStandalone) return;
     if (i18n.language !== lang) {
       i18n.changeLanguage(lang);
     }
     document.documentElement.lang = lang;
     const rtlLangs = ["ar", "he", "fa", "ur"];
     document.documentElement.dir = rtlLangs.includes(lang) ? "rtl" : "ltr";
-  }, [lang, i18n]);
+  }, [lang, i18n, isStandalone]);
 
   useEffect(() => {
-    // Apply theme from ?mode= / ?theme= so the embedded widget matches the host site.
-    if (isLight) {
-      document.documentElement.classList.remove("dark");
-      document.documentElement.classList.add("light");
-    } else {
-      document.documentElement.classList.remove("light");
-      document.documentElement.classList.add("dark");
+    if (isStandalone) {
+      // Apply theme from ?mode= / ?theme= so the embedded widget matches the host site.
+      if (isLight) {
+        document.documentElement.classList.remove("dark");
+        document.documentElement.classList.add("light");
+      } else {
+        document.documentElement.classList.remove("light");
+        document.documentElement.classList.add("dark");
+      }
+      document.body.style.margin = "0";
+      document.body.style.background = "transparent";
     }
-    document.body.style.margin = "0";
-    document.body.style.background = "transparent";
 
     // Persist the affiliate ref token so any swap created in this browsing
     // session (including the new tab opened by handleSwap) is attributed.
@@ -147,7 +150,7 @@ const EmbedWidget = () => {
         localStorage.setItem("mrc_partner_ref", refId);
       } catch { /* sessionStorage may be blocked in some embed contexts */ }
     }
-  }, [isLight, refId]);
+  }, [isLight, refId, isStandalone]);
 
   useEffect(() => {
     let cancelled = false;
