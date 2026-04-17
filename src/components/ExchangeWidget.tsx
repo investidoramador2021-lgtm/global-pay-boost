@@ -17,14 +17,18 @@ import { Input } from "@/components/ui/input";
 import { QRCodeSVG } from "qrcode.react";
 import {
   getCurrencies,
-  getEstimate,
-  getMinAmount,
-  createTransaction,
-  getTransactionStatus,
   type Currency,
   type TransactionResult,
   type TransactionStatus,
 } from "@/lib/changenow";
+import {
+  getBestEstimate,
+  getBestMinAmount,
+  createBestTransaction,
+  getStatusByProvider,
+  generateMrcTxId,
+  type Provider,
+} from "@/lib/liquidity-aggregator";
 import {
   getGuardarianCurrencies,
   getGuardarianEstimate,
@@ -649,6 +653,9 @@ const ExchangeWidget = ({ onTabChange, defaultFrom, defaultTo }: ExchangeWidgetP
   const [termsAccepted, setTermsAccepted] = useState(false);
   const [creatingTx, setCreatingTx] = useState(false);
   const [transaction, setTransaction] = useState<TransactionResult | null>(null);
+  const [txProvider, setTxProvider] = useState<Provider>("cn");
+  const [winningProvider, setWinningProvider] = useState<Provider>("cn");
+  const [bestRateActive, setBestRateActive] = useState(false);
   const [txStatus, setTxStatus] = useState<TransactionStatus | null>(null);
   const [copied, setCopied] = useState<string | null>(null);
   const [speedForecast, setSpeedForecast] = useState<string | null>(null);
@@ -756,11 +763,13 @@ const ExchangeWidget = ({ onTabChange, defaultFrom, defaultTo }: ExchangeWidgetP
   const [walletResults, setWalletResults] = useState<{ transaction_id: string; from_currency: string; to_currency: string; amount: number; created_at: string }[]>([]);
 
   // Persist recent transactions in localStorage + DB
-  const saveTransaction = async (tx: TransactionResult, recipientAddr: string) => {
+  const saveTransaction = async (tx: TransactionResult, recipientAddr: string, provider: Provider = "cn") => {
+    // Generate MRC Global Pay-branded reference ID
+    const mrcTxId = generateMrcTxId(tx.id);
     // localStorage
     try {
       const stored = JSON.parse(localStorage.getItem("mrc_recent_txs") || "[]");
-      const entry = { id: tx.id, from: tx.fromCurrency, to: tx.toCurrency, amount: tx.amount, date: new Date().toISOString() };
+      const entry = { id: tx.id, mrcId: mrcTxId, provider, from: tx.fromCurrency, to: tx.toCurrency, amount: tx.amount, date: new Date().toISOString() };
       stored.unshift(entry);
       localStorage.setItem("mrc_recent_txs", JSON.stringify(stored.slice(0, 10)));
     } catch (e) {
@@ -770,7 +779,7 @@ const ExchangeWidget = ({ onTabChange, defaultFrom, defaultTo }: ExchangeWidgetP
     try {
       const addr = recipientAddr.trim().toLowerCase();
       const payinAddr = (tx.payinAddress || "").trim().toLowerCase();
-      console.log("[MRC] Saving transaction to DB:", { id: tx.id, addr, payinAddr, from: tx.fromCurrency, to: tx.toCurrency, amount: tx.amount });
+      console.log("[MRC] Saving transaction to DB:", { id: tx.id, mrcId: mrcTxId, provider, addr, payinAddr });
       const refCode = sessionStorage.getItem("mrc_partner_ref") || null;
       const { error } = await supabase.from("swap_transactions").insert({
         transaction_id: tx.id,
@@ -780,6 +789,8 @@ const ExchangeWidget = ({ onTabChange, defaultFrom, defaultTo }: ExchangeWidgetP
         to_currency: tx.toCurrency,
         amount: tx.amount,
         ref_code: refCode,
+        provider,
+        mrc_tx_id: mrcTxId,
       });
       if (error) {
         console.error("[MRC] DB save error:", error);
@@ -852,7 +863,7 @@ const ExchangeWidget = ({ onTabChange, defaultFrom, defaultTo }: ExchangeWidgetP
 
     // Short input — treat as Transaction ID
     try {
-      const status = await getTransactionStatus(input);
+      const status = await getStatusByProvider(input, "cn");
       if (status?.id) {
         setTransaction({ id: status.id, payinAddress: status.payinAddress, payoutAddress: status.payoutAddress, fromCurrency: status.fromCurrency, toCurrency: status.toCurrency, amount: status.amountSend || 0 } as TransactionResult);
         setTxStatus(status);
@@ -872,7 +883,7 @@ const ExchangeWidget = ({ onTabChange, defaultFrom, defaultTo }: ExchangeWidgetP
   const handleSelectWalletTx = async (txId: string) => {
     setTrackLoading(true);
     try {
-      const status = await getTransactionStatus(txId);
+      const status = await getStatusByProvider(txId, "cn");
       if (!status?.id) throw new Error("Not found");
       setTransaction({ id: status.id, payinAddress: status.payinAddress, payoutAddress: status.payoutAddress, fromCurrency: status.fromCurrency, toCurrency: status.toCurrency, amount: status.amountSend || 0 } as TransactionResult);
       setTxStatus(status);
@@ -1380,24 +1391,32 @@ const ExchangeWidget = ({ onTabChange, defaultFrom, defaultTo }: ExchangeWidgetP
     }
     setEstimating(true);
     try {
-      const est = await getEstimate(fromCurrency.ticker, toCurrency.ticker, sendAmount, fixedRate);
+      const est = await getBestEstimate(fromCurrency.ticker, toCurrency.ticker, sendAmount, fixedRate);
       setEstimatedAmount(est.estimatedAmount?.toString() || "—");
       if (est.transactionSpeedForecast) {
         setSpeedForecast(est.transactionSpeedForecast);
       }
+      // Smart-router: detect provider switch and surface "rate updated" toast on quote change
+      if (est.provider !== winningProvider) {
+        if (winningProvider !== "cn" || est.provider !== "cn") {
+          toast({ title: "Rate updated", description: "We secured the best available rate for this swap." });
+        }
+        setWinningProvider(est.provider);
+      }
+      setBestRateActive(!!est.isBestRate);
     } catch {
       setEstimatedAmount("syncing");
       setSpeedForecast(null);
     }
     try {
-      const min = await getMinAmount(fromCurrency.ticker, toCurrency.ticker, fixedRate);
+      const min = await getBestMinAmount(fromCurrency.ticker, toCurrency.ticker, fixedRate);
       setMinAmount(min.minAmount || 0);
     } catch {
       setMinAmount(0);
     } finally {
       setEstimating(false);
     }
-  }, [fromCurrency, toCurrency, sendAmount, fixedRate]);
+  }, [fromCurrency, toCurrency, sendAmount, fixedRate, winningProvider, toast]);
 
   useEffect(() => {
     if (debounceRef.current) clearTimeout(debounceRef.current);
@@ -1410,7 +1429,7 @@ const ExchangeWidget = ({ onTabChange, defaultFrom, defaultTo }: ExchangeWidgetP
     if (step === "status" && transaction?.id) {
       const poll = async () => {
          try {
-          const status = await getTransactionStatus(transaction.id);
+          const status = await getStatusByProvider(transaction.id, txProvider);
           setTxStatus(status);
           if (["finished", "failed", "refunded"].includes(status.status)) {
             if (statusPollRef.current) clearInterval(statusPollRef.current);
@@ -1534,16 +1553,17 @@ const ExchangeWidget = ({ onTabChange, defaultFrom, defaultTo }: ExchangeWidgetP
     if (!fromCurrency || !toCurrency || !recipientAddress.trim()) return;
     setCreatingTx(true);
     try {
-      const result = await createTransaction({
+      const result = await createBestTransaction({
         from: fromCurrency.ticker,
         to: toCurrency.ticker,
         amount: parseFloat(sendAmount),
         address: recipientAddress.trim(),
         ...(extraId && { extraId }),
         ...(refundAddress && { refundAddress: refundAddress.trim() }),
-      });
+      }, winningProvider);
       setTransaction(result);
-      saveTransaction(result, recipientAddress);
+      setTxProvider(result.provider);
+      saveTransaction(result, recipientAddress, result.provider);
       setStep("deposit");
       scrollToWidget();
     } catch (err: unknown) {

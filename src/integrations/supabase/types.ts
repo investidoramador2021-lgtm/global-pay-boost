@@ -1174,7 +1174,9 @@ export type Database = {
           created_at: string
           from_currency: string
           id: string
+          mrc_tx_id: string | null
           payin_address: string
+          provider: string
           recipient_address: string
           ref_code: string | null
           to_currency: string
@@ -1185,7 +1187,9 @@ export type Database = {
           created_at?: string
           from_currency: string
           id?: string
+          mrc_tx_id?: string | null
           payin_address?: string
+          provider?: string
           recipient_address: string
           ref_code?: string | null
           to_currency: string
@@ -1196,7 +1200,9 @@ export type Database = {
           created_at?: string
           from_currency?: string
           id?: string
+          mrc_tx_id?: string | null
           payin_address?: string
+          provider?: string
           recipient_address?: string
           ref_code?: string | null
           to_currency?: string
