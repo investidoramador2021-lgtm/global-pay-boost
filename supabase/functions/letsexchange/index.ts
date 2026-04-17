@@ -6,7 +6,7 @@ const corsHeaders = {
   'Access-Control-Allow-Methods': 'GET, POST, OPTIONS',
 };
 
-// LetsExchange uses v1 API. v2 returns 404 for /info and /transaction.
+// LetsExchange uses v1 API. v2 returns 404 for /info and /transaction. (rev 2)
 const LE_BASE = 'https://api.letsexchange.io/api/v1';
 const LE_AFFILIATE_ID = Deno.env.get('LETSEXCHANGE_AFFILIATE_ID') || '';
 
