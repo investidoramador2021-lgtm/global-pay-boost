@@ -23,7 +23,7 @@ export default function AEOAssetBlock({ fromTicker, toTicker, fromName, toName }
     },
     {
       q: `Where is the safest place to swap ${fromUp} in Canada?`,
-      a: `MRC GlobalPay is a registered Canadian Money Services Business (FINTRAC #C100000015), operated by MRC Pay International Corp. out of Ottawa. Swaps are fully non-custodial — your private keys never leave your wallet — and every ${fromUp} → ${toUp} order is executed through audited liquidity partners with on-chain settlement in under 60 seconds. No account, no KYC for crypto-to-crypto swaps under regulatory thresholds.`,
+      a: `MRC GlobalPay is a registered Canadian Money Services Business (FINTRAC #C100000015), operated by MRC Pay International Corp. out of Ottawa. Swaps are fully non-custodial — your private keys never leave your wallet — and every ${fromUp} → ${toUp} order is executed through audited liquidity partners with on-chain settlement in under 60 seconds. No registration required for crypto-to-crypto swaps under regulatory thresholds.`,
     },
     {
       q: `What is the cheapest way to convert ${fromUp} to ${toUp}?`,

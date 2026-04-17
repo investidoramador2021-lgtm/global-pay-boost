@@ -4034,7 +4034,7 @@ const ExchangeWidget = ({ onTabChange, defaultFrom, defaultTo }: ExchangeWidgetP
                         try {
                           await navigator.share({
                             title: "Crypto Swap Complete — MRC GlobalPay",
-                            text: `I just swapped ${txStatus.fromCurrency?.toUpperCase()} → ${txStatus.toCurrency?.toUpperCase()}${txStatus.amountReceive ? ` and received ${txStatus.amountReceive} ${txStatus.toCurrency?.toUpperCase()}` : ""} on MRC GlobalPay — fast, no KYC, non-custodial!`,
+                            text: `I just swapped ${txStatus.fromCurrency?.toUpperCase()} → ${txStatus.toCurrency?.toUpperCase()}${txStatus.amountReceive ? ` and received ${txStatus.amountReceive} ${txStatus.toCurrency?.toUpperCase()}` : ""} on MRC GlobalPay — fast, registration-free, non-custodial!`,
                             url: "https://mrcglobalpay.com",
                           });
                         } catch (e) {

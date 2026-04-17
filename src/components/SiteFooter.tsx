@@ -41,7 +41,7 @@ const buyLinks = [
   { label: "Buy XDC", href: "/buy/xdc", title: "Buy XDC Network token instantly" },
   { label: "Buy LTC PayPal", href: "/buy/ltc-paypal", title: "Buy Litecoin with PayPal" },
   { label: "Buy Celo", href: "/buy/celo", title: "Buy Celo cryptocurrency instantly" },
-  { label: "Buy Monero Private", href: "/buy/monero-no-kyc", title: "Buy Monero privately, registration-free" },
+  { label: "Buy Monero Private", href: "/buy/monero-no-kyc", title: "Buy Monero privately — no registration required" },
   { label: "Bitcoin Registration-Free", href: "/buy/bitcoin-no-verification", title: "Buy Bitcoin — no account required, non-custodial settlement" },
 ];
 
