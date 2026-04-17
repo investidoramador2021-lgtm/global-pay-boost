@@ -1760,13 +1760,19 @@ const ExchangeWidget = ({ onTabChange, defaultFrom, defaultTo }: ExchangeWidgetP
             onClick={() => onSelect(c)}
             className="flex w-full items-center gap-3 rounded-lg px-3 py-2.5 text-left transition-colors hover:bg-accent"
           >
-            {c.image && <img src={c.image} alt={c.name} className="h-6 w-6 rounded-full" loading="lazy" />}
-            <div>
-              <span className="font-display text-sm font-semibold uppercase text-foreground">{displayTicker(c)}</span>
+            {c.image ? (
+              <img src={c.image} alt={c.name} className="h-6 w-6 rounded-full shrink-0" loading="lazy" onError={(e) => { (e.currentTarget as HTMLImageElement).style.display = 'none'; }} />
+            ) : (
+              <span className="flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-muted text-[10px] font-bold uppercase text-muted-foreground" aria-hidden>
+                {c.ticker.slice(0, 2)}
+              </span>
+            )}
+            <div className="flex min-w-0 flex-1 items-center">
+              <span className="font-display text-sm font-semibold uppercase text-foreground shrink-0">{displayTicker(c)}</span>
               {networkLabel(c) && (
-                <span className="ms-1.5 rounded bg-muted px-1.5 py-0.5 font-body text-[10px] uppercase text-muted-foreground">{networkLabel(c)}</span>
+                <span className="ms-1.5 shrink-0 rounded bg-muted px-1.5 py-0.5 font-body text-[10px] uppercase text-muted-foreground">{networkLabel(c)}</span>
               )}
-              <span className="ms-2 font-body text-xs text-muted-foreground">{c.name}</span>
+              <span className="ms-2 truncate font-body text-xs text-muted-foreground">{c.name}</span>
             </div>
           </button>
         ))}
