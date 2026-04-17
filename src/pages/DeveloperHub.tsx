@@ -279,7 +279,7 @@ const DeveloperHub = () => (
               {/* Stats */}
               <div className="mt-8 grid grid-cols-3 gap-4">
                 {[
-                  { value: "500+", label: "Assets" },
+                  { value: "6,000+", label: "Assets" },
                   { value: "700+", label: "Liquidity Sources" },
                   { value: "<60s", label: "Settlement" },
                 ].map((s) => (

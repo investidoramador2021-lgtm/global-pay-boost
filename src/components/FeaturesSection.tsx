@@ -8,7 +8,7 @@ const featureAlts = [
   "Sub-60-second crypto settlement icon",
   "Zero hidden fees guarantee badge",
   "No-account-required crypto swap shield",
-  "500+ supported crypto assets icon",
+  "6,000+ supported crypto assets icon",
   "Global always-on exchange indicator",
   "24/7 customer support headset icon",
 ];

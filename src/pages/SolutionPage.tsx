@@ -291,7 +291,7 @@ const SolutionPage = () => {
                 <h4 className="font-display text-xs font-bold uppercase tracking-wider text-foreground/70 mb-3">Quick Stats</h4>
                 <ul className="space-y-2 font-body text-xs text-muted-foreground">
                   <li className="flex justify-between"><span>Minimum Swap</span><span className="font-bold text-primary">$0.30</span></li>
-                  <li className="flex justify-between"><span>Assets</span><span className="font-bold text-foreground">500+</span></li>
+                  <li className="flex justify-between"><span>Assets</span><span className="font-bold text-foreground">6,000+</span></li>
                   <li className="flex justify-between"><span>Avg Speed</span><span className="font-bold text-foreground">&lt; 60s</span></li>
                   <li className="flex justify-between"><span>Registration</span><span className="font-bold text-foreground">None</span></li>
                 </ul>

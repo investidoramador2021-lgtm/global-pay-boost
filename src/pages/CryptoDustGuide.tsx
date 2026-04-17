@@ -39,7 +39,7 @@ const howToJsonLd = {
       "@type": "HowToStep",
       position: 1,
       name: "Select your dust token",
-      text: "Open MRC GlobalPay and choose the token you want to swap from the list of 500+ supported assets.",
+      text: "Open MRC GlobalPay and choose the token you want to swap from the list of 6,000+ supported assets.",
     },
     {
       "@type": "HowToStep",
@@ -247,7 +247,7 @@ const CryptoDustGuide = () => {
             </h3>
             <ol className="list-decimal list-inside space-y-3 text-muted-foreground leading-relaxed">
               <li>
-                <strong>Select your dust token</strong> — Choose from 500+ supported assets including
+                <strong>Select your dust token</strong> — Choose from 6,000+ supported assets including
                 BTC, ETH, SOL, and low-cap tokens.
               </li>
               <li>

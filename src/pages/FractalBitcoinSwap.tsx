@@ -41,7 +41,7 @@ const howToJsonLd = {
       "@type": "HowToStep",
       position: 2,
       name: "Select your destination token",
-      text: "Choose SOL, ETH, USDT, or any of 500+ supported tokens as the receiving asset.",
+      text: "Choose SOL, ETH, USDT, or any of 6,000+ supported tokens as the receiving asset.",
     },
     {
       "@type": "HowToStep",

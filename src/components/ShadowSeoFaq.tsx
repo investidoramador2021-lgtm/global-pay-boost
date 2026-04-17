@@ -29,7 +29,7 @@ const shadowFaqs = [
   },
   {
     q: "Can I buy crypto with a SEPA bank transfer in Europe?",
-    a: "Yes. MRC GlobalPay accepts SEPA Instant and standard SEPA transfers for buying Bitcoin, Ethereum, Solana, and 500+ other cryptocurrencies. SEPA payments typically settle in seconds (Instant) or within one business day (standard), and your crypto is delivered directly to your personal wallet. No account required.",
+    a: "Yes. MRC GlobalPay accepts SEPA Instant and standard SEPA transfers for buying Bitcoin, Ethereum, Solana, and 6,000+ other cryptocurrencies. SEPA payments typically settle in seconds (Instant) or within one business day (standard), and your crypto is delivered directly to your personal wallet. No account required.",
   },
   {
     q: "What are the fees for buying crypto with SEPA?",

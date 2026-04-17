@@ -270,7 +270,7 @@ const CryptoDustManifesto = () => {
                         ["Registration Required", "None", "Full KYC"],
                         ["Custody Model", "Non-Custodial", "Custodial"],
                         ["Settlement Speed", "< 60 seconds", "5 – 30 minutes"],
-                        ["Supported Assets", "500+", "50 – 200"],
+                        ["Supported Assets", "6,000+", "50 – 200"],
                         ["Cross-Chain Support", "50+ blockchains", "Limited"],
                         ["Regulatory Status", "FINTRAC MSB (Canada)", "Varies"],
                       ].map(([feature, mrc, typical]) => (

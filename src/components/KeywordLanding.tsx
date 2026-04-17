@@ -92,7 +92,7 @@ const KeywordLanding = ({ data }: Props) => {
     },
     {
       q: "What is the fastest way to buy Monero registration-free in 2026?",
-      a: "MRC GlobalPay settles most XMR swaps in under 60 seconds. Simply enter your Monero wallet address, send any of 500+ supported cryptocurrencies, and receive XMR directly — no account, no waiting period, no limits.",
+      a: "MRC GlobalPay settles most XMR swaps in under 60 seconds. Simply enter your Monero wallet address, send any of 6,000+ supported cryptocurrencies, and receive XMR directly — no account, no waiting period, no limits.",
     },
     {
       q: "Is there a minimum or maximum for buying Monero without registration?",

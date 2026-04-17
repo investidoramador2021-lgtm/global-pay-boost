@@ -81,7 +81,7 @@ const features: Feature[] = [
   { label: "Fractal BTC Support", mrc: true, changenow: false, simpleswap: false, changelly: false },
   { label: "Crypto Dust Conversion", mrc: true, changenow: false, simpleswap: false, changelly: false },
   { label: "Non-Custodial Swaps", mrc: true, changenow: true, simpleswap: true, changelly: true },
-  { label: "500+ Supported Assets", mrc: true, changenow: true, simpleswap: false, changelly: true },
+  { label: "6,000+ Supported Assets", mrc: true, changenow: true, simpleswap: false, changelly: true },
   { label: "Fiat On-Ramp", mrc: true, changenow: true, simpleswap: false, changelly: true },
   { label: "Micro-Swap Optimization", mrc: true, changenow: false, simpleswap: false, changelly: false },
   { label: "Canadian MSB Registered", mrc: true, changenow: false, simpleswap: false, changelly: false },
