@@ -66,17 +66,15 @@ const features = [
 ];
 
 const Partners = () => {
+  const initialParams = typeof window !== "undefined" ? new URLSearchParams(window.location.search) : new URLSearchParams();
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
-  const [email, setEmail] = useState("");
+  const [email, setEmail] = useState(() => initialParams.get("email") || "");
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
-  const [btcWallet, setBtcWallet] = useState("");
+  const [btcWallet, setBtcWallet] = useState(() => initialParams.get("btc") || "");
   const [loading, setLoading] = useState(false);
-  const [isLogin, setIsLogin] = useState(() => {
-    const params = new URLSearchParams(window.location.search);
-    return params.get("mode") === "login";
-  });
+  const [isLogin, setIsLogin] = useState(() => initialParams.get("mode") === "login");
   const navigate = useNavigate();
   const { toast } = useToast();
 
