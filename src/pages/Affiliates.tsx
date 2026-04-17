@@ -3,7 +3,7 @@ import { Helmet } from "react-helmet-async";
 import {
   Shield, Zap, Link2, ArrowRight, Infinity as InfinityIcon,
   Image as ImageIcon, Code2, Globe, Lock, CheckCircle2, Copy, Check,
-  Mail, Sparkles, ArrowDownUp, ArrowRightLeft, Clock,
+  Mail, Sparkles, ArrowDownUp, Clock,
 } from "lucide-react";
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
 import SiteHeader from "@/components/SiteHeader";
