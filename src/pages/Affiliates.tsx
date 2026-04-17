@@ -515,7 +515,7 @@ const Affiliates = () => (
               </ul>
               <div className="mt-7">
                 <a
-                  href="/partner-dashboard"
+                  href="/partners"
                   className="btn-shimmer inline-flex items-center justify-center gap-2 rounded-xl bg-primary px-7 py-3.5 font-display text-sm font-bold text-primary-foreground shadow-neon transition-all duration-100 hover:bg-primary/90 hover:-translate-y-0.5"
                 >
                   Go to Partner Dashboard <ArrowRight className="h-4 w-4" />
