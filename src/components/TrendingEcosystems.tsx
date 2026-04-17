@@ -51,7 +51,10 @@ const tabs = [
 ] as const;
 
 const TokenCardRow = ({ t }: { t: TokenCard }) => (
-  <Card className="group overflow-hidden transition-shadow hover:shadow-md">
+  <Card
+    className="group overflow-hidden transition-shadow hover:shadow-md"
+    aria-label={`${t.from} to ${t.label} non-custodial swap card — ${t.niche}`}
+  >
     <CardContent className="flex items-center gap-4 p-4">
       <div className="flex-1 min-w-0">
         <div className="flex flex-wrap items-center gap-2 mb-1">
@@ -61,8 +64,11 @@ const TokenCardRow = ({ t }: { t: TokenCard }) => (
         <p className="text-xs text-muted-foreground">{t.desc}</p>
       </div>
       <Button asChild size="sm" className="shrink-0">
-        <a href={`/?from=${t.from.toLowerCase()}&to=${t.to.toLowerCase()}`}>
-          Swap <ArrowRight className="ml-1 h-3 w-3" />
+        <a
+          href={`/?from=${t.from.toLowerCase()}&to=${t.to.toLowerCase()}`}
+          aria-label={`Open swap widget pre-filled with ${t.from} to ${t.label}`}
+        >
+          Swap <ArrowRight className="ml-1 h-3 w-3" aria-hidden="true" />
         </a>
       </Button>
     </CardContent>
@@ -80,9 +86,9 @@ const TrendingEcosystems = () => {
             2026 Trending Hubs
           </h2>
           <p className="mx-auto max-w-2xl text-muted-foreground">
-            Swap verified, high-liquidity tokens across AI, DePIN, RWA, and staking — with{" "}
+            The 2026 trending crypto pairs on MRC GlobalPay — verified, high-liquidity tokens across AI, DePIN, RWA, and staking. Swap with{" "}
             <strong className="text-foreground">no account required</strong> and a{" "}
-            <strong className="text-foreground">$0.30 minimum</strong>.
+            <strong className="text-foreground">$0.30 minimum</strong>, settled directly to your wallet.
           </p>
         </div>
 

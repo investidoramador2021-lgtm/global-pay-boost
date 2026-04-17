@@ -101,7 +101,7 @@ All 6,000+ assets on MRC GlobalPay are available via SEPA. The most popular pick
 | Settlement | Under 60 seconds | 10-60 minutes |
 | Minimum | $0.30 | 10-50 EUR |
 | Custody | Non-custodial | Custodial (exchange holds your funds) |
-| Assets | 500+ | 80-200 |
+| Assets | 6,000+ | 80-200 |
 | Compliance | FINTRAC MSB (Canada) | MiCA-regulated (EU) |
 
 For people who want speed, privacy, and direct wallet delivery, MRC GlobalPay offers a different experience than traditional custodial platforms.
@@ -116,7 +116,7 @@ For people who want speed, privacy, and direct wallet delivery, MRC GlobalPay of
 - Compliance: FINTRAC-registered Canadian MSB
 - Availability: 24/7/365
 
-SEPA remains the backbone of European payments, and pairing it with a registration-free, non-custodial on-ramp makes buying crypto faster and simpler than ever. Whether you are in Berlin, Lisbon, Amsterdam, or anywhere else in the EEA, MRC GlobalPay gives you access to 500+ digital assets in under a minute.
+SEPA remains the backbone of European payments, and pairing it with a registration-free, non-custodial on-ramp makes buying crypto faster and simpler than ever. Whether you are in Berlin, Lisbon, Amsterdam, or anywhere else in the EEA, MRC GlobalPay gives you access to 6,000+ Cryptocurrencies & Tokenized Stocks in under a minute.
 
 Ready to get started? [Buy crypto with SEPA now](/#exchange).
 `,

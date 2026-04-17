@@ -1,4 +1,5 @@
 import { useTranslation } from "react-i18next";
+import { Helmet } from "react-helmet-async";
 import { ClipboardList, Send, Wallet } from "lucide-react";
 
 const icons = [ClipboardList, Send, Wallet];
@@ -8,8 +9,25 @@ const numbers = ["01", "02", "03"];
 const HowItWorksSection = () => {
   const { t } = useTranslation();
 
+  const howToJsonLd = {
+    "@context": "https://schema.org",
+    "@type": "HowTo",
+    name: t("howItWorks.heading"),
+    description: t("howItWorks.subtitle"),
+    totalTime: "PT1M",
+    step: stepKeys.map((key, idx) => ({
+      "@type": "HowToStep",
+      position: idx + 1,
+      name: t(`howItWorks.${key}.title`),
+      text: t(`howItWorks.${key}.description`),
+    })),
+  };
+
   return (
     <section id="how-it-works" className="bg-background py-14 sm:py-20 lg:py-28">
+      <Helmet>
+        <script type="application/ld+json">{JSON.stringify(howToJsonLd)}</script>
+      </Helmet>
       <div className="container mx-auto px-4">
         <div className="mx-auto max-w-2xl text-center">
           <h2 className="font-display text-2xl font-bold tracking-tight text-foreground sm:text-3xl lg:text-4xl">
