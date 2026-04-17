@@ -187,6 +187,7 @@ const AppRoutes = () => (
     <Route path="exchange/:pair" element={<DynamicExchange />} />
     {/* Crawler hub — lists every supported asset and pair */}
     <Route path="directory" element={<ExchangeDirectory />} />
+    <Route path="affiliates" element={<Affiliates />} />
   </>
 );
 
