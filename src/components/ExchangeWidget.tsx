@@ -339,6 +339,8 @@ const ExchangeCurrencyPickerView = ({
   searchPlaceholder,
   onSelect,
   onClose,
+  activeCategory,
+  onCategoryChange,
 }: {
   show: boolean;
   currencies: Currency[];
@@ -348,6 +350,8 @@ const ExchangeCurrencyPickerView = ({
   searchPlaceholder: string;
   onSelect: (c: Currency) => void;
   onClose: () => void;
+  activeCategory: string;
+  onCategoryChange: (id: string) => void;
 }) => {
   if (!show) return null;
 
@@ -368,6 +372,25 @@ const ExchangeCurrencyPickerView = ({
           <button onClick={onClose} className="font-body text-xs text-muted-foreground hover:text-foreground">
             Cancel
           </button>
+        </div>
+        <div className="flex flex-wrap gap-1.5 border-b border-border px-4 pb-3 pt-3">
+          {PICKER_CATEGORIES.map((cat) => {
+            const active = cat.id === activeCategory;
+            return (
+              <button
+                key={cat.id}
+                onClick={() => onCategoryChange(cat.id)}
+                className={
+                  "rounded-full border px-3 py-1 font-body text-[11px] font-medium uppercase tracking-wide transition-colors " +
+                  (active
+                    ? "border-primary bg-primary/15 text-primary"
+                    : "border-border bg-muted/30 text-muted-foreground hover:border-primary/40 hover:text-foreground")
+                }
+              >
+                {cat.label}
+              </button>
+            );
+          })}
         </div>
         <div className="flex gap-2 border-b border-border px-4 pb-3">
           {["btc", "eth", "sol", "usdc"].map((ticker) => {
