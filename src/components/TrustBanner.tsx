@@ -8,7 +8,7 @@ interface StatConfig {
 }
 
 const stats: StatConfig[] = [
-  { target: 500, suffix: "+", label: "Cryptocurrencies" },
+  { target: 6000, suffix: "+", label: "Cryptocurrencies & Stocks" },
   { target: 60, prefix: "<", suffix: "s", label: "Avg. Settlement" },
   { target: 0, label: "Hidden Fees" },
   { target: 24, suffix: "/7", label: "Uptime" },

@@ -88,7 +88,7 @@ const About = () => (
             <div className="mt-4 space-y-3 font-body text-sm leading-relaxed text-muted-foreground">
               <p><strong>Architecture:</strong> Non-custodial. MRC GlobalPay never holds, stores, or has access to user funds. All swaps settle wallet-to-wallet through institutional-grade liquidity infrastructure (ChangeNOW / Fireblocks).</p>
               <p><strong>Minimum Swap:</strong> $0.30 USD equivalent — the lowest in the industry, designed for micro-balance ("crypto dust") conversion.</p>
-              <p><strong>Supported Assets:</strong> 500+ cryptocurrencies across 50+ blockchain networks.</p>
+              <p><strong>Supported Assets:</strong> 6,000+ cryptocurrencies and Tokenized Stocks across 50+ blockchain networks, with curated coverage of Trending AI tokens and stablecoins.</p>
               <p><strong>Settlement Speed:</strong> Average 2–15 minutes depending on network confirmation times.</p>
             </div>
           </div>

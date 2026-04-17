@@ -1,7 +1,7 @@
 {
   "meta": {
     "title": "MRC GlobalPay | Registration-Free Crypto Swap from $0.30",
-    "description": "How do you swap 500+ cryptocurrencies with no registration? MRC GlobalPay is a non-custodial crypto exchange with no minimum swap — settled in under 60 seconds. Registered Canadian MSB.",
+    "description": "Access 6,000+ cryptocurrencies and tokenized stocks instantly with no registration. MRC GlobalPay is a non-custodial crypto exchange with no minimum swap — settled in under 60 seconds. Registered Canadian MSB.",
     "ogTitle": "Non-Custodial Crypto Exchange — No Minimum Swap from $0.30 | MRC GlobalPay"
   },
   "footer": {
@@ -22,16 +22,16 @@
     "help": "Help"
   },
   "hero": {
-    "heading": "Non-Custodial Crypto Exchange.",
-    "headingAccent": "No Minimum Swap. From $0.30.",
-    "subtitle": "Swap 500+ assets instantly. Zero onboarding, direct settlement, wallet-to-wallet.",
+   "heading": "Access 6,000+ Cryptocurrencies & Tokenized Stocks.",
+   "headingAccent": "No Registration. From $0.30.",
+   "subtitle": "Swap 6,000+ assets — including Trending AI tokens and Tokenized Stocks — instantly. Zero onboarding, direct wallet-to-wallet settlement.",
     "subtitleMsb": "Registered Canadian MSB",
     "subtitleEnd": "— trusted by thousands worldwide.",
     "trustNoAccount": "No Account Required",
     "trustNonCustodial": "Non-Custodial",
     "trustSettlement": "Instant Settlement",
     "dustTitle": "🧹 No Minimum Swap — Clean Your Wallet",
-    "dustDescription": "Most platforms have high minimums. MRC GlobalPay supports micro-swaps starting at $0.30. Convert leftover dust from 500+ tokens instantly. Zero onboarding required."
+    "dustDescription": "Most platforms have high minimums. MRC GlobalPay supports micro-swaps starting at $0.30. Convert leftover dust from 6,000+ tokens instantly. Zero onboarding required."
   },
   "howItWorks": {
     "heading": "How It Works",
@@ -65,8 +65,8 @@
       "description": "Permissionless access — start swapping immediately. No sign-ups. No personal data. Zero onboarding friction."
     },
     "assets": {
-      "title": "500+ Crypto Assets",
-      "description": "Swap Bitcoin, Ethereum, Solana, USDT, and hundreds more across all major blockchains."
+      "title": "6,000+ Crypto Assets",
+      "description": "Swap Bitcoin, Ethereum, Solana, USDT, Trending AI tokens, and Tokenized Stocks across all major blockchains."
     },
     "global": {
       "title": "Global, Always-On",
