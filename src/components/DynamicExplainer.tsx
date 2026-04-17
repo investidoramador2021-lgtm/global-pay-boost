@@ -17,14 +17,14 @@ import googlePayLogo from "@/assets/logo-googlepay.png";
 import pixLogo from "@/assets/logo-pix.png";
 import sepaLogo from "@/assets/logo-sepa.png";
 
-type WidgetMode = "exchange" | "buysell" | "private" | "bridge" | "dex" | "request" | "loan" | "earn";
+type WidgetMode = "exchange" | "buysell" | "private" | "bridge" | "request" | "loan" | "earn";
 
 interface Props {
   activeTab: WidgetMode;
   onCtaClick?: (tab: WidgetMode) => void;
 }
 
-type DisplayMode = "exchange" | "buysell" | "private" | "bridge" | "dex" | "invoice" | "loan" | "earn";
+type DisplayMode = "exchange" | "buysell" | "private" | "bridge" | "invoice" | "loan" | "earn";
 
 const logos = [
   { src: visaLogo, alt: "Visa" },
@@ -77,12 +77,6 @@ const modeConfig: Record<DisplayMode, { accent: string; label: string; image: st
     label: "EARN",
     image: explainerEarn,
     glow: "0 0 70px hsl(168 80% 48% / 0.28), 0 0 140px hsl(168 80% 48% / 0.12)",
-  },
-  dex: {
-    accent: "142 76% 46%",
-    label: "DEX (DEFI)",
-    image: explainerExchange,
-    glow: "0 0 70px hsl(142 76% 46% / 0.28), 0 0 140px hsl(142 76% 46% / 0.12)",
   },
 };
 

@@ -5,7 +5,6 @@ import { ArrowDownUp, Loader2, Search, Copy, Check, ArrowLeft, ArrowRight, Arrow
 import PrivateTransferTab from "@/components/PrivateTransferTab";
 import PermanentBridgeTab from "@/components/PermanentBridgeTab";
 import InvoiceRequestTab from "@/components/InvoiceRequestTab";
-import DexTab from "@/components/DexTab";
 import FeeBreakdown from "@/components/FeeBreakdown";
 import SystemPulse from "@/components/SystemPulse";
 import DestinationAddressInput, { tickerToAddressType } from "@/components/DestinationAddressInput";
@@ -757,7 +756,7 @@ function EarnWidgetPanel() {
 }
 
 interface ExchangeWidgetProps {
-  onTabChange?: (tab: "exchange" | "buysell" | "private" | "bridge" | "dex" | "request" | "loan" | "earn") => void;
+  onTabChange?: (tab: "exchange" | "buysell" | "private" | "bridge" | "request" | "loan" | "earn") => void;
   defaultFrom?: string;
   defaultTo?: string;
 }
@@ -793,7 +792,7 @@ const ExchangeWidget = ({ onTabChange, defaultFrom, defaultTo }: ExchangeWidgetP
   const debounceRef = useRef<ReturnType<typeof setTimeout>>();
 
   // ===== Dual-tab mode: "exchange" (ChangeNOW) vs "buysell" (Guardarian) =====
-  type WidgetMode = "exchange" | "buysell" | "private" | "bridge" | "dex" | "request" | "loan" | "earn";
+  type WidgetMode = "exchange" | "buysell" | "private" | "bridge" | "request" | "loan" | "earn";
   type FiatFlow = "buy" | "sell";
   const [widgetMode, setWidgetMode] = useState<WidgetMode>("exchange");
   const [gTradeDirection, setGTradeDirection] = useState<FiatFlow>("buy");
@@ -1518,8 +1517,6 @@ const ExchangeWidget = ({ onTabChange, defaultFrom, defaultTo }: ExchangeWidgetP
       setGTradeDirection("buy");
     } else if (tab === "bridge") {
       setWidgetMode("bridge");
-    } else if (tab === "dex" || tab === "defi") {
-      setWidgetMode("dex");
     } else if (tab === "request" || tab === "invoice") {
       setWidgetMode("request");
     } else if (tab === "loan") {
@@ -2105,7 +2102,6 @@ const ExchangeWidget = ({ onTabChange, defaultFrom, defaultTo }: ExchangeWidgetP
                       }
                     }},
                     { mode: "private" as WidgetMode, icon: EyeOff, labelKey: "widget.tabs.private", onClick: () => { setWidgetMode("private"); } },
-                    { mode: "dex" as WidgetMode, icon: Wallet, labelKey: "widget.tabs.dex", onClick: () => { setWidgetMode("dex"); } },
                     { mode: "bridge" as WidgetMode, icon: Link2, labelKey: "widget.tabs.bridge", onClick: () => { setWidgetMode("bridge"); } },
                     { mode: "request" as WidgetMode, icon: FileText, labelKey: "widget.tabs.invoice", onClick: () => { setWidgetMode("request"); } },
                     { mode: "loan" as WidgetMode, icon: Landmark, labelKey: "widget.tabs.loan", badge: "🔥", onClick: () => { setWidgetMode("loan"); } },
@@ -3003,10 +2999,6 @@ const ExchangeWidget = ({ onTabChange, defaultFrom, defaultTo }: ExchangeWidgetP
               <PermanentBridgeTab />
             )}
 
-            {/* ===== DEX (DeFi) MODE — LetsExchange iframe ===== */}
-            {widgetMode === "dex" && (
-              <DexTab defaultFrom={fromCurrency?.ticker} defaultTo={toCurrency?.ticker} />
-            )}
 
             {/* ===== INVOICE REQUEST MODE ===== */}
             {widgetMode === "request" && (
