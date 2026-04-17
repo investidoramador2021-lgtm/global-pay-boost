@@ -3150,14 +3150,18 @@ const ExchangeWidget = ({ onTabChange, defaultFrom, defaultTo }: ExchangeWidgetP
                     searchQuery={searchQuery}
                     searchPlaceholder={t("widget.searchCurrency")}
                     onSearchChange={setSearchQuery}
+                    activeCategory={pickerCategory}
+                    onCategoryChange={setPickerCategory}
                     onSelect={(currency) => {
                       setToCurrency(currency);
                       setShowToPicker(false);
                       setSearchQuery("");
+                      setPickerCategory("all");
                     }}
                     onClose={() => {
                       setShowToPicker(false);
                       setSearchQuery("");
+                      setPickerCategory("all");
                     }}
                   />
                 </div>
