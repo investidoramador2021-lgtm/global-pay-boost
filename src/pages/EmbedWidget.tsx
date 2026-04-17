@@ -381,7 +381,7 @@ const EmbedWidget = () => {
             rel="noopener"
             className="text-[10px] text-white/30 transition-colors hover:text-white/50"
           >
-            Powered by <span className="font-semibold">MRC GlobalPay</span>
+            {t("widget.poweredBy", "Powered by")} <span className="font-semibold">MRC GlobalPay</span>
           </a>
         </div>
 
@@ -389,9 +389,9 @@ const EmbedWidget = () => {
           <div className="absolute inset-0 z-50 flex flex-col rounded-2xl bg-[#0b0e18]/95 p-3 backdrop-blur-xl">
             <div className="mb-3 flex items-center justify-between">
               <div>
-                <div className="text-[10px] uppercase tracking-wider text-white/35">Select asset</div>
+                <div className="text-[10px] uppercase tracking-wider text-white/35">{t("widget.select", "Select")}</div>
                 <div className="text-sm font-semibold text-white">
-                  {activeSelector === "from" ? "Choose what users send" : "Choose what users receive"}
+                  {activeSelector === "from" ? t("widget.youSend", "You Send") : t("widget.youGet", "You Get")}
                 </div>
               </div>
               <button
