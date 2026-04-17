@@ -9,6 +9,7 @@ import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/
 import SiteHeader from "@/components/SiteHeader";
 import SiteFooter from "@/components/SiteFooter";
 import MsbTrustBar from "@/components/MsbTrustBar";
+import { supabase } from "@/integrations/supabase/client";
 
 /* ─── JSON-LD ─── */
 const jsonLd = {
@@ -244,10 +245,28 @@ const WidgetGenerator = () => {
   const showEmailError = emailTouched && email.length > 0 && !emailValid;
   const showBtcError = btcTouched && btc.length > 0 && !btcValid;
 
-  const handleGenerate = () => {
+  const handleGenerate = async () => {
     setEmailTouched(true);
     setBtcTouched(true);
-    if (canGenerate) setSubmitted(true);
+    if (!canGenerate) return;
+    setSubmitted(true);
+
+    // Persist the affiliate signup so the admin can map ref tokens → payout wallets.
+    // Fire-and-forget: never block the UI on this.
+    try {
+      const refToken = buildRefToken(email, btc);
+      await supabase.from("affiliate_leads" as any).insert({
+        email: email.trim().toLowerCase(),
+        btc_wallet: btc.trim(),
+        ref_token: refToken,
+        theme: mode,
+        source: "affiliates_page",
+        user_agent: typeof navigator !== "undefined" ? navigator.userAgent.slice(0, 500) : null,
+      });
+    } catch (err) {
+      // Silent — do not interrupt affiliate flow
+      console.warn("[affiliate_leads] insert failed", err);
+    }
   };
 
   // Live updates the moment inputs are valid (no need to click Generate).

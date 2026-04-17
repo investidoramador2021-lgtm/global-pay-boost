@@ -15,7 +15,7 @@ import {
   Shield, Users, Bitcoin, TrendingUp, Check, LogOut, Lock, MessageCircle,
   Trash2, DollarSign, Copy, FileText, Landmark, Percent, Key, Activity,
   AlertTriangle, Search, Code2, Link2, Zap, XCircle, Upload, Mail, ExternalLink,
-  ShieldAlert, FileUp, Clock, Eye,
+  ShieldAlert, FileUp, Clock, Eye, Wallet,
 } from "lucide-react";
 import SiteHeader from "@/components/SiteHeader";
 import SiteFooter from "@/components/SiteFooter";
@@ -142,8 +142,9 @@ const AdminPortal = () => {
   const [apiKeys, setApiKeys] = useState<ApiKeyRow[]>([]);
   const [transactions, setTransactions] = useState<Tx[]>([]);
   const [tab, setTab] = useState("current");
-  const [adminTab, setAdminTab] = useState<"partners" | "exchanges" | "invoices" | "support" | "lending" | "proxy" | "payouts" | "compliance">("exchanges");
+  const [adminTab, setAdminTab] = useState<"partners" | "exchanges" | "invoices" | "support" | "lending" | "proxy" | "payouts" | "compliance" | "affiliates">("exchanges");
   const [complianceHolds, setComplianceHolds] = useState<ComplianceHold[]>([]);
+  const [affiliateLeads, setAffiliateLeads] = useState<Array<{ id: string; email: string; btc_wallet: string; ref_token: string; theme: string; source: string; created_at: string }>>([]);
   const [chatLogs, setChatLogs] = useState<ChatLog[]>([]);
   const [lendEarnTxs, setLendEarnTxs] = useState<LendEarnTx[]>([]);
   const [webhookDeliveries, setWebhookDeliveries] = useState<any[]>([]);
@@ -180,7 +181,7 @@ const AdminPortal = () => {
   }, [stage, resetInactivityTimer]);
 
   const loadDashboard = useCallback(async () => {
-    const [pRes, txRes, logRes, leRes, devRes, keyRes, whRes, poRes, chRes] = await Promise.all([
+    const [pRes, txRes, logRes, leRes, devRes, keyRes, whRes, poRes, chRes, alRes] = await Promise.all([
       supabase.from("partner_profiles").select("*"),
       supabase.from("partner_transactions").select("*").order("completed_at", { ascending: false }),
       supabase.from("support_chat_logs" as any).select("*").order("created_at", { ascending: false }).limit(200),
@@ -190,6 +191,7 @@ const AdminPortal = () => {
       supabase.from("webhook_deliveries" as any).select("*").order("created_at", { ascending: false }).limit(500),
       supabase.from("payout_requests" as any).select("*").order("requested_at", { ascending: false }),
       supabase.from("compliance_holds" as any).select("*").order("created_at", { ascending: false }),
+      supabase.from("affiliate_leads" as any).select("*").order("created_at", { ascending: false }).limit(500),
     ]);
     setPartners((pRes.data || []) as Partner[]);
     setTransactions((txRes.data || []) as Tx[]);
@@ -200,6 +202,7 @@ const AdminPortal = () => {
     setWebhookDeliveries((whRes.data || []) as any[]);
     setPayoutRequests((poRes.data || []) as unknown as PayoutReq[]);
     setComplianceHolds((chRes.data || []) as unknown as ComplianceHold[]);
+    setAffiliateLeads((alRes.data || []) as any[]);
     setLoading(false);
   }, []);
 
@@ -646,6 +649,7 @@ const AdminPortal = () => {
               <TabsTrigger value="lending" className="gap-2 data-[state=active]:bg-primary/10"><Landmark className="w-4 h-4" /> Lending ({lendEarnTxs.length})</TabsTrigger>
               <TabsTrigger value="support" className="gap-2 data-[state=active]:bg-primary/10"><MessageCircle className="w-4 h-4" /> Support ({chatLogs.length})</TabsTrigger>
               <TabsTrigger value="compliance" className="gap-2" style={{ color: adminTab === "compliance" ? COMPLIANCE_BLUE : undefined }} data-state={adminTab === "compliance" ? "active" : "inactive"}><ShieldAlert className="w-4 h-4" style={{ color: COMPLIANCE_BLUE }} /> Compliance ({complianceHolds.filter(h => h.status === "action_required").length})</TabsTrigger>
+              <TabsTrigger value="affiliates" className="gap-2 data-[state=active]:bg-primary/10"><Wallet className="w-4 h-4" /> Affiliates ({affiliateLeads.length})</TabsTrigger>
             </TabsList>
 
             {/* ═══ EXCHANGES ═══ */}
