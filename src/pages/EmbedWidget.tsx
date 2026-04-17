@@ -83,6 +83,16 @@ const EmbedWidget = () => {
   const [estimatedAmount, setEstimatedAmount] = useState<string>("");
   const [minAmount, setMinAmount] = useState<number>(0);
 
+  // Inline swap flow state
+  const [step, setStep] = useState<"quote" | "wallet" | "deposit">("quote");
+  const [destinationAddress, setDestinationAddress] = useState("");
+  const [extraId, setExtraId] = useState("");
+  const [creatingTx, setCreatingTx] = useState(false);
+  const [txError, setTxError] = useState("");
+  const [transaction, setTransaction] = useState<TransactionResult | null>(null);
+  const [txStatus, setTxStatus] = useState<TransactionStatus | null>(null);
+  const [copied, setCopied] = useState<"address" | "amount" | "extra" | null>(null);
+
   useEffect(() => {
     if (i18n.language !== lang) {
       i18n.changeLanguage(lang);
