@@ -210,7 +210,7 @@ function OverviewSection({ swapCount, totalVolume, totalCommission, conversionRa
 /* ════════════════════════════════════════════════════════════ */
 /*  SECTION: REFERRAL TRAFFIC                                  */
 /* ════════════════════════════════════════════════════════════ */
-function ReferralSection({ referralCode, swaps, fetchLiveStatuses }: { referralCode: string; swaps: SwapRow[]; fetchLiveStatuses: (rows: SwapRow[]) => void }) {
+function ReferralSection({ referralCode, swaps, fetchLiveStatuses, affiliateLeads }: { referralCode: string; swaps: SwapRow[]; fetchLiveStatuses: (rows: SwapRow[]) => void; affiliateLeads: Array<{ ref_token: string; theme: string; source: string; created_at: string }> }) {
   const { t } = useTranslation();
   const { toast } = useToast();
   const [expandedRow, setExpandedRow] = useState<string | null>(null);
@@ -218,6 +218,7 @@ function ReferralSection({ referralCode, swaps, fetchLiveStatuses }: { referralC
   const [searchType, setSearchType] = useState<"wallet" | "txid">("txid");
   const referralLink = `https://mrcglobalpay.com/?ref=${referralCode}`;
   const copyLink = () => { navigator.clipboard.writeText(referralLink); toast({ title: "Copied" }); };
+  const copyText = (s: string, label = "Copied") => { navigator.clipboard.writeText(s); toast({ title: label }); };
 
   const filteredSwaps = useMemo(() => {
     if (!searchQuery.trim()) return swaps;
@@ -235,6 +236,46 @@ function ReferralSection({ referralCode, swaps, fetchLiveStatuses }: { referralC
         </div>
         <Button onClick={copyLink} size="sm" className="bg-white text-black hover:bg-gray-200 shrink-0"><Copy className="w-3.5 h-3.5 me-1.5" />Copy</Button>
       </div>
+
+      {/* Linked affiliate widgets generated from /affiliates */}
+      {affiliateLeads.length > 0 && (
+        <div className="rounded-xl p-5" style={{ background: OBS.card, border: `0.5px solid ${OBS.border}` }}>
+          <div className="flex items-center justify-between mb-3">
+            <div>
+              <span className="text-xs uppercase tracking-wider block" style={{ color: OBS.muted }}>Linked Affiliate Widgets</span>
+              <p className="text-xs mt-1" style={{ color: OBS.muted }}>
+                Widgets generated on <a href="/affiliates" className="underline" style={{ color: OBS.success }}>/affiliates</a> with your email. All swaps from these are tracked here.
+              </p>
+            </div>
+            <span className="text-xs px-2 py-1 rounded font-mono" style={{ background: "rgba(255,255,255,0.05)", color: OBS.text }}>{affiliateLeads.length}</span>
+          </div>
+          <div className="space-y-2">
+            {affiliateLeads.map((lead) => {
+              const widgetUrl = `https://mrcglobalpay.com/embed/widget?mode=${lead.theme}&ref=${lead.ref_token}`;
+              const linkUrl = `https://mrcglobalpay.com/?ref=${lead.ref_token}`;
+              return (
+                <div key={lead.ref_token} className="rounded-lg p-3 grid gap-2 sm:grid-cols-[auto_1fr_auto] items-center" style={{ background: "rgba(255,255,255,0.03)", border: `0.5px solid ${OBS.border}` }}>
+                  <code className="font-mono text-xs px-2 py-1 rounded" style={{ background: "rgba(255,255,255,0.05)", color: OBS.success }}>{lead.ref_token}</code>
+                  <div className="text-xs space-y-1 min-w-0">
+                    <div className="flex items-center gap-2 min-w-0">
+                      <span style={{ color: OBS.muted }}>Link:</span>
+                      <code className="font-mono truncate" style={{ color: OBS.text }}>{linkUrl}</code>
+                    </div>
+                    <div className="flex items-center gap-2 min-w-0">
+                      <span style={{ color: OBS.muted }}>Widget:</span>
+                      <code className="font-mono truncate" style={{ color: OBS.text }}>{widgetUrl}</code>
+                    </div>
+                  </div>
+                  <div className="flex gap-1.5 justify-end">
+                    <Button size="sm" variant="ghost" className="h-7 text-xs" onClick={() => copyText(linkUrl, "Link copied")}><Copy className="w-3 h-3 me-1" />Link</Button>
+                    <Button size="sm" variant="ghost" className="h-7 text-xs" onClick={() => copyText(`<iframe src="${widgetUrl}" width="100%" height="520" style="border:none;border-radius:16px;max-width:100%" allowfullscreen></iframe>`, "Embed code copied")}><Copy className="w-3 h-3 me-1" />Embed</Button>
+                  </div>
+                </div>
+              );
+            })}
+          </div>
+        </div>
+      )}
 
       {/* Search */}
       <div className="flex items-center gap-3">
@@ -1531,7 +1572,7 @@ function DashboardContent() {
             <h2 className="text-xl font-semibold" style={{ color: OBS.text }}>{sectionTitle[activeSection]}</h2>
 
             {activeSection === "overview" && <OverviewSection swapCount={swaps.length} totalVolume={totalVolume} totalCommission={totalCommission} conversionRate={conversionRate} activeKeys={activeKeys} />}
-            {activeSection === "referrals" && <ReferralSection referralCode={profile.referral_code} swaps={swaps} fetchLiveStatuses={fetchLiveStatuses} />}
+            {activeSection === "referrals" && <ReferralSection referralCode={profile.referral_code} swaps={swaps} fetchLiveStatuses={fetchLiveStatuses} affiliateLeads={affiliateLeads} />}
             {activeSection === "earnings" && <EarningsSection commissions={commissions} />}
             {activeSection === "account" && <AccountSection profile={profile} />}
             {activeSection === "dev-setup" && <DevSetupSection partnerId={profile.id} isDeveloper={isDeveloper} onActivated={() => setIsDeveloper(true)} />}
