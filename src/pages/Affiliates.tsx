@@ -2,8 +2,8 @@ import { useState, useMemo } from "react";
 import { Helmet } from "react-helmet-async";
 import {
   Shield, Zap, Link2, ArrowRight, Infinity as InfinityIcon,
-  Image as ImageIcon, Code2, Globe, Lock, CheckCircle2, Copy, Check,
-  Mail, Sparkles, ArrowDownUp, Clock,
+  Image as ImageIcon, Code2, Lock, Copy, Check,
+  Mail, Sparkles, ArrowDownUp, Clock, Wallet, Sun, Moon, Smartphone,
 } from "lucide-react";
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
 import SiteHeader from "@/components/SiteHeader";
@@ -16,7 +16,7 @@ const jsonLd = {
   "@type": "WebPage",
   name: "Affiliate Program — Earn Lifetime Crypto Commissions | MRC GlobalPay",
   description:
-    "Join the MRC GlobalPay Affiliate Program. Earn 0.1%–0.4% lifetime revenue share on every crypto swap you refer. Generate your widget and affiliate link instantly with just an email.",
+    "Generate your MRC GlobalPay affiliate widget in seconds. Enter your email and BTC wallet, choose Light or Dark mode, and earn 0.1%–0.4% lifetime commissions on every swap, paid automatically to your wallet.",
   url: "https://mrcglobalpay.com/affiliates",
   isPartOf: { "@type": "WebSite", name: "MRC GlobalPay", url: "https://mrcglobalpay.com" },
   publisher: {
@@ -38,15 +38,23 @@ const faqJsonLd = {
       name: "Do I need to register?",
       acceptedAnswer: {
         "@type": "Answer",
-        text: "No. Registration is optional. You can generate your widget and affiliate link with just an email and start earning immediately. Registering a free Partner Account unlocks the real-time dashboard and faster payouts.",
+        text: "No. Registration is completely optional. With just your email and BTC wallet you can generate your widget, embed it anywhere, and start earning. Registering a free Partner Account unlocks the real-time dashboard with detailed reports.",
       },
     },
     {
       "@type": "Question",
-      name: "How does tracking work with only my email?",
+      name: "What do I need to generate the widget?",
       acceptedAnswer: {
         "@type": "Answer",
-        text: "Your email is encoded into your unique referral link and widget code. Every swap that comes through your link or embed is automatically attributed to your email address. To request a payout or statement, just contact us with the same email.",
+        text: "Just two things: your email address (used to attribute swaps) and a BTC wallet address (where commissions are paid). Then choose Light or Dark mode and copy the generated code.",
+      },
+    },
+    {
+      "@type": "Question",
+      name: "How do I get paid to my BTC wallet?",
+      acceptedAnswer: {
+        "@type": "Answer",
+        text: "Commissions accumulate automatically as users swap through your widget or referral link. Payouts are sent directly to the BTC wallet address you entered when generating the widget.",
       },
     },
     {
@@ -54,43 +62,55 @@ const faqJsonLd = {
       name: "Is the commission lifetime?",
       acceptedAnswer: {
         "@type": "Answer",
-        text: "Yes. Once a user swaps through your referral link or embedded widget, you earn commission on every future swap they make — with no expiration date.",
+        text: "Yes. Once a user swaps through your link or embedded widget, you earn 0.1%–0.4% on every future swap they make — with no expiration date.",
       },
     },
     {
       "@type": "Question",
-      name: "How do I receive payouts?",
+      name: "Can I change between Light and Dark mode later?",
       acceptedAnswer: {
         "@type": "Answer",
-        text: "Payouts are sent directly to your BTC wallet (or another supported asset on request). Registered partners can withdraw on demand from the dashboard; email-only promoters receive payouts after manual verification.",
+        text: "Yes. Just regenerate the widget with the other mode selected and replace the embed code on your site. Your email and wallet stay the same so your earnings are uninterrupted.",
       },
     },
   ],
 };
 
-/* ─── Widget Generator ─── */
-const slugifyEmail = (email: string) =>
-  email.trim().toLowerCase().replace(/[^a-z0-9@._-]/g, "") || "your-email";
-
+/* ─── Helpers ─── */
 const isValidEmail = (email: string) =>
   /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email.trim());
 
-const buildLink = (ref: string) => `https://mrcglobalpay.com/?ref=${encodeURIComponent(ref)}`;
+// Loose BTC validation: legacy / segwit / bech32
+const isValidBtc = (addr: string) => {
+  const a = addr.trim();
+  return /^(bc1[a-z0-9]{25,62}|[13][a-km-zA-HJ-NP-Z1-9]{25,34})$/.test(a);
+};
 
-const buildSnippet = (ref: string) =>
-  `<iframe
-  src="https://mrcglobalpay.com/embed/widget?ref=${encodeURIComponent(ref)}"
-  width="100%"
-  height="640"
-  frameborder="0"
-  allow="clipboard-write"
-  title="MRC GlobalPay Instant Swap Widget"
-  style="border-radius:16px;max-width:480px;">
-</iframe>
-<p><a href="https://mrcglobalpay.com/?ref=${encodeURIComponent(ref)}">
-  Powered by MRC GlobalPay
-</a></p>`;
+const buildLink = (email: string) =>
+  `https://mrcglobalpay.com/?ref=${encodeURIComponent(email || "your-email")}`;
 
+const buildSnippet = (email: string, btc: string, mode: "light" | "dark") => {
+  const refEmail = email || "your-email";
+  const wallet = btc || "YOUR_BTC_WALLET";
+  return `<!-- MRC GlobalPay Instant Swap Widget -->
+<div style="max-width:480px;margin:0 auto;">
+  <iframe
+    src="https://mrcglobalpay.com/embed/widget?ref=${encodeURIComponent(refEmail)}&payout=${encodeURIComponent(wallet)}&theme=${mode}"
+    width="100%"
+    height="640"
+    style="border:0;border-radius:16px;width:100%;max-width:100%;display:block;"
+    loading="lazy"
+    allow="clipboard-write"
+    title="MRC GlobalPay Instant Swap Widget"></iframe>
+  <p style="font:12px/1.4 system-ui,sans-serif;text-align:center;margin:8px 0 0;">
+    <a href="https://mrcglobalpay.com/?ref=${encodeURIComponent(refEmail)}" rel="noopener">
+      Powered by MRC GlobalPay
+    </a>
+  </p>
+</div>`;
+};
+
+/* ─── Copy Button ─── */
 const CopyButton = ({ text, label }: { text: string; label: string }) => {
   const [copied, setCopied] = useState(false);
   const onClick = async () => {
@@ -113,125 +133,203 @@ const CopyButton = ({ text, label }: { text: string; label: string }) => {
   );
 };
 
-const WidgetPreview = () => (
-  <div className="rounded-2xl border border-border bg-card shadow-lg overflow-hidden">
-    {/* Browser chrome */}
-    <div className="flex items-center gap-1.5 border-b border-border/60 bg-muted/40 px-3 py-2">
-      <span className="h-2.5 w-2.5 rounded-full bg-[hsl(0_70%_60%)]/70" />
-      <span className="h-2.5 w-2.5 rounded-full bg-[hsl(45_90%_55%)]/70" />
-      <span className="h-2.5 w-2.5 rounded-full bg-primary/70" />
-      <span className="ms-3 font-mono text-[10px] text-muted-foreground truncate">
-        mrcglobalpay.com/embed/widget
-      </span>
-    </div>
-
-    {/* Mock widget */}
-    <div className="p-4 sm:p-6 bg-[hsl(230_15%_8%)]">
-      <div className="rounded-xl border border-border/60 bg-card/40 p-4 sm:p-5 backdrop-blur">
-        <div className="flex items-center justify-between mb-3">
-          <span className="font-display text-sm font-bold text-foreground">Instant Swap</span>
-          <span className="inline-flex items-center gap-1 rounded-full bg-primary/15 px-2 py-0.5 text-[10px] font-mono font-semibold text-primary">
-            <span className="h-1.5 w-1.5 rounded-full bg-primary animate-pulse" /> LIVE RATE
-          </span>
-        </div>
-
-        {/* You Send */}
-        <div className="rounded-lg border border-border/50 bg-background/40 p-3">
-          <p className="text-[10px] uppercase tracking-wider text-muted-foreground font-display">You Send</p>
-          <div className="mt-1 flex items-center justify-between gap-2">
-            <input
-              readOnly
-              value="0.5"
-              className="w-full bg-transparent font-display text-2xl font-bold text-foreground outline-none"
-            />
-            <div className="flex items-center gap-1.5 rounded-lg border border-border/60 bg-card/60 px-2.5 py-1.5">
-              <span className="flex h-5 w-5 items-center justify-center rounded-full bg-[hsl(28_85%_55%)] text-[9px] font-bold text-primary-foreground">₿</span>
-              <span className="font-display text-xs font-semibold text-foreground">BTC</span>
-            </div>
-          </div>
-        </div>
-
-        {/* Swap arrow */}
-        <div className="my-2 flex justify-center">
-          <div className="flex h-8 w-8 items-center justify-center rounded-full border border-border/60 bg-card text-primary">
-            <ArrowDownUp className="h-4 w-4" />
-          </div>
-        </div>
-
-        {/* You Get */}
-        <div className="rounded-lg border border-border/50 bg-background/40 p-3">
-          <p className="text-[10px] uppercase tracking-wider text-muted-foreground font-display">You Get</p>
-          <div className="mt-1 flex items-center justify-between gap-2">
-            <input
-              readOnly
-              value="14.823"
-              className="w-full bg-transparent font-display text-2xl font-bold text-foreground outline-none"
-            />
-            <div className="flex items-center gap-1.5 rounded-lg border border-border/60 bg-card/60 px-2.5 py-1.5">
-              <span className="flex h-5 w-5 items-center justify-center rounded-full bg-[hsl(265_75%_60%)] text-[9px] font-bold text-primary-foreground">◎</span>
-              <span className="font-display text-xs font-semibold text-foreground">SOL</span>
-            </div>
-          </div>
-        </div>
-
-        <p className="mt-2 text-center text-[10px] text-muted-foreground font-mono">
-          1 BTC ≈ 29.646 SOL · No registration required
-        </p>
-
-        <button className="mt-3 w-full btn-shimmer rounded-xl bg-primary py-3 font-display text-sm font-bold text-primary-foreground shadow-neon">
-          Swap Now
-        </button>
-
-        <p className="mt-2 text-center text-[9px] text-muted-foreground">
-          Powered by MRC GlobalPay · FINTRAC MSB #C100000015
-        </p>
-      </div>
-    </div>
-  </div>
-);
-
-const WidgetGenerator = () => {
-  const [email, setEmail] = useState("");
-  const [submitted, setSubmitted] = useState(false);
-
-  const ref = useMemo(() => slugifyEmail(submitted ? email : ""), [email, submitted]);
-  const link = useMemo(() => buildLink(ref), [ref]);
-  const snippet = useMemo(() => buildSnippet(ref), [ref]);
-
-  const valid = isValidEmail(email);
+/* ─── Live Widget Preview (themed) ─── */
+const WidgetPreview = ({ mode }: { mode: "light" | "dark" }) => {
+  const isLight = mode === "light";
+  const surface = isLight ? "bg-white" : "bg-[hsl(230_15%_8%)]";
+  const card = isLight ? "bg-slate-50 border-slate-200" : "bg-card/40 border-border/60";
+  const inner = isLight ? "bg-white border-slate-200" : "bg-background/40 border-border/50";
+  const chip = isLight ? "bg-slate-100 border-slate-200" : "bg-card/60 border-border/60";
+  const textMain = isLight ? "text-slate-900" : "text-foreground";
+  const textMuted = isLight ? "text-slate-500" : "text-muted-foreground";
+  const browserBar = isLight ? "bg-slate-100 border-slate-200" : "bg-muted/40 border-border/60";
 
   return (
-    <div className="rounded-2xl border border-border bg-card p-6 sm:p-8 shadow-lg transition-shadow">
-      {/* Email input */}
-      <div className="flex flex-col sm:flex-row gap-3">
-        <div className="relative flex-1">
-          <Mail className="absolute start-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" aria-hidden />
-          <input
-            type="email"
-            inputMode="email"
-            placeholder="Enter your email address"
-            value={email}
-            onChange={(e) => {
-              setEmail(e.target.value);
-              if (submitted && !isValidEmail(e.target.value)) setSubmitted(false);
-            }}
-            className="w-full rounded-xl border border-border bg-background ps-10 pe-4 py-3 font-body text-sm text-foreground outline-none transition-colors focus:border-primary"
-            aria-label="Your email address"
-          />
+    <div className="rounded-2xl border border-border bg-card shadow-lg overflow-hidden">
+      {/* Browser chrome */}
+      <div className={`flex items-center gap-1.5 border-b ${browserBar} px-3 py-2`}>
+        <span className="h-2.5 w-2.5 rounded-full bg-[hsl(0_70%_60%)]/70" />
+        <span className="h-2.5 w-2.5 rounded-full bg-[hsl(45_90%_55%)]/70" />
+        <span className="h-2.5 w-2.5 rounded-full bg-primary/70" />
+        <span className={`ms-3 font-mono text-[10px] truncate ${textMuted}`}>
+          mrcglobalpay.com/embed/widget
+        </span>
+      </div>
+
+      {/* Mock widget */}
+      <div className={`p-4 sm:p-6 ${surface}`}>
+        <div className={`rounded-xl border ${card} p-4 sm:p-5 backdrop-blur`}>
+          <div className="flex items-center justify-between mb-3">
+            <span className={`font-display text-sm font-bold ${textMain}`}>Instant Swap</span>
+            <span className="inline-flex items-center gap-1 rounded-full bg-primary/15 px-2 py-0.5 text-[10px] font-mono font-semibold text-primary">
+              <span className="h-1.5 w-1.5 rounded-full bg-primary animate-pulse" /> LIVE RATE
+            </span>
+          </div>
+
+          {/* You Send */}
+          <div className={`rounded-lg border ${inner} p-3`}>
+            <p className={`text-[10px] uppercase tracking-wider font-display ${textMuted}`}>You Send</p>
+            <div className="mt-1 flex items-center justify-between gap-2">
+              <input
+                readOnly
+                value="0.5"
+                className={`w-full bg-transparent font-display text-2xl font-bold outline-none ${textMain}`}
+              />
+              <div className={`flex items-center gap-1.5 rounded-lg border ${chip} px-2.5 py-1.5`}>
+                <span className="flex h-5 w-5 items-center justify-center rounded-full bg-[hsl(28_85%_55%)] text-[9px] font-bold text-white">₿</span>
+                <span className={`font-display text-xs font-semibold ${textMain}`}>BTC</span>
+              </div>
+            </div>
+          </div>
+
+          {/* Swap arrow */}
+          <div className="my-2 flex justify-center">
+            <div className={`flex h-8 w-8 items-center justify-center rounded-full border ${chip} text-primary`}>
+              <ArrowDownUp className="h-4 w-4" />
+            </div>
+          </div>
+
+          {/* You Get */}
+          <div className={`rounded-lg border ${inner} p-3`}>
+            <p className={`text-[10px] uppercase tracking-wider font-display ${textMuted}`}>You Get</p>
+            <div className="mt-1 flex items-center justify-between gap-2">
+              <input
+                readOnly
+                value="14.823"
+                className={`w-full bg-transparent font-display text-2xl font-bold outline-none ${textMain}`}
+              />
+              <div className={`flex items-center gap-1.5 rounded-lg border ${chip} px-2.5 py-1.5`}>
+                <span className="flex h-5 w-5 items-center justify-center rounded-full bg-[hsl(265_75%_60%)] text-[9px] font-bold text-white">◎</span>
+                <span className={`font-display text-xs font-semibold ${textMain}`}>SOL</span>
+              </div>
+            </div>
+          </div>
+
+          <p className={`mt-2 text-center text-[10px] font-mono ${textMuted}`}>
+            1 BTC ≈ 29.646 SOL · No registration required
+          </p>
+
+          <button className="mt-3 w-full btn-shimmer rounded-xl bg-primary py-3 font-display text-sm font-bold text-primary-foreground shadow-neon">
+            Swap Now
+          </button>
+
+          <p className={`mt-2 text-center text-[9px] ${textMuted}`}>
+            Powered by MRC GlobalPay · FINTRAC MSB #C100000015
+          </p>
         </div>
+      </div>
+    </div>
+  );
+};
+
+/* ─── Widget Generator ─── */
+const WidgetGenerator = () => {
+  const [email, setEmail] = useState("");
+  const [btc, setBtc] = useState("");
+  const [mode, setMode] = useState<"light" | "dark">("dark");
+  const [submitted, setSubmitted] = useState(false);
+
+  const emailValid = isValidEmail(email);
+  const btcValid = isValidBtc(btc);
+  const canGenerate = emailValid && btcValid;
+
+  const activeEmail = submitted ? email.trim() : "";
+  const activeBtc = submitted ? btc.trim() : "";
+
+  const link = useMemo(() => buildLink(activeEmail), [activeEmail]);
+  const snippet = useMemo(() => buildSnippet(activeEmail, activeBtc, mode), [activeEmail, activeBtc, mode]);
+
+  return (
+    <div className="rounded-2xl border border-border bg-card p-6 sm:p-8 shadow-lg">
+      {/* Inputs */}
+      <div className="grid gap-4 sm:grid-cols-2">
+        <div>
+          <label className="mb-1.5 block font-display text-[11px] uppercase tracking-wider font-semibold text-muted-foreground">
+            Your Email Address
+          </label>
+          <div className="relative">
+            <Mail className="absolute start-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" aria-hidden />
+            <input
+              type="email"
+              inputMode="email"
+              autoComplete="email"
+              placeholder="you@example.com"
+              value={email}
+              onChange={(e) => { setEmail(e.target.value); setSubmitted(false); }}
+              className="w-full rounded-xl border border-border bg-background ps-10 pe-4 py-3 font-body text-sm text-foreground outline-none transition-colors focus:border-primary"
+              aria-label="Your email address"
+            />
+          </div>
+          <p className="mt-1 text-[11px] text-muted-foreground">Used to track referred swaps.</p>
+        </div>
+
+        <div>
+          <label className="mb-1.5 block font-display text-[11px] uppercase tracking-wider font-semibold text-muted-foreground">
+            Your BTC Wallet Address
+          </label>
+          <div className="relative">
+            <Wallet className="absolute start-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" aria-hidden />
+            <input
+              type="text"
+              spellCheck={false}
+              autoComplete="off"
+              placeholder="bc1q… or 1… / 3…"
+              value={btc}
+              onChange={(e) => { setBtc(e.target.value); setSubmitted(false); }}
+              className="w-full rounded-xl border border-border bg-background ps-10 pe-4 py-3 font-mono text-xs text-foreground outline-none transition-colors focus:border-primary"
+              aria-label="Your BTC wallet address"
+            />
+          </div>
+          <p className="mt-1 text-[11px] text-muted-foreground">Commissions are paid here automatically.</p>
+        </div>
+      </div>
+
+      {/* Mode selector + Generate */}
+      <div className="mt-5 flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
+        <div
+          role="tablist"
+          aria-label="Widget theme"
+          className="inline-flex rounded-xl border border-border bg-background p-1"
+        >
+          <button
+            role="tab"
+            aria-selected={mode === "light"}
+            onClick={() => setMode("light")}
+            className={`inline-flex items-center gap-2 rounded-lg px-4 py-2 font-display text-xs font-semibold transition-colors ${
+              mode === "light"
+                ? "bg-primary text-primary-foreground shadow-neon"
+                : "text-muted-foreground hover:text-foreground"
+            }`}
+          >
+            <Sun className="h-3.5 w-3.5" /> Light Mode (White)
+          </button>
+          <button
+            role="tab"
+            aria-selected={mode === "dark"}
+            onClick={() => setMode("dark")}
+            className={`inline-flex items-center gap-2 rounded-lg px-4 py-2 font-display text-xs font-semibold transition-colors ${
+              mode === "dark"
+                ? "bg-primary text-primary-foreground shadow-neon"
+                : "text-muted-foreground hover:text-foreground"
+            }`}
+          >
+            <Moon className="h-3.5 w-3.5" /> Dark Mode
+          </button>
+        </div>
+
         <button
-          onClick={() => valid && setSubmitted(true)}
-          disabled={!valid}
+          onClick={() => canGenerate && setSubmitted(true)}
+          disabled={!canGenerate}
           className="btn-shimmer inline-flex items-center justify-center gap-2 rounded-xl bg-primary px-6 py-3 font-display text-sm font-bold text-primary-foreground shadow-neon transition-all duration-100 hover:bg-primary/90 hover:-translate-y-0.5 disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:translate-y-0"
         >
           <Sparkles className="h-4 w-4" />
-          Generate My Widget & Link
+          Generate My Widget &amp; Link
         </button>
       </div>
 
       {!submitted && (
         <p className="mt-2 text-xs text-muted-foreground">
-          Your widget and affiliate link update instantly once you generate them.
+          Enter a valid email and BTC wallet, then generate. Preview, link, and code update instantly.
         </p>
       )}
 
@@ -239,10 +337,15 @@ const WidgetGenerator = () => {
       <div className="mt-8 grid gap-6 lg:grid-cols-2">
         {/* Live preview */}
         <div>
-          <p className="font-display text-[11px] uppercase tracking-wider font-semibold text-muted-foreground mb-3">
-            Live Widget Preview
-          </p>
-          <WidgetPreview />
+          <div className="mb-3 flex items-center justify-between">
+            <p className="font-display text-[11px] uppercase tracking-wider font-semibold text-muted-foreground">
+              Live Widget Preview · {mode === "light" ? "Light" : "Dark"}
+            </p>
+            <span className="inline-flex items-center gap-1 text-[11px] text-muted-foreground">
+              <Smartphone className="h-3 w-3" /> Fully responsive
+            </span>
+          </div>
+          <WidgetPreview mode={mode} />
         </div>
 
         {/* Outputs */}
@@ -267,7 +370,7 @@ const WidgetGenerator = () => {
               <Code2 className="h-4 w-4 text-primary" />
               <span className="font-display text-sm font-semibold text-foreground">Your Embed Code</span>
             </div>
-            <pre className="rounded-lg border border-border/60 bg-[hsl(230_15%_6%)] p-3 overflow-x-auto font-mono text-[11px] leading-relaxed text-foreground/90">
+            <pre className="rounded-lg border border-border/60 bg-[hsl(230_15%_6%)] p-3 overflow-x-auto font-mono text-[11px] leading-relaxed text-foreground/90 max-h-64">
               <code>{snippet}</code>
             </pre>
             <div className="mt-3">
@@ -275,8 +378,14 @@ const WidgetGenerator = () => {
             </div>
           </div>
 
+          <div className="rounded-xl border border-primary/20 bg-primary/5 p-3 text-xs text-foreground/90">
+            <strong className="font-display">Fully responsive:</strong> the generated widget works
+            perfectly on desktop, tablets, and mobile devices.
+          </div>
+
           <p className="text-xs text-muted-foreground">
-            Paste this code anywhere on your site. Swaps will be tracked automatically using your email.
+            Paste this code on your website or blog. The widget will appear in your chosen mode and
+            commissions will be sent automatically to your BTC wallet.
           </p>
         </div>
       </div>
@@ -286,14 +395,14 @@ const WidgetGenerator = () => {
 
 /* ─── Static Data ─── */
 const STEPS = [
-  { n: 1, title: "Enter your email", desc: "Your widget preview and embed code update instantly with your unique tracking." },
-  { n: 2, title: "Copy & paste", desc: "Drop the link or code on your website, blog, YouTube, or Telegram channel." },
-  { n: 3, title: "Earn automatically", desc: "Earn 0.1%–0.4% commission on every swap referred through your link or widget." },
+  { n: 1, title: "Enter your email + BTC wallet", desc: "Choose Light or Dark mode for the widget — preview updates instantly." },
+  { n: 2, title: "Copy the code or link", desc: "Your unique widget code and affiliate link update automatically as you type." },
+  { n: 3, title: "Paste & start earning", desc: "Drop it on any site, blog, or channel. Earn 0.1%–0.4% on every swap, lifetime." },
 ];
 
 const TOOLS = [
   { icon: ImageIcon, title: "Downloadable Banners", desc: "Multiple sizes and themes — light, dark, animated.", href: "/partners" },
-  { icon: Globe, title: "API & Developer Tools", desc: "Build custom flows with our full API documentation.", href: "/developer" },
+  { icon: Code2, title: "Full Developer Tools", desc: "Build custom flows with our complete API documentation.", href: "/developer" },
 ];
 
 const WHY = [
@@ -308,19 +417,23 @@ const WHY = [
 const FAQS = [
   {
     q: "Do I need to register?",
-    a: "No. Registration is optional. You can generate your widget and affiliate link with just an email and start earning immediately. Registering a free Partner Account unlocks the real-time dashboard and faster payouts.",
+    a: "No. Registration is completely optional. With just your email and BTC wallet you can generate your widget, embed it anywhere, and start earning. Registering a free Partner Account unlocks the real-time dashboard with detailed reports.",
   },
   {
-    q: "How does tracking work with only my email?",
-    a: "Your email is encoded into your unique referral link and widget code. Every swap that comes through your link or embed is automatically attributed to your email address. To request a payout or statement, just contact us with the same email.",
+    q: "What do I need to generate the widget?",
+    a: "Just two things: your email address (used to attribute swaps) and a BTC wallet address (where commissions are paid). Then choose Light or Dark mode and copy the generated code.",
+  },
+  {
+    q: "How do I get paid to my BTC wallet?",
+    a: "Commissions accumulate automatically as users swap through your widget or referral link. Payouts are sent directly to the BTC wallet address you entered when generating the widget.",
   },
   {
     q: "Is the commission lifetime?",
-    a: "Yes. Once a user swaps through your referral link or embedded widget, you earn commission on every future swap they make — with no expiration date.",
+    a: "Yes. Once a user swaps through your link or embedded widget, you earn 0.1%–0.4% on every future swap they make — with no expiration date.",
   },
   {
-    q: "How do I receive payouts?",
-    a: "Payouts are sent directly to your BTC wallet (or another supported asset on request). Registered partners can withdraw on demand from the dashboard; email-only promoters receive payouts after manual verification.",
+    q: "Can I change between Light and Dark mode later?",
+    a: "Yes. Just regenerate the widget with the other mode selected and replace the embed code on your site. Your email and wallet stay the same so your earnings are uninterrupted.",
   },
 ];
 
@@ -331,12 +444,12 @@ const Affiliates = () => (
       <title>Affiliate Program — Earn Lifetime Crypto Commissions | MRC GlobalPay</title>
       <meta
         name="description"
-        content="Generate your MRC GlobalPay affiliate widget and link instantly with just an email. Earn 0.1%–0.4% lifetime commissions on every crypto swap you refer. Registered Canadian MSB #C100000015."
+        content="Generate your MRC GlobalPay affiliate widget in seconds. Enter your email and BTC wallet, choose Light or Dark mode, and earn 0.1%–0.4% lifetime commissions paid automatically to your wallet. Registered Canadian MSB #C100000015."
       />
       <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1" />
       <link rel="canonical" href="https://mrcglobalpay.com/affiliates" />
       <meta property="og:title" content="Affiliate Program — Earn Lifetime Crypto Commissions | MRC GlobalPay" />
-      <meta property="og:description" content="Generate your widget and affiliate link instantly with just an email. Earn 0.1%–0.4% on every swap." />
+      <meta property="og:description" content="Generate your widget in seconds. Earn 0.1%–0.4% on every swap, paid automatically to your BTC wallet." />
       <meta property="og:url" content="https://mrcglobalpay.com/affiliates" />
       <meta property="og:type" content="website" />
       <script type="application/ld+json">{JSON.stringify(jsonLd)}</script>
@@ -361,14 +474,23 @@ const Affiliates = () => (
             <Shield className="h-3.5 w-3.5" /> Affiliate Program
           </div>
           <h1 className="mt-5 font-display text-3xl font-bold tracking-tight text-foreground sm:text-5xl">
-            Earn <span className="text-primary">0.1% – 0.4% Lifetime Commissions</span> Promoting MRC GlobalPay
+            Earn <span className="text-primary">0.1% – 0.4% Lifetime Commissions</span>
           </h1>
           <p className="mt-4 font-body text-base sm:text-lg text-muted-foreground max-w-2xl mx-auto">
-            Share our instant crypto swap widget or affiliate link and earn on every swap.
+            Promote MRC GlobalPay with our instant swap widget or affiliate link and get paid
+            automatically to your wallet.
           </p>
           <p className="mt-4 text-xs text-muted-foreground">
-            Registration is optional but recommended for full Partner Dashboard access.
+            Registration is recommended for the full Partner Dashboard, but completely optional.
           </p>
+          <div className="mt-7">
+            <a
+              href="#generate"
+              className="btn-shimmer inline-flex items-center justify-center gap-2 rounded-xl bg-primary px-7 py-3 font-display text-sm font-bold text-primary-foreground shadow-neon transition-all duration-100 hover:bg-primary/90 hover:-translate-y-0.5"
+            >
+              <Sparkles className="h-4 w-4" /> Generate Your Widget
+            </a>
+          </div>
         </div>
       </section>
 
@@ -379,11 +501,11 @@ const Affiliates = () => (
         <div className="container mx-auto max-w-5xl px-4">
           <div className="text-center max-w-2xl mx-auto">
             <h2 className="font-display text-3xl font-bold text-foreground sm:text-4xl">
-              Generate Your Widget or Affiliate Link Instantly
+              Generate Your Personalized Swap Widget in Seconds
             </h2>
             <p className="mt-3 font-body text-muted-foreground">
-              Enter your email below. The preview, affiliate link, and embed code will update
-              automatically. Copy and paste — that's all you need to start earning.
+              Enter your email and BTC wallet address, choose Light or Dark mode. The preview and
+              code update automatically. Copy and paste — that's all you need to start earning.
             </p>
           </div>
 
@@ -418,15 +540,16 @@ const Affiliates = () => (
         </div>
       </section>
 
-      {/* ═══ TRACKING EARNINGS ═══ */}
+      {/* ═══ TRACKING & PAYOUTS ═══ */}
       <section className="border-b border-border bg-muted/30 py-16 sm:py-20">
         <div className="container mx-auto max-w-3xl px-4 text-center">
           <h2 className="font-display text-3xl font-bold text-foreground sm:text-4xl">
-            Tracking Your Earnings
+            Tracking &amp; Payouts
           </h2>
           <p className="mt-4 font-body text-muted-foreground leading-relaxed">
-            Your generated widget and link track commissions using your email. For detailed
-            real-time stats and reports, register for free to access your Partner Dashboard.
+            Your widget tracks swaps using your email. Commissions are paid automatically to the
+            BTC wallet you provide. For detailed real-time stats, register for free to access your
+            Partner Dashboard.
           </p>
           <div className="mt-7">
             <a
