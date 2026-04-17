@@ -195,7 +195,19 @@ const EmbedWidget = () => {
     const source = searchParams.get("source");
     if (source) params.set("source", source);
     if (lang) params.set("lang", lang);
-    window.open(`${base}/?${params.toString()}`, "_blank", "noopener");
+    const url = `${base}/?${params.toString()}`;
+
+    // Try popup first; if blocked (common in cross-origin iframes on partner sites),
+    // fall back to navigating the top-level window so the user always reaches the swap page.
+    const win = window.open(url, "_blank", "noopener");
+    if (!win) {
+      try {
+        window.top!.location.href = url;
+      } catch {
+        // top is cross-origin & blocked — last resort: navigate self
+        window.location.href = url;
+      }
+    }
   };
 
   const handleTokenSelect = (currency: Currency) => {
