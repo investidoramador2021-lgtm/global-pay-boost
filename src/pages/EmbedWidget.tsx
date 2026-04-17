@@ -49,7 +49,20 @@ const EmbedWidget = () => {
   const [searchParams] = useSearchParams();
   const { t, i18n } = useTranslation();
   const refId = searchParams.get("ref") || "";
-  const langParam = (searchParams.get("lang") || "en").toLowerCase();
+  const detectBrowserLang = (): string => {
+    if (typeof navigator === "undefined") return "en";
+    const candidates = [
+      ...(navigator.languages || []),
+      navigator.language,
+    ].filter(Boolean);
+    for (const raw of candidates) {
+      const base = raw.toLowerCase().split("-")[0];
+      if (SUPPORTED_LANGS.includes(base)) return base;
+    }
+    return "en";
+  };
+  const rawLangParam = searchParams.get("lang");
+  const langParam = (rawLangParam || detectBrowserLang()).toLowerCase();
   const lang = SUPPORTED_LANGS.includes(langParam) ? langParam : "en";
   // Theme: accept ?mode=light|dark (preferred) or ?theme=light|dark (legacy). Default: dark.
   const themeParam = (searchParams.get("mode") || searchParams.get("theme") || "dark").toLowerCase();
