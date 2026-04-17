@@ -47,7 +47,10 @@ const formatQuoteAmount = (value: string) => {
 
 const EmbedWidget = () => {
   const [searchParams] = useSearchParams();
+  const { t, i18n } = useTranslation();
   const refId = searchParams.get("ref") || "";
+  const langParam = (searchParams.get("lang") || "en").toLowerCase();
+  const lang = SUPPORTED_LANGS.includes(langParam) ? langParam : "en";
   // Theme: accept ?mode=light|dark (preferred) or ?theme=light|dark (legacy). Default: dark.
   const themeParam = (searchParams.get("mode") || searchParams.get("theme") || "dark").toLowerCase();
   const isLight = themeParam === "light";
@@ -61,6 +64,15 @@ const EmbedWidget = () => {
   const [estimating, setEstimating] = useState(false);
   const [estimatedAmount, setEstimatedAmount] = useState<string>("");
   const [minAmount, setMinAmount] = useState<number>(0);
+
+  useEffect(() => {
+    if (i18n.language !== lang) {
+      i18n.changeLanguage(lang);
+    }
+    document.documentElement.lang = lang;
+    const rtlLangs = ["ar", "he", "fa", "ur"];
+    document.documentElement.dir = rtlLangs.includes(lang) ? "rtl" : "ltr";
+  }, [lang, i18n]);
 
   useEffect(() => {
     // Apply theme from ?mode= / ?theme= so the embedded widget matches the host site.
