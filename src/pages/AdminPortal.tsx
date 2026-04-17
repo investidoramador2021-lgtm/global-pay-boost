@@ -144,7 +144,9 @@ const AdminPortal = () => {
   const [tab, setTab] = useState("current");
   const [adminTab, setAdminTab] = useState<"partners" | "exchanges" | "invoices" | "support" | "lending" | "proxy" | "payouts" | "compliance" | "affiliates">("exchanges");
   const [complianceHolds, setComplianceHolds] = useState<ComplianceHold[]>([]);
-  const [affiliateLeads, setAffiliateLeads] = useState<Array<{ id: string; email: string; btc_wallet: string; ref_token: string; theme: string; source: string; created_at: string }>>([]);
+  const [affiliateLeads, setAffiliateLeads] = useState<Array<{ id: string; email: string; btc_wallet: string; ref_token: string; theme: string; source: string; created_at: string; partner_id?: string | null }>>([]);
+  const [commissions, setCommissions] = useState<Array<{ id: string; partner_id: string; ref_code: string; source: string; provider: string; from_currency: string; to_currency: string; swap_amount: number; volume_usd: number; commission_rate: number; commission_btc: number; created_at: string }>>([]);
+  const [runningCron, setRunningCron] = useState(false);
   const [chatLogs, setChatLogs] = useState<ChatLog[]>([]);
   const [lendEarnTxs, setLendEarnTxs] = useState<LendEarnTx[]>([]);
   const [webhookDeliveries, setWebhookDeliveries] = useState<any[]>([]);
@@ -181,7 +183,7 @@ const AdminPortal = () => {
   }, [stage, resetInactivityTimer]);
 
   const loadDashboard = useCallback(async () => {
-    const [pRes, txRes, logRes, leRes, devRes, keyRes, whRes, poRes, chRes, alRes] = await Promise.all([
+    const [pRes, txRes, logRes, leRes, devRes, keyRes, whRes, poRes, chRes, alRes, cmRes] = await Promise.all([
       supabase.from("partner_profiles").select("*"),
       supabase.from("partner_transactions").select("*").order("completed_at", { ascending: false }),
       supabase.from("support_chat_logs" as any).select("*").order("created_at", { ascending: false }).limit(200),
@@ -192,6 +194,7 @@ const AdminPortal = () => {
       supabase.from("payout_requests" as any).select("*").order("requested_at", { ascending: false }),
       supabase.from("compliance_holds" as any).select("*").order("created_at", { ascending: false }),
       supabase.from("affiliate_leads" as any).select("*").order("created_at", { ascending: false }).limit(500),
+      supabase.from("partner_commissions" as any).select("*").order("created_at", { ascending: false }).limit(500),
     ]);
     setPartners((pRes.data || []) as Partner[]);
     setTransactions((txRes.data || []) as Tx[]);
@@ -203,6 +206,7 @@ const AdminPortal = () => {
     setPayoutRequests((poRes.data || []) as unknown as PayoutReq[]);
     setComplianceHolds((chRes.data || []) as unknown as ComplianceHold[]);
     setAffiliateLeads((alRes.data || []) as any[]);
+    setCommissions((cmRes.data || []) as any[]);
     setLoading(false);
   }, []);
 
@@ -1338,6 +1342,116 @@ const AdminPortal = () => {
                             </TableCell>
                           </TableRow>
                         ))}
+                      </TableBody>
+                    </Table>
+                  )}
+                </CardContent>
+              </Card>
+
+
+              {/* ═══ COMMISSIONS LEDGER + CRON CONTROL ═══ */}
+              <Card className="border-border/40 bg-card/40 backdrop-blur-sm">
+                <CardHeader className="flex flex-row items-start justify-between gap-4">
+                  <div>
+                    <CardTitle className="text-lg flex items-center gap-2">
+                      <DollarSign className="w-5 h-5" /> Affiliate Commissions Ledger
+                    </CardTitle>
+                    <p className="text-xs text-muted-foreground mt-1">
+                      Auto-credited every 2 days at 00:05 UTC. Rates: <code className="text-primary">0.3% ChangeNOW</code> · <code className="text-primary">0.1% LetsExchange</code>. Idempotent per swap.
+                    </p>
+                  </div>
+                  <Button
+                    size="sm"
+                    className="gap-2"
+                    disabled={runningCron}
+                    onClick={async () => {
+                      setRunningCron(true);
+                      try {
+                        const { data: { session } } = await supabase.auth.getSession();
+                        const resp = await fetch(`${import.meta.env.VITE_SUPABASE_URL}/functions/v1/credit-affiliate-commissions`, {
+                          method: "POST",
+                          headers: {
+                            "Content-Type": "application/json",
+                            ...(session?.access_token ? { Authorization: `Bearer ${session.access_token}` } : {}),
+                          },
+                        });
+                        const json = await resp.json();
+                        toast({
+                          title: json.ok ? "Commissions cron run complete" : "Cron run failed",
+                          description: json.ok
+                            ? `Scanned ${json.scanned} · Credited ${json.credited} · ${Number(json.total_btc_credited || 0).toFixed(8)} BTC`
+                            : String(json.error || "Unknown error"),
+                          variant: json.ok ? "default" : "destructive",
+                        });
+                        await loadDashboard();
+                      } catch (e: any) {
+                        toast({ title: "Cron run failed", description: String(e?.message || e), variant: "destructive" });
+                      } finally {
+                        setRunningCron(false);
+                      }
+                    }}
+                  >
+                    <Zap className="w-3.5 h-3.5" /> {runningCron ? "Running…" : "Run cron now"}
+                  </Button>
+                </CardHeader>
+                <CardContent className="space-y-4">
+                  <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
+                    <div className="rounded-lg border border-border/40 p-3 bg-black/20">
+                      <p className="text-[10px] uppercase text-muted-foreground">Total Credits</p>
+                      <p className="text-xl font-bold text-foreground">{commissions.length}</p>
+                    </div>
+                    <div className="rounded-lg border border-border/40 p-3 bg-black/20">
+                      <p className="text-[10px] uppercase text-muted-foreground">Total BTC Paid</p>
+                      <p className="text-xl font-bold text-primary font-mono">{commissions.reduce((s, c) => s + Number(c.commission_btc || 0), 0).toFixed(8)}</p>
+                    </div>
+                    <div className="rounded-lg border border-border/40 p-3 bg-black/20">
+                      <p className="text-[10px] uppercase text-muted-foreground">Total Volume USD</p>
+                      <p className="text-xl font-bold text-foreground font-mono">${commissions.reduce((s, c) => s + Number(c.volume_usd || 0), 0).toLocaleString(undefined, { maximumFractionDigits: 2 })}</p>
+                    </div>
+                    <div className="rounded-lg border border-border/40 p-3 bg-black/20">
+                      <p className="text-[10px] uppercase text-muted-foreground">Unique Partners</p>
+                      <p className="text-xl font-bold text-foreground">{new Set(commissions.map((c) => c.partner_id)).size}</p>
+                    </div>
+                  </div>
+
+                  {commissions.length === 0 ? (
+                    <p className="text-sm text-muted-foreground py-8 text-center">No commissions credited yet. Click "Run cron now" to scan recent swaps.</p>
+                  ) : (
+                    <Table>
+                      <TableHeader>
+                        <TableRow>
+                          <TableHead>Date</TableHead>
+                          <TableHead>Partner</TableHead>
+                          <TableHead>Source</TableHead>
+                          <TableHead>Provider</TableHead>
+                          <TableHead>Pair</TableHead>
+                          <TableHead className="text-right">Volume USD</TableHead>
+                          <TableHead className="text-right">Rate</TableHead>
+                          <TableHead className="text-right">BTC Credited</TableHead>
+                          <TableHead>Ref</TableHead>
+                        </TableRow>
+                      </TableHeader>
+                      <TableBody>
+                        {commissions.slice(0, 100).map((c) => {
+                          const partner = partners.find((p) => p.id === c.partner_id);
+                          return (
+                            <TableRow key={c.id}>
+                              <TableCell className="text-xs whitespace-nowrap">{new Date(c.created_at).toLocaleString()}</TableCell>
+                              <TableCell className="text-xs">{partner ? `${partner.first_name} ${partner.last_name}` : <span className="text-muted-foreground font-mono">{c.partner_id.slice(0, 8)}…</span>}</TableCell>
+                              <TableCell>
+                                <span className={`text-[10px] px-2 py-0.5 rounded-md uppercase ${c.source === "affiliate_widget" ? "bg-blue-500/15 text-blue-400" : "bg-cyan-500/15 text-cyan-400"}`}>
+                                  {c.source === "affiliate_widget" ? "widget" : "referral"}
+                                </span>
+                              </TableCell>
+                              <TableCell><span className="text-[10px] uppercase font-mono text-muted-foreground">{c.provider}</span></TableCell>
+                              <TableCell className="text-xs uppercase font-mono">{c.from_currency} → {c.to_currency}</TableCell>
+                              <TableCell className="text-right font-mono text-xs">${Number(c.volume_usd).toLocaleString(undefined, { maximumFractionDigits: 2 })}</TableCell>
+                              <TableCell className="text-right font-mono text-xs">{(Number(c.commission_rate) * 100).toFixed(2)}%</TableCell>
+                              <TableCell className="text-right font-mono text-xs text-primary">{Number(c.commission_btc).toFixed(8)}</TableCell>
+                              <TableCell><code className="text-[10px] text-muted-foreground">{c.ref_code}</code></TableCell>
+                            </TableRow>
+                          );
+                        })}
                       </TableBody>
                     </Table>
                   )}
