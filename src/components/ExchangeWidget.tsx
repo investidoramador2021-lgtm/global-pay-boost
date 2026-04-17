@@ -1925,11 +1925,7 @@ const ExchangeWidget = ({ onTabChange, defaultFrom, defaultTo }: ExchangeWidgetP
     }
   };
 
-  const filteredCurrencies = currencies.filter((c) => {
-    if (!searchQuery) return true;
-    const q = searchQuery.toLowerCase();
-    return c.ticker.includes(q) || c.name.toLowerCase().includes(q);
-  });
+  const filteredCurrencies = currencies.filter((c) => matchesExchangeCurrencySearch(c, searchQuery));
 
   const sortedCurrencies = [...filteredCurrencies].sort((a, b) => {
     const aPopular = POPULAR_TICKERS.indexOf(a.ticker);
@@ -1942,66 +1938,6 @@ const ExchangeWidget = ({ onTabChange, defaultFrom, defaultTo }: ExchangeWidgetP
 
   const belowMin = parseFloat(sendAmount) > 0 && minAmount > 0 && parseFloat(sendAmount) < minAmount;
   const canExchangeNow = widgetMode === "exchange" && !loading && !estimating && !creatingTx && Boolean(fromCurrency && toCurrency) && Boolean(estimatedAmount) && estimatedAmount !== "—" && estimatedAmount !== "syncing" && !belowMin;
-
-
-
-  // CurrencyList & GuardarianCryptoList are hoisted to module scope (CurrencyListView /
-  // GuardarianCryptoListView) so the scroll container is not recreated on every parent
-  // re-render — fixes "snap-back-to-top" while scrolling the picker.
-
-  const CurrencyPicker = ({
-    show,
-    onSelect,
-    onClose,
-    exclude,
-  }: {
-    show: boolean;
-    onSelect: (c: Currency) => void;
-    onClose: () => void;
-    exclude?: string;
-  }) => {
-    if (!show) return null;
-    return (
-      <div className="fixed inset-0 z-50 flex items-center justify-center bg-foreground/40 p-4" onClick={onClose}>
-        <div className="w-full max-w-md rounded-2xl border border-border bg-card shadow-elevated" onClick={(e) => e.stopPropagation()}>
-          <div className="flex items-center gap-2 border-b border-border p-4">
-            <Search className="h-4 w-4 text-muted-foreground" />
-            <input
-              autoFocus
-              placeholder={t("widget.searchCurrency")}
-              className="flex-1 bg-transparent font-body text-sm text-foreground outline-none placeholder:text-muted-foreground"
-              value={searchQuery}
-              onChange={(e) => setSearchQuery(e.target.value)}
-            />
-            <button onClick={() => { onClose(); setSearchQuery(""); }} className="font-body text-xs text-muted-foreground hover:text-foreground">
-              Cancel
-            </button>
-          </div>
-          {/* Mobile Quick-Select */}
-          <div className="flex gap-2 border-b border-border px-4 pb-3">
-            {["btc", "eth", "sol", "usdc"].map((ticker) => {
-              const c = currencies.find((cur) => cur.ticker === ticker);
-              if (!c) return null;
-              return (
-                <button
-                  key={ticker}
-                  onClick={() => { onSelect(c); onClose(); setSearchQuery(""); }}
-                  className="flex items-center gap-1.5 rounded-lg border border-border bg-accent px-3 py-1.5 font-display text-xs font-semibold uppercase text-foreground transition-colors hover:border-primary/40"
-                >
-                  {c.image && <img src={c.image} alt="" className="h-4 w-4 rounded-full" />}
-                  {ticker}
-                </button>
-              );
-            })}
-          </div>
-          <CurrencyListView
-            currencies={sortedCurrencies.filter((c) => c.ticker !== exclude)}
-            onSelect={(c) => { onSelect(c); onClose(); setSearchQuery(""); }}
-          />
-        </div>
-      </div>
-    );
-  };
 
   if (loading || retrying) {
     return (
