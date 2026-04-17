@@ -1,5 +1,5 @@
 import { useEffect, useMemo, useState } from "react";
-import { useSearchParams } from "react-router-dom";
+import { useSearchParams, useLocation } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import { ChevronDown, Loader2, X, Copy, Check, ArrowLeft } from "lucide-react";
 import {
@@ -61,13 +61,20 @@ const formatQuoteAmount = (value: string) => {
 const EmbedWidget = () => {
   const [searchParams] = useSearchParams();
   const { t, i18n } = useTranslation();
+  const { pathname } = useLocation();
+  // Standalone = served at /embed/widget (iframe). When nested inside another page
+  // (e.g. /affiliates preview), do NOT touch <html lang/dir/class> or call
+  // i18n.changeLanguage — the parent LangLayout already manages those.
+  const isStandalone = pathname === "/embed/widget" || pathname.startsWith("/embed/widget");
   const refId = searchParams.get("ref") || "";
   const detectBrowserLang = (): string => {
     if (typeof navigator === "undefined") return "en";
     return pickSupportedLang([...(navigator.languages || []), navigator.language]);
   };
   const rawLangParam = searchParams.get("lang");
-  const langParam = (rawLangParam || detectBrowserLang()).toLowerCase();
+  // When nested, fall back to current i18n.language (set by LangLayout from URL).
+  const fallbackLang = isStandalone ? detectBrowserLang() : (i18n.language || "en");
+  const langParam = (rawLangParam || fallbackLang).toLowerCase().split("-")[0];
   const lang = SUPPORTED_LANGS.includes(langParam) ? langParam : "en";
   // Theme: accept ?mode=light|dark (preferred) or ?theme=light|dark (legacy). Default: dark.
   const themeParam = (searchParams.get("mode") || searchParams.get("theme") || "dark").toLowerCase();
@@ -112,25 +119,28 @@ const EmbedWidget = () => {
   };
 
   useEffect(() => {
+    if (!isStandalone) return;
     if (i18n.language !== lang) {
       i18n.changeLanguage(lang);
     }
     document.documentElement.lang = lang;
     const rtlLangs = ["ar", "he", "fa", "ur"];
     document.documentElement.dir = rtlLangs.includes(lang) ? "rtl" : "ltr";
-  }, [lang, i18n]);
+  }, [lang, i18n, isStandalone]);
 
   useEffect(() => {
-    // Apply theme from ?mode= / ?theme= so the embedded widget matches the host site.
-    if (isLight) {
-      document.documentElement.classList.remove("dark");
-      document.documentElement.classList.add("light");
-    } else {
-      document.documentElement.classList.remove("light");
-      document.documentElement.classList.add("dark");
+    if (isStandalone) {
+      // Apply theme from ?mode= / ?theme= so the embedded widget matches the host site.
+      if (isLight) {
+        document.documentElement.classList.remove("dark");
+        document.documentElement.classList.add("light");
+      } else {
+        document.documentElement.classList.remove("light");
+        document.documentElement.classList.add("dark");
+      }
+      document.body.style.margin = "0";
+      document.body.style.background = "transparent";
     }
-    document.body.style.margin = "0";
-    document.body.style.background = "transparent";
 
     // Persist the affiliate ref token so any swap created in this browsing
     // session (including the new tab opened by handleSwap) is attributed.
@@ -140,7 +150,7 @@ const EmbedWidget = () => {
         localStorage.setItem("mrc_partner_ref", refId);
       } catch { /* sessionStorage may be blocked in some embed contexts */ }
     }
-  }, [isLight, refId]);
+  }, [isLight, refId, isStandalone]);
 
   useEffect(() => {
     let cancelled = false;
