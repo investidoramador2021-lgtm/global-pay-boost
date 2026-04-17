@@ -500,26 +500,48 @@ const Affiliates = () => (
         />
         <div className="container relative mx-auto max-w-4xl px-4 text-center animate-fade-in">
           <div className="inline-flex items-center gap-2 rounded-full border border-primary/30 bg-primary/10 px-3 py-1 text-xs font-display font-semibold text-primary">
-            <Shield className="h-3.5 w-3.5" /> Affiliate Program
+            <Shield className="h-3.5 w-3.5" /> Affiliate Program · Lifetime Payouts
           </div>
-          <h1 className="mt-5 font-display text-3xl font-bold tracking-tight text-foreground sm:text-5xl">
-            Earn <span className="text-primary">0.1% – 0.4% Lifetime Commissions</span>
+          <h1 className="mt-6 font-display text-4xl font-extrabold tracking-tight text-foreground sm:text-6xl leading-[1.05]">
+            Earn{" "}
+            <span className="bg-gradient-to-r from-primary to-[hsl(var(--neon))] bg-clip-text text-transparent">
+              0.1% – 0.4%
+            </span>
+            <br className="hidden sm:block" />
+            <span className="text-foreground"> Lifetime Commissions</span>
           </h1>
-          <p className="mt-4 font-body text-base sm:text-lg text-muted-foreground max-w-2xl mx-auto">
+          <p className="mt-5 font-body text-base sm:text-xl text-muted-foreground max-w-2xl mx-auto leading-relaxed">
             Promote MRC GlobalPay with our instant swap widget or affiliate link and get paid
-            automatically to your wallet.
+            <span className="text-foreground font-semibold"> automatically to your BTC wallet</span>.
           </p>
-          <p className="mt-4 text-xs text-muted-foreground">
-            Registration is recommended for the full Partner Dashboard, but completely optional.
-          </p>
-          <div className="mt-7">
+          <div className="mt-5 flex flex-wrap items-center justify-center gap-2 text-[11px] font-display font-semibold">
+            <span className="inline-flex items-center gap-1.5 rounded-full border border-border bg-card px-3 py-1 text-muted-foreground">
+              <Check className="h-3 w-3 text-primary" /> No registration required
+            </span>
+            <span className="inline-flex items-center gap-1.5 rounded-full border border-border bg-card px-3 py-1 text-muted-foreground">
+              <Check className="h-3 w-3 text-primary" /> Paid in BTC, automatically
+            </span>
+            <span className="inline-flex items-center gap-1.5 rounded-full border border-border bg-card px-3 py-1 text-muted-foreground">
+              <Check className="h-3 w-3 text-primary" /> Lifetime — no expiry
+            </span>
+          </div>
+          <div className="mt-8 flex flex-col sm:flex-row items-center justify-center gap-3">
             <a
               href="#generate"
-              className="btn-shimmer inline-flex items-center justify-center gap-2 rounded-xl bg-primary px-7 py-3 font-display text-sm font-bold text-primary-foreground shadow-neon transition-all duration-100 hover:bg-primary/90 hover:-translate-y-0.5"
+              className="btn-shimmer inline-flex items-center justify-center gap-2 rounded-xl bg-primary px-7 py-3.5 font-display text-sm font-bold text-primary-foreground shadow-neon transition-all duration-100 hover:bg-primary/90 hover:-translate-y-0.5"
             >
               <Sparkles className="h-4 w-4" /> Generate Your Widget
             </a>
+            <a
+              href="/partners"
+              className="inline-flex items-center justify-center gap-2 rounded-xl border border-border bg-card px-6 py-3.5 font-display text-sm font-semibold text-foreground transition-colors hover:border-primary/40 hover:text-primary"
+            >
+              Open Partner Dashboard <ArrowRight className="h-4 w-4" />
+            </a>
           </div>
+          <p className="mt-4 text-xs text-muted-foreground">
+            Registration is recommended for the full Partner Dashboard, but completely optional.
+          </p>
         </div>
       </section>
 
