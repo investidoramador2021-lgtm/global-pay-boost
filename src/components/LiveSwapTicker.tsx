@@ -85,15 +85,15 @@ const LiveSwapTicker = () => {
                   animate={{ opacity: 1, y: 0, height: "auto" }}
                   exit={{ opacity: 0, height: 0 }}
                   transition={{ duration: 0.3, ease: "easeOut" }}
-                  className="flex items-center justify-between gap-2 rounded-lg border border-border bg-card px-3 py-2.5 sm:px-4 sm:py-3"
+                  className="hover-lift card-soft flex items-center justify-between gap-2 px-3 py-2.5 sm:px-4 sm:py-3"
                 >
                 <div className="flex flex-wrap items-center gap-1.5 sm:gap-2">
                   <span className="inline-flex items-center gap-1 rounded-md bg-trust/10 px-1.5 py-0.5 font-display text-[10px] font-bold text-trust sm:px-2 sm:text-xs">
-                    Sent {swap.fromAmount} {swap.from}
+                    {swap.fromAmount} {swap.from}
                   </span>
-                  <ArrowRight className="hidden h-3 w-3 text-muted-foreground sm:block" />
+                  <ArrowRight className="h-3 w-3 text-primary/70 rtl-flip" />
                   <span className="font-body text-[10px] text-foreground sm:text-xs">
-                    → <span className="font-semibold">{swap.toAmount} {swap.to}</span>
+                    <span className="font-semibold">{swap.toAmount} {swap.to}</span>
                   </span>
                 </div>
                 <span className="shrink-0 font-body text-[10px] text-muted-foreground sm:text-[11px]">{swap.time}</span>
