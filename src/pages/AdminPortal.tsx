@@ -183,7 +183,7 @@ const AdminPortal = () => {
   }, [stage, resetInactivityTimer]);
 
   const loadDashboard = useCallback(async () => {
-    const [pRes, txRes, logRes, leRes, devRes, keyRes, whRes, poRes, chRes, alRes] = await Promise.all([
+    const [pRes, txRes, logRes, leRes, devRes, keyRes, whRes, poRes, chRes, alRes, cmRes] = await Promise.all([
       supabase.from("partner_profiles").select("*"),
       supabase.from("partner_transactions").select("*").order("completed_at", { ascending: false }),
       supabase.from("support_chat_logs" as any).select("*").order("created_at", { ascending: false }).limit(200),
@@ -196,7 +196,6 @@ const AdminPortal = () => {
       supabase.from("affiliate_leads" as any).select("*").order("created_at", { ascending: false }).limit(500),
       supabase.from("partner_commissions" as any).select("*").order("created_at", { ascending: false }).limit(500),
     ]);
-    const cmRes = (arguments as any); // placeholder removed below
     setPartners((pRes.data || []) as Partner[]);
     setTransactions((txRes.data || []) as Tx[]);
     setChatLogs((logRes.data as unknown as ChatLog[]) || []);
@@ -207,6 +206,7 @@ const AdminPortal = () => {
     setPayoutRequests((poRes.data || []) as unknown as PayoutReq[]);
     setComplianceHolds((chRes.data || []) as unknown as ComplianceHold[]);
     setAffiliateLeads((alRes.data || []) as any[]);
+    setCommissions((cmRes.data || []) as any[]);
     setLoading(false);
   }, []);
 
