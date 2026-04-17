@@ -763,7 +763,7 @@ interface ExchangeWidgetProps {
 
 const ExchangeWidget = ({ onTabChange, defaultFrom, defaultTo }: ExchangeWidgetProps = {}) => {
   const { toast } = useToast();
-  const { t } = useTranslation();
+  const { t, i18n } = useTranslation();
   const { subscribe: subscribePush, supported: pushSupported } = usePushNotifications();
   const pushSubscribedRef = useRef(false);
   const [currencies, setCurrencies] = useState<Currency[]>([]);
