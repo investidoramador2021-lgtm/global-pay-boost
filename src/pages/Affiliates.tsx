@@ -145,7 +145,7 @@ const WidgetPreview = () => (
               className="w-full bg-transparent font-display text-2xl font-bold text-foreground outline-none"
             />
             <div className="flex items-center gap-1.5 rounded-lg border border-border/60 bg-card/60 px-2.5 py-1.5">
-              <span className="flex h-5 w-5 items-center justify-center rounded-full bg-orange-500 text-[9px] font-bold text-white">₿</span>
+              <span className="flex h-5 w-5 items-center justify-center rounded-full bg-[hsl(28_85%_55%)] text-[9px] font-bold text-primary-foreground">₿</span>
               <span className="font-display text-xs font-semibold text-foreground">BTC</span>
             </div>
           </div>
