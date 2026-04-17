@@ -37,7 +37,9 @@ const LangLayout = () => {
   return (
     <>
       <HreflangTags />
+      <LocalizedHubSchema />
       <Outlet />
+      <GeoNudgeBanner />
     </>
   );
 };
