@@ -837,7 +837,9 @@ const ExchangeWidget = ({ onTabChange, defaultFrom, defaultTo }: ExchangeWidgetP
     preferredFiatTicker?: string,
     preferredCryptoTicker?: string,
   ) => {
-    const fallbackFiatTicker = direction === "sell" ? "EUR" : "USD";
+    // Locale-aware fiat default: PT users get BRL (PIX as #1 payment method)
+    const localeFiatTicker = i18n.language === "pt" ? "BRL" : null;
+    const fallbackFiatTicker = localeFiatTicker || (direction === "sell" ? "EUR" : "USD");
     const fiatSelection = fiatOptions.find((c) => c.ticker === preferredFiatTicker)
       || fiatOptions.find((c) => c.ticker === fallbackFiatTicker)
       || fiatOptions.find((c) => c.ticker === "EUR")

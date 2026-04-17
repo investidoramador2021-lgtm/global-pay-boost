@@ -7,8 +7,8 @@ export const SEPA_POST_EN: BlogPost = {
   slug: SEPA_SLUG,
   title: "How to Buy Crypto with SEPA in Europe (2026 Guide)",
   metaTitle: "How to Buy Crypto with SEPA Bank Transfer in Europe | MRC GlobalPay",
-  metaDescription: "Buy Bitcoin, Ethereum, and 500+ tokens with SEPA bank transfer. No registration, under 60 seconds settlement. The fastest European crypto on-ramp in 2026.",
-  excerpt: "SEPA bank transfers are the most popular way for Europeans to buy crypto. This guide walks you through buying Bitcoin, Ethereum, and 500+ tokens with SEPA on MRC GlobalPay in under 90 seconds.",
+  metaDescription: "Buy Bitcoin, Ethereum, and 6,000+ tokens with SEPA bank transfer. No registration, under 60 seconds settlement. The fastest European crypto on-ramp in 2026.",
+  excerpt: "SEPA bank transfers are the most popular way for Europeans to buy crypto. This guide walks you through buying Bitcoin, Ethereum, and 6,000+ tokens with SEPA on MRC GlobalPay in under 90 seconds.",
   author: seedAuthors.danielCarter,
   publishedAt: "2026-04-11",
   updatedAt: "2026-04-11",
@@ -35,7 +35,7 @@ The whole process takes under 90 seconds:
 
 ### Step 1: Pick your crypto
 
-Go to the [Buy section](/#exchange) and select what you want to purchase. MRC GlobalPay supports 500+ tokens: Bitcoin, Ethereum, Solana, USDT, USDC, XRP, and many more.
+Go to the [Buy section](/#exchange) and select what you want to purchase. MRC GlobalPay supports 6,000+ tokens: Bitcoin, Ethereum, Solana, USDT, USDC, XRP, and many more.
 
 ### Step 2: Enter your amount in EUR
 
@@ -72,7 +72,7 @@ If your bank supports SEPA Instant, use it. The speed difference is massive and 
 | Maximum purchase | No hard cap from MRC GlobalPay. Subject to your bank SEPA limits |
 | Settlement time | Under 60 seconds with SEPA Instant |
 | Registration required | No |
-| Supported assets | 500+ tokens across all major blockchains |
+| Supported assets | 6,000+ tokens across all major blockchains |
 
 ## Is it safe to buy crypto with SEPA?
 
@@ -85,7 +85,7 @@ Yes. The security works on multiple levels:
 
 ## Which cryptos can Europeans buy with SEPA?
 
-All 500+ assets on MRC GlobalPay are available via SEPA. The most popular picks for European buyers:
+All 6,000+ assets on MRC GlobalPay are available via SEPA. The most popular picks for European buyers:
 
 - Bitcoin (BTC) for long-term holding and portfolio anchoring
 - Ethereum (ETH) for DeFi access and smart contract interaction
@@ -192,7 +192,7 @@ Si tu banco soporta SEPA Instant, usalo. La diferencia de velocidad es enorme y 
 | Compra maxima | Sin limite fijo de MRC GlobalPay. Sujeto a limites SEPA de tu banco |
 | Tiempo de liquidacion | Menos de 60 segundos con SEPA Instant |
 | Registro requerido | No |
-| Activos soportados | 500+ tokens en todas las principales blockchains |
+| Activos soportados | 6,000+ tokens en todas las principales blockchains |
 
 ## Es seguro comprar crypto con SEPA?
 
@@ -298,7 +298,7 @@ Se seu banco suporta SEPA Instant, use-o. A diferenca de velocidade e enorme e a
 | Compra maxima | Sem limite fixo da MRC GlobalPay. Sujeito aos limites SEPA do seu banco |
 | Tempo de liquidacao | Menos de 60 segundos com SEPA Instant |
 | Cadastro necessario | Nao |
-| Ativos suportados | 500+ tokens em todas as principais blockchains |
+| Ativos suportados | 6,000+ tokens em todas as principais blockchains |
 
 ## E seguro comprar crypto com SEPA?
 
@@ -457,8 +457,8 @@ SEPA支払いが確認されると、MRC GlobalPayが暗号通貨を直接ウォ
     slug: SEPA_SLUG,
     title: "SEPA se Europe mein Crypto Kaise Khareedein (2026 Guide)",
     metaTitle: "SEPA Bank Transfer se Crypto Khareedein | MRC GlobalPay",
-    metaDescription: "SEPA bank transfer se Bitcoin, Ethereum aur 500+ tokens khareedein. Bina registration, 60 second mein settlement. Europe ka sabse tez crypto on-ramp.",
-    excerpt: "SEPA bank transfers Europeans ke liye crypto khareedne ka sabse popular tarika hai. Yeh guide MRC GlobalPay par SEPA se Bitcoin, Ethereum aur 500+ tokens 90 second mein khareedne ka tarika batata hai.",
+    metaDescription: "SEPA bank transfer se Bitcoin, Ethereum aur 6,000+ tokens khareedein. Bina registration, 60 second mein settlement. Europe ka sabse tez crypto on-ramp.",
+    excerpt: "SEPA bank transfers Europeans ke liye crypto khareedne ka sabse popular tarika hai. Yeh guide MRC GlobalPay par SEPA se Bitcoin, Ethereum aur 6,000+ tokens 90 second mein khareedne ka tarika batata hai.",
     author: seedAuthors.danielCarter,
     publishedAt: "2026-04-11",
     updatedAt: "2026-04-11",
@@ -475,7 +475,7 @@ Poora process 90 second se kam mein hota hai:
 
 ### Step 1: Apna crypto chunein
 
-[Buy section](/#exchange) par jaayein aur chunein ki aap kya khareedna chahte hain. MRC GlobalPay 500+ tokens support karta hai.
+[Buy section](/#exchange) par jaayein aur chunein ki aap kya khareedna chahte hain. MRC GlobalPay 6,000+ tokens support karta hai.
 
 ### Step 2: EUR mein amount daalen
 
@@ -619,8 +619,8 @@ Khi thanh toan SEPA duoc xac nhan, MRC GlobalPay gui crypto truc tiep vao vi cua
     slug: SEPA_SLUG,
     title: "Hoe om Crypto te Koop met SEPA in Europa (2026 Gids)",
     metaTitle: "Hoe om Crypto te Koop met SEPA Bankoordrag | MRC GlobalPay",
-    metaDescription: "Koop Bitcoin, Ethereum en 500+ tokens met SEPA bankoordrag. Geen registrasie, afhandeling binne 60 sekondes. Europa se vinnigste crypto on-ramp.",
-    excerpt: "SEPA bankoordragte is die gewildste manier vir Europeers om crypto te koop. Hierdie gids wys jou hoe om Bitcoin, Ethereum en 500+ tokens met SEPA op MRC GlobalPay binne 90 sekondes te koop.",
+    metaDescription: "Koop Bitcoin, Ethereum en 6,000+ tokens met SEPA bankoordrag. Geen registrasie, afhandeling binne 60 sekondes. Europa se vinnigste crypto on-ramp.",
+    excerpt: "SEPA bankoordragte is die gewildste manier vir Europeers om crypto te koop. Hierdie gids wys jou hoe om Bitcoin, Ethereum en 6,000+ tokens met SEPA op MRC GlobalPay binne 90 sekondes te koop.",
     author: seedAuthors.danielCarter,
     publishedAt: "2026-04-11",
     updatedAt: "2026-04-11",
@@ -637,7 +637,7 @@ Die hele proses neem minder as 90 sekondes:
 
 ### Stap 1: Kies jou crypto
 
-Gaan na die [Koop afdeling](/#exchange) en kies wat jy wil koop. MRC GlobalPay ondersteun 500+ tokens.
+Gaan na die [Koop afdeling](/#exchange) en kies wat jy wil koop. MRC GlobalPay ondersteun 6,000+ tokens.
 
 ### Stap 2: Voer jou bedrag in EUR in
 
@@ -761,7 +761,7 @@ SEPA מכסה 36 מדינות ומעבד העברות יורו ברחבי האז
     slug: SEPA_SLUG,
     title: "Europe mein SEPA se Crypto Kaise Khareedein (2026 Guide)",
     metaTitle: "SEPA Bank Transfer se Crypto Khareedein | MRC GlobalPay",
-    metaDescription: "SEPA bank transfer se Bitcoin, Ethereum aur 500+ tokens khareedein. Registration nahi chahiye, 60 second mein settlement. Non-custodial crypto on-ramp.",
+    metaDescription: "SEPA bank transfer se Bitcoin, Ethereum aur 6,000+ tokens khareedein. Registration nahi chahiye, 60 second mein settlement. Non-custodial crypto on-ramp.",
     excerpt: "SEPA bank transfers Europeans ke liye crypto khareedne ka sabse mashhoor tarika hai. Yeh guide MRC GlobalPay par SEPA se crypto khareedne ka tarika batata hai.",
     author: seedAuthors.danielCarter,
     publishedAt: "2026-04-11",
@@ -777,7 +777,7 @@ SEPA 36 mulkon ko cover karta hai aur euro transfers process karta hai. [MRC Glo
 
 ### Step 1: Crypto chunein
 
-[Buy section](/#exchange) par jaayein aur chunein. 500+ tokens available hain.
+[Buy section](/#exchange) par jaayein aur chunein. 6,000+ tokens available hain.
 
 ### Step 2: EUR mein amount daalen
 

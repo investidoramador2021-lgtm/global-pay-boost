@@ -7,8 +7,8 @@ export const CARD_POST_EN: BlogPost = {
   slug: CARD_SLUG,
   title: "How to Buy Crypto Instantly with a Credit or Debit Card (2026 Guide)",
   metaTitle: "Buy Crypto with Credit Card or Debit Card Instantly | MRC GlobalPay",
-  metaDescription: "Buy Bitcoin, Ethereum, and 500+ tokens with your Visa or Mastercard. No account needed, under 60 seconds delivery. The simplest card-to-crypto on-ramp in 2026.",
-  excerpt: "Credit and debit cards remain the fastest way to buy crypto worldwide. This guide covers how to purchase Bitcoin, Ethereum, and 500+ tokens with Visa or Mastercard on MRC GlobalPay in under a minute.",
+  metaDescription: "Buy Bitcoin, Ethereum, and 6,000+ tokens with your Visa or Mastercard. No account needed, under 60 seconds delivery. The simplest card-to-crypto on-ramp in 2026.",
+  excerpt: "Credit and debit cards remain the fastest way to buy crypto worldwide. This guide covers how to purchase Bitcoin, Ethereum, and 6,000+ tokens with Visa or Mastercard on MRC GlobalPay in under a minute.",
   author: seedAuthors.sophiaRamirez,
   publishedAt: "2026-04-11",
   updatedAt: "2026-04-11",
@@ -35,7 +35,7 @@ The process takes under 60 seconds from start to finish:
 
 ### Step 1: Select your crypto
 
-Go to the [Buy section](/#exchange) and pick the token you want. MRC GlobalPay supports 500+ assets: Bitcoin, Ethereum, Solana, USDT, USDC, XRP, and hundreds more.
+Go to the [Buy section](/#exchange) and pick the token you want. MRC GlobalPay supports 6,000+ assets: Bitcoin, Ethereum, Solana, USDT, USDC, XRP, and hundreds more.
 
 ### Step 2: Enter the amount
 
@@ -75,7 +75,7 @@ Most Visa and Mastercard issuers support crypto purchases. Some banks may flag t
 | Maximum purchase | Depends on your card issuer limits |
 | Settlement time | Under 60 seconds |
 | Registration required | No |
-| Supported assets | 500+ tokens across all major blockchains |
+| Supported assets | 6,000+ tokens across all major blockchains |
 
 The $0.30 minimum is the lowest in the industry. This makes card purchases viable for small amounts that other platforms reject outright.
 
@@ -207,7 +207,7 @@ La mayoria de emisores de Visa y Mastercard soportan compras de crypto. Algunos 
 | Compra maxima | Depende de los limites de tu emisor |
 | Tiempo de liquidacion | Menos de 60 segundos |
 | Registro requerido | No |
-| Activos soportados | 500+ tokens en todas las principales blockchains |
+| Activos soportados | 6,000+ tokens en todas las principales blockchains |
 
 El minimo de $0.30 es el mas bajo de la industria. Esto hace que las compras con tarjeta sean viables para montos pequenos que otras plataformas rechazan directamente.
 
@@ -318,7 +318,7 @@ A maioria dos emissores de Visa e Mastercard suportam compras de crypto. Alguns 
 | Compra maxima | Depende dos limites do seu emissor |
 | Tempo de liquidacao | Menos de 60 segundos |
 | Registro necessario | Nao |
-| Ativos suportados | 500+ tokens em todas as principais blockchains |
+| Ativos suportados | 6,000+ tokens em todas as principais blockchains |
 
 O minimo de $0.30 e o mais baixo da industria. Isso torna compras com cartao viaveis para valores pequenos que outras plataformas rejeitam diretamente.
 
@@ -349,7 +349,7 @@ Pagamentos com cartao sao o on-ramp universal para crypto. Sem numeros de roteam
     slug: CARD_SLUG,
     title: "Comment Acheter du Crypto Instantanement par Carte Bancaire (Guide 2026)",
     metaTitle: "Acheter du Crypto par Carte Bancaire Instantanement | MRC GlobalPay",
-    metaDescription: "Achetez Bitcoin, Ethereum et 500+ tokens avec votre Visa ou Mastercard. Sans compte, livraison en moins de 60 secondes. On-ramp carte-crypto le plus simple.",
+    metaDescription: "Achetez Bitcoin, Ethereum et 6,000+ tokens avec votre Visa ou Mastercard. Sans compte, livraison en moins de 60 secondes. On-ramp carte-crypto le plus simple.",
     excerpt: "Les cartes bancaires restent le moyen le plus rapide d'acheter du crypto dans le monde. Ce guide explique comment acheter du Bitcoin, Ethereum et plus de 500 tokens avec Visa ou Mastercard sur MRC GlobalPay en moins d'une minute.",
     author: seedAuthors.sophiaRamirez,
     publishedAt: "2026-04-11",
@@ -644,8 +644,8 @@ Sau khi thanh toan duoc xu ly, MRC GlobalPay gui token truc tiep vao vi cua ban.
     slug: CARD_SLUG,
     title: "Hoe om Crypto Onmiddellik te Koop met 'n Krediet- of Debietkaart (2026 Gids)",
     metaTitle: "Koop Crypto met Krediet- of Debietkaart Onmiddellik | MRC GlobalPay",
-    metaDescription: "Koop Bitcoin, Ethereum en 500+ tokens met jou Visa of Mastercard. Geen rekening nodig nie, aflewering in minder as 60 sekondes.",
-    excerpt: "Krediet- en debietkaarte bly die vinnigste manier om crypto wereldwyd te koop. Hierdie gids wys hoe om Bitcoin, Ethereum en 500+ tokens met Visa of Mastercard op MRC GlobalPay in minder as 'n minuut te koop.",
+    metaDescription: "Koop Bitcoin, Ethereum en 6,000+ tokens met jou Visa of Mastercard. Geen rekening nodig nie, aflewering in minder as 60 sekondes.",
+    excerpt: "Krediet- en debietkaarte bly die vinnigste manier om crypto wereldwyd te koop. Hierdie gids wys hoe om Bitcoin, Ethereum en 6,000+ tokens met Visa of Mastercard op MRC GlobalPay in minder as 'n minuut te koop.",
     author: seedAuthors.sophiaRamirez,
     publishedAt: "2026-04-11",
     updatedAt: "2026-04-11",
