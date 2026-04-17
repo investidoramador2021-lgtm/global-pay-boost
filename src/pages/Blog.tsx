@@ -1,11 +1,18 @@
 import { useState, useEffect } from "react";
 import { Helmet } from "react-helmet-async";
 import { Link, useLocation } from "react-router-dom";
-import { Calendar, Clock, ArrowRight, FileText, Shield, Landmark, Zap, ScrollText, DollarSign, TrendingUp, Coins } from "lucide-react";
+import { Calendar, Clock, ArrowRight, FileText, Shield, Landmark, Zap, ScrollText, DollarSign, TrendingUp, Coins, Sparkles } from "lucide-react";
 import SiteHeader from "@/components/SiteHeader";
 import SiteFooter from "@/components/SiteFooter";
 import { fetchAllPosts, type BlogPost } from "@/lib/blog-data";
 import { getLangFromPath, langPath } from "@/i18n";
+import heroApiIntegration from "@/assets/blog-api-integration-2026.jpg";
+import heroBtcAtm from "@/assets/blog-btc-atm-vs-mrc.jpg";
+
+const FEATURED_HERO_IMAGES: Record<string, string> = {
+  "crypto-exchange-api-integration-2026-guide": heroApiIntegration,
+  "bitcoin-atms-vs-mrc-globalpay-honest-comparison": heroBtcAtm,
+};
 
 const WHITEPAPERS = [
   {
