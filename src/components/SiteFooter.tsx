@@ -53,6 +53,7 @@ const resourceLinks = [
   { label: "FAQ", href: "/#faq", title: "Frequently asked questions about crypto swaps" },
   { label: "Get Widget", href: "/get-widget", title: "Embed a free crypto swap widget on your website" },
   { label: "Developer Hub", href: "/developer", title: "Widget integration docs, URL deep-linking, and supported chains" },
+  { label: "Affiliate Program", href: "/affiliates", title: "Earn 0.1%–0.4% lifetime commissions promoting MRC GlobalPay" },
   { label: "How to Swap Dust", href: "/resources/crypto-dust-guide", title: "Guide to converting small crypto balances" },
   { label: "Fractal BTC Bridge", href: "/resources/fractal-bitcoin-swap", title: "Bridge Fractal Bitcoin to other networks" },
   { label: "Best Place to Buy Solana", href: "/guides/best-place-to-buy-solana", title: "Find the best place to buy Solana" },
