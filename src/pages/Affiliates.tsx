@@ -351,6 +351,33 @@ const Affiliates = () => (
 
       <MsbTrustBar />
 
+      {/* ═══ REGISTRATION REQUIREMENT BANNER ═══ */}
+      <section className="border-b border-border bg-background py-10">
+        <div className="container mx-auto max-w-4xl px-4">
+          <div className="flex flex-col sm:flex-row items-start gap-4 rounded-2xl border border-primary/30 bg-primary/[0.06] p-5 sm:p-6 transition-all hover:border-primary/50">
+            <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-primary/15">
+              <AlertCircle className="h-5 w-5 text-primary" aria-hidden />
+            </div>
+            <div className="flex-1">
+              <h2 className="font-display text-base sm:text-lg font-bold text-foreground">
+                Important: A Free Partner Account is Required
+              </h2>
+              <p className="mt-1.5 font-body text-sm text-muted-foreground leading-relaxed">
+                To track your commissions and access your Partner Dashboard you must register a free
+                Partner Account. Once registered you will receive your unique affiliate ID, links,
+                and a personalized embeddable widget.
+              </p>
+              <a
+                href="/partners"
+                className="mt-3 inline-flex items-center gap-1.5 font-display text-sm font-semibold text-primary hover:underline"
+              >
+                Register your free Partner Account <ArrowRight className="h-3.5 w-3.5" />
+              </a>
+            </div>
+          </div>
+        </div>
+      </section>
+
       {/* ═══ HOW IT WORKS ═══ */}
       <section className="border-b border-border py-16 sm:py-20">
         <div className="container mx-auto max-w-6xl px-4">
