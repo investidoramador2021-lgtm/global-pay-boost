@@ -1134,6 +1134,22 @@ const ExchangeWidget = ({ onTabChange, defaultFrom, defaultTo }: ExchangeWidgetP
         babydoge: "babydoge",
         bera: "bera",
         near: "nearsol",
+        // 2026 listings — Sovereign AI Stack
+        prl: "prlsol",
+        rave: "raveerc20",
+        stable: "stablebsc",
+        // Tokenized RWA equities (Ondo)
+        nvda: "nvdaonerc20",
+        anvda: "nvdaonerc20",
+        msft: "msftonerc20",
+        amsft: "msftonerc20",
+        spy: "spyonerc20",
+        aspy: "spyonerc20",
+        meta: "metaonerc20",
+        ameta: "metaonerc20",
+        // RWA / commodities
+        paxg: "paxg",
+        xaut: "xaut",
       };
 
       // Tokens pending liquidity — default to USDC (Solana) with warning
