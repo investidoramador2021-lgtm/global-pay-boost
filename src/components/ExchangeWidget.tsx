@@ -1893,7 +1893,7 @@ const ExchangeWidget = ({ onTabChange, defaultFrom, defaultTo }: ExchangeWidgetP
               );
             })}
           </div>
-          <CurrencyList
+          <CurrencyListView
             currencies={sortedCurrencies.filter((c) => c.ticker !== exclude)}
             onSelect={(c) => { onSelect(c); onClose(); setSearchQuery(""); }}
           />
@@ -2154,7 +2154,7 @@ const ExchangeWidget = ({ onTabChange, defaultFrom, defaultTo }: ExchangeWidgetP
                                   ))}
                               </div>
                             ) : (
-                              <GuardarianCryptoList
+                              <GuardarianCryptoListView
                                 items={guardarianCrypto.filter((c) => {
                                   if (!gSearchQuery) return true;
                                   const q = gSearchQuery.toLowerCase();
@@ -2255,7 +2255,7 @@ const ExchangeWidget = ({ onTabChange, defaultFrom, defaultTo }: ExchangeWidgetP
                                     );
                                   })}
                                 </div>
-                                <GuardarianCryptoList
+                                <GuardarianCryptoListView
                                   items={guardarianCrypto.filter((c) => {
                                     if (!gSearchQuery) return true;
                                     const q = gSearchQuery.toLowerCase();
