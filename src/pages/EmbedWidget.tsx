@@ -92,6 +92,24 @@ const EmbedWidget = () => {
   const [transaction, setTransaction] = useState<TransactionResult | null>(null);
   const [txStatus, setTxStatus] = useState<TransactionStatus | null>(null);
   const [copied, setCopied] = useState<"address" | "amount" | "extra" | null>(null);
+  const [tokenSearch, setTokenSearch] = useState("");
+
+  // Theme helpers — keep widget readable in both light and dark host sites.
+  const C = {
+    text: isLight ? "text-slate-900" : "text-white",
+    textMuted: isLight ? "text-slate-600" : "text-white/70",
+    textSubtle: isLight ? "text-slate-500" : "text-white/45",
+    textFaint: isLight ? "text-slate-400" : "text-white/30",
+    textDim: isLight ? "text-slate-500" : "text-white/40",
+    border: isLight ? "border-slate-200" : "border-white/[0.08]",
+    borderStrong: isLight ? "border-slate-300" : "border-white/[0.12]",
+    borderSoft: isLight ? "border-slate-200/70" : "border-white/[0.06]",
+    bg: isLight ? "bg-slate-50" : "bg-white/[0.04]",
+    bgInset: isLight ? "bg-slate-100" : "bg-white/[0.06]",
+    bgHover: isLight ? "hover:bg-slate-100" : "hover:bg-white/[0.1]",
+    overlay: isLight ? "bg-white/95" : "bg-[#0b0e18]/95",
+    inputPlaceholder: isLight ? "placeholder:text-slate-400" : "placeholder:text-white/30",
+  };
 
   useEffect(() => {
     if (i18n.language !== lang) {
