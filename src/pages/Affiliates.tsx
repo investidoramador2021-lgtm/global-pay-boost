@@ -180,36 +180,24 @@ const WHY_CHOOSE = [
 
 const FAQS = [
   {
+    q: "Do I need to register to earn commissions?",
+    a: "No — registration is optional. The fastest way to track everything in real time is to register a free Partner Account, but you can also earn without an account by providing your email address, BTC wallet, or the widget/API code you used when contacting us. We will manually verify your referrals and settle commissions to your wallet.",
+  },
+  {
+    q: "How do I track my profits?",
+    a: "Registered partners get a real-time dashboard showing all referred swaps, volume, and commissions. Without an account, you can request a manual statement at any time by contacting us with your email, BTC wallet, or the widget/API code you used to promote.",
+  },
+  {
+    q: "Can I use the widget without registering?",
+    a: "Yes. The embeddable widget works for everyone. To attribute swaps to you, simply share the widget code or referral URL you used when requesting payout, or register a free account for automatic attribution.",
+  },
+  {
+    q: "How are payouts sent?",
+    a: "Payouts are sent directly to your BTC wallet (or another supported asset on request). Registered partners can withdraw on demand from the dashboard; non-registered promoters receive payouts after manual verification of referred volume.",
+  },
+  {
     q: "Is the commission lifetime?",
-    a: "Yes. Once a user swaps through your unique referral link or embedded widget, you earn commission on every future swap they make — with no expiration date. Lifetime means lifetime.",
-  },
-  {
-    q: "How do I get paid?",
-    a: "Payouts are fast and flexible. You can withdraw in crypto (BTC, USDT, USDC and more) or fiat directly from your Partner Dashboard. There is no minimum payout threshold for most assets.",
-  },
-  {
-    q: "Do I need to register to use the widget and track profits?",
-    a: "Yes. Tracking and commissions require a free Partner Account. Once registered, you'll get your unique affiliate ID, personalized referral links, and a tracking-enabled version of the embed widget so every swap is attributed to you.",
-  },
-  {
-    q: "Can I embed the widget on my site?",
-    a: "Absolutely. After registration you'll receive a personalized iframe snippet you can paste into any website, blog, or landing page. The widget is fully responsive, themeable, and works on every modern browser.",
-  },
-  {
-    q: "What traffic is allowed?",
-    a: "Organic traffic from blogs, YouTube, social media, Telegram channels, wallets, and crypto communities is welcome. Incentivized traffic, fraudulent clicks, malware, spam, and unauthorized brand bidding on paid search are not permitted.",
-  },
-  {
-    q: "How much can I earn with the MRC GlobalPay Affiliate Program?",
-    a: "Affiliates earn between 0.1% and 0.4% revenue share on the total swap volume they refer. Higher rates apply based on volume and performance — custom rates are available for top partners.",
-  },
-  {
-    q: "Is there a minimum referred volume to qualify?",
-    a: "No. There is no minimum volume requirement. You start earning from your very first referred swap.",
-  },
-  {
-    q: "Do my users need to register to swap?",
-    a: "No. MRC GlobalPay is a non-custodial, registration-free exchange — users swap directly from their wallets, which dramatically increases your conversion rate.",
+    a: "Yes. Once a user swaps through your referral link or embedded widget, you earn commission on every future swap they make — with no expiration date.",
   },
 ];
 
