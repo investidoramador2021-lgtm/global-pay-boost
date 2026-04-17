@@ -285,6 +285,37 @@ function matchesExchangeCurrencySearch(c: Currency, query: string): boolean {
   });
 }
 
+// Curated category filters for the swap picker. Tickers are matched case-insensitively
+// against Currency.ticker — values that are LE-only will simply not appear if the
+// aggregator hasn't loaded LE coverage yet, which is the desired graceful-degradation.
+const PICKER_CATEGORIES = [
+  { id: "all", label: "All", tickers: null as string[] | null },
+  {
+    id: "ai",
+    label: "Trending AI",
+    tickers: ["prl", "prlsol", "rave", "raveerc20", "fet", "agix", "rndr", "render", "tao", "ocean", "akt", "wld", "near", "inj", "grt", "vana"],
+  },
+  {
+    id: "stocks",
+    label: "Tokenized Stocks",
+    tickers: ["nvda", "nvdaonerc20", "msft", "msftonerc20", "spy", "spyonerc20", "tsla", "tslaonerc20", "aapl", "aaplonerc20", "googl", "googlonerc20", "amzn", "amznonerc20", "meta", "metaonerc20"],
+  },
+  {
+    id: "stables",
+    label: "Stables",
+    tickers: ["usdt", "usdterc20", "usdttrc20", "usdtbsc", "usdtsol", "usdtarb", "usdtop", "usdtmatic", "usdc", "usdcerc20", "usdcsol", "usdcbsc", "usdcarb", "usdcop", "usdcmatic", "usdcspl", "dai", "daierc20", "pyusd", "fdusd", "tusd", "usde"],
+  },
+] as const;
+
+type PickerCategoryId = typeof PICKER_CATEGORIES[number]["id"];
+
+function matchesPickerCategory(c: Currency, categoryId: string): boolean {
+  const cat = PICKER_CATEGORIES.find((x) => x.id === categoryId);
+  if (!cat || !cat.tickers) return true;
+  const ticker = c.ticker.toLowerCase();
+  return (cat.tickers as readonly string[]).includes(ticker);
+}
+
 function matchesGuardarianCurrencySearch(c: GuardarianCurrency, query: string): boolean {
   if (!query) return true;
 
@@ -308,6 +339,8 @@ const ExchangeCurrencyPickerView = ({
   searchPlaceholder,
   onSelect,
   onClose,
+  activeCategory,
+  onCategoryChange,
 }: {
   show: boolean;
   currencies: Currency[];
@@ -317,6 +350,8 @@ const ExchangeCurrencyPickerView = ({
   searchPlaceholder: string;
   onSelect: (c: Currency) => void;
   onClose: () => void;
+  activeCategory: string;
+  onCategoryChange: (id: string) => void;
 }) => {
   if (!show) return null;
 
@@ -337,6 +372,25 @@ const ExchangeCurrencyPickerView = ({
           <button onClick={onClose} className="font-body text-xs text-muted-foreground hover:text-foreground">
             Cancel
           </button>
+        </div>
+        <div className="flex flex-wrap gap-1.5 border-b border-border px-4 pb-3 pt-3">
+          {PICKER_CATEGORIES.map((cat) => {
+            const active = cat.id === activeCategory;
+            return (
+              <button
+                key={cat.id}
+                onClick={() => onCategoryChange(cat.id)}
+                className={
+                  "rounded-full border px-3 py-1 font-body text-[11px] font-medium uppercase tracking-wide transition-colors " +
+                  (active
+                    ? "border-primary bg-primary/15 text-primary"
+                    : "border-border bg-muted/30 text-muted-foreground hover:border-primary/40 hover:text-foreground")
+                }
+              >
+                {cat.label}
+              </button>
+            );
+          })}
         </div>
         <div className="flex gap-2 border-b border-border px-4 pb-3">
           {["btc", "eth", "sol", "usdc"].map((ticker) => {
@@ -734,6 +788,7 @@ const ExchangeWidget = ({ onTabChange, defaultFrom, defaultTo }: ExchangeWidgetP
   const [showFromPicker, setShowFromPicker] = useState(false);
   const [showToPicker, setShowToPicker] = useState(false);
   const [searchQuery, setSearchQuery] = useState("");
+  const [pickerCategory, setPickerCategory] = useState<string>("all");
   const debounceRef = useRef<ReturnType<typeof setTimeout>>();
 
   // ===== Dual-tab mode: "exchange" (ChangeNOW) vs "buysell" (Guardarian) =====
@@ -1941,7 +1996,9 @@ const ExchangeWidget = ({ onTabChange, defaultFrom, defaultTo }: ExchangeWidgetP
     }
   };
 
-  const filteredCurrencies = currencies.filter((c) => matchesExchangeCurrencySearch(c, searchQuery));
+  const filteredCurrencies = currencies
+    .filter((c) => matchesPickerCategory(c, pickerCategory))
+    .filter((c) => matchesExchangeCurrencySearch(c, searchQuery));
 
   const sortedCurrencies = [...filteredCurrencies].sort((a, b) => {
     const aPopular = POPULAR_TICKERS.indexOf(a.ticker);
@@ -3030,14 +3087,18 @@ const ExchangeWidget = ({ onTabChange, defaultFrom, defaultTo }: ExchangeWidgetP
                     searchQuery={searchQuery}
                     searchPlaceholder={t("widget.searchCurrency")}
                     onSearchChange={setSearchQuery}
+                    activeCategory={pickerCategory}
+                    onCategoryChange={setPickerCategory}
                     onSelect={(currency) => {
                       setFromCurrency(currency);
                       setShowFromPicker(false);
                       setSearchQuery("");
+                      setPickerCategory("all");
                     }}
                     onClose={() => {
                       setShowFromPicker(false);
                       setSearchQuery("");
+                      setPickerCategory("all");
                     }}
                   />
                 </div>
@@ -3089,14 +3150,18 @@ const ExchangeWidget = ({ onTabChange, defaultFrom, defaultTo }: ExchangeWidgetP
                     searchQuery={searchQuery}
                     searchPlaceholder={t("widget.searchCurrency")}
                     onSearchChange={setSearchQuery}
+                    activeCategory={pickerCategory}
+                    onCategoryChange={setPickerCategory}
                     onSelect={(currency) => {
                       setToCurrency(currency);
                       setShowToPicker(false);
                       setSearchQuery("");
+                      setPickerCategory("all");
                     }}
                     onClose={() => {
                       setShowToPicker(false);
                       setSearchQuery("");
+                      setPickerCategory("all");
                     }}
                   />
                 </div>
@@ -3169,9 +3234,9 @@ const ExchangeWidget = ({ onTabChange, defaultFrom, defaultTo }: ExchangeWidgetP
             </div>
             <div className="mt-3 flex items-center justify-center gap-3">
               <p className="font-body text-xs text-muted-foreground">{t("widget.noHiddenFees")}</p>
-              {speedForecast && (
+              {(speedForecast || fromCurrency) && (
                 <span className="flex items-center gap-1 font-body text-xs text-primary">
-                  <Clock className="h-3 w-3" /> ~{speedForecast}
+                  <Clock className="h-3 w-3" /> ~{speedForecast || (winningProvider === "le" ? "5–15 min" : "10–30 min")}
                 </span>
               )}
             </div>
