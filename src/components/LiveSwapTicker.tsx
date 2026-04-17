@@ -65,16 +65,19 @@ const LiveSwapTicker = () => {
   return (
     <section className="border-y border-border bg-accent/50 py-10 sm:py-14">
       <div className="container mx-auto px-4">
-        <div className="mb-6 flex items-center justify-center gap-2 sm:mb-8">
-          <Globe className="h-4 w-4 text-primary" />
-          <h3 className="font-display text-sm font-bold uppercase tracking-wider text-muted-foreground">
+        <div className="mb-3 flex items-center justify-center gap-2 sm:mb-4">
+          <Globe className="h-4 w-4 text-primary" aria-hidden="true" />
+          <h2 className="font-display text-sm font-bold uppercase tracking-wider text-muted-foreground">
             Live Swaps Happening Now
-          </h3>
-          <span className="relative flex h-2 w-2">
+          </h2>
+          <span className="relative flex h-2 w-2" aria-hidden="true">
             <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-trust opacity-75" />
             <span className="relative inline-flex h-2 w-2 rounded-full bg-trust" />
           </span>
         </div>
+        <p className="mx-auto mb-6 max-w-xl text-center font-body text-xs text-muted-foreground sm:mb-8 sm:text-sm">
+          Real-time stream of recent non-custodial swaps settled across our liquidity rails. Every transaction is wallet-to-wallet, with no registration required.
+        </p>
 
         <div className="mx-auto max-w-2xl space-y-2">
           <AnimatePresence initial={false}>
@@ -86,12 +89,13 @@ const LiveSwapTicker = () => {
                   exit={{ opacity: 0, height: 0 }}
                   transition={{ duration: 0.3, ease: "easeOut" }}
                   className="hover-lift card-soft flex items-center justify-between gap-2 px-3 py-2.5 sm:px-4 sm:py-3"
+                  aria-label={`Live crypto swap example from ${swap.from} to ${swap.to}`}
                 >
                 <div className="flex flex-wrap items-center gap-1.5 sm:gap-2">
                   <span className="inline-flex items-center gap-1 rounded-md bg-trust/10 px-1.5 py-0.5 font-display text-[10px] font-bold text-trust sm:px-2 sm:text-xs">
                     {swap.fromAmount} {swap.from}
                   </span>
-                  <ArrowRight className="h-3 w-3 text-primary/70 rtl-flip" />
+                  <ArrowRight className="h-3 w-3 text-primary/70 rtl-flip" aria-label="swapped to" />
                   <span className="font-body text-[10px] text-foreground sm:text-xs">
                     <span className="font-semibold">{swap.toAmount} {swap.to}</span>
                   </span>

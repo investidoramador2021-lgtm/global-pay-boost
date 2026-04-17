@@ -66,13 +66,13 @@ const PopularPairsSection = () => {
       <div className="container mx-auto px-4">
         <div className="mx-auto max-w-2xl text-center">
           <div className="mx-auto mb-3 flex h-10 w-10 items-center justify-center rounded-xl bg-primary/10">
-            <TrendingUp className="h-5 w-5 text-primary" />
+            <TrendingUp className="h-5 w-5 text-primary" aria-hidden="true" />
           </div>
           <h2 className="font-display text-2xl font-bold tracking-tight text-foreground sm:text-3xl lg:text-4xl">
             Best Rates Crypto Exchange
           </h2>
           <p className="mt-3 font-body text-base text-muted-foreground sm:mt-4 sm:text-lg">
-            Live rates aggregated from 700+ liquidity sources. Updated in real time.
+            Live rates aggregated from 700+ liquidity sources, updated in real time. Compare the most-traded pairs and lock in the best non-custodial execution from $0.30.
           </p>
         </div>
 
