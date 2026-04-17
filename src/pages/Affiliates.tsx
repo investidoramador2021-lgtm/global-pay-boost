@@ -266,11 +266,19 @@ const WidgetGenerator = () => {
               placeholder="you@example.com"
               value={email}
               onChange={(e) => { setEmail(e.target.value); setSubmitted(false); }}
-              className="w-full rounded-xl border border-border bg-background ps-10 pe-4 py-3 font-body text-sm text-foreground outline-none transition-colors focus:border-primary"
+              onBlur={() => setEmailTouched(true)}
+              aria-invalid={showEmailError}
+              className={`w-full rounded-xl border bg-background ps-10 pe-4 py-3 font-body text-sm text-foreground outline-none transition-colors ${
+                showEmailError ? "border-destructive focus:border-destructive" : "border-border focus:border-primary"
+              }`}
               aria-label="Your email address"
             />
           </div>
-          <p className="mt-1 text-[11px] text-muted-foreground">Used to track referred swaps.</p>
+          {showEmailError ? (
+            <p className="mt-1 text-[11px] text-destructive">Please enter a valid email address.</p>
+          ) : (
+            <p className="mt-1 text-[11px] text-muted-foreground">Used to track referred swaps.</p>
+          )}
         </div>
 
         <div>
@@ -286,11 +294,21 @@ const WidgetGenerator = () => {
               placeholder="bc1q… or 1… / 3…"
               value={btc}
               onChange={(e) => { setBtc(e.target.value); setSubmitted(false); }}
-              className="w-full rounded-xl border border-border bg-background ps-10 pe-4 py-3 font-mono text-xs text-foreground outline-none transition-colors focus:border-primary"
+              onBlur={() => setBtcTouched(true)}
+              aria-invalid={showBtcError}
+              className={`w-full rounded-xl border bg-background ps-10 pe-4 py-3 font-mono text-xs text-foreground outline-none transition-colors ${
+                showBtcError ? "border-destructive focus:border-destructive" : "border-border focus:border-primary"
+              }`}
               aria-label="Your BTC wallet address"
             />
           </div>
-          <p className="mt-1 text-[11px] text-muted-foreground">Commissions are paid here automatically.</p>
+          {showBtcError ? (
+            <p className="mt-1 text-[11px] text-destructive">
+              Enter a valid BTC address (starts with bc1, 1, or 3).
+            </p>
+          ) : (
+            <p className="mt-1 text-[11px] text-muted-foreground">Commissions are paid here automatically.</p>
+          )}
         </div>
       </div>
 
