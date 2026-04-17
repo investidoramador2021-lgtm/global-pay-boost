@@ -226,12 +226,22 @@ const WidgetPreview = ({ mode }: { mode: "light" | "dark" }) => {
 const WidgetGenerator = () => {
   const [email, setEmail] = useState("");
   const [btc, setBtc] = useState("");
+  const [emailTouched, setEmailTouched] = useState(false);
+  const [btcTouched, setBtcTouched] = useState(false);
   const [mode, setMode] = useState<"light" | "dark">("dark");
   const [submitted, setSubmitted] = useState(false);
 
   const emailValid = isValidEmail(email);
   const btcValid = isValidBtc(btc);
   const canGenerate = emailValid && btcValid;
+  const showEmailError = emailTouched && email.length > 0 && !emailValid;
+  const showBtcError = btcTouched && btc.length > 0 && !btcValid;
+
+  const handleGenerate = () => {
+    setEmailTouched(true);
+    setBtcTouched(true);
+    if (canGenerate) setSubmitted(true);
+  };
 
   const activeEmail = submitted ? email.trim() : "";
   const activeBtc = submitted ? btc.trim() : "";
