@@ -1844,91 +1844,9 @@ const ExchangeWidget = ({ onTabChange, defaultFrom, defaultTo }: ExchangeWidgetP
 
 
 
-  const BATCH_SIZE = 50;
-
-  const CurrencyList = ({ currencies: items, onSelect }: { currencies: Currency[]; onSelect: (c: Currency) => void }) => {
-    const [visibleCount, setVisibleCount] = useState(BATCH_SIZE);
-    const listRef = useRef<HTMLDivElement>(null);
-
-    const handleScroll = useCallback(() => {
-      const el = listRef.current;
-      if (!el) return;
-      if (el.scrollTop + el.clientHeight >= el.scrollHeight - 100) {
-        setVisibleCount((prev) => Math.min(prev + BATCH_SIZE, items.length));
-      }
-    }, [items.length]);
-
-    useEffect(() => { setVisibleCount(BATCH_SIZE); }, [items.length]);
-
-    return (
-      <div ref={listRef} onScroll={handleScroll} className="overflow-y-auto p-2" style={{ maxHeight: 400 }}>
-        {items.slice(0, visibleCount).map((c) => (
-          <button
-            key={`${c.ticker}-${c.network}`}
-            onClick={() => onSelect(c)}
-            className="flex w-full items-center gap-3 rounded-lg px-3 py-2.5 text-left transition-colors hover:bg-accent"
-          >
-            {c.image ? (
-              <img src={c.image} alt={c.name} className="h-6 w-6 rounded-full shrink-0" loading="lazy" onError={(e) => { (e.currentTarget as HTMLImageElement).style.display = 'none'; }} />
-            ) : (
-              <span className="flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-muted text-[10px] font-bold uppercase text-muted-foreground" aria-hidden>
-                {c.ticker.slice(0, 2)}
-              </span>
-            )}
-            <div className="flex min-w-0 flex-1 items-center">
-              <span className="font-display text-sm font-semibold uppercase text-foreground shrink-0">{displayTicker(c)}</span>
-              {networkLabel(c) && (
-                <span className="ms-1.5 shrink-0 rounded bg-muted px-1.5 py-0.5 font-body text-[10px] uppercase text-muted-foreground">{networkLabel(c)}</span>
-              )}
-              <span className="ms-2 truncate font-body text-xs text-muted-foreground">{c.name}</span>
-            </div>
-          </button>
-        ))}
-        {visibleCount < items.length && (
-          <div className="py-2 text-center font-body text-xs text-muted-foreground">Scroll for more...</div>
-        )}
-      </div>
-    );
-  };
-
-  const GuardarianCryptoList = ({ items, onSelect }: { items: GuardarianCurrency[]; onSelect: (c: GuardarianCurrency) => void }) => {
-    const [visibleCount, setVisibleCount] = useState(BATCH_SIZE);
-    const listRef = useRef<HTMLDivElement>(null);
-
-    const handleScroll = useCallback(() => {
-      const el = listRef.current;
-      if (!el) return;
-      if (el.scrollTop + el.clientHeight >= el.scrollHeight - 100) {
-        setVisibleCount((prev) => Math.min(prev + BATCH_SIZE, items.length));
-      }
-    }, [items.length]);
-
-    useEffect(() => { setVisibleCount(BATCH_SIZE); }, [items.length]);
-
-    return (
-      <div ref={listRef} onScroll={handleScroll} className="overflow-y-auto p-2" style={{ maxHeight: 400 }}>
-        {items.slice(0, visibleCount).map((c) => (
-          <button
-            key={`${c.ticker}-${c.networks?.[0]?.network || ''}`}
-            onClick={() => onSelect(c)}
-            className="flex w-full items-center gap-3 rounded-lg px-3 py-2.5 text-left transition-colors hover:bg-accent"
-          >
-            <GuardarianAssetIcon currency={c} />
-            <div>
-              <span className="font-display text-sm font-semibold uppercase text-foreground">{c.ticker}</span>
-              {c.networks?.[0]?.network && c.networks[0].network !== c.ticker && (
-                <span className="ms-1.5 rounded bg-muted px-1.5 py-0.5 font-body text-[10px] uppercase text-muted-foreground">{c.networks[0].network}</span>
-              )}
-              <span className="ms-2 font-body text-xs text-muted-foreground">{c.name}</span>
-            </div>
-          </button>
-        ))}
-        {visibleCount < items.length && (
-          <div className="py-2 text-center font-body text-xs text-muted-foreground">Scroll for more...</div>
-        )}
-      </div>
-    );
-  };
+  // CurrencyList & GuardarianCryptoList are hoisted to module scope (CurrencyListView /
+  // GuardarianCryptoListView) so the scroll container is not recreated on every parent
+  // re-render — fixes "snap-back-to-top" while scrolling the picker.
 
   const CurrencyPicker = ({
     show,
