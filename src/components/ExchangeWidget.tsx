@@ -285,6 +285,20 @@ function matchesExchangeCurrencySearch(c: Currency, query: string): boolean {
   });
 }
 
+function matchesGuardarianCurrencySearch(c: GuardarianCurrency, query: string): boolean {
+  if (!query) return true;
+
+  const q = query.toLowerCase().trim();
+  const qNormalized = normalizeTokenSearchValue(query);
+  const networks = c.networks?.flatMap((n) => [n.network || "", n.name || ""]) || [];
+  const searchable = [c.ticker, c.name, ...networks];
+
+  return searchable.some((value) => {
+    const raw = value.toLowerCase();
+    return raw.includes(q) || normalizeTokenSearchValue(value).includes(qNormalized);
+  });
+}
+
 const ExchangeCurrencyPickerView = ({
   show,
   currencies,
@@ -306,6 +320,8 @@ const ExchangeCurrencyPickerView = ({
 }) => {
   if (!show) return null;
 
+  const visibleCurrencies = currencies.filter((c) => c.ticker !== exclude);
+
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center bg-foreground/40 p-4" onClick={onClose}>
       <div className="w-full max-w-md rounded-2xl border border-border bg-card shadow-elevated" onClick={(e) => e.stopPropagation()}>
@@ -324,8 +340,8 @@ const ExchangeCurrencyPickerView = ({
         </div>
         <div className="flex gap-2 border-b border-border px-4 pb-3">
           {["btc", "eth", "sol", "usdc"].map((ticker) => {
-            const c = currencies.find((cur) => cur.ticker === ticker);
-            if (!c || c.ticker === exclude) return null;
+            const c = visibleCurrencies.find((cur) => cur.ticker === ticker);
+            if (!c) return null;
             return (
               <button
                 key={ticker}
@@ -338,10 +354,7 @@ const ExchangeCurrencyPickerView = ({
             );
           })}
         </div>
-        <CurrencyListView
-          currencies={currencies.filter((c) => c.ticker !== exclude)}
-          onSelect={onSelect}
-        />
+        <CurrencyListView currencies={visibleCurrencies} onSelect={onSelect} />
       </div>
     </div>
   );
