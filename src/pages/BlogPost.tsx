@@ -34,19 +34,38 @@ const BlogPostPage = () => {
     });
   }, [slug, lang]);
 
-  // Extract H2 headings as FAQ items for FAQPage schema (must be before early returns)
+  // Extract H2 and H3 question headings as FAQ items for FAQPage schema.
+  // Auto-generates rich-result-eligible JSON-LD without manual schema authoring.
   const faqItems = useMemo(() => {
     if (!post) return [];
     const headings = extractHeadings(post.content);
+    const seen = new Set<string>();
     return headings
-      .filter((h) => h.level === 2 && h.text.includes("?"))
+      .filter((h) => (h.level === 2 || h.level === 3) && h.text.includes("?"))
       .map((h) => {
-        const regex = new RegExp(`## ${h.text.replace(/[.*+?^${}()|[\]\\]/g, "\\$&")}\\n+([\\s\\S]*?)(?=\\n## |$)`);
+        const hashes = "#".repeat(h.level);
+        // Capture content until the next heading of the same OR higher level (lower number)
+        const stopPattern = h.level === 2 ? "\\n## " : "\\n(?:## |### )";
+        const regex = new RegExp(
+          `${hashes} ${h.text.replace(/[.*+?^${}()|[\]\\]/g, "\\$&")}\\n+([\\s\\S]*?)(?=${stopPattern}|$)`
+        );
         const match = post.content.match(regex);
         const answer = match
-          ? match[1].replace(/###.*/g, "").replace(/\n+/g, " ").replace(/\[([^\]]+)\]\([^)]+\)/g, "$1").replace(/\*\*/g, "").trim().slice(0, 300)
+          ? match[1]
+              .replace(/^#{1,6}.*$/gm, "")
+              .replace(/\n+/g, " ")
+              .replace(/\[([^\]]+)\]\([^)]+\)/g, "$1")
+              .replace(/\*\*/g, "")
+              .replace(/\s+/g, " ")
+              .trim()
+              .slice(0, 300)
           : post.metaDescription;
-        return { question: h.text, answer };
+        return { question: h.text.trim(), answer };
+      })
+      .filter((item) => {
+        if (!item.answer || seen.has(item.question)) return false;
+        seen.add(item.question);
+        return true;
       });
   }, [post]);
 
