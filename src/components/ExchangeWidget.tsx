@@ -1996,7 +1996,9 @@ const ExchangeWidget = ({ onTabChange, defaultFrom, defaultTo }: ExchangeWidgetP
     }
   };
 
-  const filteredCurrencies = currencies.filter((c) => matchesExchangeCurrencySearch(c, searchQuery));
+  const filteredCurrencies = currencies
+    .filter((c) => matchesPickerCategory(c, pickerCategory))
+    .filter((c) => matchesExchangeCurrencySearch(c, searchQuery));
 
   const sortedCurrencies = [...filteredCurrencies].sort((a, b) => {
     const aPopular = POPULAR_TICKERS.indexOf(a.ticker);
