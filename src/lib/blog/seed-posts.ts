@@ -1222,7 +1222,7 @@ Work through each wallet systematically. Most swaps complete in 2–15 minutes d
 
 ## Which dust tokens can you swap?
 
-MRC GlobalPay supports 500+ coins across major networks. Common dust tokens that users consolidate include:
+MRC GlobalPay supports 6,000+ coins across major networks. Common dust tokens that users consolidate include:
 
 | Token | Typical Dust Amount | Network |
 |-------|-------------------|---------|
@@ -1289,7 +1289,7 @@ In these markets, even $5 of recovered dust can be meaningful. The $0.30 minimum
 
 ## The bottom line?
 
-Crypto dust is not worthless — it is just inconvenient. In 2026, tools like MRC GlobalPay have removed the friction. With a $0.30 minimum, registration-free access, and support for 500+ tokens, there is no reason to leave value sitting idle in forgotten wallets.
+Crypto dust is not worthless — it is just inconvenient. In 2026, tools like MRC GlobalPay have removed the friction. With a $0.30 minimum, registration-free access, and support for 6,000+ tokens, there is no reason to leave value sitting idle in forgotten wallets.
 
 Start with your largest dust balances and work down. In an hour, you will have a cleaner portfolio and a few extra dollars in stablecoins.
 

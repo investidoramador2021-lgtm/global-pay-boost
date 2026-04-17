@@ -139,11 +139,14 @@ const EmbedWidget = () => {
   const handleSwap = () => {
     if (!fromCurrency || !toCurrency || !amount) return;
 
-    const base = "https://mrcglobalpay.com";
+    const lang = searchParams.get("lang");
+    const langPath = lang && lang !== "en" ? `/${lang}` : "";
+    const base = `https://mrcglobalpay.com${langPath}`;
     const params = new URLSearchParams({ from: fromCurrency.ticker, to: toCurrency.ticker, amount });
     if (refId) params.set("ref", refId);
     const source = searchParams.get("source");
     if (source) params.set("source", source);
+    if (lang) params.set("lang", lang);
     window.open(`${base}/?${params.toString()}`, "_blank", "noopener");
   };
 
@@ -324,7 +327,15 @@ const EmbedWidget = () => {
 
         <div className="mt-3 text-center">
           <a
-            href={`https://mrcglobalpay.com${refId ? `?ref=${refId}` : ""}`}
+            href={(() => {
+              const lang = searchParams.get("lang");
+              const langPath = lang && lang !== "en" ? `/${lang}` : "";
+              const qs = new URLSearchParams();
+              if (refId) qs.set("ref", refId);
+              if (lang) qs.set("lang", lang);
+              const qsStr = qs.toString();
+              return `https://mrcglobalpay.com${langPath}${qsStr ? `?${qsStr}` : ""}`;
+            })()}
             target="_blank"
             rel="noopener"
             className="text-[10px] text-white/30 transition-colors hover:text-white/50"

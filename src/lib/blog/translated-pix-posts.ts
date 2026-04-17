@@ -9,7 +9,7 @@ export const PIX_POST_EN: BlogPost = {
   title: "How to Buy Crypto Instantly with PIX in Brazil (2026 Guide)",
   metaTitle: "How to Buy Crypto with PIX in Brazil — Instant Settlement | MRC GlobalPay",
   metaDescription: "How do Brazilians buy crypto instantly with PIX? MRC GlobalPay settles BTC, ETH, and SOL purchases in under 60 seconds via PIX. No account required.",
-  excerpt: "PIX is the fastest way to on-ramp into crypto from Brazil. This guide covers how to buy Bitcoin, Ethereum, and 500+ tokens instantly using PIX on MRC GlobalPay — with no registration and sub-60-second settlement.",
+  excerpt: "PIX is the fastest way to on-ramp into crypto from Brazil. This guide covers how to buy Bitcoin, Ethereum, and 6,000+ tokens instantly using PIX on MRC GlobalPay — with no registration and sub-60-second settlement.",
   author: seedAuthors.sophiaRamirez,
   publishedAt: "2026-04-11",
   updatedAt: "2026-04-11",
@@ -36,7 +36,7 @@ The entire process takes under 90 seconds from start to crypto in your wallet:
 
 ### Step 1: Select your crypto asset
 
-Navigate to the [Buy section](/#exchange) and choose the cryptocurrency you want to purchase. MRC GlobalPay supports 500+ tokens including Bitcoin (BTC), Ethereum (ETH), Solana (SOL), USDT, and USDC.
+Navigate to the [Buy section](/#exchange) and choose the cryptocurrency you want to purchase. MRC GlobalPay supports 6,000+ tokens including Bitcoin (BTC), Ethereum (ETH), Solana (SOL), USDT, and USDC.
 
 ### Step 2: Enter your amount in BRL
 
@@ -64,7 +64,7 @@ MRC GlobalPay supports the industry's lowest minimum purchase:
 | **Maximum purchase** | No hard cap — subject to PIX daily limits set by your bank |
 | **Settlement time** | Under 60 seconds after PIX confirmation |
 | **Registration required** | No |
-| **Supported assets** | 500+ tokens across all major blockchains |
+| **Supported assets** | 6,000+ tokens across all major blockchains |
 
 ## Is it safe to buy crypto with PIX?
 
@@ -77,7 +77,7 @@ Yes. The security model works at multiple layers:
 
 ## Which cryptocurrencies can I buy with PIX?
 
-All 500+ assets supported by MRC GlobalPay are available for PIX purchases. The most popular choices for Brazilian buyers include:
+All 6,000+ assets supported by MRC GlobalPay are available for PIX purchases. The most popular choices for Brazilian buyers include:
 
 - **Bitcoin (BTC)** — the primary store-of-value asset
 - **Ethereum (ETH)** — essential for DeFi and smart contract interaction
@@ -176,7 +176,7 @@ A MRC GlobalPay suporta o menor mínimo de compra do mercado:
 | **Compra máxima** | Sem limite fixo — sujeito aos limites diários do PIX definidos pelo seu banco |
 | **Tempo de liquidação** | Menos de 60 segundos após confirmação do PIX |
 | **Cadastro necessário** | Não |
-| **Ativos suportados** | 500+ tokens em todas as principais blockchains |
+| **Ativos suportados** | 6,000+ tokens em todas as principais blockchains |
 
 ## É seguro comprar crypto com PIX?
 
@@ -273,7 +273,7 @@ MRC GlobalPay soporta el mínimo de compra más bajo de la industria:
 | **Compra máxima** | Sin límite fijo — sujeto a los límites diarios de PIX de tu banco |
 | **Tiempo de liquidación** | Menos de 60 segundos después de la confirmación PIX |
 | **Registro requerido** | No |
-| **Activos soportados** | 500+ tokens en todas las principales blockchains |
+| **Activos soportados** | 6,000+ tokens en todas las principales blockchains |
 
 ## Es seguro comprar crypto con PIX?
 

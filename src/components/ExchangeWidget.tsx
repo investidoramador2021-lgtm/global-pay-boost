@@ -763,7 +763,7 @@ interface ExchangeWidgetProps {
 
 const ExchangeWidget = ({ onTabChange, defaultFrom, defaultTo }: ExchangeWidgetProps = {}) => {
   const { toast } = useToast();
-  const { t } = useTranslation();
+  const { t, i18n } = useTranslation();
   const { subscribe: subscribePush, supported: pushSupported } = usePushNotifications();
   const pushSubscribedRef = useRef(false);
   const [currencies, setCurrencies] = useState<Currency[]>([]);
@@ -837,7 +837,9 @@ const ExchangeWidget = ({ onTabChange, defaultFrom, defaultTo }: ExchangeWidgetP
     preferredFiatTicker?: string,
     preferredCryptoTicker?: string,
   ) => {
-    const fallbackFiatTicker = direction === "sell" ? "EUR" : "USD";
+    // Locale-aware fiat default: PT users get BRL (PIX as #1 payment method)
+    const localeFiatTicker = i18n.language === "pt" ? "BRL" : null;
+    const fallbackFiatTicker = localeFiatTicker || (direction === "sell" ? "EUR" : "USD");
     const fiatSelection = fiatOptions.find((c) => c.ticker === preferredFiatTicker)
       || fiatOptions.find((c) => c.ticker === fallbackFiatTicker)
       || fiatOptions.find((c) => c.ticker === "EUR")
@@ -851,7 +853,7 @@ const ExchangeWidget = ({ onTabChange, defaultFrom, defaultTo }: ExchangeWidgetP
     return direction === "sell"
       ? { from: cryptoSelection, to: fiatSelection, amount: "0.01" }
       : { from: fiatSelection, to: cryptoSelection, amount: "100" };
-  }, []);
+  }, [i18n.language]);
 
   const applyGuardarianDefaults = useCallback((
     direction: FiatFlow,
