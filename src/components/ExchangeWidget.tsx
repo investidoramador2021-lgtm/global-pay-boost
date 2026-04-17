@@ -345,7 +345,9 @@ const ExchangeCurrencyPickerView = ({
       </div>
     </div>
   );
-}
+};
+
+function getPreferredGuardarianNetworkCode(currency: GuardarianCurrency | null): string | undefined {
   if (!currency || currency.currency_type === "FIAT") return undefined;
 
   const ticker = currency.ticker.trim().toUpperCase();
