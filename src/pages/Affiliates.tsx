@@ -1,11 +1,10 @@
 import { useState, useMemo } from "react";
 import { Helmet } from "react-helmet-async";
 import {
-  Shield, Zap, Link2, DollarSign, Clock, ArrowRight, Infinity as InfinityIcon,
-  LayoutDashboard, Wallet, Megaphone, Image as ImageIcon, Code2, FileText,
-  Globe, Lock, CheckCircle2, Copy, Check, BarChart3,
+  Shield, Zap, Link2, ArrowRight, Infinity as InfinityIcon,
+  Image as ImageIcon, Code2, Globe, Lock, CheckCircle2, Copy, Check,
+  Mail, Sparkles, ArrowDownUp, Clock,
 } from "lucide-react";
-import { Slider } from "@/components/ui/slider";
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
 import SiteHeader from "@/components/SiteHeader";
 import SiteFooter from "@/components/SiteFooter";
@@ -17,7 +16,7 @@ const jsonLd = {
   "@type": "WebPage",
   name: "Affiliate Program — Earn Lifetime Crypto Commissions | MRC GlobalPay",
   description:
-    "Join the MRC GlobalPay Affiliate Program. Earn 0.1%–0.4% lifetime revenue share on every crypto swap you refer. No minimum volume, fast crypto/fiat payouts, real-time dashboard.",
+    "Join the MRC GlobalPay Affiliate Program. Earn 0.1%–0.4% lifetime revenue share on every crypto swap you refer. Generate your widget and affiliate link instantly with just an email.",
   url: "https://mrcglobalpay.com/affiliates",
   isPartOf: { "@type": "WebSite", name: "MRC GlobalPay", url: "https://mrcglobalpay.com" },
   publisher: {
@@ -28,13 +27,6 @@ const jsonLd = {
     description:
       "MRC GlobalPay is a non-custodial crypto exchange — a Registered Canadian MSB (FINTRAC #C100000015).",
   },
-  breadcrumb: {
-    "@type": "BreadcrumbList",
-    itemListElement: [
-      { "@type": "ListItem", position: 1, name: "Home", item: "https://mrcglobalpay.com" },
-      { "@type": "ListItem", position: 2, name: "Affiliate Program", item: "https://mrcglobalpay.com/affiliates" },
-    ],
-  },
 };
 
 const faqJsonLd = {
@@ -43,166 +35,51 @@ const faqJsonLd = {
   mainEntity: [
     {
       "@type": "Question",
-      name: "How much can I earn with the MRC GlobalPay Affiliate Program?",
+      name: "Do I need to register?",
       acceptedAnswer: {
         "@type": "Answer",
-        text: "Affiliates earn between 0.1% and 0.4% revenue share on the total swap volume they refer. Higher rates apply based on volume and performance — custom rates are available for top partners.",
+        text: "No. Registration is optional. You can generate your widget and affiliate link with just an email and start earning immediately. Registering a free Partner Account unlocks the real-time dashboard and faster payouts.",
       },
     },
     {
       "@type": "Question",
-      name: "Are commissions truly lifetime?",
+      name: "How does tracking work with only my email?",
       acceptedAnswer: {
         "@type": "Answer",
-        text: "Yes. Once a user swaps through your unique referral link or embedded widget, you earn commission on every future swap they make — with no expiration date.",
+        text: "Your email is encoded into your unique referral link and widget code. Every swap that comes through your link or embed is automatically attributed to your email address. To request a payout or statement, just contact us with the same email.",
       },
     },
     {
       "@type": "Question",
-      name: "Is there a minimum referred volume to qualify?",
+      name: "Is the commission lifetime?",
       acceptedAnswer: {
         "@type": "Answer",
-        text: "No. There is no minimum volume requirement. You start earning from your very first referred swap.",
+        text: "Yes. Once a user swaps through your referral link or embedded widget, you earn commission on every future swap they make — with no expiration date.",
       },
     },
     {
       "@type": "Question",
-      name: "How and when am I paid?",
+      name: "How do I receive payouts?",
       acceptedAnswer: {
         "@type": "Answer",
-        text: "Payouts are fast and flexible. You can choose to be paid in crypto (BTC, USDT, USDC and more) or fiat. Balances are settled directly from the partner dashboard.",
+        text: "Payouts are sent directly to your BTC wallet (or another supported asset on request). Registered partners can withdraw on demand from the dashboard; email-only promoters receive payouts after manual verification.",
       },
     },
   ],
 };
 
-/* ─── Earnings Calculator ─── */
-const fmt = (n: number) =>
-  n >= 1000 ? `$${(n / 1000).toFixed(n >= 10000 ? 0 : 1)}k` : `$${n.toFixed(0)}`;
+/* ─── Widget Generator ─── */
+const slugifyEmail = (email: string) =>
+  email.trim().toLowerCase().replace(/[^a-z0-9@._-]/g, "") || "your-email";
 
-const EarningsCalculator = () => {
-  const [volume, setVolume] = useState([500000]);
-  const tiers = useMemo(
-    () => [
-      { rate: 0.001, label: "0.1%", tone: "Entry" },
-      { rate: 0.0025, label: "0.25%", tone: "Growth" },
-      { rate: 0.004, label: "0.4%", tone: "Top Partner" },
-    ],
-    [],
-  );
+const isValidEmail = (email: string) =>
+  /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email.trim());
 
-  return (
-    <div className="rounded-2xl border border-border bg-card p-6 sm:p-8 transition-shadow hover:shadow-lg">
-      <div className="flex flex-col gap-6">
-        <div>
-          <label className="font-display text-sm font-semibold text-foreground block mb-1">
-            Monthly Referred Swap Volume
-          </label>
-          <p className="text-xs text-muted-foreground mb-4">
-            Drag the slider to estimate your monthly earnings across each commission tier.
-          </p>
-          <Slider
-            min={10000}
-            max={5000000}
-            step={10000}
-            value={volume}
-            onValueChange={setVolume}
-            className="mb-2"
-            aria-label="Monthly referred swap volume in USD"
-          />
-          <div className="flex justify-between text-xs text-muted-foreground font-mono">
-            <span>$10k</span>
-            <span className="font-semibold text-foreground text-sm">{fmt(volume[0])}</span>
-            <span>$5M</span>
-          </div>
-        </div>
+const buildLink = (ref: string) => `https://mrcglobalpay.com/?ref=${encodeURIComponent(ref)}`;
 
-        <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
-          {tiers.map((t) => {
-            const monthly = volume[0] * t.rate;
-            return (
-              <div
-                key={t.label}
-                className="rounded-xl border border-primary/20 bg-primary/5 p-4 text-center transition-all hover:border-primary/40 hover:-translate-y-0.5"
-              >
-                <p className="text-[10px] uppercase tracking-wider text-muted-foreground font-display font-semibold">
-                  {t.tone} · {t.label}
-                </p>
-                <p className="font-display text-2xl font-bold text-primary mt-1">{fmt(monthly)}</p>
-                <p className="text-[10px] text-muted-foreground mt-1">/month</p>
-              </div>
-            );
-          })}
-        </div>
-
-        <a
-          href="/partners"
-          className="btn-shimmer inline-flex items-center justify-center gap-2 rounded-xl bg-primary px-6 py-3 font-display text-sm font-bold text-primary-foreground transition-all duration-100 hover:bg-primary/90"
-        >
-          Apply for Partnership <ArrowRight className="h-4 w-4" />
-        </a>
-      </div>
-    </div>
-  );
-};
-
-/* ─── Data ─── */
-const HERO_BENEFITS = [
-  { icon: InfinityIcon, title: "Lifetime Commissions", desc: "Earn on every future swap — no expiration." },
-  { icon: CheckCircle2, title: "No Minimum Volume", desc: "Start earning from your very first referral." },
-  { icon: LayoutDashboard, title: "Real-Time Dashboard", desc: "Track clicks, swaps, and revenue live." },
-  { icon: Wallet, title: "Fast Crypto / Fiat Payouts", desc: "Get paid in BTC, USDT, USDC or fiat." },
-  { icon: Megaphone, title: "Easy Promotion Tools", desc: "Links, banners, and embeddable widget." },
-];
-
-const STEPS = [
-  { n: 1, title: "Sign up (optional)", desc: "Registration is optional but recommended — get your personalized tools and instant Partner Dashboard access in under 2 minutes." },
-  { n: 2, title: "Get your tools", desc: "Receive your unique referral link, downloadable banners, and an embeddable instant swap widget." },
-  { n: 3, title: "Promote anywhere", desc: "Share on your website, blog, YouTube, Telegram, or anywhere your audience hangs out." },
-  { n: 4, title: "Earn & track", desc: "Earn commissions on every referred swap — track them in your dashboard or via email/wallet." },
-];
-
-const TOOLS = [
-  { icon: Link2, title: "Unique Referral Links", desc: "Tracked URLs with full attribution and real-time analytics." },
-  { icon: ImageIcon, title: "Downloadable Banners", desc: "Multiple sizes and themes — light, dark, animated." },
-  { icon: Code2, title: "Embeddable Swap Widget", desc: "Drop-in iframe widget that converts visitors directly on your site." },
-  { icon: Globe, title: "API & Developer Integration", desc: "Build custom flows with our full API.", href: "/developer" },
-  { icon: FileText, title: "Promo Text Snippets", desc: "Ready-made copy for social, email, and articles." },
-];
-
-const WHY_CHOOSE = [
-  { icon: Zap, title: "6,000+ Cryptocurrencies & Tokenized Stocks", desc: "Promote one of the deepest asset catalogs in the industry." },
-  { icon: Lock, title: "Non-Custodial by Design", desc: "Wallet-to-wallet settlement — no funds held, no account required for users." },
-  { icon: Shield, title: "Registered Canadian MSB #C100000015", desc: "FINTRAC Compliant & Regulated — promote a trusted, regulated brand." },
-  { icon: Clock, title: "Instant Swaps from $0.30", desc: "Industry-low minimums convert more clicks into revenue." },
-  { icon: DollarSign, title: "Up to 0.4% Revenue Share", desc: "Best-in-class commissions with transparent, on-chain reporting." },
-];
-
-const FAQS = [
-  {
-    q: "Do I need to register to earn commissions?",
-    a: "No — registration is optional. The fastest way to track everything in real time is to register a free Partner Account, but you can also earn without an account by providing your email address, BTC wallet, or the widget/API code you used when contacting us. We will manually verify your referrals and settle commissions to your wallet.",
-  },
-  {
-    q: "How do I track my profits?",
-    a: "Registered partners get a real-time dashboard showing all referred swaps, volume, and commissions. Without an account, you can request a manual statement at any time by contacting us with your email, BTC wallet, or the widget/API code you used to promote.",
-  },
-  {
-    q: "Can I use the widget without registering?",
-    a: "Yes. The embeddable widget works for everyone. To attribute swaps to you, simply share the widget code or referral URL you used when requesting payout, or register a free account for automatic attribution.",
-  },
-  {
-    q: "How are payouts sent?",
-    a: "Payouts are sent directly to your BTC wallet (or another supported asset on request). Registered partners can withdraw on demand from the dashboard; non-registered promoters receive payouts after manual verification of referred volume.",
-  },
-  {
-    q: "Is the commission lifetime?",
-    a: "Yes. Once a user swaps through your referral link or embedded widget, you earn commission on every future swap they make — with no expiration date.",
-  },
-];
-
-const WIDGET_SNIPPET = `<iframe
-  src="https://mrcglobalpay.com/embed/widget?ref=YOUR_AFFILIATE_ID"
+const buildSnippet = (ref: string) =>
+  `<iframe
+  src="https://mrcglobalpay.com/embed/widget?ref=${encodeURIComponent(ref)}"
   width="100%"
   height="640"
   frameborder="0"
@@ -210,15 +87,15 @@ const WIDGET_SNIPPET = `<iframe
   title="MRC GlobalPay Instant Swap Widget"
   style="border-radius:16px;max-width:480px;">
 </iframe>
-<p><a href="https://mrcglobalpay.com/?ref=YOUR_AFFILIATE_ID">
+<p><a href="https://mrcglobalpay.com/?ref=${encodeURIComponent(ref)}">
   Powered by MRC GlobalPay
 </a></p>`;
 
-const WidgetSnippet = () => {
+const CopyButton = ({ text, label }: { text: string; label: string }) => {
   const [copied, setCopied] = useState(false);
-  const handleCopy = async () => {
+  const onClick = async () => {
     try {
-      await navigator.clipboard.writeText(WIDGET_SNIPPET);
+      await navigator.clipboard.writeText(text);
       setCopied(true);
       setTimeout(() => setCopied(false), 2000);
     } catch {
@@ -226,43 +103,242 @@ const WidgetSnippet = () => {
     }
   };
   return (
-    <div className="mt-6 rounded-xl border border-border bg-[hsl(230_15%_6%)] overflow-hidden">
-      <div className="flex items-center justify-between border-b border-border/60 px-4 py-2">
-        <span className="font-mono text-[11px] uppercase tracking-wider text-muted-foreground">
-          embed-widget.html
-        </span>
+    <button
+      onClick={onClick}
+      className="btn-shimmer inline-flex items-center justify-center gap-2 rounded-xl bg-primary px-5 py-2.5 font-display text-sm font-bold text-primary-foreground shadow-neon transition-all duration-100 hover:bg-primary/90 hover:-translate-y-0.5"
+    >
+      {copied ? <Check className="h-4 w-4" /> : <Copy className="h-4 w-4" />}
+      {copied ? "Copied!" : label}
+    </button>
+  );
+};
+
+const WidgetPreview = () => (
+  <div className="rounded-2xl border border-border bg-card shadow-lg overflow-hidden">
+    {/* Browser chrome */}
+    <div className="flex items-center gap-1.5 border-b border-border/60 bg-muted/40 px-3 py-2">
+      <span className="h-2.5 w-2.5 rounded-full bg-[hsl(0_70%_60%)]/70" />
+      <span className="h-2.5 w-2.5 rounded-full bg-[hsl(45_90%_55%)]/70" />
+      <span className="h-2.5 w-2.5 rounded-full bg-primary/70" />
+      <span className="ms-3 font-mono text-[10px] text-muted-foreground truncate">
+        mrcglobalpay.com/embed/widget
+      </span>
+    </div>
+
+    {/* Mock widget */}
+    <div className="p-4 sm:p-6 bg-[hsl(230_15%_8%)]">
+      <div className="rounded-xl border border-border/60 bg-card/40 p-4 sm:p-5 backdrop-blur">
+        <div className="flex items-center justify-between mb-3">
+          <span className="font-display text-sm font-bold text-foreground">Instant Swap</span>
+          <span className="inline-flex items-center gap-1 rounded-full bg-primary/15 px-2 py-0.5 text-[10px] font-mono font-semibold text-primary">
+            <span className="h-1.5 w-1.5 rounded-full bg-primary animate-pulse" /> LIVE RATE
+          </span>
+        </div>
+
+        {/* You Send */}
+        <div className="rounded-lg border border-border/50 bg-background/40 p-3">
+          <p className="text-[10px] uppercase tracking-wider text-muted-foreground font-display">You Send</p>
+          <div className="mt-1 flex items-center justify-between gap-2">
+            <input
+              readOnly
+              value="0.5"
+              className="w-full bg-transparent font-display text-2xl font-bold text-foreground outline-none"
+            />
+            <div className="flex items-center gap-1.5 rounded-lg border border-border/60 bg-card/60 px-2.5 py-1.5">
+              <span className="flex h-5 w-5 items-center justify-center rounded-full bg-[hsl(28_85%_55%)] text-[9px] font-bold text-primary-foreground">₿</span>
+              <span className="font-display text-xs font-semibold text-foreground">BTC</span>
+            </div>
+          </div>
+        </div>
+
+        {/* Swap arrow */}
+        <div className="my-2 flex justify-center">
+          <div className="flex h-8 w-8 items-center justify-center rounded-full border border-border/60 bg-card text-primary">
+            <ArrowDownUp className="h-4 w-4" />
+          </div>
+        </div>
+
+        {/* You Get */}
+        <div className="rounded-lg border border-border/50 bg-background/40 p-3">
+          <p className="text-[10px] uppercase tracking-wider text-muted-foreground font-display">You Get</p>
+          <div className="mt-1 flex items-center justify-between gap-2">
+            <input
+              readOnly
+              value="14.823"
+              className="w-full bg-transparent font-display text-2xl font-bold text-foreground outline-none"
+            />
+            <div className="flex items-center gap-1.5 rounded-lg border border-border/60 bg-card/60 px-2.5 py-1.5">
+              <span className="flex h-5 w-5 items-center justify-center rounded-full bg-[hsl(265_75%_60%)] text-[9px] font-bold text-primary-foreground">◎</span>
+              <span className="font-display text-xs font-semibold text-foreground">SOL</span>
+            </div>
+          </div>
+        </div>
+
+        <p className="mt-2 text-center text-[10px] text-muted-foreground font-mono">
+          1 BTC ≈ 29.646 SOL · No registration required
+        </p>
+
+        <button className="mt-3 w-full btn-shimmer rounded-xl bg-primary py-3 font-display text-sm font-bold text-primary-foreground shadow-neon">
+          Swap Now
+        </button>
+
+        <p className="mt-2 text-center text-[9px] text-muted-foreground">
+          Powered by MRC GlobalPay · FINTRAC MSB #C100000015
+        </p>
+      </div>
+    </div>
+  </div>
+);
+
+const WidgetGenerator = () => {
+  const [email, setEmail] = useState("");
+  const [submitted, setSubmitted] = useState(false);
+
+  const ref = useMemo(() => slugifyEmail(submitted ? email : ""), [email, submitted]);
+  const link = useMemo(() => buildLink(ref), [ref]);
+  const snippet = useMemo(() => buildSnippet(ref), [ref]);
+
+  const valid = isValidEmail(email);
+
+  return (
+    <div className="rounded-2xl border border-border bg-card p-6 sm:p-8 shadow-lg transition-shadow">
+      {/* Email input */}
+      <div className="flex flex-col sm:flex-row gap-3">
+        <div className="relative flex-1">
+          <Mail className="absolute start-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" aria-hidden />
+          <input
+            type="email"
+            inputMode="email"
+            placeholder="Enter your email address"
+            value={email}
+            onChange={(e) => {
+              setEmail(e.target.value);
+              if (submitted && !isValidEmail(e.target.value)) setSubmitted(false);
+            }}
+            className="w-full rounded-xl border border-border bg-background ps-10 pe-4 py-3 font-body text-sm text-foreground outline-none transition-colors focus:border-primary"
+            aria-label="Your email address"
+          />
+        </div>
         <button
-          onClick={handleCopy}
-          className="inline-flex items-center gap-1.5 rounded-md border border-border/60 bg-card/40 px-2.5 py-1 font-display text-[11px] font-semibold text-foreground transition-colors hover:bg-card"
-          aria-label="Copy widget code"
+          onClick={() => valid && setSubmitted(true)}
+          disabled={!valid}
+          className="btn-shimmer inline-flex items-center justify-center gap-2 rounded-xl bg-primary px-6 py-3 font-display text-sm font-bold text-primary-foreground shadow-neon transition-all duration-100 hover:bg-primary/90 hover:-translate-y-0.5 disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:translate-y-0"
         >
-          {copied ? <Check className="h-3 w-3 text-primary" /> : <Copy className="h-3 w-3" />}
-          {copied ? "Copied" : "Copy"}
+          <Sparkles className="h-4 w-4" />
+          Generate My Widget & Link
         </button>
       </div>
-      <pre className="overflow-x-auto p-4 font-mono text-[11.5px] leading-relaxed text-foreground/90">
-        <code>{WIDGET_SNIPPET}</code>
-      </pre>
+
+      {!submitted && (
+        <p className="mt-2 text-xs text-muted-foreground">
+          Your widget and affiliate link update instantly once you generate them.
+        </p>
+      )}
+
+      {/* Preview + outputs */}
+      <div className="mt-8 grid gap-6 lg:grid-cols-2">
+        {/* Live preview */}
+        <div>
+          <p className="font-display text-[11px] uppercase tracking-wider font-semibold text-muted-foreground mb-3">
+            Live Widget Preview
+          </p>
+          <WidgetPreview />
+        </div>
+
+        {/* Outputs */}
+        <div className="flex flex-col gap-5">
+          {/* Affiliate Link */}
+          <div className="rounded-xl border border-border bg-background/40 p-4">
+            <div className="flex items-center gap-2 mb-2">
+              <Link2 className="h-4 w-4 text-primary" />
+              <span className="font-display text-sm font-semibold text-foreground">Your Affiliate Link</span>
+            </div>
+            <div className="rounded-lg border border-border/60 bg-[hsl(230_15%_6%)] p-3 font-mono text-[12px] text-foreground/90 break-all">
+              {link}
+            </div>
+            <div className="mt-3">
+              <CopyButton text={link} label="Copy Link" />
+            </div>
+          </div>
+
+          {/* Embed Code */}
+          <div className="rounded-xl border border-border bg-background/40 p-4">
+            <div className="flex items-center gap-2 mb-2">
+              <Code2 className="h-4 w-4 text-primary" />
+              <span className="font-display text-sm font-semibold text-foreground">Your Embed Code</span>
+            </div>
+            <pre className="rounded-lg border border-border/60 bg-[hsl(230_15%_6%)] p-3 overflow-x-auto font-mono text-[11px] leading-relaxed text-foreground/90">
+              <code>{snippet}</code>
+            </pre>
+            <div className="mt-3">
+              <CopyButton text={snippet} label="Copy Widget Code" />
+            </div>
+          </div>
+
+          <p className="text-xs text-muted-foreground">
+            Paste this code anywhere on your site. Swaps will be tracked automatically using your email.
+          </p>
+        </div>
+      </div>
     </div>
   );
 };
 
-/* ─── Main Page ─── */
+/* ─── Static Data ─── */
+const STEPS = [
+  { n: 1, title: "Enter your email", desc: "Your widget preview and embed code update instantly with your unique tracking." },
+  { n: 2, title: "Copy & paste", desc: "Drop the link or code on your website, blog, YouTube, or Telegram channel." },
+  { n: 3, title: "Earn automatically", desc: "Earn 0.1%–0.4% commission on every swap referred through your link or widget." },
+];
+
+const TOOLS = [
+  { icon: ImageIcon, title: "Downloadable Banners", desc: "Multiple sizes and themes — light, dark, animated.", href: "/partners" },
+  { icon: Globe, title: "API & Developer Tools", desc: "Build custom flows with our full API documentation.", href: "/developer" },
+];
+
+const WHY = [
+  { icon: InfinityIcon, label: "Lifetime commissions" },
+  { icon: Zap, label: "6,000+ cryptocurrencies & tokenized stocks" },
+  { icon: Sparkles, label: "Micro-swaps from just $0.30" },
+  { icon: Clock, label: "Fast non-custodial swaps (<60 seconds)" },
+  { icon: Shield, label: "Canadian MSB registered (FINTRAC #C100000015)" },
+  { icon: Lock, label: "Wallet-to-wallet · no funds held" },
+];
+
+const FAQS = [
+  {
+    q: "Do I need to register?",
+    a: "No. Registration is optional. You can generate your widget and affiliate link with just an email and start earning immediately. Registering a free Partner Account unlocks the real-time dashboard and faster payouts.",
+  },
+  {
+    q: "How does tracking work with only my email?",
+    a: "Your email is encoded into your unique referral link and widget code. Every swap that comes through your link or embed is automatically attributed to your email address. To request a payout or statement, just contact us with the same email.",
+  },
+  {
+    q: "Is the commission lifetime?",
+    a: "Yes. Once a user swaps through your referral link or embedded widget, you earn commission on every future swap they make — with no expiration date.",
+  },
+  {
+    q: "How do I receive payouts?",
+    a: "Payouts are sent directly to your BTC wallet (or another supported asset on request). Registered partners can withdraw on demand from the dashboard; email-only promoters receive payouts after manual verification.",
+  },
+];
+
+/* ─── Page ─── */
 const Affiliates = () => (
   <>
     <Helmet>
       <title>Affiliate Program — Earn Lifetime Crypto Commissions | MRC GlobalPay</title>
       <meta
         name="description"
-        content="Join the MRC GlobalPay Affiliate Program. Earn 0.1%–0.4% lifetime revenue share on every crypto swap you refer. No minimum volume, fast crypto/fiat payouts, and a real-time partner dashboard. Registered Canadian MSB #C100000015."
+        content="Generate your MRC GlobalPay affiliate widget and link instantly with just an email. Earn 0.1%–0.4% lifetime commissions on every crypto swap you refer. Registered Canadian MSB #C100000015."
       />
       <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1" />
       <link rel="canonical" href="https://mrcglobalpay.com/affiliates" />
       <meta property="og:title" content="Affiliate Program — Earn Lifetime Crypto Commissions | MRC GlobalPay" />
-      <meta property="og:description" content="Earn 0.1%–0.4% lifetime revenue share on every swap you refer. Free to join, no minimum volume." />
+      <meta property="og:description" content="Generate your widget and affiliate link instantly with just an email. Earn 0.1%–0.4% on every swap." />
       <meta property="og:url" content="https://mrcglobalpay.com/affiliates" />
       <meta property="og:type" content="website" />
-      <meta property="og:site_name" content="MRC GlobalPay" />
       <script type="application/ld+json">{JSON.stringify(jsonLd)}</script>
       <script type="application/ld+json">{JSON.stringify(faqJsonLd)}</script>
     </Helmet>
@@ -271,7 +347,7 @@ const Affiliates = () => (
 
     <main className="min-h-screen bg-background">
       {/* ═══ HERO ═══ */}
-      <section className="relative overflow-hidden border-b border-border bg-[hsl(230_15%_6%)] py-16 sm:py-24">
+      <section className="relative overflow-hidden border-b border-border bg-[hsl(230_15%_6%)] py-14 sm:py-20">
         <div
           className="absolute inset-0 opacity-[0.04]"
           style={{
@@ -280,83 +356,56 @@ const Affiliates = () => (
           }}
           aria-hidden
         />
-        <div className="pointer-events-none absolute -start-40 top-10 h-80 w-80 rounded-full bg-primary/[0.06] blur-3xl" aria-hidden />
-        <div className="pointer-events-none absolute -end-40 bottom-0 h-80 w-80 rounded-full bg-primary/[0.06] blur-3xl" aria-hidden />
-
-        <div className="container relative mx-auto max-w-6xl px-4">
-          <div className="mx-auto max-w-3xl text-center animate-fade-in">
-            <div className="inline-flex items-center gap-2 rounded-full border border-primary/30 bg-primary/10 px-3 py-1 text-xs font-display font-semibold text-primary">
-              <Shield className="h-3.5 w-3.5" /> Affiliate Program · Free to Join
-            </div>
-            <h1 className="mt-5 font-display text-4xl font-bold tracking-tight text-foreground sm:text-5xl lg:text-6xl">
-              Earn <span className="text-primary">Lifetime Commissions</span> Promoting MRC GlobalPay
-            </h1>
-            <p className="mt-5 font-body text-lg leading-relaxed text-muted-foreground sm:text-xl">
-              Join our Affiliate Program and earn passive income on every crypto swap you refer.
-            </p>
-
-            <div className="mt-7 inline-flex flex-col items-center gap-1 rounded-2xl border border-primary/30 bg-primary/5 px-6 py-4">
-              <p className="text-[11px] uppercase tracking-wider font-display font-semibold text-muted-foreground">
-                Commission Highlight
-              </p>
-              <p className="font-display text-2xl sm:text-3xl font-bold text-primary">
-                0.1% – 0.4% revenue share on swap volume
-              </p>
-            </div>
-
-            <div className="mt-8">
-              <a
-                href="/partners"
-                className="btn-shimmer inline-flex items-center justify-center gap-2 rounded-xl bg-primary px-8 py-4 font-display text-base font-bold text-primary-foreground shadow-neon transition-all duration-100 hover:bg-primary/90 hover:-translate-y-0.5"
-              >
-                Join the Affiliate Program — Free <ArrowRight className="h-4 w-4" />
-              </a>
-              <p className="mt-3 text-xs text-muted-foreground max-w-md mx-auto">
-                Registration gives you easy access to your Partner Dashboard for tracking profits.
-                No registration needed to start promoting.
-              </p>
-            </div>
-
-            <p className="mt-5 text-xs text-muted-foreground">
-              Registered Canadian FINTRAC MSB · 6,000+ Assets · Non-Custodial · Instant Swaps from $0.30
-            </p>
+        <div className="container relative mx-auto max-w-4xl px-4 text-center animate-fade-in">
+          <div className="inline-flex items-center gap-2 rounded-full border border-primary/30 bg-primary/10 px-3 py-1 text-xs font-display font-semibold text-primary">
+            <Shield className="h-3.5 w-3.5" /> Affiliate Program
           </div>
-
-          {/* Benefit chips */}
-          <div className="mt-14 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-4">
-            {HERO_BENEFITS.map((b) => (
-              <div
-                key={b.title}
-                className="rounded-xl border border-border bg-card/60 backdrop-blur p-4 text-center transition-all hover:-translate-y-0.5 hover:border-primary/40 hover:shadow-md"
-              >
-                <b.icon className="mx-auto h-6 w-6 text-primary" aria-hidden />
-                <p className="mt-3 font-display text-sm font-semibold text-foreground">{b.title}</p>
-                <p className="mt-1 text-xs text-muted-foreground leading-relaxed">{b.desc}</p>
-              </div>
-            ))}
-          </div>
+          <h1 className="mt-5 font-display text-3xl font-bold tracking-tight text-foreground sm:text-5xl">
+            Earn <span className="text-primary">0.1% – 0.4% Lifetime Commissions</span> Promoting MRC GlobalPay
+          </h1>
+          <p className="mt-4 font-body text-base sm:text-lg text-muted-foreground max-w-2xl mx-auto">
+            Share our instant crypto swap widget or affiliate link and earn on every swap.
+          </p>
+          <p className="mt-4 text-xs text-muted-foreground">
+            Registration is optional but recommended for full Partner Dashboard access.
+          </p>
         </div>
       </section>
 
       <MsbTrustBar />
 
+      {/* ═══ WIDGET GENERATOR (centerpiece) ═══ */}
+      <section id="generate" className="border-b border-border bg-muted/30 py-16 sm:py-20">
+        <div className="container mx-auto max-w-5xl px-4">
+          <div className="text-center max-w-2xl mx-auto">
+            <h2 className="font-display text-3xl font-bold text-foreground sm:text-4xl">
+              Generate Your Widget or Affiliate Link Instantly
+            </h2>
+            <p className="mt-3 font-body text-muted-foreground">
+              Enter your email below. The preview, affiliate link, and embed code will update
+              automatically. Copy and paste — that's all you need to start earning.
+            </p>
+          </div>
 
+          <div className="mt-10">
+            <WidgetGenerator />
+          </div>
+        </div>
+      </section>
 
       {/* ═══ HOW IT WORKS ═══ */}
       <section className="border-b border-border py-16 sm:py-20">
         <div className="container mx-auto max-w-6xl px-4">
-          <div className="mx-auto max-w-2xl text-center">
+          <div className="text-center max-w-2xl mx-auto">
             <h2 className="font-display text-3xl font-bold text-foreground sm:text-4xl">How It Works</h2>
-            <p className="mt-3 font-body text-muted-foreground">
-              Get up and running in minutes. Earn for life.
-            </p>
+            <p className="mt-3 font-body text-muted-foreground">Three steps. That's it.</p>
           </div>
 
-          <div className="mt-12 grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
+          <div className="mt-12 grid gap-5 sm:grid-cols-3">
             {STEPS.map((s) => (
               <div
                 key={s.n}
-                className="group rounded-2xl border border-border bg-card p-6 transition-all hover:-translate-y-1 hover:border-primary/40 hover:shadow-lg"
+                className="rounded-2xl border border-border bg-card p-6 transition-all hover:-translate-y-1 hover:border-primary/40 hover:shadow-lg"
               >
                 <div className="flex h-10 w-10 items-center justify-center rounded-full bg-primary/10 font-display text-base font-bold text-primary">
                   {s.n}
@@ -369,191 +418,71 @@ const Affiliates = () => (
         </div>
       </section>
 
-      {/* ═══ COMMISSION STRUCTURE ═══ */}
+      {/* ═══ TRACKING EARNINGS ═══ */}
       <section className="border-b border-border bg-muted/30 py-16 sm:py-20">
-        <div className="container mx-auto max-w-6xl px-4">
-          <div className="mx-auto max-w-2xl text-center">
-            <h2 className="font-display text-3xl font-bold text-foreground sm:text-4xl">
-              Competitive Commission Rates
-            </h2>
-            <p className="mt-3 font-body text-lg text-foreground">
-              Earn between <span className="font-semibold text-primary">0.1% and 0.4%</span> on the total swap volume you refer.
-            </p>
-            <p className="mt-2 font-body text-sm text-muted-foreground">
-              Higher rates apply based on volume and performance. Custom rates available for top partners.
-            </p>
-          </div>
-
-          <div className="mx-auto mt-10 max-w-3xl">
-            <EarningsCalculator />
+        <div className="container mx-auto max-w-3xl px-4 text-center">
+          <h2 className="font-display text-3xl font-bold text-foreground sm:text-4xl">
+            Tracking Your Earnings
+          </h2>
+          <p className="mt-4 font-body text-muted-foreground leading-relaxed">
+            Your generated widget and link track commissions using your email. For detailed
+            real-time stats and reports, register for free to access your Partner Dashboard.
+          </p>
+          <div className="mt-7">
+            <a
+              href="/partners"
+              className="btn-shimmer inline-flex items-center justify-center gap-2 rounded-xl bg-primary px-7 py-3 font-display text-sm font-bold text-primary-foreground shadow-neon transition-all duration-100 hover:bg-primary/90 hover:-translate-y-0.5"
+            >
+              Go to Partner Dashboard <ArrowRight className="h-4 w-4" />
+            </a>
           </div>
         </div>
       </section>
 
-      {/* ═══ PROMOTION TOOLS ═══ */}
+      {/* ═══ ADDITIONAL TOOLS ═══ */}
       <section className="border-b border-border py-16 sm:py-20">
-        <div className="container mx-auto max-w-6xl px-4">
-          <div className="mx-auto max-w-2xl text-center">
-            <h2 className="font-display text-3xl font-bold text-foreground sm:text-4xl">Promotion Tools</h2>
-            <p className="mt-3 font-body text-muted-foreground">
-              Everything you need to convert your audience into lifetime revenue.
-            </p>
+        <div className="container mx-auto max-w-4xl px-4">
+          <div className="text-center max-w-2xl mx-auto">
+            <h2 className="font-display text-3xl font-bold text-foreground sm:text-4xl">Additional Tools</h2>
+            <p className="mt-3 font-body text-muted-foreground">More ways to convert your audience.</p>
           </div>
 
-          <div className="mt-12 grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
-            {TOOLS.map((t) => {
-              const Inner = (
-                <>
-                  <t.icon className="h-7 w-7 text-primary" aria-hidden />
-                  <h3 className="mt-4 font-display text-lg font-semibold text-foreground">{t.title}</h3>
-                  <p className="mt-2 text-sm text-muted-foreground leading-relaxed">{t.desc}</p>
-                  {t.href && (
-                    <span className="mt-4 inline-flex items-center gap-1 text-xs font-semibold text-primary">
-                      Learn more <ArrowRight className="h-3 w-3" />
-                    </span>
-                  )}
-                </>
-              );
-              const className =
-                "block rounded-2xl border border-border bg-card p-6 transition-all hover:-translate-y-1 hover:border-primary/40 hover:shadow-lg";
-              return t.href ? (
-                <a key={t.title} href={t.href} className={className}>
-                  {Inner}
-                </a>
-              ) : (
-                <div key={t.title} className={className}>
-                  {Inner}
-                </div>
-              );
-            })}
-          </div>
-
-          {/* Embeddable widget snippet */}
-          <div className="mt-12 mx-auto max-w-3xl rounded-2xl border border-border bg-card p-6 sm:p-8 transition-all hover:border-primary/40 hover:shadow-lg">
-            <div className="flex items-start gap-3">
-              <Code2 className="h-6 w-6 text-primary shrink-0" aria-hidden />
-              <div>
-                <h3 className="font-display text-lg font-semibold text-foreground">
-                  Embeddable Instant Swap Widget
-                </h3>
-                <p className="mt-1.5 text-sm text-muted-foreground leading-relaxed">
-                  Copy and paste this code on your site. After promoting, you can track earnings
-                  using your email, BTC wallet address, or the widget code in your Partner Dashboard.
-                </p>
-              </div>
-            </div>
-            <WidgetSnippet />
-          </div>
-        </div>
-      </section>
-
-      {/* ═══ PARTNER DASHBOARD TEASER ═══ */}
-      <section className="border-b border-border bg-muted/30 py-16 sm:py-20">
-        <div className="container mx-auto max-w-5xl px-4">
-          <div className="grid gap-8 md:grid-cols-2 md:items-center">
-            <div>
-              <div className="inline-flex items-center gap-2 rounded-full border border-primary/30 bg-primary/10 px-3 py-1 text-xs font-display font-semibold text-primary">
-                <BarChart3 className="h-3.5 w-3.5" /> Real-Time Analytics
-              </div>
-              <h2 className="mt-4 font-display text-3xl font-bold text-foreground sm:text-4xl">
-                How to Track Your Profits
-              </h2>
-              <p className="mt-4 font-body text-muted-foreground leading-relaxed">
-                After registering you get full access to your Partner Dashboard to see all swaps,
-                volume, and commissions in real-time.
-              </p>
-              <p className="mt-3 font-body text-muted-foreground leading-relaxed">
-                If you prefer not to register, you can still track and receive payouts by providing
-                your <span className="font-semibold text-foreground">email address</span>,
-                <span className="font-semibold text-foreground"> BTC wallet</span>, or
-                <span className="font-semibold text-foreground"> widget/API code</span> when
-                contacting us. We will manually verify and settle commissions to your wallet.
-              </p>
-              <ul className="mt-5 space-y-2.5">
-                {[
-                  "Live click → swap → commission funnel (registered)",
-                  "Per-link, per-banner, per-widget attribution",
-                  "Manual verification available without an account",
-                  "Payouts directly to your BTC wallet",
-                ].map((item) => (
-                  <li key={item} className="flex items-start gap-2 text-sm text-foreground">
-                    <CheckCircle2 className="mt-0.5 h-4 w-4 text-primary shrink-0" />
-                    <span>{item}</span>
-                  </li>
-                ))}
-              </ul>
-              <div className="mt-7">
-                <a
-                  href="/partners"
-                  className="btn-shimmer inline-flex items-center justify-center gap-2 rounded-xl bg-primary px-7 py-3.5 font-display text-sm font-bold text-primary-foreground shadow-neon transition-all duration-100 hover:bg-primary/90 hover:-translate-y-0.5"
-                >
-                  Go to Partner Dashboard <ArrowRight className="h-4 w-4" />
-                </a>
-              </div>
-            </div>
-
-            {/* Mock dashboard preview */}
-            <div className="rounded-2xl border border-border bg-[hsl(230_15%_6%)] p-5 shadow-lg">
-              <div className="flex items-center justify-between border-b border-border/60 pb-3">
-                <span className="font-display text-xs font-semibold text-foreground">Partner Dashboard</span>
-                <span className="inline-flex items-center gap-1 text-[10px] font-mono text-primary">
-                  <span className="h-1.5 w-1.5 rounded-full bg-primary animate-pulse" /> LIVE
-                </span>
-              </div>
-              <div className="mt-4 grid grid-cols-2 gap-3">
-                {[
-                  { label: "Referred Volume", value: "$182,430" },
-                  { label: "Earnings (30d)", value: "$546.20" },
-                  { label: "Active Referrals", value: "1,247" },
-                  { label: "Conversion Rate", value: "4.8%" },
-                ].map((s) => (
-                  <div key={s.label} className="rounded-lg border border-border/60 bg-card/40 p-3">
-                    <p className="text-[10px] uppercase tracking-wider text-muted-foreground font-display">
-                      {s.label}
-                    </p>
-                    <p className="mt-1 font-display text-lg font-bold text-foreground">{s.value}</p>
-                  </div>
-                ))}
-              </div>
-              <div className="mt-4 rounded-lg border border-border/60 bg-card/40 p-3">
-                <div className="flex items-end justify-between gap-1.5 h-16">
-                  {[40, 65, 50, 80, 55, 90, 75, 95, 70, 85, 100, 88].map((h, i) => (
-                    <div
-                      key={i}
-                      className="flex-1 rounded-sm bg-primary/70"
-                      style={{ height: `${h}%` }}
-                    />
-                  ))}
-                </div>
-                <p className="mt-2 text-[10px] text-muted-foreground font-mono text-center">
-                  Last 12 days · referred swaps
-                </p>
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      <section className="border-b border-border bg-muted/30 py-16 sm:py-20">
-        <div className="container mx-auto max-w-6xl px-4">
-          <div className="mx-auto max-w-2xl text-center">
-            <h2 className="font-display text-3xl font-bold text-foreground sm:text-4xl">
-              Why Choose MRC GlobalPay?
-            </h2>
-            <p className="mt-3 font-body text-muted-foreground">
-              Promote a regulated, non-custodial exchange built for high-conversion affiliate traffic.
-            </p>
-          </div>
-
-          <div className="mt-12 grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
-            {WHY_CHOOSE.map((w) => (
-              <div
-                key={w.title}
-                className="rounded-2xl border border-border bg-card p-6 transition-all hover:-translate-y-1 hover:border-primary/40 hover:shadow-lg"
+          <div className="mt-10 grid gap-5 sm:grid-cols-2">
+            {TOOLS.map((t) => (
+              <a
+                key={t.title}
+                href={t.href}
+                className="block rounded-2xl border border-border bg-card p-6 transition-all hover:-translate-y-1 hover:border-primary/40 hover:shadow-lg"
               >
-                <w.icon className="h-7 w-7 text-primary" aria-hidden />
-                <h3 className="mt-4 font-display text-base font-semibold text-foreground">{w.title}</h3>
-                <p className="mt-2 text-sm text-muted-foreground leading-relaxed">{w.desc}</p>
+                <t.icon className="h-7 w-7 text-primary" aria-hidden />
+                <h3 className="mt-4 font-display text-lg font-semibold text-foreground">{t.title}</h3>
+                <p className="mt-2 text-sm text-muted-foreground leading-relaxed">{t.desc}</p>
+                <span className="mt-4 inline-flex items-center gap-1 text-xs font-semibold text-primary">
+                  Learn more <ArrowRight className="h-3 w-3" />
+                </span>
+              </a>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* ═══ WHY MRC GLOBALPAY ═══ */}
+      <section className="border-b border-border bg-muted/30 py-16 sm:py-20">
+        <div className="container mx-auto max-w-4xl px-4">
+          <div className="text-center max-w-2xl mx-auto">
+            <h2 className="font-display text-3xl font-bold text-foreground sm:text-4xl">
+              Why MRC GlobalPay
+            </h2>
+          </div>
+
+          <div className="mt-10 grid gap-3 sm:grid-cols-2">
+            {WHY.map((w) => (
+              <div
+                key={w.label}
+                className="flex items-center gap-3 rounded-xl border border-border bg-card px-4 py-3 transition-colors hover:border-primary/40"
+              >
+                <w.icon className="h-5 w-5 text-primary shrink-0" aria-hidden />
+                <span className="font-body text-sm text-foreground">{w.label}</span>
               </div>
             ))}
           </div>
@@ -567,9 +496,6 @@ const Affiliates = () => (
             <h2 className="font-display text-3xl font-bold text-foreground sm:text-4xl">
               Frequently Asked Questions
             </h2>
-            <p className="mt-3 font-body text-muted-foreground">
-              Everything you need to know about the MRC GlobalPay Affiliate Program.
-            </p>
           </div>
 
           <Accordion type="single" collapsible className="mt-10 space-y-3">
@@ -593,19 +519,19 @@ const Affiliates = () => (
 
       {/* ═══ FINAL CTA ═══ */}
       <section className="py-16 sm:py-20">
-        <div className="container mx-auto max-w-3xl px-4 text-center">
+        <div className="container mx-auto max-w-2xl px-4 text-center">
           <h2 className="font-display text-3xl font-bold text-foreground sm:text-4xl">
-            Ready to Start Earning?
+            Ready to start earning?
           </h2>
           <p className="mt-3 font-body text-muted-foreground">
-            Join thousands of partners earning lifetime commissions with MRC GlobalPay.
+            Generate your widget now — it takes less than 30 seconds.
           </p>
           <div className="mt-7">
             <a
-              href="/partners"
+              href="#generate"
               className="btn-shimmer inline-flex items-center justify-center gap-2 rounded-xl bg-primary px-8 py-4 font-display text-base font-bold text-primary-foreground shadow-neon transition-all duration-100 hover:bg-primary/90 hover:-translate-y-0.5"
             >
-              Join the Affiliate Program — Free & Instant <ArrowRight className="h-4 w-4" />
+              <Sparkles className="h-4 w-4" /> Generate Your Widget Now
             </a>
           </div>
         </div>
