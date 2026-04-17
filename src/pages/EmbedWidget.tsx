@@ -654,19 +654,32 @@ const EmbedWidget = () => {
               </div>
               <button
                 type="button"
-                onClick={() => setActiveSelector(null)}
-                className={`rounded-full border ${C.borderStrong} ${C.bgInset} p-2 ${C.textMuted} transition-colors ${C.bgHover} hover:${C.text}`}
+                onClick={() => { setActiveSelector(null); setTokenSearch(""); }}
+                className={`rounded-full border ${C.borderStrong} ${C.bgInset} p-2 ${C.textMuted} transition-colors ${C.bgHover}`}
               >
                 <X className="h-4 w-4" />
               </button>
             </div>
 
-            <div className="grid max-h-[280px] gap-2 overflow-y-auto pr-1">
-              {selectorCurrencies.map((currency) => (
+            <input
+              type="text"
+              value={tokenSearch}
+              onChange={(e) => setTokenSearch(e.target.value)}
+              placeholder={t("widget.searchTokens", "Search 900+ tokens...")}
+              className={`mb-2 w-full rounded-lg border ${C.border} ${C.bgInset} px-3 py-2 text-xs ${C.text} ${C.inputPlaceholder} outline-none focus:border-emerald-400/40`}
+              autoFocus
+            />
+
+            <div className="grid max-h-[260px] gap-2 overflow-y-auto pr-1">
+              {selectorCurrencies.length === 0 ? (
+                <div className={`px-2 py-6 text-center text-xs ${C.textSubtle}`}>
+                  {t("widget.noTokens", "No tokens found")}
+                </div>
+              ) : selectorCurrencies.map((currency) => (
                 <button
                   key={`${currency.ticker}-${currency.network}`}
                   type="button"
-                  onClick={() => handleTokenSelect(currency)}
+                  onClick={() => { handleTokenSelect(currency); setTokenSearch(""); }}
                   className={`flex items-center gap-3 rounded-xl border ${C.border} ${C.bg} px-3 py-3 text-left transition-colors ${C.bgHover}`}
                 >
                   {currency.image ? (
