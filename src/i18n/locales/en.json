@@ -650,7 +650,7 @@
   },
   "lend": {
     "metaTitle": "Crypto Lending & Earn | Borrow USDT Against BTC/ETH/SOL | MRC GlobalPay",
-    "metaDesc": "Borrow stablecoins against your crypto or earn yield on BTC, ETH, and USDT. No KYC required. Powered by MRC GlobalPay — Registered Canadian MSB.",
+    "metaDesc": "Borrow stablecoins against your crypto or earn yield on BTC, ETH, and USDT. Registration-free access. Powered by MRC GlobalPay — Registered Canadian MSB.",
     "heroBadge": "MSB Regulated · Non-Custodial",
     "heroTitle": "Crypto",
     "heroLending": "Lending",
@@ -981,7 +981,7 @@
     "heroTitle": "How to Swap {{from}} to {{to}}",
     "heroInstantly": "Instantly",
     "snippetIntro": "To swap {{from}} to {{to}}:",
-    "snippetBody": "Enter your amount, paste your {{to}} wallet address, and send {{from}} to the deposit address. Your {{to}} arrives in {{settlement}}. No account, no KYC, no minimum beyond $0.30 USD.",
+    "snippetBody": "Enter your amount, paste your {{to}} wallet address, and send {{from}} to the deposit address. Your {{to}} arrives in {{settlement}}. Registration-free, no account required, no minimum beyond $0.30 USD.",
     "aggregatorNote": "MRC GlobalPay aggregates rates from 700+ liquidity sources to find the best {{from}}/{{to}} exchange rate in real time. We are a Canadian MSB (C100000015) operating non-custodial swaps — your funds are never held by us.",
     "factSettlement": "Settlement",
     "factMinimum": "Minimum",
@@ -1050,7 +1050,7 @@
     "swapToFrom": "Swap to {{to}} from",
     "popularPairs": "Popular Pairs",
     "ctaTitle": "Ready to swap {{from}} for {{to}}?",
-    "ctaSubtitle": "No registration. No KYC. Under 60 seconds. Canadian MSB-registered.",
+    "ctaSubtitle": "Registration-free. No account required. Under 60 seconds. Canadian MSB-registered.",
     "ctaButton": "Swap Now",
     "breadcrumbHome": "Home",
     "breadcrumbExchange": "Exchange"

@@ -103,7 +103,7 @@ If you're still stuck, our 24/7 AI Concierge (bottom-right of the screen) can wa
 
 ## Do I need to create an account on MRC GlobalPay?
 
-**No.** Your Trust Wallet **is** your account. MRC GlobalPay does not store your personal data, ensuring your total privacy. There is no registration, no KYC forms, and no waiting periods.
+**No.** Your Trust Wallet **is** your account. MRC GlobalPay does not store your personal data, ensuring your total privacy. The platform is registration-free and non-custodial — no account creation or sign-up forms required.
 
 Just paste your address, choose your coins, and swap. It's that simple.
 

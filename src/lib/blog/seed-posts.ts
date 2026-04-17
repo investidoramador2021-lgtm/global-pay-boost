@@ -1857,7 +1857,7 @@ The speed is a direct result of the **non-custodial architecture**. Because the 
 
 ---
 
-*MRC Global Pay is a registered Canadian Money Services Business (MSB). We maintain strict FINTRAC compliance standards to ensure a secure, legal, and transparent environment for all digital asset transactions.*
+*MRC Global Pay is a registered Canadian MSB. We provide a non-custodial interface that allows for registration-free trading while adhering to FINTRAC reporting standards.*
 
 The bottom line: if you're capped by Coinbase's 250-token shelf, you're leaving alpha on the table. [Open the 6,000+ asset router](/exchange?category=stocks) and route your next position through real liquidity.`,
   },
@@ -1958,7 +1958,7 @@ The platform minimum is **$0.30** equivalent. Practical minimums for fiat on-ram
 
 ---
 
-*MRC Global Pay is a registered Canadian Money Services Business (MSB). We maintain strict FINTRAC compliance standards to ensure a secure, legal, and transparent environment for all digital asset transactions.*
+*MRC Global Pay is a registered Canadian MSB. We provide a non-custodial interface that allows for registration-free trading while adhering to FINTRAC reporting standards.*
 
 The bottom line: XEC is the cleanest payments-focused L1 you can hold today, and the [direct CAD → XEC route](/buy?to=xec) is the fastest way to size a position from a Canadian bank account.`,
   },
