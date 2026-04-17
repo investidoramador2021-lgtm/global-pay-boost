@@ -20,6 +20,7 @@ export type Database = {
           created_at: string
           email: string
           id: string
+          partner_id: string | null
           ref_token: string
           source: string
           theme: string
@@ -31,6 +32,7 @@ export type Database = {
           created_at?: string
           email: string
           id?: string
+          partner_id?: string | null
           ref_token: string
           source?: string
           theme?: string
@@ -42,13 +44,22 @@ export type Database = {
           created_at?: string
           email?: string
           id?: string
+          partner_id?: string | null
           ref_token?: string
           source?: string
           theme?: string
           updated_at?: string
           user_agent?: string | null
         }
-        Relationships: []
+        Relationships: [
+          {
+            foreignKeyName: "affiliate_leads_partner_id_fkey"
+            columns: ["partner_id"]
+            isOneToOne: false
+            referencedRelation: "partner_profiles"
+            referencedColumns: ["id"]
+          },
+        ]
       }
       audit_access_logs: {
         Row: {
