@@ -320,14 +320,14 @@ const EmbedWidget = () => {
         }}
       >
         <div
-          className="flex w-full max-w-[360px] items-center justify-center rounded-2xl border border-white/[0.12] p-12"
+          className={`flex w-full max-w-[360px] items-center justify-center rounded-2xl border ${C.borderStrong} p-12`}
           style={{
             background: "linear-gradient(135deg, rgba(20,22,36,0.92) 0%, rgba(14,16,28,0.96) 100%)",
             backdropFilter: "blur(24px)",
             boxShadow: "0 8px 32px rgba(0,0,0,0.4), inset 0 1px 0 rgba(255,255,255,0.05)",
           }}
         >
-          <Loader2 className="h-6 w-6 animate-spin text-white/70" />
+          <Loader2 className={`h-6 w-6 animate-spin ${C.textMuted}`} />
         </div>
       </div>
     );
@@ -365,14 +365,14 @@ const EmbedWidget = () => {
               <button
                 type="button"
                 onClick={() => (step === "wallet" ? setStep("quote") : resetFlow())}
-                className="rounded-full border border-white/[0.1] bg-white/[0.06] p-1 text-white/70 transition-colors hover:bg-white/[0.1] hover:text-white"
+                className={`rounded-full border ${C.border} ${C.bgInset} p-1 ${C.textMuted} transition-colors ${C.bgHover} hover:${C.text}`}
                 aria-label="Back"
               >
                 <ArrowLeft className="h-3.5 w-3.5" />
               </button>
             )}
             <div className="h-2 w-2 rounded-full bg-emerald-400 animate-pulse" />
-            <span className="text-xs font-medium uppercase tracking-wider text-white/50">
+            <span className={`text-xs font-medium uppercase tracking-wider ${C.textDim}`}>
               {step === "quote"
                 ? t("widget.tabs.exchange", "Crypto Swap")
                 : step === "wallet"
@@ -380,19 +380,19 @@ const EmbedWidget = () => {
                   : t("widget.depositAddress", "Send Deposit")}
             </span>
           </div>
-          <span className="text-right text-[10px] text-white/30">{t("widget.dustFriendly", "Dust-friendly • From $0.30")}</span>
+          <span className={`text-right text-[10px] ${C.textFaint}`}>{t("widget.dustFriendly", "Dust-friendly • From $0.30")}</span>
         </div>
 
         {step === "quote" && (<>
 
 
-        <div className="mb-2 rounded-xl border border-white/[0.06] bg-white/[0.04] p-3">
-          <label className="mb-1.5 block text-[10px] uppercase tracking-wider text-white/40">{t("widget.youSend", "You Send")}</label>
+        <div className={`mb-2 rounded-xl border ${C.borderSoft} ${C.bg} p-3`}>
+          <label className={`mb-1.5 block text-[10px] uppercase tracking-wider ${C.textDim}`}>{t("widget.youSend", "You Send")}</label>
           <div className="flex items-center gap-3">
             <button
               type="button"
               onClick={() => setActiveSelector("from")}
-              className="flex min-w-[108px] shrink-0 items-center gap-2 rounded-lg border border-white/[0.08] bg-white/[0.06] px-3 py-2 text-sm font-medium text-white/90 transition-colors hover:bg-white/[0.1]"
+              className={`flex min-w-[108px] shrink-0 items-center gap-2 rounded-lg border ${C.border} ${C.bgInset} px-3 py-2 text-sm font-medium ${C.text} transition-colors ${C.bgHover}`}
             >
               {fromCurrency?.image ? (
                 <img src={fromCurrency.image} alt={fromCurrency.name} className="h-4 w-4 rounded-full" loading="lazy" />
@@ -409,7 +409,7 @@ const EmbedWidget = () => {
               onFocus={() => setIsAmountFocused(true)}
               onBlur={() => setIsAmountFocused(false)}
               onChange={(event) => setAmount(sanitizeAmountInput(event.target.value))}
-              className="min-w-0 flex-1 bg-transparent text-right text-xl font-semibold text-white outline-none placeholder:text-white/20"
+              className={`min-w-0 flex-1 bg-transparent text-right text-xl font-semibold ${C.text} outline-none placeholder:${C.textFaint}`}
             />
           </div>
         </div>
@@ -421,7 +421,7 @@ const EmbedWidget = () => {
               setFromCurrency(toCurrency);
               setToCurrency(fromCurrency);
             }}
-            className="rounded-full border border-white/[0.1] bg-white/[0.06] p-1.5 transition-colors hover:bg-white/[0.1]"
+            className={`rounded-full border ${C.border} ${C.bgInset} p-1.5 transition-colors ${C.bgHover}`}
           >
             <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
               <path d="M8 3v10M5 10l3 3 3-3" stroke="white" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
@@ -429,13 +429,13 @@ const EmbedWidget = () => {
           </button>
         </div>
 
-        <div className="mt-2 mb-2 rounded-xl border border-white/[0.06] bg-white/[0.04] p-3">
-          <label className="mb-1.5 block text-[10px] uppercase tracking-wider text-white/40">{t("widget.youGet", "You Get")}</label>
+        <div className={`mt-2 mb-2 rounded-xl border ${C.borderSoft} ${C.bg} p-3`}>
+          <label className={`mb-1.5 block text-[10px] uppercase tracking-wider ${C.textDim}`}>{t("widget.youGet", "You Get")}</label>
           <div className="flex items-center gap-3">
             <button
               type="button"
               onClick={() => setActiveSelector("to")}
-              className="flex min-w-[108px] shrink-0 items-center gap-2 rounded-lg border border-white/[0.08] bg-white/[0.06] px-3 py-2 text-sm font-medium text-white/90 transition-colors hover:bg-white/[0.1]"
+              className={`flex min-w-[108px] shrink-0 items-center gap-2 rounded-lg border ${C.border} ${C.bgInset} px-3 py-2 text-sm font-medium ${C.text} transition-colors ${C.bgHover}`}
             >
               {toCurrency?.image ? (
                 <img src={toCurrency.image} alt={toCurrency.name} className="h-4 w-4 rounded-full" loading="lazy" />
@@ -445,10 +445,10 @@ const EmbedWidget = () => {
             </button>
 
             <div className="min-w-0 flex-1 text-right">
-              <div className="truncate text-xl font-semibold text-white/90">
+              <div className={`truncate text-xl font-semibold ${C.text}`}>
                 {estimating ? t("widget.loading", "Loading...") : estimatedAmount ? formatQuoteAmount(estimatedAmount) : "—"}
               </div>
-              <div className="text-[10px] uppercase tracking-wider text-white/35">
+              <div className={`text-[10px] uppercase tracking-wider ${C.textFaint}`}>
                 {belowMin
                   ? `${t("widget.minimumAmount", "Minimum amount:")} ${formatQuoteAmount(String(minAmount))} ${fromCurrency?.ticker?.toUpperCase()}`
                   : estimatedAmount
@@ -464,7 +464,7 @@ const EmbedWidget = () => {
             {t("widget.minimumAmount", "Minimum amount:")} {formatQuoteAmount(String(minAmount))} {fromCurrency?.ticker?.toUpperCase()}
           </div>
         ) : (
-          <div className="mb-4 text-right text-[10px] uppercase tracking-wider text-white/30">
+          <div className={`mb-4 text-right text-[10px] uppercase tracking-wider ${C.textFaint}`}>
             {t("widget.fixedRate", "Live fixed-rate pricing")}
           </div>
         )}
@@ -485,19 +485,19 @@ const EmbedWidget = () => {
 
         {step === "wallet" && (
           <div className="space-y-3">
-            <div className="rounded-xl border border-white/[0.06] bg-white/[0.04] p-3 text-[11px] text-white/60">
+            <div className={`rounded-xl border ${C.borderSoft} ${C.bg} p-3 text-[11px] ${C.text}/60`}>
               <div className="flex items-center justify-between mb-1">
-                <span className="text-white/40 uppercase tracking-wider text-[10px]">{t("widget.youSend", "You Send")}</span>
-                <span className="text-white/90 font-semibold">{amount} {fromCurrency?.ticker?.toUpperCase()}</span>
+                <span className={`${C.textDim} uppercase tracking-wider text-[10px]`}>{t("widget.youSend", "You Send")}</span>
+                <span className={`${C.text} font-semibold`}>{amount} {fromCurrency?.ticker?.toUpperCase()}</span>
               </div>
               <div className="flex items-center justify-between">
-                <span className="text-white/40 uppercase tracking-wider text-[10px]">{t("widget.youGet", "You Get")}</span>
-                <span className="text-white/90 font-semibold">≈ {formatQuoteAmount(estimatedAmount)} {toCurrency?.ticker?.toUpperCase()}</span>
+                <span className={`${C.textDim} uppercase tracking-wider text-[10px]`}>{t("widget.youGet", "You Get")}</span>
+                <span className={`${C.text} font-semibold`}>≈ {formatQuoteAmount(estimatedAmount)} {toCurrency?.ticker?.toUpperCase()}</span>
               </div>
             </div>
 
             <div>
-              <label className="mb-1.5 block text-[10px] uppercase tracking-wider text-white/40">
+              <label className={`mb-1.5 block text-[10px] uppercase tracking-wider ${C.textDim}`}>
                 {t("widget.recipientAddress", "Recipient Wallet")} ({toCurrency?.ticker?.toUpperCase()})
               </label>
               <input
@@ -505,20 +505,20 @@ const EmbedWidget = () => {
                 value={destinationAddress}
                 onChange={(e) => setDestinationAddress(e.target.value)}
                 placeholder={`Your ${toCurrency?.ticker?.toUpperCase()} address`}
-                className="w-full rounded-lg border border-white/[0.08] bg-white/[0.06] px-3 py-2.5 text-xs text-white placeholder:text-white/30 outline-none focus:border-emerald-400/40"
+                className={`w-full rounded-lg border ${C.border} ${C.bgInset} px-3 py-2.5 text-xs ${C.text} placeholder:${C.textFaint} outline-none focus:border-emerald-400/40`}
               />
             </div>
 
             {toCurrency?.hasExternalId && (
               <div>
-                <label className="mb-1.5 block text-[10px] uppercase tracking-wider text-white/40">
+                <label className={`mb-1.5 block text-[10px] uppercase tracking-wider ${C.textDim}`}>
                   Memo / Tag (optional)
                 </label>
                 <input
                   type="text"
                   value={extraId}
                   onChange={(e) => setExtraId(e.target.value)}
-                  className="w-full rounded-lg border border-white/[0.08] bg-white/[0.06] px-3 py-2.5 text-xs text-white outline-none focus:border-emerald-400/40"
+                  className={`w-full rounded-lg border ${C.border} ${C.bgInset} px-3 py-2.5 text-xs ${C.text} outline-none focus:border-emerald-400/40`}
                 />
               </div>
             )}
@@ -552,10 +552,10 @@ const EmbedWidget = () => {
                 {t("widget.sendExactly", "Send exactly")}
               </div>
               <div className="flex items-center justify-between gap-2">
-                <span className="text-base font-bold text-white">{amount} {fromCurrency?.ticker?.toUpperCase()}</span>
+                <span className={`text-base font-bold ${C.text}`}>{amount} {fromCurrency?.ticker?.toUpperCase()}</span>
                 <button
                   onClick={() => copyToClipboard(amount, "amount")}
-                  className="rounded-md border border-white/[0.1] bg-white/[0.06] p-1.5 text-white/70 hover:bg-white/[0.1]"
+                  className={`rounded-md border ${C.border} ${C.bgInset} p-1.5 ${C.textMuted} ${C.bgHover}`}
                   aria-label="Copy amount"
                 >
                   {copied === "amount" ? <Check className="h-3.5 w-3.5 text-emerald-300" /> : <Copy className="h-3.5 w-3.5" />}
@@ -563,8 +563,8 @@ const EmbedWidget = () => {
               </div>
             </div>
 
-            <div className="rounded-xl border border-white/[0.08] bg-white/[0.04] p-3">
-              <div className="text-[10px] uppercase tracking-wider text-white/40 mb-1.5">
+            <div className={`rounded-xl border ${C.border} ${C.bg} p-3`}>
+              <div className={`text-[10px] uppercase tracking-wider ${C.textDim} mb-1.5`}>
                 {t("widget.depositAddress", "Deposit Address")} ({fromCurrency?.ticker?.toUpperCase()})
               </div>
               <div className="flex items-center justify-center mb-2">
@@ -577,10 +577,10 @@ const EmbedWidget = () => {
                 />
               </div>
               <div className="flex items-center justify-between gap-2">
-                <code className="text-[10px] text-white/80 break-all flex-1">{transaction.payinAddress}</code>
+                <code className={`text-[10px] ${C.text}/80 break-all flex-1`}>{transaction.payinAddress}</code>
                 <button
                   onClick={() => copyToClipboard(transaction.payinAddress, "address")}
-                  className="shrink-0 rounded-md border border-white/[0.1] bg-white/[0.06] p-1.5 text-white/70 hover:bg-white/[0.1]"
+                  className={`shrink-0 rounded-md border ${C.border} ${C.bgInset} p-1.5 ${C.textMuted} ${C.bgHover}`}
                   aria-label="Copy address"
                 >
                   {copied === "address" ? <Check className="h-3.5 w-3.5 text-emerald-300" /> : <Copy className="h-3.5 w-3.5" />}
@@ -592,10 +592,10 @@ const EmbedWidget = () => {
               <div className="rounded-xl border border-amber-400/20 bg-amber-400/5 p-3">
                 <div className="text-[10px] uppercase tracking-wider text-amber-200/80 mb-1">Memo / Tag (required)</div>
                 <div className="flex items-center justify-between gap-2">
-                  <code className="text-[11px] text-white/90 break-all flex-1">{transaction.payinExtraId}</code>
+                  <code className={`text-[11px] ${C.text} break-all flex-1`}>{transaction.payinExtraId}</code>
                   <button
                     onClick={() => copyToClipboard(transaction.payinExtraId!, "extra")}
-                    className="shrink-0 rounded-md border border-white/[0.1] bg-white/[0.06] p-1.5 text-white/70 hover:bg-white/[0.1]"
+                    className={`shrink-0 rounded-md border ${C.border} ${C.bgInset} p-1.5 ${C.textMuted} ${C.bgHover}`}
                   >
                     {copied === "extra" ? <Check className="h-3.5 w-3.5 text-emerald-300" /> : <Copy className="h-3.5 w-3.5" />}
                   </button>
@@ -603,19 +603,19 @@ const EmbedWidget = () => {
               </div>
             )}
 
-            <div className="flex items-center justify-between rounded-lg border border-white/[0.06] bg-white/[0.03] px-3 py-2">
+            <div className={`flex items-center justify-between rounded-lg border ${C.borderSoft} ${C.bg} px-3 py-2`}>
               <div className="flex items-center gap-2">
                 <Loader2 className="h-3 w-3 animate-spin text-emerald-300" />
-                <span className="text-[11px] text-white/60 uppercase tracking-wider">
+                <span className={`text-[11px] ${C.text}/60 uppercase tracking-wider`}>
                   {txStatus?.status || "waiting"}
                 </span>
               </div>
-              <span className="text-[10px] text-white/40">ID: {transaction.id.slice(0, 10)}…</span>
+              <span className={`text-[10px] ${C.textDim}`}>ID: {transaction.id.slice(0, 10)}…</span>
             </div>
 
             <button
               onClick={resetFlow}
-              className="w-full rounded-xl border border-white/[0.1] bg-white/[0.04] py-2.5 text-xs font-medium text-white/70 hover:bg-white/[0.08]"
+              className={`w-full rounded-xl border ${C.border} ${C.bg} py-2.5 text-xs font-medium ${C.textMuted} ${C.bgHover}`}
             >
               {t("widget.newSwap", "New Swap")}
             </button>
@@ -635,25 +635,25 @@ const EmbedWidget = () => {
             })()}
             target="_blank"
             rel="noopener"
-            className="text-[10px] text-white/30 transition-colors hover:text-white/50"
+            className={`text-[10px] ${C.textFaint} transition-colors hover:${C.textDim}`}
           >
             {t("widget.poweredBy", "Powered by")} <span className="font-semibold">MRC GlobalPay</span>
           </a>
         </div>
 
         {activeSelector && (
-          <div className="absolute inset-0 z-50 flex flex-col rounded-2xl bg-[#0b0e18]/95 p-3 backdrop-blur-xl">
+          <div className={`absolute inset-0 z-50 flex flex-col rounded-2xl ${C.overlay} p-3 backdrop-blur-xl`}>
             <div className="mb-3 flex items-center justify-between">
               <div>
-                <div className="text-[10px] uppercase tracking-wider text-white/35">{t("widget.select", "Select")}</div>
-                <div className="text-sm font-semibold text-white">
+                <div className={`text-[10px] uppercase tracking-wider ${C.textFaint}`}>{t("widget.select", "Select")}</div>
+                <div className={`text-sm font-semibold ${C.text}`}>
                   {activeSelector === "from" ? t("widget.youSend", "You Send") : t("widget.youGet", "You Get")}
                 </div>
               </div>
               <button
                 type="button"
                 onClick={() => setActiveSelector(null)}
-                className="rounded-full border border-white/[0.12] bg-white/[0.05] p-2 text-white/70 transition-colors hover:bg-white/[0.1] hover:text-white"
+                className={`rounded-full border ${C.borderStrong} ${C.bgInset} p-2 ${C.textMuted} transition-colors ${C.bgHover} hover:${C.text}`}
               >
                 <X className="h-4 w-4" />
               </button>
@@ -665,14 +665,14 @@ const EmbedWidget = () => {
                   key={`${currency.ticker}-${currency.network}`}
                   type="button"
                   onClick={() => handleTokenSelect(currency)}
-                  className="flex items-center gap-3 rounded-xl border border-white/[0.08] bg-white/[0.04] px-3 py-3 text-left transition-colors hover:bg-white/[0.08]"
+                  className={`flex items-center gap-3 rounded-xl border ${C.border} ${C.bg} px-3 py-3 text-left transition-colors ${C.bgHover}`}
                 >
                   {currency.image ? (
                     <img src={currency.image} alt={currency.name} className="h-5 w-5 rounded-full" loading="lazy" />
                   ) : null}
                   <div className="min-w-0 flex-1">
-                    <div className="font-medium uppercase text-white">{currency.ticker}</div>
-                    <div className="truncate text-xs text-white/45">{currency.name}</div>
+                    <div className={`font-medium uppercase ${C.text}`}>{currency.ticker}</div>
+                    <div className={`truncate text-xs ${C.textSubtle}`}>{currency.name}</div>
                   </div>
                 </button>
               ))}
