@@ -378,62 +378,95 @@ const WidgetGenerator = () => {
         Click <span className="text-primary font-semibold">Generate</span> to confirm and copy.
       </p>
 
-      {/* Preview + outputs */}
-      <div className="mt-8 grid gap-6 lg:grid-cols-2">
-        {/* Live preview */}
-        <div>
-          <div className="mb-3 flex items-center justify-between">
-            <p className="font-display text-[11px] uppercase tracking-wider font-semibold text-muted-foreground">
-              Live Widget Preview · {mode === "light" ? "Light" : "Dark"}
-            </p>
-            <span className="inline-flex items-center gap-1 text-[11px] text-muted-foreground">
-              <Smartphone className="h-3 w-3" /> Fully responsive
-            </span>
-          </div>
-          <WidgetPreview mode={mode} />
+      {/* Preview */}
+      <div className="mt-8">
+        <div className="mb-3 flex items-center justify-between">
+          <p className="font-display text-[11px] uppercase tracking-wider font-semibold text-muted-foreground">
+            Live Widget Preview · {mode === "light" ? "Light" : "Dark"} · Fully interactive
+          </p>
+          <span className="inline-flex items-center gap-1 text-[11px] text-muted-foreground">
+            <Smartphone className="h-3 w-3" /> Fully responsive
+          </span>
         </div>
 
-        {/* Outputs */}
-        <div className="flex flex-col gap-5">
-          {/* Affiliate Link */}
-          <div className="rounded-xl border border-border bg-background/40 p-4">
-            <div className="flex items-center gap-2 mb-2">
-              <Link2 className="h-4 w-4 text-primary" />
-              <span className="font-display text-sm font-semibold text-foreground">Your Affiliate Link</span>
-            </div>
-            <div className="rounded-lg border border-border/60 bg-[hsl(230_15%_6%)] p-3 font-mono text-[12px] text-foreground/90 break-all">
-              {link}
-            </div>
-            <div className="mt-3">
-              <CopyButton text={link} label="Copy Link" />
-            </div>
+        <div className="relative rounded-2xl border border-border bg-card p-3 sm:p-4 shadow-lg">
+          {/* Browser chrome */}
+          <div className="mb-2 flex items-center gap-1.5 rounded-lg border border-border/60 bg-muted/40 px-3 py-2">
+            <span className="h-2.5 w-2.5 rounded-full bg-[hsl(0_70%_60%)]/70" />
+            <span className="h-2.5 w-2.5 rounded-full bg-[hsl(45_90%_55%)]/70" />
+            <span className="h-2.5 w-2.5 rounded-full bg-primary/70" />
+            <span className="ms-3 font-mono text-[10px] truncate text-muted-foreground">
+              mrcglobalpay.com/embed/widget?theme={mode}
+            </span>
           </div>
-
-          {/* Embed Code */}
-          <div className="rounded-xl border border-border bg-background/40 p-4">
-            <div className="flex items-center gap-2 mb-2">
-              <Code2 className="h-4 w-4 text-primary" />
-              <span className="font-display text-sm font-semibold text-foreground">Your Embed Code</span>
-            </div>
-            <pre className="rounded-lg border border-border/60 bg-[hsl(230_15%_6%)] p-3 overflow-x-auto font-mono text-[11px] leading-relaxed text-foreground/90 max-h-64">
-              <code>{snippet}</code>
-            </pre>
-            <div className="mt-3">
-              <CopyButton text={snippet} label="Copy Widget Code" />
-            </div>
+          <div className="overflow-hidden rounded-xl border border-border/60 bg-background">
+            <iframe
+              key={`${mode}-${activeEmail}-${activeBtc}`}
+              src={`/embed/widget?ref=${
+                activeEmail || activeBtc ? buildRefToken(activeEmail, activeBtc) : "preview"
+              }&theme=${mode}`}
+              title="Live MRC GlobalPay swap widget preview"
+              loading="lazy"
+              allow="clipboard-write"
+              className="block w-full"
+              style={{ height: 680, border: 0, background: "transparent" }}
+            />
           </div>
-
-          <div className="rounded-xl border border-primary/20 bg-primary/5 p-3 text-xs text-foreground/90">
-            <strong className="font-display">Fully responsive:</strong> the generated widget works
-            perfectly on desktop, tablets, and mobile devices.
-          </div>
-
-          <p className="text-xs text-muted-foreground">
-            Paste this code on your website or blog. The widget will appear in your chosen mode and
-            commissions will be sent automatically to your BTC wallet.
+          <p className="mt-3 text-center text-[11px] text-muted-foreground">
+            👆 Try it — change tokens, see live rates. This is the exact widget your visitors will use.
           </p>
         </div>
       </div>
+
+      {/* Outputs */}
+      <div className="mt-8 grid gap-6 lg:grid-cols-2">
+        {/* Affiliate Link */}
+        <div className="rounded-xl border border-border bg-background/40 p-5">
+          <div className="flex items-center gap-2 mb-3">
+            <Link2 className="h-4 w-4 text-primary" />
+            <span className="font-display text-sm font-semibold text-foreground">Your Affiliate Link</span>
+          </div>
+          <div className="rounded-lg border border-border/60 bg-[hsl(230_15%_6%)] p-3 font-mono text-[12px] text-foreground/90 break-all">
+            {link}
+          </div>
+          <div className="mt-4">
+            <CopyButton text={link} label="Copy Affiliate Link" />
+          </div>
+          <p className="mt-3 text-[11px] text-muted-foreground">
+            Share this link directly. Every swap is attributed to your private email + BTC wallet on our side.
+          </p>
+        </div>
+
+        {/* Embed Code */}
+        <div className="rounded-xl border border-border bg-background/40 p-5">
+          <div className="flex items-center gap-2 mb-3">
+            <Code2 className="h-4 w-4 text-primary" />
+            <span className="font-display text-sm font-semibold text-foreground">Your Embed Code</span>
+          </div>
+          <pre className="rounded-lg border border-border/60 bg-[hsl(230_15%_6%)] p-3 overflow-x-auto font-mono text-[11px] leading-relaxed text-foreground/90 max-h-64">
+            <code>{snippet}</code>
+          </pre>
+          <div className="mt-4">
+            <CopyButton text={snippet} label="Copy Widget Code" />
+          </div>
+          <p className="mt-3 text-[11px] text-muted-foreground">
+            Paste anywhere — HTML, WordPress, Webflow, Ghost, Notion embeds, blogs.
+          </p>
+        </div>
+      </div>
+
+      {/* Parity note */}
+      <div className="mt-6 rounded-xl border border-primary/30 bg-primary/5 p-4 text-sm text-foreground/90 leading-relaxed">
+        <strong className="font-display text-primary">Works exactly like ChangeNOW's widget.</strong>{" "}
+        Users can freely change any tokens, see live rates, and complete the full non-custodial swap
+        inside the widget — no registration needed. It follows our exact flow (instant settlement,
+        micro-swaps from $0.30, under 60 seconds) and is fully responsive on desktop, tablets, and mobile.
+      </div>
+
+      <p className="mt-3 text-[11px] text-muted-foreground">
+        🔒 Privacy: your email and BTC wallet are <span className="font-semibold text-foreground">never exposed</span> in the public embed code.
+        We only emit an opaque referral token and keep tracking + payouts on our side.
+      </p>
     </div>
   );
 };
