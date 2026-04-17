@@ -193,6 +193,10 @@ const DISPLAY_TICKER_MAP: Record<string, string> = {
   ethlna: "ETH",
   ethmanta: "ETH",
   bnbbsc: "BNB",
+  // New 2026 listings — show clean tickers in UI while keeping API ticker intact
+  prlsol: "PRL",
+  raveerc20: "RAVE",
+  stablebsc: "STABLE",
 };
 
 function displayTicker(c: { ticker: string; name?: string }): string {
@@ -223,15 +227,27 @@ const NETWORK_FRIENDLY_NAME: Record<string, string> = {
   "HyperEVM": "Hyperliquid",
 };
 
+// Force-network mapping for tickers whose API metadata omits a network field
+const FORCED_NETWORK_BY_TICKER: Record<string, string> = {
+  prlsol: "Solana",
+  raveerc20: "Ethereum",
+  stablebsc: "BNB Chain",
+  msftonerc20: "Ethereum",
+  spyonerc20: "Ethereum",
+  metaonerc20: "Ethereum",
+};
+
 function networkLabel(c: { ticker: string; name: string }): string | null {
+  const tickerLower = c.ticker.toLowerCase();
+  if (FORCED_NETWORK_BY_TICKER[tickerLower]) return FORCED_NETWORK_BY_TICKER[tickerLower];
   // Extract network from name in parentheses, e.g. "Tether (TRC20)" → "TRC20"
   const match = c.name.match(/\(([^)]+)\)/);
   if (match) {
     return NETWORK_FRIENDLY_NAME[match[1]] || match[1];
   }
   // If display ticker differs from raw ticker, there's a network suffix but no parenthetical
-  if (DISPLAY_TICKER_MAP[c.ticker.toLowerCase()]) {
-    const raw = c.ticker.toLowerCase();
+  if (DISPLAY_TICKER_MAP[tickerLower]) {
+    const raw = tickerLower;
     const base = DISPLAY_TICKER_MAP[raw].toLowerCase();
     const suffix = raw.replace(base, "");
     return suffix ? suffix.toUpperCase() : null;
