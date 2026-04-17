@@ -430,12 +430,12 @@ const WidgetGenerator = () => {
       {/* Outputs */}
       <div className="mt-8 grid gap-6 lg:grid-cols-2">
         {/* Affiliate Link */}
-        <div className="rounded-xl border border-border bg-background/40 p-5">
+        <div className="rounded-xl border border-border bg-background/40 p-4 sm:p-5 min-w-0">
           <div className="flex items-center gap-2 mb-3">
-            <Link2 className="h-4 w-4 text-primary" />
+            <Link2 className="h-4 w-4 text-primary shrink-0" />
             <span className="font-display text-sm font-semibold text-foreground">Your Affiliate Link</span>
           </div>
-          <div className="rounded-lg border border-border/60 bg-[hsl(230_15%_6%)] p-3 font-mono text-[12px] text-foreground/90 break-all">
+          <div className="rounded-lg border border-border/60 bg-[hsl(230_15%_6%)] p-3 font-mono text-[11px] sm:text-[12px] text-foreground/90 break-all">
             {link}
           </div>
           <div className="mt-4">
@@ -447,12 +447,12 @@ const WidgetGenerator = () => {
         </div>
 
         {/* Embed Code */}
-        <div className="rounded-xl border-2 border-primary/40 bg-background/40 p-5 shadow-[0_0_24px_-8px_hsl(var(--primary)/0.4)]">
+        <div className="rounded-xl border-2 border-primary/40 bg-background/40 p-4 sm:p-5 shadow-[0_0_24px_-8px_hsl(var(--primary)/0.4)] min-w-0">
           <div className="flex items-center gap-2 mb-3">
-            <Code2 className="h-4 w-4 text-primary" />
+            <Code2 className="h-4 w-4 text-primary shrink-0" />
             <span className="font-display text-sm font-semibold text-foreground">Your Embed Code</span>
           </div>
-          <pre className="rounded-lg border border-border/60 bg-[hsl(230_15%_6%)] p-3 overflow-x-auto font-mono text-[11px] leading-relaxed text-foreground/90 max-h-64">
+          <pre className="rounded-lg border border-border/60 bg-[hsl(230_15%_6%)] p-3 overflow-x-auto font-mono text-[10px] sm:text-[11px] leading-relaxed text-foreground/90 max-h-64 whitespace-pre-wrap break-all">
             <code>{snippet}</code>
           </pre>
           <div className="mt-4">
@@ -564,7 +564,7 @@ const Affiliates = () => (
 
     <SiteHeader />
 
-    <main className="min-h-screen bg-background">
+    <main className="min-h-screen bg-background overflow-x-hidden">
       {/* ═══ HERO ═══ */}
       <section className="relative overflow-hidden border-b border-border bg-[hsl(230_15%_6%)] py-14 sm:py-20">
         <div
@@ -641,7 +641,7 @@ const Affiliates = () => (
           </div>
 
           <div className="mt-10 relative">
-            <div className="absolute -inset-px rounded-3xl bg-gradient-to-r from-primary/40 via-[hsl(var(--neon))]/30 to-primary/40 opacity-60 blur-md" aria-hidden />
+            <div className="absolute inset-0 rounded-3xl bg-gradient-to-r from-primary/40 via-[hsl(var(--neon))]/30 to-primary/40 opacity-60 blur-md pointer-events-none" aria-hidden />
             <div className="relative">
               <WidgetGenerator />
             </div>
