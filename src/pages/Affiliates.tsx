@@ -456,19 +456,25 @@ const Affiliates = () => (
                 <BarChart3 className="h-3.5 w-3.5" /> Real-Time Analytics
               </div>
               <h2 className="mt-4 font-display text-3xl font-bold text-foreground sm:text-4xl">
-                Track Everything in Your Personal Partner Dashboard
+                How to Track Your Profits
               </h2>
               <p className="mt-4 font-body text-muted-foreground leading-relaxed">
-                After registration you'll get access to a real-time dashboard where you can see all
-                referred swaps, commissions earned, payouts, and performance stats — updated live
-                with on-chain attribution.
+                After registering you get full access to your Partner Dashboard to see all swaps,
+                volume, and commissions in real-time.
+              </p>
+              <p className="mt-3 font-body text-muted-foreground leading-relaxed">
+                If you prefer not to register, you can still track and receive payouts by providing
+                your <span className="font-semibold text-foreground">email address</span>,
+                <span className="font-semibold text-foreground"> BTC wallet</span>, or
+                <span className="font-semibold text-foreground"> widget/API code</span> when
+                contacting us. We will manually verify and settle commissions to your wallet.
               </p>
               <ul className="mt-5 space-y-2.5">
                 {[
-                  "Live click → swap → commission funnel",
+                  "Live click → swap → commission funnel (registered)",
                   "Per-link, per-banner, per-widget attribution",
-                  "Crypto and fiat payout history",
-                  "Conversion stats by region and asset",
+                  "Manual verification available without an account",
+                  "Payouts directly to your BTC wallet",
                 ].map((item) => (
                   <li key={item} className="flex items-start gap-2 text-sm text-foreground">
                     <CheckCircle2 className="mt-0.5 h-4 w-4 text-primary shrink-0" />
