@@ -35,7 +35,7 @@ const COUNTRY_TO_LANG: Record<string, SupportedLanguage> = {
 const COPY: Record<SupportedLanguage, { msg: string; cta: string; dismiss: string }> = {
   en: { msg: "View MRC GlobalPay in your local language for region-specific rates.", cta: "Switch", dismiss: "Dismiss" },
   tr: { msg: "Türkiye'ye özel oranlar için Türkçe sürüme geçin.", cta: "Geç", dismiss: "Kapat" },
-  vi: { msg: "Xem MRC GlobalPay bằng tiếng Việt với tỷ giá dành riêng cho Việt Nam.", cta: "Chuyển", dismiss: "Đóng" },
+  vi: { msg: "Khám phá Trung tâm Việt Nam để giao dịch SOL & HYPE phí thấp.", cta: "Đi ngay", dismiss: "Đóng" },
   pt: { msg: "Veja a MRC GlobalPay em português com taxas para o Brasil.", cta: "Mudar", dismiss: "Fechar" },
   es: { msg: "Ver MRC GlobalPay en español con tasas locales.", cta: "Cambiar", dismiss: "Cerrar" },
   fr: { msg: "Affichez MRC GlobalPay en français avec des taux locaux.", cta: "Changer", dismiss: "Fermer" },
@@ -75,7 +75,15 @@ const GeoNudgeBanner = () => {
         if (!country) return;
 
         const hubLang = COUNTRY_TO_LANG[country.toUpperCase()];
-        if (!hubLang || hubLang === currentLang) return;
+        if (!hubLang) return;
+
+        // Special case for Vietnam: the deep hub is /vi/vietnam.
+        // Show the nudge on ANY page that isn't already the hub (even if user is on /vi).
+        if (hubLang === "vi") {
+          if (pathname === "/vi/vietnam" || pathname === "/vi/vietnam/") return;
+        } else if (hubLang === currentLang) {
+          return;
+        }
         if (cancelled) return;
 
         setSuggested(hubLang);
@@ -98,9 +106,10 @@ const GeoNudgeBanner = () => {
     const bare = stripLangPrefix(pathname);
     localStorage.setItem("user-lang", suggested);
     localStorage.setItem(DISMISS_KEY, "1");
-    // VN-IP users on "/" land on the deep Vietnam Hub instead of generic /vi
-    const isHomeVN = suggested === "vi" && (bare === "/" || bare === "");
-    const target = isHomeVN ? "/vi/vietnam" : langPath(suggested, bare) + search + hash;
+    // Vietnam always deep-links to the hub regardless of which page they're on
+    const target = suggested === "vi"
+      ? "/vi/vietnam"
+      : langPath(suggested, bare) + search + hash;
     navigate(target);
     setShow(false);
   };

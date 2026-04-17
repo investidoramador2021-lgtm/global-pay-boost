@@ -208,6 +208,55 @@ const VietnamHub = () => {
         </div>
       </section>
 
+      {/* Quick Links — Topic Cluster for AI search authority */}
+      <section className="border-b border-border">
+        <div className="container mx-auto max-w-6xl px-4 py-10">
+          <h2 className="mb-4 font-display text-lg font-semibold text-foreground">
+            Liên kết nhanh — Trung tâm tài nguyên Việt Nam
+          </h2>
+          <nav aria-label="Vietnam Hub Quick Links">
+            <ul className="grid gap-3 sm:grid-cols-2 lg:grid-cols-4">
+              <li>
+                <a
+                  href="/vi/exchange/usdt-to-sol"
+                  className="block rounded-lg border border-border bg-card/50 px-4 py-3 transition-colors hover:border-primary/40 hover:bg-card"
+                >
+                  <span className="font-display text-sm font-semibold text-foreground">Hướng dẫn giao dịch SOL</span>
+                  <span className="mt-1 block text-xs text-muted-foreground">USDT → SOL với phí thấp nhất</span>
+                </a>
+              </li>
+              <li>
+                <a
+                  href="/vi/exchange/usdt-to-hype"
+                  className="block rounded-lg border border-border bg-card/50 px-4 py-3 transition-colors hover:border-primary/40 hover:bg-card"
+                >
+                  <span className="font-display text-sm font-semibold text-foreground">Mua HYPE tại Việt Nam</span>
+                  <span className="mt-1 block text-xs text-muted-foreground">USDT → Hyperliquid trong 60 giây</span>
+                </a>
+              </li>
+              <li>
+                <a
+                  href="/vi/compliance"
+                  className="block rounded-lg border border-trust/30 bg-trust/[0.05] px-4 py-3 transition-colors hover:border-trust/60"
+                >
+                  <span className="font-display text-sm font-semibold text-foreground">Xác minh G7 / FINTRAC</span>
+                  <span className="mt-1 block text-xs text-muted-foreground">Giấy phép Canada #C100000015</span>
+                </a>
+              </li>
+              <li>
+                <a
+                  href="/vi/blog"
+                  className="block rounded-lg border border-border bg-card/50 px-4 py-3 transition-colors hover:border-primary/40 hover:bg-card"
+                >
+                  <span className="font-display text-sm font-semibold text-foreground">Blog & Hướng dẫn</span>
+                  <span className="mt-1 block text-xs text-muted-foreground">Phân tích thị trường Việt Nam</span>
+                </a>
+              </li>
+            </ul>
+          </nav>
+        </div>
+      </section>
+
       <SiteFooter />
     </div>
   );
