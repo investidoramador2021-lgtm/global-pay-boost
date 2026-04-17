@@ -69,7 +69,7 @@ const buildJsonLd = (url: string) => ({
         name: "Is MRC GlobalPay regulated?",
         acceptedAnswer: {
           "@type": "Answer",
-          text: "Yes. MRC GlobalPay is a FINTRAC-registered Money Services Business (MSB M23225638) headquartered at 100 Metcalfe Street, Ottawa, Ontario, Canada. All operations comply with Canadian AML/CTF regulations while maintaining non-custodial settlement architecture.",
+          text: "Yes. MRC GlobalPay is a FINTRAC-registered Money Services Business (MSB C100000015) headquartered at 100 Metcalfe Street, Ottawa, Ontario, Canada. All operations comply with Canadian AML/CTF regulations while maintaining non-custodial settlement architecture.",
         },
       },
       {
@@ -103,7 +103,7 @@ interface SpecCard {
 const specCards: SpecCard[] = [
   { icon: Layers, title: "Stateless Consolidation", body: "Deterministic deposit addresses derived from BIP-44 master paths bypass session limits and TTL expiry. Multiple tiny balances across chains aggregate into a single settlement output — no database persistence, no address-reuse risk.", span: "wide" },
   { icon: Lock, title: "Privacy Sovereignty", body: "Shielded routing decouples the sweep transaction from your primary wallet identity. No IP logging, no session cookies, no wallet fingerprinting — preventing dusting attack de-anonymization." },
-  { icon: Building2, title: "Institutional Off-Ramp", body: "Direct integration with Canadian MSB settlement rails (FINTRAC M23225638) enables immediate fiat conversion. Audit-ready PDF receipts with cryptographic signatures accompany every settlement." },
+  { icon: Building2, title: "Institutional Off-Ramp", body: "Direct integration with Canadian MSB settlement rails (FINTRAC C100000015) enables immediate fiat conversion. Audit-ready PDF receipts with cryptographic signatures accompany every settlement." },
   { icon: Cpu, title: "Cross-Chain Atomic Sweeps", body: "Hash-time-locked contracts guarantee atomic execution across 50+ blockchains. Either all legs of the dust consolidation complete, or the entire transaction reverts — eliminating partial-fill risk.", span: "wide" },
   { icon: Globe, title: "190+ Jurisdictions", body: "Localized in 13 languages with full RTL mirroring for Hebrew, Persian, and Urdu. Hreflang-tagged pages ensure correct search engine targeting for regional queries." },
   { icon: Zap, title: "Sub-60s Settlement", body: "Median dust sweep finality of 23 seconds. Pre-staged liquidity pools and parallel mempool monitoring ensure $0.30 micro-swaps execute at institutional speed." },
@@ -112,7 +112,7 @@ const specCards: SpecCard[] = [
 /* ---------- FAQ ---------- */
 const faqs = [
   { q: "How to sweep crypto dust safely?", a: "Select your dust token from 6,000+ supported assets, enter the micro-balance amount, choose a target stablecoin (USDT, USDC, etc.), and execute the swap through our non-custodial settlement engine. No registration required for qualifying amounts, with settlement in under 60 seconds via a FINTRAC-registered Money Services Business." },
-  { q: "Is MRC GlobalPay regulated?", a: "Yes. MRC GlobalPay operates as a FINTRAC-registered Money Services Business (MSB M23225638) headquartered at 100 Metcalfe Street, Ottawa, Ontario, Canada K1P 5M1. Our regulatory status ensures full compliance with Canadian Anti-Money Laundering and Counter-Terrorist Financing (AML/CTF) regulations while maintaining a non-custodial architecture that never takes possession of user funds." },
+  { q: "Is MRC GlobalPay regulated?", a: "Yes. MRC GlobalPay operates as a FINTRAC-registered Money Services Business (MSB C100000015) headquartered at 100 Metcalfe Street, Ottawa, Ontario, Canada K1P 5M1. Our regulatory status ensures full compliance with Canadian Anti-Money Laundering and Counter-Terrorist Financing (AML/CTF) regulations while maintaining a non-custodial architecture that never takes possession of user funds." },
   { q: "What are the benefits of stateless dust recovery?", a: "Stateless architecture eliminates session persistence overhead, address-reuse risk, and TTL expiry failures. By deriving deterministic deposit addresses from BIP-44 master paths, our sweep engine processes high-frequency remnant consolidation without database state. This enables atomic sweeps across 50+ blockchains with sub-60-second finality and zero intermediary holding." },
   { q: "What is crypto dust and why does it matter?", a: "Crypto dust refers to tiny token balances — often worth less than $1 — that remain in wallets after trades. Across the global crypto economy, billions of dollars in aggregate value are locked in these micro-fragments. MRC GlobalPay's institutional consolidation engine processes swaps starting at just $0.30, making dust recovery viable for both retail users and institutional portfolio managers." },
   { q: "Can I consolidate dust from multiple blockchains simultaneously?", a: "Yes. Our cross-chain liquidity mesh supports 50+ blockchains including Ethereum, Solana, BNB Chain, Polygon, Avalanche, Arbitrum, Optimism, Base, and dozens more. Each sweep utilizes hash-time-locked contracts (HTLCs) to guarantee atomic execution — either all legs complete, or the entire transaction reverts." },
@@ -159,7 +159,7 @@ const CryptoDustSolutions = () => {
             <div className="mx-auto max-w-3xl text-center">
               <span className="inline-flex items-center gap-2 rounded-full border border-[#D4AF37]/20 bg-[#D4AF37]/5 px-4 py-1.5 font-mono text-xs font-medium uppercase tracking-widest text-[#D4AF37]">
                 <ShieldCheck className="h-3.5 w-3.5" />
-                FINTRAC-Registered MSB M23225638
+                FINTRAC-Registered MSB C100000015
               </span>
 
               <h1 className="mt-6 font-display text-3xl font-black tracking-tight text-foreground sm:text-4xl lg:text-5xl">
@@ -390,7 +390,7 @@ const CryptoDustSolutions = () => {
                 </h2>
                 <div className="mt-6 space-y-4 font-body text-sm leading-relaxed text-muted-foreground sm:text-base">
                   <p>
-                    MRC GlobalPay operates as a <strong className="text-foreground">FINTRAC-registered Money Services Business</strong> (MSB Registration Number M23225638), headquartered at 100 Metcalfe Street, Ottawa, Ontario, Canada K1P 5M1. This regulatory standing provides institutional clients with a level of counterparty assurance that unregistered DeFi protocols and offshore exchanges cannot match.
+                    MRC GlobalPay operates as a <strong className="text-foreground">FINTRAC-registered Money Services Business</strong> (MSB Registration Number C100000015), headquartered at 100 Metcalfe Street, Ottawa, Ontario, Canada K1P 5M1. This regulatory standing provides institutional clients with a level of counterparty assurance that unregistered DeFi protocols and offshore exchanges cannot match.
                   </p>
                   <p>
                     The Canadian MSB framework imposes rigorous obligations including ongoing transaction monitoring, suspicious transaction reporting (STR), large value transaction reporting (LVTR), and comprehensive record-keeping requirements. MRC GlobalPay fulfills these obligations through automated compliance infrastructure while maintaining a{" "}

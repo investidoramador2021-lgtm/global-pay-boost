@@ -98,7 +98,7 @@ Deno.serve(async (req) => {
       version: "1.0",
       timestamp: new Date().toISOString(),
       provider: "MRC Global Pay",
-      license: "FINTRAC MSB M23225638",
+      license: "FINTRAC MSB C100000015",
       documentation: "https://mrcglobalpay.com/developers",
       website: "https://mrcglobalpay.com",
       total_pairs: rates.length,

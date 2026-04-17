@@ -16,7 +16,7 @@ Deno.serve(async (req) => {
     uptime: "99.98%",
     provider: {
       name: "MRC GlobalPay",
-      msb: "M23225638",
+      msb: "C100000015",
       jurisdiction: "Canada (FINTRAC)",
     },
     supported_assets: "500+",

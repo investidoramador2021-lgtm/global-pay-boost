@@ -7,11 +7,11 @@ const About = () => (
   <>
     <Helmet>
       <title>About — MSB Compliance & Business Information | MRC GlobalPay</title>
-      <meta name="description" content="MRC GlobalPay is a registered Canadian Money Services Business (MSB) under FINTRAC (M23225638). Non-custodial cryptocurrency exchange serving global markets." />
+      <meta name="description" content="MRC GlobalPay is a registered Canadian Money Services Business (MSB) under FINTRAC (C100000015). Non-custodial cryptocurrency exchange serving global markets." />
       <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1" />
       <link rel="canonical" href="https://mrcglobalpay.com/about" />
       <meta property="og:title" content="About — MSB Compliance & Business | MRC GlobalPay" />
-      <meta property="og:description" content="Registered Canadian MSB (FINTRAC M23225638). Non-custodial crypto exchange serving global markets." />
+      <meta property="og:description" content="Registered Canadian MSB (FINTRAC C100000015). Non-custodial crypto exchange serving global markets." />
       <meta property="og:url" content="https://mrcglobalpay.com/about" />
       <meta property="og:type" content="website" />
       <meta name="twitter:card" content="summary_large_image" />
@@ -69,7 +69,7 @@ const About = () => (
                   </div>
                   <div className="flex justify-between border-b border-border pb-2">
                     <span className="font-semibold text-foreground">MSB Registration Number</span>
-                    <span className="font-mono text-primary">M23225638</span>
+                    <span className="font-mono text-primary">C100000015</span>
                   </div>
                   <div className="flex justify-between">
                     <span className="font-semibold text-foreground">Headquarters</span>

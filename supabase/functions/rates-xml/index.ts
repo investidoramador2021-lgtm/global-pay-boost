@@ -83,7 +83,7 @@ Deno.serve(async (req) => {
 <rates>
   <timestamp>${new Date().toISOString()}</timestamp>
   <provider>MRC Global Pay</provider>
-  <license>FINTRAC MSB M23225638</license>
+  <license>FINTRAC MSB C100000015</license>
 ${items}
 </rates>`;
 

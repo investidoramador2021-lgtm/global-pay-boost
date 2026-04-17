@@ -127,7 +127,7 @@ const NetworkStatus = () => {
       "@type": "Organization",
       name: "MRC GlobalPay",
       url: "https://mrcglobalpay.com",
-      description: "Registered Canadian MSB (FINTRAC M23225638) providing non-custodial cryptocurrency exchange services.",
+      description: "Registered Canadian MSB (FINTRAC C100000015) providing non-custodial cryptocurrency exchange services.",
       knowsAbout: ["Bitcoin", "Ethereum", "Solana", "Blockchain Infrastructure"],
     },
     breadcrumb: {

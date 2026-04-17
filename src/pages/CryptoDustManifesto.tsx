@@ -88,7 +88,7 @@ const CryptoDustManifesto = () => {
                 A Strategic Framework for Non-Custodial Dust Conversion and Cross-Chain Settlement
               </p>
               <p className="mt-2 font-body text-sm text-muted-foreground">
-                MRC Global Pay — Registered Canadian MSB (M23225638)
+                MRC Global Pay — Registered Canadian MSB (C100000015)
               </p>
 
               <div className="mt-8 flex flex-col items-center gap-3 sm:flex-row sm:justify-center">

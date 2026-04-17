@@ -68,7 +68,7 @@ Deno.serve(async (req) => {
       status: "success",
       timestamp: new Date().toISOString(),
       provider: "MRC Global Pay / ChangeNOW",
-      license: "FINTRAC MSB M23225638",
+      license: "FINTRAC MSB C100000015",
       documentation: "https://mrcglobalpay.com/developers",
       rates,
     };

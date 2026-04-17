@@ -13,7 +13,7 @@ interface SpecCard {
 
 const specs: SpecCard[] = [
   { icon: Route, title: "Stateless Routing Architecture", body: "Deterministic address derivation eliminates session dependency. Each permanent bridge endpoint is computed from a BIP-44/SLIP-44 master path, ensuring infinite reusability without database persistence or key-rotation risk.", span: "wide" },
-  { icon: Building2, title: "Institutional Compliance Rails", body: "FINTRAC-registered MSB (M23225638) with full STR/LTR filing capability. AML/KYC thresholds are enforced at the protocol layer, enabling compliant settlement without custodial exposure." },
+  { icon: Building2, title: "Institutional Compliance Rails", body: "FINTRAC-registered MSB (C100000015) with full STR/LTR filing capability. AML/KYC thresholds are enforced at the protocol layer, enabling compliant settlement without custodial exposure." },
   { icon: Lock, title: "Zero-Knowledge Settlement", body: "Shielded routing decouples on-chain identity from transaction flow. No IP logging, no session cookies, no wallet fingerprinting — cryptographic proofs replace trust assumptions." },
   { icon: Network, title: "Multi-Chain Liquidity Mesh", body: "700+ liquidity sources aggregated across 50+ blockchains. Smart order routing splits large settlements across DEX/CEX pools to minimize slippage below 0.1% on institutional volumes.", span: "wide" },
   { icon: Cpu, title: "Deterministic Address Derivation", body: "BIP-44 hierarchical derivation ensures each currency pair maps to a unique, reproducible deposit address. No database round-trips, no TTL expiry, no address collision risk." },
@@ -108,7 +108,7 @@ const BentoSpecsSection = () => {
           <div className="flex items-center gap-2 rounded-full border border-primary/20 bg-primary/5 px-4 py-2">
             <ShieldCheck className="h-4 w-4 text-primary" />
             <span className="font-mono text-xs font-semibold uppercase tracking-wider text-foreground">
-              FINTRAC MSB M23225638 · Ottawa, ON, Canada
+              FINTRAC MSB C100000015 · Ottawa, ON, Canada
             </span>
           </div>
           <p className="font-body text-xs text-muted-foreground">

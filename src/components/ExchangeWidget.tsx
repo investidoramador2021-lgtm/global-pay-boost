@@ -3702,7 +3702,7 @@ const ExchangeWidget = ({ onTabChange, defaultFrom, defaultTo }: ExchangeWidgetP
               <div className="flex items-center justify-center gap-2 rounded-lg border border-emerald-500/20 bg-emerald-500/5 p-2.5">
                 <Shield className="h-4 w-4 text-emerald-500" />
                 <span className="font-mono text-[11px] font-semibold uppercase tracking-wider text-emerald-400">
-                  Verified by FINTRAC — MSB M23225638
+                  Verified by FINTRAC — MSB C100000015
                 </span>
               </div>
 
