@@ -356,11 +356,10 @@ const WidgetGenerator = () => {
         </button>
       </div>
 
-      {!submitted && (
-        <p className="mt-2 text-xs text-muted-foreground">
-          Enter a valid email and BTC wallet, then generate. Preview, link, and code update instantly.
-        </p>
-      )}
+      <p className="mt-2 text-xs text-muted-foreground">
+        Preview, affiliate link and embed code update <span className="text-foreground font-semibold">live</span> as you type.
+        Click <span className="text-primary font-semibold">Generate</span> to confirm and copy.
+      </p>
 
       {/* Preview + outputs */}
       <div className="mt-8 grid gap-6 lg:grid-cols-2">
