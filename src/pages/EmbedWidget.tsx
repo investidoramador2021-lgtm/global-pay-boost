@@ -1,5 +1,6 @@
 import { useEffect, useMemo, useState } from "react";
 import { useSearchParams } from "react-router-dom";
+import { useTranslation } from "react-i18next";
 import { ChevronDown, Loader2, X } from "lucide-react";
 import {
   getCurrencies,
@@ -7,6 +8,8 @@ import {
   getMinAmount,
   type Currency,
 } from "@/lib/changenow";
+
+const SUPPORTED_LANGS = ["en", "es", "pt", "fr", "ja", "fa", "ur", "he", "af", "hi", "vi", "tr", "uk"];
 
 const DEFAULT_FROM = "btc";
 const DEFAULT_TO = "usdt";
