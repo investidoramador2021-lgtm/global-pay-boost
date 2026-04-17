@@ -653,6 +653,9 @@ const ExchangeWidget = ({ onTabChange, defaultFrom, defaultTo }: ExchangeWidgetP
   const [termsAccepted, setTermsAccepted] = useState(false);
   const [creatingTx, setCreatingTx] = useState(false);
   const [transaction, setTransaction] = useState<TransactionResult | null>(null);
+  const [txProvider, setTxProvider] = useState<Provider>("cn");
+  const [winningProvider, setWinningProvider] = useState<Provider>("cn");
+  const [bestRateActive, setBestRateActive] = useState(false);
   const [txStatus, setTxStatus] = useState<TransactionStatus | null>(null);
   const [copied, setCopied] = useState<string | null>(null);
   const [speedForecast, setSpeedForecast] = useState<string | null>(null);
@@ -856,7 +859,7 @@ const ExchangeWidget = ({ onTabChange, defaultFrom, defaultTo }: ExchangeWidgetP
 
     // Short input — treat as Transaction ID
     try {
-      const status = await getTransactionStatus(input);
+      const status = await getStatusByProvider(input, "cn");
       if (status?.id) {
         setTransaction({ id: status.id, payinAddress: status.payinAddress, payoutAddress: status.payoutAddress, fromCurrency: status.fromCurrency, toCurrency: status.toCurrency, amount: status.amountSend || 0 } as TransactionResult);
         setTxStatus(status);
@@ -876,7 +879,7 @@ const ExchangeWidget = ({ onTabChange, defaultFrom, defaultTo }: ExchangeWidgetP
   const handleSelectWalletTx = async (txId: string) => {
     setTrackLoading(true);
     try {
-      const status = await getTransactionStatus(txId);
+      const status = await getStatusByProvider(txId, "cn");
       if (!status?.id) throw new Error("Not found");
       setTransaction({ id: status.id, payinAddress: status.payinAddress, payoutAddress: status.payoutAddress, fromCurrency: status.fromCurrency, toCurrency: status.toCurrency, amount: status.amountSend || 0 } as TransactionResult);
       setTxStatus(status);
@@ -1414,7 +1417,7 @@ const ExchangeWidget = ({ onTabChange, defaultFrom, defaultTo }: ExchangeWidgetP
     if (step === "status" && transaction?.id) {
       const poll = async () => {
          try {
-          const status = await getTransactionStatus(transaction.id);
+          const status = await getStatusByProvider(transaction.id, txProvider);
           setTxStatus(status);
           if (["finished", "failed", "refunded"].includes(status.status)) {
             if (statusPollRef.current) clearInterval(statusPollRef.current);
