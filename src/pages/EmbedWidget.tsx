@@ -302,9 +302,11 @@ const EmbedWidget = () => {
   };
 
   const selectorCurrencies = currencies.filter((currency) => {
-    if (activeSelector === "from") return currency.ticker !== toCurrency?.ticker;
-    if (activeSelector === "to") return currency.ticker !== fromCurrency?.ticker;
-    return true;
+    if (activeSelector === "from" && currency.ticker === toCurrency?.ticker) return false;
+    if (activeSelector === "to" && currency.ticker === fromCurrency?.ticker) return false;
+    if (!tokenSearch.trim()) return true;
+    const q = tokenSearch.trim().toLowerCase();
+    return currency.ticker.toLowerCase().includes(q) || currency.name.toLowerCase().includes(q);
   });
 
   if (loadingCurrencies) {
