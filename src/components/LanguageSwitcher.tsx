@@ -1,7 +1,7 @@
 import { useState, useRef, useEffect } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
 import { useTranslation } from "react-i18next";
-import { Search, Check } from "lucide-react";
+import { Search, Check, Globe } from "lucide-react";
 import {
   supportedLanguages,
   languageMeta,
