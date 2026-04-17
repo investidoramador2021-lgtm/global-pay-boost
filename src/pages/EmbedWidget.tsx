@@ -265,9 +265,9 @@ const EmbedWidget = () => {
         <div className="mb-4 flex items-center justify-between gap-3">
           <div className="flex items-center gap-2">
             <div className="h-2 w-2 rounded-full bg-emerald-400 animate-pulse" />
-            <span className="text-xs font-medium uppercase tracking-wider text-white/50">Crypto Swap</span>
+            <span className="text-xs font-medium uppercase tracking-wider text-white/50">{t("widget.tabs.exchange", "Crypto Swap")}</span>
           </div>
-          <span className="text-right text-[10px] text-white/30">Dust-friendly • From $0.30</span>
+          <span className="text-right text-[10px] text-white/30">{t("widget.dustFriendly", "Dust-friendly • From $0.30")}</span>
         </div>
 
         <div className="mb-2 rounded-xl border border-white/[0.06] bg-white/[0.04] p-3">
