@@ -1505,6 +1505,7 @@ const ExchangeWidget = ({ onTabChange, defaultFrom, defaultTo }: ExchangeWidgetP
     && (gTradeDirection === "buy" ? Boolean(gPayoutAddress.trim()) : true);
 
   // Deep-link: ?tab=buy|sell&crypto=SOL&fiat=USD activates Buy/Sell tab automatically
+  // Deep-link: ?category=stocks|ai|stables pre-filters the token picker and opens it
   useEffect(() => {
     const params = new URLSearchParams(window.location.search);
     const tab = params.get("tab")?.toLowerCase();
@@ -1522,6 +1523,13 @@ const ExchangeWidget = ({ onTabChange, defaultFrom, defaultTo }: ExchangeWidgetP
       setWidgetMode("loan");
     } else if (tab === "earn") {
       setWidgetMode("earn");
+    }
+
+    const category = params.get("category")?.toLowerCase();
+    if (category && ["ai", "stocks", "stables"].includes(category)) {
+      setPickerCategory(category);
+      // Auto-open the To picker so the curated category is immediately visible
+      setTimeout(() => setShowToPicker(true), 250);
     }
   }, []);
 
