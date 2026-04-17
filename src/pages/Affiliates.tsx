@@ -108,23 +108,13 @@ const buildLink = (email: string, btc: string) => {
 
 const buildSnippet = (email: string, btc: string, mode: "light" | "dark") => {
   const token = email || btc ? buildRefToken(email, btc) : "your-ref";
-  return `<!-- MRC GlobalPay Instant Swap Widget — full non-custodial swap, any token, live rates -->
-<div style="position:relative;width:100%;max-width:520px;margin:0 auto;">
-  <iframe
-    src="https://mrcglobalpay.com/embed/widget?ref=${token}&theme=${mode}"
-    width="100%"
-    height="680"
-    style="border:0;border-radius:16px;width:100%;max-width:100%;display:block;background:transparent;"
-    loading="lazy"
-    allow="clipboard-write; payment"
-    referrerpolicy="no-referrer-when-downgrade"
-    title="MRC GlobalPay Instant Swap Widget"></iframe>
-  <p style="font:12px/1.4 system-ui,-apple-system,sans-serif;text-align:center;margin:8px 0 0;color:#64748b;">
-    <a href="https://mrcglobalpay.com/?ref=${token}" rel="noopener" style="color:inherit;text-decoration:none;">
-      Powered by <strong>MRC GlobalPay</strong> · Non-custodial swaps
-    </a>
-  </p>
-</div>`;
+  return `<iframe
+  src="https://mrcglobalpay.com/embed/widget?mode=${mode}&ref=${token}"
+  width="100%"
+  height="520"
+  style="border: none; border-radius: 16px; max-width: 100%;"
+  allowfullscreen>
+</iframe>`;
 };
 
 /* ─── Copy Button ─── */
@@ -396,20 +386,20 @@ const WidgetGenerator = () => {
             <span className="h-2.5 w-2.5 rounded-full bg-[hsl(45_90%_55%)]/70" />
             <span className="h-2.5 w-2.5 rounded-full bg-primary/70" />
             <span className="ms-3 font-mono text-[10px] truncate text-muted-foreground">
-              mrcglobalpay.com/embed/widget?theme={mode}
+              mrcglobalpay.com/embed/widget?mode={mode}
             </span>
           </div>
           <div className="overflow-hidden rounded-xl border border-border/60 bg-background">
             <iframe
               key={`${mode}-${activeEmail}-${activeBtc}`}
-              src={`/embed/widget?ref=${
+              src={`/embed/widget?mode=${mode}&ref=${
                 activeEmail || activeBtc ? buildRefToken(activeEmail, activeBtc) : "preview"
-              }&theme=${mode}`}
+              }`}
               title="Live MRC GlobalPay swap widget preview"
               loading="lazy"
               allow="clipboard-write"
               className="block w-full"
-              style={{ height: 680, border: 0, background: "transparent" }}
+              style={{ height: 720, border: 0, background: "transparent" }}
             />
           </div>
           <p className="mt-3 text-center text-[11px] text-muted-foreground">
@@ -438,7 +428,7 @@ const WidgetGenerator = () => {
         </div>
 
         {/* Embed Code */}
-        <div className="rounded-xl border border-border bg-background/40 p-5">
+        <div className="rounded-xl border-2 border-primary/40 bg-background/40 p-5 shadow-[0_0_24px_-8px_hsl(var(--primary)/0.4)]">
           <div className="flex items-center gap-2 mb-3">
             <Code2 className="h-4 w-4 text-primary" />
             <span className="font-display text-sm font-semibold text-foreground">Your Embed Code</span>
@@ -457,15 +447,15 @@ const WidgetGenerator = () => {
 
       {/* Parity note */}
       <div className="mt-6 rounded-xl border border-primary/30 bg-primary/5 p-4 text-sm text-foreground/90 leading-relaxed">
-        <strong className="font-display text-primary">Works exactly like ChangeNOW's widget.</strong>{" "}
-        Users can freely change any tokens, see live rates, and complete the full non-custodial swap
-        inside the widget — no registration needed. It follows our exact flow (instant settlement,
-        micro-swaps from $0.30, under 60 seconds) and is fully responsive on desktop, tablets, and mobile.
+        This widget uses the same embed code for all affiliates. We identify the source of each swap
+        using a secure internal reference. Users can freely change any tokens and complete the full
+        swap inside the widget using our exact non-custodial flow. Fully responsive on desktop,
+        tablets, and mobile. We handle all tracking and payouts privately on our side.
       </div>
 
       <p className="mt-3 text-[11px] text-muted-foreground">
         🔒 Privacy: your email and BTC wallet are <span className="font-semibold text-foreground">never exposed</span> in the public embed code.
-        We only emit an opaque referral token and keep tracking + payouts on our side.
+        We map the <code className="font-mono">ref</code> token to your account internally for tracking and payouts.
       </p>
     </div>
   );
