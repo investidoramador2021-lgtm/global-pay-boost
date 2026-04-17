@@ -58,7 +58,14 @@ const formatQuoteAmount = (value: string) => {
   }).format(numeric);
 };
 
-const EmbedWidget = () => {
+interface EmbedWidgetProps {
+  /** Optional override (used when rendered inline, e.g. on /affiliates preview). */
+  modeOverride?: "light" | "dark";
+  /** Optional language override for inline previews. */
+  langOverride?: string;
+}
+
+const EmbedWidget = ({ modeOverride, langOverride }: EmbedWidgetProps = {}) => {
   const [searchParams] = useSearchParams();
   const { t, i18n } = useTranslation();
   const { pathname } = useLocation();
@@ -71,13 +78,13 @@ const EmbedWidget = () => {
     if (typeof navigator === "undefined") return "en";
     return pickSupportedLang([...(navigator.languages || []), navigator.language]);
   };
-  const rawLangParam = searchParams.get("lang");
+  const rawLangParam = langOverride || searchParams.get("lang");
   // When nested, fall back to current i18n.language (set by LangLayout from URL).
   const fallbackLang = isStandalone ? detectBrowserLang() : (i18n.language || "en");
   const langParam = (rawLangParam || fallbackLang).toLowerCase().split("-")[0];
   const lang = SUPPORTED_LANGS.includes(langParam) ? langParam : "en";
-  // Theme: accept ?mode=light|dark (preferred) or ?theme=light|dark (legacy). Default: dark.
-  const themeParam = (searchParams.get("mode") || searchParams.get("theme") || "dark").toLowerCase();
+  // Theme: prop override > ?mode= > ?theme= > default dark.
+  const themeParam = (modeOverride || searchParams.get("mode") || searchParams.get("theme") || "dark").toLowerCase();
   const isLight = themeParam === "light";
   const [currencies, setCurrencies] = useState<Currency[]>([]);
   const [fromCurrency, setFromCurrency] = useState<Currency | null>(null);
