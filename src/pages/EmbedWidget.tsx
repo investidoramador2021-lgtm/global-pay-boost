@@ -1,5 +1,6 @@
 import { useEffect, useMemo, useState } from "react";
 import { useSearchParams } from "react-router-dom";
+import { useTranslation } from "react-i18next";
 import { ChevronDown, Loader2, X } from "lucide-react";
 import {
   getCurrencies,
@@ -7,6 +8,8 @@ import {
   getMinAmount,
   type Currency,
 } from "@/lib/changenow";
+
+const SUPPORTED_LANGS = ["en", "es", "pt", "fr", "ja", "fa", "ur", "he", "af", "hi", "vi", "tr", "uk"];
 
 const DEFAULT_FROM = "btc";
 const DEFAULT_TO = "usdt";
@@ -44,7 +47,10 @@ const formatQuoteAmount = (value: string) => {
 
 const EmbedWidget = () => {
   const [searchParams] = useSearchParams();
+  const { t, i18n } = useTranslation();
   const refId = searchParams.get("ref") || "";
+  const langParam = (searchParams.get("lang") || "en").toLowerCase();
+  const lang = SUPPORTED_LANGS.includes(langParam) ? langParam : "en";
   // Theme: accept ?mode=light|dark (preferred) or ?theme=light|dark (legacy). Default: dark.
   const themeParam = (searchParams.get("mode") || searchParams.get("theme") || "dark").toLowerCase();
   const isLight = themeParam === "light";
@@ -58,6 +64,15 @@ const EmbedWidget = () => {
   const [estimating, setEstimating] = useState(false);
   const [estimatedAmount, setEstimatedAmount] = useState<string>("");
   const [minAmount, setMinAmount] = useState<number>(0);
+
+  useEffect(() => {
+    if (i18n.language !== lang) {
+      i18n.changeLanguage(lang);
+    }
+    document.documentElement.lang = lang;
+    const rtlLangs = ["ar", "he", "fa", "ur"];
+    document.documentElement.dir = rtlLangs.includes(lang) ? "rtl" : "ltr";
+  }, [lang, i18n]);
 
   useEffect(() => {
     // Apply theme from ?mode= / ?theme= so the embedded widget matches the host site.
@@ -250,13 +265,13 @@ const EmbedWidget = () => {
         <div className="mb-4 flex items-center justify-between gap-3">
           <div className="flex items-center gap-2">
             <div className="h-2 w-2 rounded-full bg-emerald-400 animate-pulse" />
-            <span className="text-xs font-medium uppercase tracking-wider text-white/50">Crypto Swap</span>
+            <span className="text-xs font-medium uppercase tracking-wider text-white/50">{t("widget.tabs.exchange", "Crypto Swap")}</span>
           </div>
-          <span className="text-right text-[10px] text-white/30">Dust-friendly • From $0.30</span>
+          <span className="text-right text-[10px] text-white/30">{t("widget.dustFriendly", "Dust-friendly • From $0.30")}</span>
         </div>
 
         <div className="mb-2 rounded-xl border border-white/[0.06] bg-white/[0.04] p-3">
-          <label className="mb-1.5 block text-[10px] uppercase tracking-wider text-white/40">You Send</label>
+          <label className="mb-1.5 block text-[10px] uppercase tracking-wider text-white/40">{t("widget.youSend", "You Send")}</label>
           <div className="flex items-center gap-3">
             <button
               type="button"
@@ -299,7 +314,7 @@ const EmbedWidget = () => {
         </div>
 
         <div className="mt-2 mb-2 rounded-xl border border-white/[0.06] bg-white/[0.04] p-3">
-          <label className="mb-1.5 block text-[10px] uppercase tracking-wider text-white/40">You Get</label>
+          <label className="mb-1.5 block text-[10px] uppercase tracking-wider text-white/40">{t("widget.youGet", "You Get")}</label>
           <div className="flex items-center gap-3">
             <button
               type="button"
@@ -315,14 +330,14 @@ const EmbedWidget = () => {
 
             <div className="min-w-0 flex-1 text-right">
               <div className="truncate text-xl font-semibold text-white/90">
-                {estimating ? "Loading..." : estimatedAmount ? formatQuoteAmount(estimatedAmount) : "—"}
+                {estimating ? t("widget.loading", "Loading...") : estimatedAmount ? formatQuoteAmount(estimatedAmount) : "—"}
               </div>
               <div className="text-[10px] uppercase tracking-wider text-white/35">
                 {belowMin
-                  ? `Min ${formatQuoteAmount(String(minAmount))} ${fromCurrency?.ticker?.toUpperCase()}`
+                  ? `${t("widget.minimumAmount", "Minimum amount:")} ${formatQuoteAmount(String(minAmount))} ${fromCurrency?.ticker?.toUpperCase()}`
                   : estimatedAmount
-                    ? `Estimated ${toCurrency?.ticker?.toUpperCase()}`
-                    : "Enter an amount"}
+                    ? `${t("widget.estimated", "(estimated)")} ${toCurrency?.ticker?.toUpperCase()}`
+                    : t("widget.enterAmount", "Enter an amount")}
               </div>
             </div>
           </div>
@@ -330,11 +345,11 @@ const EmbedWidget = () => {
 
         {belowMin ? (
           <div className="mb-4 rounded-lg border border-amber-400/20 bg-amber-400/10 px-3 py-2 text-[11px] text-amber-100">
-            Minimum amount: {formatQuoteAmount(String(minAmount))} {fromCurrency?.ticker?.toUpperCase()}
+            {t("widget.minimumAmount", "Minimum amount:")} {formatQuoteAmount(String(minAmount))} {fromCurrency?.ticker?.toUpperCase()}
           </div>
         ) : (
           <div className="mb-4 text-right text-[10px] uppercase tracking-wider text-white/30">
-            Live fixed-rate pricing
+            {t("widget.fixedRate", "Live fixed-rate pricing")}
           </div>
         )}
 
@@ -348,7 +363,7 @@ const EmbedWidget = () => {
             boxShadow: "0 4px 16px rgba(0,200,150,0.3)",
           }}
         >
-          Swap Now →
+          {t("widget.exchangeNow", "Swap Now")} →
         </button>
 
         <div className="mt-3 text-center">
@@ -366,7 +381,7 @@ const EmbedWidget = () => {
             rel="noopener"
             className="text-[10px] text-white/30 transition-colors hover:text-white/50"
           >
-            Powered by <span className="font-semibold">MRC GlobalPay</span>
+            {t("widget.poweredBy", "Powered by")} <span className="font-semibold">MRC GlobalPay</span>
           </a>
         </div>
 
@@ -374,9 +389,9 @@ const EmbedWidget = () => {
           <div className="absolute inset-0 z-50 flex flex-col rounded-2xl bg-[#0b0e18]/95 p-3 backdrop-blur-xl">
             <div className="mb-3 flex items-center justify-between">
               <div>
-                <div className="text-[10px] uppercase tracking-wider text-white/35">Select asset</div>
+                <div className="text-[10px] uppercase tracking-wider text-white/35">{t("widget.select", "Select")}</div>
                 <div className="text-sm font-semibold text-white">
-                  {activeSelector === "from" ? "Choose what users send" : "Choose what users receive"}
+                  {activeSelector === "from" ? t("widget.youSend", "You Send") : t("widget.youGet", "You Get")}
                 </div>
               </div>
               <button
