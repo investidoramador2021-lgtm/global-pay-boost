@@ -363,7 +363,7 @@
     },
     "exchange": {
       "heading": "Nie-Bewaarbare Kripto-Ruil.",
-      "subtitle": "Ruil 500+ bates onmiddellik sonder registrasie. Direkte beursie-tot-beursie-vereffening met deursigtige koerse en geen verborge fooie.",
+      "subtitle": "Ruil 6,000+ bates onmiddellik sonder registrasie. Direkte beursie-tot-beursie-vereffening met deursigtige koerse en geen verborge fooie.",
       "step1": {
         "title": "Kies Bates",
         "description": "Kies uit ons Vlak-1 likiditeitspaare insluitend BTC, ETH en stablecoins."
@@ -643,7 +643,7 @@
     "specAdaAdv": "Secure DEX-integrated liquidity",
     "specBsvAdv": "Legacy chain liquidity support",
     "sovereignBadge": "Sovereign & Non-Custodial Architecture",
-    "ctaDesc": "Generate a rate-locked invoice in under 30 seconds. 500+ assets, 168-hour certainty, zero registration.",
+    "ctaDesc": "Generate a rate-locked invoice in under 30 seconds. 6,000+ assets, 168-hour certainty, zero registration.",
     "cta": "Genereer Soewereine Faktuur"
   },
   "lend": {

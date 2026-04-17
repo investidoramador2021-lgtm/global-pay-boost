@@ -314,7 +314,7 @@
   "explainer": {
     "exchange": {
       "heading": "Non-Custodial Crypto Swap.",
-      "subtitle": "Swap 500+ assets instantly with zero registration. Direct wallet-to-wallet settlement with transparent rates and no hidden fees.",
+      "subtitle": "Swap 6,000+ assets instantly with zero registration. Direct wallet-to-wallet settlement with transparent rates and no hidden fees.",
       "step1": {
         "title": "Select Assets",
         "description": "Choose from our Tier-1 liquidity pairs including BTC, ETH, and stablecoins."
@@ -645,7 +645,7 @@
     "specAdaAdv": "Secure DEX-integrated liquidity",
     "specBsvAdv": "Legacy chain liquidity support",
     "sovereignBadge": "Sovereign & Non-Custodial Architecture",
-    "ctaDesc": "Generate a rate-locked invoice in under 30 seconds. 500+ assets, 168-hour certainty, zero registration.",
+    "ctaDesc": "Generate a rate-locked invoice in under 30 seconds. 6,000+ assets, 168-hour certainty, zero registration.",
     "cta": "Generate Sovereign Invoice"
   },
   "lend": {

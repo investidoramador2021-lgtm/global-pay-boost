@@ -363,7 +363,7 @@
     },
     "exchange": {
       "heading": "نان کسٹوڈیل کرپٹو سویپ۔",
-      "subtitle": "500+ اثاثوں کو بغیر رجسٹریشن کے فوری طور پر سویپ کریں۔ شفاف شرحوں اور کوئی پوشیدہ فیس کے ساتھ براہ راست والٹ ٹو والٹ تصفیہ۔",
+      "subtitle": "6,000+ اثاثوں کو بغیر رجسٹریشن کے فوری طور پر سویپ کریں۔ شفاف شرحوں اور کوئی پوشیدہ فیس کے ساتھ براہ راست والٹ ٹو والٹ تصفیہ۔",
       "step1": {
         "title": "اثاثے منتخب کریں",
         "description": "BTC، ETH اور سٹیبل کوائنز سمیت ہمارے Tier-1 لیکویڈیٹی جوڑوں میں سے منتخب کریں۔"
@@ -643,7 +643,7 @@
     "specAdaAdv": "Secure DEX-integrated liquidity",
     "specBsvAdv": "Legacy chain liquidity support",
     "sovereignBadge": "Sovereign & Non-Custodial Architecture",
-    "ctaDesc": "Generate a rate-locked invoice in under 30 seconds. 500+ assets, 168-hour certainty, zero registration.",
+    "ctaDesc": "Generate a rate-locked invoice in under 30 seconds. 6,000+ assets, 168-hour certainty, zero registration.",
     "cta": "خود مختار رسید بنائیں"
   },
   "lend": {

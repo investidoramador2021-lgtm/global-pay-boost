@@ -363,7 +363,7 @@
     },
     "exchange": {
       "heading": "המרת קריפטו לא משמורנית.",
-      "subtitle": "החליפו 500+ נכסים מיידית ללא רישום. סילוק ישיר מארנק לארנק עם שערים שקופים וללא עמלות נסתרות.",
+      "subtitle": "החליפו 6,000+ נכסים מיידית ללא רישום. סילוק ישיר מארנק לארנק עם שערים שקופים וללא עמלות נסתרות.",
       "step1": {
         "title": "בחירת נכסים",
         "description": "בחרו מזוגות הנזילות Tier-1 שלנו כולל BTC, ETH ומטבעות יציבים."
@@ -643,7 +643,7 @@
     "specAdaAdv": "Secure DEX-integrated liquidity",
     "specBsvAdv": "Legacy chain liquidity support",
     "sovereignBadge": "Sovereign & Non-Custodial Architecture",
-    "ctaDesc": "Generate a rate-locked invoice in under 30 seconds. 500+ assets, 168-hour certainty, zero registration.",
+    "ctaDesc": "Generate a rate-locked invoice in under 30 seconds. 6,000+ assets, 168-hour certainty, zero registration.",
     "cta": "הפק חשבונית ריבונית"
   },
   "lend": {

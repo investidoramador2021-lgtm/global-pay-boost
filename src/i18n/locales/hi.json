@@ -363,7 +363,7 @@
     },
     "exchange": {
       "heading": "नॉन-कस्टोडियल क्रिप्टो स्वैप।",
-      "subtitle": "500+ संपत्तियों को बिना पंजीकरण के तुरंत स्वैप करें। पारदर्शी दरों और कोई छिपी फीस के साथ सीधे वॉलेट-टू-वॉलेट निपटान।",
+      "subtitle": "6,000+ संपत्तियों को बिना पंजीकरण के तुरंत स्वैप करें। पारदर्शी दरों और कोई छिपी फीस के साथ सीधे वॉलेट-टू-वॉलेट निपटान।",
       "step1": {
         "title": "संपत्ति चुनें",
         "description": "BTC, ETH और स्टेबलकॉइन सहित हमारे Tier-1 लिक्विडिटी पेयर में से चुनें।"
@@ -643,7 +643,7 @@
     "specAdaAdv": "Secure DEX-integrated liquidity",
     "specBsvAdv": "Legacy chain liquidity support",
     "sovereignBadge": "Sovereign & Non-Custodial Architecture",
-    "ctaDesc": "Generate a rate-locked invoice in under 30 seconds. 500+ assets, 168-hour certainty, zero registration.",
+    "ctaDesc": "Generate a rate-locked invoice in under 30 seconds. 6,000+ assets, 168-hour certainty, zero registration.",
     "cta": "सार्वभौम चालान बनाएं"
   },
   "lend": {
