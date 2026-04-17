@@ -117,7 +117,7 @@ const Blog = () => {
     "@type": "Blog",
     name: "MRC GlobalPay Blog",
     url: "https://mrcglobalpay.com/blog",
-    description: "MRC GlobalPay is your crypto meta aggregator and DEX aggregator hub. Expert swap guides, market analysis, and security insights for 500+ coins.",
+    description: "MRC GlobalPay is your crypto meta aggregator and DEX aggregator hub. Expert swap guides, market analysis, and security insights for 6,000+ coins.",
     publisher: {
       "@type": "Organization",
       name: "MRC GlobalPay",
@@ -129,7 +129,7 @@ const Blog = () => {
     <>
       <Helmet>
         <title>Crypto Meta Aggregator Blog — Swap Guides & Analysis | MRC GlobalPay</title>
-        <meta name="description" content="MRC GlobalPay is your crypto meta aggregator and DEX aggregator hub. Expert swap guides, market analysis, and security insights for 500+ coins." />
+        <meta name="description" content="MRC GlobalPay is your crypto meta aggregator and DEX aggregator hub. Expert swap guides, market analysis, and security insights for 6,000+ coins." />
         <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1" />
         <link rel="canonical" href={blogUrl} />
         <meta property="og:title" content="Crypto Meta Aggregator Blog — Swap Guides & Analysis | MRC GlobalPay" />
@@ -167,7 +167,7 @@ const Blog = () => {
                 A meta aggregator scans dozens of decentralized exchanges (DEXs), centralized platforms, and liquidity pools simultaneously to find you the best available rate for any token pair. Unlike a single DEX aggregator that only routes through one protocol, a crypto meta aggregator like MRC GlobalPay compares quotes from multiple DEX aggregators and instant-swap services at once — ensuring you always get the lowest slippage and tightest spread.
               </p>
               <p className="font-body text-sm leading-relaxed text-muted-foreground sm:text-base">
-                Whether you're converting dust-sized balances starting at $0.30 or executing larger swaps across 500+ cryptocurrencies, our meta aggregator engine handles the complexity so you don't have to. No registration, no minimum limits — just the best rate delivered in under 60 seconds. Browse our guides below to learn advanced swap strategies, security tips, and how to maximize value with a DEX aggregator workflow.
+                Whether you're converting dust-sized balances starting at $0.30 or executing larger swaps across 6,000+ cryptocurrencies, our meta aggregator engine handles the complexity so you don't have to. No registration, no minimum limits — just the best rate delivered in under 60 seconds. Browse our guides below to learn advanced swap strategies, security tips, and how to maximize value with a DEX aggregator workflow.
               </p>
             </div>
           </div>
@@ -373,7 +373,7 @@ const Blog = () => {
           <div className="container mx-auto px-4">
             <h2 className="font-display text-2xl font-bold text-foreground sm:text-3xl">Ready to Swap?</h2>
             <p className="mx-auto mt-3 max-w-lg font-body text-muted-foreground">
-              500+ cryptocurrencies. Best rates. Zero registration. Settled in under 60 seconds.
+              6,000+ cryptocurrencies. Best rates. Zero registration. Settled in under 60 seconds.
             </p>
             <a
               href="/#exchange"

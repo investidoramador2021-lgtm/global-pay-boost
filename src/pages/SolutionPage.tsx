@@ -209,7 +209,7 @@ const SolutionPage = () => {
                   {
                     step: "1",
                     title: `Select ${from_token} → ${to_token}`,
-                    desc: `Open MRC GlobalPay and choose ${from_token} as your "Send" token and ${to_token} as your "Receive" token. We support 500+ assets across all major chains.`,
+                    desc: `Open MRC GlobalPay and choose ${from_token} as your "Send" token and ${to_token} as your "Receive" token. We support 6,000+ assets across all major chains.`,
                   },
                   {
                     step: "2",

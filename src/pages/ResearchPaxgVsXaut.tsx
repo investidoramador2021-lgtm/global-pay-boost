@@ -502,7 +502,7 @@ const ResearchPaxgVsXaut = () => {
               How to swap PAXG or XAUt without registration
             </h2>
             <p className="mt-3 text-sm text-muted-foreground">
-              500+ pairs · No registration · Under 60 seconds · Canadian MSB
+              6,000+ pairs · No registration · Under 60 seconds · Canadian MSB
               registered
             </p>
             <a

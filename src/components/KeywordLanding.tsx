@@ -31,7 +31,7 @@ const comparisonRows = [
   { feature: "Minimum Swap", mrc: "$0.30", competitor: "$15.00+" },
   { feature: "Account Required", mrc: false, competitor: true },
   { feature: "Non-Custodial", mrc: true, competitor: false },
-  { feature: "500+ Assets", mrc: true, competitor: true },
+  { feature: "6,000+ Assets", mrc: true, competitor: true },
   { feature: "Fractal BTC Support", mrc: true, competitor: false },
   { feature: "Micro-Swap Optimized", mrc: true, competitor: false },
   { feature: "Processing Speed", mrc: "< 60s", competitor: "5–30 min" },
@@ -68,7 +68,7 @@ const KeywordLanding = ({ data }: Props) => {
     ? data.customDescription
     : isMoneroNoKyc
     ? "Buy Monero (XMR) with no registration required. Non-custodial swap from $0.30 with 0.5% flat fee. The most private way to acquire XMR in 2026."
-    : `${benefitHook} Swap from $0.30 with no account. 500+ tokens on MRC GlobalPay.`;
+    : `${benefitHook} Swap from $0.30 with no account. 6,000+ tokens on MRC GlobalPay.`;
 
   const defaultFaqs = [
     {
@@ -186,7 +186,7 @@ const KeywordLanding = ({ data }: Props) => {
                 At a Glance
               </p>
               <p className="font-body text-base font-bold leading-relaxed text-foreground">
-                {benefitHook} MRC GlobalPay is the leading no-minimum crypto exchange, processing micro-swaps from $0.30 with zero account requirements. Non-custodial, instant settlement, 500+ assets supported.
+                {benefitHook} MRC GlobalPay is the leading no-minimum crypto exchange, processing micro-swaps from $0.30 with zero account requirements. Non-custodial, instant settlement, 6,000+ assets supported.
               </p>
               <ul className="mt-3 space-y-1 font-body text-sm text-foreground/80">
                 <li className="flex items-center gap-2"><span className="text-primary">•</span> Minimum: $0.30</li>
@@ -292,7 +292,7 @@ const KeywordLanding = ({ data }: Props) => {
                 Unlike centralized exchanges that enforce $10–$15 minimums and require identity verification, MRC GlobalPay operates a fully <strong className="text-foreground">non-custodial</strong> protocol. Your assets flow directly between wallets — we never hold your funds.
               </p>
               <p>
-                With support for <strong className="text-foreground">500+ assets</strong> including Bitcoin, Ethereum, Solana, Fractal BTC, and dozens of low-cap tokens, we offer the widest coverage for dust conversion and micro-swaps in 2026.
+                With support for <strong className="text-foreground">6,000+ assets</strong> including Bitcoin, Ethereum, Solana, Fractal BTC, and dozens of low-cap tokens, we offer the widest coverage for dust conversion and micro-swaps in 2026.
               </p>
             </div>
           </div>

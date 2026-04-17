@@ -23,7 +23,7 @@ const jsonLd = {
     priceCurrency: "USD",
   },
   description:
-    "Free embeddable crypto swap widget supporting 500+ tokens with live pricing. One-line iframe installation, glassmorphism dark UI, dust-friendly swaps from $0.30.",
+    "Free embeddable crypto swap widget supporting 6,000+ tokens with live pricing. One-line iframe installation, glassmorphism dark UI, dust-friendly swaps from $0.30.",
   url: "https://mrcglobalpay.com/get-widget",
   provider: {
     "@type": "Organization",
@@ -82,13 +82,13 @@ const GetWidget = () => {
         <title>Free Crypto Swap Widget | Embed on Your Site | MRC GlobalPay</title>
         <meta
           name="description"
-          content="Add a free crypto swap widget to your website. One-line embed code, glassmorphism dark UI, supports 500+ tokens. Dust-friendly swaps from $0.30."
+          content="Add a free crypto swap widget to your website. One-line embed code, glassmorphism dark UI, supports 6,000+ tokens. Dust-friendly swaps from $0.30."
         />
         <link rel="canonical" href="https://mrcglobalpay.com/get-widget" />
         <meta property="og:title" content="Free Crypto Swap Widget — Embed on Your Website" />
         <meta
           property="og:description"
-          content="One-line iframe embed supporting 500+ tokens with live pricing. Glassmorphism dark UI, dust-friendly from $0.30."
+          content="One-line iframe embed supporting 6,000+ tokens with live pricing. Glassmorphism dark UI, dust-friendly from $0.30."
         />
         <meta property="og:url" content="https://mrcglobalpay.com/get-widget" />
         <meta property="og:type" content="website" />
@@ -98,7 +98,7 @@ const GetWidget = () => {
         <meta name="twitter:title" content="Free Crypto Swap Widget | MRC GlobalPay" />
         <meta
           name="twitter:description"
-          content="Embed a free crypto swap widget on your site. 500+ tokens, live pricing, one line of code."
+          content="Embed a free crypto swap widget on your site. 6,000+ tokens, live pricing, one line of code."
         />
         <script type="application/ld+json">{JSON.stringify(jsonLd)}</script>
         <script type="application/ld+json">{JSON.stringify(faqJsonLd)}</script>
@@ -117,7 +117,7 @@ const GetWidget = () => {
               Free Crypto Swap Widget for <span className="text-primary">Your Website</span>
             </h1>
             <p className="mx-auto mt-4 max-w-xl text-muted-foreground">
-              Embed a professional crypto swap widget in seconds. One line of code, zero backend, supports 500+ tokens with
+              Embed a professional crypto swap widget in seconds. One line of code, zero backend, supports 6,000+ tokens with
               dust-friendly swaps from <strong>$0.30</strong>.
             </p>
           </div>
@@ -262,7 +262,7 @@ const GetWidget = () => {
                   to: "/",
                   icon: ArrowRight,
                   label: "Instant Crypto Swaps",
-                  desc: "500+ tokens, live rates, from $0.30",
+                  desc: "6,000+ tokens, live rates, from $0.30",
                 },
                 {
                   to: "/dust-swap-comparison",

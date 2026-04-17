@@ -51,12 +51,12 @@ const CryptoDustManifesto = () => {
         <title>The Master Guide to Crypto Dust Recovery | MRC GlobalPay</title>
         <meta
           name="description"
-          content="Strategic framework for non-custodial crypto dust conversion and cross-chain settlement. Convert assets from $0.30. 500+ tokens. No registration. FINTRAC-registered MSB."
+          content="Strategic framework for non-custodial crypto dust conversion and cross-chain settlement. Convert assets from $0.30. 6,000+ tokens. No registration. FINTRAC-registered MSB."
         />
         <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1" />
         <link rel="canonical" href={canonical} />
         <meta property="og:title" content="The Master Guide to Crypto Dust Recovery | MRC GlobalPay" />
-        <meta property="og:description" content="Convert crypto dust from $0.30 — no registration, 500+ assets, under 60 seconds." />
+        <meta property="og:description" content="Convert crypto dust from $0.30 — no registration, 6,000+ assets, under 60 seconds." />
         <meta property="og:type" content="article" />
         <meta property="og:url" content={canonical} />
         <meta property="og:site_name" content="MRC GlobalPay" />
@@ -221,7 +221,7 @@ const CryptoDustManifesto = () => {
                   {
                     icon: <ArrowRight className="h-6 w-6 text-primary" />,
                     title: "Cross-Chain Interoperability",
-                    text: "Support for 500+ assets across Bitcoin, Solana, EVM, and emerging chains like Fractal Bitcoin.",
+                    text: "Support for 6,000+ assets across Bitcoin, Solana, EVM, and emerging chains like Fractal Bitcoin.",
                   },
                 ].map((item) => (
                   <div key={item.title} className="flex gap-4 rounded-xl border border-border bg-card p-5 shadow-card">

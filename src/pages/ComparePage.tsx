@@ -34,7 +34,7 @@ const buildRows = (c: Competitor): Row[] => [
   { label: "Fractal BTC Support", mrc: true, rival: false },
   { label: "Crypto Dust Conversion", mrc: true, rival: false },
   { label: "Non-Custodial", mrc: true, rival: c.kyc_policy === "None" || c.kyc_policy === "No Account" || c.kyc_policy === "Privacy Focus" },
-  { label: "500+ Assets", mrc: true, rival: !c.min_swap_usd.includes("Variable") },
+  { label: "6,000+ Assets", mrc: true, rival: !c.min_swap_usd.includes("Variable") },
   { label: "Canadian MSB Registered", mrc: true, rival: false },
 ];
 
@@ -94,7 +94,7 @@ const ComparePage = () => {
       "@context": "https://schema.org",
       "@type": "Product",
       name: "MRC GlobalPay Crypto Exchange",
-      description: `Compare MRC GlobalPay vs ${competitor.name}. MRC offers $0.30 minimum swaps, registration-free access, and 500+ assets.`,
+      description: `Compare MRC GlobalPay vs ${competitor.name}. MRC offers $0.30 minimum swaps, registration-free access, and 6,000+ assets.`,
       image: "https://mrcglobalpay.com/icon-512x512.png",
       url: pageUrl,
       brand: { "@type": "Brand", name: "MRC GlobalPay" },
@@ -246,7 +246,7 @@ const ComparePage = () => {
             </h2>
             <div className="space-y-6">
               {[
-                { step: "1", title: "Select Your Token Pair", desc: "Choose the token you want to send (e.g., leftover SHIB) and the token you want to receive (e.g., USDT). We support 500+ assets across all major chains." },
+                { step: "1", title: "Select Your Token Pair", desc: "Choose the token you want to send (e.g., leftover SHIB) and the token you want to receive (e.g., USDT). We support 6,000+ assets across all major chains." },
                 { step: "2", title: "Enter Any Amount Above $0.30", desc: "Type the amount you want to swap. There's no upper limit and no minimum above $0.30. Our engine finds the best rate across aggregated liquidity pools." },
                 { step: "3", title: "Paste Your Wallet & Confirm", desc: "Enter your destination wallet address and confirm. Settlement completes in under 60 seconds. No account, no email, no registration." },
               ].map((s) => (
@@ -303,7 +303,7 @@ const ComparePage = () => {
               Fireblocks Secured
             </span>
             <span className="inline-flex items-center gap-2 rounded-full border border-border bg-muted/50 px-4 py-2 text-xs font-medium text-muted-foreground">
-              500+ Assets
+              6,000+ Assets
             </span>
             <span className="inline-flex items-center gap-2 rounded-full border border-border bg-muted/50 px-4 py-2 text-xs font-medium text-muted-foreground">
               Non-Custodial
