@@ -920,6 +920,72 @@ export type Database = {
           },
         ]
       }
+      partner_commissions: {
+        Row: {
+          btc_usd_rate: number
+          commission_btc: number
+          commission_rate: number
+          created_at: string
+          from_currency: string
+          id: string
+          partner_id: string
+          provider: string
+          ref_code: string
+          source: string
+          swap_amount: number
+          swap_transaction_id: string
+          to_currency: string
+          volume_usd: number
+        }
+        Insert: {
+          btc_usd_rate?: number
+          commission_btc?: number
+          commission_rate?: number
+          created_at?: string
+          from_currency: string
+          id?: string
+          partner_id: string
+          provider?: string
+          ref_code: string
+          source?: string
+          swap_amount?: number
+          swap_transaction_id: string
+          to_currency: string
+          volume_usd?: number
+        }
+        Update: {
+          btc_usd_rate?: number
+          commission_btc?: number
+          commission_rate?: number
+          created_at?: string
+          from_currency?: string
+          id?: string
+          partner_id?: string
+          provider?: string
+          ref_code?: string
+          source?: string
+          swap_amount?: number
+          swap_transaction_id?: string
+          to_currency?: string
+          volume_usd?: number
+        }
+        Relationships: [
+          {
+            foreignKeyName: "partner_commissions_partner_id_fkey"
+            columns: ["partner_id"]
+            isOneToOne: false
+            referencedRelation: "partner_profiles"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "partner_commissions_swap_transaction_id_fkey"
+            columns: ["swap_transaction_id"]
+            isOneToOne: true
+            referencedRelation: "swap_transactions"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       partner_profiles: {
         Row: {
           btc_wallet: string
