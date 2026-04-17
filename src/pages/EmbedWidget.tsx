@@ -238,7 +238,6 @@ const EmbedWidget = () => {
     return (
       <div
         style={{
-          minHeight: "100vh",
           display: "flex",
           alignItems: "center",
           justifyContent: "center",
@@ -264,11 +263,10 @@ const EmbedWidget = () => {
   return (
     <div
       style={{
-        minHeight: "100vh",
         display: "flex",
-        alignItems: "center",
+        alignItems: "flex-start",
         justifyContent: "center",
-        padding: "16px",
+        padding: "8px",
         background: "transparent",
         fontFamily: "'Inter', system-ui, sans-serif",
       }}
