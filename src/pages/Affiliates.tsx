@@ -668,14 +668,18 @@ const Affiliates = () => (
             </h2>
           </div>
 
-          <div className="mt-10 grid gap-3 sm:grid-cols-2">
+          <div className="mt-10 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
             {WHY.map((w) => (
               <div
                 key={w.label}
-                className="flex items-center gap-3 rounded-xl border border-border bg-card px-4 py-3 transition-colors hover:border-primary/40"
+                className="flex items-start gap-3 rounded-2xl border border-border bg-card p-5 transition-all hover:-translate-y-1 hover:border-primary/40 hover:shadow-lg"
               >
-                <w.icon className="h-5 w-5 text-primary shrink-0" aria-hidden />
-                <span className="font-body text-sm text-foreground">{w.label}</span>
+                <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-primary/10">
+                  <w.icon className="h-5 w-5 text-primary" aria-hidden />
+                </div>
+                <span className="font-body text-sm font-medium text-foreground leading-snug pt-1.5">
+                  {w.label}
+                </span>
               </div>
             ))}
           </div>
