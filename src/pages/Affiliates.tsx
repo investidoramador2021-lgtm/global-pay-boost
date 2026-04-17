@@ -476,6 +476,25 @@ const WidgetGenerator = () => {
         🔒 Privacy: your email and BTC wallet are <span className="font-semibold text-foreground">never exposed</span> in the public embed code.
         We map the <code className="font-mono">ref</code> token to your account internally for tracking and payouts.
       </p>
+
+      {/* Upgrade CTA — link this widget to a full Partner Dashboard */}
+      <div className="mt-5 rounded-xl border border-primary/30 bg-gradient-to-br from-primary/10 to-transparent p-4">
+        <div className="flex flex-col sm:flex-row sm:items-center gap-3 sm:justify-between">
+          <div className="text-sm text-foreground">
+            <p className="font-display font-semibold">Want a real-time dashboard?</p>
+            <p className="text-xs text-muted-foreground mt-0.5">
+              Register a free Partner Account using <span className="font-mono text-foreground">{activeEmail || "this same email"}</span> and
+              this widget — plus all swaps it generates — will be automatically linked to your dashboard.
+            </p>
+          </div>
+          <a
+            href={`/partners?mode=register${activeEmail ? `&email=${encodeURIComponent(activeEmail)}` : ""}${activeBtc ? `&btc=${encodeURIComponent(activeBtc)}` : ""}`}
+            className="btn-shimmer inline-flex items-center justify-center gap-2 rounded-xl bg-primary px-5 py-2.5 font-display text-sm font-bold text-primary-foreground shadow-neon shrink-0 hover:bg-primary/90 transition-colors"
+          >
+            Create Partner Account <ArrowRight className="h-4 w-4" />
+          </a>
+        </div>
+      </div>
     </div>
   );
 };
