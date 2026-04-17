@@ -3,7 +3,7 @@ import { Helmet } from "react-helmet-async";
 import {
   Shield, Zap, Link2, DollarSign, Clock, ArrowRight, Infinity as InfinityIcon,
   LayoutDashboard, Wallet, Megaphone, Image as ImageIcon, Code2, FileText,
-  Globe, Lock, CheckCircle2, AlertCircle, Copy, Check, BarChart3,
+  Globe, Lock, CheckCircle2, Copy, Check, BarChart3,
 } from "lucide-react";
 import { Slider } from "@/components/ui/slider";
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
@@ -156,10 +156,10 @@ const HERO_BENEFITS = [
 ];
 
 const STEPS = [
-  { n: 1, title: "Sign up free", desc: "Create your partner account in under 2 minutes — no KYC for affiliates." },
-  { n: 2, title: "Get your tools", desc: "Receive your unique referral links, banners, and embeddable swap widget." },
-  { n: 3, title: "Promote anywhere", desc: "Share on your blog, YouTube, website, wallet, or Telegram channel." },
-  { n: 4, title: "Earn for life", desc: "Get lifetime commissions on every swap your audience makes." },
+  { n: 1, title: "Sign up (optional)", desc: "Registration is optional but recommended — get your personalized tools and instant Partner Dashboard access in under 2 minutes." },
+  { n: 2, title: "Get your tools", desc: "Receive your unique referral link, downloadable banners, and an embeddable instant swap widget." },
+  { n: 3, title: "Promote anywhere", desc: "Share on your website, blog, YouTube, Telegram, or anywhere your audience hangs out." },
+  { n: 4, title: "Earn & track", desc: "Earn commissions on every referred swap — track them in your dashboard or via email/wallet." },
 ];
 
 const TOOLS = [
@@ -180,36 +180,24 @@ const WHY_CHOOSE = [
 
 const FAQS = [
   {
+    q: "Do I need to register to earn commissions?",
+    a: "No — registration is optional. The fastest way to track everything in real time is to register a free Partner Account, but you can also earn without an account by providing your email address, BTC wallet, or the widget/API code you used when contacting us. We will manually verify your referrals and settle commissions to your wallet.",
+  },
+  {
+    q: "How do I track my profits?",
+    a: "Registered partners get a real-time dashboard showing all referred swaps, volume, and commissions. Without an account, you can request a manual statement at any time by contacting us with your email, BTC wallet, or the widget/API code you used to promote.",
+  },
+  {
+    q: "Can I use the widget without registering?",
+    a: "Yes. The embeddable widget works for everyone. To attribute swaps to you, simply share the widget code or referral URL you used when requesting payout, or register a free account for automatic attribution.",
+  },
+  {
+    q: "How are payouts sent?",
+    a: "Payouts are sent directly to your BTC wallet (or another supported asset on request). Registered partners can withdraw on demand from the dashboard; non-registered promoters receive payouts after manual verification of referred volume.",
+  },
+  {
     q: "Is the commission lifetime?",
-    a: "Yes. Once a user swaps through your unique referral link or embedded widget, you earn commission on every future swap they make — with no expiration date. Lifetime means lifetime.",
-  },
-  {
-    q: "How do I get paid?",
-    a: "Payouts are fast and flexible. You can withdraw in crypto (BTC, USDT, USDC and more) or fiat directly from your Partner Dashboard. There is no minimum payout threshold for most assets.",
-  },
-  {
-    q: "Do I need to register to use the widget and track profits?",
-    a: "Yes. Tracking and commissions require a free Partner Account. Once registered, you'll get your unique affiliate ID, personalized referral links, and a tracking-enabled version of the embed widget so every swap is attributed to you.",
-  },
-  {
-    q: "Can I embed the widget on my site?",
-    a: "Absolutely. After registration you'll receive a personalized iframe snippet you can paste into any website, blog, or landing page. The widget is fully responsive, themeable, and works on every modern browser.",
-  },
-  {
-    q: "What traffic is allowed?",
-    a: "Organic traffic from blogs, YouTube, social media, Telegram channels, wallets, and crypto communities is welcome. Incentivized traffic, fraudulent clicks, malware, spam, and unauthorized brand bidding on paid search are not permitted.",
-  },
-  {
-    q: "How much can I earn with the MRC GlobalPay Affiliate Program?",
-    a: "Affiliates earn between 0.1% and 0.4% revenue share on the total swap volume they refer. Higher rates apply based on volume and performance — custom rates are available for top partners.",
-  },
-  {
-    q: "Is there a minimum referred volume to qualify?",
-    a: "No. There is no minimum volume requirement. You start earning from your very first referred swap.",
-  },
-  {
-    q: "Do my users need to register to swap?",
-    a: "No. MRC GlobalPay is a non-custodial, registration-free exchange — users swap directly from their wallets, which dramatically increases your conversion rate.",
+    a: "Yes. Once a user swaps through your referral link or embedded widget, you earn commission on every future swap they make — with no expiration date.",
   },
 ];
 
@@ -321,10 +309,11 @@ const Affiliates = () => (
                 href="/partners"
                 className="btn-shimmer inline-flex items-center justify-center gap-2 rounded-xl bg-primary px-8 py-4 font-display text-base font-bold text-primary-foreground shadow-neon transition-all duration-100 hover:bg-primary/90 hover:-translate-y-0.5"
               >
-                Join the Affiliate Program — Free & Instant <ArrowRight className="h-4 w-4" />
+                Join the Affiliate Program — Free <ArrowRight className="h-4 w-4" />
               </a>
               <p className="mt-3 text-xs text-muted-foreground max-w-md mx-auto">
-                Create your free Partner Account to get your referral tools and start tracking earnings immediately.
+                Registration gives you easy access to your Partner Dashboard for tracking profits.
+                No registration needed to start promoting.
               </p>
             </div>
 
@@ -351,32 +340,7 @@ const Affiliates = () => (
 
       <MsbTrustBar />
 
-      {/* ═══ REGISTRATION REQUIREMENT BANNER ═══ */}
-      <section className="border-b border-border bg-background py-10">
-        <div className="container mx-auto max-w-4xl px-4">
-          <div className="flex flex-col sm:flex-row items-start gap-4 rounded-2xl border border-primary/30 bg-primary/[0.06] p-5 sm:p-6 transition-all hover:border-primary/50">
-            <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-primary/15">
-              <AlertCircle className="h-5 w-5 text-primary" aria-hidden />
-            </div>
-            <div className="flex-1">
-              <h2 className="font-display text-base sm:text-lg font-bold text-foreground">
-                Important: A Free Partner Account is Required
-              </h2>
-              <p className="mt-1.5 font-body text-sm text-muted-foreground leading-relaxed">
-                To track your commissions and access your Partner Dashboard you must register a free
-                Partner Account. Once registered you will receive your unique affiliate ID, links,
-                and a personalized embeddable widget.
-              </p>
-              <a
-                href="/partners"
-                className="mt-3 inline-flex items-center gap-1.5 font-display text-sm font-semibold text-primary hover:underline"
-              >
-                Register your free Partner Account <ArrowRight className="h-3.5 w-3.5" />
-              </a>
-            </div>
-          </div>
-        </div>
-      </section>
+
 
       {/* ═══ HOW IT WORKS ═══ */}
       <section className="border-b border-border py-16 sm:py-20">
@@ -473,9 +437,8 @@ const Affiliates = () => (
                   Embeddable Instant Swap Widget
                 </h3>
                 <p className="mt-1.5 text-sm text-muted-foreground leading-relaxed">
-                  Drop this iframe into any website, blog, or landing page. Copy and paste this code
-                  after registering to get your personalized tracking version with your unique
-                  affiliate ID baked in.
+                  Copy and paste this code on your site. After promoting, you can track earnings
+                  using your email, BTC wallet address, or the widget code in your Partner Dashboard.
                 </p>
               </div>
             </div>
@@ -493,19 +456,25 @@ const Affiliates = () => (
                 <BarChart3 className="h-3.5 w-3.5" /> Real-Time Analytics
               </div>
               <h2 className="mt-4 font-display text-3xl font-bold text-foreground sm:text-4xl">
-                Track Everything in Your Personal Partner Dashboard
+                How to Track Your Profits
               </h2>
               <p className="mt-4 font-body text-muted-foreground leading-relaxed">
-                After registration you'll get access to a real-time dashboard where you can see all
-                referred swaps, commissions earned, payouts, and performance stats — updated live
-                with on-chain attribution.
+                After registering you get full access to your Partner Dashboard to see all swaps,
+                volume, and commissions in real-time.
+              </p>
+              <p className="mt-3 font-body text-muted-foreground leading-relaxed">
+                If you prefer not to register, you can still track and receive payouts by providing
+                your <span className="font-semibold text-foreground">email address</span>,
+                <span className="font-semibold text-foreground"> BTC wallet</span>, or
+                <span className="font-semibold text-foreground"> widget/API code</span> when
+                contacting us. We will manually verify and settle commissions to your wallet.
               </p>
               <ul className="mt-5 space-y-2.5">
                 {[
-                  "Live click → swap → commission funnel",
+                  "Live click → swap → commission funnel (registered)",
                   "Per-link, per-banner, per-widget attribution",
-                  "Crypto and fiat payout history",
-                  "Conversion stats by region and asset",
+                  "Manual verification available without an account",
+                  "Payouts directly to your BTC wallet",
                 ].map((item) => (
                   <li key={item} className="flex items-start gap-2 text-sm text-foreground">
                     <CheckCircle2 className="mt-0.5 h-4 w-4 text-primary shrink-0" />
