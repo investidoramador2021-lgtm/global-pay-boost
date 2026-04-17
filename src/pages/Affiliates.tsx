@@ -277,7 +277,7 @@ const WidgetGenerator = () => {
   const snippet = useMemo(() => buildSnippet(activeEmail, activeBtc, mode), [activeEmail, activeBtc, mode]);
 
   return (
-    <div className="rounded-2xl border border-border bg-card p-6 sm:p-8 shadow-lg">
+    <div className="rounded-2xl border border-border bg-card p-4 sm:p-6 lg:p-8 shadow-lg">
       {/* Inputs */}
       <div className="grid gap-4 sm:grid-cols-2">
         <div>
@@ -344,41 +344,41 @@ const WidgetGenerator = () => {
         <div
           role="tablist"
           aria-label="Widget theme"
-          className="inline-flex rounded-xl border border-border bg-background p-1"
+          className="grid grid-cols-2 sm:inline-flex rounded-xl border border-border bg-background p-1 w-full sm:w-auto"
         >
           <button
             role="tab"
             aria-selected={mode === "light"}
             onClick={() => setMode("light")}
-            className={`inline-flex items-center gap-2 rounded-lg px-4 py-2 font-display text-xs font-semibold transition-colors ${
+            className={`inline-flex items-center justify-center gap-1.5 rounded-lg px-3 sm:px-4 py-2 font-display text-xs font-semibold transition-colors ${
               mode === "light"
                 ? "bg-primary text-primary-foreground shadow-neon"
                 : "text-muted-foreground hover:text-foreground"
             }`}
           >
-            <Sun className="h-3.5 w-3.5" /> Light Mode (White)
+            <Sun className="h-3.5 w-3.5 shrink-0" /> <span className="truncate">Light Mode</span>
           </button>
           <button
             role="tab"
             aria-selected={mode === "dark"}
             onClick={() => setMode("dark")}
-            className={`inline-flex items-center gap-2 rounded-lg px-4 py-2 font-display text-xs font-semibold transition-colors ${
+            className={`inline-flex items-center justify-center gap-1.5 rounded-lg px-3 sm:px-4 py-2 font-display text-xs font-semibold transition-colors ${
               mode === "dark"
                 ? "bg-primary text-primary-foreground shadow-neon"
                 : "text-muted-foreground hover:text-foreground"
             }`}
           >
-            <Moon className="h-3.5 w-3.5" /> Dark Mode
+            <Moon className="h-3.5 w-3.5 shrink-0" /> <span className="truncate">Dark Mode</span>
           </button>
         </div>
 
         <button
           onClick={handleGenerate}
           disabled={!canGenerate}
-          className="btn-shimmer inline-flex items-center justify-center gap-2 rounded-xl bg-primary px-6 py-3 font-display text-sm font-bold text-primary-foreground shadow-neon transition-all duration-100 hover:bg-primary/90 hover:-translate-y-0.5 disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:translate-y-0"
+          className="btn-shimmer inline-flex w-full sm:w-auto items-center justify-center gap-2 rounded-xl bg-primary px-6 py-3 font-display text-sm font-bold text-primary-foreground shadow-neon transition-all duration-100 hover:bg-primary/90 hover:-translate-y-0.5 disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:translate-y-0 min-h-[48px]"
         >
           <Sparkles className="h-4 w-4" />
-          Generate My Widget &amp; Link
+          <span className="truncate">Generate My Widget &amp; Link</span>
         </button>
       </div>
 
@@ -417,8 +417,8 @@ const WidgetGenerator = () => {
               title="Live MRC GlobalPay swap widget preview"
               loading="lazy"
               allow="clipboard-write"
-              className="block w-full"
-              style={{ height: 720, border: 0, background: "transparent" }}
+              className="block w-full h-[560px] sm:h-[640px] lg:h-[720px]"
+              style={{ border: 0, background: "transparent" }}
             />
           </div>
           <p className="mt-3 text-center text-[11px] text-muted-foreground">
@@ -579,7 +579,7 @@ const Affiliates = () => (
           <div className="inline-flex items-center gap-2 rounded-full border border-primary/30 bg-primary/10 px-3 py-1 text-xs font-display font-semibold text-primary">
             <Shield className="h-3.5 w-3.5" /> Affiliate Program · Lifetime Payouts
           </div>
-          <h1 className="mt-6 font-display text-4xl font-extrabold tracking-tight text-foreground sm:text-6xl leading-[1.05]">
+          <h1 className="mt-6 font-display text-[2rem] sm:text-5xl lg:text-6xl font-extrabold tracking-tight text-foreground leading-[1.1]">
             Earn{" "}
             <span className="bg-gradient-to-r from-primary to-[hsl(var(--neon))] bg-clip-text text-transparent">
               0.1% – 0.4%
@@ -631,7 +631,7 @@ const Affiliates = () => (
             <div className="inline-flex items-center gap-2 rounded-full border border-primary/30 bg-primary/10 px-3 py-1 text-[11px] font-display font-semibold text-primary">
               <Sparkles className="h-3 w-3" /> The Star of the Show
             </div>
-            <h2 className="mt-4 font-display text-3xl font-extrabold text-foreground sm:text-5xl tracking-tight">
+            <h2 className="mt-4 font-display text-2xl sm:text-4xl lg:text-5xl font-extrabold text-foreground tracking-tight">
               Generate Your Personalized <span className="text-primary">Swap Widget</span> in Seconds
             </h2>
             <p className="mt-4 font-body text-muted-foreground sm:text-lg">
