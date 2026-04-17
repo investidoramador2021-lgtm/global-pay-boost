@@ -168,7 +168,7 @@ const VietnamHub = () => {
 
             {/* Widget — defaults to SOL/HYPE per VN retail trends */}
             <div className="lg:sticky lg:top-24 lg:self-start">
-              <ExchangeWidget defaultFromCrypto="USDT" defaultToCrypto="SOL" />
+              <ExchangeWidget defaultFrom="usdt" defaultTo="sol" />
               <p className="mt-2 text-center text-xs text-muted-foreground">
                 Mặc định: USDT → SOL · cũng hỗ trợ USDT → HYPE
               </p>
