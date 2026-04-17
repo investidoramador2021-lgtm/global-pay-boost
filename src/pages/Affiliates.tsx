@@ -180,26 +180,84 @@ const WHY_CHOOSE = [
 
 const FAQS = [
   {
-    q: "How much can I earn with the MRC GlobalPay Affiliate Program?",
-    a: "Affiliates earn between 0.1% and 0.4% revenue share on the total swap volume they refer. Higher rates apply based on volume and performance — custom rates are available for top partners.",
+    q: "Is the commission lifetime?",
+    a: "Yes. Once a user swaps through your unique referral link or embedded widget, you earn commission on every future swap they make — with no expiration date. Lifetime means lifetime.",
   },
   {
-    q: "Are commissions truly lifetime?",
-    a: "Yes. Once a user swaps through your unique referral link or embedded widget, you earn commission on every future swap they make — with no expiration date.",
+    q: "How do I get paid?",
+    a: "Payouts are fast and flexible. You can withdraw in crypto (BTC, USDT, USDC and more) or fiat directly from your Partner Dashboard. There is no minimum payout threshold for most assets.",
+  },
+  {
+    q: "Do I need to register to use the widget and track profits?",
+    a: "Yes. Tracking and commissions require a free Partner Account. Once registered, you'll get your unique affiliate ID, personalized referral links, and a tracking-enabled version of the embed widget so every swap is attributed to you.",
+  },
+  {
+    q: "Can I embed the widget on my site?",
+    a: "Absolutely. After registration you'll receive a personalized iframe snippet you can paste into any website, blog, or landing page. The widget is fully responsive, themeable, and works on every modern browser.",
+  },
+  {
+    q: "What traffic is allowed?",
+    a: "Organic traffic from blogs, YouTube, social media, Telegram channels, wallets, and crypto communities is welcome. Incentivized traffic, fraudulent clicks, malware, spam, and unauthorized brand bidding on paid search are not permitted.",
+  },
+  {
+    q: "How much can I earn with the MRC GlobalPay Affiliate Program?",
+    a: "Affiliates earn between 0.1% and 0.4% revenue share on the total swap volume they refer. Higher rates apply based on volume and performance — custom rates are available for top partners.",
   },
   {
     q: "Is there a minimum referred volume to qualify?",
     a: "No. There is no minimum volume requirement. You start earning from your very first referred swap.",
   },
   {
-    q: "How and when am I paid?",
-    a: "Payouts are fast and flexible. You can choose to be paid in crypto (BTC, USDT, USDC and more) or fiat. Balances are settled directly from the partner dashboard.",
-  },
-  {
     q: "Do my users need to register to swap?",
     a: "No. MRC GlobalPay is a non-custodial, registration-free exchange — users swap directly from their wallets, which dramatically increases your conversion rate.",
   },
 ];
+
+const WIDGET_SNIPPET = `<iframe
+  src="https://mrcglobalpay.com/embed/widget?ref=YOUR_AFFILIATE_ID"
+  width="100%"
+  height="640"
+  frameborder="0"
+  allow="clipboard-write"
+  title="MRC GlobalPay Instant Swap Widget"
+  style="border-radius:16px;max-width:480px;">
+</iframe>
+<p><a href="https://mrcglobalpay.com/?ref=YOUR_AFFILIATE_ID">
+  Powered by MRC GlobalPay
+</a></p>`;
+
+const WidgetSnippet = () => {
+  const [copied, setCopied] = useState(false);
+  const handleCopy = async () => {
+    try {
+      await navigator.clipboard.writeText(WIDGET_SNIPPET);
+      setCopied(true);
+      setTimeout(() => setCopied(false), 2000);
+    } catch {
+      /* noop */
+    }
+  };
+  return (
+    <div className="mt-6 rounded-xl border border-border bg-[hsl(230_15%_6%)] overflow-hidden">
+      <div className="flex items-center justify-between border-b border-border/60 px-4 py-2">
+        <span className="font-mono text-[11px] uppercase tracking-wider text-muted-foreground">
+          embed-widget.html
+        </span>
+        <button
+          onClick={handleCopy}
+          className="inline-flex items-center gap-1.5 rounded-md border border-border/60 bg-card/40 px-2.5 py-1 font-display text-[11px] font-semibold text-foreground transition-colors hover:bg-card"
+          aria-label="Copy widget code"
+        >
+          {copied ? <Check className="h-3 w-3 text-primary" /> : <Copy className="h-3 w-3" />}
+          {copied ? "Copied" : "Copy"}
+        </button>
+      </div>
+      <pre className="overflow-x-auto p-4 font-mono text-[11.5px] leading-relaxed text-foreground/90">
+        <code>{WIDGET_SNIPPET}</code>
+      </pre>
+    </div>
+  );
+};
 
 /* ─── Main Page ─── */
 const Affiliates = () => (
