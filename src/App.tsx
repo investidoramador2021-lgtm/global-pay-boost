@@ -75,6 +75,7 @@ const ResearchRavedao = lazy(() => import("./pages/ResearchRavedao.tsx"));
 const PartnerPortal = lazy(() => import("./pages/PartnerPortal.tsx"));
 const DynamicExchange = lazy(() => import("./pages/DynamicExchange.tsx"));
 const ExchangeDirectory = lazy(() => import("./pages/ExchangeDirectory.tsx"));
+const Affiliates = lazy(() => import("./pages/Affiliates.tsx"));
 const NotFound = lazy(() => import("./pages/NotFound.tsx"));
 
 const queryClient = new QueryClient();
@@ -186,6 +187,7 @@ const AppRoutes = () => (
     <Route path="exchange/:pair" element={<DynamicExchange />} />
     {/* Crawler hub — lists every supported asset and pair */}
     <Route path="directory" element={<ExchangeDirectory />} />
+    <Route path="affiliates" element={<Affiliates />} />
   </>
 );
 
