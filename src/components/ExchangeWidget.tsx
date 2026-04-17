@@ -1193,15 +1193,34 @@ const ExchangeWidget = ({ onTabChange, defaultFrom, defaultTo }: ExchangeWidgetP
         prl: "prlsol",
         rave: "raveerc20",
         stable: "stablebsc",
-        // Tokenized RWA equities (Ondo)
+        // Tokenized RWA equities (Ondo) — accept bare ticker, "a"-prefix (aNVDA), and "_stock" suffix
         nvda: "nvdaonerc20",
         anvda: "nvdaonerc20",
+        nvda_stock: "nvdaonerc20",
         msft: "msftonerc20",
         amsft: "msftonerc20",
+        msft_stock: "msftonerc20",
         spy: "spyonerc20",
         aspy: "spyonerc20",
+        spy_stock: "spyonerc20",
         meta: "metaonerc20",
         ameta: "metaonerc20",
+        meta_stock: "metaonerc20",
+        tsla: "tslaonerc20",
+        atsla: "tslaonerc20",
+        tsla_stock: "tslaonerc20",
+        aapl: "aaplonerc20",
+        aaapl: "aaplonerc20",
+        aapl_stock: "aaplonerc20",
+        googl: "googlonerc20",
+        agoogl: "googlonerc20",
+        googl_stock: "googlonerc20",
+        amzn: "amznonerc20",
+        aamzn: "amznonerc20",
+        amzn_stock: "amznonerc20",
+        // High-utility L1s / payments
+        xec: "xec",
+        ecash: "xec",
         // RWA / commodities
         paxg: "paxg",
         xaut: "xaut",
@@ -1295,8 +1314,8 @@ const ExchangeWidget = ({ onTabChange, defaultFrom, defaultTo }: ExchangeWidgetP
       setGuardarianCrypto(crypto);
       // Deep-link pre-selection: check URL params and trade direction
       const dlParams = new URLSearchParams(window.location.search);
-      const dlFiat = dlParams.get("fiat")?.toUpperCase();
-      const dlCrypto = dlParams.get("crypto")?.toUpperCase();
+      const dlFiat = (dlParams.get("fiat") || dlParams.get("from"))?.toUpperCase();
+      const dlCrypto = (dlParams.get("crypto") || dlParams.get("to"))?.toUpperCase();
       const dlTab = dlParams.get("tab")?.toLowerCase();
       const initialDirection: FiatFlow = dlTab === "sell"
         ? "sell"
