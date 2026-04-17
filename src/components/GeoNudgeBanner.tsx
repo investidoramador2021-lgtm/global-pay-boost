@@ -35,7 +35,7 @@ const COUNTRY_TO_LANG: Record<string, SupportedLanguage> = {
 const COPY: Record<SupportedLanguage, { msg: string; cta: string; dismiss: string }> = {
   en: { msg: "View MRC GlobalPay in your local language for region-specific rates.", cta: "Switch", dismiss: "Dismiss" },
   tr: { msg: "Türkiye'ye özel oranlar için Türkçe sürüme geçin.", cta: "Geç", dismiss: "Kapat" },
-  vi: { msg: "Xem MRC GlobalPay bằng tiếng Việt với tỷ giá dành riêng cho Việt Nam.", cta: "Chuyển", dismiss: "Đóng" },
+  vi: { msg: "Khám phá Trung tâm Việt Nam để giao dịch SOL & HYPE phí thấp.", cta: "Đi ngay", dismiss: "Đóng" },
   pt: { msg: "Veja a MRC GlobalPay em português com taxas para o Brasil.", cta: "Mudar", dismiss: "Fechar" },
   es: { msg: "Ver MRC GlobalPay en español con tasas locales.", cta: "Cambiar", dismiss: "Cerrar" },
   fr: { msg: "Affichez MRC GlobalPay en français avec des taux locaux.", cta: "Changer", dismiss: "Fermer" },

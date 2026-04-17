@@ -55,7 +55,11 @@ const LanguageSwitcher = () => {
       return;
     }
     const bare = stripLangPrefix(pathname);
-    const newPath = langPath(lang, bare) + search + hash;
+    // Vietnamese routes to the deep Vietnam Hub when switching from a generic page
+    const isHomeOrShallow = bare === "/" || bare === "" || bare === "/vietnam";
+    const newPath = lang === "vi" && isHomeOrShallow
+      ? "/vi/vietnam"
+      : langPath(lang, bare) + search + hash;
     localStorage.setItem("user-lang", lang);
     i18n.changeLanguage(lang);
     navigate(newPath);
