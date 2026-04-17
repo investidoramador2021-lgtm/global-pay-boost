@@ -37,6 +37,10 @@ const STATIC_PAGES = [
   { loc: "/developer", changefreq: "monthly", priority: "0.9" },
   { loc: "/developers", changefreq: "monthly", priority: "0.9" },
   { loc: "/get-widget", changefreq: "monthly", priority: "0.7" },
+  { loc: "/embed/widget", changefreq: "monthly", priority: "0.6" },
+  { loc: "/affiliates", changefreq: "weekly", priority: "0.9" },
+  { loc: "/partners", changefreq: "monthly", priority: "0.7" },
+  { loc: "/partner-portal", changefreq: "monthly", priority: "0.5" },
   { loc: "/referral", changefreq: "monthly", priority: "0.6" },
   { loc: "/about", changefreq: "monthly", priority: "0.5" },
   { loc: "/ecosystem/solana", changefreq: "weekly", priority: "0.8" },
@@ -54,7 +58,6 @@ const STATIC_PAGES = [
   { loc: "/compliance", changefreq: "monthly", priority: "0.5" },
   { loc: "/crypto-dust-solutions", changefreq: "monthly", priority: "0.6" },
   { loc: "/guide/crypto-dust", changefreq: "monthly", priority: "0.6" },
-  { loc: "/partners", changefreq: "monthly", priority: "0.5" },
   { loc: "/dust-swap-comparison", changefreq: "monthly", priority: "0.5" },
   { loc: "/transparency-security", changefreq: "monthly", priority: "0.5" },
   { loc: "/resources/crypto-dust-guide", changefreq: "monthly", priority: "0.5" },
@@ -110,7 +113,12 @@ Deno.serve(async (req) => {
 
   if (format === "rss") {
     const items = blogPosts
-      .map((p: any) => `    <item>
+      .map((p: any) => {
+        const altLinks = LANGS.map(
+          (l) =>
+            `      <atom:link rel="alternate" hreflang="${l}" href="${SITE}/${l}/blog/${p.slug}" />`
+        ).join("\n");
+        return `    <item>
       <title>${escapeXml(p.title)}</title>
       <link>${SITE}/blog/${p.slug}</link>
       <guid isPermaLink="true">${SITE}/blog/${p.slug}</guid>
@@ -118,11 +126,15 @@ Deno.serve(async (req) => {
       <dc:creator>${escapeXml(p.author_name)}</dc:creator>
       <pubDate>${new Date(p.published_at).toUTCString()}</pubDate>
       <category>${escapeXml(p.category)}</category>
-    </item>`)
+      <atom:link rel="alternate" hreflang="en" href="${SITE}/blog/${p.slug}" />
+${altLinks}
+      <atom:link rel="alternate" hreflang="x-default" href="${SITE}/blog/${p.slug}" />
+    </item>`;
+      })
       .join("\n");
 
     const rss = `<?xml version="1.0" encoding="UTF-8"?>
-<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:dc="http://purl.org/dc/elements/1.1/">
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:xhtml="http://www.w3.org/1999/xhtml">
   <channel>
     <title>MRC GlobalPay Blog</title>
     <link>${SITE}/blog</link>
