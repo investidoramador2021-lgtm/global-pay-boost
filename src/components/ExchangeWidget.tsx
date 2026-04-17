@@ -3146,8 +3146,12 @@ const ExchangeWidget = ({ onTabChange, defaultFrom, defaultTo }: ExchangeWidgetP
                       </span>
                     )}
                   </div>
-                  <button onClick={handleSwap} className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full border border-border bg-background text-primary transition-colors hover:bg-accent" aria-label="Swap currencies">
-                    <ArrowDownUp className="h-4 w-4" />
+                  <button
+                    onClick={handleSwap}
+                    className="hover-lift flex h-10 w-10 shrink-0 items-center justify-center rounded-full border border-border bg-background text-primary shadow-card hover:border-primary/40 hover:text-primary"
+                    aria-label="Swap currencies"
+                  >
+                    <ArrowDownUp className="h-4 w-4 transition-transform duration-300 group-hover:rotate-180" />
                   </button>
                 </div>
 
@@ -3223,7 +3227,7 @@ const ExchangeWidget = ({ onTabChange, defaultFrom, defaultTo }: ExchangeWidgetP
                 )}
 
                 <Button
-                  className="group relative mt-5 w-full min-h-[52px] overflow-hidden text-base font-bold transition-all duration-100 shadow-card hover:shadow-neon"
+                  className="cta-glow group relative mt-5 w-full min-h-[54px] overflow-hidden rounded-xl text-base font-bold tracking-wide transition-all duration-200"
                   size="lg"
                   disabled={!canExchangeNow}
                   onClick={handleExchangeNow}
@@ -3233,11 +3237,14 @@ const ExchangeWidget = ({ onTabChange, defaultFrom, defaultTo }: ExchangeWidgetP
                   }}
                 >
                   <span className="absolute inset-0 pointer-events-none" style={{
-                    background: "linear-gradient(90deg, transparent 0%, rgba(255,255,255,0.35) 50%, transparent 100%)",
+                    background: "linear-gradient(90deg, transparent 0%, rgba(255,255,255,0.4) 50%, transparent 100%)",
                     backgroundSize: "200% 100%",
                     animation: "shimmer 3s ease-in-out infinite",
                   }} />
-                  <span className="relative z-10">{t("widget.exchangeNow")}</span>
+                  <span className="relative z-10 inline-flex items-center gap-2">
+                    {t("widget.exchangeNow")}
+                    <ArrowRight className="h-4 w-4 transition-transform duration-200 group-hover:translate-x-0.5" />
+                  </span>
                 </Button>
                 <p className="mt-1.5 flex items-center justify-center gap-1.5 font-body text-[11px] text-muted-foreground">
                   <Shield className="h-3 w-3 text-primary" />
