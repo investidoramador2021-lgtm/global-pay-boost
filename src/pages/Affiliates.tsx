@@ -548,20 +548,26 @@ const Affiliates = () => (
       <MsbTrustBar />
 
       {/* ═══ WIDGET GENERATOR (centerpiece) ═══ */}
-      <section id="generate" className="border-b border-border bg-muted/30 py-16 sm:py-20">
-        <div className="container mx-auto max-w-5xl px-4">
+      <section id="generate" className="relative border-b border-border bg-muted/30 py-16 sm:py-24">
+        <div className="container mx-auto max-w-6xl px-4">
           <div className="text-center max-w-2xl mx-auto">
-            <h2 className="font-display text-3xl font-bold text-foreground sm:text-4xl">
-              Generate Your Personalized Swap Widget in Seconds
+            <div className="inline-flex items-center gap-2 rounded-full border border-primary/30 bg-primary/10 px-3 py-1 text-[11px] font-display font-semibold text-primary">
+              <Sparkles className="h-3 w-3" /> The Star of the Show
+            </div>
+            <h2 className="mt-4 font-display text-3xl font-extrabold text-foreground sm:text-5xl tracking-tight">
+              Generate Your Personalized <span className="text-primary">Swap Widget</span> in Seconds
             </h2>
-            <p className="mt-3 font-body text-muted-foreground">
-              Enter your email and BTC wallet address, choose Light or Dark mode. The preview and
-              code update automatically. Copy and paste — that's all you need to start earning.
+            <p className="mt-4 font-body text-muted-foreground sm:text-lg">
+              Enter your email and BTC wallet, choose Light or Dark. Preview, link and embed code
+              update <span className="text-foreground font-semibold">live</span> as you type.
             </p>
           </div>
 
-          <div className="mt-10">
-            <WidgetGenerator />
+          <div className="mt-10 relative">
+            <div className="absolute -inset-px rounded-3xl bg-gradient-to-r from-primary/40 via-[hsl(var(--neon))]/30 to-primary/40 opacity-60 blur-md" aria-hidden />
+            <div className="relative">
+              <WidgetGenerator />
+            </div>
           </div>
         </div>
       </section>
