@@ -52,6 +52,7 @@ const Index = () => {
         sameAs: ["https://twitter.com/mrcglobalpay"],
         identifier: "C100000015"
       },
+      {
         "@type": "FinancialService",
         "@id": `${homeUrl}#organization`,
         name: "MRC GlobalPay",
