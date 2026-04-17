@@ -68,3 +68,6 @@ verify_jwt = false
 
 [functions.dynamic-sitemap]
 verify_jwt = false
+
+[functions.credit-affiliate-commissions]
+verify_jwt = false
