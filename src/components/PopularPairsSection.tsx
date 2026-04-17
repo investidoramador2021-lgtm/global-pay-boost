@@ -87,12 +87,12 @@ const PopularPairsSection = () => {
               <Link
                 key={`${pair.from}-${pair.to}`}
                 to={pair.href}
-                className="group flex items-center justify-between gap-2 rounded-xl border border-border bg-card px-3 py-3 transition-all hover:border-primary/30 hover:shadow-elevated active:scale-[0.99] sm:gap-3 sm:p-4"
+                className="hover-lift card-soft group flex items-center justify-between gap-2 px-3 py-3 hover:border-primary/40 sm:gap-3 sm:p-4"
               >
                 <div className="flex items-center gap-2 sm:gap-3">
                   <div className="flex items-center gap-1 rounded-lg bg-accent px-2 py-1 sm:gap-1.5 sm:px-3 sm:py-1.5">
                     <span className="font-display text-xs font-bold text-foreground sm:text-sm">{pair.from}</span>
-                    <ArrowRight className="h-3 w-3 text-muted-foreground" />
+                    <ArrowRight className="h-3 w-3 text-primary/70 rtl-flip transition-transform duration-200 group-hover:translate-x-0.5" />
                     <span className="font-display text-xs font-bold text-foreground sm:text-sm">{pair.to}</span>
                   </div>
                   <span className="hidden font-body text-xs text-muted-foreground sm:inline">
@@ -104,7 +104,7 @@ const PopularPairsSection = () => {
                   {pair.loading ? (
                     <Loader2 className="h-4 w-4 animate-spin text-muted-foreground" />
                   ) : pair.rate ? (
-                    <span className="text-right font-display text-[11px] font-semibold text-foreground sm:text-sm">
+                    <span className="rate-tween text-right font-display text-[11px] font-semibold text-foreground sm:text-sm">
                       1 {pair.from} ≈ {parseFloat(pair.rate).toFixed(
                         parseFloat(pair.rate) > 100 ? 2 : parseFloat(pair.rate) > 1 ? 4 : 6
                       )}{" "}
