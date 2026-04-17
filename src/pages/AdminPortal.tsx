@@ -144,7 +144,9 @@ const AdminPortal = () => {
   const [tab, setTab] = useState("current");
   const [adminTab, setAdminTab] = useState<"partners" | "exchanges" | "invoices" | "support" | "lending" | "proxy" | "payouts" | "compliance" | "affiliates">("exchanges");
   const [complianceHolds, setComplianceHolds] = useState<ComplianceHold[]>([]);
-  const [affiliateLeads, setAffiliateLeads] = useState<Array<{ id: string; email: string; btc_wallet: string; ref_token: string; theme: string; source: string; created_at: string }>>([]);
+  const [affiliateLeads, setAffiliateLeads] = useState<Array<{ id: string; email: string; btc_wallet: string; ref_token: string; theme: string; source: string; created_at: string; partner_id?: string | null }>>([]);
+  const [commissions, setCommissions] = useState<Array<{ id: string; partner_id: string; ref_code: string; source: string; provider: string; from_currency: string; to_currency: string; swap_amount: number; volume_usd: number; commission_rate: number; commission_btc: number; created_at: string }>>([]);
+  const [runningCron, setRunningCron] = useState(false);
   const [chatLogs, setChatLogs] = useState<ChatLog[]>([]);
   const [lendEarnTxs, setLendEarnTxs] = useState<LendEarnTx[]>([]);
   const [webhookDeliveries, setWebhookDeliveries] = useState<any[]>([]);
@@ -192,7 +194,9 @@ const AdminPortal = () => {
       supabase.from("payout_requests" as any).select("*").order("requested_at", { ascending: false }),
       supabase.from("compliance_holds" as any).select("*").order("created_at", { ascending: false }),
       supabase.from("affiliate_leads" as any).select("*").order("created_at", { ascending: false }).limit(500),
+      supabase.from("partner_commissions" as any).select("*").order("created_at", { ascending: false }).limit(500),
     ]);
+    const cmRes = (arguments as any); // placeholder removed below
     setPartners((pRes.data || []) as Partner[]);
     setTransactions((txRes.data || []) as Tx[]);
     setChatLogs((logRes.data as unknown as ChatLog[]) || []);
