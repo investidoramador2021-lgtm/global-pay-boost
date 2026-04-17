@@ -84,6 +84,7 @@ const LanguageSwitcher = () => {
         aria-label="Switch language"
         title="Switch language"
       >
+        <Globe className="h-3.5 w-3.5 shrink-0" aria-hidden />
         <img src={flagUrl(currentLang)} alt="" className="h-5 w-5 rounded-full object-cover" />
         <span className="hidden text-xs font-medium sm:inline">{currentMeta.native}</span>
       </button>
