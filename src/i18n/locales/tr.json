@@ -1,7 +1,7 @@
 {
   "meta": {
     "title": "MRC GlobalPay | Anında Kripto Takası $0.30'dan — Kayıt Gerektirmez",
-    "description": "500'den fazla kripto para birimini $0.30'dan anında takas edin. Kayıt gerektirmez. 60 saniyede ödeme.",
+    "description": "Kayıt gerektirmeden 6.000'den fazla kripto para birimine ve tokenize hisse senedine anında erişin. MRC GlobalPay, minimum takas olmadan, 60 saniyenin altında ödenen non-custodial bir kripto borsasıdır. Kayıtlı Kanadalı MSB.",
     "ogTitle": "MRC GlobalPay | Anında Kripto Takası $0.30'dan"
   },
   "footer": {
@@ -22,14 +22,14 @@
     "help": "Yardım"
   },
   "hero": {
-    "heading": "Anında Kripto Takası.",
+    "heading": "6.000'den Fazla Kripto Para ve Tokenize Hisse Senedine Erişin.",
     "headingAccent": "Kayıt Gerektirmez. Minimum $0.30.",
-    "subtitle": "Hızlı, güvenli ve gizli. Cüzdandan cüzdana doğrudan takas $0.30'dan başlayan fiyatlarla.",
+    "subtitle": "Trend AI token'ları ve Tokenize Hisse Senetleri dahil 6.000'den fazla varlığı anında takas edin. Kayıt yok, doğrudan cüzdandan cüzdana ödeme.",
     "trustNoAccount": "Hesap Gerekmez",
     "trustNonCustodial": "Emanetsiz",
     "trustSettlement": "Doğrudan Ödeme",
     "dustTitle": "🧹 Cüzdanınızı Temizleyin",
-    "dustDescription": "Harcanamayan toz bakiyelerden bıktınız mı? Çoğu platformun minimumları yüksektir. MRC GlobalPay $0.30'dan başlayan mikro takasları destekler. 500'den fazla tokenin bakiyelerini anında dönüştürün."
+    "dustDescription": "Çoğu platformda yüksek minimumlar vardır. MRC GlobalPay, $0.30'dan başlayan mikro takasları destekler. 6.000'den fazla token'dan kalan tozu anında dönüştürün. Kayıt gerekmez."
   },
   "howItWorks": {
     "heading": "Nasıl Çalışır",
@@ -63,8 +63,8 @@
       "description": "İzinsiz ticaret — hemen takas etmeye başlayın. Kayıt yok, kişisel veri yok."
     },
     "assets": {
-      "title": "500+ Kripto Varlık",
-      "description": "Bitcoin, Ethereum, Solana, USDT ve yüzlerce daha fazlasını tüm büyük blokzincirlerde takas edin."
+      "title": "6.000'den Fazla Kripto Varlık",
+      "description": "Tüm büyük blok zincirlerinde Bitcoin, Ethereum, Solana, USDT, trend AI token'ları ve Tokenize Hisse Senetlerini takas edin."
     },
     "global": {
       "title": "Global, Her Zaman Aktif",
