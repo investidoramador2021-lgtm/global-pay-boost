@@ -11,59 +11,25 @@ const corsHeaders = {
   "Access-Control-Allow-Headers": "authorization, x-client-info, apikey, content-type",
 };
 
-// Commission rates by liquidity provider
 const RATE_CN = 0.003; // 0.3% — ChangeNOW
 const RATE_LE = 0.001; // 0.1% — LetsExchange
 
-// Tickers we can price (lowercased CoinGecko IDs).
-// Stables map to $1; everything else hits CoinGecko.
 const STABLES = new Set(["usdt", "usdc", "dai", "busd", "tusd", "usdp", "pyusd", "fdusd"]);
 const COINGECKO_IDS: Record<string, string> = {
-  btc: "bitcoin",
-  eth: "ethereum",
-  sol: "solana",
-  bnb: "binancecoin",
-  xrp: "ripple",
-  ada: "cardano",
-  doge: "dogecoin",
-  trx: "tron",
-  matic: "matic-network",
-  pol: "matic-network",
-  avax: "avalanche-2",
-  ltc: "litecoin",
-  link: "chainlink",
-  xlm: "stellar",
-  ton: "the-open-network",
-  near: "near",
-  atom: "cosmos",
-  hbar: "hedera-hashgraph",
-  arb: "arbitrum",
-  op: "optimism",
-  apt: "aptos",
-  sui: "sui",
-  fil: "filecoin",
-  bch: "bitcoin-cash",
-  etc: "ethereum-classic",
-  algo: "algorand",
-  vet: "vechain",
-  ftm: "fantom",
-  hype: "hyperliquid",
-  tia: "celestia",
-  sei: "sei-network",
-  inj: "injective-protocol",
-  bera: "berachain-bera",
-  monad: "monad",
-  paxg: "pax-gold",
-  xaut: "tether-gold",
-  pepe: "pepe",
-  shib: "shiba-inu",
+  btc: "bitcoin", eth: "ethereum", sol: "solana", bnb: "binancecoin", xrp: "ripple",
+  ada: "cardano", doge: "dogecoin", trx: "tron", matic: "matic-network", pol: "matic-network",
+  avax: "avalanche-2", ltc: "litecoin", link: "chainlink", xlm: "stellar", ton: "the-open-network",
+  near: "near", atom: "cosmos", hbar: "hedera-hashgraph", arb: "arbitrum", op: "optimism",
+  apt: "aptos", sui: "sui", fil: "filecoin", bch: "bitcoin-cash", etc: "ethereum-classic",
+  algo: "algorand", vet: "vechain", ftm: "fantom", hype: "hyperliquid", tia: "celestia",
+  sei: "sei-network", inj: "injective-protocol", bera: "berachain-bera", monad: "monad",
+  paxg: "pax-gold", xaut: "tether-gold", pepe: "pepe", shib: "shiba-inu",
 };
 
 interface PriceCache { [ticker: string]: number }
 
 async function fetchPrices(tickers: string[]): Promise<PriceCache> {
   const cache: PriceCache = { btc: 0 };
-  // Always need BTC (denominator)
   const ids = new Set<string>(["bitcoin"]);
   for (const t of tickers) {
     const lc = t.toLowerCase();
@@ -103,7 +69,6 @@ Deno.serve(async (req) => {
   const result = {
     scanned: 0,
     pending_created: 0,
-    skipped_no_ref: 0,
     skipped_no_partner: 0,
     skipped_already_logged: 0,
     skipped_no_price: 0,
@@ -112,7 +77,6 @@ Deno.serve(async (req) => {
   };
 
   try {
-    // 1) Pull recent swaps with a ref_code (last 30 days, up to 500/run)
     const since = new Date(Date.now() - 30 * 24 * 60 * 60 * 1000).toISOString();
     const { data: swaps, error: swapErr } = await supabase
       .from("swap_transactions")
@@ -125,27 +89,27 @@ Deno.serve(async (req) => {
     if (swapErr) throw swapErr;
     result.scanned = swaps?.length ?? 0;
     if (!swaps || swaps.length === 0) {
+      await notifyTelegram(supabase, result, "ok");
       return new Response(JSON.stringify({ ok: true, ...result, message: "no swaps to scan" }),
         { headers: { ...corsHeaders, "Content-Type": "application/json" } });
     }
 
-    // 2) Filter out already-credited swaps
     const swapIds = swaps.map(s => s.id);
     const { data: existing } = await supabase
       .from("partner_commissions")
       .select("swap_transaction_id")
       .in("swap_transaction_id", swapIds);
-    const credited = new Set((existing ?? []).map(e => e.swap_transaction_id));
-    const pending = swaps.filter(s => !credited.has(s.id));
-    result.skipped_already_paid = swaps.length - pending.length;
+    const logged = new Set((existing ?? []).map(e => e.swap_transaction_id));
+    const fresh = swaps.filter(s => !logged.has(s.id));
+    result.skipped_already_logged = swaps.length - fresh.length;
 
-    if (pending.length === 0) {
-      return new Response(JSON.stringify({ ok: true, ...result, message: "all already credited" }),
+    if (fresh.length === 0) {
+      await notifyTelegram(supabase, result, "ok");
+      return new Response(JSON.stringify({ ok: true, ...result, message: "all already logged" }),
         { headers: { ...corsHeaders, "Content-Type": "application/json" } });
     }
 
-    // 3) Resolve ref_code → partner_id (via referral_code or claimed affiliate widget)
-    const refCodes = [...new Set(pending.map(s => s.ref_code as string))];
+    const refCodes = [...new Set(fresh.map(s => s.ref_code as string))];
     const [{ data: profilesByRef }, { data: leadsByRef }] = await Promise.all([
       supabase.from("partner_profiles").select("id, referral_code").in("referral_code", refCodes),
       supabase.from("affiliate_leads").select("partner_id, ref_token").in("ref_token", refCodes).not("partner_id", "is", null),
@@ -157,26 +121,23 @@ Deno.serve(async (req) => {
       if (l.partner_id && !refToPartner.has(l.ref_token)) refToPartner.set(l.ref_token, l.partner_id);
     }
 
-    // 4) Resolve source label per ref (referral_link vs affiliate_widget)
     const refSource = new Map<string, string>();
     for (const p of profilesByRef ?? []) refSource.set(p.referral_code, "referral_link");
     for (const l of leadsByRef ?? []) {
       if (l.partner_id && !refSource.has(l.ref_token)) refSource.set(l.ref_token, "affiliate_widget");
     }
 
-    // 5) Pre-fetch USD prices for all from_currencies in pending swaps
-    const tickers = [...new Set(pending.map(s => s.from_currency))];
+    const tickers = [...new Set(fresh.map(s => s.from_currency))];
     const prices = await fetchPrices(tickers);
     const btcUsd = prices.btc || 0;
     if (btcUsd <= 0) {
+      await notifyTelegram(supabase, result, "error", "BTC price unavailable");
       return new Response(JSON.stringify({ ok: false, ...result, error: "BTC price unavailable" }),
         { status: 503, headers: { ...corsHeaders, "Content-Type": "application/json" } });
     }
 
-    // 6) Walk each pending swap, credit
-    const balanceDeltas = new Map<string, number>(); // partner_id → +btc
-
-    for (const s of pending) {
+    // Write each row as pending_review. NO balance crediting — admin must approve in /admin.
+    for (const s of fresh) {
       const refCode = s.ref_code as string;
       const partnerId = refToPartner.get(refCode);
       if (!partnerId) { result.skipped_no_partner++; continue; }
@@ -203,44 +164,18 @@ Deno.serve(async (req) => {
         commission_rate: rate,
         commission_btc: commissionBtc,
         btc_usd_rate: btcUsd,
+        status: "pending_review",
       });
 
       if (insErr) {
-        // 23505 unique violation = race; treat as already credited
-        if ((insErr as any).code === "23505") { result.skipped_already_paid++; continue; }
+        if ((insErr as any).code === "23505") { result.skipped_already_logged++; continue; }
         console.error("[credit-affiliate-commissions] insert failed", insErr);
         result.errors++;
         continue;
       }
 
-      balanceDeltas.set(partnerId, (balanceDeltas.get(partnerId) ?? 0) + commissionBtc);
-      result.credited++;
-      result.total_btc_credited += commissionBtc;
-    }
-
-    // 7) Apply balance deltas (upsert + add)
-    for (const [partnerId, delta] of balanceDeltas) {
-      const { data: bal } = await supabase
-        .from("partner_balances")
-        .select("id, available_btc, total_earned_btc")
-        .eq("partner_id", partnerId)
-        .maybeSingle();
-
-      if (bal) {
-        await supabase.from("partner_balances").update({
-          available_btc: Number(bal.available_btc) + delta,
-          total_earned_btc: Number(bal.total_earned_btc) + delta,
-          last_credited_at: new Date().toISOString(),
-        }).eq("id", bal.id);
-      } else {
-        await supabase.from("partner_balances").insert({
-          partner_id: partnerId,
-          available_btc: delta,
-          pending_btc: 0,
-          total_earned_btc: delta,
-          last_credited_at: new Date().toISOString(),
-        });
-      }
+      result.pending_created++;
+      result.total_btc_pending += commissionBtc;
     }
 
     await notifyTelegram(supabase, result, "ok");
@@ -258,30 +193,34 @@ async function notifyTelegram(
   supabase: ReturnType<typeof createClient>,
   result: {
     scanned: number;
-    credited: number;
+    pending_created: number;
     skipped_no_partner: number;
-    skipped_already_paid: number;
+    skipped_already_logged: number;
     skipped_no_price: number;
     errors: number;
-    total_btc_credited: number;
+    total_btc_pending: number;
   },
   status: "ok" | "error",
   errorMsg?: string,
 ) {
   try {
-    const emoji = status === "ok" ? "✅" : "🚨";
-    const title = status === "ok" ? "Affiliate Commissions Cron" : "Affiliate Commissions Cron — FAILED";
+    const emoji = status === "ok" ? "🟡" : "🚨";
+    const title = status === "ok"
+      ? "Affiliate Commissions — Pending Review"
+      : "Affiliate Commissions Cron — FAILED";
     const lines = [
       `${emoji} <b>${title}</b>`,
       `🕒 ${new Date().toISOString()}`,
       ``,
       `🔍 Scanned: <b>${result.scanned}</b>`,
-      `💸 Credited: <b>${result.credited}</b>`,
-      `₿ Total BTC paid: <b>${result.total_btc_credited.toFixed(8)}</b>`,
-      `↩️ Already paid: ${result.skipped_already_paid}`,
+      `📝 New pending rows: <b>${result.pending_created}</b>`,
+      `₿ Total BTC pending approval: <b>${result.total_btc_pending.toFixed(8)}</b>`,
+      `↩️ Already logged: ${result.skipped_already_logged}`,
       `⚠️ No partner: ${result.skipped_no_partner}`,
       `❓ No price: ${result.skipped_no_price}`,
       `❌ Errors: ${result.errors}`,
+      ``,
+      `👉 Review & approve at /admin → Affiliates tab`,
     ];
     if (errorMsg) lines.push(``, `<pre>${errorMsg.slice(0, 500)}</pre>`);
 
