@@ -10,6 +10,7 @@ import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/
 import SiteHeader from "@/components/SiteHeader";
 import SiteFooter from "@/components/SiteFooter";
 import MsbTrustBar from "@/components/MsbTrustBar";
+import ExchangeWidget from "@/components/ExchangeWidget";
 import { supabase } from "@/integrations/supabase/client";
 import { getLangFromPath, langPath } from "@/i18n";
 import { useLocation } from "react-router-dom";
