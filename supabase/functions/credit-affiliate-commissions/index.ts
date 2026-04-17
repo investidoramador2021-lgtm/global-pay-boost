@@ -1,6 +1,8 @@
-// Auto-credit affiliate commissions cron.
+// Affiliate commissions scanner (review-first).
 // Scans completed swap_transactions, joins ref_code → partner (via partner_profiles.referral_code OR affiliate_leads.ref_token),
-// computes commission in BTC (0.3% on ChangeNOW, 0.1% on LetsExchange), and credits partner_balances.
+// computes commission in BTC (0.3% on ChangeNOW, 0.1% on LetsExchange), and writes rows to partner_commissions
+// with status='pending_review'. Balances are NOT credited here — admin must approve each row in the Admin Portal,
+// which triggers the credit via approve-affiliate-commission.
 // Idempotent: partner_commissions has UNIQUE(swap_transaction_id), so re-runs are safe.
 import { createClient } from "https://esm.sh/@supabase/supabase-js@2.45.0";
 
