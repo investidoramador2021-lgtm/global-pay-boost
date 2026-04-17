@@ -1,7 +1,11 @@
 /**
- * LiquidityAggregator — Smart-router across ChangeNOW (cn) + LetsExchange (le).
+ * LiquidityAggregator — Coverage-router across ChangeNOW (cn) + LetsExchange (le).
  *
- * Strategy: Always pick the provider returning the highest output amount.
+ * Strategy: ChangeNOW ALWAYS wins when it returns a valid quote (better margin).
+ * LetsExchange is used ONLY as a coverage extender — when CN cannot quote the pair
+ * (unsupported asset, zero/null amount, or error), LE fills the gap.
+ * This expands token coverage without sacrificing primary-provider profits.
+ *
  * Failover: Silent on create-transaction. Quote toast surfaces provider switches.
  *
  * Brand integrity: Provider names never leak to UI. We only expose 'cn' | 'le'
@@ -29,8 +33,9 @@ export type Provider = "cn" | "le";
 
 export interface AggregatedEstimate extends EstimateResult {
   provider: Provider;
-  altAmount?: number | null; // Loser's amount, for badge display
-  isBestRate?: boolean;      // True when LE wins (i.e., not the default cn)
+  altAmount?: number | null; // Other provider's amount, for badge display
+  isBestRate?: boolean;      // True when LE is used (coverage extension)
+  coverageFallback?: boolean; // True when CN couldn't quote and LE filled in
 }
 
 export interface AggregatedTransaction extends TransactionResult {
@@ -41,9 +46,10 @@ const POSITIVE = (n: unknown): number =>
   typeof n === "number" && isFinite(n) && n > 0 ? n : 0;
 
 /**
- * Get best estimate from both providers in parallel.
- * Picks the provider with the highest estimated output.
- * Falls back gracefully if one provider errors.
+ * Get best estimate using ChangeNOW-first coverage routing.
+ * - If CN returns a valid positive amount → use CN (always, regardless of LE).
+ * - If CN fails or returns 0/null → fall back to LE for coverage.
+ * This protects margin while expanding the supported-token surface.
  */
 export async function getBestEstimate(
   from: string,
@@ -51,47 +57,51 @@ export async function getBestEstimate(
   amount: string,
   fixedRate = false
 ): Promise<AggregatedEstimate> {
-  const [cnRes, leRes] = await Promise.allSettled([
-    cnGetEstimate(from, to, amount, fixedRate),
-    leGetEstimate(from, to, amount),
-  ]);
-
-  const cn = cnRes.status === "fulfilled" ? cnRes.value : null;
-  const le = leRes.status === "fulfilled" ? leRes.value : null;
+  // Try CN first (primary, highest margin)
+  let cn: EstimateResult | null = null;
+  try {
+    cn = await cnGetEstimate(from, to, amount, fixedRate);
+  } catch {}
 
   const cnAmt = POSITIVE(cn?.estimatedAmount);
-  const leAmt = POSITIVE(le?.estimatedAmount);
 
-  // Both failed → return cn shape with null
-  if (!cnAmt && !leAmt) {
+  // CN has a valid quote → always use it
+  if (cnAmt > 0) {
     return {
-      estimatedAmount: cn?.estimatedAmount ?? null as any,
-      transactionSpeedForecast: cn?.transactionSpeedForecast ?? null as any,
-      warningMessage: cn?.warningMessage || le?.warningMessage || "Rate unavailable.",
+      estimatedAmount: cnAmt,
+      transactionSpeedForecast: cn!.transactionSpeedForecast,
+      warningMessage: cn!.warningMessage,
       provider: "cn",
       isBestRate: false,
+      coverageFallback: false,
     };
   }
 
-  // LE wins
-  if (leAmt > cnAmt) {
+  // CN can't quote → try LE for coverage
+  let le: EstimateResult | null = null;
+  try {
+    le = await leGetEstimate(from, to, amount);
+  } catch {}
+
+  const leAmt = POSITIVE(le?.estimatedAmount);
+
+  if (leAmt > 0) {
     return {
       estimatedAmount: leAmt,
       transactionSpeedForecast: le!.transactionSpeedForecast,
       warningMessage: le!.warningMessage,
       provider: "le",
-      altAmount: cnAmt || null,
       isBestRate: true,
+      coverageFallback: true,
     };
   }
 
-  // CN wins (or tie → prefer cn for partner attribution stability)
+  // Neither can quote
   return {
-    estimatedAmount: cnAmt,
-    transactionSpeedForecast: cn!.transactionSpeedForecast,
-    warningMessage: cn!.warningMessage,
+    estimatedAmount: cn?.estimatedAmount ?? null as any,
+    transactionSpeedForecast: cn?.transactionSpeedForecast ?? null as any,
+    warningMessage: cn?.warningMessage || le?.warningMessage || "Rate unavailable.",
     provider: "cn",
-    altAmount: leAmt || null,
     isBestRate: false,
   };
 }

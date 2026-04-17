@@ -1,13 +1,13 @@
 ---
 name: Liquidity Aggregator
-description: Smart-routing across ChangeNOW (cn) + LetsExchange (le) with parallel quoting, highest-output winner, silent create-tx failover, and unified storage
+description: Coverage-router across ChangeNOW (cn) + LetsExchange (le) — CN always wins when it can quote; LE used only to extend token coverage when CN can't
 type: feature
 ---
 
 LiquidityAggregator unifies ChangeNOW and LetsExchange behind a provider-agnostic layer.
 
-- **Quoting**: `getBestEstimate` runs both providers in parallel; picks the highest output. Switch toast fires on quote provider change.
-- **Winner selection**: Strict highest-output (no commission stickiness). Tie → cn (partner attribution stability).
+- **Routing strategy**: ChangeNOW-FIRST (margin-priority). CN is always used when it returns a valid positive quote, even if LE would offer more. LE is invoked ONLY as a coverage extender when CN errors or returns 0/null (unsupported pair). This protects primary-provider profits while expanding the supported-token surface.
+- **Quoting**: `getBestEstimate` tries CN first; falls through to LE only if CN can't quote. `coverageFallback: true` flag marks LE-served quotes.
 - **Failover**: Silent on `create-transaction` only. If winning provider fails, secondary attempted automatically.
 - **Storage**: `swap_transactions.provider` (`'cn'|'le'`) + `swap_transactions.mrc_tx_id` (`MRC-XXXXXXXX` format).
 - **Status polling**: `getStatusByProvider(id, provider)` routes to correct API; legacy txs default to `cn`.
