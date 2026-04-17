@@ -108,23 +108,13 @@ const buildLink = (email: string, btc: string) => {
 
 const buildSnippet = (email: string, btc: string, mode: "light" | "dark") => {
   const token = email || btc ? buildRefToken(email, btc) : "your-ref";
-  return `<!-- MRC GlobalPay Instant Swap Widget — full non-custodial swap, any token, live rates -->
-<div style="position:relative;width:100%;max-width:520px;margin:0 auto;">
-  <iframe
-    src="https://mrcglobalpay.com/embed/widget?ref=${token}&theme=${mode}"
-    width="100%"
-    height="680"
-    style="border:0;border-radius:16px;width:100%;max-width:100%;display:block;background:transparent;"
-    loading="lazy"
-    allow="clipboard-write; payment"
-    referrerpolicy="no-referrer-when-downgrade"
-    title="MRC GlobalPay Instant Swap Widget"></iframe>
-  <p style="font:12px/1.4 system-ui,-apple-system,sans-serif;text-align:center;margin:8px 0 0;color:#64748b;">
-    <a href="https://mrcglobalpay.com/?ref=${token}" rel="noopener" style="color:inherit;text-decoration:none;">
-      Powered by <strong>MRC GlobalPay</strong> · Non-custodial swaps
-    </a>
-  </p>
-</div>`;
+  return `<iframe
+  src="https://mrcglobalpay.com/embed/widget?mode=${mode}&ref=${token}"
+  width="100%"
+  height="520"
+  style="border: none; border-radius: 16px; max-width: 100%;"
+  allowfullscreen>
+</iframe>`;
 };
 
 /* ─── Copy Button ─── */
