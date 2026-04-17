@@ -93,7 +93,7 @@ All 6,000+ assets supported by MRC GlobalPay are available for PIX purchases. Th
 | Settlement | Under 60 seconds | 5-30 minutes |
 | Minimum purchase | $0.30 | $10-50 |
 | Custody | Non-custodial (your wallet) | Custodial (exchange holds funds) |
-| Assets available | 500+ | 50-150 |
+| Assets available | 6,000+ | 50-150 |
 | Compliance | FINTRAC MSB (Canada) | CVM-regulated (Brazil) |
 
 For users who value speed, privacy, and direct wallet custody, MRC GlobalPay offers a fundamentally different experience from custodial exchanges.

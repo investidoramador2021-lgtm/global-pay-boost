@@ -101,7 +101,7 @@ All 6,000+ assets on MRC GlobalPay are available via SEPA. The most popular pick
 | Settlement | Under 60 seconds | 10-60 minutes |
 | Minimum | $0.30 | 10-50 EUR |
 | Custody | Non-custodial | Custodial (exchange holds your funds) |
-| Assets | 500+ | 80-200 |
+| Assets | 6,000+ | 80-200 |
 | Compliance | FINTRAC MSB (Canada) | MiCA-regulated (EU) |
 
 For people who want speed, privacy, and direct wallet delivery, MRC GlobalPay offers a different experience than traditional custodial platforms.
