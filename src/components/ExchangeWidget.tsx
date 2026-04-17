@@ -309,11 +309,11 @@ const PICKER_CATEGORIES = [
 
 type PickerCategoryId = typeof PICKER_CATEGORIES[number]["id"];
 
-function matchesPickerCategory(c: Currency, categoryId: PickerCategoryId): boolean {
+function matchesPickerCategory(c: Currency, categoryId: string): boolean {
   const cat = PICKER_CATEGORIES.find((x) => x.id === categoryId);
   if (!cat || !cat.tickers) return true;
   const ticker = c.ticker.toLowerCase();
-  return cat.tickers.includes(ticker);
+  return (cat.tickers as readonly string[]).includes(ticker);
 }
 
 function matchesGuardarianCurrencySearch(c: GuardarianCurrency, query: string): boolean {
