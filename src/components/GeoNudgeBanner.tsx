@@ -98,7 +98,10 @@ const GeoNudgeBanner = () => {
     const bare = stripLangPrefix(pathname);
     localStorage.setItem("user-lang", suggested);
     localStorage.setItem(DISMISS_KEY, "1");
-    navigate(langPath(suggested, bare) + search + hash);
+    // VN-IP users on "/" land on the deep Vietnam Hub instead of generic /vi
+    const isHomeVN = suggested === "vi" && (bare === "/" || bare === "");
+    const target = isHomeVN ? "/vi/vietnam" : langPath(suggested, bare) + search + hash;
+    navigate(target);
     setShow(false);
   };
 
