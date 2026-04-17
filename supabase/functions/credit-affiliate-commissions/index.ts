@@ -102,13 +102,13 @@ Deno.serve(async (req) => {
 
   const result = {
     scanned: 0,
-    credited: 0,
+    pending_created: 0,
     skipped_no_ref: 0,
     skipped_no_partner: 0,
-    skipped_already_paid: 0,
+    skipped_already_logged: 0,
     skipped_no_price: 0,
     errors: 0,
-    total_btc_credited: 0,
+    total_btc_pending: 0,
   };
 
   try {
