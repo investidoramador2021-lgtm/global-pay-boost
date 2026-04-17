@@ -3,7 +3,7 @@ import { Helmet } from "react-helmet-async";
 import {
   Shield, Zap, Link2, DollarSign, Clock, ArrowRight, Infinity as InfinityIcon,
   LayoutDashboard, Wallet, Megaphone, Image as ImageIcon, Code2, FileText,
-  Globe, Lock, CheckCircle2,
+  Globe, Lock, CheckCircle2, AlertCircle, Copy, Check, BarChart3,
 } from "lucide-react";
 import { Slider } from "@/components/ui/slider";
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
