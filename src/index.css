@@ -234,3 +234,61 @@ html[lang='fa'] body { font-family: 'Vazirmatn', 'Inter', sans-serif; }
   0% { background-position: 200% 0; }
   100% { background-position: -200% 0; }
 }
+
+/* ── Widget polish utilities ── */
+@layer utilities {
+  /* Gentle lift + brightness on hover, used for cards & coin selectors */
+  .hover-lift {
+    transition: transform 220ms cubic-bezier(0.22, 1, 0.36, 1),
+                box-shadow 220ms cubic-bezier(0.22, 1, 0.36, 1),
+                border-color 220ms ease,
+                filter 220ms ease;
+    will-change: transform;
+  }
+  .hover-lift:hover {
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-elevated);
+    filter: brightness(1.03);
+  }
+  .hover-lift:active {
+    transform: translateY(0);
+    transition-duration: 90ms;
+  }
+
+  /* Soft premium card style (consistent across widgets) */
+  .card-soft {
+    @apply rounded-xl border border-border bg-card;
+    box-shadow: var(--shadow-card);
+  }
+
+  /* Smooth numeric / rate updates */
+  .rate-tween {
+    transition: color 200ms ease, opacity 200ms ease;
+  }
+
+  /* Glow used by the primary Swap Now CTA */
+  .cta-glow {
+    box-shadow: 0 8px 24px -8px hsl(var(--neon) / 0.55),
+                0 0 0 1px hsl(var(--neon) / 0.25) inset;
+  }
+  .cta-glow:hover:not(:disabled) {
+    box-shadow: 0 14px 32px -8px hsl(var(--neon) / 0.7),
+                0 0 0 1px hsl(var(--neon) / 0.35) inset;
+    transform: translateY(-1px);
+  }
+
+  /* Fade-in on scroll (used via IntersectionObserver or initial paint) */
+  .fade-in-up {
+    animation: fade-in-up 0.55s cubic-bezier(0.22, 1, 0.36, 1) both;
+  }
+}
+
+@keyframes fade-in-up {
+  from { opacity: 0; transform: translateY(12px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes pulse-soft {
+  0%, 100% { opacity: 1; }
+  50%      { opacity: 0.55; }
+}
