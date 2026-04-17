@@ -226,12 +226,22 @@ const WidgetPreview = ({ mode }: { mode: "light" | "dark" }) => {
 const WidgetGenerator = () => {
   const [email, setEmail] = useState("");
   const [btc, setBtc] = useState("");
+  const [emailTouched, setEmailTouched] = useState(false);
+  const [btcTouched, setBtcTouched] = useState(false);
   const [mode, setMode] = useState<"light" | "dark">("dark");
   const [submitted, setSubmitted] = useState(false);
 
   const emailValid = isValidEmail(email);
   const btcValid = isValidBtc(btc);
   const canGenerate = emailValid && btcValid;
+  const showEmailError = emailTouched && email.length > 0 && !emailValid;
+  const showBtcError = btcTouched && btc.length > 0 && !btcValid;
+
+  const handleGenerate = () => {
+    setEmailTouched(true);
+    setBtcTouched(true);
+    if (canGenerate) setSubmitted(true);
+  };
 
   const activeEmail = submitted ? email.trim() : "";
   const activeBtc = submitted ? btc.trim() : "";
@@ -256,11 +266,19 @@ const WidgetGenerator = () => {
               placeholder="you@example.com"
               value={email}
               onChange={(e) => { setEmail(e.target.value); setSubmitted(false); }}
-              className="w-full rounded-xl border border-border bg-background ps-10 pe-4 py-3 font-body text-sm text-foreground outline-none transition-colors focus:border-primary"
+              onBlur={() => setEmailTouched(true)}
+              aria-invalid={showEmailError}
+              className={`w-full rounded-xl border bg-background ps-10 pe-4 py-3 font-body text-sm text-foreground outline-none transition-colors ${
+                showEmailError ? "border-destructive focus:border-destructive" : "border-border focus:border-primary"
+              }`}
               aria-label="Your email address"
             />
           </div>
-          <p className="mt-1 text-[11px] text-muted-foreground">Used to track referred swaps.</p>
+          {showEmailError ? (
+            <p className="mt-1 text-[11px] text-destructive">Please enter a valid email address.</p>
+          ) : (
+            <p className="mt-1 text-[11px] text-muted-foreground">Used to track referred swaps.</p>
+          )}
         </div>
 
         <div>
@@ -276,11 +294,21 @@ const WidgetGenerator = () => {
               placeholder="bc1q… or 1… / 3…"
               value={btc}
               onChange={(e) => { setBtc(e.target.value); setSubmitted(false); }}
-              className="w-full rounded-xl border border-border bg-background ps-10 pe-4 py-3 font-mono text-xs text-foreground outline-none transition-colors focus:border-primary"
+              onBlur={() => setBtcTouched(true)}
+              aria-invalid={showBtcError}
+              className={`w-full rounded-xl border bg-background ps-10 pe-4 py-3 font-mono text-xs text-foreground outline-none transition-colors ${
+                showBtcError ? "border-destructive focus:border-destructive" : "border-border focus:border-primary"
+              }`}
               aria-label="Your BTC wallet address"
             />
           </div>
-          <p className="mt-1 text-[11px] text-muted-foreground">Commissions are paid here automatically.</p>
+          {showBtcError ? (
+            <p className="mt-1 text-[11px] text-destructive">
+              Enter a valid BTC address (starts with bc1, 1, or 3).
+            </p>
+          ) : (
+            <p className="mt-1 text-[11px] text-muted-foreground">Commissions are paid here automatically.</p>
+          )}
         </div>
       </div>
 
@@ -318,7 +346,7 @@ const WidgetGenerator = () => {
         </div>
 
         <button
-          onClick={() => canGenerate && setSubmitted(true)}
+          onClick={handleGenerate}
           disabled={!canGenerate}
           className="btn-shimmer inline-flex items-center justify-center gap-2 rounded-xl bg-primary px-6 py-3 font-display text-sm font-bold text-primary-foreground shadow-neon transition-all duration-100 hover:bg-primary/90 hover:-translate-y-0.5 disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:translate-y-0"
         >
