@@ -30,13 +30,13 @@ async function parseJson(r: Response) {
 }
 
 // LE accepts uppercase tickers and a separate `network` field.
-// We strip common network suffixes from CN-style tickers (usdterc20 → usdt + ETH).
+// LE network codes: ERC20, TRC20, BEP20 (BSC), MATIC, SOL, ARBITRUM, OPTIMISM, BASE, TON, AVAXC, BTC, ETH (native).
 function splitTickerNetwork(raw: string, fallbackNetwork?: string): { code: string; network: string } {
   const t = raw.toLowerCase();
   const map: Array<[RegExp, string, string]> = [
-    [/^(usdt|usdc)erc20$/, '$1', 'ETH'],
-    [/^(usdt|usdc)trc20$/, '$1', 'TRX'],
-    [/^(usdt|usdc)bsc$/, '$1', 'BSC'],
+    [/^(usdt|usdc)erc20$/, '$1', 'ERC20'],
+    [/^(usdt|usdc)trc20$/, '$1', 'TRC20'],
+    [/^(usdt|usdc)bsc$/, '$1', 'BEP20'],
     [/^(usdt|usdc)sol$/, '$1', 'SOL'],
     [/^(usdt|usdc)matic$/, '$1', 'MATIC'],
     [/^(usdt|usdc)arb$/, '$1', 'ARBITRUM'],
@@ -50,7 +50,8 @@ function splitTickerNetwork(raw: string, fallbackNetwork?: string): { code: stri
     const m = t.match(re);
     if (m) return { code: m[1].toUpperCase(), network: net };
   }
-  return { code: t.toUpperCase(), network: (fallbackNetwork || '').toUpperCase() };
+  // Native chains: code === network for BTC/ETH/SOL/TRX/BNB/etc.
+  return { code: t.toUpperCase(), network: (fallbackNetwork || t).toUpperCase() };
 }
 
 async function leFetch(path: string, apiKey: string, init?: RequestInit) {
