@@ -337,11 +337,30 @@ const EmbedWidget = () => {
       >
         <div className="mb-4 flex items-center justify-between gap-3">
           <div className="flex items-center gap-2">
+            {step !== "quote" && (
+              <button
+                type="button"
+                onClick={() => (step === "wallet" ? setStep("quote") : resetFlow())}
+                className="rounded-full border border-white/[0.1] bg-white/[0.06] p-1 text-white/70 transition-colors hover:bg-white/[0.1] hover:text-white"
+                aria-label="Back"
+              >
+                <ArrowLeft className="h-3.5 w-3.5" />
+              </button>
+            )}
             <div className="h-2 w-2 rounded-full bg-emerald-400 animate-pulse" />
-            <span className="text-xs font-medium uppercase tracking-wider text-white/50">{t("widget.tabs.exchange", "Crypto Swap")}</span>
+            <span className="text-xs font-medium uppercase tracking-wider text-white/50">
+              {step === "quote"
+                ? t("widget.tabs.exchange", "Crypto Swap")
+                : step === "wallet"
+                  ? t("widget.recipientAddress", "Recipient Wallet")
+                  : t("widget.depositAddress", "Send Deposit")}
+            </span>
           </div>
           <span className="text-right text-[10px] text-white/30">{t("widget.dustFriendly", "Dust-friendly • From $0.30")}</span>
         </div>
+
+        {step === "quote" && (<>
+
 
         <div className="mb-2 rounded-xl border border-white/[0.06] bg-white/[0.04] p-3">
           <label className="mb-1.5 block text-[10px] uppercase tracking-wider text-white/40">{t("widget.youSend", "You Send")}</label>
