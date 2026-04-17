@@ -264,13 +264,34 @@ const SupportChatWidget = () => {
     scrollRef.current?.scrollTo({ top: scrollRef.current.scrollHeight, behavior: "smooth" });
   }, [messages]);
 
-  // Welcome message — reset when language or route changes; affiliates page gets a sales-pitch greeting
+  // Track which "greeting context" was last shown so we can refresh it on route changes.
+  // Context = "affiliate" on partner pages, "general" everywhere else.
+  const greetedContextRef = useRef<string | null>(null);
+
+  // Welcome message — also re-greet when the user moves to a different *type* of page
+  // (e.g. home → /affiliates) so the bot is immediately on-topic. We only swap the greeting
+  // if the user hasn't actually conversed yet (i.e. only the assistant's own welcome is in the log).
   useEffect(() => {
-    if (open && messages.length === 0) {
-      const onAffiliates = isAffiliateRoute(location.pathname);
-      const greetMap = onAffiliates ? AFFILIATE_WELCOME : WELCOME_MESSAGES;
-      const greet = greetMap[lang] || greetMap.en;
-      setMessages([{ role: "assistant", content: greet(currentPersona.name) }]);
+    if (!open) return;
+
+    const onAffiliates = isAffiliateRoute(location.pathname);
+    const newContext = `${onAffiliates ? "affiliate" : "general"}:${lang}`;
+    const greetMap = onAffiliates ? AFFILIATE_WELCOME : WELCOME_MESSAGES;
+    const greet = greetMap[lang] || greetMap.en;
+    const greetMsg: Msg = { role: "assistant", content: greet(currentPersona.name) };
+
+    // First open on this page → greet
+    if (messages.length === 0) {
+      greetedContextRef.current = newContext;
+      setMessages([greetMsg]);
+      return;
+    }
+
+    // Route category changed AND user hasn't replied yet → swap greeting
+    const userHasReplied = messages.some((m) => m.role === "user");
+    if (!userHasReplied && greetedContextRef.current !== newContext) {
+      greetedContextRef.current = newContext;
+      setMessages([greetMsg]);
     }
   }, [open, lang, location.pathname]);
 
@@ -288,6 +309,12 @@ const SupportChatWidget = () => {
     window.addEventListener("mrc-widget-tab-change", handler);
     return () => window.removeEventListener("mrc-widget-tab-change", handler);
   }, [open, lang]);
+
+  /* ── Reset proactive popup state when route changes so the affiliate page can re-trigger it ── */
+  useEffect(() => {
+    setProactiveShown(false);
+    setProactiveDismissed(false);
+  }, [location.pathname]);
 
   /* ── Proactive 10-second popup on tool pages ── */
   useEffect(() => {
@@ -307,6 +334,7 @@ const SupportChatWidget = () => {
       if (proactiveTimer.current) clearTimeout(proactiveTimer.current);
     };
   }, [location.pathname, open, proactiveDismissed, proactiveShown, lang]);
+
 
   const handleProactiveAccept = () => {
     setProactiveShown(false);
