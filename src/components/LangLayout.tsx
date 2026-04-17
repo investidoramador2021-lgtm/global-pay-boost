@@ -3,6 +3,8 @@ import { Outlet, useLocation } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import { getLangFromPath, languageMeta } from "@/i18n";
 import HreflangTags from "@/components/HreflangTags";
+import LocalizedHubSchema from "@/components/LocalizedHubSchema";
+import GeoNudgeBanner from "@/components/GeoNudgeBanner";
 
 /**
  * Syncs the i18n language with the URL path prefix on every navigation.
