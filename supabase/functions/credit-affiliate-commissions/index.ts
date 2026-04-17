@@ -241,11 +241,55 @@ Deno.serve(async (req) => {
       }
     }
 
+    await notifyTelegram(supabase, result, "ok");
     return new Response(JSON.stringify({ ok: true, ...result }),
       { headers: { ...corsHeaders, "Content-Type": "application/json" } });
   } catch (err) {
     console.error("[credit-affiliate-commissions] fatal", err);
+    await notifyTelegram(supabase, result, "error", String(err));
     return new Response(JSON.stringify({ ok: false, error: String(err), ...result }),
       { status: 500, headers: { ...corsHeaders, "Content-Type": "application/json" } });
   }
 });
+
+async function notifyTelegram(
+  supabase: ReturnType<typeof createClient>,
+  result: {
+    scanned: number;
+    credited: number;
+    skipped_no_partner: number;
+    skipped_already_paid: number;
+    skipped_no_price: number;
+    errors: number;
+    total_btc_credited: number;
+  },
+  status: "ok" | "error",
+  errorMsg?: string,
+) {
+  try {
+    const emoji = status === "ok" ? "✅" : "🚨";
+    const title = status === "ok" ? "Affiliate Commissions Cron" : "Affiliate Commissions Cron — FAILED";
+    const lines = [
+      `${emoji} <b>${title}</b>`,
+      `🕒 ${new Date().toISOString()}`,
+      ``,
+      `🔍 Scanned: <b>${result.scanned}</b>`,
+      `💸 Credited: <b>${result.credited}</b>`,
+      `₿ Total BTC paid: <b>${result.total_btc_credited.toFixed(8)}</b>`,
+      `↩️ Already paid: ${result.skipped_already_paid}`,
+      `⚠️ No partner: ${result.skipped_no_partner}`,
+      `❓ No price: ${result.skipped_no_price}`,
+      `❌ Errors: ${result.errors}`,
+    ];
+    if (errorMsg) lines.push(``, `<pre>${errorMsg.slice(0, 500)}</pre>`);
+
+    await supabase.functions.invoke("telegram-notify", {
+      body: {
+        type: status === "ok" ? "alert" : "error",
+        message: lines.join("\n"),
+      },
+    });
+  } catch (e) {
+    console.warn("[credit-affiliate-commissions] telegram notify failed", e);
+  }
+}
