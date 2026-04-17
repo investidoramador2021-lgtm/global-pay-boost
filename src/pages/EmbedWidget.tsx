@@ -60,15 +60,7 @@ const EmbedWidget = () => {
   const refId = searchParams.get("ref") || "";
   const detectBrowserLang = (): string => {
     if (typeof navigator === "undefined") return "en";
-    const candidates = [
-      ...(navigator.languages || []),
-      navigator.language,
-    ].filter(Boolean);
-    for (const raw of candidates) {
-      const base = raw.toLowerCase().split("-")[0];
-      if (SUPPORTED_LANGS.includes(base)) return base;
-    }
-    return "en";
+    return pickSupportedLang([...(navigator.languages || []), navigator.language]);
   };
   const rawLangParam = searchParams.get("lang");
   const langParam = (rawLangParam || detectBrowserLang()).toLowerCase();
