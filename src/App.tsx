@@ -94,6 +94,23 @@ const EdgeFunctionAliasRedirect = () => {
   return <Navigate to="/" replace />;
 };
 
+/**
+ * Tab alias redirect: /buy and /exchange route to home with the
+ * appropriate `tab` query param so the ExchangeWidget pre-selects the
+ * correct mode. Preserves all other params (to, from, crypto, fiat, amount).
+ */
+const TabAliasRedirect = ({ tab }: { tab: "buy" | "exchange" }) => {
+  const { search } = useLocation();
+  const params = new URLSearchParams(search);
+  if (tab === "buy") {
+    params.set("tab", "buy");
+  } else {
+    params.delete("tab");
+  }
+  const qs = params.toString();
+  return <Navigate to={`/${qs ? `?${qs}` : ""}#exchange`} replace />;
+};
+
 /** All app routes — rendered once at root and once per language prefix */
 const AppRoutes = () => (
   <>
