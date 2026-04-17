@@ -86,25 +86,42 @@ const isValidBtc = (addr: string) => {
   return /^(bc1[a-z0-9]{25,62}|[13][a-km-zA-HJ-NP-Z1-9]{25,34})$/.test(a);
 };
 
-const buildLink = (email: string) =>
-  `https://mrcglobalpay.com/?ref=${encodeURIComponent(email || "your-email")}`;
+// Stable, non-PII referral token derived from email + wallet (first 12 hex chars).
+// We keep email/wallet PRIVATE on our side and only expose this opaque token publicly.
+const buildRefToken = (email: string, btc: string) => {
+  const seed = `${email.trim().toLowerCase()}|${btc.trim()}`;
+  let h1 = 0x811c9dc5;
+  let h2 = 0xdeadbeef;
+  for (let i = 0; i < seed.length; i++) {
+    const c = seed.charCodeAt(i);
+    h1 = Math.imul(h1 ^ c, 16777619) >>> 0;
+    h2 = Math.imul(h2 ^ c, 2246822519) >>> 0;
+  }
+  const hex = (h1.toString(16).padStart(8, "0") + h2.toString(16).padStart(8, "0")).slice(0, 12);
+  return `mrc_${hex}`;
+};
+
+const buildLink = (email: string, btc: string) => {
+  const token = email || btc ? buildRefToken(email, btc) : "your-ref";
+  return `https://mrcglobalpay.com/?ref=${token}`;
+};
 
 const buildSnippet = (email: string, btc: string, mode: "light" | "dark") => {
-  const refEmail = email || "your-email";
-  const wallet = btc || "YOUR_BTC_WALLET";
-  return `<!-- MRC GlobalPay Instant Swap Widget -->
-<div style="max-width:480px;margin:0 auto;">
+  const token = email || btc ? buildRefToken(email, btc) : "your-ref";
+  return `<!-- MRC GlobalPay Instant Swap Widget — full non-custodial swap, any token, live rates -->
+<div style="position:relative;width:100%;max-width:520px;margin:0 auto;">
   <iframe
-    src="https://mrcglobalpay.com/embed/widget?ref=${encodeURIComponent(refEmail)}&payout=${encodeURIComponent(wallet)}&theme=${mode}"
+    src="https://mrcglobalpay.com/embed/widget?ref=${token}&theme=${mode}"
     width="100%"
-    height="640"
-    style="border:0;border-radius:16px;width:100%;max-width:100%;display:block;"
+    height="680"
+    style="border:0;border-radius:16px;width:100%;max-width:100%;display:block;background:transparent;"
     loading="lazy"
-    allow="clipboard-write"
+    allow="clipboard-write; payment"
+    referrerpolicy="no-referrer-when-downgrade"
     title="MRC GlobalPay Instant Swap Widget"></iframe>
-  <p style="font:12px/1.4 system-ui,sans-serif;text-align:center;margin:8px 0 0;">
-    <a href="https://mrcglobalpay.com/?ref=${encodeURIComponent(refEmail)}" rel="noopener">
-      Powered by MRC GlobalPay
+  <p style="font:12px/1.4 system-ui,-apple-system,sans-serif;text-align:center;margin:8px 0 0;color:#64748b;">
+    <a href="https://mrcglobalpay.com/?ref=${token}" rel="noopener" style="color:inherit;text-decoration:none;">
+      Powered by <strong>MRC GlobalPay</strong> · Non-custodial swaps
     </a>
   </p>
 </div>`;
