@@ -1,7 +1,11 @@
 /**
- * LiquidityAggregator — Smart-router across ChangeNOW (cn) + LetsExchange (le).
+ * LiquidityAggregator — Coverage-router across ChangeNOW (cn) + LetsExchange (le).
  *
- * Strategy: Always pick the provider returning the highest output amount.
+ * Strategy: ChangeNOW ALWAYS wins when it returns a valid quote (better margin).
+ * LetsExchange is used ONLY as a coverage extender — when CN cannot quote the pair
+ * (unsupported asset, zero/null amount, or error), LE fills the gap.
+ * This expands token coverage without sacrificing primary-provider profits.
+ *
  * Failover: Silent on create-transaction. Quote toast surfaces provider switches.
  *
  * Brand integrity: Provider names never leak to UI. We only expose 'cn' | 'le'
