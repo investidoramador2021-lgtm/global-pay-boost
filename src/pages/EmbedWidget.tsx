@@ -330,14 +330,14 @@ const EmbedWidget = () => {
 
             <div className="min-w-0 flex-1 text-right">
               <div className="truncate text-xl font-semibold text-white/90">
-                {estimating ? "Loading..." : estimatedAmount ? formatQuoteAmount(estimatedAmount) : "—"}
+                {estimating ? t("widget.loading", "Loading...") : estimatedAmount ? formatQuoteAmount(estimatedAmount) : "—"}
               </div>
               <div className="text-[10px] uppercase tracking-wider text-white/35">
                 {belowMin
-                  ? `Min ${formatQuoteAmount(String(minAmount))} ${fromCurrency?.ticker?.toUpperCase()}`
+                  ? `${t("widget.minimumAmount", "Minimum amount:")} ${formatQuoteAmount(String(minAmount))} ${fromCurrency?.ticker?.toUpperCase()}`
                   : estimatedAmount
-                    ? `Estimated ${toCurrency?.ticker?.toUpperCase()}`
-                    : "Enter an amount"}
+                    ? `${t("widget.estimated", "(estimated)")} ${toCurrency?.ticker?.toUpperCase()}`
+                    : t("widget.enterAmount", "Enter an amount")}
               </div>
             </div>
           </div>
