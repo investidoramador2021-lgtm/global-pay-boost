@@ -113,7 +113,12 @@ Deno.serve(async (req) => {
 
   if (format === "rss") {
     const items = blogPosts
-      .map((p: any) => `    <item>
+      .map((p: any) => {
+        const altLinks = LANGS.map(
+          (l) =>
+            `      <atom:link rel="alternate" hreflang="${l}" href="${SITE}/${l}/blog/${p.slug}" />`
+        ).join("\n");
+        return `    <item>
       <title>${escapeXml(p.title)}</title>
       <link>${SITE}/blog/${p.slug}</link>
       <guid isPermaLink="true">${SITE}/blog/${p.slug}</guid>
@@ -121,11 +126,15 @@ Deno.serve(async (req) => {
       <dc:creator>${escapeXml(p.author_name)}</dc:creator>
       <pubDate>${new Date(p.published_at).toUTCString()}</pubDate>
       <category>${escapeXml(p.category)}</category>
-    </item>`)
+      <atom:link rel="alternate" hreflang="en" href="${SITE}/blog/${p.slug}" />
+${altLinks}
+      <atom:link rel="alternate" hreflang="x-default" href="${SITE}/blog/${p.slug}" />
+    </item>`;
+      })
       .join("\n");
 
     const rss = `<?xml version="1.0" encoding="UTF-8"?>
-<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:dc="http://purl.org/dc/elements/1.1/">
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:xhtml="http://www.w3.org/1999/xhtml">
   <channel>
     <title>MRC GlobalPay Blog</title>
     <link>${SITE}/blog</link>
