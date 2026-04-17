@@ -598,22 +598,36 @@ const Affiliates = () => (
 
       {/* ═══ TRACKING & PAYOUTS ═══ */}
       <section className="border-b border-border bg-muted/30 py-16 sm:py-20">
-        <div className="container mx-auto max-w-3xl px-4 text-center">
-          <h2 className="font-display text-3xl font-bold text-foreground sm:text-4xl">
-            Tracking &amp; Payouts
-          </h2>
-          <p className="mt-4 font-body text-muted-foreground leading-relaxed">
-            Your widget tracks swaps using your email. Commissions are paid automatically to the
-            BTC wallet you provide. For detailed real-time stats, register for free to access your
-            Partner Dashboard.
-          </p>
-          <div className="mt-7">
-            <a
-              href="/partners"
-              className="btn-shimmer inline-flex items-center justify-center gap-2 rounded-xl bg-primary px-7 py-3 font-display text-sm font-bold text-primary-foreground shadow-neon transition-all duration-100 hover:bg-primary/90 hover:-translate-y-0.5"
-            >
-              Go to Partner Dashboard <ArrowRight className="h-4 w-4" />
-            </a>
+        <div className="container mx-auto max-w-4xl px-4">
+          <div className="rounded-3xl border border-primary/20 bg-card p-8 sm:p-12 text-center shadow-lg relative overflow-hidden">
+            <div className="absolute inset-0 bg-gradient-to-br from-primary/5 via-transparent to-[hsl(var(--neon))]/5" aria-hidden />
+            <div className="relative">
+              <div className="inline-flex items-center gap-2 rounded-full border border-primary/30 bg-primary/10 px-3 py-1 text-[11px] font-display font-semibold text-primary">
+                <Wallet className="h-3 w-3" /> Tracking &amp; Payouts
+              </div>
+              <h2 className="mt-4 font-display text-3xl font-extrabold text-foreground sm:text-4xl tracking-tight">
+                Track every swap. Get paid automatically.
+              </h2>
+              <p className="mt-4 font-body text-muted-foreground leading-relaxed max-w-2xl mx-auto">
+                Your widget tracks swaps using your email. Commissions are paid directly to the BTC
+                wallet you provide — no minimums, no manual claims. For detailed real-time stats,
+                register for free to unlock your Partner Dashboard.
+              </p>
+              <div className="mt-7 flex flex-col sm:flex-row items-center justify-center gap-3">
+                <a
+                  href="/partners"
+                  className="btn-shimmer inline-flex items-center justify-center gap-2 rounded-xl bg-primary px-8 py-3.5 font-display text-base font-bold text-primary-foreground shadow-neon transition-all duration-100 hover:bg-primary/90 hover:-translate-y-0.5"
+                >
+                  Go to Partner Dashboard <ArrowRight className="h-4 w-4" />
+                </a>
+                <a
+                  href="#generate"
+                  className="inline-flex items-center justify-center gap-2 rounded-xl border border-border bg-background px-6 py-3.5 font-display text-sm font-semibold text-foreground transition-colors hover:border-primary/40 hover:text-primary"
+                >
+                  Generate Widget Instead
+                </a>
+              </div>
+            </div>
           </div>
         </div>
       </section>
