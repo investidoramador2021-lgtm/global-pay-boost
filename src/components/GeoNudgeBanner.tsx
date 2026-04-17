@@ -75,7 +75,15 @@ const GeoNudgeBanner = () => {
         if (!country) return;
 
         const hubLang = COUNTRY_TO_LANG[country.toUpperCase()];
-        if (!hubLang || hubLang === currentLang) return;
+        if (!hubLang) return;
+
+        // Special case for Vietnam: the deep hub is /vi/vietnam.
+        // Show the nudge on ANY page that isn't already the hub (even if user is on /vi).
+        if (hubLang === "vi") {
+          if (pathname === "/vi/vietnam" || pathname === "/vi/vietnam/") return;
+        } else if (hubLang === currentLang) {
+          return;
+        }
         if (cancelled) return;
 
         setSuggested(hubLang);
@@ -98,9 +106,10 @@ const GeoNudgeBanner = () => {
     const bare = stripLangPrefix(pathname);
     localStorage.setItem("user-lang", suggested);
     localStorage.setItem(DISMISS_KEY, "1");
-    // VN-IP users on "/" land on the deep Vietnam Hub instead of generic /vi
-    const isHomeVN = suggested === "vi" && (bare === "/" || bare === "");
-    const target = isHomeVN ? "/vi/vietnam" : langPath(suggested, bare) + search + hash;
+    // Vietnam always deep-links to the hub regardless of which page they're on
+    const target = suggested === "vi"
+      ? "/vi/vietnam"
+      : langPath(suggested, bare) + search + hash;
     navigate(target);
     setShow(false);
   };
