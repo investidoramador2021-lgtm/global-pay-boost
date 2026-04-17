@@ -43,6 +43,15 @@ const Index = () => {
     "@context": "https://schema.org",
     "@graph": [
       {
+        "@type": "Organization",
+        "@id": `${homeUrl}#legalentity`,
+        name: "MRC GlobalPay",
+        url: homeUrl,
+        logo: "https://mrcglobalpay.com/icon-512.png",
+        description: "MRC GlobalPay is a non-custodial crypto exchange — a Registered Canadian MSB (FINTRAC #C100000015) operated by MRC Pay International Corp.",
+        sameAs: ["https://twitter.com/mrcglobalpay"],
+        identifier: "C100000015"
+      },
         "@type": "FinancialService",
         "@id": `${homeUrl}#organization`,
         name: "MRC GlobalPay",
