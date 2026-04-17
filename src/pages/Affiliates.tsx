@@ -243,8 +243,9 @@ const WidgetGenerator = () => {
     if (canGenerate) setSubmitted(true);
   };
 
-  const activeEmail = submitted ? email.trim() : "";
-  const activeBtc = submitted ? btc.trim() : "";
+  // Live updates the moment inputs are valid (no need to click Generate).
+  const activeEmail = emailValid ? email.trim() : "";
+  const activeBtc = btcValid ? btc.trim() : "";
 
   const link = useMemo(() => buildLink(activeEmail), [activeEmail]);
   const snippet = useMemo(() => buildSnippet(activeEmail, activeBtc, mode), [activeEmail, activeBtc, mode]);
