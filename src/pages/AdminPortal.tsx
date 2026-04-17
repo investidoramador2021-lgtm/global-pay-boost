@@ -1347,6 +1347,116 @@ const AdminPortal = () => {
                   )}
                 </CardContent>
               </Card>
+
+
+              {/* ═══ COMMISSIONS LEDGER + CRON CONTROL ═══ */}
+              <Card className="border-border/40 bg-card/40 backdrop-blur-sm">
+                <CardHeader className="flex flex-row items-start justify-between gap-4">
+                  <div>
+                    <CardTitle className="text-lg flex items-center gap-2">
+                      <DollarSign className="w-5 h-5" /> Affiliate Commissions Ledger
+                    </CardTitle>
+                    <p className="text-xs text-muted-foreground mt-1">
+                      Auto-credited every 2 days at 00:05 UTC. Rates: <code className="text-primary">0.3% ChangeNOW</code> · <code className="text-primary">0.1% LetsExchange</code>. Idempotent per swap.
+                    </p>
+                  </div>
+                  <Button
+                    size="sm"
+                    className="gap-2"
+                    disabled={runningCron}
+                    onClick={async () => {
+                      setRunningCron(true);
+                      try {
+                        const { data: { session } } = await supabase.auth.getSession();
+                        const resp = await fetch(`${import.meta.env.VITE_SUPABASE_URL}/functions/v1/credit-affiliate-commissions`, {
+                          method: "POST",
+                          headers: {
+                            "Content-Type": "application/json",
+                            ...(session?.access_token ? { Authorization: `Bearer ${session.access_token}` } : {}),
+                          },
+                        });
+                        const json = await resp.json();
+                        toast({
+                          title: json.ok ? "Commissions cron run complete" : "Cron run failed",
+                          description: json.ok
+                            ? `Scanned ${json.scanned} · Credited ${json.credited} · ${Number(json.total_btc_credited || 0).toFixed(8)} BTC`
+                            : String(json.error || "Unknown error"),
+                          variant: json.ok ? "default" : "destructive",
+                        });
+                        await loadDashboard();
+                      } catch (e: any) {
+                        toast({ title: "Cron run failed", description: String(e?.message || e), variant: "destructive" });
+                      } finally {
+                        setRunningCron(false);
+                      }
+                    }}
+                  >
+                    <Zap className="w-3.5 h-3.5" /> {runningCron ? "Running…" : "Run cron now"}
+                  </Button>
+                </CardHeader>
+                <CardContent className="space-y-4">
+                  <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
+                    <div className="rounded-lg border border-border/40 p-3 bg-black/20">
+                      <p className="text-[10px] uppercase text-muted-foreground">Total Credits</p>
+                      <p className="text-xl font-bold text-foreground">{commissions.length}</p>
+                    </div>
+                    <div className="rounded-lg border border-border/40 p-3 bg-black/20">
+                      <p className="text-[10px] uppercase text-muted-foreground">Total BTC Paid</p>
+                      <p className="text-xl font-bold text-primary font-mono">{commissions.reduce((s, c) => s + Number(c.commission_btc || 0), 0).toFixed(8)}</p>
+                    </div>
+                    <div className="rounded-lg border border-border/40 p-3 bg-black/20">
+                      <p className="text-[10px] uppercase text-muted-foreground">Total Volume USD</p>
+                      <p className="text-xl font-bold text-foreground font-mono">${commissions.reduce((s, c) => s + Number(c.volume_usd || 0), 0).toLocaleString(undefined, { maximumFractionDigits: 2 })}</p>
+                    </div>
+                    <div className="rounded-lg border border-border/40 p-3 bg-black/20">
+                      <p className="text-[10px] uppercase text-muted-foreground">Unique Partners</p>
+                      <p className="text-xl font-bold text-foreground">{new Set(commissions.map((c) => c.partner_id)).size}</p>
+                    </div>
+                  </div>
+
+                  {commissions.length === 0 ? (
+                    <p className="text-sm text-muted-foreground py-8 text-center">No commissions credited yet. Click "Run cron now" to scan recent swaps.</p>
+                  ) : (
+                    <Table>
+                      <TableHeader>
+                        <TableRow>
+                          <TableHead>Date</TableHead>
+                          <TableHead>Partner</TableHead>
+                          <TableHead>Source</TableHead>
+                          <TableHead>Provider</TableHead>
+                          <TableHead>Pair</TableHead>
+                          <TableHead className="text-right">Volume USD</TableHead>
+                          <TableHead className="text-right">Rate</TableHead>
+                          <TableHead className="text-right">BTC Credited</TableHead>
+                          <TableHead>Ref</TableHead>
+                        </TableRow>
+                      </TableHeader>
+                      <TableBody>
+                        {commissions.slice(0, 100).map((c) => {
+                          const partner = partners.find((p) => p.id === c.partner_id);
+                          return (
+                            <TableRow key={c.id}>
+                              <TableCell className="text-xs whitespace-nowrap">{new Date(c.created_at).toLocaleString()}</TableCell>
+                              <TableCell className="text-xs">{partner ? `${partner.first_name} ${partner.last_name}` : <span className="text-muted-foreground font-mono">{c.partner_id.slice(0, 8)}…</span>}</TableCell>
+                              <TableCell>
+                                <span className={`text-[10px] px-2 py-0.5 rounded-md uppercase ${c.source === "affiliate_widget" ? "bg-blue-500/15 text-blue-400" : "bg-cyan-500/15 text-cyan-400"}`}>
+                                  {c.source === "affiliate_widget" ? "widget" : "referral"}
+                                </span>
+                              </TableCell>
+                              <TableCell><span className="text-[10px] uppercase font-mono text-muted-foreground">{c.provider}</span></TableCell>
+                              <TableCell className="text-xs uppercase font-mono">{c.from_currency} → {c.to_currency}</TableCell>
+                              <TableCell className="text-right font-mono text-xs">${Number(c.volume_usd).toLocaleString(undefined, { maximumFractionDigits: 2 })}</TableCell>
+                              <TableCell className="text-right font-mono text-xs">{(Number(c.commission_rate) * 100).toFixed(2)}%</TableCell>
+                              <TableCell className="text-right font-mono text-xs text-primary">{Number(c.commission_btc).toFixed(8)}</TableCell>
+                              <TableCell><code className="text-[10px] text-muted-foreground">{c.ref_code}</code></TableCell>
+                            </TableRow>
+                          );
+                        })}
+                      </TableBody>
+                    </Table>
+                  )}
+                </CardContent>
+              </Card>
             </TabsContent>
           </Tabs>
         </main>
