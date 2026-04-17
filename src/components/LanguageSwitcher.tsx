@@ -80,11 +80,10 @@ const LanguageSwitcher = () => {
     <div ref={containerRef} className="relative">
       <button
         onClick={() => setOpen((v) => !v)}
-        className="flex h-9 items-center gap-1.5 rounded-lg border border-border px-2.5 text-muted-foreground transition-colors hover:bg-accent hover:text-foreground"
+        className="flex h-9 items-center gap-2 rounded-lg border border-border px-2.5 text-muted-foreground transition-colors hover:bg-accent hover:text-foreground"
         aria-label="Switch language"
         title="Switch language"
       >
-        <Globe className="h-3.5 w-3.5 shrink-0" aria-hidden />
         <img src={flagUrl(currentLang)} alt="" className="h-5 w-5 rounded-full object-cover" />
         <span className="hidden text-xs font-medium sm:inline">{currentMeta.native}</span>
       </button>
