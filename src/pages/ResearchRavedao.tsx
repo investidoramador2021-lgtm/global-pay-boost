@@ -404,7 +404,7 @@ const ResearchRavedao = () => {
             Swap RAVE Instantly
           </h3>
           <p className="mt-2 text-sm text-muted-foreground">
-            500+ pairs including RAVE · No registration · Under 60 seconds · Canadian MSB
+            6,000+ pairs including RAVE · No registration · Under 60 seconds · Canadian MSB
           </p>
           <Link
             to="/exchange/rave-to-usdt"

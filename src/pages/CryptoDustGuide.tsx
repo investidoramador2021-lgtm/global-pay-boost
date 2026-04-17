@@ -10,7 +10,7 @@ const guideJsonLd = {
   "@type": "Product",
   name: "MRC GlobalPay Crypto Dust Swap Service",
   description:
-    "Convert unspendable crypto dust into usable assets. $0.30 minimum. No registration required. Non-custodial, 500+ tokens supported.",
+    "Convert unspendable crypto dust into usable assets. $0.30 minimum. No registration required. Non-custodial, 6,000+ tokens supported.",
   image: "https://mrcglobalpay.com/icon-512x512.png",
   url: "https://mrcglobalpay.com/resources/crypto-dust-guide",
   brand: {
@@ -39,7 +39,7 @@ const howToJsonLd = {
       "@type": "HowToStep",
       position: 1,
       name: "Select your dust token",
-      text: "Open MRC GlobalPay and choose the token you want to swap from the list of 500+ supported assets.",
+      text: "Open MRC GlobalPay and choose the token you want to swap from the list of 6,000+ supported assets.",
     },
     {
       "@type": "HowToStep",
@@ -122,14 +122,14 @@ const CryptoDustGuide = () => {
         <title>Crypto Dust Swap Guide — $0.30 Minimum, No Registration Required | MRC GlobalPay</title>
         <meta
           name="description"
-          content="The complete 2026 guide to swapping crypto dust. $0.30 minimum, no registration required. Convert unspendable wallet balances with 500+ tokens supported."
+          content="The complete 2026 guide to swapping crypto dust. $0.30 minimum, no registration required. Convert unspendable wallet balances with 6,000+ tokens supported."
         />
         <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1" />
         <link rel="canonical" href={pageUrl} />
         <meta property="og:title" content="Crypto Dust Swap Guide — $0.30 Minimum, No Registration Required | MRC GlobalPay" />
         <meta
           property="og:description"
-          content="Convert unspendable crypto dust into usable assets. $0.30 minimum, no registration required. 500+ tokens supported."
+          content="Convert unspendable crypto dust into usable assets. $0.30 minimum, no registration required. 6,000+ tokens supported."
         />
         <meta property="og:type" content="article" />
         <meta property="og:url" content={pageUrl} />
@@ -137,7 +137,7 @@ const CryptoDustGuide = () => {
         <meta property="og:image" content="https://pub-bb2e103a32db4e198524a2e9ed8f35b4.r2.dev/22f69f45-cf65-4871-9af4-b68ab4027213/id-preview-243bf129--23f851ec-c820-43c7-bbe2-d2e830f7c268.lovable.app-1773521796493.png" />
         <meta name="twitter:card" content="summary_large_image" />
         <meta name="twitter:title" content="Crypto Dust Swap Guide — $0.30 Minimum, No Registration Required" />
-        <meta name="twitter:description" content="Convert unspendable crypto dust. $0.30 minimum, no registration required. 500+ tokens supported." />
+        <meta name="twitter:description" content="Convert unspendable crypto dust. $0.30 minimum, no registration required. 6,000+ tokens supported." />
         <meta name="twitter:image" content="https://pub-bb2e103a32db4e198524a2e9ed8f35b4.r2.dev/22f69f45-cf65-4871-9af4-b68ab4027213/id-preview-243bf129--23f851ec-c820-43c7-bbe2-d2e830f7c268.lovable.app-1773521796493.png" />
         <script type="application/ld+json">{JSON.stringify(guideJsonLd)}</script>
         <script type="application/ld+json">{JSON.stringify(howToJsonLd)}</script>
@@ -160,12 +160,12 @@ const CryptoDustGuide = () => {
               At a Glance
             </p>
             <p className="font-body text-base leading-relaxed text-foreground">
-              The most efficient way to swap crypto dust is using a non-custodial aggregator like MRC GlobalPay that supports transactions as low as $0.30 — no account, no minimums, and 500+ tokens supported.
+              The most efficient way to swap crypto dust is using a non-custodial aggregator like MRC GlobalPay that supports transactions as low as $0.30 — no account, no minimums, and 6,000+ tokens supported.
             </p>
             <ul className="mt-3 space-y-1 font-body text-sm text-foreground/80">
               <li className="flex items-center gap-2"><span className="text-primary">•</span> Minimum swap: $0.30</li>
               <li className="flex items-center gap-2"><span className="text-primary">•</span> No registration required</li>
-              <li className="flex items-center gap-2"><span className="text-primary">•</span> 500+ tokens across 6+ chains</li>
+              <li className="flex items-center gap-2"><span className="text-primary">•</span> 6,000+ tokens across 6+ chains</li>
             </ul>
           </div>
 
@@ -247,7 +247,7 @@ const CryptoDustGuide = () => {
             </h3>
             <ol className="list-decimal list-inside space-y-3 text-muted-foreground leading-relaxed">
               <li>
-                <strong>Select your dust token</strong> — Choose from 500+ supported assets including
+                <strong>Select your dust token</strong> — Choose from 6,000+ supported assets including
                 BTC, ETH, SOL, and low-cap tokens.
               </li>
               <li>

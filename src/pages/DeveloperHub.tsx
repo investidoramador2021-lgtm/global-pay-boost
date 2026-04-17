@@ -49,7 +49,7 @@ const jsonLd = {
   "@context": "https://schema.org",
   "@type": "WebPage",
   name: "Developer Hub — Build Your Own Crypto Exchange | MRC GlobalPay",
-  description: "Access institutional-grade liquidity, 500+ assets, and automated settlement rails. Integrate our non-custodial API or Widget in minutes.",
+  description: "Access institutional-grade liquidity, 6,000+ assets, and automated settlement rails. Integrate our non-custodial API or Widget in minutes.",
   url: "https://mrcglobalpay.com/developer",
   isPartOf: { "@type": "WebSite", name: "MRC GlobalPay", url: "https://mrcglobalpay.com" },
   publisher: {
@@ -69,7 +69,7 @@ const faqJsonLd = {
   "@context": "https://schema.org",
   "@type": "FAQPage",
   mainEntity: [
-    { "@type": "Question", name: "How do I embed the MRC GlobalPay swap widget?", acceptedAnswer: { "@type": "Answer", text: "Copy the one-line iframe snippet from the Developer Hub page and paste it into your HTML. The widget supports 500+ tokens with live pricing and requires no API key." } },
+    { "@type": "Question", name: "How do I embed the MRC GlobalPay swap widget?", acceptedAnswer: { "@type": "Answer", text: "Copy the one-line iframe snippet from the Developer Hub page and paste it into your HTML. The widget supports 6,000+ tokens with live pricing and requires no API key." } },
     { "@type": "Question", name: "Can I pre-fill the swap pair via URL parameters?", acceptedAnswer: { "@type": "Answer", text: "Yes. Use ?from=BTC&to=USDT query parameters on the widget URL or the main exchange to pre-select trading pairs for your users." } },
     { "@type": "Question", name: "Does MRC GlobalPay require an account?", acceptedAnswer: { "@type": "Answer", text: "MRC GlobalPay is a registration-free platform. You can swap crypto directly from your wallet without creating an account." } },
   ],
@@ -100,7 +100,7 @@ curl -s https://api.mrcglobalpay.com/currencies \\
       "hasExternalId": false,
       "isFiat": false
     }
-    // ... 500+ assets
+    // ... 6,000+ assets
   ]
 }`,
   transaction: `POST /api/v1/create_transaction
@@ -219,11 +219,11 @@ const DeveloperHub = () => (
   <>
     <Helmet>
       <title>Developer Hub — Build Your Own Crypto Exchange | MRC GlobalPay</title>
-      <meta name="description" content="Access institutional-grade liquidity, 500+ assets, and automated settlement rails. Integrate our non-custodial API or Widget in minutes. Canadian MSB registered." />
+      <meta name="description" content="Access institutional-grade liquidity, 6,000+ assets, and automated settlement rails. Integrate our non-custodial API or Widget in minutes. Canadian MSB registered." />
       <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1" />
       <link rel="canonical" href="https://mrcglobalpay.com/developer" />
       <meta property="og:title" content="Developer Hub — Build Your Own Crypto Exchange | MRC GlobalPay" />
-      <meta property="og:description" content="Access institutional-grade liquidity, 500+ assets, and automated settlement rails. Integrate in minutes." />
+      <meta property="og:description" content="Access institutional-grade liquidity, 6,000+ assets, and automated settlement rails. Integrate in minutes." />
       <meta property="og:url" content="https://mrcglobalpay.com/developer" />
       <meta property="og:type" content="website" />
       <meta property="og:site_name" content="MRC GlobalPay" />
@@ -259,7 +259,7 @@ const DeveloperHub = () => (
                 <span className="text-gradient-neon">MRC&nbsp;Global&nbsp;Pay.</span>
               </h1>
               <p className="mt-5 max-w-lg text-base leading-relaxed text-[hsl(210_20%_65%)] sm:text-lg">
-                Access institutional-grade liquidity, 500+ assets, and automated settlement rails.
+                Access institutional-grade liquidity, 6,000+ assets, and automated settlement rails.
                 Integrate our non-custodial API or Widget in minutes.
               </p>
               <div className="mt-8 flex flex-wrap gap-3">
@@ -279,7 +279,7 @@ const DeveloperHub = () => (
               {/* Stats */}
               <div className="mt-8 grid grid-cols-3 gap-4">
                 {[
-                  { value: "500+", label: "Assets" },
+                  { value: "6,000+", label: "Assets" },
                   { value: "700+", label: "Liquidity Sources" },
                   { value: "<60s", label: "Settlement" },
                 ].map((s) => (
@@ -340,7 +340,7 @@ const DeveloperHub = () => (
                 icon: Code2,
                 title: "Instant Widget",
                 subtitle: "No-code solution for websites",
-                desc: "One-line iframe embed with live pricing, 500+ tokens, and deep-link parameters. No API key required — works out of the box on any website or blog.",
+                desc: "One-line iframe embed with live pricing, 6,000+ tokens, and deep-link parameters. No API key required — works out of the box on any website or blog.",
                 cta: { label: "Get Widget", href: "/get-widget" },
               },
               {
@@ -454,7 +454,7 @@ const DeveloperHub = () => (
           <h2 className="font-display text-2xl font-bold text-foreground text-center sm:text-3xl mb-10">Developer FAQ</h2>
           <div className="mx-auto max-w-2xl space-y-3">
             {[
-              { q: "How do I embed the MRC GlobalPay swap widget?", a: "Copy the one-line iframe snippet from the Quick Start section and paste it into your HTML. The widget supports 500+ tokens with live pricing and requires no API key." },
+              { q: "How do I embed the MRC GlobalPay swap widget?", a: "Copy the one-line iframe snippet from the Quick Start section and paste it into your HTML. The widget supports 6,000+ tokens with live pricing and requires no API key." },
               { q: "Can I pre-fill the swap pair via URL parameters?", a: "Yes. Use ?from=BTC&to=USDT query parameters on the widget URL or the main exchange to pre-select trading pairs for your users." },
               { q: "Does MRC GlobalPay require an account?", a: "MRC GlobalPay is a registration-free platform. You can swap crypto directly from your wallet without creating an account. We are a Canadian-registered MSB with FINTRAC." },
               { q: "Is there a rate limit on the widget?", a: "The embedded widget uses the same live pricing engine as our main site. There are no API keys or rate limits — it works out of the box." },
@@ -508,7 +508,7 @@ const DeveloperHub = () => (
                 </tbody>
               </table>
             </div>
-            <p className="mt-2 text-xs text-muted-foreground">* Representative sample — 500+ tokens supported across all major blockchains.</p>
+            <p className="mt-2 text-xs text-muted-foreground">* Representative sample — 6,000+ tokens supported across all major blockchains.</p>
           </div>
 
           {/* Deep-links */}

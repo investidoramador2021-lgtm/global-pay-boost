@@ -17,7 +17,7 @@ const shadowFaqs = [
   },
   {
     q: "Can I buy crypto with PIX in Brazil?",
-    a: "Yes. MRC GlobalPay supports PIX as an instant payment method for buying Bitcoin, Ethereum, Solana, and 500+ cryptocurrencies. PIX payments confirm in under 10 seconds, and your crypto is delivered to your wallet in under 60 seconds. No account required.",
+    a: "Yes. MRC GlobalPay supports PIX as an instant payment method for buying Bitcoin, Ethereum, Solana, and 6,000+ cryptocurrencies. PIX payments confirm in under 10 seconds, and your crypto is delivered to your wallet in under 60 seconds. No account required.",
   },
   {
     q: "Is PIX safe for buying cryptocurrency?",
@@ -29,7 +29,7 @@ const shadowFaqs = [
   },
   {
     q: "Can I buy crypto with a SEPA bank transfer in Europe?",
-    a: "Yes. MRC GlobalPay accepts SEPA Instant and standard SEPA transfers for buying Bitcoin, Ethereum, Solana, and 500+ other cryptocurrencies. SEPA payments typically settle in seconds (Instant) or within one business day (standard), and your crypto is delivered directly to your personal wallet. No account required.",
+    a: "Yes. MRC GlobalPay accepts SEPA Instant and standard SEPA transfers for buying Bitcoin, Ethereum, Solana, and 6,000+ other cryptocurrencies. SEPA payments typically settle in seconds (Instant) or within one business day (standard), and your crypto is delivered directly to your personal wallet. No account required.",
   },
   {
     q: "What are the fees for buying crypto with SEPA?",
@@ -37,7 +37,7 @@ const shadowFaqs = [
   },
   {
     q: "Can I buy crypto with a credit or debit card?",
-    a: "Yes. MRC GlobalPay accepts Visa and Mastercard (credit, debit, prepaid, and virtual cards) for buying Bitcoin, Ethereum, Solana, and 500+ cryptocurrencies. Card payments confirm instantly, and your crypto is delivered to your wallet in under 60 seconds. No account required.",
+    a: "Yes. MRC GlobalPay accepts Visa and Mastercard (credit, debit, prepaid, and virtual cards) for buying Bitcoin, Ethereum, Solana, and 6,000+ cryptocurrencies. Card payments confirm instantly, and your crypto is delivered to your wallet in under 60 seconds. No account required.",
   },
   {
     q: "Is it safe to buy crypto with a card?",

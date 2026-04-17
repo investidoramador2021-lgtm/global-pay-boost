@@ -41,7 +41,7 @@ const howToJsonLd = {
       "@type": "HowToStep",
       position: 2,
       name: "Select your destination token",
-      text: "Choose SOL, ETH, USDT, or any of 500+ supported tokens as the receiving asset.",
+      text: "Choose SOL, ETH, USDT, or any of 6,000+ supported tokens as the receiving asset.",
     },
     {
       "@type": "HowToStep",
@@ -67,14 +67,14 @@ const FractalBitcoinSwap = () => {
         <title>Fractal Bitcoin Swap | Instant FB to SOL & ETH | MRC GlobalPay</title>
         <meta
           name="description"
-          content="Swap Fractal Bitcoin to Solana, Ethereum, and 500+ tokens instantly. No account, no minimums. Non-custodial cross-chain swaps."
+          content="Swap Fractal Bitcoin to Solana, Ethereum, and 6,000+ tokens instantly. No account, no minimums. Non-custodial cross-chain swaps."
         />
         <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1" />
         <link rel="canonical" href={pageUrl} />
         <meta property="og:title" content="Fractal Bitcoin Swap | Instant FB to SOL & ETH" />
         <meta
           property="og:description"
-          content="Swap Fractal Bitcoin to Solana, Ethereum, and 500+ tokens instantly. No account required."
+          content="Swap Fractal Bitcoin to Solana, Ethereum, and 6,000+ tokens instantly. No account required."
         />
         <meta property="og:type" content="article" />
         <meta property="og:url" content={pageUrl} />
@@ -82,7 +82,7 @@ const FractalBitcoinSwap = () => {
         <meta property="og:image" content="https://pub-bb2e103a32db4e198524a2e9ed8f35b4.r2.dev/22f69f45-cf65-4871-9af4-b68ab4027213/id-preview-243bf129--23f851ec-c820-43c7-bbe2-d2e830f7c268.lovable.app-1773521796493.png" />
         <meta name="twitter:card" content="summary_large_image" />
         <meta name="twitter:title" content="Fractal Bitcoin Swap | Instant FB to SOL & ETH | MRC GlobalPay" />
-        <meta name="twitter:description" content="Swap Fractal Bitcoin to Solana, Ethereum, and 500+ tokens instantly. No account required." />
+        <meta name="twitter:description" content="Swap Fractal Bitcoin to Solana, Ethereum, and 6,000+ tokens instantly. No account required." />
         <meta name="twitter:image" content="https://pub-bb2e103a32db4e198524a2e9ed8f35b4.r2.dev/22f69f45-cf65-4871-9af4-b68ab4027213/id-preview-243bf129--23f851ec-c820-43c7-bbe2-d2e830f7c268.lovable.app-1773521796493.png" />
         <script type="application/ld+json">{JSON.stringify(guideJsonLd)}</script>
         <script type="application/ld+json">{JSON.stringify(howToJsonLd)}</script>
@@ -171,7 +171,7 @@ const FractalBitcoinSwap = () => {
                 <strong>Select Fractal Bitcoin</strong> as the source token in the exchange widget.
               </li>
               <li>
-                <strong>Choose your destination</strong> — SOL, ETH, USDT, USDC, or any of 500+ tokens.
+                <strong>Choose your destination</strong> — SOL, ETH, USDT, USDC, or any of 6,000+ tokens.
               </li>
               <li>
                 <strong>Enter the amount</strong> and paste your destination wallet address.

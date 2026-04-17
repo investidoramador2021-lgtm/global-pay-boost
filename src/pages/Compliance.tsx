@@ -24,7 +24,7 @@ const Compliance = () => (
           legalName: "MRC Global Pay",
           url: "https://mrcglobalpay.com",
           description:
-            "FINTRAC-registered Money Services Business providing non-custodial crypto-to-crypto swaps from $0.30. 500+ assets. No registration required.",
+            "FINTRAC-registered Money Services Business providing non-custodial crypto-to-crypto swaps from $0.30. 6,000+ assets. No registration required.",
           address: {
             "@type": "PostalAddress",
              streetAddress: "116 Albert Street, Suite 300",

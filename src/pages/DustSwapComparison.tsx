@@ -19,7 +19,7 @@ const comparisonJsonLd = {
   "@type": "Product",
   name: "MRC GlobalPay Micro-Swap Service",
   description:
-    "No-minimum crypto exchange with $0.30 minimum swap. No registration required. Non-custodial, instant settlement, 500+ assets.",
+    "No-minimum crypto exchange with $0.30 minimum swap. No registration required. Non-custodial, instant settlement, 6,000+ assets.",
   image: "https://mrcglobalpay.com/icon-512x512.png",
   url: "https://mrcglobalpay.com/dust-swap-comparison",
   brand: {
@@ -81,7 +81,7 @@ const features: Feature[] = [
   { label: "Fractal BTC Support", mrc: true, changenow: false, simpleswap: false, changelly: false },
   { label: "Crypto Dust Conversion", mrc: true, changenow: false, simpleswap: false, changelly: false },
   { label: "Non-Custodial Swaps", mrc: true, changenow: true, simpleswap: true, changelly: true },
-  { label: "500+ Supported Assets", mrc: true, changenow: true, simpleswap: false, changelly: true },
+  { label: "6,000+ Supported Assets", mrc: true, changenow: true, simpleswap: false, changelly: true },
   { label: "Fiat On-Ramp", mrc: true, changenow: true, simpleswap: false, changelly: true },
   { label: "Micro-Swap Optimization", mrc: true, changenow: false, simpleswap: false, changelly: false },
   { label: "Canadian MSB Registered", mrc: true, changenow: false, simpleswap: false, changelly: false },
@@ -253,7 +253,7 @@ const DustSwapComparison = () => {
               <p>
                 MRC GlobalPay is one of the only platforms supporting{" "}
                 <strong className="text-foreground">Fractal Bitcoin (fBTC)</strong> swaps. Convert
-                Fractal BTC to Solana, Ethereum, or any of 500+ assets instantly through our
+                Fractal BTC to Solana, Ethereum, or any of 6,000+ assets instantly through our
                 non-custodial engine.
               </p>
             </div>

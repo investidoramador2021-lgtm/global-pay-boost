@@ -21,7 +21,7 @@ const articleContent: Record<
     understanding:
       "A non-custodial exchange never takes possession of your private keys or holds your funds in a centralized wallet. When you initiate a swap on MRC GlobalPay, your assets move directly from your wallet to the recipient wallet via ChangeNOW's institutional routing layer. At no point does MRC GlobalPay have the ability to freeze, seize, or access your cryptocurrency. This architecture eliminates the single biggest risk in crypto: exchange hacks. In 2024–2025 alone, custodial exchanges lost over $2.1 billion to breaches. Non-custodial platforms like MRC GlobalPay had zero losses because there is nothing to steal.",
     partnerEcosystem:
-      "MRC GlobalPay routes all swaps through ChangeNOW, a leading non-custodial aggregator with 500+ integrated liquidity sources. Every transaction is secured by Fireblocks' Multi-Party Computation (MPC) technology — the same infrastructure used by Fidelity Digital Assets and BNY Mellon. Fireblocks' MPC eliminates single points of failure by splitting signing keys across multiple secure enclaves. No single server, employee, or process can access a complete private key.",
+      "MRC GlobalPay routes all swaps through ChangeNOW, a leading non-custodial aggregator with 6,000+ integrated liquidity sources. Every transaction is secured by Fireblocks' Multi-Party Computation (MPC) technology — the same infrastructure used by Fidelity Digital Assets and BNY Mellon. Fireblocks' MPC eliminates single points of failure by splitting signing keys across multiple secure enclaves. No single server, employee, or process can access a complete private key.",
     whyNonCustodial:
       "Regulators worldwide are increasingly scrutinizing custodial exchanges. The SEC, ESMA, and FINTRAC have all signaled that non-custodial models reduce systemic risk. By 2026, over 40% of retail crypto volume is projected to flow through non-custodial channels. MRC GlobalPay is ahead of this curve — operating as a registered Canadian MSB while maintaining a fully non-custodial architecture. This means full regulatory compliance without compromising user sovereignty.",
     faqItems: [
@@ -63,15 +63,15 @@ const articleContent: Record<
   },
   "our-liquidity-partners": {
     understanding:
-      "MRC GlobalPay doesn't operate its own liquidity pools. Instead, we aggregate liquidity from 500+ sources through our partnership with ChangeNOW — one of the largest non-custodial exchange aggregators in the world. This means you always get the best available rate across dozens of DEXs, CEXs, and liquidity providers. Every swap is secured end-to-end by Fireblocks' institutional-grade MPC (Multi-Party Computation) technology, which protects transaction signing without any single point of failure.",
+      "MRC GlobalPay doesn't operate its own liquidity pools. Instead, we aggregate liquidity from 6,000+ sources through our partnership with ChangeNOW — one of the largest non-custodial exchange aggregators in the world. This means you always get the best available rate across dozens of DEXs, CEXs, and liquidity providers. Every swap is secured end-to-end by Fireblocks' institutional-grade MPC (Multi-Party Computation) technology, which protects transaction signing without any single point of failure.",
     partnerEcosystem:
-      "ChangeNOW processes over $5 billion in monthly volume across 500+ cryptocurrency pairs. Their aggregation engine scans rates from Binance, Kraken, Uniswap, and dozens of other sources in real-time to find the optimal route for your swap. Fireblocks secures this entire flow with MPC wallets — the same technology trusted by 1,800+ institutional clients including Revolut, Galaxy Digital, and BlockFi. Fireblocks has processed over $6 trillion in digital assets with zero security incidents.",
+      "ChangeNOW processes over $5 billion in monthly volume across 6,000+ cryptocurrency pairs. Their aggregation engine scans rates from Binance, Kraken, Uniswap, and dozens of other sources in real-time to find the optimal route for your swap. Fireblocks secures this entire flow with MPC wallets — the same technology trusted by 1,800+ institutional clients including Revolut, Galaxy Digital, and BlockFi. Fireblocks has processed over $6 trillion in digital assets with zero security incidents.",
     whyNonCustodial:
       "By partnering with ChangeNOW rather than operating custodial liquidity pools, MRC GlobalPay eliminates the risk of impermanent loss, pool exploits, and smart contract vulnerabilities that have cost DeFi users billions. Your swap is executed atomically: you send your assets, and you receive your target token. No staking, no wrapping, no pool tokens. Just a clean, direct swap secured by institutional-grade infrastructure.",
     faqItems: [
       {
         q: "Who provides the liquidity for MRC GlobalPay swaps?",
-        a: "Liquidity is aggregated from 500+ sources through ChangeNOW, including major exchanges like Binance and Kraken, plus dozens of DEX protocols. This ensures the best available rate for every swap.",
+        a: "Liquidity is aggregated from 6,000+ sources through ChangeNOW, including major exchanges like Binance and Kraken, plus dozens of DEX protocols. This ensures the best available rate for every swap.",
       },
       {
         q: "What is Fireblocks MPC technology?",

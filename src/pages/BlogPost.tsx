@@ -343,7 +343,7 @@ const BlogPostPage = () => {
         <section className="border-t border-border bg-muted/50 py-10 text-center sm:py-14">
           <div className="container mx-auto px-4">
             <h2 className="font-display text-xl font-bold text-foreground sm:text-2xl">Ready to Swap Crypto Instantly?</h2>
-            <p className="mt-2 font-body text-sm text-muted-foreground">500+ coins. Best rates. No account needed.</p>
+            <p className="mt-2 font-body text-sm text-muted-foreground">6,000+ coins. Best rates. No account needed.</p>
             <a
               href="/#exchange"
               className="mt-5 inline-flex items-center gap-2 rounded-xl bg-primary px-6 py-3 font-display text-sm font-semibold text-primary-foreground shadow-neon transition-transform hover:scale-105"
