@@ -48,10 +48,13 @@ const buildSnippet = (email: string, btc: string, mode: "light" | "dark", lang: 
   const langParam = lang && lang !== "en" ? `&lang=${lang}` : "";
   return `<iframe
   src="https://mrcglobalpay.com/embed/widget?mode=${mode}&ref=${token}${langParam}"
+  title="MRC GlobalPay — Instant Crypto Swap"
   width="100%"
-  height="520"
-  style="border: none; border-radius: 16px; max-width: 100%;"
-  allowfullscreen>
+  height="560"
+  loading="lazy"
+  referrerpolicy="strict-origin-when-cross-origin"
+  allow="clipboard-write; popups; popups-to-escape-sandbox"
+  style="border: 0; border-radius: 16px; max-width: 420px; width: 100%; display: block; margin: 0 auto; background: transparent;">
 </iframe>`;
 };
 
