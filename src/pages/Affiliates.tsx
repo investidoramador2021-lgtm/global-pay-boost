@@ -437,9 +437,8 @@ const Affiliates = () => (
                   Embeddable Instant Swap Widget
                 </h3>
                 <p className="mt-1.5 text-sm text-muted-foreground leading-relaxed">
-                  Drop this iframe into any website, blog, or landing page. Copy and paste this code
-                  after registering to get your personalized tracking version with your unique
-                  affiliate ID baked in.
+                  Copy and paste this code on your site. After promoting, you can track earnings
+                  using your email, BTC wallet address, or the widget code in your Partner Dashboard.
                 </p>
               </div>
             </div>
