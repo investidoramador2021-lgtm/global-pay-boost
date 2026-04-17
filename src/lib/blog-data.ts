@@ -8,6 +8,7 @@ import { CARD_POST_EN, TRANSLATED_CARD_POSTS } from "@/lib/blog/translated-card-
 import { PRIVATE_TRANSFER_POST_EN, TRANSLATED_PRIVATE_TRANSFER_POSTS } from "@/lib/blog/translated-private-transfer-posts";
 import { BEGINNERS_GUIDE_EN, TRANSLATED_BEGINNERS_GUIDE_POSTS } from "@/lib/blog/translated-beginners-guide-posts";
 import { INVOICE_POST_EN, TRANSLATED_INVOICE_POSTS } from "@/lib/blog/translated-invoice-posts";
+import { FEATURED_2026_POSTS } from "@/lib/blog/seed-featured-2026";
 import type { BlogPost, BlogAuthor } from "@/lib/blog/types";
 
 export type { BlogPost, BlogAuthor } from "@/lib/blog/types";
@@ -48,10 +49,24 @@ export async function fetchAllPosts(): Promise<BlogPost[]> {
 
   const dbPosts = (data || []).map(dbRowToPost);
   const dbSlugs = new Set(dbPosts.map((post) => post.slug));
-  const allSeedPosts = [...SEED_POSTS, PIX_POST_EN, SEPA_POST_EN, CARD_POST_EN, PRIVATE_TRANSFER_POST_EN, BEGINNERS_GUIDE_EN, INVOICE_POST_EN];
+  const allSeedPosts = [
+    ...FEATURED_2026_POSTS,
+    ...SEED_POSTS,
+    PIX_POST_EN,
+    SEPA_POST_EN,
+    CARD_POST_EN,
+    PRIVATE_TRANSFER_POST_EN,
+    BEGINNERS_GUIDE_EN,
+    INVOICE_POST_EN,
+  ];
   const uniqueSeedPosts = allSeedPosts.filter((post) => !dbSlugs.has(post.slug));
 
-  return [...dbPosts, ...uniqueSeedPosts];
+  // Featured posts go first; remaining DB + seed posts follow.
+  const featuredSlugs = new Set(FEATURED_2026_POSTS.map((p) => p.slug));
+  const featured = uniqueSeedPosts.filter((p) => featuredSlugs.has(p.slug));
+  const rest = [...dbPosts, ...uniqueSeedPosts.filter((p) => !featuredSlugs.has(p.slug))];
+
+  return [...featured, ...rest];
 }
 
 const ALL_TRANSLATED_COLLECTIONS: Record<string, BlogPost>[] = [
@@ -66,6 +81,7 @@ const ALL_TRANSLATED_COLLECTIONS: Record<string, BlogPost>[] = [
 ];
 
 const ALL_ENGLISH_SEED_POSTS: BlogPost[] = [
+  ...FEATURED_2026_POSTS,
   ...SEED_POSTS,
   PIX_POST_EN,
   SEPA_POST_EN,
