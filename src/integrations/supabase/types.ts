@@ -922,6 +922,8 @@ export type Database = {
       }
       partner_commissions: {
         Row: {
+          approved_at: string | null
+          approved_by: string | null
           btc_usd_rate: number
           commission_btc: number
           commission_rate: number
@@ -931,13 +933,18 @@ export type Database = {
           partner_id: string
           provider: string
           ref_code: string
+          rejected_at: string | null
+          rejection_reason: string | null
           source: string
+          status: string
           swap_amount: number
           swap_transaction_id: string
           to_currency: string
           volume_usd: number
         }
         Insert: {
+          approved_at?: string | null
+          approved_by?: string | null
           btc_usd_rate?: number
           commission_btc?: number
           commission_rate?: number
@@ -947,13 +954,18 @@ export type Database = {
           partner_id: string
           provider?: string
           ref_code: string
+          rejected_at?: string | null
+          rejection_reason?: string | null
           source?: string
+          status?: string
           swap_amount?: number
           swap_transaction_id: string
           to_currency: string
           volume_usd?: number
         }
         Update: {
+          approved_at?: string | null
+          approved_by?: string | null
           btc_usd_rate?: number
           commission_btc?: number
           commission_rate?: number
@@ -963,7 +975,10 @@ export type Database = {
           partner_id?: string
           provider?: string
           ref_code?: string
+          rejected_at?: string | null
+          rejection_reason?: string | null
           source?: string
+          status?: string
           swap_amount?: number
           swap_transaction_id?: string
           to_currency?: string
