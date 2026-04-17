@@ -79,10 +79,10 @@ const modeConfig: Record<DisplayMode, { accent: string; label: string; image: st
     glow: "0 0 70px hsl(168 80% 48% / 0.28), 0 0 140px hsl(168 80% 48% / 0.12)",
   },
   dex: {
-    accent: "190 95% 55%",
+    accent: "142 76% 46%",
     label: "DEX (DEFI)",
-    image: explainerBridge,
-    glow: "0 0 70px hsl(190 95% 55% / 0.28), 0 0 140px hsl(190 95% 55% / 0.12)",
+    image: explainerExchange,
+    glow: "0 0 70px hsl(142 76% 46% / 0.28), 0 0 140px hsl(142 76% 46% / 0.12)",
   },
 };
 
