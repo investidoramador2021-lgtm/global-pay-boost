@@ -24,7 +24,7 @@ const Referral = () => (
         publisher: {
           "@type": "Organization",
           name: "MRC GlobalPay",
-          description: "Registered Canadian MSB (FINTRAC M23225638) — non-custodial cryptocurrency exchange.",
+          description: "Registered Canadian MSB (FINTRAC C100000015) — non-custodial cryptocurrency exchange.",
         },
         breadcrumb: {
           "@type": "BreadcrumbList",

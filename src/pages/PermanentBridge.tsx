@@ -66,7 +66,7 @@ const PermanentBridge = () => {
                 "name": "Is MRC GlobalPay a regulated Canadian MSB?",
                 "acceptedAnswer": {
                   "@type": "Answer",
-                  "text": "Yes. MRC GlobalPay is FINTRAC-registered (MSB M23225638), headquartered at 100 Metcalfe Street, Ottawa, Ontario. All bridge operations comply with Canadian AML/CTF regulations under non-custodial architecture."
+                  "text": "Yes. MRC GlobalPay is FINTRAC-registered (MSB C100000015), headquartered at 100 Metcalfe Street, Ottawa, Ontario. All bridge operations comply with Canadian AML/CTF regulations under non-custodial architecture."
                 }
               }
             ]

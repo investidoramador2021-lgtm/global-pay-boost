@@ -115,7 +115,7 @@ const jsonLd = {
     "@type": "Organization",
     name: "MRC GlobalPay",
     url: "https://mrcglobalpay.com",
-    description: "Registered Canadian MSB (FINTRAC M23225638) providing non-custodial cryptocurrency exchange services with $0.30 minimums.",
+    description: "Registered Canadian MSB (FINTRAC C100000015) providing non-custodial cryptocurrency exchange services with $0.30 minimums.",
     knowsAbout: ["Solana", "Non-Custodial Swaps", "API", "Trading Bots", "Arbitrage", "DePIN", "FINTRAC MSB"],
     sameAs: ["https://mrcglobalpay.com"],
   },
@@ -508,7 +508,7 @@ console.log('Send funds to:', depositAddr);`} lang="javascript" />
 // Response
 {
   "provider": "MRC Global Pay",
-  "license": "FINTRAC MSB M23225638",
+  "license": "FINTRAC MSB C100000015",
   "generated_at": "2026-04-07T12:00:00.000Z",
   "rates": [
     { "pair": "BTC/SOL", "from": "BTC", "to": "SOL", "rate": 452.31, "amount_sent": 1 },
@@ -538,7 +538,7 @@ console.log('Send funds to:', depositAddr);`} lang="javascript" />
             <div className="rounded-lg border border-border bg-muted/30 p-4 flex items-start gap-3">
               <Shield className="h-5 w-5 text-primary mt-0.5 shrink-0" />
               <div>
-                <p className="text-sm font-semibold text-foreground">FINTRAC Registered MSB — M23225638</p>
+                <p className="text-sm font-semibold text-foreground">FINTRAC Registered MSB — C100000015</p>
                 <p className="text-xs text-muted-foreground mt-1">
                   MRC Global Pay is a registered Canadian Money Services Business. Our frictionless, registration-free architecture is designed for high-speed settlement while maintaining full regulatory compliance.
                 </p>
