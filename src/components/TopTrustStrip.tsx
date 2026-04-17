@@ -1,4 +1,3 @@
-import { ShieldCheck } from "lucide-react";
 import { Link } from "react-router-dom";
 
 /**
@@ -19,7 +18,6 @@ const TopTrustStrip = () => (
         title="View MRC GlobalPay's Canadian MSB registration and FINTRAC compliance details"
       >
         <span className="text-base leading-none" aria-hidden="true">🇨🇦</span>
-        <ShieldCheck className="h-3.5 w-3.5 text-primary" aria-hidden="true" />
         <span>
           Registered Canadian Money Services Business
           <span className="mx-2 text-primary/50" aria-hidden="true">|</span>
