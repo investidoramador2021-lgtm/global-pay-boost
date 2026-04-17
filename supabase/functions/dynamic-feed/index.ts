@@ -58,7 +58,6 @@ const STATIC_PAGES = [
   { loc: "/compliance", changefreq: "monthly", priority: "0.5" },
   { loc: "/crypto-dust-solutions", changefreq: "monthly", priority: "0.6" },
   { loc: "/guide/crypto-dust", changefreq: "monthly", priority: "0.6" },
-  { loc: "/partners", changefreq: "monthly", priority: "0.5" },
   { loc: "/dust-swap-comparison", changefreq: "monthly", priority: "0.5" },
   { loc: "/transparency-security", changefreq: "monthly", priority: "0.5" },
   { loc: "/resources/crypto-dust-guide", changefreq: "monthly", priority: "0.5" },
