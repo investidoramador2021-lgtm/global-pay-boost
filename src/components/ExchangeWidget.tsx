@@ -2177,7 +2177,7 @@ const ExchangeWidget = ({ onTabChange, defaultFrom, defaultTo }: ExchangeWidgetP
                             {gTradeDirection === "buy" ? (
                               <div className="overflow-y-auto p-2" style={{ maxHeight: 400 }}>
                                 {guardarianFiat
-                                  .filter((c) => (!gSearchQuery || c.ticker.toLowerCase().includes(gSearchQuery.toLowerCase()) || c.name.toLowerCase().includes(gSearchQuery.toLowerCase())))
+                                  .filter((c) => matchesGuardarianCurrencySearch(c, gSearchQuery))
                                   .map((c) => (
                                     <button
                                       key={c.ticker}
@@ -2192,11 +2192,7 @@ const ExchangeWidget = ({ onTabChange, defaultFrom, defaultTo }: ExchangeWidgetP
                               </div>
                             ) : (
                               <GuardarianCryptoListView
-                                items={guardarianCrypto.filter((c) => {
-                                  if (!gSearchQuery) return true;
-                                  const q = gSearchQuery.toLowerCase();
-                                  return c.ticker.toLowerCase().includes(q) || c.name.toLowerCase().includes(q);
-                                })}
+                                items={guardarianCrypto.filter((c) => matchesGuardarianCurrencySearch(c, gSearchQuery))}
                                 onSelect={(c) => { setGFromCurrency(c); setGShowFromPicker(false); setGSearchQuery(""); }}
                               />
                             )}
@@ -2293,18 +2289,14 @@ const ExchangeWidget = ({ onTabChange, defaultFrom, defaultTo }: ExchangeWidgetP
                                   })}
                                 </div>
                                 <GuardarianCryptoListView
-                                  items={guardarianCrypto.filter((c) => {
-                                    if (!gSearchQuery) return true;
-                                    const q = gSearchQuery.toLowerCase();
-                                    return c.ticker.toLowerCase().includes(q) || c.name.toLowerCase().includes(q) || c.networks?.some((n) => n.network.toLowerCase().includes(q) || n.name.toLowerCase().includes(q));
-                                  })}
+                                  items={guardarianCrypto.filter((c) => matchesGuardarianCurrencySearch(c, gSearchQuery))}
                                   onSelect={(c) => { setGToCurrency(c); setGShowToPicker(false); setGSearchQuery(""); }}
                                 />
                               </>
                             ) : (
                               <div className="overflow-y-auto p-2" style={{ maxHeight: 400 }}>
                                 {guardarianFiat
-                                  .filter((c) => isSellEligibleFiat(c) && (!gSearchQuery || c.ticker.toLowerCase().includes(gSearchQuery.toLowerCase()) || c.name.toLowerCase().includes(gSearchQuery.toLowerCase())))
+                                  .filter((c) => isSellEligibleFiat(c) && matchesGuardarianCurrencySearch(c, gSearchQuery))
                                   .map((c) => (
                                     <button
                                       key={c.ticker}
@@ -3015,7 +3007,23 @@ const ExchangeWidget = ({ onTabChange, defaultFrom, defaultTo }: ExchangeWidgetP
                       {t("widget.minimumAmount")} {minAmount} {fromCurrency ? displayTicker(fromCurrency) : ""}
                     </p>
                   )}
-                  <CurrencyPicker show={showFromPicker} onSelect={setFromCurrency} onClose={() => setShowFromPicker(false)} exclude={toCurrency?.ticker} />
+                  <ExchangeCurrencyPickerView
+                    show={showFromPicker}
+                    currencies={sortedCurrencies}
+                    exclude={toCurrency?.ticker}
+                    searchQuery={searchQuery}
+                    searchPlaceholder={t("widget.searchCurrency")}
+                    onSearchChange={setSearchQuery}
+                    onSelect={(currency) => {
+                      setFromCurrency(currency);
+                      setShowFromPicker(false);
+                      setSearchQuery("");
+                    }}
+                    onClose={() => {
+                      setShowFromPicker(false);
+                      setSearchQuery("");
+                    }}
+                  />
                 </div>
 
                 {/* Rate info bar */}
@@ -3058,7 +3066,23 @@ const ExchangeWidget = ({ onTabChange, defaultFrom, defaultTo }: ExchangeWidgetP
                       )}
                     </button>
                   </div>
-                  <CurrencyPicker show={showToPicker} onSelect={setToCurrency} onClose={() => setShowToPicker(false)} exclude={fromCurrency?.ticker} />
+                  <ExchangeCurrencyPickerView
+                    show={showToPicker}
+                    currencies={sortedCurrencies}
+                    exclude={fromCurrency?.ticker}
+                    searchQuery={searchQuery}
+                    searchPlaceholder={t("widget.searchCurrency")}
+                    onSearchChange={setSearchQuery}
+                    onSelect={(currency) => {
+                      setToCurrency(currency);
+                      setShowToPicker(false);
+                      setSearchQuery("");
+                    }}
+                    onClose={() => {
+                      setShowToPicker(false);
+                      setSearchQuery("");
+                    }}
+                  />
                 </div>
 
                 {/* Rate-mode disclaimer / 15-min Fixed-Rate countdown */}
