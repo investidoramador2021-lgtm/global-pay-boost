@@ -259,6 +259,107 @@ function networkLabel(c: { ticker: string; name: string }): string | null {
   return null;
 }
 
+function normalizeTokenSearchValue(value: string): string {
+  return value.toLowerCase().replace(/[^a-z0-9]/g, "");
+}
+
+function matchesExchangeCurrencySearch(c: Currency, query: string): boolean {
+  if (!query) return true;
+
+  const q = query.toLowerCase().trim();
+  const qNormalized = normalizeTokenSearchValue(query);
+  const display = displayTicker(c);
+  const network = networkLabel(c) || "";
+  const searchable = [
+    c.ticker,
+    c.name,
+    display,
+    network,
+    `${display} ${network}`,
+    `${c.name} ${network}`,
+  ];
+
+  return searchable.some((value) => {
+    const raw = value.toLowerCase();
+    return raw.includes(q) || normalizeTokenSearchValue(value).includes(qNormalized);
+  });
+}
+
+function matchesGuardarianCurrencySearch(c: GuardarianCurrency, query: string): boolean {
+  if (!query) return true;
+
+  const q = query.toLowerCase().trim();
+  const qNormalized = normalizeTokenSearchValue(query);
+  const networks = c.networks?.flatMap((n) => [n.network || "", n.name || ""]) || [];
+  const searchable = [c.ticker, c.name, ...networks];
+
+  return searchable.some((value) => {
+    const raw = value.toLowerCase();
+    return raw.includes(q) || normalizeTokenSearchValue(value).includes(qNormalized);
+  });
+}
+
+const ExchangeCurrencyPickerView = ({
+  show,
+  currencies,
+  exclude,
+  searchQuery,
+  onSearchChange,
+  searchPlaceholder,
+  onSelect,
+  onClose,
+}: {
+  show: boolean;
+  currencies: Currency[];
+  exclude?: string;
+  searchQuery: string;
+  onSearchChange: (value: string) => void;
+  searchPlaceholder: string;
+  onSelect: (c: Currency) => void;
+  onClose: () => void;
+}) => {
+  if (!show) return null;
+
+  const visibleCurrencies = currencies.filter((c) => c.ticker !== exclude);
+
+  return (
+    <div className="fixed inset-0 z-50 flex items-center justify-center bg-foreground/40 p-4" onClick={onClose}>
+      <div className="w-full max-w-md rounded-2xl border border-border bg-card shadow-elevated" onClick={(e) => e.stopPropagation()}>
+        <div className="flex items-center gap-2 border-b border-border p-4">
+          <Search className="h-4 w-4 text-muted-foreground" />
+          <input
+            autoFocus
+            placeholder={searchPlaceholder}
+            className="flex-1 bg-transparent font-body text-sm text-foreground outline-none placeholder:text-muted-foreground"
+            value={searchQuery}
+            onChange={(e) => onSearchChange(e.target.value)}
+          />
+          <button onClick={onClose} className="font-body text-xs text-muted-foreground hover:text-foreground">
+            Cancel
+          </button>
+        </div>
+        <div className="flex gap-2 border-b border-border px-4 pb-3">
+          {["btc", "eth", "sol", "usdc"].map((ticker) => {
+            const c = visibleCurrencies.find((cur) => cur.ticker === ticker);
+            if (!c) return null;
+            return (
+              <button
+                key={ticker}
+                onClick={() => onSelect(c)}
+                className="flex items-center gap-1.5 rounded-lg border border-border bg-accent px-3 py-1.5 font-display text-xs font-semibold uppercase text-foreground transition-colors hover:border-primary/40"
+              >
+                {c.image && <img src={c.image} alt="" className="h-4 w-4 rounded-full" />}
+                {ticker}
+              </button>
+            );
+          })}
+        </div>
+        <CurrencyListView currencies={visibleCurrencies} onSelect={onSelect} />
+      </div>
+    </div>
+  );
+};
+
 function getPreferredGuardarianNetworkCode(currency: GuardarianCurrency | null): string | undefined {
   if (!currency || currency.currency_type === "FIAT") return undefined;
 
@@ -1824,11 +1925,7 @@ const ExchangeWidget = ({ onTabChange, defaultFrom, defaultTo }: ExchangeWidgetP
     }
   };
 
-  const filteredCurrencies = currencies.filter((c) => {
-    if (!searchQuery) return true;
-    const q = searchQuery.toLowerCase();
-    return c.ticker.includes(q) || c.name.toLowerCase().includes(q);
-  });
+  const filteredCurrencies = currencies.filter((c) => matchesExchangeCurrencySearch(c, searchQuery));
 
   const sortedCurrencies = [...filteredCurrencies].sort((a, b) => {
     const aPopular = POPULAR_TICKERS.indexOf(a.ticker);
@@ -1841,66 +1938,6 @@ const ExchangeWidget = ({ onTabChange, defaultFrom, defaultTo }: ExchangeWidgetP
 
   const belowMin = parseFloat(sendAmount) > 0 && minAmount > 0 && parseFloat(sendAmount) < minAmount;
   const canExchangeNow = widgetMode === "exchange" && !loading && !estimating && !creatingTx && Boolean(fromCurrency && toCurrency) && Boolean(estimatedAmount) && estimatedAmount !== "—" && estimatedAmount !== "syncing" && !belowMin;
-
-
-
-  // CurrencyList & GuardarianCryptoList are hoisted to module scope (CurrencyListView /
-  // GuardarianCryptoListView) so the scroll container is not recreated on every parent
-  // re-render — fixes "snap-back-to-top" while scrolling the picker.
-
-  const CurrencyPicker = ({
-    show,
-    onSelect,
-    onClose,
-    exclude,
-  }: {
-    show: boolean;
-    onSelect: (c: Currency) => void;
-    onClose: () => void;
-    exclude?: string;
-  }) => {
-    if (!show) return null;
-    return (
-      <div className="fixed inset-0 z-50 flex items-center justify-center bg-foreground/40 p-4" onClick={onClose}>
-        <div className="w-full max-w-md rounded-2xl border border-border bg-card shadow-elevated" onClick={(e) => e.stopPropagation()}>
-          <div className="flex items-center gap-2 border-b border-border p-4">
-            <Search className="h-4 w-4 text-muted-foreground" />
-            <input
-              autoFocus
-              placeholder={t("widget.searchCurrency")}
-              className="flex-1 bg-transparent font-body text-sm text-foreground outline-none placeholder:text-muted-foreground"
-              value={searchQuery}
-              onChange={(e) => setSearchQuery(e.target.value)}
-            />
-            <button onClick={() => { onClose(); setSearchQuery(""); }} className="font-body text-xs text-muted-foreground hover:text-foreground">
-              Cancel
-            </button>
-          </div>
-          {/* Mobile Quick-Select */}
-          <div className="flex gap-2 border-b border-border px-4 pb-3">
-            {["btc", "eth", "sol", "usdc"].map((ticker) => {
-              const c = currencies.find((cur) => cur.ticker === ticker);
-              if (!c) return null;
-              return (
-                <button
-                  key={ticker}
-                  onClick={() => { onSelect(c); onClose(); setSearchQuery(""); }}
-                  className="flex items-center gap-1.5 rounded-lg border border-border bg-accent px-3 py-1.5 font-display text-xs font-semibold uppercase text-foreground transition-colors hover:border-primary/40"
-                >
-                  {c.image && <img src={c.image} alt="" className="h-4 w-4 rounded-full" />}
-                  {ticker}
-                </button>
-              );
-            })}
-          </div>
-          <CurrencyListView
-            currencies={sortedCurrencies.filter((c) => c.ticker !== exclude)}
-            onSelect={(c) => { onSelect(c); onClose(); setSearchQuery(""); }}
-          />
-        </div>
-      </div>
-    );
-  };
 
   if (loading || retrying) {
     return (
@@ -2140,7 +2177,7 @@ const ExchangeWidget = ({ onTabChange, defaultFrom, defaultTo }: ExchangeWidgetP
                             {gTradeDirection === "buy" ? (
                               <div className="overflow-y-auto p-2" style={{ maxHeight: 400 }}>
                                 {guardarianFiat
-                                  .filter((c) => (!gSearchQuery || c.ticker.toLowerCase().includes(gSearchQuery.toLowerCase()) || c.name.toLowerCase().includes(gSearchQuery.toLowerCase())))
+                                  .filter((c) => matchesGuardarianCurrencySearch(c, gSearchQuery))
                                   .map((c) => (
                                     <button
                                       key={c.ticker}
@@ -2155,11 +2192,7 @@ const ExchangeWidget = ({ onTabChange, defaultFrom, defaultTo }: ExchangeWidgetP
                               </div>
                             ) : (
                               <GuardarianCryptoListView
-                                items={guardarianCrypto.filter((c) => {
-                                  if (!gSearchQuery) return true;
-                                  const q = gSearchQuery.toLowerCase();
-                                  return c.ticker.toLowerCase().includes(q) || c.name.toLowerCase().includes(q);
-                                })}
+                                items={guardarianCrypto.filter((c) => matchesGuardarianCurrencySearch(c, gSearchQuery))}
                                 onSelect={(c) => { setGFromCurrency(c); setGShowFromPicker(false); setGSearchQuery(""); }}
                               />
                             )}
@@ -2256,18 +2289,14 @@ const ExchangeWidget = ({ onTabChange, defaultFrom, defaultTo }: ExchangeWidgetP
                                   })}
                                 </div>
                                 <GuardarianCryptoListView
-                                  items={guardarianCrypto.filter((c) => {
-                                    if (!gSearchQuery) return true;
-                                    const q = gSearchQuery.toLowerCase();
-                                    return c.ticker.toLowerCase().includes(q) || c.name.toLowerCase().includes(q) || c.networks?.some((n) => n.network.toLowerCase().includes(q) || n.name.toLowerCase().includes(q));
-                                  })}
+                                  items={guardarianCrypto.filter((c) => matchesGuardarianCurrencySearch(c, gSearchQuery))}
                                   onSelect={(c) => { setGToCurrency(c); setGShowToPicker(false); setGSearchQuery(""); }}
                                 />
                               </>
                             ) : (
                               <div className="overflow-y-auto p-2" style={{ maxHeight: 400 }}>
                                 {guardarianFiat
-                                  .filter((c) => isSellEligibleFiat(c) && (!gSearchQuery || c.ticker.toLowerCase().includes(gSearchQuery.toLowerCase()) || c.name.toLowerCase().includes(gSearchQuery.toLowerCase())))
+                                  .filter((c) => isSellEligibleFiat(c) && matchesGuardarianCurrencySearch(c, gSearchQuery))
                                   .map((c) => (
                                     <button
                                       key={c.ticker}
@@ -2978,7 +3007,23 @@ const ExchangeWidget = ({ onTabChange, defaultFrom, defaultTo }: ExchangeWidgetP
                       {t("widget.minimumAmount")} {minAmount} {fromCurrency ? displayTicker(fromCurrency) : ""}
                     </p>
                   )}
-                  <CurrencyPicker show={showFromPicker} onSelect={setFromCurrency} onClose={() => setShowFromPicker(false)} exclude={toCurrency?.ticker} />
+                  <ExchangeCurrencyPickerView
+                    show={showFromPicker}
+                    currencies={sortedCurrencies}
+                    exclude={toCurrency?.ticker}
+                    searchQuery={searchQuery}
+                    searchPlaceholder={t("widget.searchCurrency")}
+                    onSearchChange={setSearchQuery}
+                    onSelect={(currency) => {
+                      setFromCurrency(currency);
+                      setShowFromPicker(false);
+                      setSearchQuery("");
+                    }}
+                    onClose={() => {
+                      setShowFromPicker(false);
+                      setSearchQuery("");
+                    }}
+                  />
                 </div>
 
                 {/* Rate info bar */}
@@ -3021,7 +3066,23 @@ const ExchangeWidget = ({ onTabChange, defaultFrom, defaultTo }: ExchangeWidgetP
                       )}
                     </button>
                   </div>
-                  <CurrencyPicker show={showToPicker} onSelect={setToCurrency} onClose={() => setShowToPicker(false)} exclude={fromCurrency?.ticker} />
+                  <ExchangeCurrencyPickerView
+                    show={showToPicker}
+                    currencies={sortedCurrencies}
+                    exclude={fromCurrency?.ticker}
+                    searchQuery={searchQuery}
+                    searchPlaceholder={t("widget.searchCurrency")}
+                    onSearchChange={setSearchQuery}
+                    onSelect={(currency) => {
+                      setToCurrency(currency);
+                      setShowToPicker(false);
+                      setSearchQuery("");
+                    }}
+                    onClose={() => {
+                      setShowToPicker(false);
+                      setSearchQuery("");
+                    }}
+                  />
                 </div>
 
                 {/* Rate-mode disclaimer / 15-min Fixed-Rate countdown */}
