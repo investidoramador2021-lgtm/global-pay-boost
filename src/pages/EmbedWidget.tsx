@@ -198,30 +198,65 @@ const EmbedWidget = () => {
     return Number.isFinite(parsed) && parsed > 0 && minAmount > 0 && parsed < minAmount;
   }, [amount, minAmount]);
 
-  const handleSwap = () => {
+  const handleProceedToWallet = () => {
     if (!fromCurrency || !toCurrency || !amount) return;
+    setTxError("");
+    setStep("wallet");
+  };
 
-    const lang = searchParams.get("lang");
-    const langPath = lang && lang !== "en" ? `/${lang}` : "";
-    const base = `https://mrcglobalpay.com${langPath}`;
-    const params = new URLSearchParams({ from: fromCurrency.ticker, to: toCurrency.ticker, amount });
-    if (refId) params.set("ref", refId);
-    const source = searchParams.get("source");
-    if (source) params.set("source", source);
-    if (lang) params.set("lang", lang);
-    const url = `${base}/?${params.toString()}`;
-
-    // Try popup first; if blocked (common in cross-origin iframes on partner sites),
-    // fall back to navigating the top-level window so the user always reaches the swap page.
-    const win = window.open(url, "_blank", "noopener");
-    if (!win) {
-      try {
-        window.top!.location.href = url;
-      } catch {
-        // top is cross-origin & blocked — last resort: navigate self
-        window.location.href = url;
-      }
+  const handleCreateTransaction = async () => {
+    if (!fromCurrency || !toCurrency || !amount || !destinationAddress.trim()) return;
+    setCreatingTx(true);
+    setTxError("");
+    try {
+      const tx = await createTransaction({
+        from: fromCurrency.ticker,
+        to: toCurrency.ticker,
+        amount: Number.parseFloat(amount),
+        address: destinationAddress.trim(),
+        extraId: extraId.trim() || undefined,
+      });
+      setTransaction(tx);
+      setStep("deposit");
+    } catch (err) {
+      setTxError(err instanceof Error ? err.message : "Failed to create transaction");
+    } finally {
+      setCreatingTx(false);
     }
+  };
+
+  useEffect(() => {
+    if (step !== "deposit" || !transaction?.id) return;
+    let cancelled = false;
+    const poll = async () => {
+      try {
+        const status = await getTransactionStatus(transaction.id);
+        if (!cancelled) setTxStatus(status);
+      } catch { /* ignore polling errors */ }
+    };
+    poll();
+    const interval = window.setInterval(poll, 15000);
+    return () => {
+      cancelled = true;
+      window.clearInterval(interval);
+    };
+  }, [step, transaction?.id]);
+
+  const copyToClipboard = async (text: string, key: "address" | "amount" | "extra") => {
+    try {
+      await navigator.clipboard.writeText(text);
+      setCopied(key);
+      window.setTimeout(() => setCopied(null), 1500);
+    } catch { /* clipboard may be blocked */ }
+  };
+
+  const resetFlow = () => {
+    setStep("quote");
+    setTransaction(null);
+    setTxStatus(null);
+    setDestinationAddress("");
+    setExtraId("");
+    setTxError("");
   };
 
   const handleTokenSelect = (currency: Currency) => {
