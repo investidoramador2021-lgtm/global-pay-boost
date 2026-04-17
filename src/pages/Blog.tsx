@@ -8,10 +8,18 @@ import { fetchAllPosts, type BlogPost } from "@/lib/blog-data";
 import { getLangFromPath, langPath } from "@/i18n";
 import heroApiIntegration from "@/assets/blog-api-integration-2026.jpg";
 import heroBtcAtm from "@/assets/blog-btc-atm-vs-mrc.jpg";
+import heroMonad from "@/assets/blog-monad-hero.jpg";
+import heroCantonCoin from "@/assets/blog-canton-coin-hero.jpg";
+import heroStablecoins from "@/assets/blog-stablecoins-regulation-hero.jpg";
+import heroEcash from "@/assets/blog-ecash-xec-hero.jpg";
 
 const FEATURED_HERO_IMAGES: Record<string, string> = {
   "crypto-exchange-api-integration-2026-guide": heroApiIntegration,
   "bitcoin-atms-vs-mrc-globalpay-honest-comparison": heroBtcAtm,
+  "how-to-buy-monad-mon-2026-guide": heroMonad,
+  "canton-coin-cc-price-prediction-2026-2035": heroCantonCoin,
+  "stablecoins-after-global-regulation-winners-losers-2026": heroStablecoins,
+  "how-to-buy-ecash-xec-2026-guide": heroEcash,
 };
 
 const WHITEPAPERS = [
