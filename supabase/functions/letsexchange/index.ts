@@ -163,7 +163,7 @@ Deno.serve(async (req) => {
         const r = await leFetch('/info', apiKey, { method: 'POST', body: JSON.stringify(body) });
         const p = await parseJson(r);
         if (!r.ok || !p.isJson) {
-          console.error('LE estimate error:', p.text?.slice(0, 300));
+          console.error(`LE estimate error [${r.status}] body=${JSON.stringify(body)} resp=${p.text?.slice(0, 400)}`);
           return json({ estimatedAmount: null, transactionSpeedForecast: null, warningMessage: 'Rate unavailable.' });
         }
         return json({
