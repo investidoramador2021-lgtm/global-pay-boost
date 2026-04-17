@@ -40,6 +40,7 @@ const SiteHeader = () => {
     { label: "Exchange", href: lp("/exchange/btc-to-eth") },
     { label: "Borrow", href: lp("/lend") },
     { label: "Earn", href: lp("/lend") + "?tab=earn" },
+    { label: "Affiliates", href: lp("/affiliates") },
     { label: t("nav.blog"), href: lp("/blog") },
     { label: t("nav.faq"), href: lp("/") + "#faq" },
   ];
