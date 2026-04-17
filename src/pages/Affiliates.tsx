@@ -247,7 +247,7 @@ const WidgetGenerator = ({ lang }: { lang: string }) => {
           <div className="overflow-hidden rounded-xl border border-border/60 bg-background">
             {/* Inline render of the embed-only widget (Exchange tab only — no Buy/Private/Invoice/Loan
                 because those flows require KYC/compliance and cannot be embedded on third-party sites). */}
-            <EmbedWidget />
+            <EmbedWidget modeOverride={mode} langOverride={lang} />
           </div>
           <p className="mt-3 text-center text-[11px] text-muted-foreground">
             {t("affiliates.generator.previewTry")}
