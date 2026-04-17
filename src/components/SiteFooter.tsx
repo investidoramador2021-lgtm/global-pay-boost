@@ -216,45 +216,6 @@ const SiteFooter = () => {
           <FooterLinkList langPrefix={lp} title="Wallet Reviews" links={walletReviews} />
         </div>
 
-        {/* Global Hubs — deep localized landing pages, internal-link authority transfer */}
-        <nav aria-label="Global Hubs" className="mt-10 border-t border-border pt-8">
-          <h3 className="mb-4 font-display text-sm font-semibold uppercase tracking-wider text-foreground/70">
-            🌐 Global Hubs
-          </h3>
-          <ul className="grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
-            <li>
-              <a
-                href="/vi/vietnam"
-                title="MRC Việt Nam — SOL & HYPE phi lưu ký"
-                className="block rounded-lg border border-border bg-card/40 px-3 py-2.5 transition-colors hover:border-primary/40 hover:bg-card/80"
-              >
-                <span className="font-display text-sm font-semibold text-foreground">🇻🇳 Vietnam (vi)</span>
-                <span className="mt-0.5 block text-xs text-muted-foreground">SOL · HYPE · GameFi dust</span>
-              </a>
-            </li>
-            <li>
-              <a
-                href="/tr/turkiye"
-                title="MRC Türkiye — XAUt & PAXG ile altın hedge"
-                className="block rounded-lg border border-border bg-card/40 px-3 py-2.5 transition-colors hover:border-primary/40 hover:bg-card/80"
-              >
-                <span className="font-display text-sm font-semibold text-foreground">🇹🇷 Turkey (tr)</span>
-                <span className="mt-0.5 block text-xs text-muted-foreground">XAUt · PAXG · Lira hedge</span>
-              </a>
-            </li>
-            <li>
-              <a
-                href="/pt"
-                title="MRC Brasil — Crypto via PIX, sem KYC"
-                className="block rounded-lg border border-border bg-card/40 px-3 py-2.5 transition-colors hover:border-primary/40 hover:bg-card/80"
-              >
-                <span className="font-display text-sm font-semibold text-foreground">🇧🇷 Brazil (pt)</span>
-                <span className="mt-0.5 block text-xs text-muted-foreground">PIX · BRL · Não-custodial</span>
-              </a>
-            </li>
-          </ul>
-        </nav>
-
         {/* Swap pairs categorized grid */}
         <div className="mt-10 border-t border-border pt-8">
           <div className="mb-6 flex flex-col items-center justify-between gap-3 sm:flex-row sm:items-end">

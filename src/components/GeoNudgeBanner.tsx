@@ -34,8 +34,8 @@ const COUNTRY_TO_LANG: Record<string, SupportedLanguage> = {
 /** Localized invitation copy */
 const COPY: Record<SupportedLanguage, { msg: string; cta: string; dismiss: string }> = {
   en: { msg: "View MRC GlobalPay in your local language for region-specific rates.", cta: "Switch", dismiss: "Dismiss" },
-  tr: { msg: "Türkiye'den mi giriyorsunuz? Lira'dan altına saklamasız hub'ımıza göz atın.", cta: "Hub'a git", dismiss: "Kapat" },
-  vi: { msg: "Bạn đang truy cập từ Việt Nam? Hãy ghé thăm Trung tâm SOL & AI chuyên biệt của chúng tôi.", cta: "Khám phá ngay", dismiss: "Đóng" },
+  tr: { msg: "Türkiye'ye özel oranlar için Türkçe sürüme geçin.", cta: "Geç", dismiss: "Kapat" },
+  vi: { msg: "Xem MRC GlobalPay bằng tiếng Việt với tỷ giá dành riêng cho Việt Nam.", cta: "Chuyển", dismiss: "Đóng" },
   pt: { msg: "Veja a MRC GlobalPay em português com taxas para o Brasil.", cta: "Mudar", dismiss: "Fechar" },
   es: { msg: "Ver MRC GlobalPay en español con tasas locales.", cta: "Cambiar", dismiss: "Cerrar" },
   fr: { msg: "Affichez MRC GlobalPay en français avec des taux locaux.", cta: "Changer", dismiss: "Fermer" },
@@ -75,17 +75,7 @@ const GeoNudgeBanner = () => {
         if (!country) return;
 
         const hubLang = COUNTRY_TO_LANG[country.toUpperCase()];
-        if (!hubLang) return;
-
-        // Deep hubs: VN → /vi/vietnam, TR → /tr/turkiye.
-        // Show the nudge on ANY page that isn't already the deep hub.
-        if (hubLang === "vi") {
-          if (pathname === "/vi/vietnam" || pathname === "/vi/vietnam/") return;
-        } else if (hubLang === "tr") {
-          if (pathname === "/tr/turkiye" || pathname === "/tr/turkiye/") return;
-        } else if (hubLang === currentLang) {
-          return;
-        }
+        if (!hubLang || hubLang === currentLang) return;
         if (cancelled) return;
 
         setSuggested(hubLang);
@@ -108,12 +98,7 @@ const GeoNudgeBanner = () => {
     const bare = stripLangPrefix(pathname);
     localStorage.setItem("user-lang", suggested);
     localStorage.setItem(DISMISS_KEY, "1");
-    // Deep-hub destinations override generic langPath
-    let target: string;
-    if (suggested === "vi") target = "/vi/vietnam";
-    else if (suggested === "tr") target = "/tr/turkiye";
-    else target = langPath(suggested, bare) + search + hash;
-    navigate(target);
+    navigate(langPath(suggested, bare) + search + hash);
     setShow(false);
   };
 

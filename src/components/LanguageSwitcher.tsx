@@ -55,26 +55,12 @@ const LanguageSwitcher = () => {
       return;
     }
     const bare = stripLangPrefix(pathname);
-    const isHomeOrShallow = bare === "/" || bare === "" || bare === "/vietnam" || bare === "/turkiye";
-    let newPath: string;
-    if (lang === "vi" && isHomeOrShallow) {
-      newPath = "/vi/vietnam";
-    } else if (lang === "tr" && isHomeOrShallow) {
-      newPath = "/tr/turkiye";
-    } else {
-      newPath = langPath(lang, bare) + search + hash;
-    }
+    const newPath = langPath(lang, bare) + search + hash;
     localStorage.setItem("user-lang", lang);
     i18n.changeLanguage(lang);
     navigate(newPath);
     setOpen(false);
     setQuery("");
-  };
-
-  // Hub-aware label override
-  const HUB_LABEL: Partial<Record<SupportedLanguage, string>> = {
-    vi: "Trung tâm Việt Nam",
-    tr: "Türkiye Hub",
   };
 
   const filtered = supportedLanguages.filter((lang) => {
@@ -130,7 +116,6 @@ const LanguageSwitcher = () => {
             {filtered.map((lang) => {
               const meta = languageMeta[lang];
               const isActive = lang === currentLang;
-              const hubLabel = HUB_LABEL[lang];
               return (
                 <button
                   key={lang}
@@ -140,18 +125,13 @@ const LanguageSwitcher = () => {
                   }`}
                 >
                   <img src={flagUrl(lang)} alt="" className="h-5 w-5 rounded-full object-cover shrink-0" />
-                  <span className="flex-1 min-w-0">
+                  <span className="flex-1">
                     <span className={`text-sm font-medium ${isActive ? "text-primary" : "text-foreground"}`}>
-                      {hubLabel ?? meta.native}
+                      {meta.native}
                     </span>
-                    {!hubLabel && (
-                      <span className="ml-1.5 text-xs text-muted-foreground">{meta.english}</span>
-                    )}
-                    {hubLabel && (
-                      <span className="ml-1.5 inline-flex items-center rounded-full border border-primary/30 bg-primary/10 px-1.5 py-0.5 text-[10px] font-semibold uppercase tracking-wide text-primary">
-                        Hub
-                      </span>
-                    )}
+                    <span className="ml-1.5 text-xs text-muted-foreground">
+                      {meta.english}
+                    </span>
                   </span>
                   {isActive && <Check className="h-4 w-4 shrink-0 text-primary" />}
                 </button>
