@@ -10,6 +10,7 @@ import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/
 import SiteHeader from "@/components/SiteHeader";
 import SiteFooter from "@/components/SiteFooter";
 import MsbTrustBar from "@/components/MsbTrustBar";
+import ExchangeWidget from "@/components/ExchangeWidget";
 import { supabase } from "@/integrations/supabase/client";
 import { getLangFromPath, langPath } from "@/i18n";
 import { useLocation } from "react-router-dom";
@@ -240,18 +241,10 @@ const WidgetGenerator = ({ lang }: { lang: string }) => {
               mrcglobalpay.com/embed/widget?mode={mode}{lang !== "en" ? `&lang=${lang}` : ""}
             </span>
           </div>
-          <div className="overflow-hidden rounded-xl border border-border/60 bg-background">
-            <iframe
-              key={`${mode}-${activeEmail}-${activeBtc}-${lang}`}
-              src={`/embed/widget?mode=${mode}&lang=${lang}&ref=${
-                activeEmail || activeBtc ? buildRefToken(activeEmail, activeBtc) : "preview"
-              }`}
-              title="Live MRC GlobalPay swap widget preview"
-              loading="lazy"
-              allow="clipboard-write"
-              className="block w-full h-[560px] sm:h-[640px] lg:h-[720px]"
-              style={{ border: 0, background: "transparent" }}
-            />
+          <div className="overflow-hidden rounded-xl border border-border/60 bg-background p-3 sm:p-4">
+            {/* Inline render avoids ad-blocker / iframe-blocker false positives.
+                Partners still copy the iframe snippet shown below. */}
+            <ExchangeWidget />
           </div>
           <p className="mt-3 text-center text-[11px] text-muted-foreground">
             {t("affiliates.generator.previewTry")}
