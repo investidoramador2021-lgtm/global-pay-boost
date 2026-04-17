@@ -1507,19 +1507,36 @@ function DashboardContent() {
         ...affiliateLeads.map((l: any) => l.ref_token),
       ].filter(Boolean);
 
-      const [swapRes, commRes, keyRes, devRes] = await Promise.all([
+      const [swapRes, commRes, affCommRes, keyRes, devRes] = await Promise.all([
         supabase
           .from("swap_transactions")
           .select("*")
           .in("ref_code", refIdentifiers as string[])
           .order("created_at", { ascending: false }),
         supabase.from("partner_transactions").select("*").eq("partner_id", (p as PartnerProfile).id).order("completed_at", { ascending: false }),
+        supabase.from("partner_commissions" as any).select("*").eq("partner_id", (p as PartnerProfile).id).order("created_at", { ascending: false }),
         supabase.from("partner_api_keys").select("id", { count: "exact", head: true }).eq("partner_id", (p as PartnerProfile).id).eq("is_active", true),
         supabase.from("developer_profiles").select("id").eq("partner_id", (p as PartnerProfile).id).maybeSingle(),
       ]);
       const rows = (swapRes.data || []) as SwapRow[];
       setSwaps(rows);
-      setCommissions((commRes.data || []) as PartnerTx[]);
+
+      // Merge API-side commissions with affiliate-link/widget commissions, normalized to PartnerTx shape.
+      const apiComm = ((commRes.data || []) as PartnerTx[]).map(c => ({ ...c, source: (c as any).source || "api" }));
+      const affComm: PartnerTx[] = (((affCommRes as any).data as any[]) || []).map((c: any) => ({
+        id: c.id,
+        partner_id: c.partner_id,
+        asset: `${c.from_currency}→${c.to_currency}`,
+        volume: Number(c.volume_usd) || 0,
+        commission_btc: Number(c.commission_btc) || 0,
+        completed_at: c.created_at,
+        is_paid: false,
+        paid_at: null,
+        status: "credited",
+        source: c.source === "affiliate_widget" ? "widget" : "referral",
+      } as any));
+      setCommissions([...affComm, ...apiComm]);
+
       setActiveKeys(keyRes.count || 0);
       setIsDeveloper(!!devRes.data);
       setLoading(false);
