@@ -57,27 +57,7 @@ export async function getBestEstimate(
   amount: string,
   fixedRate = false
 ): Promise<AggregatedEstimate> {
-  // Try CN first (primary, highest margin)
-  let cn: EstimateResult | null = null;
-  try {
-    cn = await cnGetEstimate(from, to, amount, fixedRate);
-  } catch {}
-
-  const cnAmt = POSITIVE(cn?.estimatedAmount);
-
-  // CN has a valid quote → always use it
-  if (cnAmt > 0) {
-    return {
-      estimatedAmount: cnAmt,
-      transactionSpeedForecast: cn!.transactionSpeedForecast,
-      warningMessage: cn!.warningMessage,
-      provider: "cn",
-      isBestRate: false,
-      coverageFallback: false,
-    };
-  }
-
-  // CN can't quote → try LE for coverage
+  // TEMPORARY: LE primary, CN fallback (per operator request).
   let le: EstimateResult | null = null;
   try {
     le = await leGetEstimate(from, to, amount);
@@ -91,17 +71,35 @@ export async function getBestEstimate(
       transactionSpeedForecast: le!.transactionSpeedForecast,
       warningMessage: le!.warningMessage,
       provider: "le",
+      isBestRate: false,
+      coverageFallback: false,
+    };
+  }
+
+  // LE can't quote → fall back to CN
+  let cn: EstimateResult | null = null;
+  try {
+    cn = await cnGetEstimate(from, to, amount, fixedRate);
+  } catch {}
+
+  const cnAmt = POSITIVE(cn?.estimatedAmount);
+
+  if (cnAmt > 0) {
+    return {
+      estimatedAmount: cnAmt,
+      transactionSpeedForecast: cn!.transactionSpeedForecast,
+      warningMessage: cn!.warningMessage,
+      provider: "cn",
       isBestRate: true,
       coverageFallback: true,
     };
   }
 
-  // Neither can quote
   return {
-    estimatedAmount: cn?.estimatedAmount ?? null as any,
-    transactionSpeedForecast: cn?.transactionSpeedForecast ?? null as any,
-    warningMessage: cn?.warningMessage || le?.warningMessage || "Rate unavailable.",
-    provider: "cn",
+    estimatedAmount: le?.estimatedAmount ?? null as any,
+    transactionSpeedForecast: le?.transactionSpeedForecast ?? null as any,
+    warningMessage: le?.warningMessage || cn?.warningMessage || "Rate unavailable.",
+    provider: "le",
     isBestRate: false,
   };
 }
