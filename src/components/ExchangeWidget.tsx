@@ -1245,19 +1245,16 @@ const ExchangeWidget = ({ onTabChange, defaultFrom, defaultTo }: ExchangeWidgetP
       }
 
       getCurrencies()
-        .then((data) => {
-          // Defensive: API may return {data: [...]} or [...] depending on transport
-          const list = Array.isArray(data)
-            ? data
-            : Array.isArray((data as { data?: unknown })?.data)
-              ? ((data as { data: Currency[] }).data)
+        .then((rawResp) => {
+          // Defensive: API may return [...] OR {data: [...]} depending on transport/proxy
+          const data: Currency[] | null = Array.isArray(rawResp)
+            ? (rawResp as Currency[])
+            : Array.isArray((rawResp as { data?: unknown })?.data)
+              ? ((rawResp as { data: Currency[] }).data)
               : null;
-          if (list && list.length > 0) {
-            const arrayData = list;
-            setCurrencies(arrayData);
-            // Re-bind: rest of original logic uses `data` — alias it
-            // eslint-disable-next-line @typescript-eslint/no-explicit-any
-            (data as any) = arrayData;
+
+          if (data && data.length > 0) {
+            setCurrencies(data);
 
             const findCurrency = (mapped: string | undefined, raw: string | undefined) => {
               if (!mapped) return null;
@@ -1267,7 +1264,6 @@ const ExchangeWidget = ({ onTabChange, defaultFrom, defaultTo }: ExchangeWidgetP
                 const rawMatch = data.find((c) => c.ticker === raw);
                 if (rawMatch) return rawMatch;
               }
-              // Fuzzy: match tickers that start with the query (e.g. "usdt" → "usdterc20")
               const prefix = data.find((c) => c.ticker.startsWith(mapped));
               return prefix || null;
             };
@@ -1294,8 +1290,12 @@ const ExchangeWidget = ({ onTabChange, defaultFrom, defaultTo }: ExchangeWidgetP
             }
             retryCount = 0;
             setRetrying(false);
+          } else {
+            // Empty/malformed payload — treat as failure so retry kicks in
+            throw new Error("Empty currencies payload");
           }
         })
+
         .catch(() => {
           if (retryCount < maxRetries) {
             retryCount++;
