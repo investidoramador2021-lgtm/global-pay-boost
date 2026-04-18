@@ -105,7 +105,7 @@ export async function getBestEstimate(
 }
 
 /**
- * Get min amount — prefers ChangeNOW (canonical source), falls back to LE.
+ * Get min amount — TEMPORARY: prefer LE, fall back to CN.
  */
 export async function getBestMinAmount(
   from: string,
@@ -113,11 +113,11 @@ export async function getBestMinAmount(
   fixedRate = false
 ): Promise<MinAmountResult> {
   try {
-    const r = await cnGetMinAmount(from, to, fixedRate);
+    const r = await leGetMinAmount(from, to);
     if (r?.minAmount && r.minAmount > 0) return r;
   } catch {}
   try {
-    return await leGetMinAmount(from, to);
+    return await cnGetMinAmount(from, to, fixedRate);
   } catch {}
   return { minAmount: 0 };
 }
