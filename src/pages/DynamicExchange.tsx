@@ -280,8 +280,14 @@ export default function DynamicExchange() {
   const title = pairLangContent?.title || pairSeo?.seo_title || `${dx("heroTitle", { from: fromUp, to: toUp })} — ${dx("ctaSubtitle")} | MRC GlobalPay`;
   const description = pairLangContent?.description || pairSeo?.seo_description || `Convert ${fromName} (${fromUp}) to ${toName} (${toUp}) in under 60 seconds with no account required. Compare rates from 700+ liquidity sources. Canadian MSB-registered (C100000015). Step-by-step guide, network details, and live rates.`;
   const seoH1 = pairLangContent?.h1 || pairSeo?.seo_h1 || null;
-  // Canonical = English version per sitemap-strategy memory
-  const canonicalUrl = `https://mrcglobalpay.com/exchange/${fromLower}-to-${toLower}`;
+  // Localized self-referencing canonical: each language version IS its own
+  // canonical so Google indexes /vi/, /he/, /tr/, etc. independently for
+  // local search visibility (google.com.vn, google.co.il, google.com.tr…).
+  // x-default points at the English version.
+  const englishUrl = `https://mrcglobalpay.com/exchange/${fromLower}-to-${toLower}`;
+  const canonicalUrl = lang === "en"
+    ? englishUrl
+    : `https://mrcglobalpay.com/${lang}/exchange/${fromLower}-to-${toLower}`;
   const SUPPORTED_LANGS = ["en", "es", "pt", "fr", "ja", "fa", "ur", "he", "af", "hi", "vi", "tr", "uk"] as const;
   const OG_LOCALE_MAP: Record<string, string> = {
     en: "en_US", es: "es_ES", pt: "pt_BR", fr: "fr_FR", ja: "ja_JP",
@@ -396,7 +402,7 @@ export default function DynamicExchange() {
         {hreflangAlternates.map((alt) => (
           <link key={alt.lang} rel="alternate" hrefLang={alt.lang} href={alt.href} />
         ))}
-        <link rel="alternate" hrefLang="x-default" href={canonicalUrl} />
+        <link rel="alternate" hrefLang="x-default" href={englishUrl} />
         <meta property="og:title" content={title} />
         <meta property="og:description" content={description} />
         <meta property="og:type" content="website" />
