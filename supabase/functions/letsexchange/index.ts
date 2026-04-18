@@ -8,15 +8,9 @@ const corsHeaders = {
 
 // LetsExchange uses v1 API. v2 returns 404 for /info and /transaction. (rev 2)
 const LE_BASE = 'https://api.letsexchange.io/api/v1';
-const _RAW_AFFILIATE = (Deno.env.get('LETSEXCHANGE_AFFILIATE_ID') || '').trim();
-// LE affiliate IDs are short alphanumeric tokens (typically ≤20 chars). If a URL or
-// long string was pasted, force null so request stays valid (prevents header malform).
-const LE_AFFILIATE_ID = (_RAW_AFFILIATE.length > 0 && _RAW_AFFILIATE.length <= 20 && /^[a-zA-Z0-9_-]+$/.test(_RAW_AFFILIATE))
-  ? _RAW_AFFILIATE
-  : '';
-if (_RAW_AFFILIATE && !LE_AFFILIATE_ID) {
-  console.warn(`[LE] LETSEXCHANGE_AFFILIATE_ID is invalid (len=${_RAW_AFFILIATE.length}). Must be ≤20 alphanumeric chars. Sending WITHOUT attribution.`);
-}
+// Pass the full affiliate value through, no truncation, no length cap.
+const LE_AFFILIATE_ID = (Deno.env.get('LETSEXCHANGE_AFFILIATE_ID') || '').trim();
+console.log(`[LE] affiliate_id length=${LE_AFFILIATE_ID.length}`);
 
 const TICKER_RE = /^[a-z0-9]{1,40}$/i;
 const TX_ID_RE = /^[a-zA-Z0-9_-]{1,80}$/;
