@@ -110,38 +110,16 @@ serve(async (req) => {
 
   const blogUrls = (posts || []).map((p: any) => `${SITE}/blog/${p.slug}`);
 
-  // Fetch ALL valid /exchange/[pair] pages via paginated SECURITY DEFINER RPC,
-  // firing all page requests concurrently to keep total fetch time ~= slowest single page.
+  // Single-shot: RPC returns ALL valid pairs as one jsonb array.
   const pairUrls: string[] = [];
-  const pageSize = 1000;
-  const MAX_PAGES = 50;
-  const { data: pingState } = await supabase
-    .from("sync_engine_state")
-    .select("pairs_count")
-    .eq("id", 1)
-    .maybeSingle();
-  const totalCount = (pingState as any)?.pairs_count ?? 0;
-  const pageCount = Math.min(MAX_PAGES, Math.max(1, Math.ceil(totalCount / pageSize) + 1));
-  console.log(`[ping] parallel rpc pageCount=${pageCount} totalCount=${totalCount}`);
-
   const tFetch = Date.now();
-  const pageJobs = Array.from({ length: pageCount }, (_, i) => {
-    const offset = i * pageSize;
-    const t0 = Date.now();
-    return supabase
-      .rpc("get_valid_pair_slugs", { p_offset: offset, p_limit: pageSize })
-      .then(({ data, error }: any) => {
-        const ms = Date.now() - t0;
-        if (error) {
-          console.error(`[ping] rpc page=${i} offset=${offset} ERR ms=${ms}: ${error.message}`);
-          return [] as any[];
-        }
-        console.log(`[ping] rpc page=${i} offset=${offset} rows=${data?.length ?? 0} ms=${ms}`);
-        return (data ?? []) as any[];
-      });
-  });
-  const pages = await Promise.all(pageJobs);
-  for (const rows of pages) {
+  const { data: pairsJson, error: pairsErr } = await supabase.rpc("get_valid_pair_slugs_json");
+  const fetchMs = Date.now() - tFetch;
+  if (pairsErr) {
+    console.error(`[ping] rpc ERR ms=${fetchMs}: ${pairsErr.message}`);
+  } else {
+    const rows = (pairsJson ?? []) as any[];
+    console.log(`[ping] single-shot rpc rows=${rows.length} ms=${fetchMs}`);
     for (const p of rows) {
       const f = (p.from_ticker || "").toLowerCase();
       const t = (p.to_ticker || "").toLowerCase();
@@ -153,7 +131,7 @@ serve(async (req) => {
       }
     }
   }
-  console.log(`[ping] pair URL count = ${pairUrls.length} fetchMs=${Date.now() - tFetch}`);
+  console.log(`[ping] pair URL count = ${pairUrls.length}`);
   const ALL_URLS = [...STATIC_URLS, ...blogUrls, ...pairUrls];
 
   // IndexNow accepts max 10,000 URLs per request — chunk if needed.
