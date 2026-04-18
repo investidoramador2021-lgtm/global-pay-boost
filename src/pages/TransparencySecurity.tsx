@@ -127,7 +127,8 @@ const TransparencySecurity = () => {
                 </p>
                 <ul className="mt-6 space-y-3">
                   {[
-                    "FINTRAC-registered Money Services Business",
+                    "FINTRAC-registered Money Services Business (MSB: C100000015)",
+                    "Bank of Canada — Authorized Payment Service Provider (PSP)",
                     "AML/CTF policies reviewed annually",
                     "Transaction monitoring for suspicious activity",
                     "Headquartered in Ottawa, Canada",
@@ -138,12 +139,22 @@ const TransparencySecurity = () => {
                     </li>
                   ))}
                 </ul>
-                <Link
-                  to="/aml"
-                  className="mt-6 inline-flex items-center gap-1.5 font-body text-sm font-medium text-primary hover:underline"
-                >
-                  Read our AML Policy <ExternalLink className="h-3.5 w-3.5" />
-                </Link>
+                <div className="mt-6 flex flex-wrap gap-4">
+                  <Link
+                    to="/aml"
+                    className="inline-flex items-center gap-1.5 font-body text-sm font-medium text-primary hover:underline"
+                  >
+                    Read our AML Policy <ExternalLink className="h-3.5 w-3.5" />
+                  </Link>
+                  <a
+                    href="https://www.bankofcanada.ca/core-functions/retail-payments-supervision/psp-registry/psp-registry-details/?account_id=408b884a-1aa1-ef11-a72d-0022483bf164"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="inline-flex items-center gap-1.5 font-body text-sm font-medium text-primary hover:underline"
+                  >
+                    Verify on Bank of Canada PSP Registry <ExternalLink className="h-3.5 w-3.5" />
+                  </a>
+                </div>
               </div>
 
               <div>
