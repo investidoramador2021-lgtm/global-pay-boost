@@ -35,15 +35,9 @@ export default function AEOAssetBlock({ fromTicker, toTicker, fromName, toName }
     },
   ];
 
-  const faqJsonLd = {
-    "@context": "https://schema.org",
-    "@type": "FAQPage",
-    mainEntity: questions.map((qa) => ({
-      "@type": "Question",
-      name: qa.q,
-      acceptedAnswer: { "@type": "Answer", text: qa.a },
-    })),
-  };
+  // NOTE: FAQPage JSON-LD intentionally omitted here to avoid duplicate FAQPage
+  // schemas on pages that already emit one (e.g. DynamicExchange @graph).
+  // Visible Q&A semantics are still conveyed via Microdata itemScope/itemProp below.
 
   return (
     <section className="border-t border-[#1E2028] py-12" aria-labelledby="aeo-heading">
@@ -84,7 +78,6 @@ export default function AEOAssetBlock({ fromTicker, toTicker, fromName, toName }
               </article>
             ))}
           </div>
-          <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(faqJsonLd) }} />
         </div>
       </div>
     </section>
