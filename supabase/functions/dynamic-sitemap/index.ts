@@ -102,9 +102,15 @@ Deno.serve(async (req) => {
   // exact batch count. Estimated count via pg_class can be stale on freshly
   // synced tables (returns null/0), so we just paginate the real data.
   if (path === "/" || path === "/index.xml") {
-    const allPairs = await fetchAllValidPairs(svc);
-    console.log("[sitemap-index] pair rows fetched =", allPairs.length);
-    const totalUrls = allPairs.length * LANGS.length;
+    // Fast head-count — don't paginate 22k rows just to compute batch count.
+    const { count, error: countErr } = await svc
+      .from("pairs")
+      .select("*", { count: "exact", head: true })
+      .eq("is_valid", true);
+    if (countErr) console.error("[sitemap-index] count error:", countErr.message);
+    const pairCount = count ?? 0;
+    console.log("[sitemap-index] pairCount =", pairCount);
+    const totalUrls = pairCount * LANGS.length;
     const batchCount = Math.max(1, Math.ceil(totalUrls / BATCH_SIZE));
     const today = new Date().toISOString().split("T")[0];
 
