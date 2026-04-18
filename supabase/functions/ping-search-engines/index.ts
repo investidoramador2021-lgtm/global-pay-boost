@@ -153,23 +153,27 @@ serve(async (req) => {
     `https://www.bing.com/ping?sitemap=${encodeURIComponent(`${SITE}/sitemap.xml`)}`
   );
 
-  // ── 3. IndexNow (Bing, Yandex, Seznam, Naver) ──
-  const indexNowPayload = JSON.stringify({
-    host: "mrcglobalpay.com",
-    key: INDEXNOW_KEY,
-    keyLocation: `${SITE}/${INDEXNOW_KEY}.txt`,
-    urlList: ALL_URLS,
-  });
-
-  results.indexnow = await safeFetch(
-    "indexnow",
-    "https://api.indexnow.org/indexnow",
-    {
-      method: "POST",
-      headers: { "Content-Type": "application/json; charset=utf-8" },
-      body: indexNowPayload,
+  // ── 3. IndexNow (chunked: API caps at 10k URLs/request) ──
+  async function pingIndexNow(endpoint: string): Promise<string> {
+    const statuses: string[] = [];
+    for (let i = 0; i < urlChunks.length; i++) {
+      const payload = JSON.stringify({
+        host: "mrcglobalpay.com",
+        key: INDEXNOW_KEY,
+        keyLocation: `${SITE}/${INDEXNOW_KEY}.txt`,
+        urlList: urlChunks[i],
+      });
+      const status = await safeFetch(`indexnow_chunk_${i}`, endpoint, {
+        method: "POST",
+        headers: { "Content-Type": "application/json; charset=utf-8" },
+        body: payload,
+      });
+      statuses.push(`${urlChunks[i].length}=${status}`);
     }
-  );
+    return statuses.join(" | ");
+  }
+
+  results.indexnow = await pingIndexNow("https://api.indexnow.org/indexnow");
 
   // ── 4. Google RSS Ping ──
   results.google_rss = await safeFetch(
