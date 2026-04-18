@@ -259,6 +259,8 @@ const ExchangeTracker = () => {
           });
         }
       }
+
+      const merged = Array.from(map.values()).sort(
         (a, b) => new Date(b.created_at).getTime() - new Date(a.created_at).getTime()
       );
       setSwaps(merged);
