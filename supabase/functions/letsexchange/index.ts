@@ -237,7 +237,7 @@ Deno.serve(async (req) => {
           return json({ error: 'Provider unavailable.' }, 502);
         }
         if (!r.ok) {
-          console.error('LE create-tx error:', JSON.stringify(p.data));
+          console.error(`LE create-tx error [${r.status}] payload_keys=${JSON.stringify(Object.keys(body))} resp=${JSON.stringify(p.data)}`);
           return json({ error: p.data?.error || p.data?.message || 'Provider error.' }, r.status);
         }
         const d = p.data;
