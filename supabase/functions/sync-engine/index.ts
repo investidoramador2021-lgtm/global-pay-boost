@@ -613,7 +613,8 @@ Deno.serve(async (req) => {
     console.log(`Loaded ${existingSet.size} existing pairs across ${pairPage + 1} page(s)`);
 
     // Generate new combinations (skip self-pairs)
-    // In priority mode, tier-1 × tier-1 combos go first (filtered to those the API supports).
+    // In priority mode, tier-1 × tier-1 combos go first AND we round-robin through
+    // all `from` tickers so no single ticker hogs the batch budget.
     const tickerSet = new Set(uniqueTickers);
     const orderedFroms: string[] = priorityMode
       ? [...TIER1.filter((t) => tickerSet.has(t)), ...uniqueTickers.filter((t) => !TIER1.includes(t))]
@@ -623,14 +624,31 @@ Deno.serve(async (req) => {
       : uniqueTickers;
 
     const newPairs: Array<{ from_ticker: string; to_ticker: string }> = [];
-    for (const from of orderedFroms) {
-      if (newPairs.length >= BATCH_LIMIT) break;
-      for (const to of orderedTos) {
+
+    if (priorityMode) {
+      // Round-robin: pass 1 = (from[0], to[0..n]), then pass 2 cycles again etc., but
+      // we want every `from` to get at least N pairs before any single `from` consumes the budget.
+      for (let toIdx = 0; toIdx < orderedTos.length && newPairs.length < BATCH_LIMIT; toIdx++) {
+        for (let fromIdx = 0; fromIdx < orderedFroms.length && newPairs.length < BATCH_LIMIT; fromIdx++) {
+          const from = orderedFroms[fromIdx];
+          const to = orderedTos[toIdx];
+          if (from === to) continue;
+          const key = `${from}__${to}`;
+          if (!existingSet.has(key)) {
+            newPairs.push({ from_ticker: from, to_ticker: to });
+          }
+        }
+      }
+    } else {
+      for (const from of orderedFroms) {
         if (newPairs.length >= BATCH_LIMIT) break;
-        if (from === to) continue;
-        const key = `${from}__${to}`;
-        if (!existingSet.has(key)) {
-          newPairs.push({ from_ticker: from, to_ticker: to });
+        for (const to of orderedTos) {
+          if (newPairs.length >= BATCH_LIMIT) break;
+          if (from === to) continue;
+          const key = `${from}__${to}`;
+          if (!existingSet.has(key)) {
+            newPairs.push({ from_ticker: from, to_ticker: to });
+          }
         }
       }
     }
