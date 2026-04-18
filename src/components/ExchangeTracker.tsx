@@ -23,6 +23,7 @@ interface SwapRow {
   recipient_address: string;
   payin_address: string;
   created_at: string;
+  provider?: string | null;
 }
 
 interface LiveStatus {
@@ -116,37 +117,58 @@ const ExchangeTracker = () => {
 
     // Process in batches of 5 to avoid hammering the API
     const BATCH = 5;
-    const updated = [...rows];
+    const updated = rows.map((r) => ({ ...r, liveLoading: true }));
+    setSwaps([...updated]);
 
-    for (let i = 0; i < rows.length; i += BATCH) {
-      const batch = rows.slice(i, i + BATCH);
+    // Helper: only ChangeNOW IDs are resolvable here. LetsExchange ('le') and
+    // synthetic / malformed IDs would 404 → mark as resolved with no live data
+    // so the badge stops spinning and the row remains visible under "All Status".
+    const RESOLVABLE = (row: EnrichedSwap) => {
+      const id = (row.transaction_id || "").trim();
+      const provider = (row.provider || "cn").toLowerCase();
+      if (provider !== "cn") return false;
+      if (!id) return false;
+      // ChangeNOW order ids are 14-char alphanumeric. Skip probes / hashes.
+      if (/^E2E_/i.test(id)) return false;
+      if (id.length < 10 || id.length > 32) return false;
+      return /^[a-z0-9]+$/i.test(id);
+    };
+
+    for (let i = 0; i < updated.length; i += BATCH) {
+      const batch = updated.slice(i, i + BATCH);
       const results = await Promise.allSettled(
         batch.map(async (row) => {
-          const { data } = await supabase.functions.invoke("changenow", {
+          if (!RESOLVABLE(row)) return { txId: row.transaction_id, data: null as any, skipped: true };
+          const { data, error } = await supabase.functions.invoke("changenow", {
             method: "POST",
             body: { _get: true, action: "tx-status", id: row.transaction_id },
           });
-          return { txId: row.transaction_id, data };
+          if (error) return { txId: row.transaction_id, data: null as any, skipped: false };
+          return { txId: row.transaction_id, data, skipped: false };
         })
       );
 
-      results.forEach((r) => {
+      results.forEach((r, k) => {
+        const row = batch[k];
+        const idx = updated.findIndex((s) => s.id === row.id);
+        if (idx === -1) return;
         if (r.status === "fulfilled" && r.value.data && !r.value.data.error) {
-          const idx = updated.findIndex((s) => s.transaction_id === r.value.txId);
-          if (idx !== -1) {
-            updated[idx] = {
-              ...updated[idx],
-              live: {
-                status: r.value.data.status,
-                amountSend: r.value.data.amountSend,
-                amountReceive: r.value.data.amountReceive,
-                payinHash: r.value.data.payinHash,
-                payoutHash: r.value.data.payoutHash,
-                payinAddress: r.value.data.payinAddress,
-                payoutAddress: r.value.data.payoutAddress,
-              },
-            };
-          }
+          updated[idx] = {
+            ...updated[idx],
+            liveLoading: false,
+            live: {
+              status: r.value.data.status,
+              amountSend: r.value.data.amountSend,
+              amountReceive: r.value.data.amountReceive,
+              payinHash: r.value.data.payinHash,
+              payoutHash: r.value.data.payoutHash,
+              payinAddress: r.value.data.payinAddress,
+              payoutAddress: r.value.data.payoutAddress,
+            },
+          };
+        } else {
+          // Mark resolved-without-data so the badge stops spinning.
+          updated[idx] = { ...updated[idx], liveLoading: false };
         }
       });
 
@@ -203,15 +225,20 @@ const ExchangeTracker = () => {
   }, [swaps]);
 
   /* ── Helpers ── */
-  const statusBadge = (status?: string) => {
-    if (!status) return <span className="text-xs text-muted-foreground">Loading…</span>;
-    const s = STATUS_MAP[status] || { label: status, color: "text-muted-foreground", icon: null };
-    return (
-      <span className={`inline-flex items-center gap-1.5 text-xs font-medium ${s.color}`}>
-        {s.icon}
-        {s.label}
-      </span>
-    );
+  const statusBadge = (sw?: EnrichedSwap) => {
+    if (sw?.live) {
+      const s = STATUS_MAP[sw.live.status] || { label: sw.live.status, color: "text-muted-foreground", icon: null };
+      return (
+        <span className={`inline-flex items-center gap-1.5 text-xs font-medium ${s.color}`}>
+          {s.icon}
+          {s.label}
+        </span>
+      );
+    }
+    if (sw?.liveLoading) {
+      return <span className="text-xs text-muted-foreground inline-flex items-center gap-1.5"><RefreshCw className="w-3.5 h-3.5 animate-spin" />Loading…</span>;
+    }
+    return <span className="text-xs text-muted-foreground">Unknown</span>;
   };
 
   const formatDate = (d: string) => {
@@ -366,7 +393,7 @@ const ExchangeTracker = () => {
                 ) : (
                   filtered.map((sw) => (
                     <TableRow key={sw.id} className="group cursor-pointer" onClick={() => setDetail(sw)}>
-                      <TableCell>{statusBadge(sw.live?.status)}</TableCell>
+                      <TableCell>{statusBadge(sw)}</TableCell>
                       <TableCell className="text-xs text-muted-foreground whitespace-nowrap">{formatDate(sw.created_at)}</TableCell>
                       <TableCell>
                         <span className="text-sm font-medium">
@@ -422,7 +449,7 @@ const ExchangeTracker = () => {
         <DialogContent className="max-w-lg bg-card border-border/40">
           <DialogHeader>
             <DialogTitle className="flex items-center gap-2 text-base">
-              Exchange Details {detail?.live && statusBadge(detail.live.status)}
+              Exchange Details {detail?.live && statusBadge(detail)}
             </DialogTitle>
           </DialogHeader>
           {detail && (
