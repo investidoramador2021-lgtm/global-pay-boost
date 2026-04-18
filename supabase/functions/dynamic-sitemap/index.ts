@@ -13,22 +13,29 @@ async function fetchAllValidPairs(svc: ReturnType<typeof createClient>) {
   const all: Array<{ from_ticker: string; to_ticker: string; updated_at: string }> = [];
   const pageSize = 1000;
   let from = 0;
+  let pageIndex = 0;
+  console.log("[fetchAllValidPairs] start");
   while (from < 50000) {
-    // No ORDER BY → fast pk-order seq read; sitemap doesn't depend on row order.
+    const t0 = Date.now();
     const { data, error } = await svc
       .from("pairs")
       .select("from_ticker, to_ticker, updated_at")
       .eq("is_valid", true)
       .range(from, from + pageSize - 1);
+    const ms = Date.now() - t0;
     if (error) {
-      console.error("[fetchAllValidPairs] error:", error.message, "from=", from);
+      console.error(`[fetchAllValidPairs] page=${pageIndex} from=${from} ERROR after ${ms}ms:`, error.message, JSON.stringify(error));
       break;
     }
-    if (!data || data.length === 0) break;
+    const rows = data?.length ?? 0;
+    console.log(`[fetchAllValidPairs] page=${pageIndex} from=${from} rows=${rows} ms=${ms} total=${all.length + rows}`);
+    if (!data || rows === 0) break;
     all.push(...(data as any));
-    if (data.length < pageSize) break;
+    if (rows < pageSize) break;
     from += pageSize;
+    pageIndex++;
   }
+  console.log(`[fetchAllValidPairs] done total=${all.length}`);
   return all;
 }
 
@@ -95,9 +102,15 @@ Deno.serve(async (req) => {
   // exact batch count. Estimated count via pg_class can be stale on freshly
   // synced tables (returns null/0), so we just paginate the real data.
   if (path === "/" || path === "/index.xml") {
-    const allPairs = await fetchAllValidPairs(svc);
-    console.log("[sitemap-index] pair rows fetched =", allPairs.length);
-    const totalUrls = allPairs.length * LANGS.length;
+    // Fast head-count — don't paginate 22k rows just to compute batch count.
+    const { count, error: countErr } = await svc
+      .from("pairs")
+      .select("*", { count: "exact", head: true })
+      .eq("is_valid", true);
+    if (countErr) console.error("[sitemap-index] count error:", countErr.message);
+    const pairCount = count ?? 0;
+    console.log("[sitemap-index] pairCount =", pairCount);
+    const totalUrls = pairCount * LANGS.length;
     const batchCount = Math.max(1, Math.ceil(totalUrls / BATCH_SIZE));
     const today = new Date().toISOString().split("T")[0];
 
