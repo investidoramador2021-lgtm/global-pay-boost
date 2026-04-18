@@ -236,8 +236,38 @@ Deno.serve(async (req) => {
         const id = params.id;
         if (!id) return badRequest('Missing id param');
         if (!isValidTxId(id)) return badRequest('Invalid transaction id format');
-        apiUrl = `${CHANGENOW_BASE}/transactions/${id}/${apiKey}`;
-        break;
+
+        const keysToTry = [privateKey!, apiKey!].filter((k, i, a) => k && a.indexOf(k) === i);
+        let txResp: Response | null = null;
+        let txParsed: { isJson: boolean; data: any; text: string } | null = null;
+
+        // Try v2 first with header auth
+        for (const key of keysToTry) {
+          txResp = await fetch(`https://api.changenow.io/v2/exchange/by-id?id=${id}`, {
+            headers: { 'x-changenow-api-key': key },
+          });
+          txParsed = await parseJsonResponse(txResp);
+          if (txResp.ok) break;
+          console.error(`ChangeNow v2 tx-status key attempt failed:`, txParsed?.isJson ? JSON.stringify(txParsed.data) : txParsed?.text);
+        }
+
+        // Fallback to v1 with key in URL
+        if (!txResp?.ok) {
+          for (const key of keysToTry) {
+            txResp = await fetch(`${CHANGENOW_BASE}/transactions/${id}/${key}`);
+            txParsed = await parseJsonResponse(txResp);
+            if (txResp.ok) break;
+            console.error(`ChangeNow v1 tx-status key attempt failed:`, txParsed?.isJson ? JSON.stringify(txParsed.data) : txParsed?.text);
+          }
+        }
+
+        if (!txParsed?.isJson) {
+          return jsonResponse({ error: 'Service unavailable.' }, 502);
+        }
+        if (!txResp?.ok) {
+          return jsonResponse({ error: txParsed.data?.message || 'Transaction not found or private key required.' }, txResp?.status || 401);
+        }
+        return jsonResponse(txParsed.data);
       }
       case 'list-transactions': {
         const limit = params.limit || '100';
