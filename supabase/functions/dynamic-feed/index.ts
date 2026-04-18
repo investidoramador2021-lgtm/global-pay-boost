@@ -5,10 +5,13 @@ const SITE = "https://mrcglobalpay.com";
 const LANGS = ["es", "pt", "fr", "ja", "fa", "ur", "he", "af", "hi", "vi", "tr", "uk"];
 const ALL_HREFLANGS = ["en", ...LANGS];
 
-// Pairs per child sitemap. Each pair × 13 langs = 13 <url> entries, so
-// 1500 pairs ≈ 19.5k URLs per child — well under Google's 50k hard cap and
-// small enough to render inside the edge function's CPU budget.
-const PAIRS_PER_CHILD = 1500;
+// Pairs per child sitemap. We now emit ONE canonical English URL per pair
+// (with hreflang alternates inline) rather than 13 duplicate URLs. This
+// removes the duplicate-content waste that prevented Google from indexing
+// most pair pages — the previous 289k inflated sitemap was 12× over the
+// effective render/index budget. 25,000 pairs per child stays under
+// Google's 50,000-URL hard cap with safe headroom.
+const PAIRS_PER_CHILD = 25000;
 
 /* ─────────────────────────────────────────────────────────────────────────────
  * ROUTE INVENTORY — mirrors src/App.tsx. Anything indexable lives here.
@@ -283,21 +286,19 @@ ${items}
   }
 
   // ── Sitemap INDEX ──
-  // Children point back at THIS edge function (not mrcglobalpay.com) because
-  // Lovable hosting does not honor public/_redirects for /sitemap-*.xml paths.
-  // Cross-host children inside a sitemap index are accepted by Google/Bing as
-  // long as the host of the index is verified in Search Console.
+  // The build-time generate-sitemaps Vite plugin writes the real
+  // sitemap.xml index to dist/, pointing at same-host child files. This
+  // edge-function index is only a fallback for direct invocation.
   if (subPath === "/" || subPath === "/index.xml" || subPath === "") {
     const pairCount = await getPairCount();
     const batchCount = Math.max(1, Math.ceil(pairCount / PAIRS_PER_CHILD));
-    const FN_BASE = `https://${url.host}/functions/v1/dynamic-feed?p=`;
 
     let xml = `<?xml version="1.0" encoding="UTF-8"?>
 <sitemapindex xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
-  <sitemap><loc>${FN_BASE}/sitemap-static.xml</loc><lastmod>${today}</lastmod></sitemap>
-  <sitemap><loc>${FN_BASE}/sitemap-blog.xml</loc><lastmod>${today}</lastmod></sitemap>`;
+  <sitemap><loc>${SITE}/sitemap-static.xml</loc><lastmod>${today}</lastmod></sitemap>
+  <sitemap><loc>${SITE}/sitemap-blog.xml</loc><lastmod>${today}</lastmod></sitemap>`;
     for (let i = 0; i < batchCount; i++) {
-      xml += `\n  <sitemap><loc>${FN_BASE}/sitemap-pairs-${i}.xml</loc><lastmod>${today}</lastmod></sitemap>`;
+      xml += `\n  <sitemap><loc>${SITE}/sitemap-pairs-${i}.xml</loc><lastmod>${today}</lastmod></sitemap>`;
     }
     xml += `\n</sitemapindex>`;
     return new Response(xml, { headers: xmlHeaders });
@@ -380,7 +381,12 @@ ${items}
       const slug = `${from}-to-${to}`;
       const lastmod = p.updated_at ? p.updated_at.split("T")[0] : today;
       const path = `/exchange/${slug}`;
-      for (const e of localizedEntries(path, lastmod, "weekly", "0.7")) entries.push(e);
+      // Emit ONLY the canonical English URL with a full hreflang block.
+      // Translations are still discoverable via the alternate links — but
+      // Google doesn't waste its render budget re-rendering 12 duplicate
+      // pages that all canonicalize to English anyway. This is the single
+      // biggest indexing-coverage fix: 289k URLs → ~22k canonical URLs.
+      entries.push(urlEntry(path, lastmod, "weekly", "0.7", true));
     }
     return new Response(wrapUrlset(entries), {
       headers: { ...xmlHeaders, "X-Sitemap-Url-Count": String(entries.length) },
