@@ -1245,8 +1245,15 @@ const ExchangeWidget = ({ onTabChange, defaultFrom, defaultTo }: ExchangeWidgetP
       }
 
       getCurrencies()
-        .then((data) => {
-          if (Array.isArray(data)) {
+        .then((rawResp) => {
+          // Defensive: API may return [...] OR {data: [...]} depending on transport/proxy
+          const data: Currency[] | null = Array.isArray(rawResp)
+            ? (rawResp as Currency[])
+            : Array.isArray((rawResp as { data?: unknown })?.data)
+              ? ((rawResp as { data: Currency[] }).data)
+              : null;
+
+          if (data && data.length > 0) {
             setCurrencies(data);
 
             const findCurrency = (mapped: string | undefined, raw: string | undefined) => {
@@ -1257,7 +1264,6 @@ const ExchangeWidget = ({ onTabChange, defaultFrom, defaultTo }: ExchangeWidgetP
                 const rawMatch = data.find((c) => c.ticker === raw);
                 if (rawMatch) return rawMatch;
               }
-              // Fuzzy: match tickers that start with the query (e.g. "usdt" → "usdterc20")
               const prefix = data.find((c) => c.ticker.startsWith(mapped));
               return prefix || null;
             };
@@ -1284,8 +1290,12 @@ const ExchangeWidget = ({ onTabChange, defaultFrom, defaultTo }: ExchangeWidgetP
             }
             retryCount = 0;
             setRetrying(false);
+          } else {
+            // Empty/malformed payload — treat as failure so retry kicks in
+            throw new Error("Empty currencies payload");
           }
         })
+
         .catch(() => {
           if (retryCount < maxRetries) {
             retryCount++;
