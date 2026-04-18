@@ -158,6 +158,8 @@ const ExchangeTracker = () => {
               status: d.status,
               amountSend: d.amountSend ?? d.expectedSendAmount ?? null,
               amountReceive: d.amountReceive ?? d.expectedReceiveAmount ?? null,
+              fromCurrency: d.fromCurrency ?? null,
+              toCurrency: d.toCurrency ?? null,
               payinHash: d.payinHash ?? null,
               payoutHash: d.payoutHash ?? null,
               payinAddress: d.payinAddress ?? "",
