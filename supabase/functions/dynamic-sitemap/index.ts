@@ -71,6 +71,17 @@ Deno.serve(async (req) => {
     "/transparency-security",
     "/developers",
     "/get-widget",
+    // Swap landing pages — each gets full hreflang block across all 13 languages.
+    "/swap/sol-usdt",
+    "/swap/btc-usdc",
+    "/swap/hype-usdt",
+    "/swap/eth-sol",
+    "/swap/xrp-usdt",
+    "/swap/bera-usdt",
+    "/swap/tia-usdt",
+    "/swap/monad-usdt",
+    "/swap/pyusd-usdt",
+    "/swap/bnb-usdc",
   ];
 
   // Sitemap index — split by URL count, accounting for the fact that each pair
