@@ -110,23 +110,35 @@ serve(async (req) => {
 
   const blogUrls = (posts || []).map((p: any) => `${SITE}/blog/${p.slug}`);
 
-  // Fetch ALL valid /exchange/[pair] pages via SECURITY DEFINER RPC — single
-  // round-trip avoids PostgREST throttling that hangs paginated selects.
+  // Fetch ALL valid /exchange/[pair] pages via paginated SECURITY DEFINER RPC.
   const pairUrls: string[] = [];
-  const t0 = Date.now();
-  // .range() overrides PostgREST's default max-rows=1000 cap on RPC results.
-  const { data: pairs, error: pairsErr } = await supabase.rpc("get_valid_pair_slugs").range(0, 49999);
-  console.log(`[ping] rpc get_valid_pair_slugs ms=${Date.now() - t0} rows=${pairs?.length ?? 0} err=${pairsErr?.message ?? "none"}`);
-  if (pairsErr) console.error("[ping] pairs RPC error:", pairsErr.message);
-  for (const p of (pairs as any[]) || []) {
-    const f = (p.from_ticker || "").toLowerCase();
-    const t = (p.to_ticker || "").toLowerCase();
-    if (!f || !t) continue;
-    const slug = `${f}-to-${t}`;
-    for (const lang of LANGS) {
-      const prefix = lang ? `/${lang}` : "";
-      pairUrls.push(`${SITE}${prefix}/exchange/${slug}`);
+  const pageSize = 5000;
+  let offset = 0;
+  let page = 0;
+  while (offset < 100000) {
+    const t0 = Date.now();
+    const { data: pairs, error: pairsErr } = await supabase.rpc("get_valid_pair_slugs", { p_offset: offset, p_limit: pageSize });
+    const ms = Date.now() - t0;
+    if (pairsErr) {
+      console.error(`[ping] pairs RPC page=${page} offset=${offset} ms=${ms} err:`, pairsErr.message);
+      break;
     }
+    const rows = pairs?.length ?? 0;
+    console.log(`[ping] rpc page=${page} offset=${offset} rows=${rows} ms=${ms}`);
+    if (!pairs || rows === 0) break;
+    for (const p of pairs as any[]) {
+      const f = (p.from_ticker || "").toLowerCase();
+      const t = (p.to_ticker || "").toLowerCase();
+      if (!f || !t) continue;
+      const slug = `${f}-to-${t}`;
+      for (const lang of LANGS) {
+        const prefix = lang ? `/${lang}` : "";
+        pairUrls.push(`${SITE}${prefix}/exchange/${slug}`);
+      }
+    }
+    if (rows < pageSize) break;
+    offset += pageSize;
+    page++;
   }
   console.log("[ping] pair URL count =", pairUrls.length);
   const ALL_URLS = [...STATIC_URLS, ...blogUrls, ...pairUrls];
