@@ -77,10 +77,14 @@ serve(async (req) => {
     return new Response(null, { headers: corsHeaders });
   }
 
-  // Auth check — mirror auto-publish-blog pattern
+  // Auth check — accept CRON_SECRET (for scheduled runs) or the project anon key (for manual admin triggers).
+  // Endpoint only pings public IndexNow/search endpoints with public URLs, so anon-key access is safe.
   const cronSecret = Deno.env.get("CRON_SECRET");
-  const authHeader = req.headers.get("Authorization");
-  if (!cronSecret || authHeader !== `Bearer ${cronSecret}`) {
+  const anonKey = Deno.env.get("SUPABASE_ANON_KEY");
+  const authHeader = req.headers.get("Authorization") || "";
+  const token = authHeader.replace(/^Bearer\s+/i, "");
+  const isAuthorized = (cronSecret && token === cronSecret) || (anonKey && token === anonKey);
+  if (!isAuthorized) {
     return new Response(JSON.stringify({ error: "Unauthorized" }), {
       status: 401,
       headers: { ...corsHeaders, "Content-Type": "application/json" },
