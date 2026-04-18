@@ -56,6 +56,23 @@ Deno.serve(async (req) => {
     Deno.env.get("SUPABASE_SERVICE_ROLE_KEY")!
   );
 
+  // Static, high-priority routes that must appear in the sitemap for every
+  // supported language (affiliate / partner program landing pages, etc).
+  // IndexNow + Google look here, so omitting these = no discovery.
+  const STATIC_ROUTES = [
+    "/affiliates",
+    "/partners",
+    "/referral",
+    "/lend",
+    "/private-transfer",
+    "/permanent-bridge",
+    "/about",
+    "/compliance",
+    "/transparency-security",
+    "/developers",
+    "/get-widget",
+  ];
+
   // Sitemap index — split by URL count, accounting for the fact that each pair
   // now produces LANGS.length URL entries (13 by default).
   if (path === "/" || path === "/index.xml") {
@@ -66,6 +83,12 @@ Deno.serve(async (req) => {
 
     let xml = `<?xml version="1.0" encoding="UTF-8"?>
 <sitemapindex xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">`;
+    // Static routes sitemap first — guarantees affiliate pages get crawled.
+    xml += `
+  <sitemap>
+    <loc>${BASE_URL}/functions/v1/dynamic-sitemap/static.xml</loc>
+    <lastmod>${today}</lastmod>
+  </sitemap>`;
     for (let i = 0; i < batchCount; i++) {
       xml += `
   <sitemap>
@@ -74,6 +97,44 @@ Deno.serve(async (req) => {
   </sitemap>`;
     }
     xml += `\n</sitemapindex>`;
+    return new Response(xml, {
+      headers: { "Content-Type": "application/xml", "Cache-Control": "public, max-age=3600" },
+    });
+  }
+
+  // Static-routes sitemap — one <url> per (route × language) with full
+  // bidirectional hreflang alternates so Google + IndexNow index every locale.
+  if (path === "/static.xml") {
+    const today = new Date().toISOString().split("T")[0];
+    let xml = `<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
+        xmlns:xhtml="http://www.w3.org/1999/xhtml">`;
+
+    for (const route of STATIC_ROUTES) {
+      for (const lang of LANGS) {
+        const prefix = lang ? `/${lang}` : "";
+        const loc = `${BASE_URL}${prefix}${route}`;
+        const priority = lang ? "0.7" : "0.9";
+        let alts = "";
+        for (const l of LANGS) {
+          const hl = l || "en";
+          const p = l ? `/${l}` : "";
+          alts += `
+    <xhtml:link rel="alternate" hreflang="${hl}" href="${BASE_URL}${p}${route}" />`;
+        }
+        alts += `
+    <xhtml:link rel="alternate" hreflang="x-default" href="${BASE_URL}${route}" />`;
+
+        xml += `
+  <url>
+    <loc>${loc}</loc>
+    <lastmod>${today}</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>${priority}</priority>${alts}
+  </url>`;
+      }
+    }
+    xml += `\n</urlset>`;
     return new Response(xml, {
       headers: { "Content-Type": "application/xml", "Cache-Control": "public, max-age=3600" },
     });

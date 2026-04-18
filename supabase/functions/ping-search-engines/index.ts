@@ -4,10 +4,29 @@ import { createClient } from "https://esm.sh/@supabase/supabase-js@2";
 const SITE = "https://mrcglobalpay.com";
 const INDEXNOW_KEY = "5b41e59fca3649f389b22450cd5cb8dc";
 
-const STATIC_URLS = [
-  `${SITE}/`,
-  `${SITE}/blog`,
-  `${SITE}/lend`,
+// "" = English (no prefix). Must mirror the LANGS list in dynamic-sitemap.
+const LANGS = ["", "es", "pt", "fr", "ja", "fa", "ur", "he", "af", "hi", "vi", "tr", "uk"];
+
+// Routes pinged in EVERY language. Affiliate/partner pages were missing —
+// IndexNow couldn't discover them.
+const LOCALIZED_ROUTES = [
+  "/",
+  "/affiliates",
+  "/partners",
+  "/referral",
+  "/lend",
+  "/private-transfer",
+  "/permanent-bridge",
+  "/about",
+  "/compliance",
+  "/transparency-security",
+  "/developers",
+  "/get-widget",
+  "/blog",
+];
+
+// English-only routes (whitepapers, swap landings, legal pages).
+const ENGLISH_ONLY = [
   `${SITE}/swap/sol-usdt`,
   `${SITE}/swap/btc-usdc`,
   `${SITE}/swap/hype-usdt`,
@@ -26,6 +45,17 @@ const STATIC_URLS = [
   `${SITE}/privacy`,
   `${SITE}/terms`,
   `${SITE}/aml`,
+];
+
+const STATIC_URLS = [
+  ...LOCALIZED_ROUTES.flatMap((route) =>
+    LANGS.map((lang) => {
+      const prefix = lang ? `/${lang}` : "";
+      if (route === "/") return `${SITE}${prefix}/`;
+      return `${SITE}${prefix}${route}`;
+    })
+  ),
+  ...ENGLISH_ONLY,
 ];
 
 const corsHeaders = {
