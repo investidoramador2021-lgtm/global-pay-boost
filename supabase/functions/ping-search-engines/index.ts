@@ -183,7 +183,7 @@ serve(async (req) => {
     return statuses.join(" | ");
   }
 
-  results.indexnow = await pingIndexNow("https://api.indexnow.org/indexnow");
+  // (moved below — pinged in parallel with other IndexNow endpoints)
 
   // ── 4. Google RSS Ping ──
   results.google_rss = await safeFetch(
