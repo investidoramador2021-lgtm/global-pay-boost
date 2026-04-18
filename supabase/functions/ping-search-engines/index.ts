@@ -230,49 +230,17 @@ serve(async (req) => {
     `https://webmaster.yandex.com/ping?sitemap=${encodeURIComponent(`${SITE}/sitemap.xml`)}`
   );
 
-  // ── 9. IndexNow via Bing directly ──
-  results.indexnow_bing = await safeFetch(
-    "indexnow_bing",
-    "https://www.bing.com/indexnow",
-    {
-      method: "POST",
-      headers: { "Content-Type": "application/json; charset=utf-8" },
-      body: indexNowPayload,
-    }
-  );
+  // ── 9. IndexNow via Bing directly ── chunked
+  results.indexnow_bing = await pingIndexNow("https://www.bing.com/indexnow");
 
-  // ── 10. IndexNow via Yandex directly ──
-  results.indexnow_yandex = await safeFetch(
-    "indexnow_yandex",
-    "https://yandex.com/indexnow",
-    {
-      method: "POST",
-      headers: { "Content-Type": "application/json; charset=utf-8" },
-      body: indexNowPayload,
-    }
-  );
+  // ── 10. IndexNow via Yandex directly ── chunked
+  results.indexnow_yandex = await pingIndexNow("https://yandex.com/indexnow");
 
-  // ── 11. IndexNow via Naver ──
-  results.indexnow_naver = await safeFetch(
-    "indexnow_naver",
-    "https://searchadvisor.naver.com/indexnow",
-    {
-      method: "POST",
-      headers: { "Content-Type": "application/json; charset=utf-8" },
-      body: indexNowPayload,
-    }
-  );
+  // ── 11. IndexNow via Naver ── chunked
+  results.indexnow_naver = await pingIndexNow("https://searchadvisor.naver.com/indexnow");
 
-  // ── 12. IndexNow via Seznam ──
-  results.indexnow_seznam = await safeFetch(
-    "indexnow_seznam",
-    "https://search.seznam.cz/indexnow",
-    {
-      method: "POST",
-      headers: { "Content-Type": "application/json; charset=utf-8" },
-      body: indexNowPayload,
-    }
-  );
+  // ── 12. IndexNow via Seznam ── chunked
+  results.indexnow_seznam = await pingIndexNow("https://search.seznam.cz/indexnow");
 
   // ── 13. Bing URL submission for llms.txt ──
   results.bing_llms = await safeFetch(
