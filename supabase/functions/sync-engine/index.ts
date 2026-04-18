@@ -770,6 +770,59 @@ Deno.serve(async (req) => {
   // ── 0. Parse mode (priority backfill bypasses alphabetical sweep) ──
   const url = new URL(req.url);
   const priorityMode = url.searchParams.get("priority") === "true";
+  const backfillDescriptions = url.searchParams.get("backfill_descriptions") === "true";
+
+  // ── 0b. Backfill mode: regenerate content_json for existing pairs only ──
+  // Re-templates rows with the latest 30-variant DESC_TEMPLATES so older
+  // ~95-char descriptions get replaced by 155-185 char unique long-form copy.
+  // Stateless: pass ?offset=N&limit=M to walk the table in chunks.
+  if (backfillDescriptions) {
+    const offset = parseInt(url.searchParams.get("offset") || "0", 10);
+    const limit = Math.min(parseInt(url.searchParams.get("limit") || "500", 10), 1000);
+
+    const { data: rows, error: fetchErr } = await supabase
+      .from("pairs")
+      .select("id, from_ticker, to_ticker, seo_template_id")
+      .order("id", { ascending: true })
+      .range(offset, offset + limit - 1);
+
+    if (fetchErr) {
+      return new Response(
+        JSON.stringify({ status: "error", error: fetchErr.message }),
+        { status: 500, headers: { ...corsHeaders, "Content-Type": "application/json" } }
+      );
+    }
+
+    let updated = 0;
+    for (const row of rows ?? []) {
+      const content = generateContentJson(row.from_ticker, row.to_ticker, row.seo_template_id);
+      const en = content.en;
+      const { error: updErr } = await supabase
+        .from("pairs")
+        .update({
+          content_json: content,
+          seo_title: en.title,
+          seo_description: en.description,
+          seo_h1: en.h1,
+          updated_at: new Date().toISOString(),
+        })
+        .eq("id", row.id);
+      if (!updErr) updated++;
+    }
+
+    return new Response(
+      JSON.stringify({
+        status: "ok",
+        mode: "backfill_descriptions",
+        offset,
+        limit,
+        scanned: rows?.length ?? 0,
+        updated,
+        next_offset: offset + (rows?.length ?? 0),
+      }),
+      { headers: { ...corsHeaders, "Content-Type": "application/json" } }
+    );
+  }
 
   const BATCH_LIMIT = priorityMode ? 500 : 100;
   const MAINTENANCE_THRESHOLD = 50_000;
