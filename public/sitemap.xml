@@ -1,19 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!--
-  Sitemap index for mrcglobalpay.com.
+  Fallback sitemap.xml — overwritten on every build by the generate-sitemaps
+  Vite plugin (vite-plugins/generate-sitemaps.ts). The build-time version
+  splits all pair URLs (currently ~289k across 13 languages) into 5,000-URL
+  files and lists every one as a child here.
 
-  All children are real static .xml files in public/ so they resolve on the
-  apex domain (Lovable hosting serves real files reliably; _redirects proxy
-  rules for /sitemap-* paths are not honored by the host).
-
-  Children:
-    - sitemap-static.xml: 326 core/landing/lang URLs
-    - sitemap-blog.xml:   312 blog post URLs across all languages
-
-  Pair landing pages (~290k URLs) are intentionally NOT exposed via this
-  sitemap. They are crawl-discoverable via internal links from the
-  TrendingEcosystems / SwapPairs sections. Surfacing 290k thin pages to
-  Google before they accumulate authority hurts Discovery Quality scores.
+  This file is the static fallback shipped if the build-time generator
+  cannot reach the dynamic-feed function for some reason.
 -->
 <sitemapindex xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <sitemap><loc>https://mrcglobalpay.com/sitemap-static.xml</loc></sitemap>
