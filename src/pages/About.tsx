@@ -71,6 +71,17 @@ const About = () => (
                     <span className="font-semibold text-foreground">MSB Registration Number</span>
                     <span className="font-mono text-primary">C100000015</span>
                   </div>
+                  <div className="flex justify-between border-b border-border pb-2">
+                    <span className="font-semibold text-foreground">Bank of Canada — PSP Authorization</span>
+                    <a
+                      href="https://www.bankofcanada.ca/core-functions/retail-payments-supervision/psp-registry/psp-registry-details/?account_id=408b884a-1aa1-ef11-a72d-0022483bf164"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="text-primary underline decoration-primary/30 underline-offset-2 hover:decoration-primary"
+                    >
+                      Authorized Payment Service Provider ↗
+                    </a>
+                  </div>
                   <div className="flex justify-between">
                     <span className="font-semibold text-foreground">Headquarters</span>
                     <span>Ottawa, Ontario, Canada</span>
