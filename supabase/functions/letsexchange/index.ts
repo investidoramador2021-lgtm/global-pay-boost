@@ -287,6 +287,42 @@ Deno.serve(async (req) => {
         });
       }
 
+      case 'list-transactions': {
+        const limit = params.limit || '100';
+        const offset = params.offset || '0';
+        // LetsExchange affiliate history endpoint
+        const r = await leFetch(`/affiliate/history?limit=${limit}&offset=${offset}`, apiKey);
+        const p = await parseJson(r);
+        if (!r.ok || !p.isJson) {
+          console.error(`LE list-tx [${r.status}]: ${p.text?.slice(0, 200)}`);
+          return json([], 200);
+        }
+        const list = Array.isArray(p.data) ? p.data : (p.data?.data || p.data?.transactions || []);
+        const statusMap: Record<string, string> = {
+          wait: 'waiting', waiting: 'waiting',
+          confirmation: 'confirming', confirming: 'confirming',
+          exchanging: 'exchanging', sending: 'sending',
+          success: 'finished', finished: 'finished',
+          overdue: 'failed', expired: 'failed', error: 'failed', fail: 'failed', failed: 'failed',
+          refund: 'refunded', refunded: 'refunded',
+        };
+        const normalized = list.map((d: any) => ({
+          id: d.transaction_id || d.id,
+          status: statusMap[String(d.status || '').toLowerCase()] || d.status || 'waiting',
+          fromCurrency: (d.coin_from || '').toLowerCase(),
+          toCurrency: (d.coin_to || '').toLowerCase(),
+          amountSend: d.deposit_amount ? Number(d.deposit_amount) : null,
+          amountReceive: d.withdrawal_amount ? Number(d.withdrawal_amount) : null,
+          payinAddress: d.deposit || '',
+          payoutAddress: d.withdrawal || '',
+          payinHash: d.hash_in || null,
+          payoutHash: d.hash_out || null,
+          createdAt: d.created_at || d.createdAt || null,
+          provider: 'le',
+        }));
+        return json(normalized);
+      }
+
       default:
         return bad(`Invalid action: ${action}`);
     }
