@@ -225,15 +225,20 @@ const ExchangeTracker = () => {
   }, [swaps]);
 
   /* ── Helpers ── */
-  const statusBadge = (status?: string) => {
-    if (!status) return <span className="text-xs text-muted-foreground">Loading…</span>;
-    const s = STATUS_MAP[status] || { label: status, color: "text-muted-foreground", icon: null };
-    return (
-      <span className={`inline-flex items-center gap-1.5 text-xs font-medium ${s.color}`}>
-        {s.icon}
-        {s.label}
-      </span>
-    );
+  const statusBadge = (sw?: EnrichedSwap) => {
+    if (sw?.live) {
+      const s = STATUS_MAP[sw.live.status] || { label: sw.live.status, color: "text-muted-foreground", icon: null };
+      return (
+        <span className={`inline-flex items-center gap-1.5 text-xs font-medium ${s.color}`}>
+          {s.icon}
+          {s.label}
+        </span>
+      );
+    }
+    if (sw?.liveLoading) {
+      return <span className="text-xs text-muted-foreground inline-flex items-center gap-1.5"><RefreshCw className="w-3.5 h-3.5 animate-spin" />Loading…</span>;
+    }
+    return <span className="text-xs text-muted-foreground">Unknown</span>;
   };
 
   const formatDate = (d: string) => {
