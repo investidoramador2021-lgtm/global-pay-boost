@@ -1246,8 +1246,18 @@ const ExchangeWidget = ({ onTabChange, defaultFrom, defaultTo }: ExchangeWidgetP
 
       getCurrencies()
         .then((data) => {
-          if (Array.isArray(data)) {
-            setCurrencies(data);
+          // Defensive: API may return {data: [...]} or [...] depending on transport
+          const list = Array.isArray(data)
+            ? data
+            : Array.isArray((data as { data?: unknown })?.data)
+              ? ((data as { data: Currency[] }).data)
+              : null;
+          if (list && list.length > 0) {
+            const arrayData = list;
+            setCurrencies(arrayData);
+            // Re-bind: rest of original logic uses `data` — alias it
+            // eslint-disable-next-line @typescript-eslint/no-explicit-any
+            (data as any) = arrayData;
 
             const findCurrency = (mapped: string | undefined, raw: string | undefined) => {
               if (!mapped) return null;
