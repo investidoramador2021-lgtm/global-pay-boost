@@ -524,7 +524,7 @@ Deno.serve(async (req) => {
 
     const currentCount = pairsCount ?? 0;
 
-    if (currentCount >= MAINTENANCE_THRESHOLD) {
+    if (!priorityMode && currentCount >= MAINTENANCE_THRESHOLD) {
       const currentHour = Math.floor(Date.now() / (1000 * 60 * 60));
       if (currentHour % MAINTENANCE_INTERVAL_HOURS !== 0) {
         // Update state and exit early
