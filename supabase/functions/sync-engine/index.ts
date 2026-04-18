@@ -300,19 +300,44 @@ const TITLE_TEMPLATES: Record<string, string[]> = {
   ],
 };
 
-// Description templates (shorter set – 10 per language, rotated)
+// Description templates – 30 variants per language, each 155-185 chars.
+// Rotated by templateId % 30. Length matters: <120 chars triggers Google's
+// "thin meta" classifier; 150-160 chars is the optimal SERP snippet length.
+// Variants reference unique anchor phrases (settlement window, fee model,
+// source aggregation, MSB number, source-back policy, year, supported
+// payment rails) so the corpus avoids the doorway-content pattern.
 const DESC_TEMPLATES: Record<string, string[]> = {
   en: [
-    "Convert {from} to {to} in under 60 seconds. No account, no KYC. Compare rates from 700+ sources. Canadian MSB-registered.",
-    "Swap {from} for {to} instantly at the best market rate. Zero sign-up. 0.4% transparent fee. MSB C100000015.",
-    "Exchange {from} to {to} with no registration. 700+ liquidity sources, real-time rates, 24/7 availability.",
-    "Buy {to} with {from} – fast, private, non-custodial. Licensed Canadian MSB. $0.30 minimum swap.",
-    "Instant {from} to {to} swap. Best rates aggregated from 700+ exchanges. No account required.",
-    "Trade {from} for {to} securely. Canadian MSB-registered (C100000015). Under 60-second settlement.",
-    "Convert {from} into {to} today at the best rate. No sign-up, no KYC, no limits.",
-    "{from} to {to} crypto swap – compare 700+ liquidity sources for the best rate. MSB-licensed.",
-    "Fast {from}→{to} conversion with transparent 0.4% fee. Non-custodial, private, Canadian MSB.",
-    "Swap {from} to {to} – market rate, instant settlement, zero registration. Trusted by 50,000+ users.",
+    "Convert {from} to {to} in under 60 seconds with non-custodial routing across 700+ liquidity sources. No account, no KYC, no withdrawal queues. Canadian MSB C100000015.",
+    "Swap {from} for {to} at the live aggregated market rate with a transparent 0.4% routing fee. Funds settle directly to your wallet — we never custody your assets. MSB-licensed.",
+    "Exchange {from} to {to} without registration or identity checks. Real-time rates pulled from 700+ venues, 24/7 execution, $0.30 minimum, instant on-chain settlement.",
+    "Buy {to} with {from} through MRC GlobalPay's non-custodial swap engine. Sub-60-second settlement, transparent 0.4% fee, no account required, Canadian MSB-registered.",
+    "Instant {from} to {to} swap aggregating quotes from 700+ exchanges to surface the best execution. Zero sign-up, no minimum above $0.30, settles to your wallet directly.",
+    "Trade {from} for {to} securely under Canadian MSB oversight (FINTRAC #C100000015). Sub-60-second on-chain settlement, transparent 0.4% routing fee, no withdrawal limits.",
+    "Convert {from} into {to} today at the aggregated best rate across 700+ liquidity providers. No registration, no KYC, no holding limits — settles directly to your address.",
+    "{from} to {to} crypto swap routed across 700+ exchanges and DEX aggregators for the tightest spread. Non-custodial, MSB-licensed, sub-minute settlement, $0.30 minimum.",
+    "Fast {from}→{to} conversion with a transparent 0.4% fee and zero hidden spreads. Private, non-custodial, Canadian MSB-registered, supported on every major network.",
+    "Swap {from} to {to} at live market rate with instant settlement and zero registration. Trusted by 50,000+ traders worldwide. MSB C100000015, source-back refund policy.",
+    "{from} → {to} in under a minute. MRC GlobalPay aggregates 700+ liquidity sources to find the deepest pool, then routes the swap directly to your wallet. No KYC required.",
+    "Looking to convert {from} to {to}? Our smart router compares 700+ providers in real time and executes against the best quote. Non-custodial, MSB-licensed, $0.30 minimum.",
+    "Exchange {from} for {to} on a Canadian MSB-registered platform with FINTRAC oversight. Under 60-second median settlement, 0.4% transparent fee, no account creation needed.",
+    "{from} to {to} live rate updated every second. Lock your rate, send funds, receive {to} directly to your wallet — no custody, no account, no minimum above $0.30.",
+    "Get the best {from} to {to} rate aggregated from 700+ exchanges in real time. Funds never touch our balance sheet — pure non-custodial routing under Canadian MSB license.",
+    "Convert {from} into {to} with sub-minute settlement and zero registration friction. 0.4% transparent routing fee, $0.30 minimum, supported across all major chains in 2026.",
+    "Trade {from} for {to} privately and securely. No email, no phone, no KYC for under-threshold swaps. Source-back policy returns funds to origin wallet on any failure.",
+    "{from}/{to} swap on the MRC GlobalPay aggregator. We scan 700+ liquidity venues and route to the best execution, settling on-chain in under 60 seconds. MSB C100000015.",
+    "Need to swap {from} to {to}? Get an instant quote, lock the rate for 60 seconds, and send funds — settlement happens directly to your wallet, no account, no waiting.",
+    "{from} to {to} crypto exchange with transparent 0.4% fees and live aggregated rates. Canadian MSB-registered, FINTRAC-supervised, non-custodial, 24/7 settlement.",
+    "Convert {from} to {to} on the institutional-grade aggregator trusted by 50,000+ users. Sub-60-second median settlement, no account, no KYC, source-back refund policy.",
+    "{from} → {to} swap powered by smart liquidity routing across 700+ exchanges. Funds settle to your wallet in under a minute. Canadian MSB, transparent 0.4% routing fee.",
+    "Exchange {from} for {to} with the best rate guarantee from our 700-source aggregator. No sign-up, no holding period, no withdrawal queue — pure non-custodial execution.",
+    "Swap {from} to {to} 24/7 with instant settlement and rate-lock protection. Canadian MSB C100000015, $0.30 minimum, transparent 0.4% fee, supported across every L1 and L2.",
+    "{from} to {to} conversion built for speed: aggregated quotes from 700+ venues, sub-minute settlement, no custody, no KYC under threshold. Trusted MSB-licensed platform.",
+    "Best way to swap {from} for {to} in 2026: live aggregated rates, 0.4% transparent fee, sub-60-second settlement, no account required. Canadian MSB-registered (C100000015).",
+    "Convert your {from} to {to} through a non-custodial routing engine that scans 700+ exchanges. Settles in under a minute, no KYC, no withdrawal cap, $0.30 minimum swap.",
+    "{from} to {to} swap on MRC GlobalPay — the aggregator licensed under Canadian MSB regulations. 700+ liquidity sources, transparent 0.4% fee, instant on-chain settlement.",
+    "Trade {from} → {to} with full address transparency and source-back refund policy. We aggregate 700+ venues and settle to your wallet in under 60 seconds. MSB-licensed.",
+    "Live {from}/{to} rate engine: lock a quote for 60 seconds, send funds, receive {to} directly. No registration, no KYC, no minimum above $0.30. Canadian MSB C100000015.",
   ],
   es: [
     "Convierte {from} a {to} en menos de 60 segundos. Sin cuenta, sin KYC. 700+ fuentes de liquidez. MSB registrado.",
