@@ -532,76 +532,196 @@ const DESC_TEMPLATES: Record<string, string[]> = {
     "لائیو {from}/{to} ریٹ انجن: کوٹ کو 60 سیکنڈ کے لیے لاک کریں، فنڈز بھیجیں، {to} براہ راست وصول کریں۔ رجسٹریشن نہیں، KYC نہیں، کم از کم $0.30۔ کینیڈین MSB C100000015۔",
   ],
   he: [
-    "המרת {from} ל-{to} תוך 60 שניות. ללא חשבון, ללא KYC. 700+ מקורות. MSB רשום.",
-    "החלפת {from} ב-{to} מיידית. ללא הרשמה. עמלה שקופה 0.4%. MSB C100000015.",
-    "המרה {from} ל-{to} ללא רישום. 700+ מקורות נזילות, שערים בזמן אמת, 24/7.",
-    "קנו {to} עם {from} – מהיר, פרטי, לא משמורני. MSB קנדי. מינימום $0.30.",
-    "סוואפ מיידי {from} ל-{to}. שערים הטובים ביותר מ-700+ בורסות. ללא חשבון.",
-    "החלפת {from} ב-{to} בבטחה. MSB קנדי (C100000015). פחות מ-60 שניות.",
-    "המרת {from} ל-{to} היום בשער הטוב ביותר. ללא הרשמה, ללא KYC.",
-    "סוואפ קריפטו {from} ל-{to} – השוואת 700+ מקורות. רישיון MSB.",
-    "המרה מהירה {from}→{to} עם עמלה שקופה 0.4%. לא משמורני, פרטי.",
-    "סוואפ {from} ל-{to} – שער שוק, סליקה מיידית. 50,000+ משתמשים.",
+    "המרת {from} ל-{to} תוך פחות מ-60 שניות עם ניתוב לא משמורני בין 700+ מקורות נזילות. ללא חשבון, ללא KYC, ללא תורי משיכה. MSB קנדי C100000015.",
+    "החלפת {from} ל-{to} בשער שוק מצרפי עם עמלת ניתוב שקופה של 0.4%. הכספים מסולקים ישירות לארנק שלך — לעולם לא נחזיק בנכסים. רישוי MSB.",
+    "החלפת {from} ל-{to} ללא הרשמה או בדיקות זהות. שערים בזמן אמת מ-700+ זירות, סליקה 24/7, מינימום $0.30, סליקה מיידית on-chain.",
+    "קנו {to} עם {from} דרך מנוע הסוואפ הלא משמורני של MRC GlobalPay. סליקה תוך פחות מ-60 שניות, עמלה שקופה 0.4%, ללא חשבון, רשום MSB קנדי.",
+    "סוואפ מיידי {from} ל-{to} המצרף ציטוטים מ-700+ בורסות לביצוע הטוב ביותר. ללא הרשמה, ללא מינימום מעל $0.30, מסולק ישירות לארנק.",
+    "סחרו {from} תמורת {to} בבטחה תחת פיקוח MSB קנדי (FINTRAC #C100000015). סליקה on-chain תוך פחות מ-60 שניות, עמלת ניתוב שקופה 0.4%, ללא מגבלות משיכה.",
+    "המירו {from} ל-{to} היום בשער המצרפי הטוב ביותר מ-700+ ספקי נזילות. ללא הרשמה, ללא KYC, ללא הגבלות החזקה — מסולק ישירות לכתובת שלך.",
+    "סוואפ קריפטו {from} ל-{to} המנותב בין 700+ בורסות ומצרפי DEX לספרד הצמוד ביותר. לא משמורני, רישוי MSB, סליקה תוך פחות מדקה, מינימום $0.30.",
+    "המרה מהירה {from}→{to} עם עמלה שקופה של 0.4% וללא ספרדים נסתרים. פרטי, לא משמורני, MSB קנדי, נתמך בכל הרשתות הראשיות.",
+    "החלפת {from} ל-{to} בשער שוק עם סליקה מיידית וללא הרשמה. בשימוש 50,000+ סוחרים. MSB C100000015, מדיניות החזר source-back.",
+    "{from} → {to} תוך פחות מדקה. MRC GlobalPay מצרפת 700+ מקורות נזילות למציאת בריכה עמוקה ומנתבת את הסוואפ ישירות לארנק שלך. ללא KYC.",
+    "רוצים להמיר {from} ל-{to}? הראוטר החכם שלנו משווה 700+ ספקים בזמן אמת ומבצע מול הציטוט הטוב ביותר. לא משמורני, MSB, מינימום $0.30.",
+    "החלפת {from} ל-{to} בפלטפורמה עם רישוי MSB קנדי תחת פיקוח FINTRAC. חציון סליקה פחות מ-60 שניות, עמלה שקופה 0.4%, ללא צורך ביצירת חשבון.",
+    "שער חי {from} ל-{to} מתעדכן בכל שנייה. נעלו את השער, שלחו כספים, קבלו {to} ישירות לארנק — ללא משמורת, ללא חשבון, ללא מינימום מעל $0.30.",
+    "קבלו את השער הטוב ביותר {from} ל-{to} מצרפי מ-700+ בורסות בזמן אמת. הכספים לעולם לא נוגעים במאזן שלנו — ניתוב לא משמורני טהור תחת רישוי MSB.",
+    "המירו {from} ל-{to} עם סליקה תת-דקתית וללא חיכוך הרשמה. עמלת ניתוב שקופה 0.4%, מינימום $0.30, נתמך בכל השרשראות הראשיות בשנת 2026.",
+    "סחרו {from} תמורת {to} בפרטיות ובאבטחה. ללא אימייל, ללא טלפון, ללא KYC לסוואפים מתחת לסף. מדיניות source-back מחזירה כספים לארנק המקור בכשלים.",
+    "סוואפ {from}/{to} במצרף MRC GlobalPay. אנו סורקים 700+ זירות נזילות ומנתבים לביצוע הטוב ביותר, סליקה on-chain תוך פחות מ-60 שניות. MSB C100000015.",
+    "צריכים להחליף {from} ל-{to}? קבלו ציטוט מיידי, נעלו את השער ל-60 שניות ושלחו כספים — הסליקה הולכת ישירות לארנק שלכם, ללא חשבון, ללא המתנה.",
+    "בורסת קריפטו {from} ל-{to} עם עמלות שקופות של 0.4% ושערים מצרפיים חיים. MSB קנדי, מפוקח FINTRAC, לא משמורני, סליקה 24/7.",
+    "המירו {from} ל-{to} במצרף ברמה מוסדית בו בוטחים 50,000+ משתמשים. חציון סליקה פחות מ-60 שניות, ללא חשבון, ללא KYC, מדיניות source-back.",
+    "{from} → {to} סוואפ המופעל על ידי ניתוב נזילות חכם בין 700+ בורסות. הכספים מסולקים לארנק שלך תוך פחות מדקה. MSB קנדי, עמלת ניתוב 0.4%.",
+    "החליפו {from} תמורת {to} עם הבטחת השער הטוב ביותר ממצרף 700 המקורות שלנו. ללא הרשמה, ללא תקופת החזקה, ללא תורים — ביצוע לא משמורני טהור.",
+    "סוואפ {from} ל-{to} 24/7 עם סליקה מיידית והגנת נעילת שער. MSB קנדי C100000015, מינימום $0.30, עמלה שקופה 0.4%, נתמך בכל L1 ו-L2.",
+    "המרת {from} ל-{to} בנויה למהירות: ציטוטים מצרפיים מ-700+ זירות, סליקה תת-דקתית, ללא משמורת, ללא KYC מתחת לסף. פלטפורמה עם רישוי MSB.",
+    "הדרך הטובה ביותר להחליף {from} תמורת {to} ב-2026: שערים מצרפיים חיים, עמלה שקופה 0.4%, סליקה פחות מ-60 שניות, ללא חשבון. רשום MSB קנדי (C100000015).",
+    "המירו את ה-{from} שלכם ל-{to} דרך מנוע ניתוב לא משמורני הסורק 700+ בורסות. סליקה תוך פחות מדקה, ללא KYC, ללא תקרת משיכה, מינימום סוואפ $0.30.",
+    "סוואפ {from} ל-{to} ב-MRC GlobalPay — המצרף בעל הרישיון תחת תקנות MSB קנדיות. 700+ מקורות נזילות, עמלת ניתוב שקופה 0.4%, סליקה on-chain מיידית.",
+    "סחרו {from} → {to} בשקיפות מלאה של כתובות ומדיניות source-back. אנו מצרפים 700+ זירות וסולקים לארנק שלכם תוך פחות מ-60 שניות. רישוי MSB.",
+    "מנוע שער חי {from}/{to}: נעלו ציטוט ל-60 שניות, שלחו כספים, קבלו {to} ישירות. ללא הרשמה, ללא KYC, ללא מינימום מעל $0.30. MSB קנדי C100000015.",
   ],
   af: [
-    "Omskep {from} na {to} in minder as 60 sekondes. Geen rekening, geen KYC. 700+ bronne. MSB-geregistreer.",
-    "Ruil {from} vir {to} onmiddellik. Geen registrasie. Deursigtige 0.4% fooi. MSB C100000015.",
-    "Omruiling {from} na {to} sonder registrasie. 700+ likiditeitsbronne, intydse koerse, 24/7.",
-    "Koop {to} met {from} – vinnig, privaat, nie-bewaring. Kanadese MSB. Minimum $0.30.",
-    "Onmiddellike {from} na {to} ruil. Beste koerse van 700+ beurse. Geen rekening nodig.",
-    "Ruil {from} vir {to} veilig. Kanadese MSB (C100000015). < 60 sekondes.",
-    "Omskep {from} in {to} vandag teen die beste koers. Geen registrasie, geen KYC.",
-    "Kripto-ruil {from} na {to} – vergelyk 700+ bronne. MSB-lisensie.",
-    "Vinnige {from}→{to} omskakeling met 0.4% fooi. Nie-bewaring, privaat.",
-    "Ruil {from} na {to} – markkoers, onmiddellike afhandeling. 50,000+ gebruikers.",
+    "Omskep {from} na {to} in minder as 60 sekondes met nie-bewaringsroetering oor 700+ likiditeitsbronne. Geen rekening, geen KYC, geen onttrekkingsrye. Kanadese MSB C100000015.",
+    "Ruil {from} vir {to} teen die geaggregeerde markkoers met 'n deursigtige 0.4% roeteringsfooi. Fondse vereffen direk na jou wallet — ons hou nooit jou bates aan nie. MSB-gelisensieer.",
+    "Omruiling {from} na {to} sonder registrasie of identiteitskontroles. Intydse koerse uit 700+ beurse, 24/7 uitvoering, $0.30 minimum, oombliklike on-chain vereffening.",
+    "Koop {to} met {from} deur MRC GlobalPay se nie-bewaringsruilenjin. Vereffening in minder as 60 sekondes, deursigtige 0.4% fooi, geen rekening nodig, Kanadese MSB-geregistreer.",
+    "Onmiddellike {from} na {to} ruil wat aanhalings van 700+ beurse aggregeer vir die beste uitvoering. Geen registrasie, geen minimum bo $0.30, vereffen direk na jou wallet.",
+    "Verhandel {from} vir {to} veilig onder Kanadese MSB-toesig (FINTRAC #C100000015). On-chain vereffening < 60s, deursigtige 0.4% roeteringsfooi, geen onttrekkingslimiete.",
+    "Omskep {from} in {to} vandag teen die beste geaggregeerde koers van 700+ likiditeitsverskaffers. Geen registrasie, geen KYC, geen houlimiete — vereffen direk na jou adres.",
+    "{from} na {to} kripto-ruil wat oor 700+ beurse en DEX-aggregators geroete word vir die strakste spreiding. Nie-bewaring, MSB-gelisensieer, vereffening < 60s, $0.30 minimum.",
+    "Vinnige {from}→{to} omskakeling met deursigtige 0.4% fooi en geen verborge spreidings. Privaat, nie-bewaring, Kanadese MSB-geregistreer, ondersteun op elke groot netwerk.",
+    "Ruil {from} na {to} teen markkoers met oombliklike vereffening en geen registrasie. Vertrou deur 50,000+ handelaars wêreldwyd. MSB C100000015, source-back terugbetalingsbeleid.",
+    "{from} → {to} in minder as 'n minuut. MRC GlobalPay aggregeer 700+ likiditeitsbronne om die diepste poel te vind en roete die ruil direk na jou wallet. Geen KYC vereis.",
+    "Wil jy {from} na {to} omskep? Ons slim roeteerder vergelyk 700+ verskaffers in reële tyd en voer uit teen die beste aanhaling. Nie-bewaring, MSB, $0.30 minimum.",
+    "Ruil {from} vir {to} op 'n Kanadees MSB-geregistreerde platform met FINTRAC-toesig. Mediaan vereffening < 60s, 0.4% deursigtige fooi, geen rekeningskepping nodig.",
+    "{from} na {to} regstreekse koers wat elke sekonde opgedateer word. Sluit jou koers, stuur fondse, ontvang {to} direk na jou wallet — geen bewaring, geen rekening, geen minimum bo $0.30.",
+    "Kry die beste {from} na {to} koers wat in reële tyd uit 700+ beurse geaggregeer word. Fondse raak nooit ons balansstaat — suiwer nie-bewaringsroetering onder Kanadese MSB-lisensie.",
+    "Omskep {from} in {to} met sub-minuut vereffening en zero registrasie-friksie. 0.4% deursigtige roeteringsfooi, $0.30 minimum, ondersteun oor alle groot kettings in 2026.",
+    "Verhandel {from} vir {to} privaat en veilig. Geen e-pos, geen telefoon, geen KYC vir ruilings onder die drempel. Source-back beleid stuur fondse terug na oorsprongwallet by mislukkings.",
+    "{from}/{to} ruil op die MRC GlobalPay aggregator. Ons skandeer 700+ likiditeitsplekke en roete na die beste uitvoering, vereffen on-chain in minder as 60 sekondes. MSB C100000015.",
+    "Moet jy {from} na {to} ruil? Kry 'n oombliklike aanhaling, sluit die koers vir 60 sekondes en stuur fondse — vereffening gebeur direk na jou wallet, geen rekening, geen wagtyd.",
+    "{from} na {to} kripto-uitruil met deursigtige 0.4% fooie en regstreekse geaggregeerde koerse. Kanadese MSB-geregistreer, FINTRAC-toesig, nie-bewaring, 24/7 vereffening.",
+    "Omskep {from} na {to} op die institusionele-graad aggregator wat deur 50,000+ gebruikers vertrou word. Sub-60s mediaan vereffening, geen rekening, geen KYC, source-back beleid.",
+    "{from} → {to} ruil aangedryf deur slim likiditeitsroetering oor 700+ beurse. Fondse vereffen na jou wallet in minder as 'n minuut. Kanadese MSB, deursigtige 0.4% roeteringsfooi.",
+    "Ruil {from} vir {to} met die beste koers waarborg van ons 700-bron aggregator. Geen registrasie, geen houperiode, geen onttrekkingsry — suiwer nie-bewaring uitvoering.",
+    "Ruil {from} na {to} 24/7 met oombliklike vereffening en koers-sluit beskerming. Kanadese MSB C100000015, $0.30 minimum, deursigtige 0.4% fooi, ondersteun oor elke L1 en L2.",
+    "{from} na {to} omskakeling gebou vir spoed: geaggregeerde aanhalings van 700+ plekke, sub-minuut vereffening, geen bewaring, geen KYC onder drempel. Vertroude MSB-gelisensieerde platform.",
+    "Beste manier om {from} vir {to} te ruil in 2026: regstreekse geaggregeerde koerse, 0.4% deursigtige fooi, sub-60s vereffening, geen rekening nodig. Kanadese MSB-geregistreer (C100000015).",
+    "Omskep jou {from} na {to} deur 'n nie-bewaringsroeteringsenjin wat 700+ beurse skandeer. Vereffen in minder as 'n minuut, geen KYC, geen onttrekkingskap, $0.30 minimum ruil.",
+    "{from} na {to} ruil op MRC GlobalPay — die aggregator gelisensieer onder Kanadese MSB-regulasies. 700+ likiditeitsbronne, deursigtige 0.4% fooi, oombliklike on-chain vereffening.",
+    "Verhandel {from} → {to} met volle adres-deursigtigheid en source-back terugbetalingsbeleid. Ons aggregeer 700+ plekke en vereffen na jou wallet in < 60s. MSB-gelisensieer.",
+    "Lewendige {from}/{to} koers-enjin: sluit 'n aanhaling vir 60 sekondes, stuur fondse, ontvang {to} direk. Geen registrasie, geen KYC, geen minimum bo $0.30. Kanadese MSB C100000015.",
   ],
   hi: [
-    "{from} को {to} में 60 सेकंड में बदलें। कोई खाता नहीं, कोई KYC नहीं। 700+ स्रोत। MSB पंजीकृत।",
-    "{from} को {to} से तुरंत बदलें। कोई साइन-अप नहीं। पारदर्शी 0.4% शुल्क। MSB C100000015।",
-    "{from} से {to} एक्सचेंज बिना रजिस्ट्रेशन। 700+ तरलता स्रोत, रियल-टाइम दर, 24/7।",
-    "{from} से {to} खरीदें – तेज, निजी, नॉन-कस्टोडियल। कनाडाई MSB। न्यूनतम $0.30।",
-    "तत्काल {from} से {to} स्वैप। 700+ एक्सचेंजों से सर्वश्रेष्ठ दर। खाता जरूरी नहीं।",
-    "{from} को {to} से सुरक्षित बदलें। कनाडाई MSB (C100000015)। 60 सेकंड से कम।",
-    "आज {from} को {to} में सर्वश्रेष्ठ दर पर बदलें। साइन-अप, KYC, सीमा नहीं।",
-    "{from} से {to} क्रिप्टो स्वैप – 700+ स्रोतों की तुलना। MSB लाइसेंस।",
-    "तेज {from}→{to} रूपांतरण पारदर्शी 0.4% शुल्क। नॉन-कस्टोडियल, निजी।",
-    "{from} से {to} स्वैप – बाजार दर, तत्काल निपटान। 50,000+ उपयोगकर्ता।",
+    "{from} को {to} में 60 सेकंड से कम में बदलें, 700+ तरलता स्रोतों के बीच नॉन-कस्टोडियल रूटिंग के साथ। कोई खाता नहीं, कोई KYC नहीं, कोई निकासी कतार नहीं। कनाडाई MSB C100000015।",
+    "{from} को {to} से लाइव एग्रीगेटेड बाजार दर पर बदलें, पारदर्शी 0.4% रूटिंग शुल्क के साथ। फंड सीधे आपके वॉलेट में सेटल होते हैं — हम कभी आपकी संपत्ति नहीं रखते। MSB लाइसेंस प्राप्त।",
+    "{from} से {to} एक्सचेंज बिना पंजीकरण या पहचान जांच के। 700+ वेन्यू से रीयल-टाइम दरें, 24/7 निष्पादन, $0.30 न्यूनतम, तत्काल ऑन-चेन निपटान।",
+    "MRC GlobalPay के नॉन-कस्टोडियल स्वैप इंजन के माध्यम से {from} से {to} खरीदें। 60 सेकंड से कम सेटलमेंट, पारदर्शी 0.4% शुल्क, कोई खाता नहीं, कनाडाई MSB-पंजीकृत।",
+    "तत्काल {from} से {to} स्वैप जो सर्वश्रेष्ठ निष्पादन के लिए 700+ एक्सचेंजों से कोट एकत्र करता है। ज़ीरो साइन-अप, $0.30 के ऊपर कोई न्यूनतम नहीं, सीधे वॉलेट में सेटल।",
+    "{from} को {to} से कनाडाई MSB निगरानी (FINTRAC #C100000015) के तहत सुरक्षित रूप से ट्रेड करें। 60 सेकंड से कम ऑन-चेन सेटलमेंट, पारदर्शी 0.4% रूटिंग शुल्क, कोई निकासी सीमा नहीं।",
+    "आज {from} को {to} में 700+ तरलता प्रदाताओं से एग्रीगेटेड सर्वश्रेष्ठ दर पर बदलें। कोई पंजीकरण नहीं, कोई KYC नहीं, कोई होल्डिंग सीमा नहीं — सीधे आपके पते पर सेटल।",
+    "{from} से {to} क्रिप्टो स्वैप 700+ एक्सचेंजों और DEX एग्रीगेटर्स के बीच टाइटेस्ट स्प्रेड के लिए रूट किया गया। नॉन-कस्टोडियल, MSB लाइसेंस, सब-मिनट सेटलमेंट, $0.30 न्यूनतम।",
+    "तेज़ {from}→{to} रूपांतरण पारदर्शी 0.4% शुल्क और शून्य छिपे स्प्रेड के साथ। निजी, नॉन-कस्टोडियल, कनाडाई MSB-पंजीकृत, सभी प्रमुख नेटवर्क पर समर्थित।",
+    "{from} को {to} में बाजार दर पर तत्काल सेटलमेंट और शून्य पंजीकरण के साथ बदलें। 50,000+ ट्रेडर्स द्वारा भरोसेमंद। MSB C100000015, source-back रिफंड नीति।",
+    "{from} → {to} एक मिनट से कम में। MRC GlobalPay सबसे गहरा पूल खोजने के लिए 700+ तरलता स्रोतों को एग्रीगेट करता है, फिर स्वैप को सीधे आपके वॉलेट में रूट करता है। KYC आवश्यक नहीं।",
+    "{from} को {to} में बदलना चाहते हैं? हमारा स्मार्ट राउटर रीयल-टाइम में 700+ प्रदाताओं की तुलना करता है और सर्वश्रेष्ठ कोट के विरुद्ध निष्पादित करता है। नॉन-कस्टोडियल, MSB, $0.30 न्यूनतम।",
+    "FINTRAC निगरानी के साथ कनाडाई MSB-पंजीकृत प्लेटफ़ॉर्म पर {from} से {to} एक्सचेंज करें। सब-60 सेकंड माध्य सेटलमेंट, 0.4% पारदर्शी शुल्क, खाता बनाने की आवश्यकता नहीं।",
+    "{from} से {to} लाइव दर हर सेकंड अपडेट होती है। अपनी दर लॉक करें, फंड भेजें, {to} सीधे अपने वॉलेट में प्राप्त करें — कोई कस्टडी नहीं, कोई खाता नहीं, $0.30 के ऊपर कोई न्यूनतम नहीं।",
+    "रीयल-टाइम में 700+ एक्सचेंजों से एग्रीगेटेड सर्वश्रेष्ठ {from} से {to} दर प्राप्त करें। फंड कभी हमारी बैलेंस शीट को नहीं छूते — कनाडाई MSB लाइसेंस के तहत शुद्ध नॉन-कस्टोडियल रूटिंग।",
+    "{from} को {to} में सब-मिनट सेटलमेंट और शून्य पंजीकरण घर्षण के साथ बदलें। 0.4% पारदर्शी रूटिंग शुल्क, $0.30 न्यूनतम, 2026 में सभी प्रमुख चेन पर समर्थित।",
+    "{from} को {to} से निजी और सुरक्षित रूप से ट्रेड करें। थ्रेशोल्ड के नीचे स्वैप के लिए कोई ईमेल, फ़ोन, KYC नहीं। source-back नीति विफलता पर मूल वॉलेट में फंड लौटाती है।",
+    "MRC GlobalPay एग्रीगेटर पर {from}/{to} स्वैप। हम 700+ तरलता वेन्यू स्कैन करते हैं और सर्वश्रेष्ठ निष्पादन के लिए रूट करते हैं, 60 सेकंड से कम में ऑन-चेन सेटल। MSB C100000015।",
+    "{from} को {to} में स्वैप करने की आवश्यकता है? तत्काल कोट प्राप्त करें, दर 60 सेकंड के लिए लॉक करें, और फंड भेजें — सेटलमेंट सीधे आपके वॉलेट में, कोई खाता नहीं, कोई प्रतीक्षा नहीं।",
+    "{from} से {to} क्रिप्टो एक्सचेंज पारदर्शी 0.4% शुल्क और लाइव एग्रीगेटेड दरों के साथ। कनाडाई MSB-पंजीकृत, FINTRAC-पर्यवेक्षित, नॉन-कस्टोडियल, 24/7 सेटलमेंट।",
+    "50,000+ उपयोगकर्ताओं द्वारा भरोसेमंद संस्थागत-ग्रेड एग्रीगेटर पर {from} से {to} में बदलें। सब-60 सेकंड माध्य सेटलमेंट, कोई खाता नहीं, कोई KYC नहीं, source-back नीति।",
+    "{from} → {to} स्वैप 700+ एक्सचेंजों के बीच स्मार्ट तरलता रूटिंग द्वारा संचालित। फंड एक मिनट से कम में आपके वॉलेट में सेटल होते हैं। कनाडाई MSB, पारदर्शी 0.4% रूटिंग शुल्क।",
+    "{from} को {to} से हमारे 700-स्रोत एग्रीगेटर से सर्वश्रेष्ठ दर गारंटी के साथ बदलें। कोई साइन-अप नहीं, कोई होल्डिंग अवधि नहीं, कोई निकासी कतार नहीं — शुद्ध नॉन-कस्टोडियल निष्पादन।",
+    "{from} को {to} में 24/7 तत्काल सेटलमेंट और रेट-लॉक सुरक्षा के साथ स्वैप करें। कनाडाई MSB C100000015, $0.30 न्यूनतम, पारदर्शी 0.4% शुल्क, हर L1 और L2 पर समर्थित।",
+    "{from} से {to} रूपांतरण गति के लिए बनाया गया: 700+ वेन्यू से एग्रीगेटेड कोट, सब-मिनट सेटलमेंट, कोई कस्टडी नहीं, थ्रेशोल्ड के तहत कोई KYC नहीं। भरोसेमंद MSB-लाइसेंस प्राप्त।",
+    "2026 में {from} को {to} से स्वैप करने का सर्वश्रेष्ठ तरीका: लाइव एग्रीगेटेड दरें, 0.4% पारदर्शी शुल्क, सब-60s सेटलमेंट, खाता आवश्यक नहीं। कनाडाई MSB-पंजीकृत (C100000015)।",
+    "अपने {from} को {to} में नॉन-कस्टोडियल रूटिंग इंजन के माध्यम से बदलें जो 700+ एक्सचेंज स्कैन करता है। एक मिनट से कम में सेटल, कोई KYC नहीं, कोई निकासी कैप नहीं, $0.30 न्यूनतम।",
+    "MRC GlobalPay पर {from} से {to} स्वैप — कनाडाई MSB नियमों के तहत लाइसेंस प्राप्त एग्रीगेटर। 700+ तरलता स्रोत, पारदर्शी 0.4% शुल्क, तत्काल ऑन-चेन सेटलमेंट।",
+    "{from} → {to} पूर्ण पता पारदर्शिता और source-back रिफंड नीति के साथ ट्रेड करें। हम 700+ वेन्यू एग्रीगेट करते हैं और 60s से कम में आपके वॉलेट में सेटल करते हैं। MSB-लाइसेंस।",
+    "लाइव {from}/{to} दर इंजन: 60 सेकंड के लिए कोट लॉक करें, फंड भेजें, {to} सीधे प्राप्त करें। कोई पंजीकरण नहीं, कोई KYC नहीं, $0.30 के ऊपर कोई न्यूनतम नहीं। कनाडाई MSB C100000015।",
   ],
   vi: [
-    "Đổi {from} sang {to} trong 60 giây. Không tài khoản, không KYC. 700+ nguồn. MSB đăng ký.",
-    "Hoán đổi {from} lấy {to} tức thì. Không đăng ký. Phí minh bạch 0.4%. MSB C100000015.",
-    "Sàn {from} sang {to} không đăng ký. 700+ nguồn thanh khoản, tỷ giá thời gian thực, 24/7.",
-    "Mua {to} bằng {from} – nhanh, riêng tư, phi lưu ký. MSB Canada. Tối thiểu $0.30.",
-    "Swap tức thì {from} sang {to}. Tỷ giá tốt nhất từ 700+ sàn. Không cần tài khoản.",
-    "Đổi {from} lấy {to} an toàn. MSB Canada (C100000015). < 60 giây.",
-    "Đổi {from} thành {to} hôm nay với tỷ giá tốt nhất. Không đăng ký, không KYC.",
-    "Swap crypto {from} sang {to} – so sánh 700+ nguồn. Giấy phép MSB.",
-    "Chuyển đổi nhanh {from}→{to} với phí 0.4%. Phi lưu ký, riêng tư.",
-    "Swap {from} sang {to} – giá thị trường, thanh toán tức thì. 50.000+ người dùng.",
+    "Đổi {from} sang {to} trong dưới 60 giây với định tuyến phi lưu ký qua 700+ nguồn thanh khoản. Không tài khoản, không KYC, không hàng đợi rút. MSB Canada C100000015.",
+    "Hoán đổi {from} lấy {to} ở tỷ giá thị trường tổng hợp trực tiếp với phí định tuyến minh bạch 0.4%. Tiền thanh toán trực tiếp về ví của bạn — chúng tôi không bao giờ giữ tài sản. MSB cấp phép.",
+    "Sàn {from} sang {to} không đăng ký hay kiểm tra danh tính. Tỷ giá thời gian thực từ 700+ sàn, thực hiện 24/7, tối thiểu $0.30, thanh toán on-chain tức thì.",
+    "Mua {to} bằng {from} qua động cơ swap phi lưu ký của MRC GlobalPay. Thanh toán dưới 60 giây, phí minh bạch 0.4%, không cần tài khoản, đăng ký MSB Canada.",
+    "Swap tức thì {from} sang {to} tổng hợp báo giá từ 700+ sàn cho thực thi tốt nhất. Không đăng ký, không tối thiểu trên $0.30, thanh toán thẳng vào ví.",
+    "Giao dịch {from} lấy {to} an toàn dưới sự giám sát MSB Canada (FINTRAC #C100000015). Thanh toán on-chain dưới 60 giây, phí định tuyến minh bạch 0.4%, không giới hạn rút.",
+    "Đổi {from} thành {to} hôm nay với tỷ giá tổng hợp tốt nhất từ 700+ nhà cung cấp thanh khoản. Không đăng ký, không KYC, không giới hạn nắm giữ — thanh toán thẳng vào địa chỉ.",
+    "Swap crypto {from} sang {to} định tuyến qua 700+ sàn và bộ tổng hợp DEX cho spread chặt nhất. Phi lưu ký, MSB cấp phép, thanh toán dưới phút, tối thiểu $0.30.",
+    "Chuyển đổi nhanh {from}→{to} với phí minh bạch 0.4% và không spread ẩn. Riêng tư, phi lưu ký, MSB Canada, hỗ trợ trên mọi mạng lưới chính.",
+    "Hoán đổi {from} lấy {to} ở giá thị trường với thanh toán tức thì và không đăng ký. Được tin dùng bởi 50.000+ trader. MSB C100000015, chính sách hoàn tiền source-back.",
+    "{from} → {to} dưới một phút. MRC GlobalPay tổng hợp 700+ nguồn thanh khoản để tìm pool sâu nhất, sau đó định tuyến swap thẳng vào ví của bạn. Không cần KYC.",
+    "Muốn đổi {from} sang {to}? Bộ định tuyến thông minh của chúng tôi so sánh 700+ nhà cung cấp theo thời gian thực và thực thi với báo giá tốt nhất. Phi lưu ký, MSB, tối thiểu $0.30.",
+    "Đổi {from} lấy {to} trên nền tảng MSB Canada với giám sát FINTRAC. Thanh toán trung vị dưới 60 giây, phí minh bạch 0.4%, không cần tạo tài khoản.",
+    "Tỷ giá trực tiếp {from} sang {to} cập nhật mỗi giây. Khóa tỷ giá, gửi tiền, nhận {to} trực tiếp về ví — không lưu ký, không tài khoản, không tối thiểu trên $0.30.",
+    "Nhận tỷ giá {from} sang {to} tốt nhất tổng hợp từ 700+ sàn theo thời gian thực. Tiền không bao giờ chạm bảng cân đối của chúng tôi — định tuyến phi lưu ký thuần dưới giấy phép MSB.",
+    "Đổi {from} sang {to} với thanh toán dưới phút và không ma sát đăng ký. Phí định tuyến minh bạch 0.4%, tối thiểu $0.30, hỗ trợ trên mọi chuỗi chính trong 2026.",
+    "Giao dịch {from} lấy {to} riêng tư và an toàn. Không email, không điện thoại, không KYC cho swap dưới ngưỡng. Chính sách source-back trả tiền về ví gốc khi thất bại.",
+    "Swap {from}/{to} trên bộ tổng hợp MRC GlobalPay. Chúng tôi quét 700+ địa điểm thanh khoản và định tuyến đến thực thi tốt nhất, thanh toán on-chain dưới 60 giây. MSB C100000015.",
+    "Cần swap {from} sang {to}? Nhận báo giá tức thì, khóa tỷ giá 60 giây và gửi tiền — thanh toán đi thẳng vào ví của bạn, không tài khoản, không chờ đợi.",
+    "Sàn crypto {from} sang {to} với phí minh bạch 0.4% và tỷ giá tổng hợp trực tiếp. MSB Canada, giám sát FINTRAC, phi lưu ký, thanh toán 24/7.",
+    "Đổi {from} sang {to} trên bộ tổng hợp cấp tổ chức được tin dùng bởi 50.000+ người dùng. Thanh toán trung vị dưới 60 giây, không tài khoản, không KYC, chính sách source-back.",
+    "{from} → {to} swap được hỗ trợ bởi định tuyến thanh khoản thông minh qua 700+ sàn. Tiền thanh toán về ví trong dưới một phút. MSB Canada, phí định tuyến minh bạch 0.4%.",
+    "Hoán đổi {from} lấy {to} với đảm bảo tỷ giá tốt nhất từ bộ tổng hợp 700 nguồn của chúng tôi. Không đăng ký, không thời gian giữ, không hàng đợi — thực thi phi lưu ký thuần.",
+    "Swap {from} sang {to} 24/7 với thanh toán tức thì và bảo vệ khóa tỷ giá. MSB Canada C100000015, tối thiểu $0.30, phí minh bạch 0.4%, hỗ trợ trên mọi L1 và L2.",
+    "Chuyển đổi {from} sang {to} được xây dựng cho tốc độ: báo giá tổng hợp từ 700+ địa điểm, thanh toán dưới phút, không lưu ký, không KYC dưới ngưỡng. Nền tảng MSB cấp phép tin cậy.",
+    "Cách tốt nhất để swap {from} lấy {to} trong 2026: tỷ giá tổng hợp trực tiếp, phí minh bạch 0.4%, thanh toán dưới 60 giây, không cần tài khoản. MSB Canada đăng ký (C100000015).",
+    "Đổi {from} của bạn sang {to} qua động cơ định tuyến phi lưu ký quét 700+ sàn. Thanh toán dưới một phút, không KYC, không trần rút, swap tối thiểu $0.30.",
+    "Swap {from} sang {to} trên MRC GlobalPay — bộ tổng hợp được cấp phép theo quy định MSB Canada. 700+ nguồn thanh khoản, phí minh bạch 0.4%, thanh toán on-chain tức thì.",
+    "Giao dịch {from} → {to} với minh bạch địa chỉ đầy đủ và chính sách hoàn tiền source-back. Chúng tôi tổng hợp 700+ địa điểm và thanh toán về ví trong dưới 60 giây. MSB cấp phép.",
+    "Động cơ tỷ giá trực tiếp {from}/{to}: khóa báo giá 60 giây, gửi tiền, nhận {to} trực tiếp. Không đăng ký, không KYC, không tối thiểu trên $0.30. MSB Canada C100000015.",
   ],
   tr: [
-    "{from}'ı {to}'a 60 saniyede dönüştürün. Hesap yok, KYC yok. 700+ kaynak. MSB kayıtlı.",
-    "{from}'ı {to} ile anında değiştirin. Kayıt yok. %0.4 şeffaf ücret. MSB C100000015.",
-    "{from}'dan {to}'a değişim kayıt olmadan. 700+ likidite kaynağı, anlık oranlar, 7/24.",
-    "{from} ile {to} satın alın – hızlı, özel, emanetsiz. Kanada MSB. Min $0.30.",
-    "Anlık {from}→{to} swap. 700+ borsadan en iyi oranlar. Hesap gerekmez.",
-    "{from}'ı {to} ile güvenle değiştirin. Kanada MSB (C100000015). < 60 saniye.",
-    "Bugün {from}'ı {to}'a en iyi oranda dönüştürün. Kayıt, KYC, limit yok.",
-    "{from}→{to} kripto swap – 700+ kaynağı karşılaştırın. MSB lisansı.",
-    "Hızlı {from}→{to} dönüştürme %0.4 ücretle. Emanetsiz, özel.",
-    "{from}→{to} swap – piyasa fiyatı, anlık ödeme. 50.000+ kullanıcı.",
+    "{from}'ı {to}'a 60 saniyeden kısa sürede dönüştürün, 700+ likidite kaynağı arasında emanetsiz yönlendirme ile. Hesap yok, KYC yok, çekim kuyruğu yok. Kanada MSB C100000015.",
+    "{from}'ı {to} ile canlı toplu piyasa oranında değiştirin, şeffaf %0.4 yönlendirme ücretiyle. Fonlar doğrudan cüzdanınıza gelir — varlıklarınızı asla emanet almayız. MSB lisanslı.",
+    "{from}'dan {to}'a kayıt veya kimlik kontrolü olmadan değişim. 700+ borsadan gerçek zamanlı oranlar, 7/24 yürütme, $0.30 minimum, anında zincir-üzerinde ödeme.",
+    "MRC GlobalPay'in emanetsiz swap motoru üzerinden {from} ile {to} satın alın. 60 saniyeden kısa ödeme, şeffaf %0.4 ücret, hesap yok, Kanada MSB-kayıtlı.",
+    "Anlık {from} → {to} swap'ı en iyi yürütme için 700+ borsadan teklif toplar. Sıfır kayıt, $0.30 üzerinde minimum yok, doğrudan cüzdana ödeme.",
+    "{from}'ı {to} ile Kanada MSB denetimi (FINTRAC #C100000015) altında güvenle takas edin. 60 saniyeden kısa zincir-üstü ödeme, şeffaf %0.4 yönlendirme ücreti, çekim limiti yok.",
+    "{from}'ı bugün {to}'a 700+ likidite sağlayıcısından toplu en iyi oranda dönüştürün. Kayıt yok, KYC yok, tutma limiti yok — doğrudan adresinize ödeme.",
+    "{from} → {to} kripto swap'ı en sıkı spread için 700+ borsa ve DEX toplayıcı arasında yönlendirilir. Emanetsiz, MSB lisanslı, dakika altı ödeme, $0.30 minimum.",
+    "Hızlı {from}→{to} dönüşümü şeffaf %0.4 ücret ve sıfır gizli spread ile. Özel, emanetsiz, Kanada MSB-kayıtlı, her büyük ağda destekli.",
+    "{from}'ı {to}'a piyasa fiyatından anında ödeme ve sıfır kayıtla değiştirin. Dünya çapında 50.000+ trader tarafından güveniliyor. MSB C100000015, source-back iade politikası.",
+    "{from} → {to} bir dakikadan az sürede. MRC GlobalPay en derin havuzu bulmak için 700+ likidite kaynağını toplar, ardından swap'ı doğrudan cüzdanınıza yönlendirir. KYC gerekmez.",
+    "{from}'ı {to}'a dönüştürmek mi istiyorsunuz? Akıllı yönlendiricimiz 700+ sağlayıcıyı gerçek zamanlı karşılaştırır ve en iyi teklife karşı yürütür. Emanetsiz, MSB, $0.30 minimum.",
+    "FINTRAC denetimli Kanada MSB-kayıtlı platformda {from}'ı {to} ile değiştirin. Medyan ödeme < 60s, şeffaf %0.4 ücret, hesap oluşturmaya gerek yok.",
+    "Saniyede güncellenen canlı {from} → {to} oranı. Oranınızı kilitleyin, fon gönderin, {to}'yu doğrudan cüzdanınıza alın — emanet yok, hesap yok, $0.30 üzerinde minimum yok.",
+    "Gerçek zamanlı 700+ borsadan toplanan en iyi {from} → {to} oranını alın. Fonlar bilançomuza asla dokunmaz — Kanada MSB lisansı altında saf emanetsiz yönlendirme.",
+    "{from}'ı {to}'a dakika altı ödeme ve sıfır kayıt sürtünmesiyle dönüştürün. Şeffaf %0.4 yönlendirme ücreti, $0.30 minimum, 2026'da tüm büyük zincirlerde destekli.",
+    "{from}'ı {to} ile özel ve güvenli takas edin. Eşik altındaki swap'lar için e-posta, telefon, KYC yok. Source-back politikası başarısızlıklarda fonları kaynak cüzdana iade eder.",
+    "MRC GlobalPay toplayıcısında {from}/{to} swap. 700+ likidite mekanını tarar ve en iyi yürütmeye yönlendiririz, 60 saniyeden kısa zincir-üstü ödeme. MSB C100000015.",
+    "{from}'ı {to}'a swap etmeniz mi gerekiyor? Anlık teklif alın, oranı 60 saniye kilitleyin ve fon gönderin — ödeme doğrudan cüzdanınıza, hesap yok, bekleme yok.",
+    "{from} → {to} kripto borsası şeffaf %0.4 ücretler ve canlı toplu oranlarla. Kanada MSB-kayıtlı, FINTRAC denetimli, emanetsiz, 7/24 ödeme.",
+    "50.000+ kullanıcının güvendiği kurumsal sınıf toplayıcıda {from}'ı {to}'a dönüştürün. Medyan ödeme < 60s, hesap yok, KYC yok, source-back politikası.",
+    "{from} → {to} swap, 700+ borsa arasında akıllı likidite yönlendirmesi ile destekleniyor. Fonlar bir dakikadan kısa sürede cüzdanınıza ulaşır. Kanada MSB, şeffaf %0.4 yönlendirme ücreti.",
+    "{from}'ı {to} ile 700-kaynak toplayıcımızdan en iyi oran garantisiyle değiştirin. Kayıt yok, tutma süresi yok, çekim kuyruğu yok — saf emanetsiz yürütme.",
+    "{from}'ı {to}'a 7/24 anında ödeme ve oran-kilit korumasıyla swap edin. Kanada MSB C100000015, $0.30 minimum, şeffaf %0.4 ücret, her L1 ve L2'de destekli.",
+    "{from} → {to} dönüşümü hız için inşa edildi: 700+ mekandan toplu teklifler, dakika altı ödeme, emanet yok, eşik altında KYC yok. Güvenilir MSB-lisanslı platform.",
+    "2026'da {from}'ı {to} ile swap etmenin en iyi yolu: canlı toplu oranlar, şeffaf %0.4 ücret, 60 saniye altı ödeme, hesap gerekmez. Kanada MSB-kayıtlı (C100000015).",
+    "{from}'ınızı {to}'a 700+ borsayı tarayan emanetsiz yönlendirme motoru üzerinden dönüştürün. Bir dakikadan kısa sürede ödeme, KYC yok, çekim tavanı yok, $0.30 minimum swap.",
+    "MRC GlobalPay'de {from} → {to} swap — Kanada MSB düzenlemeleri altında lisanslı toplayıcı. 700+ likidite kaynağı, şeffaf %0.4 ücret, anında zincir-üstü ödeme.",
+    "{from} → {to} tam adres şeffaflığı ve source-back iade politikasıyla işlem yapın. 700+ mekanı toplar ve cüzdanınıza < 60s'de öderiz. MSB lisanslı.",
+    "Canlı {from}/{to} oran motoru: teklifi 60 saniye kilitleyin, fon gönderin, {to}'yu doğrudan alın. Kayıt yok, KYC yok, $0.30 üzerinde minimum yok. Kanada MSB C100000015.",
   ],
   uk: [
-    "Конвертуйте {from} в {to} за 60 секунд. Без акаунту, без KYC. 700+ джерел. MSB зареєстровано.",
-    "Обміняйте {from} на {to} миттєво. Без реєстрації. Прозора комісія 0.4%. MSB C100000015.",
-    "Обмін {from} на {to} без реєстрації. 700+ джерел ліквідності, курси в реальному часі, 24/7.",
-    "Купіть {to} за {from} – швидко, приватно, без опіки. Канадська MSB. Мінімум $0.30.",
-    "Миттєвий свап {from} на {to}. Найкращі курси з 700+ бірж. Акаунт не потрібен.",
-    "Обміняйте {from} на {to} безпечно. Канадська MSB (C100000015). < 60 секунд.",
-    "Конвертуйте {from} в {to} сьогодні за найкращим курсом. Без реєстрації, без KYC.",
-    "Крипто свап {from} на {to} – порівняйте 700+ джерел. Ліцензія MSB.",
-    "Швидка конвертація {from}→{to} з комісією 0.4%. Без опіки, приватно.",
-    "Свап {from} на {to} – ринковий курс, миттєвий розрахунок. 50 000+ користувачів.",
+    "Конвертуйте {from} в {to} менше ніж за 60 секунд із некустодіальною маршрутизацією через 700+ джерел ліквідності. Без акаунту, без KYC, без черг на виведення. Канадська MSB C100000015.",
+    "Обміняйте {from} на {to} за живим агрегованим ринковим курсом із прозорою комісією маршрутизації 0.4%. Кошти зараховуються прямо на ваш гаманець — ми ніколи не зберігаємо ваші активи. MSB ліцензована.",
+    "Обмін {from} на {to} без реєстрації чи перевірки особи. Реальні курси з 700+ майданчиків, виконання 24/7, мінімум $0.30, миттєвий on-chain розрахунок.",
+    "Купіть {to} за {from} через некустодіальний swap-двигун MRC GlobalPay. Розрахунок менше ніж за 60 секунд, прозора комісія 0.4%, без акаунту, зареєстровано MSB Канади.",
+    "Миттєвий swap {from} на {to} агрегує котирування з 700+ бірж для найкращого виконання. Без реєстрації, без мінімуму понад $0.30, зараховується прямо на гаманець.",
+    "Торгуйте {from} за {to} безпечно під канадським MSB наглядом (FINTRAC #C100000015). On-chain розрахунок < 60с, прозора комісія маршрутизації 0.4%, без лімітів виведення.",
+    "Конвертуйте {from} в {to} сьогодні за найкращим агрегованим курсом з 700+ постачальників ліквідності. Без реєстрації, без KYC, без лімітів утримання — прямо на вашу адресу.",
+    "{from} на {to} крипто-swap, маршрутизований через 700+ бірж і DEX-агрегаторів для найвужчого спреду. Некустодіальний, MSB ліцензований, розрахунок < 60с, мінімум $0.30.",
+    "Швидка конвертація {from}→{to} з прозорою комісією 0.4% та нульовими прихованими спредами. Приватний, некустодіальний, MSB Канади, підтримка на всіх основних мережах.",
+    "Обміняйте {from} на {to} за ринковим курсом з миттєвим розрахунком і нульовою реєстрацією. Довіра 50 000+ трейдерів. MSB C100000015, source-back політика повернення.",
+    "{from} → {to} менше ніж за хвилину. MRC GlobalPay агрегує 700+ джерел ліквідності, щоб знайти найглибший пул, потім маршрутизує swap прямо на ваш гаманець. KYC не потрібно.",
+    "Хочете конвертувати {from} в {to}? Наш розумний роутер порівнює 700+ постачальників в реальному часі та виконує проти найкращої котирувань. Некустодіальний, MSB, мінімум $0.30.",
+    "Обміняйте {from} на {to} на канадській MSB-зареєстрованій платформі з наглядом FINTRAC. Медіана розрахунку < 60с, прозора комісія 0.4%, не потрібно створювати акаунт.",
+    "Живий курс {from} на {to} оновлюється щосекунди. Заблокуйте курс, надішліть кошти, отримайте {to} прямо на гаманець — без зберігання, без акаунту, без мінімуму понад $0.30.",
+    "Отримайте найкращий курс {from} на {to}, агрегований з 700+ бірж в реальному часі. Кошти ніколи не торкаються нашого балансу — чиста некустодіальна маршрутизація під ліцензією MSB.",
+    "Конвертуйте {from} в {to} з суб-хвилинним розрахунком і нульовим тертям реєстрації. Прозора комісія маршрутизації 0.4%, мінімум $0.30, підтримка на всіх основних ланцюгах в 2026.",
+    "Торгуйте {from} за {to} приватно і безпечно. Без email, без телефону, без KYC для swap-ів нижче порогу. Source-back політика повертає кошти на гаманець-джерело при збоях.",
+    "{from}/{to} swap на агрегаторі MRC GlobalPay. Ми скануємо 700+ майданчиків ліквідності та маршрутизуємо до найкращого виконання, розрахунок on-chain менше 60с. MSB C100000015.",
+    "Потрібно обміняти {from} на {to}? Отримайте миттєву котирувальну ціну, заблокуйте курс на 60с і надішліть кошти — розрахунок йде прямо на ваш гаманець, без акаунту, без очікування.",
+    "{from} на {to} крипто-обмін з прозорими комісіями 0.4% та живими агрегованими курсами. MSB Канади, FINTRAC-наглядом, некустодіальний, розрахунок 24/7.",
+    "Конвертуйте {from} в {to} на агрегаторі інституційного класу, якому довіряють 50 000+ користувачів. Медіана розрахунку < 60с, без акаунту, без KYC, source-back політика.",
+    "{from} → {to} swap, що працює завдяки розумній маршрутизації ліквідності через 700+ бірж. Кошти зараховуються на ваш гаманець менше ніж за хвилину. MSB Канади, прозора комісія 0.4%.",
+    "Обміняйте {from} на {to} з гарантією найкращого курсу від нашого агрегатора 700 джерел. Без реєстрації, без періоду утримання, без черг — чисте некустодіальне виконання.",
+    "Swap {from} на {to} 24/7 з миттєвим розрахунком і захистом фіксації курсу. MSB Канади C100000015, мінімум $0.30, прозора комісія 0.4%, підтримка на кожному L1 і L2.",
+    "Конвертація {from} в {to} побудована для швидкості: агреговані котирування з 700+ майданчиків, суб-хвилинний розрахунок, без зберігання, без KYC нижче порогу. Надійна MSB-ліцензована платформа.",
+    "Найкращий спосіб обміняти {from} за {to} в 2026: живі агреговані курси, прозора комісія 0.4%, розрахунок < 60с, без акаунту. Зареєстровано MSB Канади (C100000015).",
+    "Конвертуйте свій {from} в {to} через некустодіальний двигун маршрутизації, що сканує 700+ бірж. Розрахунок менше ніж за хвилину, без KYC, без обмеження виведення, мінімум $0.30.",
+    "{from} на {to} swap на MRC GlobalPay — агрегатор, ліцензований під канадськими MSB-регуляціями. 700+ джерел ліквідності, прозора комісія 0.4%, миттєвий on-chain розрахунок.",
+    "Торгуйте {from} → {to} з повною прозорістю адрес і source-back політикою повернення. Ми агрегуємо 700+ майданчиків і розраховуємо на ваш гаманець за < 60с. MSB ліцензований.",
+    "Живий двигун курсів {from}/{to}: заблокуйте котирування на 60с, надішліть кошти, отримайте {to} напряму. Без реєстрації, без KYC, без мінімуму понад $0.30. MSB Канади C100000015.",
   ],
 };
 
@@ -616,17 +736,20 @@ function generateContentJson(
 ): Record<string, { title: string; description: string; h1: string }> {
   const content: Record<string, { title: string; description: string; h1: string }> = {};
   const titleIdx = templateId % 20;
-  const descIdx = templateId % 10;
+  const descIdx = templateId % 30;
   const fromUp = from.toUpperCase();
   const toUp = to.toUpperCase();
 
   for (const lang of LANGS) {
     const titles = TITLE_TEMPLATES[lang] || TITLE_TEMPLATES.en;
     const descs = DESC_TEMPLATES[lang] || DESC_TEMPLATES.en;
+    // Safe modulo against actual array length so a partially-translated language never crashes.
+    const safeTitle = titles[titleIdx % titles.length];
+    const safeDesc = descs[descIdx % descs.length];
     content[lang] = {
-      title: interpolate(titles[titleIdx], fromUp, toUp),
-      description: interpolate(descs[descIdx], fromUp, toUp),
-      h1: interpolate(titles[titleIdx], fromUp, toUp).split("|")[0].trim(),
+      title: interpolate(safeTitle, fromUp, toUp),
+      description: interpolate(safeDesc, fromUp, toUp),
+      h1: interpolate(safeTitle, fromUp, toUp).split("|")[0].trim(),
     };
   }
   return content;
@@ -647,6 +770,59 @@ Deno.serve(async (req) => {
   // ── 0. Parse mode (priority backfill bypasses alphabetical sweep) ──
   const url = new URL(req.url);
   const priorityMode = url.searchParams.get("priority") === "true";
+  const backfillDescriptions = url.searchParams.get("backfill_descriptions") === "true";
+
+  // ── 0b. Backfill mode: regenerate content_json for existing pairs only ──
+  // Re-templates rows with the latest 30-variant DESC_TEMPLATES so older
+  // ~95-char descriptions get replaced by 155-185 char unique long-form copy.
+  // Stateless: pass ?offset=N&limit=M to walk the table in chunks.
+  if (backfillDescriptions) {
+    const offset = parseInt(url.searchParams.get("offset") || "0", 10);
+    const limit = Math.min(parseInt(url.searchParams.get("limit") || "500", 10), 1000);
+
+    const { data: rows, error: fetchErr } = await supabase
+      .from("pairs")
+      .select("id, from_ticker, to_ticker, seo_template_id")
+      .order("id", { ascending: true })
+      .range(offset, offset + limit - 1);
+
+    if (fetchErr) {
+      return new Response(
+        JSON.stringify({ status: "error", error: fetchErr.message }),
+        { status: 500, headers: { ...corsHeaders, "Content-Type": "application/json" } }
+      );
+    }
+
+    let updated = 0;
+    for (const row of rows ?? []) {
+      const content = generateContentJson(row.from_ticker, row.to_ticker, row.seo_template_id);
+      const en = content.en;
+      const { error: updErr } = await supabase
+        .from("pairs")
+        .update({
+          content_json: content,
+          seo_title: en.title,
+          seo_description: en.description,
+          seo_h1: en.h1,
+          updated_at: new Date().toISOString(),
+        })
+        .eq("id", row.id);
+      if (!updErr) updated++;
+    }
+
+    return new Response(
+      JSON.stringify({
+        status: "ok",
+        mode: "backfill_descriptions",
+        offset,
+        limit,
+        scanned: rows?.length ?? 0,
+        updated,
+        next_offset: offset + (rows?.length ?? 0),
+      }),
+      { headers: { ...corsHeaders, "Content-Type": "application/json" } }
+    );
+  }
 
   const BATCH_LIMIT = priorityMode ? 500 : 100;
   const MAINTENANCE_THRESHOLD = 50_000;
