@@ -736,17 +736,20 @@ function generateContentJson(
 ): Record<string, { title: string; description: string; h1: string }> {
   const content: Record<string, { title: string; description: string; h1: string }> = {};
   const titleIdx = templateId % 20;
-  const descIdx = templateId % 10;
+  const descIdx = templateId % 30;
   const fromUp = from.toUpperCase();
   const toUp = to.toUpperCase();
 
   for (const lang of LANGS) {
     const titles = TITLE_TEMPLATES[lang] || TITLE_TEMPLATES.en;
     const descs = DESC_TEMPLATES[lang] || DESC_TEMPLATES.en;
+    // Safe modulo against actual array length so a partially-translated language never crashes.
+    const safeTitle = titles[titleIdx % titles.length];
+    const safeDesc = descs[descIdx % descs.length];
     content[lang] = {
-      title: interpolate(titles[titleIdx], fromUp, toUp),
-      description: interpolate(descs[descIdx], fromUp, toUp),
-      h1: interpolate(titles[titleIdx], fromUp, toUp).split("|")[0].trim(),
+      title: interpolate(safeTitle, fromUp, toUp),
+      description: interpolate(safeDesc, fromUp, toUp),
+      h1: interpolate(safeTitle, fromUp, toUp).split("|")[0].trim(),
     };
   }
   return content;
