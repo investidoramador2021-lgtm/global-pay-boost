@@ -90,10 +90,14 @@ Deno.serve(async (req) => {
   // Sitemap index — use a fast HEAD count so we don't have to fetch every row
   // just to determine batch count. Each pair produces LANGS.length URL entries.
   if (path === "/" || path === "/index.xml") {
-    const { count: pairCount } = await svc
+    const { count: pairCount, error: countErr } = await svc
       .from("pairs")
       .select("*", { count: "exact", head: true })
       .eq("is_valid", true);
+    if (countErr) {
+      console.error("[sitemap-index] count query error:", countErr.message, countErr);
+    }
+    console.log("[sitemap-index] pairCount =", pairCount);
     const totalUrls = (pairCount || 0) * LANGS.length;
     const batchCount = Math.max(1, Math.ceil(totalUrls / BATCH_SIZE));
     const today = new Date().toISOString().split("T")[0];
