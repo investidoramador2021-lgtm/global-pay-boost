@@ -30,6 +30,8 @@ interface LiveStatus {
   status: string;
   amountSend: number | null;
   amountReceive: number | null;
+  fromCurrency: string | null;
+  toCurrency: string | null;
   payinHash: string | null;
   payoutHash: string | null;
   payinAddress: string;
