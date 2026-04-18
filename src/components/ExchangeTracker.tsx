@@ -342,7 +342,7 @@ const ExchangeTracker = () => {
   /* ── Helpers ── */
   const statusBadge = (sw?: EnrichedSwap) => {
     if (sw?.live) {
-      const s = STATUS_MAP[sw.live.status] || { label: sw.live.status, color: "text-muted-foreground", icon: null };
+      const s = STATUS_MAP[sw.live.status] || STATUS_MAP.waiting;
       return (
         <span className={`inline-flex items-center gap-1.5 text-xs font-medium ${s.color}`}>
           {s.icon}
@@ -353,7 +353,9 @@ const ExchangeTracker = () => {
     if (sw?.liveLoading) {
       return <span className="text-xs text-muted-foreground inline-flex items-center gap-1.5"><RefreshCw className="w-3.5 h-3.5 animate-spin" />Loading…</span>;
     }
-    return <span className="text-xs text-muted-foreground">Unknown</span>;
+    // Default unknown state to Waiting (matches ChangeNOW dashboard convention).
+    const w = STATUS_MAP.waiting;
+    return <span className={`inline-flex items-center gap-1.5 text-xs font-medium ${w.color}`}>{w.icon}{w.label}</span>;
   };
 
   const formatDate = (d: string) => {
