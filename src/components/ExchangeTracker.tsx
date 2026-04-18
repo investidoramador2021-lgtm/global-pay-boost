@@ -30,6 +30,8 @@ interface LiveStatus {
   status: string;
   amountSend: number | null;
   amountReceive: number | null;
+  fromCurrency: string | null;
+  toCurrency: string | null;
   payinHash: string | null;
   payoutHash: string | null;
   payinAddress: string;
@@ -156,6 +158,8 @@ const ExchangeTracker = () => {
               status: d.status,
               amountSend: d.amountSend ?? d.expectedSendAmount ?? null,
               amountReceive: d.amountReceive ?? d.expectedReceiveAmount ?? null,
+              fromCurrency: d.fromCurrency ?? null,
+              toCurrency: d.toCurrency ?? null,
               payinHash: d.payinHash ?? null,
               payoutHash: d.payoutHash ?? null,
               payinAddress: d.payinAddress ?? "",
@@ -393,18 +397,20 @@ const ExchangeTracker = () => {
                       <TableCell className="text-xs text-muted-foreground whitespace-nowrap">{formatDate(sw.created_at)}</TableCell>
                       <TableCell>
                         <span className="text-sm font-medium">
-                          {formatAmount(sw.amount ?? sw.live?.amountSend, sw.from_currency)}
+                          {formatAmount(sw.live?.amountSend ?? sw.amount, sw.live?.fromCurrency ?? sw.from_currency)}
                         </span>
                       </TableCell>
                       <TableCell>
                         <span className="text-sm font-medium">
-                          {formatAmount(sw.live?.amountReceive, sw.to_currency)}
+                          {formatAmount(sw.live?.amountReceive, sw.live?.toCurrency ?? sw.to_currency)}
                         </span>
                       </TableCell>
                       <TableCell className="text-xs text-muted-foreground">
-                        {sw.live?.amountReceive
-                          ? formatAmount(sw.live.amountReceive, sw.to_currency)
-                          : "—"}
+                        {sw.live?.payoutHash
+                          ? <span className="font-mono">{sw.live.payoutHash.slice(0,10)}…</span>
+                          : sw.live?.amountReceive
+                            ? formatAmount(sw.live.amountReceive, sw.live?.toCurrency ?? sw.to_currency)
+                            : "—"}
                       </TableCell>
                       <TableCell>
                         <span className="font-mono text-[11px] text-muted-foreground">
