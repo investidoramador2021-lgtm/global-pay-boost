@@ -613,10 +613,19 @@ Deno.serve(async (req) => {
     console.log(`Loaded ${existingSet.size} existing pairs across ${pairPage + 1} page(s)`);
 
     // Generate new combinations (skip self-pairs)
+    // In priority mode, tier-1 × tier-1 combos go first (filtered to those the API supports).
+    const tickerSet = new Set(uniqueTickers);
+    const orderedFroms: string[] = priorityMode
+      ? [...TIER1.filter((t) => tickerSet.has(t)), ...uniqueTickers.filter((t) => !TIER1.includes(t))]
+      : uniqueTickers;
+    const orderedTos: string[] = priorityMode
+      ? [...TIER1.filter((t) => tickerSet.has(t)), ...uniqueTickers.filter((t) => !TIER1.includes(t))]
+      : uniqueTickers;
+
     const newPairs: Array<{ from_ticker: string; to_ticker: string }> = [];
-    for (const from of uniqueTickers) {
+    for (const from of orderedFroms) {
       if (newPairs.length >= BATCH_LIMIT) break;
-      for (const to of uniqueTickers) {
+      for (const to of orderedTos) {
         if (newPairs.length >= BATCH_LIMIT) break;
         if (from === to) continue;
         const key = `${from}__${to}`;
