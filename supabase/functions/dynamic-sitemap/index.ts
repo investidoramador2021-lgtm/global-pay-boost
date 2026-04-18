@@ -14,13 +14,17 @@ async function fetchAllValidPairs(svc: ReturnType<typeof createClient>) {
   const pageSize = 1000;
   let from = 0;
   while (from < 50000) {
+    // No ORDER BY → fast pk-order seq read; sitemap doesn't depend on row order.
     const { data, error } = await svc
       .from("pairs")
       .select("from_ticker, to_ticker, updated_at")
       .eq("is_valid", true)
-      .order("updated_at", { ascending: false })
       .range(from, from + pageSize - 1);
-    if (error || !data || data.length === 0) break;
+    if (error) {
+      console.error("[fetchAllValidPairs] error:", error.message, "from=", from);
+      break;
+    }
+    if (!data || data.length === 0) break;
     all.push(...(data as any));
     if (data.length < pageSize) break;
     from += pageSize;
