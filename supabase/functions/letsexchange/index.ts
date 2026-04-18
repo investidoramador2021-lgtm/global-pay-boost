@@ -205,21 +205,20 @@ Deno.serve(async (req) => {
           if (ir.ok && ip.isJson) lockedRateId = ip.data?.rate_id || '';
         }
 
+        // LE v1 /transaction expects: deposit_amount, withdrawal (address), withdrawal_extra_id, return, return_extra_id
         const body = {
-          from: f.code,
-          to: t.code,
+          coin_from: f.code,
+          coin_to: t.code,
           network_from: f.network || f.code,
           network_to: t.network || t.code,
-          amount: String(amount),
-          address_to: String(address),
-          extra_id_to: extraId || '',
-          return_address: refundAddress || '',
+          deposit_amount: String(amount),
+          withdrawal: String(address),
+          withdrawal_extra_id: extraId || '',
+          return: refundAddress || '',
           return_extra_id: '',
           rate_id: lockedRateId,
           affiliate_id: LE_AFFILIATE_ID,
           promocode: '',
-          coin_from: f.code,
-          coin_to: t.code,
         };
 
         const r = await leFetch('/transaction', apiKey, { method: 'POST', body: JSON.stringify(body) });
