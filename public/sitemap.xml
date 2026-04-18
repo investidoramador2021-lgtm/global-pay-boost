@@ -2,47 +2,20 @@
 <!--
   Sitemap index for mrcglobalpay.com.
 
-  All children are listed on the SAME HOST (mrcglobalpay.com) to comply with
-  Google's cross-host child sitemap rule (children on a different host than
-  the parent index are silently ignored unless that host is also verified
-  in Search Console).
+  All children are real static .xml files in public/ so they resolve on the
+  apex domain (Lovable hosting serves real files reliably; _redirects proxy
+  rules for /sitemap-* paths are not honored by the host).
 
-  The apex URLs below are proxied by public/_redirects to the dynamic-feed
-  edge function on Supabase (which auto-syncs the batch count from the live
-  pairs_count in sync_engine_state). 30 batches covers ~45,000 pairs /
-  ~585k URLs. Out-of-range batches return a valid empty <urlset>.
+  Children:
+    - sitemap-static.xml: 326 core/landing/lang URLs
+    - sitemap-blog.xml:   312 blog post URLs across all languages
+
+  Pair landing pages (~290k URLs) are intentionally NOT exposed via this
+  sitemap. They are crawl-discoverable via internal links from the
+  TrendingEcosystems / SwapPairs sections. Surfacing 290k thin pages to
+  Google before they accumulate authority hurts Discovery Quality scores.
 -->
 <sitemapindex xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <sitemap><loc>https://mrcglobalpay.com/sitemap-static.xml</loc></sitemap>
   <sitemap><loc>https://mrcglobalpay.com/sitemap-blog.xml</loc></sitemap>
-  <sitemap><loc>https://mrcglobalpay.com/sitemap-pairs-0.xml</loc></sitemap>
-  <sitemap><loc>https://mrcglobalpay.com/sitemap-pairs-1.xml</loc></sitemap>
-  <sitemap><loc>https://mrcglobalpay.com/sitemap-pairs-2.xml</loc></sitemap>
-  <sitemap><loc>https://mrcglobalpay.com/sitemap-pairs-3.xml</loc></sitemap>
-  <sitemap><loc>https://mrcglobalpay.com/sitemap-pairs-4.xml</loc></sitemap>
-  <sitemap><loc>https://mrcglobalpay.com/sitemap-pairs-5.xml</loc></sitemap>
-  <sitemap><loc>https://mrcglobalpay.com/sitemap-pairs-6.xml</loc></sitemap>
-  <sitemap><loc>https://mrcglobalpay.com/sitemap-pairs-7.xml</loc></sitemap>
-  <sitemap><loc>https://mrcglobalpay.com/sitemap-pairs-8.xml</loc></sitemap>
-  <sitemap><loc>https://mrcglobalpay.com/sitemap-pairs-9.xml</loc></sitemap>
-  <sitemap><loc>https://mrcglobalpay.com/sitemap-pairs-10.xml</loc></sitemap>
-  <sitemap><loc>https://mrcglobalpay.com/sitemap-pairs-11.xml</loc></sitemap>
-  <sitemap><loc>https://mrcglobalpay.com/sitemap-pairs-12.xml</loc></sitemap>
-  <sitemap><loc>https://mrcglobalpay.com/sitemap-pairs-13.xml</loc></sitemap>
-  <sitemap><loc>https://mrcglobalpay.com/sitemap-pairs-14.xml</loc></sitemap>
-  <sitemap><loc>https://mrcglobalpay.com/sitemap-pairs-15.xml</loc></sitemap>
-  <sitemap><loc>https://mrcglobalpay.com/sitemap-pairs-16.xml</loc></sitemap>
-  <sitemap><loc>https://mrcglobalpay.com/sitemap-pairs-17.xml</loc></sitemap>
-  <sitemap><loc>https://mrcglobalpay.com/sitemap-pairs-18.xml</loc></sitemap>
-  <sitemap><loc>https://mrcglobalpay.com/sitemap-pairs-19.xml</loc></sitemap>
-  <sitemap><loc>https://mrcglobalpay.com/sitemap-pairs-20.xml</loc></sitemap>
-  <sitemap><loc>https://mrcglobalpay.com/sitemap-pairs-21.xml</loc></sitemap>
-  <sitemap><loc>https://mrcglobalpay.com/sitemap-pairs-22.xml</loc></sitemap>
-  <sitemap><loc>https://mrcglobalpay.com/sitemap-pairs-23.xml</loc></sitemap>
-  <sitemap><loc>https://mrcglobalpay.com/sitemap-pairs-24.xml</loc></sitemap>
-  <sitemap><loc>https://mrcglobalpay.com/sitemap-pairs-25.xml</loc></sitemap>
-  <sitemap><loc>https://mrcglobalpay.com/sitemap-pairs-26.xml</loc></sitemap>
-  <sitemap><loc>https://mrcglobalpay.com/sitemap-pairs-27.xml</loc></sitemap>
-  <sitemap><loc>https://mrcglobalpay.com/sitemap-pairs-28.xml</loc></sitemap>
-  <sitemap><loc>https://mrcglobalpay.com/sitemap-pairs-29.xml</loc></sitemap>
 </sitemapindex>
