@@ -58,6 +58,15 @@ const STATUS_MAP: Record<string, { label: string; color: string; icon: React.Rea
 
 const PAGE_SIZE = 50;
 
+const PROVIDER_LABELS: Record<string, string> = {
+  se: "StealthEX",
+  le: "LetsExchange",
+  cn: "ChangeNOW",
+};
+
+const providerLabel = (p?: string | null) =>
+  p ? (PROVIDER_LABELS[p.toLowerCase()] || p.toUpperCase()) : "—";
+
 const ExchangeTracker = () => {
   const [swaps, setSwaps] = useState<EnrichedSwap[]>([]);
   const [loading, setLoading] = useState(false);
@@ -92,14 +101,18 @@ const ExchangeTracker = () => {
         query = query.gte("created_at", from.toISOString());
       }
 
-      // 2) Provider live lists in parallel
-      const [dbRes, cnRes, leRes] = await Promise.allSettled([
+      // 2) Provider live lists in parallel (SE > LE > CN)
+      const [dbRes, seRes, leRes, cnRes] = await Promise.allSettled([
         query,
-        supabase.functions.invoke("changenow", {
+        supabase.functions.invoke("stealthex", {
           method: "POST",
           body: { _get: true, action: "list-transactions", limit: "100" },
         }),
         supabase.functions.invoke("letsexchange", {
+          method: "POST",
+          body: { _get: true, action: "list-transactions", limit: "100" },
+        }),
+        supabase.functions.invoke("changenow", {
           method: "POST",
           body: { _get: true, action: "list-transactions", limit: "100" },
         }),
@@ -114,6 +127,10 @@ const ExchangeTracker = () => {
       const dbCount =
         dbRes.status === "fulfilled" ? (dbRes.value as any).count || dbRows.length : 0;
 
+      const seList: any[] =
+        seRes.status === "fulfilled" && Array.isArray(seRes.value.data)
+          ? seRes.value.data
+          : [];
       const cnList: any[] =
         cnRes.status === "fulfilled" && cnRes.value.data && !cnRes.value.data.error
           ? (Array.isArray(cnRes.value.data) ? cnRes.value.data : (cnRes.value.data?.data || []))
@@ -206,6 +223,43 @@ const ExchangeTracker = () => {
         }
       }
 
+      // Add StealthEX provider rows (Priority 1)
+      for (const d of seList) {
+        const txId = d.id;
+        if (!txId) continue;
+        const existing = map.get(txId);
+        const live: LiveStatus = {
+          status: String(d.status || "waiting").toLowerCase(),
+          amountSend: d.amountSend ?? null,
+          amountReceive: d.amountReceive ?? null,
+          fromCurrency: d.fromCurrency || null,
+          toCurrency: d.toCurrency || null,
+          payinHash: d.payinHash ?? null,
+          payoutHash: d.payoutHash ?? null,
+          payinAddress: d.payinAddress ?? "",
+          payoutAddress: d.payoutAddress ?? "",
+        };
+        if (existing) {
+          existing.live = live;
+          existing.liveLoading = false;
+          existing.provider = existing.provider || "se";
+        } else {
+          map.set(txId, {
+            id: `se-${txId}`,
+            transaction_id: txId,
+            from_currency: live.fromCurrency || "",
+            to_currency: live.toCurrency || "",
+            amount: live.amountSend || 0,
+            recipient_address: live.payoutAddress,
+            payin_address: live.payinAddress,
+            created_at: d.createdAt || new Date().toISOString(),
+            provider: "se",
+            live,
+            liveLoading: false,
+          });
+        }
+      }
+
       const merged = Array.from(map.values()).sort(
         (a, b) => new Date(b.created_at).getTime() - new Date(a.created_at).getTime()
       );
@@ -241,7 +295,8 @@ const ExchangeTracker = () => {
       const batch = rows.slice(i, i + BATCH);
       const results = await Promise.allSettled(
         batch.map(async (row) => {
-          const fnName = (row.provider || "cn").toLowerCase() === "le" ? "letsexchange" : "changenow";
+          const provider = (row.provider || "se").toLowerCase();
+          const fnName = provider === "le" ? "letsexchange" : provider === "cn" ? "changenow" : "stealthex";
           const { data } = await supabase.functions.invoke(fnName, {
             method: "POST",
             body: { _get: true, action: "tx-status", id: row.transaction_id },
@@ -486,6 +541,7 @@ const ExchangeTracker = () => {
                 <TableRow>
                   <TableHead className="w-[100px]">Status</TableHead>
                   <TableHead>Created</TableHead>
+                  <TableHead>Provider</TableHead>
                   <TableHead>From</TableHead>
                   <TableHead>To</TableHead>
                   <TableHead>Received</TableHead>
@@ -496,14 +552,14 @@ const ExchangeTracker = () => {
               <TableBody>
                 {loading && filtered.length === 0 ? (
                   <TableRow>
-                    <TableCell colSpan={7} className="text-center py-12 text-muted-foreground">
+                    <TableCell colSpan={8} className="text-center py-12 text-muted-foreground">
                       <RefreshCw className="w-5 h-5 animate-spin mx-auto mb-2" />
                       Loading exchanges…
                     </TableCell>
                   </TableRow>
                 ) : filtered.length === 0 ? (
                   <TableRow>
-                    <TableCell colSpan={7} className="text-center py-12 text-muted-foreground">
+                    <TableCell colSpan={8} className="text-center py-12 text-muted-foreground">
                       No exchanges found.
                     </TableCell>
                   </TableRow>
@@ -512,6 +568,11 @@ const ExchangeTracker = () => {
                     <TableRow key={sw.id} className="group cursor-pointer" onClick={() => setDetail(sw)}>
                       <TableCell>{statusBadge(sw)}</TableCell>
                       <TableCell className="text-xs text-muted-foreground whitespace-nowrap">{formatDate(sw.created_at)}</TableCell>
+                      <TableCell>
+                        <span className="inline-flex items-center px-2 py-0.5 rounded text-[11px] font-medium bg-muted/40 text-foreground/80 border border-border/40">
+                          {providerLabel(sw.provider)}
+                        </span>
+                      </TableCell>
                       <TableCell>
                         <span className="text-sm font-medium">
                           {formatAmount(sw.live?.amountSend ?? sw.amount, sw.live?.fromCurrency ?? sw.from_currency)}
@@ -625,14 +686,11 @@ const ExchangeTracker = () => {
                 </div>
               )}
 
-              <a
-                href={`https://changenow.io/exchange/txs/${detail.transaction_id}`}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="inline-flex items-center gap-1.5 text-xs text-primary hover:underline"
-              >
-                <ExternalLink className="w-3.5 h-3.5" /> View on ChangeNOW
-              </a>
+              <div className="flex items-center justify-between pt-2 border-t border-border/30">
+                <p className="text-xs text-muted-foreground">
+                  Routed via <span className="font-medium text-foreground">{providerLabel(detail.provider)}</span>
+                </p>
+              </div>
             </div>
           )}
         </DialogContent>
