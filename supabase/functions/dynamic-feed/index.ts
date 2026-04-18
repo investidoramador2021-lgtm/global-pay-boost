@@ -166,32 +166,54 @@ function escapeXml(str: string): string {
  * Bidirectional: every variant emits the same set of alternates including
  * a self-reference and x-default → English.
  */
-function hreflangBlock(path: string): string {
+/**
+ * Build hreflang alternates for a localized route.
+ * `basePath` is ALWAYS the canonical English path (no language prefix).
+ * Every variant emits the same set of alternates so search engines can map
+ * them as siblings, plus x-default → English.
+ */
+function hreflangBlock(basePath: string): string {
   const lines: string[] = [];
   for (const lang of ALL_HREFLANGS) {
-    const href = lang === "en" ? `${SITE}${path}` : `${SITE}/${lang}${path === "/" ? "" : path}`;
+    const href = lang === "en"
+      ? `${SITE}${basePath}`
+      : `${SITE}/${lang}${basePath === "/" ? "" : basePath}`;
     lines.push(`    <xhtml:link rel="alternate" hreflang="${lang}" href="${href}" />`);
   }
-  lines.push(`    <xhtml:link rel="alternate" hreflang="x-default" href="${SITE}${path}" />`);
+  lines.push(`    <xhtml:link rel="alternate" hreflang="x-default" href="${SITE}${basePath}" />`);
   return lines.join("\n");
 }
 
-function urlEntry(path: string, lastmod: string, changefreq: string, priority: string, withHreflang: boolean): string {
+/**
+ * Emit a <url> entry. When `withHreflang` is true, `basePath` MUST be the
+ * canonical English path (no `/xx` prefix). `loc` is the actual URL emitted.
+ */
+function urlEntry(
+  loc: string,
+  lastmod: string,
+  changefreq: string,
+  priority: string,
+  withHreflang: boolean,
+  basePath?: string,
+): string {
+  const hreflangPath = basePath ?? loc;
   return `  <url>
-    <loc>${SITE}${path}</loc>
+    <loc>${SITE}${loc}</loc>
     <lastmod>${lastmod}</lastmod>
     <changefreq>${changefreq}</changefreq>
-    <priority>${priority}</priority>${withHreflang ? "\n" + hreflangBlock(path) : ""}
+    <priority>${priority}</priority>${withHreflang ? "\n" + hreflangBlock(hreflangPath) : ""}
   </url>`;
 }
 
 function localizedEntries(path: string, lastmod: string, changefreq: string, priority: string): string[] {
   const out: string[] = [];
-  out.push(urlEntry(path, lastmod, changefreq, priority, true));
+  // English canonical
+  out.push(urlEntry(path, lastmod, changefreq, priority, true, path));
   const trPriority = (Math.max(0.1, parseFloat(priority) - 0.2)).toFixed(1);
   for (const lang of LANGS) {
     const trPath = path === "/" ? `/${lang}` : `/${lang}${path}`;
-    out.push(urlEntry(trPath, lastmod, changefreq, trPriority, true));
+    // Translated URL but hreflang block keyed off the EN base path
+    out.push(urlEntry(trPath, lastmod, changefreq, trPriority, true, path));
   }
   return out;
 }
