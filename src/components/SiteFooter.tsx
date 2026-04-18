@@ -277,6 +277,7 @@ const SiteFooter = () => {
                   { name: "LetsExchange", href: "https://letsexchange.io/" },
                   { name: "StealthEX", href: "https://stealthex.io/" },
                   { name: "Fireblocks", href: "https://www.fireblocks.com/" },
+                  { name: "GitHub", href: "https://github.com/" },
                 ].map((partner) => (
                   <a
                     key={partner.name}
