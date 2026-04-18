@@ -250,8 +250,19 @@ Deno.serve(async (req) => {
         if (!isTxId(id)) return bad('Invalid id');
         const r = await leFetch(`/transaction/${encodeURIComponent(id)}`, apiKey);
         const p = await parseJson(r);
-        if (!r.ok || !p.isJson) {
-          return json({ error: 'Status unavailable.' }, r.status || 502);
+        // LE returns {"success":false,"error":"Transaction not found"} for very new txs
+        // until deposit is detected. Treat as benign 'waiting' so the UI keeps polling.
+        if (!p.isJson) {
+          console.error(`LE tx-status non-JSON [${r.status}]: ${p.text?.slice(0,200)}`);
+          return json({ id, status: 'waiting', payinAddress: '', payoutAddress: '', fromCurrency: '', toCurrency: '', amountSend: null, amountReceive: null, payinHash: null, payoutHash: null });
+        }
+        if (!r.ok || p.data?.success === false) {
+          const errMsg = String(p.data?.error || '').toLowerCase();
+          if (errMsg.includes('not found')) {
+            return json({ id, status: 'waiting', payinAddress: '', payoutAddress: '', fromCurrency: '', toCurrency: '', amountSend: null, amountReceive: null, payinHash: null, payoutHash: null });
+          }
+          console.error(`LE tx-status error [${r.status}]: ${JSON.stringify(p.data)}`);
+          return json({ id, status: 'waiting', error: p.data?.error || 'Status unavailable.' });
         }
         const d = p.data;
         const leStatus = String(d.status || '').toLowerCase();
