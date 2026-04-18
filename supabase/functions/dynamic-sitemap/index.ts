@@ -11,7 +11,8 @@ const ECOSYSTEM_HUBS = ["/solana-ai", "/solana-ecosystem", "/fractal-bitcoin-swa
 
 async function fetchAllValidPairs(svc: ReturnType<typeof createClient>) {
   const t0 = Date.now();
-  const { data, error } = await svc.rpc("get_valid_pair_slugs");
+  // .range() overrides PostgREST's default max-rows=1000 cap on RPC results.
+  const { data, error } = await svc.rpc("get_valid_pair_slugs").range(0, 49999);
   const ms = Date.now() - t0;
   if (error) {
     console.error(`[fetchAllValidPairs] RPC error after ${ms}ms:`, error.message);
