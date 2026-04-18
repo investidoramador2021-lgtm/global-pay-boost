@@ -8,11 +8,14 @@ const corsHeaders = {
 
 // LetsExchange uses v1 API. v2 returns 404 for /info and /transaction. (rev 2)
 const LE_BASE = 'https://api.letsexchange.io/api/v1';
-const _RAW_AFFILIATE = Deno.env.get('LETSEXCHANGE_AFFILIATE_ID') || '';
-// LE rejects affiliate_id >191 chars. Drop silently if invalid (e.g., user pasted a URL).
-const LE_AFFILIATE_ID = (_RAW_AFFILIATE.length > 0 && _RAW_AFFILIATE.length <= 191) ? _RAW_AFFILIATE : '';
+const _RAW_AFFILIATE = (Deno.env.get('LETSEXCHANGE_AFFILIATE_ID') || '').trim();
+// LE affiliate IDs are short alphanumeric tokens (typically ≤20 chars). If a URL or
+// long string was pasted, force null so request stays valid (prevents header malform).
+const LE_AFFILIATE_ID = (_RAW_AFFILIATE.length > 0 && _RAW_AFFILIATE.length <= 20 && /^[a-zA-Z0-9_-]+$/.test(_RAW_AFFILIATE))
+  ? _RAW_AFFILIATE
+  : '';
 if (_RAW_AFFILIATE && !LE_AFFILIATE_ID) {
-  console.warn(`[LE] LETSEXCHANGE_AFFILIATE_ID has ${_RAW_AFFILIATE.length} chars (max 191). Sending requests WITHOUT affiliate attribution.`);
+  console.warn(`[LE] LETSEXCHANGE_AFFILIATE_ID is invalid (len=${_RAW_AFFILIATE.length}). Must be ≤20 alphanumeric chars. Sending WITHOUT attribution.`);
 }
 
 const TICKER_RE = /^[a-z0-9]{1,40}$/i;
@@ -61,6 +64,7 @@ function splitTickerNetwork(raw: string, fallbackNetwork?: string): { code: stri
 
 async function leFetch(path: string, apiKey: string, init?: RequestInit) {
   const headers: Record<string, string> = {
+    'X-Api-Key': apiKey,
     'Authorization': `Bearer ${apiKey}`,
     'Accept': 'application/json',
     ...((init?.body) ? { 'Content-Type': 'application/json' } : {}),
@@ -68,7 +72,7 @@ async function leFetch(path: string, apiKey: string, init?: RequestInit) {
   return fetch(`${LE_BASE}${path}`, { ...init, headers: { ...headers, ...(init?.headers as any || {}) } });
 }
 
-console.log('[LE] boot rev=3 base=' + LE_BASE);
+console.log('[LE] boot rev=4 base=' + LE_BASE + ' affiliate_active=' + (LE_AFFILIATE_ID ? 'yes' : 'no'));
 
 Deno.serve(async (req) => {
   if (req.method === 'OPTIONS') return new Response(null, { headers: corsHeaders });
@@ -233,7 +237,7 @@ Deno.serve(async (req) => {
           return json({ error: 'Provider unavailable.' }, 502);
         }
         if (!r.ok) {
-          console.error('LE create-tx error:', JSON.stringify(p.data));
+          console.error(`LE create-tx error [${r.status}] payload_keys=${JSON.stringify(Object.keys(body))} resp=${JSON.stringify(p.data)}`);
           return json({ error: p.data?.error || p.data?.message || 'Provider error.' }, r.status);
         }
         const d = p.data;
