@@ -58,6 +58,15 @@ const STATUS_MAP: Record<string, { label: string; color: string; icon: React.Rea
 
 const PAGE_SIZE = 50;
 
+const PROVIDER_LABELS: Record<string, string> = {
+  se: "StealthEX",
+  le: "LetsExchange",
+  cn: "ChangeNOW",
+};
+
+const providerLabel = (p?: string | null) =>
+  p ? (PROVIDER_LABELS[p.toLowerCase()] || p.toUpperCase()) : "—";
+
 const ExchangeTracker = () => {
   const [swaps, setSwaps] = useState<EnrichedSwap[]>([]);
   const [loading, setLoading] = useState(false);
@@ -92,14 +101,18 @@ const ExchangeTracker = () => {
         query = query.gte("created_at", from.toISOString());
       }
 
-      // 2) Provider live lists in parallel
-      const [dbRes, cnRes, leRes] = await Promise.allSettled([
+      // 2) Provider live lists in parallel (SE > LE > CN)
+      const [dbRes, seRes, leRes, cnRes] = await Promise.allSettled([
         query,
-        supabase.functions.invoke("changenow", {
+        supabase.functions.invoke("stealthex", {
           method: "POST",
           body: { _get: true, action: "list-transactions", limit: "100" },
         }),
         supabase.functions.invoke("letsexchange", {
+          method: "POST",
+          body: { _get: true, action: "list-transactions", limit: "100" },
+        }),
+        supabase.functions.invoke("changenow", {
           method: "POST",
           body: { _get: true, action: "list-transactions", limit: "100" },
         }),
@@ -114,6 +127,10 @@ const ExchangeTracker = () => {
       const dbCount =
         dbRes.status === "fulfilled" ? (dbRes.value as any).count || dbRows.length : 0;
 
+      const seList: any[] =
+        seRes.status === "fulfilled" && Array.isArray(seRes.value.data)
+          ? seRes.value.data
+          : [];
       const cnList: any[] =
         cnRes.status === "fulfilled" && cnRes.value.data && !cnRes.value.data.error
           ? (Array.isArray(cnRes.value.data) ? cnRes.value.data : (cnRes.value.data?.data || []))
