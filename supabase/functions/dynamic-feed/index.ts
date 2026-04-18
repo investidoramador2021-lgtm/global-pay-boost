@@ -5,13 +5,12 @@ const SITE = "https://mrcglobalpay.com";
 const LANGS = ["es", "pt", "fr", "ja", "fa", "ur", "he", "af", "hi", "vi", "tr", "uk"];
 const ALL_HREFLANGS = ["en", ...LANGS];
 
-// Pairs per child sitemap. We now emit ONE canonical English URL per pair
-// (with hreflang alternates inline) rather than 13 duplicate URLs. This
-// removes the duplicate-content waste that prevented Google from indexing
-// most pair pages — the previous 289k inflated sitemap was 12× over the
-// effective render/index budget. 25,000 pairs per child stays under
-// Google's 50,000-URL hard cap with safe headroom.
-const PAIRS_PER_CHILD = 25000;
+// Pairs per child sitemap. Each pair × 13 langs = 13 <url> entries, so
+// 1500 pairs ≈ 19.5k URLs per child — well under Google's 50k hard cap.
+// Each language URL is now a SELF-REFERENCING CANONICAL (not pointing back
+// to English), which is what unlocks indexing in google.co.il, google.com.vn,
+// google.com.tr, etc. — full local-search visibility per language.
+const PAIRS_PER_CHILD = 1500;
 
 /* ─────────────────────────────────────────────────────────────────────────────
  * ROUTE INVENTORY — mirrors src/App.tsx. Anything indexable lives here.
@@ -381,12 +380,12 @@ ${items}
       const slug = `${from}-to-${to}`;
       const lastmod = p.updated_at ? p.updated_at.split("T")[0] : today;
       const path = `/exchange/${slug}`;
-      // Emit ONLY the canonical English URL with a full hreflang block.
-      // Translations are still discoverable via the alternate links — but
-      // Google doesn't waste its render budget re-rendering 12 duplicate
-      // pages that all canonicalize to English anyway. This is the single
-      // biggest indexing-coverage fix: 289k URLs → ~22k canonical URLs.
-      entries.push(urlEntry(path, lastmod, "weekly", "0.7", true));
+      // Emit one URL per language so each translated variant is independently
+      // submitted to Google. The React component now sets a SELF-REFERENCING
+      // CANONICAL on every language path, so each is a real index target
+      // (not a duplicate of English) — unlocking google.com.vn, google.co.il,
+      // google.com.tr, etc. for local search ranking.
+      for (const e of localizedEntries(path, lastmod, "weekly", "0.7")) entries.push(e);
     }
     return new Response(wrapUrlset(entries), {
       headers: { ...xmlHeaders, "X-Sitemap-Url-Count": String(entries.length) },
