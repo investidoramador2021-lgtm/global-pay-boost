@@ -135,6 +135,7 @@ const About = () => (
             </h2>
             <ul className="mt-4 space-y-2 font-body text-sm text-muted-foreground">
               <li>✓ <strong>AML/CTF:</strong> Full Anti-Money Laundering and Counter-Terrorism Financing compliance per FINTRAC requirements.</li>
+              <li>✓ <strong>Bank of Canada Authorized PSP:</strong> Registered Payment Service Provider under the Retail Payment Activities Act (RPAA), supervised by the Bank of Canada.</li>
               <li>✓ <strong>Transaction Monitoring:</strong> Automated risk-scoring and suspicious activity reporting.</li>
               <li>✓ <strong>Zero Data Retention:</strong> No personal data stored. Non-custodial architecture means no user wallets or funds are held.</li>
               <li>✓ <strong>Privacy-First:</strong> Registration-free swaps for standard transactions. Enhanced verification triggered only by risk thresholds.</li>
