@@ -98,7 +98,46 @@ serve(async (req) => {
     .eq("is_published", true);
 
   const blogUrls = (posts || []).map((p: any) => `${SITE}/blog/${p.slug}`);
-  const ALL_URLS = [...STATIC_URLS, ...blogUrls];
+
+  // Fetch ALL valid /exchange/[pair] pages and emit one URL per language.
+  // IndexNow could not previously discover these — they were never pinged.
+  const pairUrls: string[] = [];
+  const pageSize = 1000;
+  let from = 0;
+  while (from < 50000) {
+    const { data: pairs } = await supabase
+      .from("pairs")
+      .select("from_ticker, to_ticker")
+      .eq("is_valid", true)
+      .order("updated_at", { ascending: false })
+      .range(from, from + pageSize - 1);
+    if (!pairs || pairs.length === 0) break;
+    for (const p of pairs as any[]) {
+      const f = (p.from_ticker || "").toLowerCase();
+      const t = (p.to_ticker || "").toLowerCase();
+      if (!f || !t) continue;
+      const slug = `${f}-to-${t}`;
+      for (const lang of LANGS) {
+        const prefix = lang ? `/${lang}` : "";
+        pairUrls.push(`${SITE}${prefix}/exchange/${slug}`);
+      }
+    }
+    if (pairs.length < pageSize) break;
+    from += pageSize;
+  }
+
+  const ALL_URLS = [...STATIC_URLS, ...blogUrls, ...pairUrls];
+
+  // IndexNow accepts max 10,000 URLs per request — chunk if needed.
+  const CHUNK_SIZE = 10000;
+  function chunkUrls(urls: string[]): string[][] {
+    const chunks: string[][] = [];
+    for (let i = 0; i < urls.length; i += CHUNK_SIZE) {
+      chunks.push(urls.slice(i, i + CHUNK_SIZE));
+    }
+    return chunks;
+  }
+  const urlChunks = chunkUrls(ALL_URLS);
 
   const results: Record<string, string> = {};
 
@@ -114,23 +153,27 @@ serve(async (req) => {
     `https://www.bing.com/ping?sitemap=${encodeURIComponent(`${SITE}/sitemap.xml`)}`
   );
 
-  // ── 3. IndexNow (Bing, Yandex, Seznam, Naver) ──
-  const indexNowPayload = JSON.stringify({
-    host: "mrcglobalpay.com",
-    key: INDEXNOW_KEY,
-    keyLocation: `${SITE}/${INDEXNOW_KEY}.txt`,
-    urlList: ALL_URLS,
-  });
-
-  results.indexnow = await safeFetch(
-    "indexnow",
-    "https://api.indexnow.org/indexnow",
-    {
-      method: "POST",
-      headers: { "Content-Type": "application/json; charset=utf-8" },
-      body: indexNowPayload,
+  // ── 3. IndexNow (chunked: API caps at 10k URLs/request) ──
+  async function pingIndexNow(endpoint: string): Promise<string> {
+    const statuses: string[] = [];
+    for (let i = 0; i < urlChunks.length; i++) {
+      const payload = JSON.stringify({
+        host: "mrcglobalpay.com",
+        key: INDEXNOW_KEY,
+        keyLocation: `${SITE}/${INDEXNOW_KEY}.txt`,
+        urlList: urlChunks[i],
+      });
+      const status = await safeFetch(`indexnow_chunk_${i}`, endpoint, {
+        method: "POST",
+        headers: { "Content-Type": "application/json; charset=utf-8" },
+        body: payload,
+      });
+      statuses.push(`${urlChunks[i].length}=${status}`);
     }
-  );
+    return statuses.join(" | ");
+  }
+
+  results.indexnow = await pingIndexNow("https://api.indexnow.org/indexnow");
 
   // ── 4. Google RSS Ping ──
   results.google_rss = await safeFetch(
@@ -187,49 +230,17 @@ serve(async (req) => {
     `https://webmaster.yandex.com/ping?sitemap=${encodeURIComponent(`${SITE}/sitemap.xml`)}`
   );
 
-  // ── 9. IndexNow via Bing directly ──
-  results.indexnow_bing = await safeFetch(
-    "indexnow_bing",
-    "https://www.bing.com/indexnow",
-    {
-      method: "POST",
-      headers: { "Content-Type": "application/json; charset=utf-8" },
-      body: indexNowPayload,
-    }
-  );
+  // ── 9. IndexNow via Bing directly ── chunked
+  results.indexnow_bing = await pingIndexNow("https://www.bing.com/indexnow");
 
-  // ── 10. IndexNow via Yandex directly ──
-  results.indexnow_yandex = await safeFetch(
-    "indexnow_yandex",
-    "https://yandex.com/indexnow",
-    {
-      method: "POST",
-      headers: { "Content-Type": "application/json; charset=utf-8" },
-      body: indexNowPayload,
-    }
-  );
+  // ── 10. IndexNow via Yandex directly ── chunked
+  results.indexnow_yandex = await pingIndexNow("https://yandex.com/indexnow");
 
-  // ── 11. IndexNow via Naver ──
-  results.indexnow_naver = await safeFetch(
-    "indexnow_naver",
-    "https://searchadvisor.naver.com/indexnow",
-    {
-      method: "POST",
-      headers: { "Content-Type": "application/json; charset=utf-8" },
-      body: indexNowPayload,
-    }
-  );
+  // ── 11. IndexNow via Naver ── chunked
+  results.indexnow_naver = await pingIndexNow("https://searchadvisor.naver.com/indexnow");
 
-  // ── 12. IndexNow via Seznam ──
-  results.indexnow_seznam = await safeFetch(
-    "indexnow_seznam",
-    "https://search.seznam.cz/indexnow",
-    {
-      method: "POST",
-      headers: { "Content-Type": "application/json; charset=utf-8" },
-      body: indexNowPayload,
-    }
-  );
+  // ── 12. IndexNow via Seznam ── chunked
+  results.indexnow_seznam = await pingIndexNow("https://search.seznam.cz/indexnow");
 
   // ── 13. Bing URL submission for llms.txt ──
   results.bing_llms = await safeFetch(
