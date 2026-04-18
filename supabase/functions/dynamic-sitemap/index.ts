@@ -2,9 +2,12 @@ import "jsr:@supabase/functions-js/edge-runtime.d.ts";
 import { createClient } from "https://esm.sh/@supabase/supabase-js@2.49.1";
 
 const BASE_URL = "https://mrcglobalpay.com";
-const BATCH_SIZE = 5000;
+const BATCH_SIZE = 10000; // Max URLs per child sitemap (Google hard cap is 50k)
 // "" = English (default, no prefix). Listed langs match the i18n config.
 const LANGS = ["", "es", "pt", "fr", "ja", "fa", "ur", "he", "af", "hi", "vi", "tr", "uk"];
+
+// Ecosystem hubs — high-authority topic pages, priority 1.0
+const ECOSYSTEM_HUBS = ["/solana-ai", "/solana-ecosystem", "/fractal-bitcoin-swap"];
 
 async function fetchAllValidPairs(svc: ReturnType<typeof createClient>) {
   const all: Array<{ from_ticker: string; to_ticker: string; updated_at: string }> = [];
