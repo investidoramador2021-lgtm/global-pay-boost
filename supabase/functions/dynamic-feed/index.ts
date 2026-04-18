@@ -5,6 +5,11 @@ const SITE = "https://mrcglobalpay.com";
 const LANGS = ["es", "pt", "fr", "ja", "fa", "ur", "he", "af", "hi", "vi", "tr", "uk"];
 const ALL_HREFLANGS = ["en", ...LANGS];
 
+// Pairs per child sitemap. Each pair × 13 langs = 13 <url> entries, so
+// 1500 pairs ≈ 19.5k URLs per child — well under Google's 50k hard cap and
+// small enough to render inside the edge function's CPU budget.
+const PAIRS_PER_CHILD = 1500;
+
 /* ─────────────────────────────────────────────────────────────────────────────
  * ROUTE INVENTORY — mirrors src/App.tsx. Anything indexable lives here.
  * Routes flagged `localized: true` get a full hreflang block across 13 langs
@@ -89,10 +94,7 @@ const STATIC_ROUTES: RouteSpec[] = [
   { loc: "/aml", changefreq: "monthly", priority: "0.3" },
 ];
 
-/* Inline data extraction — tiny set, parsed at boot. Avoids importing /src. */
-
 // Keyword-driven landing pages — sourced from src/lib/seo-keywords.ts targets.
-// Filtered to deduped, non-canonicalized URLs that actually render via KeywordPage.
 const KEYWORD_URLS: string[] = [
   "/swap/usdt-to-trx", "/buy/bitcoin-no-verification", "/swap/usd-to-xmr",
   "/swap/usdt-to-sol", "/local-crypto-exchange", "/guides/is-solana-a-good-investment",
@@ -121,14 +123,11 @@ const KEYWORD_URLS: string[] = [
   "/bridge/eth-to-sol", "/bridge/solana-to-bnb", "/bridge/pulsechain",
 ];
 
-// Authority/Learn articles — slugs from src/lib/authority-hub-data.ts
 const LEARN_SLUGS = [
   "why-non-custodial-is-safer", "canadian-fintrac-msb", "our-liquidity-partners",
   "swap-without-registration", "tracking-your-micro-swap",
 ];
 
-// Compare slugs — sourced from src/lib/competitor-data.ts (non-exhaustive; keep
-// in sync when new competitors are added).
 const COMPARE_SLUGS = [
   "changenow", "changelly", "simpleswap", "stealthex", "exolix", "fixedfloat",
   "houdiniswap", "godex", "letsexchange", "swapuz", "swapzone", "majesticbank",
@@ -140,7 +139,6 @@ const COMPARE_SLUGS = [
   "bestchange", "exchanger24", "switchere", "moonpay", "transak", "ramp",
 ];
 
-// Solution slugs — high-intent how-to-swap pages from src/lib/swap-solutions-data.ts
 const SOLUTION_SLUGS = [
   "btc-to-usdc", "btc-to-usdt", "btc-to-sol", "eth-to-usdt", "eth-to-sol",
   "sol-to-usdc", "xrp-to-usdt", "ltc-to-btc", "trx-to-usdt", "hype-to-usdt",
@@ -156,8 +154,7 @@ function escapeXml(str: string): string {
 /**
  * Build hreflang alternates for a localized route.
  * Bidirectional: every variant emits the same set of alternates including
- * a self-reference and x-default → English. Without this, Google reports
- * variants as "Duplicate, Google chose different canonical".
+ * a self-reference and x-default → English.
  */
 function hreflangBlock(path: string): string {
   const lines: string[] = [];
@@ -178,16 +175,9 @@ function urlEntry(path: string, lastmod: string, changefreq: string, priority: s
   </url>`;
 }
 
-/**
- * Emit one <url> per language for a localized route, plus the canonical
- * English URL. Each entry carries the full hreflang alternate set so any
- * variant can be picked up directly by IndexNow / Google Search Console.
- */
 function localizedEntries(path: string, lastmod: string, changefreq: string, priority: string): string[] {
   const out: string[] = [];
-  // English (canonical)
   out.push(urlEntry(path, lastmod, changefreq, priority, true));
-  // Translated variants — slightly lower priority to signal canonical hierarchy.
   const trPriority = (Math.max(0.1, parseFloat(priority) - 0.2)).toFixed(1);
   for (const lang of LANGS) {
     const trPath = path === "/" ? `/${lang}` : `/${lang}${path}`;
@@ -196,9 +186,25 @@ function localizedEntries(path: string, lastmod: string, changefreq: string, pri
   return out;
 }
 
+function wrapUrlset(entries: string[]): string {
+  return `<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:xhtml="http://www.w3.org/1999/xhtml">
+${entries.join("\n")}
+</urlset>`;
+}
+
+const xmlHeaders = {
+  "Content-Type": "application/xml; charset=utf-8",
+  "Cache-Control": "public, max-age=3600",
+};
+
 Deno.serve(async (req) => {
   const url = new URL(req.url);
   const format = url.searchParams.get("format") || "sitemap";
+  // Path after the function name (works for both direct invocation and the
+  // /sitemap.xml etc. _redirects rules — the rewrites preserve the path).
+  const rawPath = url.pathname.replace(/^\/functions\/v1\/dynamic-feed/, "") || "/";
+  const subPath = url.searchParams.get("p") || rawPath;
 
   const supabaseUrl = Deno.env.get("SUPABASE_URL")!;
   const supabaseKey = Deno.env.get("SUPABASE_SERVICE_ROLE_KEY") ?? Deno.env.get("SUPABASE_ANON_KEY")!;
@@ -206,16 +212,15 @@ Deno.serve(async (req) => {
 
   const today = new Date().toISOString().split("T")[0];
 
-  // ── Blog posts ──
-  const { data: posts } = await supabase
-    .from("blog_posts")
-    .select("slug, title, excerpt, published_at, updated_at, author_name, category")
-    .eq("is_published", true)
-    .order("published_at", { ascending: false });
-  const blogPosts = posts || [];
-
   /* ───── RSS branch ───── */
   if (format === "rss") {
+    const { data: posts } = await supabase
+      .from("blog_posts")
+      .select("slug, title, excerpt, published_at, updated_at, author_name, category")
+      .eq("is_published", true)
+      .order("published_at", { ascending: false });
+    const blogPosts = posts || [];
+
     const items = blogPosts.map((p: any) => {
       const altLinks = LANGS.map(
         (l) => `      <atom:link rel="alternate" hreflang="${l}" href="${SITE}/${l}/blog/${p.slug}" />`
@@ -251,86 +256,123 @@ ${items}
     });
   }
 
-  /* ───── Sitemap branch ───── */
+  /* ───── Sitemap routing ─────
+   * /                       → sitemap index
+   * /sitemap-static.xml     → static + curated routes (localized expansion)
+   * /sitemap-blog.xml       → all blog posts (localized)
+   * /sitemap-pairs-N.xml    → batch N of DB exchange pairs (localized)
+   */
 
-  // ── DB-driven exchange pairs (single-shot RPC, bypasses 1k row cap) ──
-  const { data: pairsJson, error: pairsErr } = await supabase.rpc("get_valid_pair_slugs_json");
-  if (pairsErr) console.error("[sitemap] pairs rpc error:", pairsErr.message);
-  const allPairs = ((pairsJson ?? []) as Array<{ from_ticker: string; to_ticker: string; updated_at: string }>);
+  // Helper: get pair count (cheap — single small row)
+  async function getPairCount(): Promise<number> {
+    const { data, error } = await supabase
+      .from("sync_engine_state")
+      .select("pairs_count")
+      .eq("id", 1)
+      .maybeSingle();
+    if (error) console.error("[sitemap] state err:", error.message);
+    return ((data as any)?.pairs_count as number) ?? 0;
+  }
 
-  const entries: string[] = [];
-  const seen = new Set<string>();
-  const push = (e: string, key: string) => {
-    if (seen.has(key)) return;
-    seen.add(key);
-    entries.push(e);
-  };
+  // ── Sitemap INDEX ──
+  if (subPath === "/" || subPath === "/index.xml" || subPath === "") {
+    const pairCount = await getPairCount();
+    const batchCount = Math.max(1, Math.ceil(pairCount / PAIRS_PER_CHILD));
 
-  // Static routes (with localized expansion where flagged)
-  for (const r of STATIC_ROUTES) {
-    if (r.localized) {
-      for (const e of localizedEntries(r.loc, today, r.changefreq, r.priority)) {
-        const m = e.match(/<loc>([^<]+)<\/loc>/);
-        push(e, m ? m[1] : e);
+    let xml = `<?xml version="1.0" encoding="UTF-8"?>
+<sitemapindex xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+  <sitemap><loc>${SITE}/sitemap-static.xml</loc><lastmod>${today}</lastmod></sitemap>
+  <sitemap><loc>${SITE}/sitemap-blog.xml</loc><lastmod>${today}</lastmod></sitemap>`;
+    for (let i = 0; i < batchCount; i++) {
+      xml += `\n  <sitemap><loc>${SITE}/sitemap-pairs-${i}.xml</loc><lastmod>${today}</lastmod></sitemap>`;
+    }
+    xml += `\n</sitemapindex>`;
+    return new Response(xml, { headers: xmlHeaders });
+  }
+
+  // ── Static + curated routes ──
+  if (subPath === "/sitemap-static.xml") {
+    const entries: string[] = [];
+    const seen = new Set<string>();
+    const push = (e: string, key: string) => {
+      if (seen.has(key)) return;
+      seen.add(key);
+      entries.push(e);
+    };
+
+    for (const r of STATIC_ROUTES) {
+      if (r.localized) {
+        for (const e of localizedEntries(r.loc, today, r.changefreq, r.priority)) {
+          const m = e.match(/<loc>([^<]+)<\/loc>/);
+          push(e, m ? m[1] : e);
+        }
+      } else {
+        push(urlEntry(r.loc, today, r.changefreq, r.priority, false), r.loc);
       }
-    } else {
-      push(urlEntry(r.loc, today, r.changefreq, r.priority, false), r.loc);
     }
-  }
-
-  // Keyword landing pages (English-only routes — KeywordPage doesn't translate)
-  for (const k of KEYWORD_URLS) {
-    push(urlEntry(k, today, "weekly", "0.7", false), k);
-  }
-
-  // Learn / authority articles
-  for (const slug of LEARN_SLUGS) {
-    push(urlEntry(`/learn/${slug}`, today, "monthly", "0.7", false), `/learn/${slug}`);
-  }
-
-  // Compare pages
-  for (const slug of COMPARE_SLUGS) {
-    push(urlEntry(`/compare/${slug}`, today, "weekly", "0.7", false), `/compare/${slug}`);
-  }
-
-  // Solution pages
-  for (const slug of SOLUTION_SLUGS) {
-    const p = `/solutions/how-to-swap-${slug}`;
-    push(urlEntry(p, today, "weekly", "0.7", false), p);
-  }
-
-  // Dynamic exchange pairs (each gets full 13-language hreflang block since
-  // /exchange/:pair is wrapped in LangLayout)
-  for (const p of allPairs) {
-    const slug = `${p.from_ticker}-to-${p.to_ticker}`.toLowerCase();
-    const lastmod = p.updated_at ? p.updated_at.split("T")[0] : today;
-    const path = `/exchange/${slug}`;
-    for (const e of localizedEntries(path, lastmod, "weekly", "0.7")) {
-      const m = e.match(/<loc>([^<]+)<\/loc>/);
-      push(e, m ? m[1] : e);
+    for (const k of KEYWORD_URLS) push(urlEntry(k, today, "weekly", "0.7", false), k);
+    for (const slug of LEARN_SLUGS) push(urlEntry(`/learn/${slug}`, today, "monthly", "0.7", false), `/learn/${slug}`);
+    for (const slug of COMPARE_SLUGS) push(urlEntry(`/compare/${slug}`, today, "weekly", "0.7", false), `/compare/${slug}`);
+    for (const slug of SOLUTION_SLUGS) {
+      const p = `/solutions/how-to-swap-${slug}`;
+      push(urlEntry(p, today, "weekly", "0.7", false), p);
     }
+
+    return new Response(wrapUrlset(entries), {
+      headers: { ...xmlHeaders, "X-Sitemap-Url-Count": String(entries.length) },
+    });
   }
 
-  // Blog posts (localized — blog post route is inside LangLayout)
-  for (const p of blogPosts as any[]) {
-    const lastmod = (p.updated_at || p.published_at || "").split("T")[0] || today;
-    const path = `/blog/${p.slug}`;
-    for (const e of localizedEntries(path, lastmod, "weekly", "0.8")) {
-      const m = e.match(/<loc>([^<]+)<\/loc>/);
-      push(e, m ? m[1] : e);
+  // ── Blog posts (localized) ──
+  if (subPath === "/sitemap-blog.xml") {
+    const { data: posts } = await supabase
+      .from("blog_posts")
+      .select("slug, updated_at, published_at")
+      .eq("is_published", true)
+      .order("published_at", { ascending: false });
+    const blogPosts = (posts || []) as any[];
+
+    const entries: string[] = [];
+    for (const p of blogPosts) {
+      const lastmod = (p.updated_at || p.published_at || "").split("T")[0] || today;
+      const path = `/blog/${p.slug}`;
+      for (const e of localizedEntries(path, lastmod, "weekly", "0.8")) entries.push(e);
     }
+    return new Response(wrapUrlset(entries), {
+      headers: { ...xmlHeaders, "X-Sitemap-Url-Count": String(entries.length) },
+    });
   }
 
-  const sitemap = `<?xml version="1.0" encoding="UTF-8"?>
-<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:xhtml="http://www.w3.org/1999/xhtml">
-${entries.join("\n")}
-</urlset>`;
+  // ── Pair batches ──
+  const pairsBatchMatch = subPath.match(/^\/sitemap-pairs-(\d+)\.xml$/);
+  if (pairsBatchMatch) {
+    const batchIdx = parseInt(pairsBatchMatch[1], 10);
+    const t0 = Date.now();
+    const { data: pairsJson, error: pairsErr } = await supabase.rpc("get_valid_pair_slugs_json");
+    if (pairsErr) {
+      console.error("[sitemap-pairs] rpc err:", pairsErr.message);
+      return new Response("Pairs unavailable", { status: 500, headers: xmlHeaders });
+    }
+    const allPairs = (pairsJson ?? []) as Array<{ from_ticker: string; to_ticker: string; updated_at: string }>;
+    console.log(`[sitemap-pairs-${batchIdx}] fetched=${allPairs.length} ms=${Date.now() - t0}`);
 
-  return new Response(sitemap, {
-    headers: {
-      "Content-Type": "application/xml; charset=utf-8",
-      "Cache-Control": "public, max-age=3600",
-      "X-Sitemap-Url-Count": String(entries.length),
-    },
-  });
+    const start = batchIdx * PAIRS_PER_CHILD;
+    const slice = allPairs.slice(start, start + PAIRS_PER_CHILD);
+
+    const entries: string[] = [];
+    for (const p of slice) {
+      const from = (p.from_ticker || "").toLowerCase();
+      const to = (p.to_ticker || "").toLowerCase();
+      if (!from || !to) continue;
+      const slug = `${from}-to-${to}`;
+      const lastmod = p.updated_at ? p.updated_at.split("T")[0] : today;
+      const path = `/exchange/${slug}`;
+      for (const e of localizedEntries(path, lastmod, "weekly", "0.7")) entries.push(e);
+    }
+    return new Response(wrapUrlset(entries), {
+      headers: { ...xmlHeaders, "X-Sitemap-Url-Count": String(entries.length) },
+    });
+  }
+
+  return new Response("Not Found", { status: 404, headers: xmlHeaders });
 });
