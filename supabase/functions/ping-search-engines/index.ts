@@ -97,30 +97,34 @@ serve(async (req) => {
     });
   }
 
-  // Dynamically fetch all published blog post slugs
+  // Use service role to bypass per-row RLS evaluation (faster on large reads).
   const supabaseUrl = Deno.env.get("SUPABASE_URL")!;
-  const supabaseKey = Deno.env.get("SUPABASE_ANON_KEY")!;
-  const supabase = createClient(supabaseUrl, supabaseKey);
+  const serviceKey = Deno.env.get("SUPABASE_SERVICE_ROLE_KEY") ?? Deno.env.get("SUPABASE_ANON_KEY")!;
+  const supabase = createClient(supabaseUrl, serviceKey);
 
-  const { data: posts } = await supabase
+  const { data: posts, error: postsErr } = await supabase
     .from("blog_posts")
     .select("slug")
     .eq("is_published", true);
+  if (postsErr) console.error("[ping] blog_posts error:", postsErr.message);
 
   const blogUrls = (posts || []).map((p: any) => `${SITE}/blog/${p.slug}`);
 
-  // Fetch ALL valid /exchange/[pair] pages and emit one URL per language.
-  // IndexNow could not previously discover these — they were never pinged.
+  // Fetch ALL valid /exchange/[pair] pages. Drop ORDER BY (no index on updated_at)
+  // so the query is a fast seq-scan-with-pk-order. Each pair → LANGS.length URLs.
   const pairUrls: string[] = [];
   const pageSize = 1000;
   let from = 0;
   while (from < 50000) {
-    const { data: pairs } = await supabase
+    const { data: pairs, error: pairsErr } = await supabase
       .from("pairs")
       .select("from_ticker, to_ticker")
       .eq("is_valid", true)
-      .order("updated_at", { ascending: false })
       .range(from, from + pageSize - 1);
+    if (pairsErr) {
+      console.error("[ping] pairs page error:", pairsErr.message, "from=", from);
+      break;
+    }
     if (!pairs || pairs.length === 0) break;
     for (const p of pairs as any[]) {
       const f = (p.from_ticker || "").toLowerCase();
@@ -135,7 +139,7 @@ serve(async (req) => {
     if (pairs.length < pageSize) break;
     from += pageSize;
   }
-
+  console.log("[ping] pair URL count =", pairUrls.length);
   const ALL_URLS = [...STATIC_URLS, ...blogUrls, ...pairUrls];
 
   // IndexNow accepts max 10,000 URLs per request — chunk if needed.
