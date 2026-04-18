@@ -91,20 +91,13 @@ Deno.serve(async (req) => {
     "/swap/bnb-usdc",
   ];
 
-  // Sitemap index — use a fast HEAD count so we don't have to fetch every row
-  // just to determine batch count. Each pair produces LANGS.length URL entries.
+  // Sitemap index — fetch the full pair list (only ~22k rows) so we know the
+  // exact batch count. Estimated count via pg_class can be stale on freshly
+  // synced tables (returns null/0), so we just paginate the real data.
   if (path === "/" || path === "/index.xml") {
-    // Use estimated count (pg_class stats) — instant, no RLS row-walk.
-    // For sitemap batching this approximation is more than good enough.
-    const { count: pairCount, error: countErr } = await svc
-      .from("pairs")
-      .select("*", { count: "estimated", head: true })
-      .eq("is_valid", true);
-    if (countErr) {
-      console.error("[sitemap-index] count query error:", countErr.message);
-    }
-    console.log("[sitemap-index] pairCount =", pairCount);
-    const totalUrls = (pairCount || 0) * LANGS.length;
+    const allPairs = await fetchAllValidPairs(svc);
+    console.log("[sitemap-index] pair rows fetched =", allPairs.length);
+    const totalUrls = allPairs.length * LANGS.length;
     const batchCount = Math.max(1, Math.ceil(totalUrls / BATCH_SIZE));
     const today = new Date().toISOString().split("T")[0];
 
