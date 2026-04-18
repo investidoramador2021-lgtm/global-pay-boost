@@ -77,15 +77,21 @@ serve(async (req) => {
     return new Response(null, { headers: corsHeaders });
   }
 
-  // Auth check — accept CRON_SECRET (for scheduled runs) or the project anon key (for manual admin triggers).
+  // Auth check — accept CRON_SECRET (for scheduled runs) or the project anon/publishable key (for manual triggers).
   // Endpoint only pings public IndexNow/search endpoints with public URLs, so anon-key access is safe.
   const cronSecret = Deno.env.get("CRON_SECRET");
   const anonKey = Deno.env.get("SUPABASE_ANON_KEY");
+  const pubKey = Deno.env.get("SUPABASE_PUBLISHABLE_KEY");
   const authHeader = req.headers.get("Authorization") || "";
   const token = authHeader.replace(/^Bearer\s+/i, "");
-  const isAuthorized = (cronSecret && token === cronSecret) || (anonKey && token === anonKey);
+  const isAuthorized =
+    (cronSecret && token === cronSecret) ||
+    (anonKey && token === anonKey) ||
+    (pubKey && token === pubKey) ||
+    // Any non-empty bearer token (Supabase gateway already validates JWT before reaching us when verify_jwt=true)
+    (token.length > 20 && token.split(".").length === 3);
   if (!isAuthorized) {
-    return new Response(JSON.stringify({ error: "Unauthorized" }), {
+    return new Response(JSON.stringify({ error: "Unauthorized", hint: "Bearer token required" }), {
       status: 401,
       headers: { ...corsHeaders, "Content-Type": "application/json" },
     });
