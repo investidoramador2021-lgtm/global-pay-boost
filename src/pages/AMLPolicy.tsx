@@ -32,6 +32,20 @@ const AMLPolicy = () => {
         <h2 className="text-xl font-semibold text-foreground">1. Purpose</h2>
         <p>MRC GlobalPay is committed to preventing money laundering, terrorist financing, and other financial crimes. This policy outlines our compliance measures.</p>
 
+        <h2 className="text-xl font-semibold text-foreground">2. Regulatory Status</h2>
+        <p>
+          MRC GlobalPay is a <strong>FINTRAC-registered Money Services Business (MSB: C100000015)</strong> and an{" "}
+          <a
+            href="https://www.bankofcanada.ca/core-functions/retail-payments-supervision/psp-registry/psp-registry-details/?account_id=408b884a-1aa1-ef11-a72d-0022483bf164"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="text-primary underline decoration-primary/30 underline-offset-2 hover:decoration-primary"
+          >
+            authorized Payment Service Provider (PSP) supervised by the Bank of Canada
+          </a>{" "}
+          under the Retail Payment Activities Act (RPAA). We operate under both the PCMLTFA and RPAA frameworks.
+        </p>
+
         <h2 className="text-xl font-semibold text-foreground">2. Identity Verification Procedures</h2>
         <p>For transactions exceeding certain thresholds or flagged by our automated risk-prevention system, we may request standard identity verification. This may include government-issued ID and proof of address.</p>
 
