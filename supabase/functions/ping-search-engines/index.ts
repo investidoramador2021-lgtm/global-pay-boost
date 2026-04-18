@@ -98,7 +98,46 @@ serve(async (req) => {
     .eq("is_published", true);
 
   const blogUrls = (posts || []).map((p: any) => `${SITE}/blog/${p.slug}`);
-  const ALL_URLS = [...STATIC_URLS, ...blogUrls];
+
+  // Fetch ALL valid /exchange/[pair] pages and emit one URL per language.
+  // IndexNow could not previously discover these — they were never pinged.
+  const pairUrls: string[] = [];
+  const pageSize = 1000;
+  let from = 0;
+  while (from < 50000) {
+    const { data: pairs } = await supabase
+      .from("pairs")
+      .select("from_ticker, to_ticker")
+      .eq("is_valid", true)
+      .order("updated_at", { ascending: false })
+      .range(from, from + pageSize - 1);
+    if (!pairs || pairs.length === 0) break;
+    for (const p of pairs as any[]) {
+      const f = (p.from_ticker || "").toLowerCase();
+      const t = (p.to_ticker || "").toLowerCase();
+      if (!f || !t) continue;
+      const slug = `${f}-to-${t}`;
+      for (const lang of LANGS) {
+        const prefix = lang ? `/${lang}` : "";
+        pairUrls.push(`${SITE}${prefix}/exchange/${slug}`);
+      }
+    }
+    if (pairs.length < pageSize) break;
+    from += pageSize;
+  }
+
+  const ALL_URLS = [...STATIC_URLS, ...blogUrls, ...pairUrls];
+
+  // IndexNow accepts max 10,000 URLs per request — chunk if needed.
+  const CHUNK_SIZE = 10000;
+  function chunkUrls(urls: string[]): string[][] {
+    const chunks: string[][] = [];
+    for (let i = 0; i < urls.length; i += CHUNK_SIZE) {
+      chunks.push(urls.slice(i, i + CHUNK_SIZE));
+    }
+    return chunks;
+  }
+  const urlChunks = chunkUrls(ALL_URLS);
 
   const results: Record<string, string> = {};
 
