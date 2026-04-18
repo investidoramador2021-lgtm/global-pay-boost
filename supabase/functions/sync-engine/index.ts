@@ -499,9 +499,22 @@ Deno.serve(async (req) => {
   const changeNowKey = Deno.env.get("CHANGENOW_API_KEY")!;
   const supabase = createClient(supabaseUrl, serviceKey);
 
-  const BATCH_LIMIT = 100;
+  // ── 0. Parse mode (priority backfill bypasses alphabetical sweep) ──
+  const url = new URL(req.url);
+  const priorityMode = url.searchParams.get("priority") === "true";
+
+  const BATCH_LIMIT = priorityMode ? 500 : 100;
   const MAINTENANCE_THRESHOLD = 50_000;
   const MAINTENANCE_INTERVAL_HOURS = 48;
+
+  // Tier-1 tickers — combinatorially expanded into priority pairs
+  const TIER1 = [
+    "btc","eth","usdt","usdc","sol","xrp","bnb","ada","doge","trx",
+    "ton","matic","dot","avax","link","ltc","bch","atom","near","apt",
+    "arb","op","sui","hype","pepe","shib","xlm","etc","fil","icp",
+    "xmr","dash","zec","algo","vet","aave","uni","mkr","comp","sand",
+    "mana","axs","grt","ftm","kas","tia","inj","sei","jup","wld","paxg","xaut",
+  ];
 
   try {
     // ── 1. Adaptive throttle ──
