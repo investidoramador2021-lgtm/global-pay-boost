@@ -168,8 +168,37 @@ Deno.serve(async (req) => {
       }
 
       case 'list-transactions': {
-        // StealthEX v2 doesn't expose affiliate history publicly; return empty list.
-        return json([], 200);
+        const limit = String(Math.min(Number(params.limit || '100'), 250));
+        const offset = String(Number(params.offset || '0'));
+        const r = await fetch(seUrl('/exchanges', apiKey, { limit, offset }));
+        const p = await parseJson(r);
+        if (!r.ok || !p.isJson) {
+          console.error(`SE list [${r.status}] resp=${p.text?.slice(0, 300)}`);
+          return json([], 200);
+        }
+        const list: any[] = p.data?.data?.exchanges || p.data?.exchanges || [];
+        const normalized = list.map((d: any) => {
+          const seStatus = String(d.status || '').toLowerCase();
+          const statusMap: Record<string, string> = {
+            waiting: 'waiting', confirming: 'confirming', exchanging: 'exchanging',
+            sending: 'sending', finished: 'finished', expired: 'failed',
+            failed: 'failed', refunded: 'refunded', verifying: 'confirming',
+          };
+          return {
+            id: d.id,
+            status: statusMap[seStatus] || seStatus || 'waiting',
+            payinAddress: d.address_from || '',
+            payoutAddress: d.address_to || '',
+            fromCurrency: (d.currency_from || '').toLowerCase(),
+            toCurrency: (d.currency_to || '').toLowerCase(),
+            amountSend: d.amount_from ? Number(d.amount_from) : null,
+            amountReceive: d.amount_to ? Number(d.amount_to) : null,
+            payinHash: d.tx_from || null,
+            payoutHash: d.tx_to || null,
+            createdAt: d.timestamp ? new Date(Number(d.timestamp) * 1000).toISOString() : (d.created_at || new Date().toISOString()),
+          };
+        });
+        return json(normalized, 200);
       }
 
       default:
