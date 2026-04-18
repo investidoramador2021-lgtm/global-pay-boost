@@ -84,14 +84,17 @@ Deno.serve(async (req) => {
   // exact batch count. Estimated count via pg_class can be stale on freshly
   // synced tables (returns null/0), so we just paginate the real data.
   if (path === "/" || path === "/index.xml") {
-    // Fast head-count — don't paginate 22k rows just to compute batch count.
-    const { count, error: countErr } = await svc
-      .from("pairs")
-      .select("*", { count: "exact", head: true })
-      .eq("is_valid", true);
-    if (countErr) console.error("[sitemap-index] count error:", countErr.message);
-    const pairCount = count ?? 0;
-    console.log("[sitemap-index] pairCount =", pairCount);
+    // Use sync_engine_state.pairs_count (single small row) to avoid the slow
+    // count(*) on the large pairs table that PostgREST chokes on.
+    const t0 = Date.now();
+    const { data: state, error: stateErr } = await svc
+      .from("sync_engine_state")
+      .select("pairs_count")
+      .eq("id", 1)
+      .maybeSingle();
+    if (stateErr) console.error("[sitemap-index] state error:", stateErr.message);
+    const pairCount = (state as any)?.pairs_count ?? 0;
+    console.log(`[sitemap-index] pairCount=${pairCount} ms=${Date.now() - t0}`);
     const totalUrls = pairCount * LANGS.length;
     const batchCount = Math.max(1, Math.ceil(totalUrls / BATCH_SIZE));
     const today = new Date().toISOString().split("T")[0];
