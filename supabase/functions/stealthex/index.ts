@@ -37,7 +37,7 @@ const seUrl = (path: string, key: string, extra: Record<string, string> = {}) =>
   return `${SE_BASE}${path}?${qp.toString()}`;
 };
 
-console.log(`[SE] boot rev=2 base=${SE_BASE} affiliate_active=${SE_AFFILIATE_ID ? 'yes' : 'no'} aff_len=${SE_AFFILIATE_ID.length}`);
+console.log(`[SE] boot rev=3 base=${SE_BASE} affiliate_active=${SE_AFFILIATE_ID ? 'yes' : 'no'} aff_len=${SE_AFFILIATE_ID.length}`);
 
 Deno.serve(async (req) => {
   if (req.method === 'OPTIONS') return new Response(null, { headers: corsHeaders });
@@ -195,7 +195,17 @@ Deno.serve(async (req) => {
             amountReceive: d.amount_to ? Number(d.amount_to) : null,
             payinHash: d.tx_from || null,
             payoutHash: d.tx_to || null,
-            createdAt: d.timestamp ? new Date(Number(d.timestamp) * 1000).toISOString() : (d.created_at || new Date().toISOString()),
+            createdAt: (() => {
+              const t = d.timestamp ?? d.created_at ?? d.createdAt;
+              if (!t) return new Date().toISOString();
+              try {
+                const ms = typeof t === 'number'
+                  ? (t < 1e12 ? t * 1000 : t)
+                  : (/^\d+$/.test(String(t)) ? (Number(t) < 1e12 ? Number(t) * 1000 : Number(t)) : Date.parse(String(t)));
+                const dt = new Date(ms);
+                return isNaN(dt.getTime()) ? new Date().toISOString() : dt.toISOString();
+              } catch { return new Date().toISOString(); }
+            })(),
           };
         });
         return json(normalized, 200);
