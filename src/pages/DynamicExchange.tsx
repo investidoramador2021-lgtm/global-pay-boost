@@ -387,11 +387,16 @@ export default function DynamicExchange() {
   return (
     <>
       <Helmet>
+        <html lang={lang} />
         <title>{title}</title>
         <meta name="description" content={description} />
         <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1" />
         <meta name="keywords" content={`${fromUp} to ${toUp}, swap ${fromUp} ${toUp}, ${fromName} to ${toName}, fixed rate crypto swap Canada, guaranteed crypto exchange rates, FINTRAC MSB crypto exchange, non-custodial crypto swap, instant ${fromUp} exchange`} />
         <link rel="canonical" href={canonicalUrl} />
+        {hreflangAlternates.map((alt) => (
+          <link key={alt.lang} rel="alternate" hrefLang={alt.lang} href={alt.href} />
+        ))}
+        <link rel="alternate" hrefLang="x-default" href={canonicalUrl} />
         <meta property="og:title" content={title} />
         <meta property="og:description" content={description} />
         <meta property="og:type" content="website" />
@@ -400,6 +405,7 @@ export default function DynamicExchange() {
         <meta property="og:image" content="https://mrcglobalpay.com/og-image.jpg" />
         <meta property="og:image:width" content="1200" />
         <meta property="og:image:height" content="630" />
+        <meta property="og:locale" content={OG_LOCALE_MAP[lang] || "en_US"} />
         <meta name="twitter:card" content="summary_large_image" />
         <meta name="twitter:title" content={title} />
         <meta name="twitter:description" content={description} />
