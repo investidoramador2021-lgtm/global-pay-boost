@@ -282,7 +282,7 @@ ${items}
   if (subPath === "/" || subPath === "/index.xml" || subPath === "") {
     const pairCount = await getPairCount();
     const batchCount = Math.max(1, Math.ceil(pairCount / PAIRS_PER_CHILD));
-    const FN_BASE = `${url.origin}/functions/v1/dynamic-feed?p=`;
+    const FN_BASE = `https://${url.host}/functions/v1/dynamic-feed?p=`;
 
     let xml = `<?xml version="1.0" encoding="UTF-8"?>
 <sitemapindex xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
