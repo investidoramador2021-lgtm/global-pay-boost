@@ -584,12 +584,16 @@ Deno.serve(async (req) => {
     const uniqueTickers: string[] = [];
     for (const a of assets) {
       const t = a.ticker?.toLowerCase();
-      if (t && !seen.has(t) && a.isActive !== false) {
+      // SEO thin-content guard: skip 1-2 char tickers (e.g. "j", "c", "0g", "b2").
+      // These produce templated pages with no real brand content and would be
+      // flagged by Google as auto-generated, harming the whole sitemap's crawl
+      // reputation. Matches the public.get_valid_pair_slugs* RPC filter.
+      if (t && t.length >= 3 && !seen.has(t) && a.isActive !== false) {
         seen.add(t);
         uniqueTickers.push(t);
       }
     }
-    console.log(`Unique tickers: ${uniqueTickers.length}`);
+    console.log(`Unique tickers (>=3 chars): ${uniqueTickers.length}`);
 
     // ── 3. Find new pairs not yet in the DB ──
     // Get ALL existing pairs to compare (paginated — Supabase caps at 1000 per query)
