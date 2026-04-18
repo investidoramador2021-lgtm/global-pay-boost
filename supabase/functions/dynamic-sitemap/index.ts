@@ -11,7 +11,7 @@ const ECOSYSTEM_HUBS = ["/solana-ai", "/solana-ecosystem", "/fractal-bitcoin-swa
 
 async function fetchAllValidPairs(svc: ReturnType<typeof createClient>) {
   const all: Array<{ from_ticker: string; to_ticker: string; updated_at: string }> = [];
-  const pageSize = 5000;
+  const pageSize = 1000; // PostgREST caps RPC response at 1000 rows
   let offset = 0;
   let page = 0;
   while (offset < 100000) {
