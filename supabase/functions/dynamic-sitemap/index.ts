@@ -124,11 +124,17 @@ Deno.serve(async (req) => {
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
         xmlns:xhtml="http://www.w3.org/1999/xhtml">`;
 
-    for (const route of STATIC_ROUTES) {
+    // Combined: regular static routes + ecosystem hubs (priority 1.0).
+    const allRoutes: Array<{ route: string; basePriority: number; changefreq: string }> = [
+      ...STATIC_ROUTES.map((route) => ({ route, basePriority: 0.9, changefreq: "weekly" })),
+      ...ECOSYSTEM_HUBS.map((route) => ({ route, basePriority: 1.0, changefreq: "daily" })),
+    ];
+
+    for (const { route, basePriority, changefreq } of allRoutes) {
       for (const lang of LANGS) {
         const prefix = lang ? `/${lang}` : "";
         const loc = `${BASE_URL}${prefix}${route}`;
-        const priority = lang ? "0.7" : "0.9";
+        const priority = lang ? (basePriority - 0.2).toFixed(1) : basePriority.toFixed(1);
         let alts = "";
         for (const l of LANGS) {
           const hl = l || "en";
@@ -143,7 +149,7 @@ Deno.serve(async (req) => {
   <url>
     <loc>${loc}</loc>
     <lastmod>${today}</lastmod>
-    <changefreq>weekly</changefreq>
+    <changefreq>${changefreq}</changefreq>
     <priority>${priority}</priority>${alts}
   </url>`;
       }
