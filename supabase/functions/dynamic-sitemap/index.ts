@@ -10,38 +10,17 @@ const LANGS = ["", "es", "pt", "fr", "ja", "fa", "ur", "he", "af", "hi", "vi", "
 const ECOSYSTEM_HUBS = ["/solana-ai", "/solana-ecosystem", "/fractal-bitcoin-swap"];
 
 async function fetchAllValidPairs(svc: ReturnType<typeof createClient>) {
-  const pageSize = 1000; // PostgREST caps RPC response at 1000 rows
-  const MAX_PAGES = 50;  // safety cap (50k rows)
-
-  // Get total count from sync_engine_state to compute exact page count.
-  const { data: state } = await svc
-    .from("sync_engine_state")
-    .select("pairs_count")
-    .eq("id", 1)
-    .maybeSingle();
-  const totalCount = (state as any)?.pairs_count ?? 0;
-  const pageCount = Math.min(MAX_PAGES, Math.max(1, Math.ceil(totalCount / pageSize) + 1));
-  console.log(`[fetchAllValidPairs] parallel fetch pageCount=${pageCount} totalCount=${totalCount}`);
-
+  // Single-shot: RPC returns ALL valid pairs as one jsonb array, bypassing
+  // PostgREST's 1000-row cap and PostgreSQL's expensive OFFSET pagination.
   const t0 = Date.now();
-  const jobs = Array.from({ length: pageCount }, (_, i) => {
-    const offset = i * pageSize;
-    const j0 = Date.now();
-    return svc
-      .rpc("get_valid_pair_slugs", { p_offset: offset, p_limit: pageSize })
-      .then(({ data, error }: any) => {
-        const ms = Date.now() - j0;
-        if (error) {
-          console.error(`[fetchAllValidPairs] page=${i} offset=${offset} ERR ms=${ms}: ${error.message}`);
-          return [] as any[];
-        }
-        console.log(`[fetchAllValidPairs] page=${i} offset=${offset} rows=${data?.length ?? 0} ms=${ms}`);
-        return (data ?? []) as any[];
-      });
-  });
-  const pages = await Promise.all(jobs);
-  const all = pages.flat() as Array<{ from_ticker: string; to_ticker: string; updated_at: string }>;
-  console.log(`[fetchAllValidPairs] done total=${all.length} totalMs=${Date.now() - t0}`);
+  const { data, error } = await svc.rpc("get_valid_pair_slugs_json");
+  const ms = Date.now() - t0;
+  if (error) {
+    console.error(`[fetchAllValidPairs] ERR ms=${ms}: ${error.message}`);
+    return [];
+  }
+  const all = (data ?? []) as Array<{ from_ticker: string; to_ticker: string; updated_at: string }>;
+  console.log(`[fetchAllValidPairs] single-shot done total=${all.length} ms=${ms}`);
   return all;
 }
 
