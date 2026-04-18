@@ -295,15 +295,17 @@ ${items}
    * /sitemap-pairs-N.xml    → batch N of DB exchange pairs (localized)
    */
 
-  // Helper: get pair count (cheap — single small row)
+  // Helper: count VALID pairs only (matches what get_valid_pair_slugs_json
+  // returns). Using sync_engine_state.pairs_count caused us to advertise
+  // trailing empty batches (e.g. sitemap-pairs-20.xml with 0 URLs), which
+  // Bing/Google flag as "Error / 0 Discovered".
   async function getPairCount(): Promise<number> {
-    const { data, error } = await supabase
-      .from("sync_engine_state")
-      .select("pairs_count")
-      .eq("id", 1)
-      .maybeSingle();
-    if (error) console.error("[sitemap] state err:", error.message);
-    return ((data as any)?.pairs_count as number) ?? 0;
+    const { count, error } = await supabase
+      .from("pairs")
+      .select("*", { count: "exact", head: true })
+      .eq("is_valid", true);
+    if (error) console.error("[sitemap] pairs count err:", error.message);
+    return count ?? 0;
   }
 
   // ── Sitemap INDEX ──
