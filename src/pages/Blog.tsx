@@ -12,8 +12,10 @@ import heroMonad from "@/assets/blog-monad-hero.jpg";
 import heroCantonCoin from "@/assets/blog-canton-coin-hero.jpg";
 import heroStablecoins from "@/assets/blog-stablecoins-regulation-hero.jpg";
 import heroEcash from "@/assets/blog-ecash-xec-hero.jpg";
+import heroVechain from "@/assets/blog-vechain-hero.jpg";
 
 const FEATURED_HERO_IMAGES: Record<string, string> = {
+  "vechain-price-prediction": heroVechain,
   "crypto-exchange-api-integration-2026-guide": heroApiIntegration,
   "bitcoin-atms-vs-mrc-globalpay-honest-comparison": heroBtcAtm,
   "how-to-buy-monad-mon-2026-guide": heroMonad,
