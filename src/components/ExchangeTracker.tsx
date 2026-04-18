@@ -393,7 +393,7 @@ const ExchangeTracker = () => {
                       <TableCell className="text-xs text-muted-foreground whitespace-nowrap">{formatDate(sw.created_at)}</TableCell>
                       <TableCell>
                         <span className="text-sm font-medium">
-                          {formatAmount(sw.live?.amountSend ?? sw.amount, sw.from_currency)}
+                          {formatAmount(sw.amount ?? sw.live?.amountSend, sw.from_currency)}
                         </span>
                       </TableCell>
                       <TableCell>
