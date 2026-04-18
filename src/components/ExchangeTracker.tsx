@@ -120,31 +120,26 @@ const ExchangeTracker = () => {
     const updated = rows.map((r) => ({ ...r, liveLoading: true }));
     setSwaps([...updated]);
 
-    // Helper: only ChangeNOW IDs are resolvable here. LetsExchange ('le') and
-    // synthetic / malformed IDs would 404 → mark as resolved with no live data
-    // so the badge stops spinning and the row remains visible under "All Status".
-    const RESOLVABLE = (row: EnrichedSwap) => {
-      const id = (row.transaction_id || "").trim();
-      const provider = (row.provider || "cn").toLowerCase();
-      if (provider !== "cn") return false;
-      if (!id) return false;
-      // ChangeNOW order ids are 14-char alphanumeric. Skip probes / hashes.
-      if (/^E2E_/i.test(id)) return false;
-      if (id.length < 10 || id.length > 32) return false;
-      return /^[a-z0-9]+$/i.test(id);
-    };
+    // Skip only obviously synthetic ids (E2E probes, empty). Everything else is
+    // attempted against the correct provider edge function ('cn' = ChangeNOW,
+    // 'le' = LetsExchange). Failures resolve the row with no live data so the
+    // badge stops spinning instead of getting stuck on "Loading…".
+    const isSynthetic = (id: string) => !id || /^E2E_/i.test(id) || id.length < 6;
 
     for (let i = 0; i < updated.length; i += BATCH) {
       const batch = updated.slice(i, i + BATCH);
       const results = await Promise.allSettled(
         batch.map(async (row) => {
-          if (!RESOLVABLE(row)) return { txId: row.transaction_id, data: null as any, skipped: true };
-          const { data, error } = await supabase.functions.invoke("changenow", {
+          const id = (row.transaction_id || "").trim();
+          if (isSynthetic(id)) return { txId: id, data: null as any };
+          const provider = (row.provider || "cn").toLowerCase();
+          const fnName = provider === "le" ? "letsexchange" : "changenow";
+          const { data, error } = await supabase.functions.invoke(fnName, {
             method: "POST",
-            body: { _get: true, action: "tx-status", id: row.transaction_id },
+            body: { _get: true, action: "tx-status", id },
           });
-          if (error) return { txId: row.transaction_id, data: null as any, skipped: false };
-          return { txId: row.transaction_id, data, skipped: false };
+          if (error) return { txId: id, data: null as any };
+          return { txId: id, data };
         })
       );
 
