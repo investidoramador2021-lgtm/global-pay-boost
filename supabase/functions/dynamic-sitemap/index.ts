@@ -10,33 +10,15 @@ const LANGS = ["", "es", "pt", "fr", "ja", "fa", "ur", "he", "af", "hi", "vi", "
 const ECOSYSTEM_HUBS = ["/solana-ai", "/solana-ecosystem", "/fractal-bitcoin-swap"];
 
 async function fetchAllValidPairs(svc: ReturnType<typeof createClient>) {
-  const all: Array<{ from_ticker: string; to_ticker: string; updated_at: string }> = [];
-  const pageSize = 1000;
-  let from = 0;
-  let pageIndex = 0;
-  console.log("[fetchAllValidPairs] start");
-  while (from < 50000) {
-    const t0 = Date.now();
-    const { data, error } = await svc
-      .from("pairs")
-      .select("from_ticker, to_ticker, updated_at")
-      .eq("is_valid", true)
-      .range(from, from + pageSize - 1);
-    const ms = Date.now() - t0;
-    if (error) {
-      console.error(`[fetchAllValidPairs] page=${pageIndex} from=${from} ERROR after ${ms}ms:`, error.message, JSON.stringify(error));
-      break;
-    }
-    const rows = data?.length ?? 0;
-    console.log(`[fetchAllValidPairs] page=${pageIndex} from=${from} rows=${rows} ms=${ms} total=${all.length + rows}`);
-    if (!data || rows === 0) break;
-    all.push(...(data as any));
-    if (rows < pageSize) break;
-    from += pageSize;
-    pageIndex++;
+  const t0 = Date.now();
+  const { data, error } = await svc.rpc("get_valid_pair_slugs");
+  const ms = Date.now() - t0;
+  if (error) {
+    console.error(`[fetchAllValidPairs] RPC error after ${ms}ms:`, error.message);
+    return [] as Array<{ from_ticker: string; to_ticker: string; updated_at: string }>;
   }
-  console.log(`[fetchAllValidPairs] done total=${all.length}`);
-  return all;
+  console.log(`[fetchAllValidPairs] rpc rows=${data?.length ?? 0} ms=${ms}`);
+  return (data || []) as Array<{ from_ticker: string; to_ticker: string; updated_at: string }>;
 }
 
 /**
@@ -102,14 +84,17 @@ Deno.serve(async (req) => {
   // exact batch count. Estimated count via pg_class can be stale on freshly
   // synced tables (returns null/0), so we just paginate the real data.
   if (path === "/" || path === "/index.xml") {
-    // Fast head-count — don't paginate 22k rows just to compute batch count.
-    const { count, error: countErr } = await svc
-      .from("pairs")
-      .select("*", { count: "exact", head: true })
-      .eq("is_valid", true);
-    if (countErr) console.error("[sitemap-index] count error:", countErr.message);
-    const pairCount = count ?? 0;
-    console.log("[sitemap-index] pairCount =", pairCount);
+    // Use sync_engine_state.pairs_count (single small row) to avoid the slow
+    // count(*) on the large pairs table that PostgREST chokes on.
+    const t0 = Date.now();
+    const { data: state, error: stateErr } = await svc
+      .from("sync_engine_state")
+      .select("pairs_count")
+      .eq("id", 1)
+      .maybeSingle();
+    if (stateErr) console.error("[sitemap-index] state error:", stateErr.message);
+    const pairCount = (state as any)?.pairs_count ?? 0;
+    console.log(`[sitemap-index] pairCount=${pairCount} ms=${Date.now() - t0}`);
     const totalUrls = pairCount * LANGS.length;
     const batchCount = Math.max(1, Math.ceil(totalUrls / BATCH_SIZE));
     const today = new Date().toISOString().split("T")[0];

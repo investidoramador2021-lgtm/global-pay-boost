@@ -1541,6 +1541,14 @@ export type Database = {
           isSetofReturn: true
         }
       }
+      get_valid_pair_slugs: {
+        Args: never
+        Returns: {
+          from_ticker: string
+          to_ticker: string
+          updated_at: string
+        }[]
+      }
       has_role: {
         Args: {
           _role: Database["public"]["Enums"]["app_role"]
