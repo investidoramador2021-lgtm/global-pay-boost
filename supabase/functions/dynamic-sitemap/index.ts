@@ -192,7 +192,7 @@ Deno.serve(async (req) => {
       const prefix = e.lang ? `/${e.lang}` : "";
       const loc = `${BASE_URL}${prefix}/exchange/${e.slug}`;
       // English version gets higher priority since it's the canonical.
-      const priority = e.lang ? "0.5" : "0.7";
+      const priority = e.lang ? "0.6" : "0.8";
       xml += `
   <url>
     <loc>${loc}</loc>
