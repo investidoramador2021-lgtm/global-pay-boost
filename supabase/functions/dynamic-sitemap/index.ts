@@ -10,16 +10,28 @@ const LANGS = ["", "es", "pt", "fr", "ja", "fa", "ur", "he", "af", "hi", "vi", "
 const ECOSYSTEM_HUBS = ["/solana-ai", "/solana-ecosystem", "/fractal-bitcoin-swap"];
 
 async function fetchAllValidPairs(svc: ReturnType<typeof createClient>) {
-  const t0 = Date.now();
-  // .range() overrides PostgREST's default max-rows=1000 cap on RPC results.
-  const { data, error } = await svc.rpc("get_valid_pair_slugs").range(0, 49999);
-  const ms = Date.now() - t0;
-  if (error) {
-    console.error(`[fetchAllValidPairs] RPC error after ${ms}ms:`, error.message);
-    return [] as Array<{ from_ticker: string; to_ticker: string; updated_at: string }>;
+  const all: Array<{ from_ticker: string; to_ticker: string; updated_at: string }> = [];
+  const pageSize = 1000; // PostgREST caps RPC response at 1000 rows
+  let offset = 0;
+  let page = 0;
+  while (offset < 100000) {
+    const t0 = Date.now();
+    const { data, error } = await svc.rpc("get_valid_pair_slugs", { p_offset: offset, p_limit: pageSize });
+    const ms = Date.now() - t0;
+    if (error) {
+      console.error(`[fetchAllValidPairs] page=${page} offset=${offset} ERROR ms=${ms}:`, error.message);
+      break;
+    }
+    const rows = data?.length ?? 0;
+    console.log(`[fetchAllValidPairs] page=${page} offset=${offset} rows=${rows} ms=${ms} total=${all.length + rows}`);
+    if (!data || rows === 0) break;
+    all.push(...(data as any));
+    if (rows < pageSize) break;
+    offset += pageSize;
+    page++;
   }
-  console.log(`[fetchAllValidPairs] rpc rows=${data?.length ?? 0} ms=${ms}`);
-  return (data || []) as Array<{ from_ticker: string; to_ticker: string; updated_at: string }>;
+  console.log(`[fetchAllValidPairs] done total=${all.length}`);
+  return all;
 }
 
 /**
