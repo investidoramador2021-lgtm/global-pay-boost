@@ -1,11 +1,28 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!--
   Sitemap index for mrcglobalpay.com.
-  Children point at the dynamic-feed edge function on Supabase because Lovable
-  hosting does not honor public/_redirects for these paths. Cross-host children
-  inside a sitemap index are accepted by Google/Bing as long as the host of
-  this index file (mrcglobalpay.com) is verified in Search Console — no need
-  to also verify the supabase.co host.
+
+  Children are served by the dynamic-feed edge function on Supabase because
+  Lovable hosting does not honor public/_redirects for /sitemap-*.xml paths.
+  Cross-host children inside a sitemap index are accepted by Google/Bing as
+  long as the host of THIS index file (mrcglobalpay.com) is verified in
+  Search Console — no need to verify the supabase.co host.
+
+  ── Auto-sync note ───────────────────────────────────────────────────────────
+  This static stub mirrors the dynamic index emitted by the edge function at
+  https://tjikwxkmsfmyjkssvyoh.supabase.co/functions/v1/dynamic-feed?p=/
+
+  The dynamic endpoint reads sync_engine_state.pairs_count and emits one
+  child per 1500 pairs automatically — so it stays in sync as the pair table
+  grows. robots.txt also references that dynamic endpoint, so crawlers will
+  pick up new batches without any code change required here.
+
+  This static file is kept as a fallback discovery point and contains a
+  generous batch range (currently 0–29, covering ~45,000 pairs / ~585k URLs)
+  so search engines following https://mrcglobalpay.com/sitemap.xml will see
+  every batch even if the edge function is briefly unreachable.
+  Extra unused batch URLs (above the live count) simply return 200 with an
+  empty <urlset>, which is valid per sitemaps.org.
 -->
 <sitemapindex xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <sitemap>
@@ -14,49 +31,34 @@
   <sitemap>
     <loc>https://tjikwxkmsfmyjkssvyoh.supabase.co/functions/v1/dynamic-feed?p=/sitemap-blog.xml</loc>
   </sitemap>
-  <sitemap>
-    <loc>https://tjikwxkmsfmyjkssvyoh.supabase.co/functions/v1/dynamic-feed?p=/sitemap-pairs-0.xml</loc>
-  </sitemap>
-  <sitemap>
-    <loc>https://tjikwxkmsfmyjkssvyoh.supabase.co/functions/v1/dynamic-feed?p=/sitemap-pairs-1.xml</loc>
-  </sitemap>
-  <sitemap>
-    <loc>https://tjikwxkmsfmyjkssvyoh.supabase.co/functions/v1/dynamic-feed?p=/sitemap-pairs-2.xml</loc>
-  </sitemap>
-  <sitemap>
-    <loc>https://tjikwxkmsfmyjkssvyoh.supabase.co/functions/v1/dynamic-feed?p=/sitemap-pairs-3.xml</loc>
-  </sitemap>
-  <sitemap>
-    <loc>https://tjikwxkmsfmyjkssvyoh.supabase.co/functions/v1/dynamic-feed?p=/sitemap-pairs-4.xml</loc>
-  </sitemap>
-  <sitemap>
-    <loc>https://tjikwxkmsfmyjkssvyoh.supabase.co/functions/v1/dynamic-feed?p=/sitemap-pairs-5.xml</loc>
-  </sitemap>
-  <sitemap>
-    <loc>https://tjikwxkmsfmyjkssvyoh.supabase.co/functions/v1/dynamic-feed?p=/sitemap-pairs-6.xml</loc>
-  </sitemap>
-  <sitemap>
-    <loc>https://tjikwxkmsfmyjkssvyoh.supabase.co/functions/v1/dynamic-feed?p=/sitemap-pairs-7.xml</loc>
-  </sitemap>
-  <sitemap>
-    <loc>https://tjikwxkmsfmyjkssvyoh.supabase.co/functions/v1/dynamic-feed?p=/sitemap-pairs-8.xml</loc>
-  </sitemap>
-  <sitemap>
-    <loc>https://tjikwxkmsfmyjkssvyoh.supabase.co/functions/v1/dynamic-feed?p=/sitemap-pairs-9.xml</loc>
-  </sitemap>
-  <sitemap>
-    <loc>https://tjikwxkmsfmyjkssvyoh.supabase.co/functions/v1/dynamic-feed?p=/sitemap-pairs-10.xml</loc>
-  </sitemap>
-  <sitemap>
-    <loc>https://tjikwxkmsfmyjkssvyoh.supabase.co/functions/v1/dynamic-feed?p=/sitemap-pairs-11.xml</loc>
-  </sitemap>
-  <sitemap>
-    <loc>https://tjikwxkmsfmyjkssvyoh.supabase.co/functions/v1/dynamic-feed?p=/sitemap-pairs-12.xml</loc>
-  </sitemap>
-  <sitemap>
-    <loc>https://tjikwxkmsfmyjkssvyoh.supabase.co/functions/v1/dynamic-feed?p=/sitemap-pairs-13.xml</loc>
-  </sitemap>
-  <sitemap>
-    <loc>https://tjikwxkmsfmyjkssvyoh.supabase.co/functions/v1/dynamic-feed?p=/sitemap-pairs-14.xml</loc>
-  </sitemap>
+  <sitemap><loc>https://tjikwxkmsfmyjkssvyoh.supabase.co/functions/v1/dynamic-feed?p=/sitemap-pairs-0.xml</loc></sitemap>
+  <sitemap><loc>https://tjikwxkmsfmyjkssvyoh.supabase.co/functions/v1/dynamic-feed?p=/sitemap-pairs-1.xml</loc></sitemap>
+  <sitemap><loc>https://tjikwxkmsfmyjkssvyoh.supabase.co/functions/v1/dynamic-feed?p=/sitemap-pairs-2.xml</loc></sitemap>
+  <sitemap><loc>https://tjikwxkmsfmyjkssvyoh.supabase.co/functions/v1/dynamic-feed?p=/sitemap-pairs-3.xml</loc></sitemap>
+  <sitemap><loc>https://tjikwxkmsfmyjkssvyoh.supabase.co/functions/v1/dynamic-feed?p=/sitemap-pairs-4.xml</loc></sitemap>
+  <sitemap><loc>https://tjikwxkmsfmyjkssvyoh.supabase.co/functions/v1/dynamic-feed?p=/sitemap-pairs-5.xml</loc></sitemap>
+  <sitemap><loc>https://tjikwxkmsfmyjkssvyoh.supabase.co/functions/v1/dynamic-feed?p=/sitemap-pairs-6.xml</loc></sitemap>
+  <sitemap><loc>https://tjikwxkmsfmyjkssvyoh.supabase.co/functions/v1/dynamic-feed?p=/sitemap-pairs-7.xml</loc></sitemap>
+  <sitemap><loc>https://tjikwxkmsfmyjkssvyoh.supabase.co/functions/v1/dynamic-feed?p=/sitemap-pairs-8.xml</loc></sitemap>
+  <sitemap><loc>https://tjikwxkmsfmyjkssvyoh.supabase.co/functions/v1/dynamic-feed?p=/sitemap-pairs-9.xml</loc></sitemap>
+  <sitemap><loc>https://tjikwxkmsfmyjkssvyoh.supabase.co/functions/v1/dynamic-feed?p=/sitemap-pairs-10.xml</loc></sitemap>
+  <sitemap><loc>https://tjikwxkmsfmyjkssvyoh.supabase.co/functions/v1/dynamic-feed?p=/sitemap-pairs-11.xml</loc></sitemap>
+  <sitemap><loc>https://tjikwxkmsfmyjkssvyoh.supabase.co/functions/v1/dynamic-feed?p=/sitemap-pairs-12.xml</loc></sitemap>
+  <sitemap><loc>https://tjikwxkmsfmyjkssvyoh.supabase.co/functions/v1/dynamic-feed?p=/sitemap-pairs-13.xml</loc></sitemap>
+  <sitemap><loc>https://tjikwxkmsfmyjkssvyoh.supabase.co/functions/v1/dynamic-feed?p=/sitemap-pairs-14.xml</loc></sitemap>
+  <sitemap><loc>https://tjikwxkmsfmyjkssvyoh.supabase.co/functions/v1/dynamic-feed?p=/sitemap-pairs-15.xml</loc></sitemap>
+  <sitemap><loc>https://tjikwxkmsfmyjkssvyoh.supabase.co/functions/v1/dynamic-feed?p=/sitemap-pairs-16.xml</loc></sitemap>
+  <sitemap><loc>https://tjikwxkmsfmyjkssvyoh.supabase.co/functions/v1/dynamic-feed?p=/sitemap-pairs-17.xml</loc></sitemap>
+  <sitemap><loc>https://tjikwxkmsfmyjkssvyoh.supabase.co/functions/v1/dynamic-feed?p=/sitemap-pairs-18.xml</loc></sitemap>
+  <sitemap><loc>https://tjikwxkmsfmyjkssvyoh.supabase.co/functions/v1/dynamic-feed?p=/sitemap-pairs-19.xml</loc></sitemap>
+  <sitemap><loc>https://tjikwxkmsfmyjkssvyoh.supabase.co/functions/v1/dynamic-feed?p=/sitemap-pairs-20.xml</loc></sitemap>
+  <sitemap><loc>https://tjikwxkmsfmyjkssvyoh.supabase.co/functions/v1/dynamic-feed?p=/sitemap-pairs-21.xml</loc></sitemap>
+  <sitemap><loc>https://tjikwxkmsfmyjkssvyoh.supabase.co/functions/v1/dynamic-feed?p=/sitemap-pairs-22.xml</loc></sitemap>
+  <sitemap><loc>https://tjikwxkmsfmyjkssvyoh.supabase.co/functions/v1/dynamic-feed?p=/sitemap-pairs-23.xml</loc></sitemap>
+  <sitemap><loc>https://tjikwxkmsfmyjkssvyoh.supabase.co/functions/v1/dynamic-feed?p=/sitemap-pairs-24.xml</loc></sitemap>
+  <sitemap><loc>https://tjikwxkmsfmyjkssvyoh.supabase.co/functions/v1/dynamic-feed?p=/sitemap-pairs-25.xml</loc></sitemap>
+  <sitemap><loc>https://tjikwxkmsfmyjkssvyoh.supabase.co/functions/v1/dynamic-feed?p=/sitemap-pairs-26.xml</loc></sitemap>
+  <sitemap><loc>https://tjikwxkmsfmyjkssvyoh.supabase.co/functions/v1/dynamic-feed?p=/sitemap-pairs-27.xml</loc></sitemap>
+  <sitemap><loc>https://tjikwxkmsfmyjkssvyoh.supabase.co/functions/v1/dynamic-feed?p=/sitemap-pairs-28.xml</loc></sitemap>
+  <sitemap><loc>https://tjikwxkmsfmyjkssvyoh.supabase.co/functions/v1/dynamic-feed?p=/sitemap-pairs-29.xml</loc></sitemap>
 </sitemapindex>

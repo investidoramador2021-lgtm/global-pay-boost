@@ -275,16 +275,21 @@ ${items}
   }
 
   // ── Sitemap INDEX ──
+  // Children point back at THIS edge function (not mrcglobalpay.com) because
+  // Lovable hosting does not honor public/_redirects for /sitemap-*.xml paths.
+  // Cross-host children inside a sitemap index are accepted by Google/Bing as
+  // long as the host of the index is verified in Search Console.
   if (subPath === "/" || subPath === "/index.xml" || subPath === "") {
     const pairCount = await getPairCount();
     const batchCount = Math.max(1, Math.ceil(pairCount / PAIRS_PER_CHILD));
+    const FN_BASE = `https://${url.host}/functions/v1/dynamic-feed?p=`;
 
     let xml = `<?xml version="1.0" encoding="UTF-8"?>
 <sitemapindex xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
-  <sitemap><loc>${SITE}/sitemap-static.xml</loc><lastmod>${today}</lastmod></sitemap>
-  <sitemap><loc>${SITE}/sitemap-blog.xml</loc><lastmod>${today}</lastmod></sitemap>`;
+  <sitemap><loc>${FN_BASE}/sitemap-static.xml</loc><lastmod>${today}</lastmod></sitemap>
+  <sitemap><loc>${FN_BASE}/sitemap-blog.xml</loc><lastmod>${today}</lastmod></sitemap>`;
     for (let i = 0; i < batchCount; i++) {
-      xml += `\n  <sitemap><loc>${SITE}/sitemap-pairs-${i}.xml</loc><lastmod>${today}</lastmod></sitemap>`;
+      xml += `\n  <sitemap><loc>${FN_BASE}/sitemap-pairs-${i}.xml</loc><lastmod>${today}</lastmod></sitemap>`;
     }
     xml += `\n</sitemapindex>`;
     return new Response(xml, { headers: xmlHeaders });
