@@ -114,7 +114,8 @@ serve(async (req) => {
   // round-trip avoids PostgREST throttling that hangs paginated selects.
   const pairUrls: string[] = [];
   const t0 = Date.now();
-  const { data: pairs, error: pairsErr } = await supabase.rpc("get_valid_pair_slugs");
+  // .range() overrides PostgREST's default max-rows=1000 cap on RPC results.
+  const { data: pairs, error: pairsErr } = await supabase.rpc("get_valid_pair_slugs").range(0, 49999);
   console.log(`[ping] rpc get_valid_pair_slugs ms=${Date.now() - t0} rows=${pairs?.length ?? 0} err=${pairsErr?.message ?? "none"}`);
   if (pairsErr) console.error("[ping] pairs RPC error:", pairsErr.message);
   for (const p of (pairs as any[]) || []) {
