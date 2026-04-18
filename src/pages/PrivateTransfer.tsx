@@ -6,6 +6,7 @@ import SiteFooter from "@/components/SiteFooter";
 import MsbTrustBar from "@/components/MsbTrustBar";
 import PrivateTransferTab from "@/components/PrivateTransferTab";
 import { Helmet } from "react-helmet-async";
+import HreflangTags from "@/components/HreflangTags";
 import { Shield, Lock, CheckCircle2, Eye, ArrowRight } from "lucide-react";
 
 const PrivateTransfer = () => {
@@ -66,6 +67,7 @@ const PrivateTransfer = () => {
         <meta name="twitter:description" content="Send crypto without exposing your wallet. Shielded routing through liquidity pools." />
         <script type="application/ld+json">{JSON.stringify(jsonLd)}</script>
       </Helmet>
+      <HreflangTags />
 
       <SiteHeader />
       <main className="container mx-auto px-4 py-8 sm:py-12">

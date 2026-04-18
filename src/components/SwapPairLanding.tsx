@@ -10,6 +10,7 @@ import {
   AccordionTrigger,
 } from "@/components/ui/accordion";
 import { Helmet } from "react-helmet-async";
+import HreflangTags from "@/components/HreflangTags";
 import SiteHeader from "@/components/SiteHeader";
 import SiteFooter from "@/components/SiteFooter";
 
@@ -149,6 +150,7 @@ const SwapPairLanding = ({
         <script type="application/ld+json">{JSON.stringify(jsonLd)}</script>
         <script type="application/ld+json">{JSON.stringify(serviceJsonLd)}</script>
       </Helmet>
+      <HreflangTags />
 
       <SiteHeader />
       <main>
