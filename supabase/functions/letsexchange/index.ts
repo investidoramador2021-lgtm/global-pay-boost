@@ -303,13 +303,29 @@ Deno.serve(async (req) => {
       case 'list-transactions': {
         const limit = params.limit || '100';
         const offset = params.offset || '0';
-        // LetsExchange affiliate history endpoint
-        const r = await leFetch(`/affiliate/history?limit=${limit}&offset=${offset}`, apiKey);
-        const p = await parseJson(r);
-        if (!r.ok || !p.isJson) {
-          console.error(`LE list-tx [${r.status}]: ${p.text?.slice(0, 200)}`);
+        // LE exposes affiliate transaction history under several historical paths;
+        // try the documented v1 ones in order until we get a 200 with JSON.
+        const candidates = [
+          `/affiliate/transactions?limit=${limit}&offset=${offset}`,
+          `/transactions?limit=${limit}&offset=${offset}`,
+          `/affiliate/history?limit=${limit}&offset=${offset}`,
+          `/user/transactions?limit=${limit}&offset=${offset}`,
+        ];
+        let p: any = { isJson: false, data: null, text: '' };
+        let status = 0;
+        let usedPath = '';
+        for (const path of candidates) {
+          const r = await leFetch(path, apiKey);
+          status = r.status;
+          p = await parseJson(r);
+          if (r.ok && p.isJson) { usedPath = path; break; }
+          console.warn(`LE list-tx try ${path} -> ${r.status}`);
+        }
+        if (!usedPath) {
+          console.error(`LE list-tx all paths failed last=${status}: ${p.text?.slice(0, 200)}`);
           return json([], 200);
         }
+        console.log(`LE list-tx ok via ${usedPath}`);
         const list = Array.isArray(p.data) ? p.data : (p.data?.data || p.data?.transactions || []);
         const statusMap: Record<string, string> = {
           wait: 'waiting', waiting: 'waiting',
