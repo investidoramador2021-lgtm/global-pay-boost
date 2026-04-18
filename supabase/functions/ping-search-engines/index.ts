@@ -110,34 +110,22 @@ serve(async (req) => {
 
   const blogUrls = (posts || []).map((p: any) => `${SITE}/blog/${p.slug}`);
 
-  // Fetch ALL valid /exchange/[pair] pages. Drop ORDER BY (no index on updated_at)
-  // so the query is a fast seq-scan-with-pk-order. Each pair → LANGS.length URLs.
+  // Fetch ALL valid /exchange/[pair] pages via SECURITY DEFINER RPC — single
+  // round-trip avoids PostgREST throttling that hangs paginated selects.
   const pairUrls: string[] = [];
-  const pageSize = 1000;
-  let from = 0;
-  while (from < 50000) {
-    const { data: pairs, error: pairsErr } = await supabase
-      .from("pairs")
-      .select("from_ticker, to_ticker")
-      .eq("is_valid", true)
-      .range(from, from + pageSize - 1);
-    if (pairsErr) {
-      console.error("[ping] pairs page error:", pairsErr.message, "from=", from);
-      break;
+  const t0 = Date.now();
+  const { data: pairs, error: pairsErr } = await supabase.rpc("get_valid_pair_slugs");
+  console.log(`[ping] rpc get_valid_pair_slugs ms=${Date.now() - t0} rows=${pairs?.length ?? 0} err=${pairsErr?.message ?? "none"}`);
+  if (pairsErr) console.error("[ping] pairs RPC error:", pairsErr.message);
+  for (const p of (pairs as any[]) || []) {
+    const f = (p.from_ticker || "").toLowerCase();
+    const t = (p.to_ticker || "").toLowerCase();
+    if (!f || !t) continue;
+    const slug = `${f}-to-${t}`;
+    for (const lang of LANGS) {
+      const prefix = lang ? `/${lang}` : "";
+      pairUrls.push(`${SITE}${prefix}/exchange/${slug}`);
     }
-    if (!pairs || pairs.length === 0) break;
-    for (const p of pairs as any[]) {
-      const f = (p.from_ticker || "").toLowerCase();
-      const t = (p.to_ticker || "").toLowerCase();
-      if (!f || !t) continue;
-      const slug = `${f}-to-${t}`;
-      for (const lang of LANGS) {
-        const prefix = lang ? `/${lang}` : "";
-        pairUrls.push(`${SITE}${prefix}/exchange/${slug}`);
-      }
-    }
-    if (pairs.length < pageSize) break;
-    from += pageSize;
   }
   console.log("[ping] pair URL count =", pairUrls.length);
   const ALL_URLS = [...STATIC_URLS, ...blogUrls, ...pairUrls];
