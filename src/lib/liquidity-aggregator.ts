@@ -131,7 +131,7 @@ export async function getBestMinAmount(
  */
 export async function createBestTransaction(
   params: CreateTransactionParams,
-  preferredProvider: Provider = "cn"
+  preferredProvider: Provider = "le"
 ): Promise<AggregatedTransaction> {
   const primary = preferredProvider;
   const secondary: Provider = primary === "cn" ? "le" : "cn";
