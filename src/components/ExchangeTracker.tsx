@@ -393,7 +393,7 @@ const ExchangeTracker = () => {
                 ) : (
                   filtered.map((sw) => (
                     <TableRow key={sw.id} className="group cursor-pointer" onClick={() => setDetail(sw)}>
-                      <TableCell>{statusBadge(sw.live?.status)}</TableCell>
+                      <TableCell>{statusBadge(sw)}</TableCell>
                       <TableCell className="text-xs text-muted-foreground whitespace-nowrap">{formatDate(sw.created_at)}</TableCell>
                       <TableCell>
                         <span className="text-sm font-medium">
@@ -449,7 +449,7 @@ const ExchangeTracker = () => {
         <DialogContent className="max-w-lg bg-card border-border/40">
           <DialogHeader>
             <DialogTitle className="flex items-center gap-2 text-base">
-              Exchange Details {detail?.live && statusBadge(detail.live.status)}
+              Exchange Details {detail?.live && statusBadge(detail)}
             </DialogTitle>
           </DialogHeader>
           {detail && (
