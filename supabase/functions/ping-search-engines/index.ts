@@ -112,7 +112,7 @@ serve(async (req) => {
 
   // Fetch ALL valid /exchange/[pair] pages via paginated SECURITY DEFINER RPC.
   const pairUrls: string[] = [];
-  const pageSize = 5000;
+  const pageSize = 1000; // PostgREST caps RPC response at 1000 rows
   let offset = 0;
   let page = 0;
   while (offset < 100000) {
