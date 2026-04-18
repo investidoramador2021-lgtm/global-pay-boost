@@ -541,6 +541,7 @@ const ExchangeTracker = () => {
                 <TableRow>
                   <TableHead className="w-[100px]">Status</TableHead>
                   <TableHead>Created</TableHead>
+                  <TableHead>Provider</TableHead>
                   <TableHead>From</TableHead>
                   <TableHead>To</TableHead>
                   <TableHead>Received</TableHead>
@@ -551,14 +552,14 @@ const ExchangeTracker = () => {
               <TableBody>
                 {loading && filtered.length === 0 ? (
                   <TableRow>
-                    <TableCell colSpan={7} className="text-center py-12 text-muted-foreground">
+                    <TableCell colSpan={8} className="text-center py-12 text-muted-foreground">
                       <RefreshCw className="w-5 h-5 animate-spin mx-auto mb-2" />
                       Loading exchanges…
                     </TableCell>
                   </TableRow>
                 ) : filtered.length === 0 ? (
                   <TableRow>
-                    <TableCell colSpan={7} className="text-center py-12 text-muted-foreground">
+                    <TableCell colSpan={8} className="text-center py-12 text-muted-foreground">
                       No exchanges found.
                     </TableCell>
                   </TableRow>
@@ -567,6 +568,11 @@ const ExchangeTracker = () => {
                     <TableRow key={sw.id} className="group cursor-pointer" onClick={() => setDetail(sw)}>
                       <TableCell>{statusBadge(sw)}</TableCell>
                       <TableCell className="text-xs text-muted-foreground whitespace-nowrap">{formatDate(sw.created_at)}</TableCell>
+                      <TableCell>
+                        <span className="inline-flex items-center px-2 py-0.5 rounded text-[11px] font-medium bg-muted/40 text-foreground/80 border border-border/40">
+                          {providerLabel(sw.provider)}
+                        </span>
+                      </TableCell>
                       <TableCell>
                         <span className="text-sm font-medium">
                           {formatAmount(sw.live?.amountSend ?? sw.amount, sw.live?.fromCurrency ?? sw.from_currency)}
