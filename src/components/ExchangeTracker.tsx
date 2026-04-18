@@ -686,14 +686,11 @@ const ExchangeTracker = () => {
                 </div>
               )}
 
-              <a
-                href={`https://changenow.io/exchange/txs/${detail.transaction_id}`}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="inline-flex items-center gap-1.5 text-xs text-primary hover:underline"
-              >
-                <ExternalLink className="w-3.5 h-3.5" /> View on ChangeNOW
-              </a>
+              <div className="flex items-center justify-between pt-2 border-t border-border/30">
+                <p className="text-xs text-muted-foreground">
+                  Routed via <span className="font-medium text-foreground">{providerLabel(detail.provider)}</span>
+                </p>
+              </div>
             </div>
           )}
         </DialogContent>
