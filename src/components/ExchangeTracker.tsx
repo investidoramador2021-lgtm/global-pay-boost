@@ -223,7 +223,42 @@ const ExchangeTracker = () => {
         }
       }
 
-      const merged = Array.from(map.values()).sort(
+      // Add StealthEX provider rows (Priority 1)
+      for (const d of seList) {
+        const txId = d.id;
+        if (!txId) continue;
+        const existing = map.get(txId);
+        const live: LiveStatus = {
+          status: String(d.status || "waiting").toLowerCase(),
+          amountSend: d.amountSend ?? null,
+          amountReceive: d.amountReceive ?? null,
+          fromCurrency: d.fromCurrency || null,
+          toCurrency: d.toCurrency || null,
+          payinHash: d.payinHash ?? null,
+          payoutHash: d.payoutHash ?? null,
+          payinAddress: d.payinAddress ?? "",
+          payoutAddress: d.payoutAddress ?? "",
+        };
+        if (existing) {
+          existing.live = live;
+          existing.liveLoading = false;
+          existing.provider = existing.provider || "se";
+        } else {
+          map.set(txId, {
+            id: `se-${txId}`,
+            transaction_id: txId,
+            from_currency: live.fromCurrency || "",
+            to_currency: live.toCurrency || "",
+            amount: live.amountSend || 0,
+            recipient_address: live.payoutAddress,
+            payin_address: live.payinAddress,
+            created_at: d.createdAt || new Date().toISOString(),
+            provider: "se",
+            live,
+            liveLoading: false,
+          });
+        }
+      }
         (a, b) => new Date(b.created_at).getTime() - new Date(a.created_at).getTime()
       );
       setSwaps(merged);
@@ -258,7 +293,8 @@ const ExchangeTracker = () => {
       const batch = rows.slice(i, i + BATCH);
       const results = await Promise.allSettled(
         batch.map(async (row) => {
-          const fnName = (row.provider || "cn").toLowerCase() === "le" ? "letsexchange" : "changenow";
+          const provider = (row.provider || "se").toLowerCase();
+          const fnName = provider === "le" ? "letsexchange" : provider === "cn" ? "changenow" : "stealthex";
           const { data } = await supabase.functions.invoke(fnName, {
             method: "POST",
             body: { _get: true, action: "tx-status", id: row.transaction_id },
