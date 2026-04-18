@@ -499,9 +499,22 @@ Deno.serve(async (req) => {
   const changeNowKey = Deno.env.get("CHANGENOW_API_KEY")!;
   const supabase = createClient(supabaseUrl, serviceKey);
 
-  const BATCH_LIMIT = 100;
+  // ── 0. Parse mode (priority backfill bypasses alphabetical sweep) ──
+  const url = new URL(req.url);
+  const priorityMode = url.searchParams.get("priority") === "true";
+
+  const BATCH_LIMIT = priorityMode ? 500 : 100;
   const MAINTENANCE_THRESHOLD = 50_000;
   const MAINTENANCE_INTERVAL_HOURS = 48;
+
+  // Tier-1 tickers — combinatorially expanded into priority pairs
+  const TIER1 = [
+    "btc","eth","usdt","usdc","sol","xrp","bnb","ada","doge","trx",
+    "ton","matic","dot","avax","link","ltc","bch","atom","near","apt",
+    "arb","op","sui","hype","pepe","shib","xlm","etc","fil","icp",
+    "xmr","dash","zec","algo","vet","aave","uni","mkr","comp","sand",
+    "mana","axs","grt","ftm","kas","tia","inj","sei","jup","wld","paxg","xaut",
+  ];
 
   try {
     // ── 1. Adaptive throttle ──
@@ -511,7 +524,7 @@ Deno.serve(async (req) => {
 
     const currentCount = pairsCount ?? 0;
 
-    if (currentCount >= MAINTENANCE_THRESHOLD) {
+    if (!priorityMode && currentCount >= MAINTENANCE_THRESHOLD) {
       const currentHour = Math.floor(Date.now() / (1000 * 60 * 60));
       if (currentHour % MAINTENANCE_INTERVAL_HOURS !== 0) {
         // Update state and exit early
@@ -600,15 +613,42 @@ Deno.serve(async (req) => {
     console.log(`Loaded ${existingSet.size} existing pairs across ${pairPage + 1} page(s)`);
 
     // Generate new combinations (skip self-pairs)
+    // In priority mode, tier-1 × tier-1 combos go first AND we round-robin through
+    // all `from` tickers so no single ticker hogs the batch budget.
+    const tickerSet = new Set(uniqueTickers);
+    const orderedFroms: string[] = priorityMode
+      ? [...TIER1.filter((t) => tickerSet.has(t)), ...uniqueTickers.filter((t) => !TIER1.includes(t))]
+      : uniqueTickers;
+    const orderedTos: string[] = priorityMode
+      ? [...TIER1.filter((t) => tickerSet.has(t)), ...uniqueTickers.filter((t) => !TIER1.includes(t))]
+      : uniqueTickers;
+
     const newPairs: Array<{ from_ticker: string; to_ticker: string }> = [];
-    for (const from of uniqueTickers) {
-      if (newPairs.length >= BATCH_LIMIT) break;
-      for (const to of uniqueTickers) {
+
+    if (priorityMode) {
+      // Round-robin: pass 1 = (from[0], to[0..n]), then pass 2 cycles again etc., but
+      // we want every `from` to get at least N pairs before any single `from` consumes the budget.
+      for (let toIdx = 0; toIdx < orderedTos.length && newPairs.length < BATCH_LIMIT; toIdx++) {
+        for (let fromIdx = 0; fromIdx < orderedFroms.length && newPairs.length < BATCH_LIMIT; fromIdx++) {
+          const from = orderedFroms[fromIdx];
+          const to = orderedTos[toIdx];
+          if (from === to) continue;
+          const key = `${from}__${to}`;
+          if (!existingSet.has(key)) {
+            newPairs.push({ from_ticker: from, to_ticker: to });
+          }
+        }
+      }
+    } else {
+      for (const from of orderedFroms) {
         if (newPairs.length >= BATCH_LIMIT) break;
-        if (from === to) continue;
-        const key = `${from}__${to}`;
-        if (!existingSet.has(key)) {
-          newPairs.push({ from_ticker: from, to_ticker: to });
+        for (const to of orderedTos) {
+          if (newPairs.length >= BATCH_LIMIT) break;
+          if (from === to) continue;
+          const key = `${from}__${to}`;
+          if (!existingSet.has(key)) {
+            newPairs.push({ from_ticker: from, to_ticker: to });
+          }
         }
       }
     }
