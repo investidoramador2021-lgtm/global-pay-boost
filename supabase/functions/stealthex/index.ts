@@ -1,10 +1,9 @@
 import "jsr:@supabase/functions-js/edge-runtime.d.ts";
 
 /**
- * StealthEX provider edge function.
- * - Auth: Bearer token via STEALTHEX_API_KEY.
- * - Affiliate tracking: short STEALTHEX_AFFILIATE_ID (NEVER a URL — keeps payloads <422 bytes).
- * - Surfaces same shape as changenow / letsexchange so the LiquidityAggregator can route freely.
+ * StealthEX provider edge function — uses v2 API.
+ * - Auth: api_key query param (NOT Bearer).
+ * - Affiliate: short STEALTHEX_AFFILIATE_ID only (never a URL).
  */
 
 const corsHeaders = {
@@ -13,7 +12,7 @@ const corsHeaders = {
   'Access-Control-Allow-Methods': 'GET, POST, OPTIONS',
 };
 
-const SE_BASE = 'https://api.stealthex.io/api/v4';
+const SE_BASE = 'https://api.stealthex.io/api/v2';
 const SE_AFFILIATE_ID = (Deno.env.get('STEALTHEX_AFFILIATE_ID') || '').trim();
 
 const TICKER_RE = /^[a-z0-9]{1,40}$/i;
@@ -33,50 +32,21 @@ async function parseJson(r: Response) {
   catch { return { isJson: false as const, data: null, text }; }
 }
 
-// StealthEX uses ticker + network parameters similar to LE.
-// Map our composite tickers (e.g., usdttrc20) to {symbol, network}.
-function splitTickerNetwork(raw: string): { symbol: string; network: string } {
-  const t = raw.toLowerCase();
-  const map: Array<[RegExp, string, string]> = [
-    [/^(usdt|usdc)erc20$/, '$1', 'erc20'],
-    [/^(usdt|usdc)trc20$/, '$1', 'trc20'],
-    [/^(usdt|usdc)bsc$/, '$1', 'bep20'],
-    [/^(usdt|usdc)sol$/, '$1', 'sol'],
-    [/^(usdt|usdc)matic$/, '$1', 'matic'],
-    [/^(usdt|usdc)arb$/, '$1', 'arbitrum'],
-    [/^(usdt|usdc)op$/, '$1', 'optimism'],
-    [/^(usdt|usdc)base$/, '$1', 'base'],
-    [/^(usdt|usdc)ton$/, '$1', 'ton'],
-    [/^(usdt|usdc)avaxc?$/, '$1', 'avaxc'],
-  ];
-  for (const [re, codeRepl, net] of map) {
-    const m = t.match(re);
-    if (m) return { symbol: m[1], network: net };
-  }
-  return { symbol: t, network: t };
-}
+const seUrl = (path: string, key: string, extra: Record<string, string> = {}) => {
+  const qp = new URLSearchParams({ api_key: key, ...extra });
+  return `${SE_BASE}${path}?${qp.toString()}`;
+};
 
-async function seFetch(path: string, apiKey: string, init?: RequestInit) {
-  const headers: Record<string, string> = {
-    'Authorization': `Bearer ${apiKey}`,
-    'Accept': 'application/json',
-    ...((init?.body) ? { 'Content-Type': 'application/json' } : {}),
-  };
-  return fetch(`${SE_BASE}${path}`, { ...init, headers: { ...headers, ...(init?.headers as any || {}) } });
-}
-
-console.log(`[SE] boot rev=1 base=${SE_BASE} affiliate_active=${SE_AFFILIATE_ID ? 'yes' : 'no'} aff_len=${SE_AFFILIATE_ID.length}`);
+console.log(`[SE] boot rev=2 base=${SE_BASE} affiliate_active=${SE_AFFILIATE_ID ? 'yes' : 'no'} aff_len=${SE_AFFILIATE_ID.length}`);
 
 Deno.serve(async (req) => {
   if (req.method === 'OPTIONS') return new Response(null, { headers: corsHeaders });
-
   const apiKey = Deno.env.get('STEALTHEX_API_KEY');
   if (!apiKey) return json({ error: 'STEALTHEX_API_KEY not configured' }, 500);
 
   try {
     let params: Record<string, string> = {};
     let postBody: Record<string, unknown> | null = null;
-
     const url = new URL(req.url);
     url.searchParams.forEach((v, k) => { params[k] = v; });
 
@@ -96,41 +66,24 @@ Deno.serve(async (req) => {
 
     switch (action) {
       case 'min-amount': {
-        const from = params.from;
-        const to = params.to;
+        const from = params.from, to = params.to;
         if (!from || !to) return bad('Missing from/to');
         if (!isTicker(from) || !isTicker(to)) return bad('Invalid ticker');
-
-        const f = splitTickerNetwork(from);
-        const t = splitTickerNetwork(to);
-        const r = await seFetch(
-          `/rates/range?route[from][symbol]=${f.symbol}&route[from][network]=${f.network}&route[to][symbol]=${t.symbol}&route[to][network]=${t.network}&estimation=direct&rate=floating`,
-          apiKey,
-        );
+        const r = await fetch(seUrl(`/min_amount/${encodeURIComponent(from)}/${encodeURIComponent(to)}`, apiKey));
         const p = await parseJson(r);
-        if (!r.ok || !p.isJson) {
-          return json({ minAmount: 0, warningMessage: 'Min unavailable.' });
-        }
-        return json({ minAmount: Number(p.data?.min_amount || 0) });
+        if (!r.ok || !p.isJson) return json({ minAmount: 0, warningMessage: 'Min unavailable.' });
+        return json({ minAmount: Number(p.data?.min_amount || p.data || 0) });
       }
 
       case 'estimate': {
-        const from = params.from;
-        const to = params.to;
-        const amount = params.amount;
+        const from = params.from, to = params.to, amount = params.amount;
         if (!from || !to || !amount) return bad('Missing from/to/amount');
         if (!isTicker(from) || !isTicker(to)) return bad('Invalid ticker');
         if (!isAmount(amount)) return bad('Invalid amount');
-
-        const f = splitTickerNetwork(from);
-        const t = splitTickerNetwork(to);
-        const r = await seFetch(
-          `/rates/estimated-amount?route[from][symbol]=${f.symbol}&route[from][network]=${f.network}&route[to][symbol]=${t.symbol}&route[to][network]=${t.network}&estimation=direct&rate=floating&amount=${encodeURIComponent(amount)}`,
-          apiKey,
-        );
+        const r = await fetch(seUrl(`/estimate/${encodeURIComponent(from)}/${encodeURIComponent(to)}`, apiKey, { amount }));
         const p = await parseJson(r);
         if (!r.ok || !p.isJson) {
-          console.error(`SE estimate [${r.status}] ${f.symbol}/${f.network}->${t.symbol}/${t.network} resp=${p.text?.slice(0,300)}`);
+          console.error(`SE estimate [${r.status}] ${from}->${to} resp=${p.text?.slice(0,300)}`);
           return json({ estimatedAmount: null, transactionSpeedForecast: null, warningMessage: 'Rate unavailable.' });
         }
         return json({
@@ -146,26 +99,22 @@ Deno.serve(async (req) => {
         if (!from || !to || !amount || !address) return bad('Missing required fields');
         if (!isTicker(from) || !isTicker(to)) return bad('Invalid ticker');
 
-        const f = splitTickerNetwork(String(from));
-        const t = splitTickerNetwork(String(to));
-
-        // CRITICAL: send the short affiliate ID only — never a URL.
         const body: Record<string, unknown> = {
-          route: {
-            from: { symbol: f.symbol, network: f.network },
-            to:   { symbol: t.symbol, network: t.network },
-          },
-          estimation: 'direct',
-          rate: 'floating',
-          amount: String(amount),
-          address: String(address),
-          extra_id: extraId || '',
+          currency_from: String(from).toLowerCase(),
+          currency_to: String(to).toLowerCase(),
+          amount_from: String(amount),
+          address_to: String(address),
+          extra_id_to: extraId || '',
           refund_address: refundAddress || '',
           refund_extra_id: '',
         };
         if (SE_AFFILIATE_ID) body.affiliate_id = SE_AFFILIATE_ID;
 
-        const r = await seFetch('/exchanges', apiKey, { method: 'POST', body: JSON.stringify(body) });
+        const r = await fetch(seUrl('/exchange', apiKey), {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
+          body: JSON.stringify(body),
+        });
         const p = await parseJson(r);
         if (!p.isJson) {
           console.error('SE create-tx non-JSON:', p.text?.slice(0, 300));
@@ -173,18 +122,18 @@ Deno.serve(async (req) => {
         }
         if (!r.ok) {
           console.error(`SE create-tx [${r.status}] resp=${JSON.stringify(p.data).slice(0,400)}`);
-          return json({ error: p.data?.message || p.data?.error || 'Provider error.' }, r.status);
+          return json({ error: p.data?.err?.details || p.data?.message || p.data?.error || 'Provider error.' }, r.status);
         }
         const d = p.data;
         return json({
           id: d.id,
-          payinAddress: d.deposit?.address || '',
-          payoutAddress: d.withdrawal?.address || address,
-          payinExtraId: d.deposit?.extra_id || '',
-          fromCurrency: (d.route?.from?.symbol || f.symbol).toLowerCase(),
-          toCurrency: (d.route?.to?.symbol || t.symbol).toLowerCase(),
-          amount: Number(d.deposit?.amount || amount),
-          payoutExtraId: d.withdrawal?.extra_id || '',
+          payinAddress: d.address_from || '',
+          payoutAddress: d.address_to || address,
+          payinExtraId: d.extra_id_from || '',
+          fromCurrency: (d.currency_from || from).toLowerCase(),
+          toCurrency: (d.currency_to || to).toLowerCase(),
+          amount: Number(d.amount_from || amount),
+          payoutExtraId: d.extra_id_to || '',
         });
       }
 
@@ -192,70 +141,35 @@ Deno.serve(async (req) => {
         const id = params.id;
         if (!id) return bad('Missing id');
         if (!isTxId(id)) return bad('Invalid id');
-        const r = await seFetch(`/exchanges/${encodeURIComponent(id)}`, apiKey);
+        const r = await fetch(seUrl(`/exchange/${encodeURIComponent(id)}`, apiKey));
         const p = await parseJson(r);
-        if (!p.isJson) {
+        if (!p.isJson || !r.ok) {
           return json({ id, status: 'waiting', payinAddress: '', payoutAddress: '', fromCurrency: '', toCurrency: '', amountSend: null, amountReceive: null, payinHash: null, payoutHash: null });
-        }
-        if (!r.ok) {
-          return json({ id, status: 'waiting', error: p.data?.message || 'Status unavailable.' });
         }
         const d = p.data;
         const seStatus = String(d.status || '').toLowerCase();
-        const statusMap: Record<string, string> = {
-          waiting: 'waiting',
-          confirming: 'confirming',
-          exchanging: 'exchanging',
-          sending: 'sending',
-          finished: 'finished',
-          expired: 'failed',
-          failed: 'failed',
-          refunded: 'refunded',
-          verifying: 'confirming',
-        };
-        return json({
-          id: d.id || id,
-          status: statusMap[seStatus] || seStatus || 'waiting',
-          payinAddress: d.deposit?.address || '',
-          payoutAddress: d.withdrawal?.address || '',
-          fromCurrency: (d.route?.from?.symbol || '').toLowerCase(),
-          toCurrency: (d.route?.to?.symbol || '').toLowerCase(),
-          amountSend: d.deposit?.amount ? Number(d.deposit.amount) : null,
-          amountReceive: d.withdrawal?.amount ? Number(d.withdrawal.amount) : null,
-          payinHash: d.deposit?.hash || null,
-          payoutHash: d.withdrawal?.hash || null,
-        });
-      }
-
-      case 'list-transactions': {
-        const limit = params.limit || '100';
-        const r = await seFetch(`/exchanges?limit=${limit}`, apiKey);
-        const p = await parseJson(r);
-        if (!r.ok || !p.isJson) {
-          console.error(`SE list-tx [${r.status}]: ${p.text?.slice(0,200)}`);
-          return json([], 200);
-        }
-        const list = Array.isArray(p.data) ? p.data : (p.data?.data || p.data?.exchanges || []);
         const statusMap: Record<string, string> = {
           waiting: 'waiting', confirming: 'confirming', exchanging: 'exchanging',
           sending: 'sending', finished: 'finished', expired: 'failed',
           failed: 'failed', refunded: 'refunded', verifying: 'confirming',
         };
-        const normalized = list.map((d: any) => ({
-          id: d.id,
-          status: statusMap[String(d.status || '').toLowerCase()] || d.status || 'waiting',
-          fromCurrency: (d.route?.from?.symbol || '').toLowerCase(),
-          toCurrency: (d.route?.to?.symbol || '').toLowerCase(),
-          amountSend: d.deposit?.amount ? Number(d.deposit.amount) : null,
-          amountReceive: d.withdrawal?.amount ? Number(d.withdrawal.amount) : null,
-          payinAddress: d.deposit?.address || '',
-          payoutAddress: d.withdrawal?.address || '',
-          payinHash: d.deposit?.hash || null,
-          payoutHash: d.withdrawal?.hash || null,
-          createdAt: d.timestamps?.created_at || d.created_at || null,
-          provider: 'se',
-        }));
-        return json(normalized);
+        return json({
+          id: d.id || id,
+          status: statusMap[seStatus] || seStatus || 'waiting',
+          payinAddress: d.address_from || '',
+          payoutAddress: d.address_to || '',
+          fromCurrency: (d.currency_from || '').toLowerCase(),
+          toCurrency: (d.currency_to || '').toLowerCase(),
+          amountSend: d.amount_from ? Number(d.amount_from) : null,
+          amountReceive: d.amount_to ? Number(d.amount_to) : null,
+          payinHash: d.tx_from || null,
+          payoutHash: d.tx_to || null,
+        });
+      }
+
+      case 'list-transactions': {
+        // StealthEX v2 doesn't expose affiliate history publicly; return empty list.
+        return json([], 200);
       }
 
       default:
