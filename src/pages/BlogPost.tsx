@@ -10,6 +10,7 @@ import TableOfContents, { extractHeadings } from "@/components/blog/TableOfConte
 import { fetchPostBySlug, fetchRelatedPosts, findSlugLanguage, type BlogPost } from "@/lib/blog-data";
 import { getLangFromPath, langPath, supportedLanguages } from "@/i18n";
 import { TRANSLATED_BEGINNERS_GUIDE_POSTS } from "@/lib/blog/translated-beginners-guide-posts";
+import { TRANSLATED_VECHAIN_POSTS } from "@/lib/blog/translated-vechain-posts";
 
 const BlogPostPage = () => {
   const { slug } = useParams<{ slug: string }>();
@@ -299,6 +300,16 @@ const BlogPostPage = () => {
                   englishSlug="beginners-guide-digital-assets-wallet-to-swap"
                   translatedSlugs={Object.fromEntries(
                     Object.entries(TRANSLATED_BEGINNERS_GUIDE_POSTS).map(([l, p]) => [l, p.slug])
+                  )}
+                />
+              )}
+
+              {post.slug === "vechain-price-prediction" && (
+                <BlogLanguageToggle
+                  availableLanguages={new Set(["en", ...Object.keys(TRANSLATED_VECHAIN_POSTS)])}
+                  englishSlug="vechain-price-prediction"
+                  translatedSlugs={Object.fromEntries(
+                    Object.entries(TRANSLATED_VECHAIN_POSTS).map(([l, p]) => [l, p.slug])
                   )}
                 />
               )}
