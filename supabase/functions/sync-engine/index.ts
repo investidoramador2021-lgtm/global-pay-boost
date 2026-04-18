@@ -579,14 +579,25 @@ Deno.serve(async (req) => {
     console.log(`Unique tickers: ${uniqueTickers.length}`);
 
     // ── 3. Find new pairs not yet in the DB ──
-    // Get all existing pairs to compare
-    const { data: existingPairs } = await supabase
-      .from("pairs")
-      .select("from_ticker, to_ticker");
-
-    const existingSet = new Set(
-      (existingPairs || []).map((p) => `${p.from_ticker}__${p.to_ticker}`)
-    );
+    // Get ALL existing pairs to compare (paginated — Supabase caps at 1000 per query)
+    const existingSet = new Set<string>();
+    const PAIR_PAGE = 1000;
+    let pairPage = 0;
+    while (true) {
+      const { data: chunk, error: chunkErr } = await supabase
+        .from("pairs")
+        .select("from_ticker, to_ticker")
+        .range(pairPage * PAIR_PAGE, (pairPage + 1) * PAIR_PAGE - 1);
+      if (chunkErr) {
+        console.error("Failed to fetch existing pairs page", pairPage, chunkErr);
+        break;
+      }
+      if (!chunk || chunk.length === 0) break;
+      for (const p of chunk) existingSet.add(`${p.from_ticker}__${p.to_ticker}`);
+      if (chunk.length < PAIR_PAGE) break;
+      pairPage++;
+    }
+    console.log(`Loaded ${existingSet.size} existing pairs across ${pairPage + 1} page(s)`);
 
     // Generate new combinations (skip self-pairs)
     const newPairs: Array<{ from_ticker: string; to_ticker: string }> = [];
