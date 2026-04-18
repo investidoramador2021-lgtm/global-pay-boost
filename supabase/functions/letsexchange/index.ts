@@ -64,6 +64,7 @@ function splitTickerNetwork(raw: string, fallbackNetwork?: string): { code: stri
 
 async function leFetch(path: string, apiKey: string, init?: RequestInit) {
   const headers: Record<string, string> = {
+    'X-Api-Key': apiKey,
     'Authorization': `Bearer ${apiKey}`,
     'Accept': 'application/json',
     ...((init?.body) ? { 'Content-Type': 'application/json' } : {}),
@@ -71,7 +72,7 @@ async function leFetch(path: string, apiKey: string, init?: RequestInit) {
   return fetch(`${LE_BASE}${path}`, { ...init, headers: { ...headers, ...(init?.headers as any || {}) } });
 }
 
-console.log('[LE] boot rev=3 base=' + LE_BASE);
+console.log('[LE] boot rev=4 base=' + LE_BASE + ' affiliate_active=' + (LE_AFFILIATE_ID ? 'yes' : 'no'));
 
 Deno.serve(async (req) => {
   if (req.method === 'OPTIONS') return new Response(null, { headers: corsHeaders });
