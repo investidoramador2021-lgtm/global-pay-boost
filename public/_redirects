@@ -5,11 +5,11 @@
 /export/rates.xml https://tjikwxkmsfmyjkssvyoh.supabase.co/functions/v1/rates-xml 200
 /feed.xml https://tjikwxkmsfmyjkssvyoh.supabase.co/functions/v1/live-feed 200
 /feed.rss https://tjikwxkmsfmyjkssvyoh.supabase.co/functions/v1/live-feed?format=rss 200
-/dynamic-sitemap.xml https://tjikwxkmsfmyjkssvyoh.supabase.co/functions/v1/dynamic-feed 200
+/dynamic-sitemap.xml https://tjikwxkmsfmyjkssvyoh.supabase.co/functions/v1/dynamic-feed?p=/ 200
 /sitemap.xml https://tjikwxkmsfmyjkssvyoh.supabase.co/functions/v1/dynamic-feed?p=/ 200
 /sitemap-static.xml https://tjikwxkmsfmyjkssvyoh.supabase.co/functions/v1/dynamic-feed?p=/sitemap-static.xml 200
 /sitemap-blog.xml https://tjikwxkmsfmyjkssvyoh.supabase.co/functions/v1/dynamic-feed?p=/sitemap-blog.xml 200
-/sitemap-pairs-:n.xml https://tjikwxkmsfmyjkssvyoh.supabase.co/functions/v1/dynamic-feed?p=/sitemap-pairs-:n.xml 200
+/sitemap-pairs-* https://tjikwxkmsfmyjkssvyoh.supabase.co/functions/v1/dynamic-feed?p=/sitemap-pairs-:splat 200
 /api/v1/health https://tjikwxkmsfmyjkssvyoh.supabase.co/functions/v1/health 200
 /rss.xml https://tjikwxkmsfmyjkssvyoh.supabase.co/functions/v1/dynamic-feed?format=rss 200
 /blog/feed.xml https://tjikwxkmsfmyjkssvyoh.supabase.co/functions/v1/dynamic-feed?format=rss 200
