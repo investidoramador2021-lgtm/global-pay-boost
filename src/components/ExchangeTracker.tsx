@@ -23,6 +23,7 @@ interface SwapRow {
   recipient_address: string;
   payin_address: string;
   created_at: string;
+  provider?: string | null;
 }
 
 interface LiveStatus {
