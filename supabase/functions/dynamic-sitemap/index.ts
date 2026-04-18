@@ -2,9 +2,12 @@ import "jsr:@supabase/functions-js/edge-runtime.d.ts";
 import { createClient } from "https://esm.sh/@supabase/supabase-js@2.49.1";
 
 const BASE_URL = "https://mrcglobalpay.com";
-const BATCH_SIZE = 5000;
+const BATCH_SIZE = 10000; // Max URLs per child sitemap (Google hard cap is 50k)
 // "" = English (default, no prefix). Listed langs match the i18n config.
 const LANGS = ["", "es", "pt", "fr", "ja", "fa", "ur", "he", "af", "hi", "vi", "tr", "uk"];
+
+// Ecosystem hubs — high-authority topic pages, priority 1.0
+const ECOSYSTEM_HUBS = ["/solana-ai", "/solana-ecosystem", "/fractal-bitcoin-swap"];
 
 async function fetchAllValidPairs(svc: ReturnType<typeof createClient>) {
   const all: Array<{ from_ticker: string; to_ticker: string; updated_at: string }> = [];
@@ -84,11 +87,14 @@ Deno.serve(async (req) => {
     "/swap/bnb-usdc",
   ];
 
-  // Sitemap index — split by URL count, accounting for the fact that each pair
-  // now produces LANGS.length URL entries (13 by default).
+  // Sitemap index — use a fast HEAD count so we don't have to fetch every row
+  // just to determine batch count. Each pair produces LANGS.length URL entries.
   if (path === "/" || path === "/index.xml") {
-    const allPairs = await fetchAllValidPairs(svc);
-    const totalUrls = allPairs.length * LANGS.length;
+    const { count: pairCount } = await svc
+      .from("pairs")
+      .select("*", { count: "exact", head: true })
+      .eq("is_valid", true);
+    const totalUrls = (pairCount || 0) * LANGS.length;
     const batchCount = Math.max(1, Math.ceil(totalUrls / BATCH_SIZE));
     const today = new Date().toISOString().split("T")[0];
 
@@ -121,11 +127,17 @@ Deno.serve(async (req) => {
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
         xmlns:xhtml="http://www.w3.org/1999/xhtml">`;
 
-    for (const route of STATIC_ROUTES) {
+    // Combined: regular static routes + ecosystem hubs (priority 1.0).
+    const allRoutes: Array<{ route: string; basePriority: number; changefreq: string }> = [
+      ...STATIC_ROUTES.map((route) => ({ route, basePriority: 0.9, changefreq: "weekly" })),
+      ...ECOSYSTEM_HUBS.map((route) => ({ route, basePriority: 1.0, changefreq: "daily" })),
+    ];
+
+    for (const { route, basePriority, changefreq } of allRoutes) {
       for (const lang of LANGS) {
         const prefix = lang ? `/${lang}` : "";
         const loc = `${BASE_URL}${prefix}${route}`;
-        const priority = lang ? "0.7" : "0.9";
+        const priority = lang ? (basePriority - 0.2).toFixed(1) : basePriority.toFixed(1);
         let alts = "";
         for (const l of LANGS) {
           const hl = l || "en";
@@ -140,7 +152,7 @@ Deno.serve(async (req) => {
   <url>
     <loc>${loc}</loc>
     <lastmod>${today}</lastmod>
-    <changefreq>weekly</changefreq>
+    <changefreq>${changefreq}</changefreq>
     <priority>${priority}</priority>${alts}
   </url>`;
       }
@@ -183,7 +195,7 @@ Deno.serve(async (req) => {
       const prefix = e.lang ? `/${e.lang}` : "";
       const loc = `${BASE_URL}${prefix}/exchange/${e.slug}`;
       // English version gets higher priority since it's the canonical.
-      const priority = e.lang ? "0.5" : "0.7";
+      const priority = e.lang ? "0.6" : "0.8";
       xml += `
   <url>
     <loc>${loc}</loc>
