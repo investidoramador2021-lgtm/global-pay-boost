@@ -13,22 +13,29 @@ async function fetchAllValidPairs(svc: ReturnType<typeof createClient>) {
   const all: Array<{ from_ticker: string; to_ticker: string; updated_at: string }> = [];
   const pageSize = 1000;
   let from = 0;
+  let pageIndex = 0;
+  console.log("[fetchAllValidPairs] start");
   while (from < 50000) {
-    // No ORDER BY → fast pk-order seq read; sitemap doesn't depend on row order.
+    const t0 = Date.now();
     const { data, error } = await svc
       .from("pairs")
       .select("from_ticker, to_ticker, updated_at")
       .eq("is_valid", true)
       .range(from, from + pageSize - 1);
+    const ms = Date.now() - t0;
     if (error) {
-      console.error("[fetchAllValidPairs] error:", error.message, "from=", from);
+      console.error(`[fetchAllValidPairs] page=${pageIndex} from=${from} ERROR after ${ms}ms:`, error.message, JSON.stringify(error));
       break;
     }
-    if (!data || data.length === 0) break;
+    const rows = data?.length ?? 0;
+    console.log(`[fetchAllValidPairs] page=${pageIndex} from=${from} rows=${rows} ms=${ms} total=${all.length + rows}`);
+    if (!data || rows === 0) break;
     all.push(...(data as any));
-    if (data.length < pageSize) break;
+    if (rows < pageSize) break;
     from += pageSize;
+    pageIndex++;
   }
+  console.log(`[fetchAllValidPairs] done total=${all.length}`);
   return all;
 }
 
