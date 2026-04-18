@@ -14,13 +14,17 @@ async function fetchAllValidPairs(svc: ReturnType<typeof createClient>) {
   const pageSize = 1000;
   let from = 0;
   while (from < 50000) {
+    // No ORDER BY → fast pk-order seq read; sitemap doesn't depend on row order.
     const { data, error } = await svc
       .from("pairs")
       .select("from_ticker, to_ticker, updated_at")
       .eq("is_valid", true)
-      .order("updated_at", { ascending: false })
       .range(from, from + pageSize - 1);
-    if (error || !data || data.length === 0) break;
+    if (error) {
+      console.error("[fetchAllValidPairs] error:", error.message, "from=", from);
+      break;
+    }
+    if (!data || data.length === 0) break;
     all.push(...(data as any));
     if (data.length < pageSize) break;
     from += pageSize;
@@ -87,14 +91,13 @@ Deno.serve(async (req) => {
     "/swap/bnb-usdc",
   ];
 
-  // Sitemap index — use a fast HEAD count so we don't have to fetch every row
-  // just to determine batch count. Each pair produces LANGS.length URL entries.
+  // Sitemap index — fetch the full pair list (only ~22k rows) so we know the
+  // exact batch count. Estimated count via pg_class can be stale on freshly
+  // synced tables (returns null/0), so we just paginate the real data.
   if (path === "/" || path === "/index.xml") {
-    const { count: pairCount } = await svc
-      .from("pairs")
-      .select("*", { count: "exact", head: true })
-      .eq("is_valid", true);
-    const totalUrls = (pairCount || 0) * LANGS.length;
+    const allPairs = await fetchAllValidPairs(svc);
+    console.log("[sitemap-index] pair rows fetched =", allPairs.length);
+    const totalUrls = allPairs.length * LANGS.length;
     const batchCount = Math.max(1, Math.ceil(totalUrls / BATCH_SIZE));
     const today = new Date().toISOString().split("T")[0];
 
