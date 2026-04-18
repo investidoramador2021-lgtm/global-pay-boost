@@ -280,7 +280,18 @@ export default function DynamicExchange() {
   const title = pairLangContent?.title || pairSeo?.seo_title || `${dx("heroTitle", { from: fromUp, to: toUp })} — ${dx("ctaSubtitle")} | MRC GlobalPay`;
   const description = pairLangContent?.description || pairSeo?.seo_description || `Convert ${fromName} (${fromUp}) to ${toName} (${toUp}) in under 60 seconds with no account required. Compare rates from 700+ liquidity sources. Canadian MSB-registered (C100000015). Step-by-step guide, network details, and live rates.`;
   const seoH1 = pairLangContent?.h1 || pairSeo?.seo_h1 || null;
+  // Canonical = English version per sitemap-strategy memory
   const canonicalUrl = `https://mrcglobalpay.com/exchange/${fromLower}-to-${toLower}`;
+  const SUPPORTED_LANGS = ["en", "es", "pt", "fr", "ja", "fa", "ur", "he", "af", "hi", "vi", "tr", "uk"] as const;
+  const OG_LOCALE_MAP: Record<string, string> = {
+    en: "en_US", es: "es_ES", pt: "pt_BR", fr: "fr_FR", ja: "ja_JP",
+    fa: "fa_IR", ur: "ur_PK", he: "he_IL", af: "af_ZA", hi: "hi_IN",
+    vi: "vi_VN", tr: "tr_TR", uk: "uk_UA",
+  };
+  const hreflangAlternates = SUPPORTED_LANGS.map((l) => ({
+    lang: l,
+    href: `https://mrcglobalpay.com${l === "en" ? "" : `/${l}`}/exchange/${fromLower}-to-${toLower}`,
+  }));
 
   const fromNetwork = fromAsset?.network || "";
   const toNetwork = toAsset?.network || "";
