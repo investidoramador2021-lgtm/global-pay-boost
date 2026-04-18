@@ -253,23 +253,10 @@ ${items}
 
   /* ───── Sitemap branch ───── */
 
-  // ── DB-driven exchange pairs (paginated) ──
-  const allPairs: Array<{ from_ticker: string; to_ticker: string; updated_at: string }> = [];
-  const PAGE_SIZE = 1000;
-  let page = 0;
-  while (true) {
-    const { data: batch } = await supabase
-      .from("pairs")
-      .select("from_ticker, to_ticker, updated_at")
-      .eq("is_valid", true)
-      .order("updated_at", { ascending: false })
-      .range(page * PAGE_SIZE, (page + 1) * PAGE_SIZE - 1);
-    if (!batch || batch.length === 0) break;
-    allPairs.push(...(batch as any));
-    if (batch.length < PAGE_SIZE) break;
-    page++;
-    if (page > 50) break; // hard cap: 50k pairs
-  }
+  // ── DB-driven exchange pairs (single-shot RPC, bypasses 1k row cap) ──
+  const { data: pairsJson, error: pairsErr } = await supabase.rpc("get_valid_pair_slugs_json");
+  if (pairsErr) console.error("[sitemap] pairs rpc error:", pairsErr.message);
+  const allPairs = ((pairsJson ?? []) as Array<{ from_ticker: string; to_ticker: string; updated_at: string }>);
 
   const entries: string[] = [];
   const seen = new Set<string>();
