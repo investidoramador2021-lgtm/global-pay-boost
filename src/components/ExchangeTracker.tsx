@@ -148,17 +148,18 @@ const ExchangeTracker = () => {
         const idx = updated.findIndex((s) => s.id === row.id);
         if (idx === -1) return;
         if (r.status === "fulfilled" && r.value.data && !r.value.data.error) {
+          const d = r.value.data;
           updated[idx] = {
             ...updated[idx],
             liveLoading: false,
             live: {
-              status: r.value.data.status,
-              amountSend: r.value.data.amountSend,
-              amountReceive: r.value.data.amountReceive,
-              payinHash: r.value.data.payinHash,
-              payoutHash: r.value.data.payoutHash,
-              payinAddress: r.value.data.payinAddress,
-              payoutAddress: r.value.data.payoutAddress,
+              status: d.status,
+              amountSend: d.amountSend ?? d.expectedSendAmount ?? null,
+              amountReceive: d.amountReceive ?? d.expectedReceiveAmount ?? null,
+              payinHash: d.payinHash ?? null,
+              payoutHash: d.payoutHash ?? null,
+              payinAddress: d.payinAddress ?? "",
+              payoutAddress: d.payoutAddress ?? "",
             },
           };
         } else {
