@@ -1242,6 +1242,27 @@ export type Database = {
         }
         Relationships: []
       }
+      sitemap_cache: {
+        Row: {
+          generated_at: string
+          key: string
+          kind: string
+          payload: string
+        }
+        Insert: {
+          generated_at?: string
+          key: string
+          kind: string
+          payload: string
+        }
+        Update: {
+          generated_at?: string
+          key?: string
+          kind?: string
+          payload?: string
+        }
+        Relationships: []
+      }
       support_chat_logs: {
         Row: {
           ai_response: string
@@ -1541,14 +1562,31 @@ export type Database = {
           isSetofReturn: true
         }
       }
-      get_valid_pair_slugs: {
-        Args: never
+      get_sitemap_cache: {
+        Args: { p_key: string; p_kind: string }
         Returns: {
-          from_ticker: string
-          to_ticker: string
-          updated_at: string
+          generated_at: string
+          payload: string
         }[]
       }
+      get_valid_pair_slugs:
+        | {
+            Args: never
+            Returns: {
+              from_ticker: string
+              to_ticker: string
+              updated_at: string
+            }[]
+          }
+        | {
+            Args: { p_limit?: number; p_offset?: number }
+            Returns: {
+              from_ticker: string
+              to_ticker: string
+              updated_at: string
+            }[]
+          }
+      get_valid_pair_slugs_json: { Args: never; Returns: Json }
       has_role: {
         Args: {
           _role: Database["public"]["Enums"]["app_role"]
