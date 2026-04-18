@@ -22,12 +22,21 @@ const About = () => (
         url: "https://mrcglobalpay.com",
         description: "Registered Canadian Money Services Business providing non-custodial cryptocurrency exchange services.",
         address: { "@type": "PostalAddress", streetAddress: "116 Albert Street, Suite 300", addressLocality: "Ottawa", addressRegion: "ON", postalCode: "K1P 5G3", addressCountry: "CA" },
-        knowsAbout: ["Cryptocurrency Exchange", "Non-Custodial Trading", "Blockchain", "FINTRAC Compliance"],
-        hasCredential: {
-          "@type": "EducationalOccupationalCredential",
-          credentialCategory: "Money Services Business License",
-          recognizedBy: { "@type": "Organization", name: "FINTRAC — Financial Transactions and Reports Analysis Centre of Canada" },
-        },
+        knowsAbout: ["Cryptocurrency Exchange", "Non-Custodial Trading", "Blockchain", "FINTRAC Compliance", "Retail Payment Activities Act (RPAA)"],
+        hasCredential: [
+          {
+            "@type": "EducationalOccupationalCredential",
+            credentialCategory: "Money Services Business License",
+            identifier: "C100000015",
+            recognizedBy: { "@type": "Organization", name: "FINTRAC — Financial Transactions and Reports Analysis Centre of Canada", url: "https://fintrac-canafe.canada.ca/msb-esm/reg-eng" },
+          },
+          {
+            "@type": "EducationalOccupationalCredential",
+            credentialCategory: "Authorized Payment Service Provider (PSP)",
+            url: "https://www.bankofcanada.ca/core-functions/retail-payments-supervision/psp-registry/psp-registry-details/?account_id=408b884a-1aa1-ef11-a72d-0022483bf164",
+            recognizedBy: { "@type": "Organization", name: "Bank of Canada — Retail Payments Supervision", url: "https://www.bankofcanada.ca/core-functions/retail-payments-supervision/" },
+          },
+        ],
         breadcrumb: {
           "@type": "BreadcrumbList",
           itemListElement: [
