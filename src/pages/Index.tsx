@@ -24,6 +24,7 @@ import HomeResourceCards from "@/components/HomeResourceCards";
 import WhyChooseSection from "@/components/WhyChooseSection";
 import LiveNetworkBadge from "@/components/LiveNetworkBadge";
 import PartnerProtocolCTA from "@/components/PartnerProtocolCTA";
+import AffiliatePartnerCTA from "@/components/AffiliatePartnerCTA";
 import { Helmet } from "react-helmet-async";
 
 type WidgetMode = "exchange" | "buysell" | "private" | "bridge" | "request";
@@ -182,6 +183,7 @@ const Index = () => {
           <div className="cv-auto">
             <PopularPairsSection />
           </div>
+          <AffiliatePartnerCTA />
           <div className="cv-auto">
             <SwapPairsQA />
           </div>
