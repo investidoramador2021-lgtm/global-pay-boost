@@ -22,7 +22,25 @@ import banner4 from "@/assets/affiliate-banner-4-skyscraper.jpg";
 import banner5 from "@/assets/affiliate-banner-5-social.jpg";
 import banner6 from "@/assets/affiliate-banner-6-story.jpg";
 
-/* ─────────── Reusable copy block ─────────── */
+/* ─────────── Shared helpers ─────────── */
+const downloadFile = async (url: string, filename: string) => {
+  try {
+    const response = await fetch(url, { credentials: "same-origin" });
+    if (!response.ok) throw new Error("Download failed");
+    const blob = await response.blob();
+    const blobUrl = URL.createObjectURL(blob);
+    const a = document.createElement("a");
+    a.href = blobUrl;
+    a.download = filename;
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
+    setTimeout(() => URL.revokeObjectURL(blobUrl), 1000);
+  } catch {
+    window.open(url, "_blank", "noopener,noreferrer");
+  }
+};
+
 const CopyBlock = ({ text, label = "Copy" }: { text: string; label?: string }) => {
   const [copied, setCopied] = useState(false);
   const onCopy = async () => {
@@ -459,32 +477,14 @@ const MarketingMaterials = () => {
                       />
                     </div>
 
-                    <a
-                      href={b.image}
-                      download={b.filename}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      onClick={async (e) => {
-                        e.preventDefault();
-                        try {
-                          const res = await fetch(b.image);
-                          const blob = await res.blob();
-                          const url = URL.createObjectURL(blob);
-                          const a = document.createElement("a");
-                          a.href = url;
-                          a.download = b.filename;
-                          document.body.appendChild(a);
-                          a.click();
-                          a.remove();
-                          setTimeout(() => URL.revokeObjectURL(url), 1000);
-                        } catch {
-                          window.open(b.image, "_blank");
-                        }
-                      }}
-                      className="mt-3 inline-flex w-full items-center justify-center gap-2 rounded-lg border border-primary/40 bg-primary/10 px-3 py-2 font-display text-xs font-semibold text-primary transition-colors hover:bg-primary/20"
+                    <Button
+                      type="button"
+                      variant="outline"
+                      onClick={() => void downloadFile(b.image, b.filename)}
+                      className="mt-3 inline-flex h-auto w-full items-center justify-center gap-2 rounded-lg border border-primary/40 bg-primary/10 px-3 py-2 font-display text-xs font-semibold text-primary transition-colors hover:bg-primary/20"
                     >
                       <Download className="h-3.5 w-3.5" /> Download banner
-                    </a>
+                    </Button>
 
                     <div className="mt-3">
                       <p className="mb-1.5 text-[11px] font-semibold uppercase tracking-wider text-muted-foreground">
