@@ -9,10 +9,18 @@ import {
   Check,
   Megaphone,
   Sparkles,
+  Download,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { cn } from "@/lib/utils";
+
+import banner1 from "@/assets/affiliate-banner-1-leaderboard.jpg";
+import banner2 from "@/assets/affiliate-banner-2-mediumrect-dark.jpg";
+import banner3 from "@/assets/affiliate-banner-3-mediumrect-light.jpg";
+import banner4 from "@/assets/affiliate-banner-4-skyscraper.jpg";
+import banner5 from "@/assets/affiliate-banner-5-social.jpg";
+import banner6 from "@/assets/affiliate-banner-6-story.jpg";
 
 /* ─────────── Reusable copy block ─────────── */
 const CopyBlock = ({ text, label = "Copy" }: { text: string; label?: string }) => {
