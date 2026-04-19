@@ -16,32 +16,9 @@ import { Button } from "@/components/ui/button";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { cn } from "@/lib/utils";
 
-import banner1 from "@/assets/affiliate-banner-1-leaderboard.jpg";
-import banner2 from "@/assets/affiliate-banner-2-mediumrect-dark.jpg";
-import banner3 from "@/assets/affiliate-banner-3-mediumrect-light.jpg";
-import banner4 from "@/assets/affiliate-banner-4-skyscraper.jpg";
-import banner5 from "@/assets/affiliate-banner-5-social.jpg";
-import banner6 from "@/assets/affiliate-banner-6-story.jpg";
+import { bannerSpecs, createBannerDataUrl, downloadBanner } from "@/components/affiliates/bannerSvg";
 
 /* ─────────── Shared helpers ─────────── */
-const downloadFile = async (url: string, filename: string) => {
-  try {
-    const response = await fetch(url, { credentials: "same-origin" });
-    if (!response.ok) throw new Error("Download failed");
-    const blob = await response.blob();
-    const blobUrl = URL.createObjectURL(blob);
-    const a = document.createElement("a");
-    a.href = blobUrl;
-    a.download = filename;
-    document.body.appendChild(a);
-    a.click();
-    document.body.removeChild(a);
-    setTimeout(() => URL.revokeObjectURL(blobUrl), 1000);
-  } catch {
-    window.open(url, "_blank", "noopener,noreferrer");
-  }
-};
-
 const CopyBlock = ({ text, label }: { text: string; label?: string }) => {
   const { t } = useTranslation();
   const [copied, setCopied] = useState(false);
@@ -74,16 +51,20 @@ const CopyBlock = ({ text, label }: { text: string; label?: string }) => {
 
 /* ─────────── COMPONENT ─────────── */
 const MarketingMaterials = () => {
-  const { t } = useTranslation();
+  const { t, i18n } = useTranslation();
+  const lang = i18n.resolvedLanguage ?? i18n.language ?? "en";
+  const dir = i18n.dir(lang) as "ltr" | "rtl";
 
-  const banners = [
-    { id: "leaderboard", name: t("affiliates.materials.banner1Name"), size: "1920 × 1080 (use as 728×90)", theme: "Dark", overlay: t("affiliates.materials.banner1Overlay"), image: banner1, filename: "mrcglobalpay-banner-leaderboard.jpg", aspect: "aspect-[16/9]" },
-    { id: "medium-rect-dark", name: t("affiliates.materials.banner2Name"), size: "1024 × 1024 (use as 300×250)", theme: "Dark", overlay: t("affiliates.materials.banner2Overlay"), image: banner2, filename: "mrcglobalpay-banner-mediumrect-dark.jpg", aspect: "aspect-square" },
-    { id: "medium-rect-light", name: t("affiliates.materials.banner3Name"), size: "1024 × 1024 (use as 300×250)", theme: "Light", overlay: t("affiliates.materials.banner3Overlay"), image: banner3, filename: "mrcglobalpay-banner-mediumrect-light.jpg", aspect: "aspect-square" },
-    { id: "skyscraper", name: t("affiliates.materials.banner4Name"), size: "1080 × 1920 (use as 160×600)", theme: "Dark", overlay: t("affiliates.materials.banner4Overlay"), image: banner4, filename: "mrcglobalpay-banner-skyscraper.jpg", aspect: "aspect-[9/16]" },
-    { id: "social-1200", name: t("affiliates.materials.banner5Name"), size: "1024 × 1024 (use as 1200×628)", theme: "Dark", overlay: t("affiliates.materials.banner5Overlay"), image: banner5, filename: "mrcglobalpay-banner-social.jpg", aspect: "aspect-square" },
-    { id: "story-1080", name: t("affiliates.materials.banner6Name"), size: "1080 × 1920 (Instagram / TikTok / Shorts)", theme: "Dark", overlay: t("affiliates.materials.banner6Overlay"), image: banner6, filename: "mrcglobalpay-banner-story.jpg", aspect: "aspect-[9/16]" },
-  ];
+  const banners = bannerSpecs.map((spec, index) => {
+    const overlay = t(`affiliates.materials.banner${index + 1}Overlay`);
+    return {
+      ...spec,
+      name: t(`affiliates.materials.banner${index + 1}Name`),
+      size: `${spec.width} × ${spec.height}`,
+      overlay,
+      preview: createBannerDataUrl(spec, overlay, dir),
+    };
+  });
 
   const socials = [
     { platform: t("affiliates.social.platformX"), label: t("affiliates.social.x1Label"), text: t("affiliates.social.x1Text") },
@@ -180,7 +161,7 @@ const MarketingMaterials = () => {
                       )}
                     >
                       <img
-                        src={b.image}
+                        src={b.preview}
                         alt={`${b.name} — ${b.overlay}`}
                         loading="lazy"
                         className="h-full w-full object-cover"
@@ -190,7 +171,7 @@ const MarketingMaterials = () => {
                     <Button
                       type="button"
                       variant="outline"
-                      onClick={() => void downloadFile(b.image, b.filename)}
+                      onClick={() => downloadBanner(b, b.overlay, lang, dir)}
                       className="mt-3 inline-flex h-auto w-full items-center justify-center gap-2 rounded-lg border border-primary/40 bg-primary/10 px-3 py-2 font-display text-xs font-semibold text-primary transition-colors hover:bg-primary/20"
                     >
                       <Download className="h-3.5 w-3.5" /> {t("affiliates.materials.download")}
