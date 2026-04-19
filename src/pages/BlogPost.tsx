@@ -7,6 +7,7 @@ import SiteFooter from "@/components/SiteFooter";
 import BlogMarkdown from "@/components/blog/BlogMarkdown";
 import BlogLanguageToggle from "@/components/blog/BlogLanguageToggle";
 import TableOfContents, { extractHeadings } from "@/components/blog/TableOfContents";
+import SocialShare from "@/components/blog/SocialShare";
 import { fetchPostBySlug, fetchRelatedPosts, findSlugLanguage, type BlogPost } from "@/lib/blog-data";
 import { getLangFromPath, langPath, supportedLanguages } from "@/i18n";
 import { TRANSLATED_BEGINNERS_GUIDE_POSTS } from "@/lib/blog/translated-beginners-guide-posts";
@@ -323,6 +324,10 @@ const BlogPostPage = () => {
                     {tag}
                   </span>
                 ))}
+              </div>
+
+              <div className="mt-8">
+                <SocialShare url={postUrl} title={post.title} description={post.metaDescription} />
               </div>
             </div>
           </div>
