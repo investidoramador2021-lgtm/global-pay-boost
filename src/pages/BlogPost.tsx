@@ -190,19 +190,27 @@ const BlogPostPage = () => {
       }
     : null;
 
+  const priorityToken = getPriorityTokenByBlogSlug(post.slug);
+  const langPrefix = lp("").replace(/\/$/, "");
+  const heroOgImage = priorityToken
+    ? `https://mrcglobalpay.com${priorityToken.heroImage}`
+    : "https://pub-bb2e103a32db4e198524a2e9ed8f35b4.r2.dev/22f69f45-cf65-4871-9af4-b68ab4027213/id-preview-243bf129--23f851ec-c820-43c7-bbe2-d2e830f7c268.lovable.app-1773521796493.png";
+  const effectiveMetaTitle = priorityToken?.metaTitle || post.metaTitle;
+  const effectiveMetaDescription = priorityToken?.metaDescription || post.metaDescription;
+
   return (
     <>
       <Helmet>
-        <title>{post.metaTitle.length > 45 ? post.metaTitle.slice(0, 45).trim() : post.metaTitle} | MRC GlobalPay</title>
-        <meta name="description" content={post.metaDescription} />
+        <title>{effectiveMetaTitle.length > 60 ? effectiveMetaTitle.slice(0, 60).trim() : effectiveMetaTitle} | MRC GlobalPay</title>
+        <meta name="description" content={effectiveMetaDescription} />
         <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1" />
         <link rel="canonical" href={postUrl} />
-        <meta property="og:title" content={post.metaTitle} />
-        <meta property="og:description" content={post.metaDescription} />
+        <meta property="og:title" content={effectiveMetaTitle} />
+        <meta property="og:description" content={effectiveMetaDescription} />
         <meta property="og:type" content="article" />
         <meta property="og:url" content={postUrl} />
         <meta property="og:site_name" content="MRC GlobalPay" />
-        <meta property="og:image" content="https://pub-bb2e103a32db4e198524a2e9ed8f35b4.r2.dev/22f69f45-cf65-4871-9af4-b68ab4027213/id-preview-243bf129--23f851ec-c820-43c7-bbe2-d2e830f7c268.lovable.app-1773521796493.png" />
+        <meta property="og:image" content={heroOgImage} />
         <meta property="article:published_time" content={post.publishedAt} />
         <meta property="article:modified_time" content={post.updatedAt} />
         <meta property="article:section" content={post.category} />
@@ -210,15 +218,17 @@ const BlogPostPage = () => {
           <meta property="article:tag" content={tag} key={tag} />
         ))}
         <meta name="twitter:card" content="summary_large_image" />
-        <meta name="twitter:title" content={`${post.metaTitle} | MRC GlobalPay`} />
-        <meta name="twitter:description" content={post.metaDescription} />
-        <meta name="twitter:image" content="https://pub-bb2e103a32db4e198524a2e9ed8f35b4.r2.dev/22f69f45-cf65-4871-9af4-b68ab4027213/id-preview-243bf129--23f851ec-c820-43c7-bbe2-d2e830f7c268.lovable.app-1773521796493.png" />
+        <meta name="twitter:title" content={`${effectiveMetaTitle} | MRC GlobalPay`} />
+        <meta name="twitter:description" content={effectiveMetaDescription} />
+        <meta name="twitter:image" content={heroOgImage} />
         <link rel="alternate" type="application/rss+xml" title="MRC GlobalPay Blog RSS" href="https://mrcglobalpay.com/rss.xml" />
         <script type="application/ld+json">{JSON.stringify(jsonLd)}</script>
         <script type="application/ld+json">{JSON.stringify(breadcrumbJsonLd)}</script>
         {faqJsonLd && <script type="application/ld+json">{JSON.stringify(faqJsonLd)}</script>}
         {financialServiceJsonLd && <script type="application/ld+json">{JSON.stringify(financialServiceJsonLd)}</script>}
       </Helmet>
+
+      {priorityToken && <StickyShareRail url={postUrl} title={post.title} />}
 
       <SiteHeader />
       <main className="min-h-screen bg-background">
