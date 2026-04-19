@@ -7,7 +7,7 @@ const corsHeaders = {
   'Access-Control-Allow-Methods': 'GET, POST, OPTIONS',
 };
 
-const CHANGENOW_BASE = 'https://api.changenow.io/v1';
+const V2_BASE = 'https://api.changenow.io/v2';
 
 // Fire-and-forget Telegram notification
 async function notifyTelegram(type: 'swap' | 'alert' | 'error', message: string) {
@@ -30,56 +30,89 @@ async function notifyTelegram(type: 'swap' | 'alert' | 'error', message: string)
   }
 }
 
-// Validation helpers
 const TICKER_RE = /^[a-z0-9]{1,20}$/i;
 const TX_ID_RE = /^[a-zA-Z0-9_-]{1,64}$/;
-
-function isValidTicker(v: string): boolean {
-  return TICKER_RE.test(v);
-}
-function isValidAmount(v: string): boolean {
-  const n = Number(v);
-  return isFinite(n) && n > 0;
-}
-function isValidTxId(v: string): boolean {
-  return TX_ID_RE.test(v);
-}
+const isValidTicker = (v: string) => TICKER_RE.test(v);
+const isValidAmount = (v: string) => { const n = Number(v); return isFinite(n) && n > 0; };
+const isValidTxId = (v: string) => TX_ID_RE.test(v);
 
 function badRequest(msg: string) {
   return new Response(JSON.stringify({ error: msg }), {
-    status: 400,
-    headers: { ...corsHeaders, 'Content-Type': 'application/json' },
+    status: 400, headers: { ...corsHeaders, 'Content-Type': 'application/json' },
   });
 }
-
 function jsonResponse(data: unknown, status = 200) {
   return new Response(JSON.stringify(data), {
-    status,
-    headers: { ...corsHeaders, 'Content-Type': 'application/json' },
+    status, headers: { ...corsHeaders, 'Content-Type': 'application/json' },
   });
 }
-
 async function parseJsonResponse(response: Response) {
   const text = await response.text();
-  try {
-    return { isJson: true as const, data: JSON.parse(text), text };
-  } catch {
-    return { isJson: false as const, data: null, text };
+  try { return { isJson: true as const, data: JSON.parse(text), text }; }
+  catch { return { isJson: false as const, data: null, text }; }
+}
+
+// Map legacy MRC ticker (e.g. "usdterc20") → v2 { ticker, network }
+// Suffixes mapped to v2 network names (which differ from suffix names)
+const SUFFIX_TO_V2_NETWORK: Record<string, string> = {
+  erc20: 'eth',         // usdterc20 → usdt + eth
+  trc20: 'trx',         // usdttrc20 → usdt + trx
+  bsc: 'bsc',
+  bep20: 'bsc',
+  matic: 'matic',
+  polygon: 'matic',
+  sol: 'sol',
+  arc20: 'avaxc',       // usdtarc20 (AVAX C-CHAIN) → avaxc
+  arb: 'arbitrum',      // etharb → eth + arbitrum
+  arbitrum: 'arbitrum',
+  op: 'op',
+  ton: 'ton',
+  celo: 'celo',
+  apt: 'apt',
+  assethub: 'assethub',
+  algo: 'algo',
+  sui: 'sui',
+  mon: 'monad',
+  monad: 'monad',
+  zksync: 'zksync',
+  base: 'base',
+  lna: 'lna',
+  manta: 'manta',
+  avaxc: 'avaxc',
+};
+const SUFFIXES_SORTED = Object.keys(SUFFIX_TO_V2_NETWORK).sort((a, b) => b.length - a.length);
+
+function splitNetwork(raw: string): { ticker: string; network: string } {
+  const lower = raw.toLowerCase();
+  for (const suf of SUFFIXES_SORTED) {
+    if (lower.endsWith(suf) && lower.length > suf.length) {
+      return { ticker: lower.slice(0, -suf.length), network: SUFFIX_TO_V2_NETWORK[suf] };
+    }
   }
+  return { ticker: lower, network: lower };
 }
 
 Deno.serve(async (req) => {
-  if (req.method === 'OPTIONS') {
-    return new Response(null, { headers: corsHeaders });
-  }
+  if (req.method === 'OPTIONS') return new Response(null, { headers: corsHeaders });
 
   const apiKey = Deno.env.get('CHANGENOW_API_KEY');
   const privateKey = Deno.env.get('CHANGENOW_PRIVATE_KEY') || apiKey;
   if (!apiKey) {
-    return new Response(JSON.stringify({ error: 'CHANGENOW_API_KEY not configured' }), {
-      status: 500,
-      headers: { ...corsHeaders, 'Content-Type': 'application/json' },
-    });
+    return jsonResponse({ error: 'CHANGENOW_API_KEY not configured' }, 500);
+  }
+
+  // Some v2 endpoints (estimate, by-fixed-rate, by-id) require the PRIVATE key,
+  // others (currencies, min-amount) accept the PUBLIC key. We default to private when available.
+  const primaryKey = privateKey || apiKey;
+  const authHeaders = { 'x-changenow-api-key': primaryKey };
+  const fallbackHeaders = primaryKey === apiKey ? null : { 'x-changenow-api-key': apiKey };
+
+  async function fetchWithKeyFallback(url: string, init?: RequestInit) {
+    let resp = await fetch(url, { ...init, headers: { ...(init?.headers || {}), ...authHeaders } });
+    if (resp.status === 401 && fallbackHeaders) {
+      resp = await fetch(url, { ...init, headers: { ...(init?.headers || {}), ...fallbackHeaders } });
+    }
+    return resp;
   }
 
   try {
@@ -87,9 +120,7 @@ Deno.serve(async (req) => {
     let postBody: Record<string, unknown> | null = null;
 
     const url = new URL(req.url);
-    url.searchParams.forEach((value, key) => {
-      params[key] = value;
-    });
+    url.searchParams.forEach((v, k) => { params[k] = v; });
 
     if (req.method === 'POST') {
       const body = await req.json();
@@ -104,88 +135,124 @@ Deno.serve(async (req) => {
     }
 
     const action = params.action;
-    let apiUrl: string;
 
     switch (action) {
       case 'currencies': {
-        apiUrl = `${CHANGENOW_BASE}/currencies?active=true&fixedRate=true`;
-        break;
+        const resp = await fetchWithKeyFallback(`${V2_BASE}/exchange/currencies?active=true&flow=standard`);
+        const parsed = await parseJsonResponse(resp);
+        if (!resp.ok || !parsed.isJson) {
+          console.error('v2 currencies failed:', parsed.text);
+          return jsonResponse([], 200);
+        }
+        // Map v2 → legacy v1 shape used by frontend
+        const mapped = (parsed.data as any[]).map((c: any) => ({
+          ticker: c.ticker || c.legacyTicker,
+          name: c.name,
+          image: c.image,
+          hasExternalId: !!c.hasExternalId,
+          isExtraIdSupported: !!c.isExtraIdSupported,
+          isFiat: !!c.isFiat,
+          featured: !!c.featured,
+          isStable: !!c.isStable,
+          supportsFixedRate: !!c.supportsFixedRate,
+          network: c.network,
+          tokenContract: c.tokenContract || null,
+        }));
+        return jsonResponse(mapped);
       }
+
       case 'min-amount': {
-        const from = params.from;
-        const to = params.to;
+        const from = params.from, to = params.to;
         if (!from || !to) return badRequest('Missing from/to params');
         if (!isValidTicker(from) || !isValidTicker(to)) return badRequest('Invalid ticker format');
-        const fixedMin = params.fixedRate === 'true';
-
-        if (fixedMin) {
-          const fixedResponse = await fetch(`${CHANGENOW_BASE}/min-amount-fixed/${from}_${to}?api_key=${apiKey}`);
-          const fixedParsed = await parseJsonResponse(fixedResponse);
-
-          if (fixedResponse.ok && fixedParsed.isJson) {
-            return jsonResponse(fixedParsed.data);
-          }
-
-          console.error('ChangeNow fixed min-amount fallback triggered:', fixedParsed.isJson ? JSON.stringify(fixedParsed.data) : fixedParsed.text);
+        const flow = params.fixedRate === 'true' ? 'fixed-rate' : 'standard';
+        const f = splitNetwork(from), t = splitNetwork(to);
+        const u = `${V2_BASE}/exchange/min-amount?fromCurrency=${f.ticker}&toCurrency=${t.ticker}&fromNetwork=${f.network}&toNetwork=${t.network}&flow=${flow}`;
+        const resp = await fetchWithKeyFallback(u);
+        const parsed = await parseJsonResponse(resp);
+        if (!resp.ok || !parsed.isJson) {
+          console.error('v2 min-amount failed:', parsed.text);
+          return jsonResponse({ minAmount: 0, warningMessage: 'Minimum amount unavailable right now.' });
         }
-
-        apiUrl = `${CHANGENOW_BASE}/min-amount/${from}_${to}?api_key=${apiKey}`;
-        break;
+        return jsonResponse({ minAmount: parsed.data.minAmount });
       }
+
       case 'estimate': {
-        const from = params.from;
-        const to = params.to;
-        const amount = params.amount;
+        const from = params.from, to = params.to, amount = params.amount;
         if (!from || !to || !amount) return badRequest('Missing from/to/amount params');
         if (!isValidTicker(from) || !isValidTicker(to)) return badRequest('Invalid ticker format');
         if (!isValidAmount(amount)) return badRequest('Invalid amount');
-        const fixedEst = params.fixedRate === 'true';
-
-        if (fixedEst) {
-          const fixedUrl = `${CHANGENOW_BASE}/exchange-amount/fixed-rate/${amount}/${from}_${to}?api_key=${apiKey}`;
-          const fixedResp = await fetch(fixedUrl);
-          const fixedParsed = await parseJsonResponse(fixedResp);
-
-          if (fixedResp.ok && fixedParsed.isJson) {
-            return jsonResponse(fixedParsed.data);
-          }
-
-          // Fixed rate out_of_range or unavailable — fall back to standard rate
-          console.error('ChangeNow fixed estimate fallback triggered:', fixedParsed.isJson ? JSON.stringify(fixedParsed.data) : fixedParsed.text);
+        const flow = params.fixedRate === 'true' ? 'fixed-rate' : 'standard';
+        const rateId = params.fixedRate === 'true' ? '&useRateId=true' : '';
+        const f = splitNetwork(from), t = splitNetwork(to);
+        const u = `${V2_BASE}/exchange/estimated-amount?fromCurrency=${f.ticker}&toCurrency=${t.ticker}&fromNetwork=${f.network}&toNetwork=${t.network}&fromAmount=${amount}&flow=${flow}${rateId}`;
+        const resp = await fetchWithKeyFallback(u);
+        const parsed = await parseJsonResponse(resp);
+        if (!resp.ok || !parsed.isJson) {
+          console.error('v2 estimate failed:', parsed.text);
+          return jsonResponse({ estimatedAmount: null, transactionSpeedForecast: null, warningMessage: 'Rate unavailable right now.' });
         }
-
-        // Standard (expected) rate — no upper limit
-        apiUrl = `${CHANGENOW_BASE}/exchange-amount/${amount}/${from}_${to}?api_key=${apiKey}`;
-        break;
+        return jsonResponse({
+          estimatedAmount: parsed.data.toAmount ?? parsed.data.estimatedAmount ?? null,
+          transactionSpeedForecast: parsed.data.transactionSpeedForecast ?? null,
+          warningMessage: parsed.data.warningMessage ?? null,
+          rateId: parsed.data.rateId ?? null,
+        });
       }
+
       case 'create-transaction': {
         if (!postBody) return badRequest('POST body required');
-        const response = await fetch(`${CHANGENOW_BASE}/transactions/${apiKey}`, {
+        const { from, to, amount, address, extraId, refundAddress, refundExtraId, flow: bodyFlow, rateId } = postBody as any;
+        const flow = bodyFlow || 'standard';
+        const endpoint = flow === 'fixed-rate' ? 'by-fixed-rate' : 'by-standard-rate';
+        const f = splitNetwork(from), t = splitNetwork(to);
+        const v2Body: Record<string, unknown> = {
+          fromCurrency: f.ticker,
+          toCurrency: t.ticker,
+          fromNetwork: f.network,
+          toNetwork: t.network,
+          fromAmount: String(amount),
+          address,
+          flow,
+        };
+        if (extraId) v2Body.extraId = extraId;
+        if (refundAddress) v2Body.refundAddress = refundAddress;
+        if (refundExtraId) v2Body.refundExtraId = refundExtraId;
+        if (rateId) v2Body.rateId = rateId;
+
+        const response = await fetchWithKeyFallback(`${V2_BASE}/exchange/${endpoint}`, {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify(postBody),
+          body: JSON.stringify(v2Body),
         });
         const parsed = await parseJsonResponse(response);
         if (!parsed.isJson) {
-          console.error('ChangeNow transaction non-JSON response:', parsed.text);
+          console.error('v2 create-transaction non-JSON:', parsed.text);
           return jsonResponse({ error: 'Exchange service unavailable. Please try again.' }, 502);
         }
         if (!response.ok) {
-          console.error('ChangeNow transaction error:', JSON.stringify(parsed.data));
-          return jsonResponse({ error: 'Exchange service error. Please try again.' }, response.status);
+          console.error('v2 create-transaction error:', JSON.stringify(parsed.data));
+          return jsonResponse({ error: parsed.data?.message || 'Exchange service error. Please try again.' }, response.status);
         }
-        // Notify Telegram
         const txData = parsed.data;
-        const amount = postBody?.amount || txData?.amount || '?';
-        const fromC = (postBody?.from as string || txData?.fromCurrency || '?').toUpperCase();
-        const toC = (postBody?.to as string || txData?.toCurrency || '?').toUpperCase();
+        // Normalize to legacy shape
+        const normalized = {
+          id: txData.id,
+          payinAddress: txData.payinAddress,
+          payoutAddress: txData.payoutAddress,
+          payinExtraId: txData.payinExtraId,
+          payoutExtraId: txData.payoutExtraId,
+          fromCurrency: txData.fromCurrency || from,
+          toCurrency: txData.toCurrency || to,
+          amount: txData.fromAmount ?? txData.amount ?? amount,
+        };
+
+        const fromC = String(from).toUpperCase();
+        const toC = String(to).toUpperCase();
         const amountNum = Number(amount);
         const isHighValue = amountNum >= 10000;
-        const telegramMsg = `[MRC GlobalPay] ✅ New Swap: ${amount} ${fromC} ➔ ${toC}\nStatus: ChangeNOW Forensic Verified\nID: ${txData?.id || 'N/A'}`;
-        notifyTelegram(isHighValue ? 'alert' : 'swap', isHighValue
-          ? `🚨 HIGH VALUE\n${telegramMsg}`
-          : telegramMsg
-        );
+        const telegramMsg = `[MRC GlobalPay] ✅ New Swap: ${amount} ${fromC} ➔ ${toC}\nStatus: ChangeNOW v2 Verified\nID: ${txData?.id || 'N/A'}`;
+        notifyTelegram(isHighValue ? 'alert' : 'swap', isHighValue ? `🚨 HIGH VALUE\n${telegramMsg}` : telegramMsg);
 
         // ── Partner Attribution Engine ──
         const partnerKeyId = req.headers.get('x-mrc-partner-id');
@@ -199,13 +266,11 @@ Deno.serve(async (req) => {
               .eq('is_active', true)
               .maybeSingle();
             if (apiKeyRow) {
-              // Update last_used_at
               await svc.from('partner_api_keys').update({ last_used_at: new Date().toISOString() }).eq('key_id', partnerKeyId);
-              // Log commission (0.4% cap for API-driven volume)
               const commission = amountNum * 0.004;
               const mrcTxId = `MRC-${txData?.id?.slice(0, 12) || crypto.randomUUID().slice(0, 12)}`;
               await svc.from('partner_transactions').insert({
-                partner_id: apiKeyRow.partner_id,
+                partner_id: (apiKeyRow as any).partner_id,
                 asset: fromC.toLowerCase(),
                 volume: amountNum,
                 commission_btc: commission,
@@ -213,167 +278,78 @@ Deno.serve(async (req) => {
                 status: 'awaiting_deposit',
                 mrc_transaction_id: mrcTxId,
                 changenow_order_id: txData?.id || null,
-              });
-
-              // Upsert partner balance (add to pending)
-              const { data: bal } = await svc.from('partner_balances').select('id, pending_btc').eq('partner_id', apiKeyRow.partner_id).maybeSingle();
+              } as any);
+              const { data: bal } = await svc.from('partner_balances').select('id, pending_btc').eq('partner_id', (apiKeyRow as any).partner_id).maybeSingle();
               if (bal) {
                 await svc.from('partner_balances').update({ pending_btc: (bal as any).pending_btc + commission, updated_at: new Date().toISOString() }).eq('id', (bal as any).id);
               } else {
-                await svc.from('partner_balances').insert({ partner_id: apiKeyRow.partner_id, pending_btc: commission });
+                await svc.from('partner_balances').insert({ partner_id: (apiKeyRow as any).partner_id, pending_btc: commission } as any);
               }
-
-              console.log(`Partner attribution logged: ${partnerKeyId} → ${commission} commission, MRC ID: ${mrcTxId}`);
             }
           } catch (e) {
             console.error('Partner attribution error:', e);
           }
         }
 
-        return jsonResponse(parsed.data);
+        return jsonResponse(normalized);
       }
+
       case 'tx-status': {
         const id = params.id;
         if (!id) return badRequest('Missing id param');
         if (!isValidTxId(id)) return badRequest('Invalid transaction id format');
-
-        const keysToTry = [privateKey!, apiKey!].filter((k, i, a) => k && a.indexOf(k) === i);
-        let txResp: Response | null = null;
-        let txParsed: { isJson: boolean; data: any; text: string } | null = null;
-
-        // Try v2 first with header auth
-        for (const key of keysToTry) {
-          txResp = await fetch(`https://api.changenow.io/v2/exchange/by-id?id=${id}`, {
-            headers: { 'x-changenow-api-key': key },
-          });
-          txParsed = await parseJsonResponse(txResp);
-          if (txResp.ok) break;
-          console.error(`ChangeNow v2 tx-status key attempt failed:`, txParsed?.isJson ? JSON.stringify(txParsed.data) : txParsed?.text);
-        }
-
-        // Fallback to v1 with key in URL
-        if (!txResp?.ok) {
-          for (const key of keysToTry) {
-            txResp = await fetch(`${CHANGENOW_BASE}/transactions/${id}/${key}`);
-            txParsed = await parseJsonResponse(txResp);
-            if (txResp.ok) break;
-            console.error(`ChangeNow v1 tx-status key attempt failed:`, txParsed?.isJson ? JSON.stringify(txParsed.data) : txParsed?.text);
-          }
-        }
-
-        if (!txParsed?.isJson) {
-          return jsonResponse({ error: 'Service unavailable.' }, 502);
-        }
-        if (!txResp?.ok) {
-          return jsonResponse({ error: txParsed.data?.message || 'Transaction not found or private key required.' }, txResp?.status || 401);
-        }
-        return jsonResponse(txParsed.data);
+        const resp = await fetchWithKeyFallback(`${V2_BASE}/exchange/by-id?id=${id}`);
+        const parsed = await parseJsonResponse(resp);
+        if (!parsed.isJson) return jsonResponse({ error: 'Service unavailable.' }, 502);
+        if (!resp.ok) return jsonResponse({ error: parsed.data?.message || 'Transaction not found.' }, resp.status);
+        return jsonResponse(parsed.data);
       }
+
       case 'list-transactions': {
         const limit = params.limit || '100';
         const offset = params.offset || '0';
         const dateFrom = params.dateFrom || '';
         const dateTo = params.dateTo || '';
         const status = params.status || '';
-        const from = params.from || '';
-        const to = params.to || '';
-
-        let txUrl = `https://api.changenow.io/v2/exchanges?limit=${limit}&offset=${offset}`;
+        let txUrl = `${V2_BASE}/exchanges?limit=${limit}&offset=${offset}`;
         if (dateFrom) txUrl += `&dateFrom=${dateFrom}`;
         if (dateTo) txUrl += `&dateTo=${dateTo}`;
         if (status) txUrl += `&status=${status}`;
-        if (from) txUrl += `&fromCurrency=${from}`;
-        if (to) txUrl += `&toCurrency=${to}`;
-
-        // Try both keys with v2 header-based auth
-        const keysToTry = [privateKey!, apiKey!].filter((k, i, a) => a.indexOf(k) === i);
-        let txResp: Response | null = null;
-        let txParsed: { isJson: boolean; data: any; text: string } | null = null;
-
-        for (const key of keysToTry) {
-          txResp = await fetch(txUrl, {
-            headers: { 'x-changenow-api-key': key },
-          });
-          txParsed = await parseJsonResponse(txResp);
-          if (txResp.ok) break;
-          console.error(`ChangeNow v2 list-txs key attempt failed:`, txParsed?.isJson ? JSON.stringify(txParsed.data) : txParsed?.text);
-        }
-
-        // Fallback to v1
-        if (!txResp?.ok) {
-          for (const key of keysToTry) {
-            let v1Url = `${CHANGENOW_BASE}/transactions/${key}?limit=${limit}&offset=${offset}`;
-            if (dateFrom) v1Url += `&dateFrom=${dateFrom}`;
-            if (dateTo) v1Url += `&dateTo=${dateTo}`;
-            if (status) v1Url += `&status=${status}`;
-            txResp = await fetch(v1Url);
-            txParsed = await parseJsonResponse(txResp!);
-            if (txResp.ok) break;
-            console.error(`ChangeNow v1 list-txs key attempt failed:`, txParsed?.isJson ? JSON.stringify(txParsed.data) : txParsed?.text);
-          }
-        }
-
-        if (!txParsed?.isJson) {
-          return jsonResponse({ error: 'Service unavailable.' }, 502);
-        }
-        if (!txResp?.ok) {
-          return jsonResponse({ error: txParsed.data?.message || 'Private API key required. Check your ChangeNOW affiliate dashboard for the correct key.' }, txResp?.status || 401);
-        }
-        return jsonResponse(txParsed.data);
+        const resp = await fetchWithKeyFallback(txUrl);
+        const parsed = await parseJsonResponse(resp);
+        if (!parsed.isJson) return jsonResponse({ error: 'Service unavailable.' }, 502);
+        if (!resp.ok) return jsonResponse({ error: parsed.data?.message || 'List unavailable.' }, resp.status);
+        return jsonResponse(parsed.data);
       }
+
       case 'fixed-address': {
         if (!postBody) return badRequest('POST body required');
         const { from, to, address } = postBody as Record<string, string>;
         if (!from || !to || !address) return badRequest('Missing from/to/address');
-        if (!isValidTicker(from as string) || !isValidTicker(to as string)) return badRequest('Invalid ticker');
-        const response = await fetch(`${CHANGENOW_BASE}/transactions/fixed-rate/${apiKey}`, {
+        if (!isValidTicker(from) || !isValidTicker(to)) return badRequest('Invalid ticker');
+        const f = splitNetwork(from), t = splitNetwork(to);
+        const response = await fetchWithKeyFallback(`${V2_BASE}/exchange/by-fixed-rate`, {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ from, to, address }),
+          body: JSON.stringify({
+            fromCurrency: f.ticker, toCurrency: t.ticker,
+            fromNetwork: f.network, toNetwork: t.network,
+            address, flow: 'fixed-rate',
+          }),
         });
         const parsed = await parseJsonResponse(response);
-        if (!parsed.isJson) {
-          console.error('ChangeNow fixed-address non-JSON:', parsed.text);
-          return jsonResponse({ error: 'Service unavailable.' }, 502);
-        }
-        if (!response.ok) {
-          console.error('ChangeNow fixed-address error:', JSON.stringify(parsed.data));
-          return jsonResponse({ error: parsed.data?.message || 'Service error.' }, response.status);
-        }
+        if (!parsed.isJson) return jsonResponse({ error: 'Service unavailable.' }, 502);
+        if (!response.ok) return jsonResponse({ error: parsed.data?.message || 'Service error.' }, response.status);
         return jsonResponse(parsed.data);
       }
+
       default:
         return badRequest(`Invalid action: ${action}`);
     }
-
-    const response = await fetch(apiUrl!);
-    const parsed = await parseJsonResponse(response);
-    const softFallback = action === 'estimate'
-      ? { estimatedAmount: null, transactionSpeedForecast: null, warningMessage: 'Rate unavailable right now.' }
-      : action === 'min-amount'
-        ? { minAmount: 0, warningMessage: 'Minimum amount unavailable right now.' }
-        : null;
-
-    if (!parsed.isJson) {
-      console.error('ChangeNow API non-JSON response:', parsed.text);
-      if (softFallback) return jsonResponse(softFallback);
-      return jsonResponse({ error: 'Exchange service unavailable. Please try again.' }, 502);
-    }
-
-    if (!response.ok) {
-      console.error('ChangeNow API error:', JSON.stringify(parsed.data));
-      if (softFallback) return jsonResponse(softFallback);
-      return jsonResponse({ error: 'Exchange service error. Please try again.' }, response.status);
-    }
-
-    return jsonResponse(parsed.data);
   } catch (error: unknown) {
     const msg = error instanceof Error ? error.message : 'Unknown error';
     console.error('ChangeNow API error:', msg);
     notifyTelegram('error', `🚨 [MRC GlobalPay] API Error\n${msg}`);
-    return new Response(JSON.stringify({ error: msg }), {
-      status: 500,
-      headers: { ...corsHeaders, 'Content-Type': 'application/json' },
-    });
+    return jsonResponse({ error: msg }, 500);
   }
 });
