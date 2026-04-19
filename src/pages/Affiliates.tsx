@@ -3,7 +3,7 @@ import { Helmet } from "react-helmet-async";
 import { useTranslation } from "react-i18next";
 import {
   Shield, Zap, Link2, ArrowRight, Infinity as InfinityIcon,
-  Image as ImageIcon, Code2, Lock, Copy, Check,
+  Image as ImageIcon, Code2, Lock, Copy, Check, ExternalLink,
   Mail, Sparkles, ArrowDownUp, Clock, Wallet, Sun, Moon, Smartphone,
 } from "lucide-react";
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
@@ -72,9 +72,9 @@ const CopyButton = ({ text, label }: { text: string; label: string }) => {
   return (
     <button
       onClick={onClick}
-      className="btn-shimmer inline-flex w-full items-center justify-center gap-2 rounded-xl bg-primary px-6 py-3.5 font-display text-base font-bold text-primary-foreground shadow-neon transition-all duration-100 hover:bg-primary/90 hover:-translate-y-0.5"
+      className="btn-shimmer group inline-flex w-full items-center justify-center gap-2.5 rounded-xl bg-gradient-to-b from-primary to-[hsl(var(--neon))] px-6 py-4 font-display text-base font-extrabold uppercase tracking-wide text-primary-foreground shadow-[0_0_28px_-4px_hsl(var(--primary)/0.7)] ring-1 ring-primary/40 transition-all duration-150 hover:shadow-[0_0_40px_-2px_hsl(var(--primary)/0.9)] hover:-translate-y-0.5 hover:brightness-110 active:translate-y-0 min-h-[52px]"
     >
-      {copied ? <Check className="h-5 w-5" /> : <Copy className="h-5 w-5" />}
+      {copied ? <Check className="h-5 w-5" /> : <Copy className="h-5 w-5 transition-transform group-hover:scale-110" />}
       {copied ? t("affiliates.generator.copied") : label}
     </button>
   );
@@ -121,6 +121,11 @@ const WidgetGenerator = ({ lang }: { lang: string }) => {
 
   const link = useMemo(() => buildLink(activeEmail, activeBtc, lang), [activeEmail, activeBtc, lang]);
   const snippet = useMemo(() => buildSnippet(activeEmail, activeBtc, mode, lang), [activeEmail, activeBtc, mode, lang]);
+  const previewUrl = useMemo(() => {
+    const token = activeEmail || activeBtc ? buildRefToken(activeEmail, activeBtc) : "your-ref";
+    const langParam = lang && lang !== "en" ? `&lang=${lang}` : "";
+    return `https://mrcglobalpay.com/embed/widget?mode=${mode}&ref=${token}${langParam}`;
+  }, [activeEmail, activeBtc, mode, lang]);
 
   return (
     <div className="rounded-2xl border border-border bg-card p-4 sm:p-6 lg:p-8 shadow-lg">
@@ -225,11 +230,11 @@ const WidgetGenerator = ({ lang }: { lang: string }) => {
       </p>
 
       {/* Preview — enlarged & prominent */}
-      <div className="mt-10">
-        <div className="mb-3 flex flex-wrap items-center justify-between gap-2">
-          <p className="font-display text-xs uppercase tracking-wider font-bold text-foreground">
-            <span className="text-primary">●</span> Live Widget Preview
-            <span className="ml-2 font-normal normal-case tracking-normal text-muted-foreground">
+      <div className="mt-12">
+        <div className="mb-4 flex flex-wrap items-center justify-between gap-2">
+          <p className="font-display text-sm uppercase tracking-wider font-bold text-foreground">
+            <span className="text-primary animate-pulse">●</span> Live Widget Preview
+            <span className="ms-2 font-normal normal-case tracking-normal text-muted-foreground text-xs">
               · {mode === "light" ? t("affiliates.generator.previewLight") : t("affiliates.generator.previewDark")} · {t("affiliates.generator.previewInteractive")}
             </span>
           </p>
@@ -238,7 +243,7 @@ const WidgetGenerator = ({ lang }: { lang: string }) => {
           </span>
         </div>
 
-        <div className="relative rounded-3xl border-2 border-primary/40 bg-gradient-to-b from-card to-background p-3 sm:p-6 shadow-[0_0_40px_-12px_hsl(var(--primary)/0.5)]">
+        <div className="relative rounded-3xl border-2 border-primary/40 bg-gradient-to-b from-card to-background p-3 sm:p-6 shadow-[0_0_60px_-12px_hsl(var(--primary)/0.55)]">
           <div className="mb-3 flex items-center gap-1.5 rounded-lg border border-border/60 bg-muted/40 px-3 py-2">
             <span className="h-2.5 w-2.5 rounded-full bg-[hsl(0_70%_60%)]/70" />
             <span className="h-2.5 w-2.5 rounded-full bg-[hsl(45_90%_55%)]/70" />
@@ -247,11 +252,13 @@ const WidgetGenerator = ({ lang }: { lang: string }) => {
               mrcglobalpay.com/embed/widget?mode={mode}{lang !== "en" ? `&lang=${lang}` : ""}
             </span>
           </div>
-          <div className="overflow-hidden rounded-2xl border border-border/60 bg-background mx-auto max-w-[480px]">
+          <div className="overflow-hidden rounded-2xl border border-border/60 bg-background mx-auto max-w-[520px] min-h-[600px] lg:min-h-[680px] flex">
             {/* Inline render of the embed-only widget — Exchange tab only */}
-            <EmbedWidget modeOverride={mode} langOverride={lang} />
+            <div className="w-full">
+              <EmbedWidget modeOverride={mode} langOverride={lang} />
+            </div>
           </div>
-          <p className="mt-4 text-center text-xs text-muted-foreground max-w-2xl mx-auto leading-relaxed">
+          <p className="mt-5 text-center text-sm text-muted-foreground max-w-2xl mx-auto leading-relaxed">
             This widget works exactly like ChangeNOW's. Users can freely change any tokens and complete the full swap using our exact non-custodial flow. Fully responsive on desktop, tablets, and mobile.
           </p>
         </div>
@@ -281,8 +288,17 @@ const WidgetGenerator = ({ lang }: { lang: string }) => {
           <pre className="rounded-lg border border-border/60 bg-[hsl(230_15%_6%)] p-3 overflow-x-auto font-mono text-[10px] sm:text-[11px] leading-relaxed text-foreground/90 max-h-64 whitespace-pre-wrap break-all">
             <code>{snippet}</code>
           </pre>
-          <div className="mt-4">
+          <div className="mt-4 grid gap-2 sm:grid-cols-[1fr_auto]">
             <CopyButton text={snippet} label={t("affiliates.generator.copyCode")} />
+            <a
+              href={previewUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex items-center justify-center gap-2 rounded-xl border-2 border-primary/50 bg-primary/10 px-5 py-4 font-display text-sm font-bold uppercase tracking-wide text-primary transition-all hover:bg-primary/20 hover:border-primary hover:-translate-y-0.5 min-h-[52px] whitespace-nowrap"
+              title="Open the embeddable widget in a new tab to test it"
+            >
+              <ExternalLink className="h-4 w-4" /> Test in New Tab
+            </a>
           </div>
           <p className="mt-3 text-[11px] text-muted-foreground">{t("affiliates.generator.embedHelp")}</p>
         </div>
@@ -345,11 +361,31 @@ const Affiliates = () => {
   ];
 
   const FAQS = [
-    { q: t("affiliates.faq.q1"), a: t("affiliates.faq.a1") },
-    { q: t("affiliates.faq.q2"), a: t("affiliates.faq.a2") },
-    { q: t("affiliates.faq.q3"), a: t("affiliates.faq.a3") },
-    { q: t("affiliates.faq.q4"), a: t("affiliates.faq.a4") },
-    { q: t("affiliates.faq.q5"), a: t("affiliates.faq.a5") },
+    {
+      q: t("affiliates.faq.q1"),
+      a: t("affiliates.faq.a1"),
+      tip: "Commissions range from 0.1% to 0.4% of swap volume — paid in BTC, for the lifetime of every referred user. No caps, no expirations.",
+    },
+    {
+      q: t("affiliates.faq.q2"),
+      a: t("affiliates.faq.a2"),
+      tip: "No signup, no KYC for affiliates. Just paste your email + BTC wallet, copy the widget or link, and start earning.",
+    },
+    {
+      q: t("affiliates.faq.q3"),
+      a: t("affiliates.faq.a3"),
+      tip: "Payouts are sent automatically to the BTC wallet you provided when generating your link — no manual claims required.",
+    },
+    {
+      q: t("affiliates.faq.q4"),
+      a: t("affiliates.faq.a4"),
+      tip: "The embed widget is fully functional: 6,000+ tokens, fixed or floating rates, $0.30 minimum. Identical to mrcglobalpay.com.",
+    },
+    {
+      q: t("affiliates.faq.q5"),
+      a: t("affiliates.faq.a5"),
+      tip: "MRC GlobalPay is a FINTRAC-registered Canadian MSB (#C100000015) and Bank of Canada Authorized PSP. Non-custodial — funds never leave the user's wallet flow.",
+    },
   ];
 
   const canonicalUrl = `https://mrcglobalpay.com${langPath(lang, "/affiliates")}`;
@@ -377,7 +413,7 @@ const Affiliates = () => {
     mainEntity: FAQS.map((f) => ({
       "@type": "Question",
       name: f.q,
-      acceptedAnswer: { "@type": "Answer", text: f.a },
+      acceptedAnswer: { "@type": "Answer", text: `${f.a}${f.tip ? ` ${f.tip}` : ""}` },
     })),
   };
 
@@ -612,7 +648,13 @@ const Affiliates = () => {
                     {f.q}
                   </AccordionTrigger>
                   <AccordionContent className="font-body text-sm text-muted-foreground leading-relaxed">
-                    {f.a}
+                    <p>{f.a}</p>
+                    {f.tip && (
+                      <p className="mt-2 rounded-lg border border-primary/20 bg-primary/5 p-3 text-[13px] text-foreground/85">
+                        <span className="font-semibold text-primary">Quick tip · </span>
+                        {f.tip}
+                      </p>
+                    )}
                   </AccordionContent>
                 </AccordionItem>
               ))}
