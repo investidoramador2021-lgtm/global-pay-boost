@@ -1,12 +1,17 @@
 import { useState } from "react";
 import { useTranslation } from "react-i18next";
-import { Shield, Lock, Server } from "lucide-react";
+import { Shield, Lock, Server, ArrowRight, Landmark, BadgeCheck, ExternalLink } from "lucide-react";
 import { motion } from "framer-motion";
 import ExchangeWidget from "@/components/ExchangeWidget";
 import DynamicExplainer from "@/components/DynamicExplainer";
 
 const trustIcons = [Shield, Lock, Server];
 const trustKeys = ["trustNoAccount", "trustNonCustodial", "trustSettlement"] as const;
+
+const FINTRAC_REGISTRY_URL =
+  "https://www10.fintrac-canafe.gc.ca/msb-esm/public/msb-search/search-by-name/?searchTerm=MRC+Pay+International";
+const BOC_PSP_REGISTRY_URL =
+  "https://www.bankofcanada.ca/core-functions/retail-payments-supervision/psp-registry/psp-registry-details/?account_id=408b884a-1aa1-ef11-a72d-0022483bf164";
 
 type WidgetMode = "exchange" | "buysell" | "private" | "bridge" | "request";
 
@@ -60,23 +65,76 @@ const HeroSection = ({ onTabChange }: HeroSectionProps) => {
             >
               <motion.h1
                 variants={fadeUp}
-                className="font-display font-extrabold leading-tight tracking-tight text-foreground"
+                className="font-display text-3xl font-extrabold leading-[1.1] tracking-tight text-foreground sm:text-4xl lg:text-5xl xl:text-6xl"
               >
-                {t("hero.heading")}{" "}
-                <span className="text-gradient-neon">{t("hero.headingAccent")}</span>
+                Non-Custodial{" "}
+                <span className="text-gradient-neon">Crypto Swap</span>
               </motion.h1>
 
               <motion.p
                 variants={fadeUp}
-                className="mt-4 max-w-lg font-body text-base leading-relaxed text-muted-foreground sm:mt-6 sm:text-lg"
+                className="mt-5 max-w-xl font-body text-base leading-relaxed text-muted-foreground sm:mt-6 sm:text-lg"
               >
-                {t("hero.subtitle")}{" "}
-                <span className="font-semibold text-primary">{t("hero.subtitleMsb")}</span>{" "}
-                {t("hero.subtitleEnd")}
+                Swap <span className="font-semibold text-foreground">6,000+ cryptocurrencies &amp; tokenized stocks</span> instantly from <span className="font-semibold text-primary">$0.30</span>. No registration. Direct wallet-to-wallet. Fully transparent rates.
               </motion.p>
 
-              {/* Trust Bar */}
-              <motion.div variants={fadeUp} className="mt-4 grid grid-cols-3 gap-2 sm:mt-8 sm:gap-4">
+              {/* Primary CTA — large, prominent */}
+              <motion.div variants={fadeUp} className="mt-7 flex flex-col gap-3 sm:flex-row sm:items-center sm:gap-4">
+                <a
+                  href="#exchange"
+                  onClick={(e) => {
+                    e.preventDefault();
+                    document.getElementById("exchange")?.scrollIntoView({ behavior: "smooth", block: "start" });
+                  }}
+                  className="btn-shimmer group inline-flex items-center justify-center gap-2 rounded-2xl bg-gradient-to-b from-primary to-[hsl(var(--neon))] px-8 py-4 font-display text-base font-extrabold uppercase tracking-wide text-primary-foreground shadow-[0_0_32px_-4px_hsl(var(--primary)/0.7)] ring-1 ring-primary/40 transition-all duration-150 hover:-translate-y-0.5 hover:brightness-110 hover:shadow-[0_0_44px_-2px_hsl(var(--primary)/0.9)] active:translate-y-0 sm:text-lg min-h-[56px]"
+                  aria-label="Start a crypto swap"
+                >
+                  Start Swap
+                  <ArrowRight className="h-5 w-5 transition-transform group-hover:translate-x-1" aria-hidden="true" />
+                </a>
+                <span className="font-body text-xs text-muted-foreground sm:text-sm">
+                  Live rates · No account · Settles in under 60s
+                </span>
+              </motion.div>
+
+              {/* Regulatory trust badge row — directly under hero text */}
+              <motion.div
+                variants={fadeUp}
+                className="mt-6 flex flex-wrap items-center gap-2 sm:gap-2.5"
+                aria-label="Regulatory trust signals"
+              >
+                <a
+                  href={FINTRAC_REGISTRY_URL}
+                  target="_blank"
+                  rel="noopener noreferrer external"
+                  className="inline-flex items-center gap-1.5 rounded-full border border-primary/30 bg-primary/5 px-3 py-1.5 font-display text-[11px] font-semibold text-foreground transition-colors hover:bg-primary/10 sm:text-xs"
+                  title="Verify on the official FINTRAC MSB Registry"
+                >
+                  <Shield className="h-3.5 w-3.5 text-primary" aria-hidden="true" />
+                  Registered Canadian MSB
+                  <ExternalLink className="h-3 w-3 text-muted-foreground" aria-hidden="true" />
+                </a>
+                <span className="hidden text-muted-foreground sm:inline" aria-hidden="true">•</span>
+                <span className="inline-flex items-center gap-1.5 rounded-full border border-border bg-card px-3 py-1.5 font-display text-[11px] font-semibold text-foreground sm:text-xs">
+                  <BadgeCheck className="h-3.5 w-3.5 text-primary" aria-hidden="true" />
+                  FINTRAC Compliant &amp; Regulated
+                </span>
+                <span className="hidden text-muted-foreground sm:inline" aria-hidden="true">•</span>
+                <a
+                  href={BOC_PSP_REGISTRY_URL}
+                  target="_blank"
+                  rel="noopener noreferrer external"
+                  className="inline-flex items-center gap-1.5 rounded-full border border-primary/30 bg-primary/5 px-3 py-1.5 font-display text-[11px] font-semibold text-foreground transition-colors hover:bg-primary/10 sm:text-xs"
+                  title="Verify on the official Bank of Canada PSP Registry"
+                >
+                  <Landmark className="h-3.5 w-3.5 text-primary" aria-hidden="true" />
+                  Bank of Canada — Authorized PSP
+                  <ExternalLink className="h-3 w-3 text-muted-foreground" aria-hidden="true" />
+                </a>
+              </motion.div>
+
+              {/* Trust Bar (3 steps) */}
+              <motion.div variants={fadeUp} className="mt-6 grid grid-cols-3 gap-2 sm:mt-8 sm:gap-4">
                 {trustKeys.map((key, idx) => {
                   const Icon = trustIcons[idx];
                   const altTexts = ["No-account crypto swap icon", "Non-custodial security shield", "Instant settlement indicator"];
