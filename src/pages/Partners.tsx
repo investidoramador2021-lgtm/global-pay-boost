@@ -6,10 +6,15 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { useToast } from "@/hooks/use-toast";
-import { ArrowRight, Check, X, AlertCircle } from "lucide-react";
+import {
+  ArrowRight, Check, X, AlertCircle, Shield, ExternalLink, Sparkles,
+  BarChart3, LineChart, Wallet, Users, TrendingUp, Coins, Percent,
+  Gauge, Webhook, KeyRound, Building2,
+} from "lucide-react";
 import SiteHeader from "@/components/SiteHeader";
 import SiteFooter from "@/components/SiteFooter";
 import MobileBottomNav from "@/components/MobileBottomNav";
+import { Link } from "react-router-dom";
 
 /* ── BTC address regex (mainnet: legacy, segwit, taproot) ── */
 const BTC_REGEX = /^(1[a-km-zA-HJ-NP-Z1-9]{25,34}|3[a-km-zA-HJ-NP-Z1-9]{25,34}|bc1[a-zA-HJ-NP-Z0-9]{25,90})$/;
@@ -234,13 +239,32 @@ const Partners = () => {
                 </div>
 
                 <h1 className="text-4xl sm:text-5xl lg:text-[3.25rem] font-bold text-foreground leading-[1.1] tracking-tight">
-                  Earn BTC on Every<br />
-                  <span className="text-primary">Settlement</span>
+                  Earn BTC on Referred Settlements with a{" "}
+                  <span className="text-primary">Dedicated Dashboard</span>
                 </h1>
 
-                <p className="text-lg text-muted-foreground leading-relaxed max-w-md">
-                  Secure BTC rewards by referring settlements to the MRC GlobalPay network.
+                <p className="text-lg text-muted-foreground leading-relaxed max-w-xl">
+                  The MRC GlobalPay Partner Program pays{" "}
+                  <span className="text-foreground font-semibold">0.1% – 0.2% in BTC</span>{" "}
+                  on every settlement your network generates — tracked live in a private dashboard,
+                  paid automatically, and built for high-volume referrers.
                 </p>
+
+                {/* Top cross-links */}
+                <div className="flex flex-wrap items-center gap-2 pt-1 text-xs">
+                  <Link
+                    to="/affiliates"
+                    className="inline-flex items-center gap-1.5 rounded-full border border-border bg-card/60 px-3 py-1 font-semibold text-muted-foreground transition-colors hover:border-primary/40 hover:text-primary"
+                  >
+                    Prefer easy widgets? Visit Affiliate Program <ArrowRight className="h-3 w-3" />
+                  </Link>
+                  <Link
+                    to="/referral"
+                    className="inline-flex items-center gap-1.5 rounded-full border border-border bg-card/60 px-3 py-1 font-semibold text-muted-foreground transition-colors hover:border-primary/40 hover:text-primary"
+                  >
+                    Referral Program <ArrowRight className="h-3 w-3" />
+                  </Link>
+                </div>
               </div>
 
               {/* Feature cards */}
@@ -259,10 +283,25 @@ const Partners = () => {
                 ))}
               </div>
 
-              {/* Trust note */}
-              <p className="text-xs text-muted-foreground/60">
-                Canadian MSB Registration&nbsp;C100000015&nbsp;·&nbsp;FINTRAC Compliant
-              </p>
+              {/* Trust badges */}
+              <div className="flex flex-wrap items-center gap-2">
+                <a
+                  href="https://www10.fintrac-canafe.gc.ca/msb-esm/public/msb-search/search-by-name/?searchTerm=MRC+Pay+International"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-flex items-center gap-1.5 rounded-full border border-primary/40 bg-primary/10 px-3 py-1 text-xs font-semibold text-primary transition-colors hover:bg-primary/20"
+                >
+                  <Shield className="h-3 w-3" /> FINTRAC MSB · C100000015
+                </a>
+                <a
+                  href="https://www.bankofcanada.ca/core-functions/retail-payments-supervision/psp-registry/psp-registry-details/?account_id=408b884a-1aa1-ef11-a72d-0022483bf164"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-flex items-center gap-1.5 rounded-full border border-primary/40 bg-primary/10 px-3 py-1 text-xs font-semibold text-primary transition-colors hover:bg-primary/20"
+                >
+                  <Shield className="h-3 w-3" /> Bank of Canada PSP
+                </a>
+              </div>
             </div>
 
             {/* ════════ RIGHT — Glassmorphic Registration Card ════════ */}
@@ -274,10 +313,12 @@ const Partners = () => {
                 <div className="rounded-3xl p-6 sm:p-8">
                   <div className="text-center space-y-1.5 mb-6">
                     <h2 className="text-xl font-bold text-foreground">
-                      {isLogin ? "Partner Login" : "Create Partner Account"}
+                      {isLogin ? "Welcome Back, Partner" : "Activate Your Partner Account"}
                     </h2>
                     {!isLogin && (
-                      <p className="text-sm text-muted-foreground">All fields are required to join the program.</p>
+                      <p className="text-sm text-muted-foreground">
+                        Free · ~2 minutes · BTC payouts to a wallet you control.
+                      </p>
                     )}
                   </div>
 
