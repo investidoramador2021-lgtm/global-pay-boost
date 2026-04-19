@@ -5,6 +5,7 @@ import { getLangFromPath, languageMeta } from "@/i18n";
 import HreflangTags from "@/components/HreflangTags";
 import LocalizedHubSchema from "@/components/LocalizedHubSchema";
 import GeoNudgeBanner from "@/components/GeoNudgeBanner";
+import FloatingSwapButton from "@/components/FloatingSwapButton";
 
 /**
  * Syncs the i18n language with the URL path prefix on every navigation.
@@ -40,6 +41,7 @@ const LangLayout = () => {
       <LocalizedHubSchema />
       <Outlet />
       <GeoNudgeBanner />
+      <FloatingSwapButton />
     </>
   );
 };
