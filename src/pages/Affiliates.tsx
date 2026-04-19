@@ -453,16 +453,16 @@ const Affiliates = () => {
               <Shield className="h-3.5 w-3.5" /> {t("affiliates.hero.badge")}
             </div>
             <h1 className="mt-6 font-display text-[2rem] sm:text-5xl lg:text-6xl font-extrabold tracking-tight text-foreground leading-[1.05]">
-              Turn Every Crypto Click Into{" "}
+              {t("affiliates.extra.heroH1Pre")}{" "}
               <span className="bg-gradient-to-r from-primary to-[hsl(var(--neon))] bg-clip-text text-transparent">
-                Lifetime BTC Income
+                {t("affiliates.extra.heroH1Accent")}
               </span>
             </h1>
             <p className="mt-5 font-body text-base sm:text-xl text-muted-foreground max-w-2xl mx-auto leading-relaxed">
-              Embed our{" "}
-              <span className="text-foreground font-semibold">fully functional non-custodial swap widget</span>{" "}
-              in 60 seconds and earn{" "}
-              <span className="text-foreground font-semibold">0.1% – 0.4% of every swap, forever</span> — paid automatically in BTC. No signup, no minimums, no caps.
+              {t("affiliates.extra.heroSubtitle1")}{" "}
+              <span className="text-foreground font-semibold">{t("affiliates.extra.heroSubtitle2")}</span>{" "}
+              {t("affiliates.extra.heroSubtitle3")}{" "}
+              <span className="text-foreground font-semibold">{t("affiliates.extra.heroSubtitle4")}</span>{t("affiliates.extra.heroSubtitle5")}
             </p>
 
             {/* Top cross-links */}
@@ -471,13 +471,13 @@ const Affiliates = () => {
                 href={langPath(lang, "/partners")}
                 className="inline-flex items-center gap-1.5 rounded-full border border-border bg-card/60 px-3 py-1 font-display font-semibold text-muted-foreground transition-colors hover:border-primary/40 hover:text-primary"
               >
-                Also check our Partner Program <ArrowRight className="h-3 w-3" />
+                {t("affiliates.extra.crossPartner")} <ArrowRight className="h-3 w-3" />
               </a>
               <a
                 href={langPath(lang, "/referral")}
                 className="inline-flex items-center gap-1.5 rounded-full border border-border bg-card/60 px-3 py-1 font-display font-semibold text-muted-foreground transition-colors hover:border-primary/40 hover:text-primary"
               >
-                Referral Program <ArrowRight className="h-3 w-3" />
+                {t("affiliates.extra.crossReferral")} <ArrowRight className="h-3 w-3" />
               </a>
             </div>
             <div className="mt-5 flex flex-wrap items-center justify-center gap-2 text-[11px] font-display font-semibold">
