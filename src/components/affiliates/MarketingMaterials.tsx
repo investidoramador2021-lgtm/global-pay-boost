@@ -192,7 +192,7 @@ const MarketingMaterials = () => {
                       )}
                     >
                       <img
-                        src={b.preview}
+                        src={previews[b.id] ?? b.image}
                         alt={`${b.name} — ${b.overlay}`}
                         loading="lazy"
                         className="h-full w-full object-cover"
@@ -202,7 +202,7 @@ const MarketingMaterials = () => {
                     <Button
                       type="button"
                       variant="outline"
-                      onClick={() => downloadBanner(b, b.overlay, lang, dir)}
+                      onClick={() => void downloadBanner({ spec: b, text: b.overlay, dir, lang })}
                       className="mt-3 inline-flex h-auto w-full items-center justify-center gap-2 rounded-lg border border-primary/40 bg-primary/10 px-3 py-2 font-display text-xs font-semibold text-primary transition-colors hover:bg-primary/20"
                     >
                       <Download className="h-3.5 w-3.5" /> {t("affiliates.materials.download")}
