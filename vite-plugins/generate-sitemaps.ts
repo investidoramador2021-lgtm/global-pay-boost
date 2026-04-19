@@ -23,7 +23,11 @@ import { join } from "node:path";
 
 const SUPABASE_URL = "https://tjikwxkmsfmyjkssvyoh.supabase.co";
 const FEED_BASE = `${SUPABASE_URL}/functions/v1/dynamic-feed?p=`;
-const URLS_PER_FILE = 5000;
+// 1,000 URLs/file keeps each sitemap ~1.6 MB. Larger files (we previously
+// shipped 5,000/file = ~8.2 MB) are technically valid per sitemaps.org but
+// Googlebot frequently times out fetching them, which surfaces in Search
+// Console as "Couldn't fetch" on a random subset of children every crawl.
+const URLS_PER_FILE = 1000;
 const URL_RE = /<url>[\s\S]*?<\/url>/g;
 
 async function fetchSourceBatch(idx: number): Promise<string | null> {
