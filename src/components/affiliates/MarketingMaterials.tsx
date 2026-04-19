@@ -436,7 +436,7 @@ const MarketingMaterials = () => {
             {/* ─────────── BANNERS ─────────── */}
             <TabsContent value="banners" className="mt-8">
               <p className="mb-6 text-center text-sm text-muted-foreground">
-                Generate any banner instantly by pasting the prompt into Grok Imagine, Midjourney, DALL·E, or any AI image tool.
+                Six on-brand banners — preview, then download the full-resolution image. Pair with the suggested overlay text or use as-is.
               </p>
               <div className="grid gap-5 lg:grid-cols-2">
                 {banners.map((b) => (
@@ -462,17 +462,34 @@ const MarketingMaterials = () => {
                     <p className="mt-1 text-xs text-muted-foreground">
                       Size: <span className="font-mono">{b.size}</span>
                     </p>
+
+                    <div
+                      className={cn(
+                        "mt-3 overflow-hidden rounded-lg border border-border bg-muted/40",
+                        b.aspect,
+                      )}
+                    >
+                      <img
+                        src={b.image}
+                        alt={`${b.name} — ${b.overlay}`}
+                        loading="lazy"
+                        className="h-full w-full object-cover"
+                      />
+                    </div>
+
+                    <a
+                      href={b.image}
+                      download={b.filename}
+                      className="mt-3 inline-flex w-full items-center justify-center gap-2 rounded-lg border border-primary/40 bg-primary/10 px-3 py-2 font-display text-xs font-semibold text-primary transition-colors hover:bg-primary/20"
+                    >
+                      <Download className="h-3.5 w-3.5" /> Download banner
+                    </a>
+
                     <div className="mt-3">
                       <p className="mb-1.5 text-[11px] font-semibold uppercase tracking-wider text-muted-foreground">
-                        Text overlay
+                        Suggested overlay text
                       </p>
                       <CopyBlock text={b.overlay} label="Copy text" />
-                    </div>
-                    <div className="mt-3">
-                      <p className="mb-1.5 text-[11px] font-semibold uppercase tracking-wider text-muted-foreground">
-                        AI image prompt
-                      </p>
-                      <CopyBlock text={b.prompt} label="Copy prompt" />
                     </div>
                   </div>
                 ))}
