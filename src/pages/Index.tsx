@@ -20,6 +20,7 @@ import ShadowSeoFaq from "@/components/ShadowSeoFaq";
 import TrendingEcosystems from "@/components/TrendingEcosystems";
 import GetTheAppBadges from "@/components/GetTheAppBadges";
 import BentoSpecsSection from "@/components/BentoSpecsSection";
+import WhyChooseSection from "@/components/WhyChooseSection";
 import LiveNetworkBadge from "@/components/LiveNetworkBadge";
 import PartnerProtocolCTA from "@/components/PartnerProtocolCTA";
 import { Helmet } from "react-helmet-async";
