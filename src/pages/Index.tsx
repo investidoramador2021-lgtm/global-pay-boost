@@ -168,6 +168,7 @@ const Index = () => {
         <main className="pb-20 lg:pb-0">
           <HeroSection onTabChange={setActiveWidgetTab} />
           <TrustBanner />
+          <WhyChooseSection />
           <div id="live-swaps">
             <LiveSwapTicker />
           </div>
