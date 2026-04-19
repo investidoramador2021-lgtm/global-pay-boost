@@ -1,7 +1,7 @@
 import { type ReactNode } from "react";
 import { useLocation } from "react-router-dom";
 import { getLangFromPath, langPath } from "@/i18n";
-import { Zap, Timer, Shield, Activity, ArrowRight, Gauge, Clock, CheckCircle2 } from "lucide-react";
+import { Zap, Timer, Shield, Activity, ArrowRight, Gauge, Clock, CheckCircle2, BookOpen, TrendingUp, AlertTriangle, Check, X } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import {
   Accordion,
@@ -13,6 +13,7 @@ import { Helmet } from "react-helmet-async";
 import HreflangTags from "@/components/HreflangTags";
 import SiteHeader from "@/components/SiteHeader";
 import SiteFooter from "@/components/SiteFooter";
+import { TOKEN_RICH_CONTENT, PAIR_META_OVERRIDES, buildSwapSteps } from "@/lib/swap-pair-rich-content";
 
 interface SwapPairPageProps {
   assetA: string;
@@ -28,6 +29,8 @@ interface SwapPairPageProps {
   extraFaqs?: { q: string; a: string }[];
   metaTitle?: string;
   metaDescription?: string;
+  /** Optional token key to render the deep "rich content" sections. Uses TOKEN_RICH_CONTENT[tokenKey]. Defaults to assetA. */
+  tokenKey?: string;
 }
 
 const SwapPairLanding = ({
