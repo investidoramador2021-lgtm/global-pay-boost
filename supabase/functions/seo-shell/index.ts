@@ -97,35 +97,9 @@ function buildSeoHead(opts: {
           url: SITE,
         },
       },
-      {
-        "@type": "FAQPage",
-        mainEntity: [
-          {
-            "@type": "Question",
-            name: `What is the minimum ${fromUp} required to swap for ${toUp}?`,
-            acceptedAnswer: {
-              "@type": "Answer",
-              text: `The minimum swap amount is approximately $0.30 USD equivalent in ${fromUp}. MRC GlobalPay supports micro-swaps starting from crypto dust amounts.`,
-            },
-          },
-          {
-            "@type": "Question",
-            name: `How long does a ${fromUp} to ${toUp} swap take?`,
-            acceptedAnswer: {
-              "@type": "Answer",
-              text: `Most ${fromUp} to ${toUp} swaps complete in under 60 seconds after the deposit transaction receives the required network confirmations.`,
-            },
-          },
-          {
-            "@type": "Question",
-            name: `Can I swap ${fromUp} to ${toUp} without KYC or identity verification?`,
-            acceptedAnswer: {
-              "@type": "Answer",
-              text: `Yes. MRC GlobalPay is a registered Canadian Money Services Business (MSB #C100000015). Standard crypto-to-crypto swaps do not require account creation or identity verification.`,
-            },
-          },
-        ],
-      },
+      // NOTE: FAQPage schema intentionally omitted here. The React app
+      // (DynamicExchange.tsx) renders a single FAQPage entity via Helmet to
+      // avoid Google Search Console "Duplicate field FAQPage" warnings.
     ],
   };
 
