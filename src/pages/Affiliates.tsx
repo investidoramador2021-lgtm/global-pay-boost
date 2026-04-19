@@ -413,7 +413,7 @@ const Affiliates = () => {
     mainEntity: FAQS.map((f) => ({
       "@type": "Question",
       name: f.q,
-      acceptedAnswer: { "@type": "Answer", text: f.a },
+      acceptedAnswer: { "@type": "Answer", text: `${f.a}${f.tip ? ` ${f.tip}` : ""}` },
     })),
   };
 
