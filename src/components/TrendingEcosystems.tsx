@@ -82,12 +82,16 @@ const TrendingEcosystems = () => {
     <section className="border-t border-border bg-background py-16" aria-labelledby="trending-hubs-heading">
       <div className="container mx-auto px-4">
         <div className="mb-10 text-center">
-          <h2 id="trending-hubs-heading" className="mb-3 text-2xl font-bold text-foreground sm:text-3xl">
+          <span className="inline-flex items-center gap-2 rounded-full border border-primary/20 bg-primary/5 px-4 py-1.5 font-mono text-xs font-medium uppercase tracking-widest text-primary">
+            <Cpu className="h-3.5 w-3.5" aria-hidden="true" />
             2026 Trending Hubs
+          </span>
+          <h2 id="trending-hubs-heading" className="mt-4 mb-3 font-display text-2xl font-bold tracking-tight text-foreground sm:text-3xl lg:text-4xl">
+            Top Crypto Ecosystems This Year
           </h2>
-          <p className="mx-auto max-w-2xl text-muted-foreground">
-            The 2026 trending crypto pairs on MRC GlobalPay — verified, high-liquidity tokens across AI, DePIN, RWA, and staking. Swap with{" "}
-            <strong className="text-foreground">no account required</strong> and a{" "}
+          <p className="mx-auto max-w-2xl font-body text-base text-muted-foreground sm:text-lg">
+            Verified, high-liquidity tokens across AI, DePIN, RWA, and Solana staking. Swap with{" "}
+            <strong className="text-foreground">no account required</strong> from a{" "}
             <strong className="text-foreground">$0.30 minimum</strong>, settled directly to your wallet.
           </p>
         </div>
