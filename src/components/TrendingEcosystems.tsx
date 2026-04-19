@@ -94,6 +94,9 @@ const TrendingEcosystems = () => {
             <strong className="text-foreground">no account required</strong> from a{" "}
             <strong className="text-foreground">$0.30 minimum</strong>, settled directly to your wallet.
           </p>
+          <p className="mx-auto mt-2 max-w-2xl font-body text-xs text-muted-foreground/80 sm:text-sm">
+            Built for both casual swappers and serious affiliate partners.
+          </p>
         </div>
 
         {/* Tab buttons */}
