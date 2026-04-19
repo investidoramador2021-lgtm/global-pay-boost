@@ -47,13 +47,17 @@ const SwapPairLanding = ({
   extraFaqs = [],
   metaTitle,
   metaDescription,
+  tokenKey,
 }: SwapPairPageProps) => {
   const { pathname } = useLocation();
   const lang = getLangFromPath(pathname);
   const lp = (path: string) => langPath(lang, path);
-  const title = metaTitle || `Swap ${assetA} to ${assetB} Instantly | MRC GlobalPay`;
-  const description = metaDescription || `Instant ${assetAName} to ${assetBName} swaps in under 60 seconds. No registration, zero delays. Best rates March 2026.`;
+  const metaOverride = PAIR_META_OVERRIDES[slug];
+  const title = metaTitle || metaOverride?.metaTitle || `Swap ${assetA} to ${assetB} Instantly | MRC GlobalPay`;
+  const description = metaDescription || metaOverride?.metaDescription || `Instant ${assetAName} to ${assetBName} swaps in under 60 seconds. No registration, zero delays. Best rates March 2026.`;
   const url = `https://mrcglobalpay.com${lp(`/swap/${slug}`)}`;
+  const rich = TOKEN_RICH_CONTENT[tokenKey || assetA];
+  const steps = buildSwapSteps(assetA, assetB, assetAName, assetBName);
 
   const aeoFaq = {
     q: `What is the fastest way to swap ${assetA} for ${assetB} in March 2026?`,
