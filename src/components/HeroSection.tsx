@@ -1,12 +1,17 @@
 import { useState } from "react";
 import { useTranslation } from "react-i18next";
-import { Shield, Lock, Server } from "lucide-react";
+import { Shield, Lock, Server, ArrowRight, Landmark, BadgeCheck, ExternalLink } from "lucide-react";
 import { motion } from "framer-motion";
 import ExchangeWidget from "@/components/ExchangeWidget";
 import DynamicExplainer from "@/components/DynamicExplainer";
 
 const trustIcons = [Shield, Lock, Server];
 const trustKeys = ["trustNoAccount", "trustNonCustodial", "trustSettlement"] as const;
+
+const FINTRAC_REGISTRY_URL =
+  "https://www10.fintrac-canafe.gc.ca/msb-esm/public/msb-search/search-by-name/?searchTerm=MRC+Pay+International";
+const BOC_PSP_REGISTRY_URL =
+  "https://www.bankofcanada.ca/core-functions/retail-payments-supervision/psp-registry/psp-registry-details/?account_id=408b884a-1aa1-ef11-a72d-0022483bf164";
 
 type WidgetMode = "exchange" | "buysell" | "private" | "bridge" | "request";
 
