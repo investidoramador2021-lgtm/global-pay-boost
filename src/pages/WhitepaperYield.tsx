@@ -3,6 +3,8 @@ import { useTranslation } from "react-i18next";
 import { usePageUrl } from "@/hooks/use-page-url";
 import SiteHeader from "@/components/SiteHeader";
 import SiteFooter from "@/components/SiteFooter";
+import SocialShare from "@/components/blog/SocialShare";
+import StickyShareRail from "@/components/blog/StickyShareRail";
 import { motion } from "framer-motion";
 import { Link, useLocation } from "react-router-dom";
 import { getLangFromPath, langPath } from "@/i18n";
@@ -62,7 +64,19 @@ const WhitepaperYield = () => {
         <title>Digital Asset Yield Engine — MRC GlobalPay Whitepaper</title>
         <meta name="description" content="Is the MRC Earn yield guaranteed? Institutional-grade interest accrual via Peer-to-Institutional lending, 150% over-collateralization, daily compounding." />
         <link rel="canonical" href={canonicalUrl} />
-        <meta name="robots" content="index, follow" />
+        <meta name="robots" content="index, follow, max-image-preview:large" />
+        <meta property="og:title" content="Digital Asset Yield Engine — MRC GlobalPay Whitepaper" />
+        <meta property="og:description" content="Institutional-grade interest accrual via Peer-to-Institutional lending, 150% over-collateralization, daily compounding." />
+        <meta property="og:type" content="article" />
+        <meta property="og:url" content={canonicalUrl} />
+        <meta property="og:site_name" content="MRC GlobalPay" />
+        <meta property="og:image" content="https://mrcglobalpay.com/og-image.jpg" />
+        <meta property="og:image:width" content="1200" />
+        <meta property="og:image:height" content="630" />
+        <meta name="twitter:card" content="summary_large_image" />
+        <meta name="twitter:title" content="Digital Asset Yield Engine — MRC GlobalPay" />
+        <meta name="twitter:description" content="Daily compounding via Peer-to-Institutional lending with 150% over-collateralization." />
+        <meta name="twitter:image" content="https://mrcglobalpay.com/og-image.jpg" />
         <script type="application/ld+json">
           {JSON.stringify({
             "@context": "https://schema.org",
@@ -71,6 +85,7 @@ const WhitepaperYield = () => {
             headline: "Institutional-Grade Interest Accrual and Risk Management",
             description: "MRC GlobalPay Earn protocol delivers daily compounding interest via Peer-to-Institutional lending pools with 150% over-collateralization.",
             url: canonicalUrl,
+            image: "https://mrcglobalpay.com/og-image.jpg",
             datePublished: "2026-04-14",
             identifier: "MRC-WP-EARN-2026",
             author: { "@type": "Organization", name: "MRC GlobalPay" },
@@ -79,6 +94,7 @@ const WhitepaperYield = () => {
         </script>
       </Helmet>
       <HreflangTags />
+      <StickyShareRail url={canonicalUrl} title="Digital Asset Yield Engine — MRC GlobalPay Whitepaper" />
       <SiteHeader />
 
       {/* Hero */}
@@ -205,6 +221,14 @@ const WhitepaperYield = () => {
             </div>
           </div>
         </div>
+      </section>
+
+      <section className="container mx-auto max-w-3xl px-4 pb-16">
+        <SocialShare
+          url={canonicalUrl}
+          title="Digital Asset Yield Engine — MRC GlobalPay Whitepaper"
+          description="Institutional-grade interest accrual via Peer-to-Institutional lending, 150% over-collateralization."
+        />
       </section>
 
       <SiteFooter />

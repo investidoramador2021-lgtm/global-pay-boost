@@ -3,6 +3,8 @@ import { useTranslation } from "react-i18next";
 import { usePageUrl } from "@/hooks/use-page-url";
 import SiteHeader from "@/components/SiteHeader";
 import SiteFooter from "@/components/SiteFooter";
+import SocialShare from "@/components/blog/SocialShare";
+import StickyShareRail from "@/components/blog/StickyShareRail";
 import { motion } from "framer-motion";
 import { Link, useLocation } from "react-router-dom";
 import { getLangFromPath, langPath } from "@/i18n";
@@ -98,7 +100,19 @@ const LiquidityWhitepaper = () => {
           content="MRC GlobalPay liquidity whitepaper: ZkSync USDC, USDS, EDGE and Aptos CAKE powering non-custodial cross-chain settlement for 900+ assets, $0.30 minimums."
         />
         <link rel="canonical" href={canonicalUrl} />
-        <meta name="robots" content="index, follow" />
+        <meta name="robots" content="index, follow, max-image-preview:large" />
+        <meta property="og:title" content="Q2 2026 Liquidity Expansion — MRC GlobalPay Whitepaper" />
+        <meta property="og:description" content="MRC GlobalPay liquidity whitepaper: ZkSync USDC, USDS, EDGE and Aptos CAKE powering non-custodial cross-chain settlement for 900+ assets, $0.30 minimums." />
+        <meta property="og:type" content="article" />
+        <meta property="og:url" content={canonicalUrl} />
+        <meta property="og:site_name" content="MRC GlobalPay" />
+        <meta property="og:image" content={`https://mrcglobalpay.com${heroAsset}`} />
+        <meta property="og:image:width" content="1200" />
+        <meta property="og:image:height" content="630" />
+        <meta name="twitter:card" content="summary_large_image" />
+        <meta name="twitter:title" content="Q2 2026 Liquidity Expansion — MRC GlobalPay" />
+        <meta name="twitter:description" content="ZkSync USDC, USDS, EDGE and Aptos CAKE powering non-custodial cross-chain settlement." />
+        <meta name="twitter:image" content={`https://mrcglobalpay.com${heroAsset}`} />
         <script type="application/ld+json">
           {JSON.stringify({
             "@context": "https://schema.org",
@@ -109,6 +123,7 @@ const LiquidityWhitepaper = () => {
             description:
               "MRC GlobalPay integrates Layer-2 powerhouses and next-generation stablecoins to reduce transaction friction globally.",
             url: canonicalUrl,
+            image: `https://mrcglobalpay.com${heroAsset}`,
             datePublished: "2026-04-12",
             author: {
               "@type": "Organization",
@@ -122,6 +137,8 @@ const LiquidityWhitepaper = () => {
           })}
         </script>
       </Helmet>
+
+      <StickyShareRail url={canonicalUrl} title="Q2 2026 Liquidity Expansion — MRC GlobalPay Whitepaper" />
 
       <SiteHeader />
 
@@ -423,6 +440,14 @@ const LiquidityWhitepaper = () => {
             </Link>
           </motion.div>
         </div>
+      </section>
+
+      <section className="container mx-auto max-w-3xl px-4 pb-16">
+        <SocialShare
+          url={canonicalUrl}
+          title="Q2 2026 Liquidity Expansion — MRC GlobalPay Whitepaper"
+          description="ZkSync USDC, USDS, EDGE and Aptos CAKE powering non-custodial cross-chain settlement for 900+ assets."
+        />
       </section>
 
       <SiteFooter />

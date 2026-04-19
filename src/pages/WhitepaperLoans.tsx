@@ -3,6 +3,8 @@ import { useTranslation } from "react-i18next";
 import { usePageUrl } from "@/hooks/use-page-url";
 import SiteHeader from "@/components/SiteHeader";
 import SiteFooter from "@/components/SiteFooter";
+import SocialShare from "@/components/blog/SocialShare";
+import StickyShareRail from "@/components/blog/StickyShareRail";
 import { motion } from "framer-motion";
 import { Link, useLocation } from "react-router-dom";
 import { getLangFromPath, langPath } from "@/i18n";
@@ -62,7 +64,19 @@ const WhitepaperLoans = () => {
         <title>Crypto-Collateralized Liquidity Solutions — MRC GlobalPay Whitepaper</title>
         <meta name="description" content="How do crypto-collateralized loans work in Canada? MRC GlobalPay's non-custodial lending framework optimizes capital efficiency under FINTRAC MSB regulation." />
         <link rel="canonical" href={canonicalUrl} />
-        <meta name="robots" content="index, follow" />
+        <meta name="robots" content="index, follow, max-image-preview:large" />
+        <meta property="og:title" content="Crypto-Collateralized Liquidity Solutions — MRC GlobalPay Whitepaper" />
+        <meta property="og:description" content="MRC GlobalPay's non-custodial lending framework: capital efficiency under FINTRAC MSB regulation." />
+        <meta property="og:type" content="article" />
+        <meta property="og:url" content={canonicalUrl} />
+        <meta property="og:site_name" content="MRC GlobalPay" />
+        <meta property="og:image" content="https://mrcglobalpay.com/og-image.jpg" />
+        <meta property="og:image:width" content="1200" />
+        <meta property="og:image:height" content="630" />
+        <meta name="twitter:card" content="summary_large_image" />
+        <meta name="twitter:title" content="Crypto-Collateralized Liquidity Solutions — MRC GlobalPay" />
+        <meta name="twitter:description" content="Non-custodial lending under FINTRAC MSB regulation." />
+        <meta name="twitter:image" content="https://mrcglobalpay.com/og-image.jpg" />
         <script type="application/ld+json">
           {JSON.stringify({
             "@context": "https://schema.org",
@@ -71,6 +85,7 @@ const WhitepaperLoans = () => {
             headline: "Optimizing Capital Efficiency through Non-Custodial Lending Frameworks",
             description: "MRC GlobalPay's lending protocol enables liquidity access without divestment of digital assets through decentralized collateral management and Canadian MSB oversight.",
             url: canonicalUrl,
+            image: "https://mrcglobalpay.com/og-image.jpg",
             datePublished: "2026-04-14",
             identifier: "MRC-WP-LOAN-2026",
             author: { "@type": "Organization", name: "MRC GlobalPay" },
@@ -79,6 +94,7 @@ const WhitepaperLoans = () => {
         </script>
       </Helmet>
       <HreflangTags />
+      <StickyShareRail url={canonicalUrl} title="Crypto-Collateralized Liquidity Solutions — MRC GlobalPay Whitepaper" />
       <SiteHeader />
 
       {/* Hero */}
@@ -206,6 +222,14 @@ const WhitepaperLoans = () => {
             </div>
           </div>
         </div>
+      </section>
+
+      <section className="container mx-auto max-w-3xl px-4 pb-16">
+        <SocialShare
+          url={canonicalUrl}
+          title="Crypto-Collateralized Liquidity Solutions — MRC GlobalPay Whitepaper"
+          description="MRC GlobalPay's non-custodial lending framework optimizes capital efficiency under FINTRAC MSB regulation."
+        />
       </section>
 
       <SiteFooter />
