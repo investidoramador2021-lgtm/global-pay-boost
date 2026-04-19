@@ -14,6 +14,7 @@ import {
 import SiteHeader from "@/components/SiteHeader";
 import SiteFooter from "@/components/SiteFooter";
 import MobileBottomNav from "@/components/MobileBottomNav";
+import { ProgramsNav, ProgramsFooterLinks } from "@/components/ProgramsNav";
 import { Link } from "react-router-dom";
 
 /* ── BTC address regex (mainnet: legacy, segwit, taproot) ── */
@@ -217,6 +218,7 @@ const Partners = () => {
       </Helmet>
 
       <SiteHeader />
+      <ProgramsNav active="partners" />
 
       {/* ── Page wrapper with mesh gradient ── */}
       <div className="relative min-h-screen bg-background overflow-hidden">
@@ -680,6 +682,7 @@ const Partners = () => {
         </section>
       </div>
 
+      <ProgramsFooterLinks active="partners" />
       <SiteFooter />
       <MobileBottomNav />
     </>
