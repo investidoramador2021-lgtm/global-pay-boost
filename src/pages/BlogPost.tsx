@@ -9,10 +9,13 @@ import BlogLanguageToggle from "@/components/blog/BlogLanguageToggle";
 import TableOfContents, { extractHeadings } from "@/components/blog/TableOfContents";
 import SocialShare from "@/components/blog/SocialShare";
 import BlogSwapCrossLinks from "@/components/blog/BlogSwapCrossLinks";
+import StickyShareRail from "@/components/blog/StickyShareRail";
+import PriorityTokenHero from "@/components/blog/PriorityTokenHero";
 import { fetchPostBySlug, fetchRelatedPosts, findSlugLanguage, type BlogPost } from "@/lib/blog-data";
 import { getLangFromPath, langPath, supportedLanguages } from "@/i18n";
 import { TRANSLATED_BEGINNERS_GUIDE_POSTS } from "@/lib/blog/translated-beginners-guide-posts";
 import { TRANSLATED_VECHAIN_POSTS } from "@/lib/blog/translated-vechain-posts";
+import { getPriorityTokenByBlogSlug, buildSwapDeepLink } from "@/lib/priority-token-assets";
 
 const BlogPostPage = () => {
   const { slug } = useParams<{ slug: string }>();
