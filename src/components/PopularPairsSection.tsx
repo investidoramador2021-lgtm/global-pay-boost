@@ -62,68 +62,78 @@ const PopularPairsSection = () => {
   }, []);
 
   return (
-    <section id="popular-pairs" className="bg-background py-14 sm:py-20 lg:py-28">
+    <section id="popular-pairs" className="bg-background py-14 sm:py-20 lg:py-24">
       <div className="container mx-auto px-4">
         <div className="mx-auto max-w-2xl text-center">
-          <div className="mx-auto mb-3 flex h-10 w-10 items-center justify-center rounded-xl bg-primary/10">
-            <TrendingUp className="h-5 w-5 text-primary" aria-hidden="true" />
-          </div>
-          <h2 className="font-display text-2xl font-bold tracking-tight text-foreground sm:text-3xl lg:text-4xl">
+          <span className="inline-flex items-center gap-2 rounded-full border border-primary/20 bg-primary/5 px-4 py-1.5 font-mono text-xs font-medium uppercase tracking-widest text-primary">
+            <TrendingUp className="h-3.5 w-3.5" aria-hidden="true" />
+            Popular Swaps
+          </span>
+          <h2 className="mt-4 font-display text-2xl font-bold tracking-tight text-foreground sm:text-3xl lg:text-4xl">
             Best Rates Crypto Exchange
           </h2>
           <p className="mt-3 font-body text-base text-muted-foreground sm:mt-4 sm:text-lg">
-            Live rates aggregated from 700+ liquidity sources, updated in real time. Compare the most-traded pairs and lock in the best non-custodial execution from $0.30.
+            Live rates aggregated from 700+ liquidity sources. Tap any pair to swap instantly from <span className="font-semibold text-foreground">$0.30</span> — non-custodial, no account.
           </p>
         </div>
 
-        {/* Table-style layout inspired by ChangeNow */}
-        <div className="mx-auto mt-8 max-w-3xl sm:mt-12">
-          <div className="mb-3 flex items-center justify-between px-4 font-body text-xs font-medium uppercase tracking-wider text-muted-foreground">
-            <span>Popular Pair</span>
-            <span>Rate</span>
-          </div>
-          <div className="space-y-2">
+        {/* Horizontal carousel of top pairs */}
+        <div className="relative mx-auto mt-8 sm:mt-12">
+          <div
+            className="-mx-4 flex snap-x snap-mandatory gap-3 overflow-x-auto px-4 pb-4 sm:gap-4 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden"
+            role="list"
+            aria-label="Popular crypto swap pairs"
+          >
             {pairs.map((pair) => (
               <Link
                 key={`${pair.from}-${pair.to}`}
                 to={pair.href}
-                className="hover-lift card-soft group flex items-center justify-between gap-2 px-3 py-3 hover:border-primary/40 sm:gap-3 sm:p-4"
+                role="listitem"
+                className="group relative flex w-[240px] shrink-0 snap-start flex-col gap-3 rounded-2xl border border-border bg-card p-4 shadow-card transition-all duration-200 hover:-translate-y-1 hover:border-primary/40 hover:shadow-elevated sm:w-[260px] sm:p-5"
+                aria-label={`Swap ${pair.fromName} to ${pair.toName}`}
               >
-                <div className="flex items-center gap-2 sm:gap-3">
-                  <div className="flex items-center gap-1 rounded-lg bg-accent px-2 py-1 sm:gap-1.5 sm:px-3 sm:py-1.5">
+                <div className="flex items-center justify-between">
+                  <div className="flex items-center gap-1.5 rounded-lg bg-accent px-2.5 py-1.5">
                     <span className="font-display text-xs font-bold text-foreground sm:text-sm">{pair.from}</span>
-                    <ArrowRight className="h-3 w-3 text-primary/70 rtl-flip transition-transform duration-200 group-hover:translate-x-0.5" />
+                    <ArrowRight className="h-3 w-3 text-primary/70 rtl-flip transition-transform duration-200 group-hover:translate-x-0.5" aria-hidden="true" />
                     <span className="font-display text-xs font-bold text-foreground sm:text-sm">{pair.to}</span>
                   </div>
-                  <span className="hidden font-body text-xs text-muted-foreground sm:inline">
-                    {pair.fromName} → {pair.toName}
-                  </span>
+                  <ArrowUpRight className="h-4 w-4 text-muted-foreground transition-colors group-hover:text-primary" aria-hidden="true" />
                 </div>
 
-                <div className="flex items-center gap-2 sm:gap-3">
+                <div className="font-body text-xs text-muted-foreground">
+                  {pair.fromName} → {pair.toName}
+                </div>
+
+                <div className="mt-auto flex items-center justify-between border-t border-border/60 pt-3">
                   {pair.loading ? (
-                    <Loader2 className="h-4 w-4 animate-spin text-muted-foreground" />
+                    <Loader2 className="h-4 w-4 animate-spin text-muted-foreground" aria-hidden="true" />
                   ) : pair.rate ? (
-                    <span className="rate-tween text-right font-display text-[11px] font-semibold text-foreground sm:text-sm">
+                    <span className="rate-tween font-display text-[11px] font-semibold text-foreground sm:text-xs">
                       1 {pair.from} ≈ {parseFloat(pair.rate).toFixed(
                         parseFloat(pair.rate) > 100 ? 2 : parseFloat(pair.rate) > 1 ? 4 : 6
-                      )}{" "}
-                      {pair.to}
+                      )} {pair.to}
                     </span>
                   ) : (
-                    <span className="font-body text-sm text-muted-foreground">—</span>
+                    <span className="font-body text-xs text-muted-foreground">Live rate</span>
                   )}
-                  <Button
-                    variant="ghost"
-                    size="sm"
-                    className="hidden text-primary text-xs sm:flex opacity-0 transition-opacity group-hover:opacity-100"
-                  >
-                    Swap <ArrowUpRight className="ml-1 h-3 w-3" />
-                  </Button>
+                  <span className="font-display text-[10px] font-bold uppercase tracking-wider text-primary opacity-0 transition-opacity group-hover:opacity-100">
+                    Swap
+                  </span>
                 </div>
               </Link>
             ))}
           </div>
+
+          {/* Edge fade hints */}
+          <div className="pointer-events-none absolute inset-y-0 left-0 w-8 bg-gradient-to-r from-background to-transparent" aria-hidden="true" />
+          <div className="pointer-events-none absolute inset-y-0 right-0 w-8 bg-gradient-to-l from-background to-transparent" aria-hidden="true" />
+        </div>
+
+        <div className="mt-6 text-center">
+          <span className="font-body text-xs text-muted-foreground">
+            Swipe to explore more pairs · Updated every 30 seconds
+          </span>
         </div>
       </div>
     </section>
