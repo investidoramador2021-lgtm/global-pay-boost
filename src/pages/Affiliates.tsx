@@ -645,32 +645,32 @@ const Affiliates = () => {
               <div className="rounded-2xl border border-border bg-card p-5 shadow-sm">
                 <div className="flex items-center justify-between">
                   <span className="font-display text-xs font-semibold uppercase tracking-wider text-muted-foreground">
-                    Lifetime Earnings
+                    {t("affiliates.extra.dashEarnings")}
                   </span>
                   <span className="inline-flex items-center gap-1 rounded-full bg-primary/15 px-2 py-0.5 font-mono text-[10px] font-semibold text-primary">
                     <Coins className="h-3 w-3" /> BTC
                   </span>
                 </div>
                 <div className="mt-3 font-mono text-3xl font-extrabold text-foreground">₿ 0.14582910</div>
-                <p className="mt-1 text-xs text-muted-foreground">≈ $14,250 USD · updated every 30s</p>
+                <p className="mt-1 text-xs text-muted-foreground">{t("affiliates.extra.dashEarningsCaption")}</p>
                 <div className="mt-4 flex h-2 overflow-hidden rounded-full bg-border/60">
                   <div className="h-full w-3/4 bg-gradient-to-r from-primary to-[hsl(var(--neon))]" />
                 </div>
-                <p className="mt-2 text-[11px] text-muted-foreground">75% to next tier (Pro · 0.3%)</p>
+                <p className="mt-2 text-[11px] text-muted-foreground">{t("affiliates.extra.dashEarningsProgress")}</p>
               </div>
 
               {/* Volume card */}
               <div className="rounded-2xl border border-border bg-card p-5 shadow-sm">
                 <div className="flex items-center justify-between">
                   <span className="font-display text-xs font-semibold uppercase tracking-wider text-muted-foreground">
-                    30-Day Volume
+                    {t("affiliates.extra.dashVolume")}
                   </span>
                   <span className="inline-flex items-center gap-1 text-[11px] font-semibold text-primary">
                     <TrendingUp className="h-3 w-3" /> +18.4%
                   </span>
                 </div>
                 <div className="mt-3 font-mono text-3xl font-extrabold text-foreground">$182,940</div>
-                <p className="mt-1 text-xs text-muted-foreground">347 swaps · 89 unique referrals</p>
+                <p className="mt-1 text-xs text-muted-foreground">{t("affiliates.extra.dashVolumeCaption")}</p>
                 <div className="mt-4 flex items-end gap-1 h-12">
                   {[40, 65, 50, 80, 70, 90, 100, 75, 85, 95, 88, 100].map((h, i) => (
                     <div
@@ -687,27 +687,27 @@ const Affiliates = () => {
               <div className="rounded-2xl border border-border bg-card p-5 shadow-sm">
                 <div className="flex items-center justify-between">
                   <span className="font-display text-xs font-semibold uppercase tracking-wider text-muted-foreground">
-                    Recent BTC Payouts
+                    {t("affiliates.extra.dashPayouts")}
                   </span>
                   <Wallet className="h-3.5 w-3.5 text-primary" />
                 </div>
                 <ul className="mt-3 space-y-2">
                   {[
-                    { date: "Apr 18", amount: "0.00428 BTC", status: "Confirmed" },
-                    { date: "Apr 11", amount: "0.00391 BTC", status: "Confirmed" },
-                    { date: "Apr 04", amount: "0.00512 BTC", status: "Confirmed" },
+                    { date: "Apr 18", amount: "0.00428 BTC" },
+                    { date: "Apr 11", amount: "0.00391 BTC" },
+                    { date: "Apr 04", amount: "0.00512 BTC" },
                   ].map((p) => (
                     <li key={p.date} className="flex items-center justify-between rounded-lg border border-border/60 bg-background/60 px-3 py-2 text-xs">
                       <span className="font-mono text-muted-foreground">{p.date}</span>
                       <span className="font-mono font-semibold text-foreground">{p.amount}</span>
                       <span className="inline-flex items-center gap-1 font-display text-[10px] font-semibold text-primary">
-                        <Check className="h-3 w-3" /> {p.status}
+                        <Check className="h-3 w-3" /> {t("affiliates.extra.dashPayoutStatus")}
                       </span>
                     </li>
                   ))}
                 </ul>
                 <p className="mt-3 text-[11px] text-muted-foreground">
-                  Auto-paid every 7 days once threshold is met.
+                  {t("affiliates.extra.dashPayoutsCaption")}
                 </p>
               </div>
             </div>
@@ -717,9 +717,9 @@ const Affiliates = () => {
                 href={langPath(lang, "/partners")}
                 className="btn-shimmer inline-flex items-center justify-center gap-2 rounded-xl bg-primary px-7 py-3.5 font-display text-sm font-bold text-primary-foreground shadow-neon transition-all duration-100 hover:bg-primary/90 hover:-translate-y-0.5"
               >
-                <Users className="h-4 w-4" /> Unlock the Full Dashboard <ArrowRight className="h-4 w-4" />
+                <Users className="h-4 w-4" /> {t("affiliates.extra.dashCta")} <ArrowRight className="h-4 w-4" />
               </a>
-              <p className="mt-3 text-xs text-muted-foreground">Free upgrade · no KYC · keep your widget &amp; payouts unchanged.</p>
+              <p className="mt-3 text-xs text-muted-foreground">{t("affiliates.extra.dashCtaNote")}</p>
             </div>
           </div>
         </section>
