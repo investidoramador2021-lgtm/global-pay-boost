@@ -47,12 +47,12 @@ const buildLink = (email: string, btc: string, lang: string) => {
   return `https://mrcglobalpay.com${langSeg}/?ref=${token}`;
 };
 
-const buildSnippet = (email: string, btc: string, mode: "light" | "dark", lang: string) => {
+const buildSnippet = (email: string, btc: string, mode: "light" | "dark", lang: string, title: string) => {
   const token = email || btc ? buildRefToken(email, btc) : "your-ref";
   const langParam = lang && lang !== "en" ? `&lang=${lang}` : "";
   return `<iframe
   src="https://mrcglobalpay.com/embed/widget?mode=${mode}&ref=${token}${langParam}"
-  title="MRC GlobalPay — Instant Crypto Swap"
+  title="${title}"
   width="100%"
   height="440"
   loading="lazy"
@@ -124,7 +124,7 @@ const WidgetGenerator = ({ lang }: { lang: string }) => {
   const activeBtc = btcValid ? btc.trim() : "";
 
   const link = useMemo(() => buildLink(activeEmail, activeBtc, lang), [activeEmail, activeBtc, lang]);
-  const snippet = useMemo(() => buildSnippet(activeEmail, activeBtc, mode, lang), [activeEmail, activeBtc, mode, lang]);
+  const snippet = useMemo(() => buildSnippet(activeEmail, activeBtc, mode, lang, t("affiliates.generator.previewLabel")), [activeEmail, activeBtc, mode, lang, t]);
   const previewUrl = useMemo(() => {
     const token = activeEmail || activeBtc ? buildRefToken(activeEmail, activeBtc) : "your-ref";
     const langParam = lang && lang !== "en" ? `&lang=${lang}` : "";
@@ -237,7 +237,7 @@ const WidgetGenerator = ({ lang }: { lang: string }) => {
       <div className="mt-12">
         <div className="mb-4 flex flex-wrap items-center justify-between gap-2">
           <p className="font-display text-sm uppercase tracking-wider font-bold text-foreground">
-            <span className="text-primary animate-pulse">●</span> Live Widget Preview
+            <span className="text-primary animate-pulse">●</span> {t("affiliates.generator.previewLabel")}
             <span className="ms-2 font-normal normal-case tracking-normal text-muted-foreground text-xs">
               · {mode === "light" ? t("affiliates.generator.previewLight") : t("affiliates.generator.previewDark")} · {t("affiliates.generator.previewInteractive")}
             </span>
@@ -263,7 +263,7 @@ const WidgetGenerator = ({ lang }: { lang: string }) => {
             </div>
           </div>
           <p className="mt-5 text-center text-sm text-muted-foreground max-w-2xl mx-auto leading-relaxed">
-            This widget works exactly like ChangeNOW's. Users can freely change any tokens and complete the full swap using our exact non-custodial flow. Fully responsive on desktop, tablets, and mobile.
+            {t("affiliates.generator.previewTry")}
           </p>
         </div>
       </div>
@@ -299,9 +299,9 @@ const WidgetGenerator = ({ lang }: { lang: string }) => {
               target="_blank"
               rel="noopener noreferrer"
               className="inline-flex items-center justify-center gap-2 rounded-xl border-2 border-primary/50 bg-primary/10 px-5 py-4 font-display text-sm font-bold uppercase tracking-wide text-primary transition-all hover:bg-primary/20 hover:border-primary hover:-translate-y-0.5 min-h-[52px] whitespace-nowrap"
-              title="Open the embeddable widget in a new tab to test it"
+              title={t("affiliates.generator.previewTry")}
             >
-              <ExternalLink className="h-4 w-4" /> Test in New Tab
+              <ExternalLink className="h-4 w-4" /> {t("affiliates.generator.previewInteractive")}
             </a>
           </div>
           <p className="mt-3 text-[11px] text-muted-foreground">{t("affiliates.generator.embedHelp")}</p>
@@ -367,28 +367,23 @@ const Affiliates = () => {
   const FAQS = [
     {
       q: t("affiliates.faq.q1"),
-      a: "You earn 0.1% to 0.4% of every swap your referrals make — for life. Tier depends on your monthly referred volume: 0.1% under $50k, 0.2% from $50k–$250k, 0.3% from $250k–$1M, and 0.4% above $1M. Commissions are paid in BTC directly to the wallet you provided when generating your link.",
-      tip: "No caps, no expirations, no clawbacks. As long as your referral keeps swapping, you keep earning.",
+      a: t("affiliates.faq.a1"),
     },
     {
       q: t("affiliates.faq.q2"),
-      a: "No. There is zero signup, zero KYC, and zero approval process for affiliates. You just paste your email and a BTC payout wallet, copy the widget code or referral link, and you're live. Tracking starts on the very first click.",
-      tip: "If you want a real-time dashboard, API keys, and webhooks, upgrade to the Partner Program — also free, takes ~2 minutes.",
+      a: t("affiliates.faq.a2"),
     },
     {
       q: t("affiliates.faq.q3"),
-      a: "Commissions are aggregated and sent automatically to your BTC wallet on a rolling basis once the network-confirmed amount exceeds the minimum payout threshold. There are no manual claims, no invoices, and no waiting periods beyond on-chain confirmation.",
-      tip: "Use a wallet you fully control (not an exchange deposit address) so you never miss a payout.",
+      a: t("affiliates.faq.a3"),
     },
     {
       q: t("affiliates.faq.q4"),
-      a: "Yes — the embedded widget is the exact same engine that powers mrcglobalpay.com. Your visitors get 6,000+ tokens, fixed and floating rates, $0.30 minimum swaps, and the full non-custodial flow. They never need to leave your site.",
-      tip: "The widget is fully responsive on mobile, tablet, and desktop, and supports 13 languages out of the box.",
+      a: t("affiliates.faq.a4"),
     },
     {
       q: t("affiliates.faq.q5"),
-      a: "MRC GlobalPay is operated by MRC Pay International Corp, a FINTRAC-registered Canadian Money Services Business (#C100000015) and a Bank of Canada–registered Payment Service Provider. We are non-custodial: user funds route directly through liquidity providers and never sit on our books. You can promote with full regulatory confidence.",
-      tip: "Both registrations are publicly verifiable on the official FINTRAC and Bank of Canada registries (linked in the hero).",
+      a: t("affiliates.faq.a5"),
     },
   ];
 
@@ -417,7 +412,7 @@ const Affiliates = () => {
     mainEntity: FAQS.map((f) => ({
       "@type": "Question",
       name: f.q,
-      acceptedAnswer: { "@type": "Answer", text: `${f.a}${f.tip ? ` ${f.tip}` : ""}` },
+      acceptedAnswer: { "@type": "Answer", text: f.a },
     })),
   };
 
@@ -863,12 +858,6 @@ const Affiliates = () => {
                   </AccordionTrigger>
                   <AccordionContent className="font-body text-sm text-muted-foreground leading-relaxed">
                     <p>{f.a}</p>
-                    {f.tip && (
-                      <p className="mt-2 rounded-lg border border-primary/20 bg-primary/5 p-3 text-[13px] text-foreground/85">
-                        <span className="font-semibold text-primary">Quick tip · </span>
-                        {f.tip}
-                      </p>
-                    )}
                   </AccordionContent>
                 </AccordionItem>
               ))}
