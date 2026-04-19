@@ -1,7 +1,7 @@
 import { type ReactNode } from "react";
 import { useLocation } from "react-router-dom";
 import { getLangFromPath, langPath } from "@/i18n";
-import { Zap, Timer, Shield, Activity, ArrowRight, Gauge, Clock, CheckCircle2 } from "lucide-react";
+import { Zap, Timer, Shield, Activity, ArrowRight, Gauge, Clock, CheckCircle2, BookOpen, TrendingUp, AlertTriangle, Check, X } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import {
   Accordion,
@@ -13,6 +13,7 @@ import { Helmet } from "react-helmet-async";
 import HreflangTags from "@/components/HreflangTags";
 import SiteHeader from "@/components/SiteHeader";
 import SiteFooter from "@/components/SiteFooter";
+import { TOKEN_RICH_CONTENT, PAIR_META_OVERRIDES, buildSwapSteps } from "@/lib/swap-pair-rich-content";
 
 interface SwapPairPageProps {
   assetA: string;
@@ -28,6 +29,8 @@ interface SwapPairPageProps {
   extraFaqs?: { q: string; a: string }[];
   metaTitle?: string;
   metaDescription?: string;
+  /** Optional token key to render the deep "rich content" sections. Uses TOKEN_RICH_CONTENT[tokenKey]. Defaults to assetA. */
+  tokenKey?: string;
 }
 
 const SwapPairLanding = ({
@@ -44,13 +47,17 @@ const SwapPairLanding = ({
   extraFaqs = [],
   metaTitle,
   metaDescription,
+  tokenKey,
 }: SwapPairPageProps) => {
   const { pathname } = useLocation();
   const lang = getLangFromPath(pathname);
   const lp = (path: string) => langPath(lang, path);
-  const title = metaTitle || `Swap ${assetA} to ${assetB} Instantly | MRC GlobalPay`;
-  const description = metaDescription || `Instant ${assetAName} to ${assetBName} swaps in under 60 seconds. No registration, zero delays. Best rates March 2026.`;
+  const metaOverride = PAIR_META_OVERRIDES[slug];
+  const title = metaTitle || metaOverride?.metaTitle || `Swap ${assetA} to ${assetB} Instantly | MRC GlobalPay`;
+  const description = metaDescription || metaOverride?.metaDescription || `Instant ${assetAName} to ${assetBName} swaps in under 60 seconds. No registration, zero delays. Best rates March 2026.`;
   const url = `https://mrcglobalpay.com${lp(`/swap/${slug}`)}`;
+  const rich = TOKEN_RICH_CONTENT[tokenKey || assetA];
+  const steps = buildSwapSteps(assetA, assetB, assetAName, assetBName);
 
   const aeoFaq = {
     q: `What is the fastest way to swap ${assetA} for ${assetB} in March 2026?`,
