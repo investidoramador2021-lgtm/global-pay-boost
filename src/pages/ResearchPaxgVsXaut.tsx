@@ -2,6 +2,8 @@ import { Helmet } from "react-helmet-async";
 import { useLocation } from "react-router-dom";
 import SiteHeader from "@/components/SiteHeader";
 import SiteFooter from "@/components/SiteFooter";
+import SocialShare from "@/components/blog/SocialShare";
+import StickyShareRail from "@/components/blog/StickyShareRail";
 import HreflangTags from "@/components/HreflangTags";
 import { getLangFromPath, langPath, type SupportedLanguage } from "@/i18n";
 import {
@@ -138,6 +140,14 @@ const ResearchPaxgVsXaut = () => {
         <meta property="og:description" content={meta.metaDescription} />
         <meta property="og:url" content={canonicalUrl} />
         <meta property="og:type" content="article" />
+        <meta property="og:site_name" content="MRC GlobalPay" />
+        <meta property="og:image" content="https://mrcglobalpay.com/og-image.jpg" />
+        <meta property="og:image:width" content="1200" />
+        <meta property="og:image:height" content="630" />
+        <meta name="twitter:card" content="summary_large_image" />
+        <meta name="twitter:title" content={meta.metaTitle} />
+        <meta name="twitter:description" content={meta.metaDescription} />
+        <meta name="twitter:image" content="https://mrcglobalpay.com/og-image.jpg" />
         <meta
           name="robots"
           content="index, follow, max-image-preview:large, max-snippet:-1"
@@ -147,6 +157,7 @@ const ResearchPaxgVsXaut = () => {
         </script>
       </Helmet>
       <HreflangTags />
+      <StickyShareRail url={canonicalUrl} title={meta.metaTitle} />
       <SiteHeader />
 
       <main className="min-h-screen bg-background">
@@ -554,6 +565,10 @@ const ResearchPaxgVsXaut = () => {
                 </AccordionItem>
               ))}
             </Accordion>
+          </div>
+
+          <div className="mx-auto mt-10 max-w-3xl px-4 pb-16">
+            <SocialShare url={canonicalUrl} title={meta.metaTitle} description={meta.metaDescription} />
           </div>
         </div>
       </main>

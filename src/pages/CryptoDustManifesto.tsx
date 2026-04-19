@@ -3,6 +3,8 @@ import { useLocation } from "react-router-dom";
 import { getLangFromPath, langPath } from "@/i18n";
 import SiteHeader from "@/components/SiteHeader";
 import SiteFooter from "@/components/SiteFooter";
+import SocialShare from "@/components/blog/SocialShare";
+import StickyShareRail from "@/components/blog/StickyShareRail";
 import { Zap, Shield, Clock, ArrowRight, Download, CheckCircle2, AlertTriangle, Layers } from "lucide-react";
 import { Button } from "@/components/ui/button";
 
@@ -60,8 +62,17 @@ const CryptoDustManifesto = () => {
         <meta property="og:type" content="article" />
         <meta property="og:url" content={canonical} />
         <meta property="og:site_name" content="MRC GlobalPay" />
+        <meta property="og:image" content="https://mrcglobalpay.com/og-image.jpg" />
+        <meta property="og:image:width" content="1200" />
+        <meta property="og:image:height" content="630" />
+        <meta name="twitter:card" content="summary_large_image" />
+        <meta name="twitter:title" content="The Master Guide to Crypto Dust Recovery" />
+        <meta name="twitter:description" content="Convert crypto dust from $0.30 — no registration, 6,000+ assets, under 60 seconds." />
+        <meta name="twitter:image" content="https://mrcglobalpay.com/og-image.jpg" />
         <script type="application/ld+json">{JSON.stringify(articleJsonLd)}</script>
       </Helmet>
+
+      <StickyShareRail url={canonical} title="The Master Guide to Crypto Dust Recovery | MRC GlobalPay" />
 
       <SiteHeader />
 
@@ -414,6 +425,14 @@ const CryptoDustManifesto = () => {
               </div>
             </section>
           </article>
+
+          <div className="mx-auto mt-10 max-w-3xl">
+            <SocialShare
+              url={canonical}
+              title="The Master Guide to Crypto Dust Recovery | MRC GlobalPay"
+              description="Strategic framework for non-custodial crypto dust conversion and cross-chain settlement."
+            />
+          </div>
         </div>
       </main>
 

@@ -274,7 +274,7 @@ const BlogPostPage = () => {
         {financialServiceJsonLd && <script type="application/ld+json">{JSON.stringify(financialServiceJsonLd)}</script>}
       </Helmet>
 
-      {priorityToken && <StickyShareRail url={postUrl} title={post.title} />}
+      <StickyShareRail url={postUrl} title={post.title} />
 
       <SiteHeader />
       <main className="min-h-screen bg-background">

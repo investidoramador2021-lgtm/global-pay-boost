@@ -3,6 +3,8 @@ import { useTranslation } from "react-i18next";
 import { usePageUrl } from "@/hooks/use-page-url";
 import SiteHeader from "@/components/SiteHeader";
 import SiteFooter from "@/components/SiteFooter";
+import SocialShare from "@/components/blog/SocialShare";
+import StickyShareRail from "@/components/blog/StickyShareRail";
 import { motion } from "framer-motion";
 import { Link } from "react-router-dom";
 import { getLangFromPath, langPath } from "@/i18n";
@@ -57,7 +59,19 @@ const BridgeWhitepaper = () => {
         <title>{wp("metaTitle")}</title>
         <meta name="description" content={wp("metaDesc")} />
         <link rel="canonical" href={canonicalUrl} />
-        <meta name="robots" content="index, follow" />
+        <meta name="robots" content="index, follow, max-image-preview:large" />
+        <meta property="og:title" content={wp("metaTitle")} />
+        <meta property="og:description" content={wp("metaDesc")} />
+        <meta property="og:type" content="article" />
+        <meta property="og:url" content={canonicalUrl} />
+        <meta property="og:site_name" content="MRC GlobalPay" />
+        <meta property="og:image" content={`https://mrcglobalpay.com${bridgeAsset}`} />
+        <meta property="og:image:width" content="1200" />
+        <meta property="og:image:height" content="630" />
+        <meta name="twitter:card" content="summary_large_image" />
+        <meta name="twitter:title" content={wp("metaTitle")} />
+        <meta name="twitter:description" content={wp("metaDesc")} />
+        <meta name="twitter:image" content={`https://mrcglobalpay.com${bridgeAsset}`} />
         <script type="application/ld+json">
           {JSON.stringify({
             "@context": "https://schema.org",
@@ -66,6 +80,7 @@ const BridgeWhitepaper = () => {
             "headline": wp("heroTitle"),
             "description": wp("metaDesc"),
             "url": canonicalUrl,
+            "image": `https://mrcglobalpay.com${bridgeAsset}`,
             "author": { "@type": "Organization", "name": "MRC GlobalPay" },
             "publisher": {
               "@type": "FinancialService",
@@ -75,6 +90,8 @@ const BridgeWhitepaper = () => {
           })}
         </script>
       </Helmet>
+
+      <StickyShareRail url={canonicalUrl} title={wp("metaTitle")} />
 
       <SiteHeader />
 
@@ -362,6 +379,10 @@ const BridgeWhitepaper = () => {
               </Link>
             </motion.div>
           </div>
+        </section>
+
+        <section className="container mx-auto max-w-3xl px-4 pb-16">
+          <SocialShare url={canonicalUrl} title={wp("metaTitle")} description={wp("metaDesc")} />
         </section>
       </main>
 
