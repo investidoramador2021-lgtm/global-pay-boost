@@ -220,7 +220,7 @@ Quick one — I've been using MRC GlobalPay for the last few weeks and it's quie
 • 6,000+ trading pairs
 • Under 60 seconds per swap
 • From $0.30 — yes, even dust
-• Regulated Canadian MSB (FINTRAC C100000015)
+• No account required for swaps
 
 If you swap crypto at all, give it a try: [YOUR-AFFILIATE-LINK]
 
@@ -238,12 +238,9 @@ I get asked all the time which exchange I use for quick crypto swaps. For a whil
 MRC GlobalPay has become my go-to, and here's why:
 
 🔐 Non-custodial — funds never sit on the platform
-🇨🇦 Fully regulated — FINTRAC MSB C100000015 + Bank of Canada PSP registered
 ⚡ 6,000+ pairs, swaps complete in under 60 seconds
 💸 Micro-swaps from $0.30 (perfect for clearing dust on Solana, BSC, TRON, etc.)
 🎯 No account needed for swaps
-
-I also signed up for their affiliate program — they pay LIFETIME commissions in real BTC (0.1% – 0.4% per swap). That's why this email has my link in it. Full transparency.
 
 Try it here:
 👉 [YOUR-AFFILIATE-LINK]
@@ -262,7 +259,7 @@ If you've been in crypto for more than five minutes, you know the pattern:
 
 → Centralized exchanges are fast but custodial (and increasingly KYC-everything)
 → DEX aggregators are non-custodial but slow, expensive, and chain-limited
-→ "No-KYC" swap sites are sketchy and almost never regulated
+→ "No-KYC" swap sites are sketchy and almost never trustworthy
 
 I spent months looking for something in the middle. I found it.
 
@@ -272,12 +269,10 @@ It's called MRC GlobalPay, and it's the cleanest non-custodial swap I've used:
 ✅ 6,000+ trading pairs across all major chains
 ✅ Swaps settle in under 60 seconds
 ✅ Micro-swaps from just $0.30 (huge for cleaning up dust)
-✅ Regulated as a Canadian MSB (FINTRAC C100000015) and registered with the Bank of Canada as a PSP
 ✅ Operated by MRC Pay International Corp out of Ottawa, Canada
+✅ No account required for swaps
 
-That last point matters. Most "anonymous" swap platforms are based in jurisdictions where there's zero recourse if something goes wrong. MRC is the opposite — fully on the record, fully compliant, but still non-custodial and still no-account-required for swaps.
-
-Here's the bonus: they run an affiliate program that pays LIFETIME commissions in BTC (0.1% – 0.4% of every swap, forever). That's how this email is monetized — full transparency. If you click my link and ever swap, I get a tiny piece in BTC.
+That last point matters. Most "anonymous" swap platforms are based in jurisdictions where there's zero recourse if something goes wrong. MRC is the opposite — a real corporate entity, on the record, but still non-custodial and still no-account-required for swaps.
 
 Try it once and see for yourself:
 👉 [YOUR-AFFILIATE-LINK]
@@ -299,16 +294,16 @@ const videoScript = `🎬 60-SECOND VIDEO SCRIPT — "The Best Non-Custodial Cry
 "If you swap crypto and you're still using centralized exchanges — stop. I'll show you something better in 60 seconds."
 
 [0:05 – 0:15] PROBLEM
-"Centralized exchanges hold your funds, ask for KYC on everything, and freeze accounts at random. DEXs are slow, expensive, and chain-limited. Most 'no-KYC' swaps? Unregulated and risky."
+"Centralized exchanges hold your funds, ask for KYC on everything, and freeze accounts at random. DEXs are slow, expensive, and chain-limited. Most 'no-KYC' swaps? Sketchy and risky."
 
 [0:15 – 0:35] SOLUTION — MRC GlobalPay
-"This is MRC GlobalPay. It's non-custodial — you never give up your keys. It supports 6,000+ trading pairs across every major chain. Swaps complete in under 60 seconds. And you can swap as little as $0.30 — perfect for cleaning up dust. Best part? It's a fully regulated Canadian MSB — FINTRAC registered and Bank of Canada PSP."
+"This is MRC GlobalPay. It's non-custodial — you never give up your keys. It supports 6,000+ trading pairs across every major chain. Swaps complete in under 60 seconds. And you can swap as little as $0.30 — perfect for cleaning up dust. No account, no email required."
 
 [0:35 – 0:50] PROOF / DEMO
 "Here's the swap I just did — BTC to USDT, 47 seconds, no account, no email. Funds went straight to my wallet."
 
 [0:50 – 1:00] CTA
-"Link in the description — it's my affiliate link, full transparency. Try a small swap, see for yourself, and if you like it, share your own link and earn lifetime BTC commissions just like I do. See you in the next one."
+"Link in the description — try a small swap and see for yourself. See you in the next one."
 
 ─────────────────────────────────────────────
 📝 VIDEO DESCRIPTION TEMPLATE
@@ -323,10 +318,9 @@ Why it's different:
 ✅ 6,000+ pairs across all major chains
 ✅ Swaps complete in under 60 seconds
 ✅ Micro-swaps from $0.30
-✅ FINTRAC MSB C100000015 + Bank of Canada PSP registered
 ✅ No account required for swaps
 
-💰 Affiliate disclosure: The link above is my referral link. If you swap through it, I earn a small lifetime commission in BTC (0.1% – 0.4%) — at zero extra cost to you. You can get your own link too.
+💰 Affiliate disclosure: The link above is my referral link. If you swap through it, I may earn a small commission — at zero extra cost to you.
 
 ⏱️ TIMESTAMPS
 0:00 Intro
@@ -346,9 +340,7 @@ There's finally a better option — and after testing it for several months, I'm
 
 ## Meet MRC GlobalPay
 
-[MRC GlobalPay]([YOUR-AFFILIATE-LINK]) is a non-custodial cryptocurrency exchange operated by MRC Pay International Corp, headquartered in Ottawa, Canada. Unlike most "anonymous" swap sites, it's a fully registered Canadian Money Services Business (FINTRAC MSB **C100000015**) and a registered Payment Service Provider with the **Bank of Canada**. That's a level of regulatory legitimacy almost no comparable platform can match.
-
-But it isn't a centralized exchange. Your funds never sit on the platform — every swap is an atomic, non-custodial transaction. You don't need an account to swap.
+[MRC GlobalPay]([YOUR-AFFILIATE-LINK]) is a non-custodial cryptocurrency exchange operated by MRC Pay International Corp, headquartered in Ottawa, Canada. Unlike most "anonymous" swap sites, it has a real corporate entity behind it — but it isn't a centralized exchange. Your funds never sit on the platform. Every swap is an atomic, non-custodial transaction, and you don't need an account to swap.
 
 ## Why It Stands Out
 
@@ -357,8 +349,8 @@ Here's what makes it different from every other swap I've tested:
 - **6,000+ trading pairs** across Bitcoin, Ethereum, Solana, BNB Chain, TRON, and dozens more.
 - **Sub-60-second swap times.** Most transactions settle in under a minute.
 - **Micro-swaps from just $0.30.** Almost no platform supports amounts this small — perfect for clearing dust on multi-chain wallets.
-- **Zero account required for swaps.** You only register if you want to use the affiliate or partner program.
-- **Real regulatory standing.** Canadian MSB + Bank of Canada PSP registration means there's a real entity behind the product.
+- **Zero account required for swaps.** Sign-up is only needed if you want to use the partner or affiliate tools.
+- **Real corporate operator.** A real entity behind the product, headquartered in Ottawa.
 
 ## Who Should Use It
 
@@ -367,13 +359,7 @@ If you fall into any of these groups, it's worth trying:
 1. **Long-term holders** who occasionally rebalance and hate the friction of centralized exchanges.
 2. **Multi-chain users** drowning in dust they can't otherwise convert.
 3. **Self-custody advocates** who refuse to deposit funds anywhere.
-4. **Creators and educators** who want a regulated platform they can recommend without reputational risk.
-
-## Bonus: Lifetime BTC Commissions
-
-There's also an affiliate program — and it's one of the most generous I've seen. You earn **0.1% to 0.4% in real BTC** on every swap your referrals ever make, paid automatically and forever. No minimums. No payout thresholds. Just lifetime Bitcoin.
-
-That's exactly how this article is monetized: the link below is my affiliate link. Full transparency.
+4. **Creators and educators** who want a clean tool they can recommend.
 
 ## Try It Yourself
 
@@ -381,11 +367,11 @@ The fastest way to evaluate MRC GlobalPay is to try a small swap — even $0.30 
 
 👉 **[Start a swap on MRC GlobalPay →]([YOUR-AFFILIATE-LINK])**
 
-In a market full of bad options, it's rare to find a tool that's simultaneously non-custodial, fast, regulated, and creator-friendly. MRC GlobalPay is the first platform I've used in 2026 that ticks every box.
+In a market full of bad options, it's rare to find a tool that's simultaneously non-custodial, fast, and easy. MRC GlobalPay is the first platform I've used in 2026 that ticks every box.
 
 ---
 
-*Disclosure: The links above are affiliate links. If you swap through them, I earn a small lifetime BTC commission at no extra cost to you.*`;
+*Disclosure: The links above are affiliate links. If you swap through them, I may earn a small commission at no extra cost to you.*`;
 
 /* ─────────── COMPONENT ─────────── */
 const MarketingMaterials = () => {
