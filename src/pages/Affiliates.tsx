@@ -648,7 +648,13 @@ const Affiliates = () => {
                     {f.q}
                   </AccordionTrigger>
                   <AccordionContent className="font-body text-sm text-muted-foreground leading-relaxed">
-                    {f.a}
+                    <p>{f.a}</p>
+                    {f.tip && (
+                      <p className="mt-2 rounded-lg border border-primary/20 bg-primary/5 p-3 text-[13px] text-foreground/85">
+                        <span className="font-semibold text-primary">Quick tip · </span>
+                        {f.tip}
+                      </p>
+                    )}
                   </AccordionContent>
                 </AccordionItem>
               ))}
