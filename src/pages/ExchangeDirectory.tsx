@@ -44,25 +44,12 @@ export default function ExchangeDirectory() {
   const { data: pairs } = useQuery({
     queryKey: ["directory-pairs"],
     queryFn: async () => {
-      // Fetch in chunks of 1000 (Supabase default cap) to surface every pair.
-      const all: Array<{ from_ticker: string; to_ticker: string }> = [];
-      let offset = 0;
-      const chunk = 1000;
-      // Hard cap at 5000 rows to avoid pathological renders
-      for (let i = 0; i < 5; i++) {
-        const { data, error } = await supabase
-          .from("pairs")
-          .select("from_ticker, to_ticker")
-          .eq("is_valid", true)
-          .order("from_ticker", { ascending: true })
-          .order("to_ticker", { ascending: true })
-          .range(offset, offset + chunk - 1);
-        if (error || !data || data.length === 0) break;
-        all.push(...data);
-        if (data.length < chunk) break;
-        offset += chunk;
-      }
-      return all;
+      const { data, error } = await supabase.rpc("get_valid_pair_slugs_json");
+      if (error) throw error;
+      return ((data ?? []) as Array<{ from_ticker: string; to_ticker: string }>).sort((a, b) => {
+        const fromCompare = a.from_ticker.localeCompare(b.from_ticker);
+        return fromCompare !== 0 ? fromCompare : a.to_ticker.localeCompare(b.to_ticker);
+      });
     },
     staleTime: 1000 * 60 * 60,
   });
