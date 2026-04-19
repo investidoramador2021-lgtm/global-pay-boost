@@ -403,19 +403,27 @@ const FintracFooterBlock = () => {
 
       {/* Regulatory Badges */}
       <div className="mt-4 flex flex-wrap items-center justify-center gap-2 sm:justify-start">
-        <div className="inline-flex items-center gap-1.5 rounded-full border border-primary/20 bg-primary/5 px-3 py-1">
+        <a
+          href={FINTRAC_REGISTRY_URL}
+          target="_blank"
+          rel="noopener noreferrer"
+          title="Verify MRC GlobalPay on the official FINTRAC MSB Registry — opens in a new tab"
+          className="inline-flex items-center gap-1.5 rounded-full border border-primary/30 bg-primary/5 px-3 py-1 transition-colors hover:bg-primary/10"
+        >
           <Shield className="h-3.5 w-3.5 text-primary" />
-          <span className="font-display text-[10px] font-bold uppercase tracking-wider text-primary">FINTRAC Registered</span>
-        </div>
+          <span className="font-display text-[10px] font-bold uppercase tracking-wider text-primary">FINTRAC Registered MSB</span>
+          <ExternalLink className="h-2.5 w-2.5 text-primary/70" aria-hidden="true" />
+        </a>
         <a
           href="https://www.bankofcanada.ca/core-functions/retail-payments-supervision/psp-registry/psp-registry-details/?account_id=408b884a-1aa1-ef11-a72d-0022483bf164"
           target="_blank"
           rel="noopener noreferrer"
-          title="Verify MRC GlobalPay on the official Bank of Canada PSP Registry"
-          className="inline-flex items-center gap-1.5 rounded-full border border-primary/20 bg-primary/5 px-3 py-1 transition-colors hover:bg-primary/10"
+          title="Verify MRC GlobalPay on the official Bank of Canada PSP Registry — opens in a new tab"
+          className="inline-flex items-center gap-1.5 rounded-full border border-primary/30 bg-primary/5 px-3 py-1 transition-colors hover:bg-primary/10"
         >
           <Shield className="h-3.5 w-3.5 text-primary" />
           <span className="font-display text-[10px] font-bold uppercase tracking-wider text-primary">Bank of Canada — Authorized PSP</span>
+          <ExternalLink className="h-2.5 w-2.5 text-primary/70" aria-hidden="true" />
         </a>
       </div>
 
