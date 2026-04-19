@@ -2,6 +2,8 @@ import { Helmet } from "react-helmet-async";
 import { Link } from "react-router-dom";
 import SiteHeader from "@/components/SiteHeader";
 import SiteFooter from "@/components/SiteFooter";
+import SocialShare from "@/components/blog/SocialShare";
+import StickyShareRail from "@/components/blog/StickyShareRail";
 import MsbTrustBar from "@/components/MsbTrustBar";
 import { ArrowRight, AlertTriangle, TrendingUp, ShieldCheck } from "lucide-react";
 import ogRavedaoImage from "@/assets/og-ravedao-research.jpg";
@@ -137,6 +139,8 @@ const ResearchRavedao = () => {
         <script type="application/ld+json">{JSON.stringify(softwareSchema)}</script>
         <script type="application/ld+json">{JSON.stringify(faqSchema)}</script>
       </Helmet>
+
+      <StickyShareRail url={CANONICAL} title={META_TITLE} />
 
       <SiteHeader />
 
@@ -462,6 +466,10 @@ const ResearchRavedao = () => {
           constitute financial advice. Cryptocurrency investments carry substantial risk of loss. Always do
           your own research and consult a licensed advisor before making investment decisions.
         </p>
+
+        <div className="mt-10">
+          <SocialShare url={CANONICAL} title={META_TITLE} description={META_DESCRIPTION} />
+        </div>
       </article>
 
       <SiteFooter />
