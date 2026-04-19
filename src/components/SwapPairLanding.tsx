@@ -14,6 +14,7 @@ import HreflangTags from "@/components/HreflangTags";
 import SiteHeader from "@/components/SiteHeader";
 import SiteFooter from "@/components/SiteFooter";
 import { TOKEN_RICH_CONTENT, PAIR_META_OVERRIDES, buildSwapSteps } from "@/lib/swap-pair-rich-content";
+import { getPriorityTokenByPairSlug, buildSwapDeepLink } from "@/lib/priority-token-assets";
 
 interface SwapPairPageProps {
   assetA: string;
@@ -58,6 +59,12 @@ const SwapPairLanding = ({
   const url = `https://mrcglobalpay.com${lp(`/swap/${slug}`)}`;
   const rich = TOKEN_RICH_CONTENT[tokenKey || assetA];
   const steps = buildSwapSteps(assetA, assetB, assetAName, assetBName);
+  const priorityToken = getPriorityTokenByPairSlug(slug);
+  const langPrefix = lp("").replace(/\/$/, "");
+  const heroOgImage = priorityToken
+    ? `https://mrcglobalpay.com${priorityToken.heroImage}`
+    : "https://pub-bb2e103a32db4e198524a2e9ed8f35b4.r2.dev/22f69f45-cf65-4871-9af4-b68ab4027213/id-preview-243bf129--23f851ec-c820-43c7-bbe2-d2e830f7c268.lovable.app-1773521796493.png";
+  const swapHref = priorityToken ? buildSwapDeepLink(priorityToken, langPrefix) : "/#exchange";
 
   const aeoFaq = {
     q: `What is the fastest way to swap ${assetA} for ${assetB} in March 2026?`,
@@ -149,11 +156,11 @@ const SwapPairLanding = ({
         <meta property="og:type" content="website" />
         <meta property="og:url" content={url} />
         <meta property="og:site_name" content="MRC GlobalPay" />
-        <meta property="og:image" content="https://pub-bb2e103a32db4e198524a2e9ed8f35b4.r2.dev/22f69f45-cf65-4871-9af4-b68ab4027213/id-preview-243bf129--23f851ec-c820-43c7-bbe2-d2e830f7c268.lovable.app-1773521796493.png" />
+        <meta property="og:image" content={heroOgImage} />
         <meta name="twitter:card" content="summary_large_image" />
         <meta name="twitter:title" content={title} />
         <meta name="twitter:description" content={description} />
-        <meta name="twitter:image" content="https://pub-bb2e103a32db4e198524a2e9ed8f35b4.r2.dev/22f69f45-cf65-4871-9af4-b68ab4027213/id-preview-243bf129--23f851ec-c820-43c7-bbe2-d2e830f7c268.lovable.app-1773521796493.png" />
+        <meta name="twitter:image" content={heroOgImage} />
         <script type="application/ld+json">{JSON.stringify(jsonLd)}</script>
         <script type="application/ld+json">{JSON.stringify(serviceJsonLd)}</script>
       </Helmet>
@@ -179,9 +186,23 @@ const SwapPairLanding = ({
                 {subHeadline}
               </p>
 
+              {priorityToken && (
+                <div className="mt-6 sm:mt-8 overflow-hidden rounded-2xl border border-border shadow-neon">
+                  <img
+                    src={priorityToken.heroImage}
+                    alt={priorityToken.heroAlt}
+                    width={1280}
+                    height={720}
+                    loading="eager"
+                    fetchPriority="high"
+                    className="h-auto w-full"
+                  />
+                </div>
+              )}
+
               <div className="mt-6 flex flex-col items-center gap-3 sm:mt-8 sm:flex-row sm:justify-center sm:gap-4">
                 <Button size="lg" className="shadow-neon w-full sm:w-auto" asChild>
-                  <a href="/#exchange">
+                  <a href={swapHref}>
                     <Zap className="mr-2 h-5 w-5" />
                     Swap {assetA} → {assetB} Now
                   </a>
