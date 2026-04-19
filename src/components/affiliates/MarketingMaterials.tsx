@@ -22,7 +22,25 @@ import banner4 from "@/assets/affiliate-banner-4-skyscraper.jpg";
 import banner5 from "@/assets/affiliate-banner-5-social.jpg";
 import banner6 from "@/assets/affiliate-banner-6-story.jpg";
 
-/* ─────────── Reusable copy block ─────────── */
+/* ─────────── Shared helpers ─────────── */
+const downloadFile = async (url: string, filename: string) => {
+  try {
+    const response = await fetch(url, { credentials: "same-origin" });
+    if (!response.ok) throw new Error("Download failed");
+    const blob = await response.blob();
+    const blobUrl = URL.createObjectURL(blob);
+    const a = document.createElement("a");
+    a.href = blobUrl;
+    a.download = filename;
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
+    setTimeout(() => URL.revokeObjectURL(blobUrl), 1000);
+  } catch {
+    window.open(url, "_blank", "noopener,noreferrer");
+  }
+};
+
 const CopyBlock = ({ text, label = "Copy" }: { text: string; label?: string }) => {
   const [copied, setCopied] = useState(false);
   const onCopy = async () => {
