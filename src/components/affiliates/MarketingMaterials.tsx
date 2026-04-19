@@ -9,10 +9,18 @@ import {
   Check,
   Megaphone,
   Sparkles,
+  Download,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { cn } from "@/lib/utils";
+
+import banner1 from "@/assets/affiliate-banner-1-leaderboard.jpg";
+import banner2 from "@/assets/affiliate-banner-2-mediumrect-dark.jpg";
+import banner3 from "@/assets/affiliate-banner-3-mediumrect-light.jpg";
+import banner4 from "@/assets/affiliate-banner-4-skyscraper.jpg";
+import banner5 from "@/assets/affiliate-banner-5-social.jpg";
+import banner6 from "@/assets/affiliate-banner-6-story.jpg";
 
 /* ─────────── Reusable copy block ─────────── */
 const CopyBlock = ({ text, label = "Copy" }: { text: string; label?: string }) => {
@@ -48,51 +56,63 @@ const CopyBlock = ({ text, label = "Copy" }: { text: string; label?: string }) =
 const banners = [
   {
     id: "leaderboard",
-    name: "Banner 1 — Leaderboard (728×90)",
-    size: "728 × 90 px",
+    name: "Banner 1 — Leaderboard",
+    size: "1920 × 1080 (use as 728×90)",
     theme: "Dark",
     overlay: "Swap 6,000+ Cryptos in 60 Seconds — Earn Lifetime BTC →",
-    prompt: `Ultra-modern 728x90 leaderboard banner for a non-custodial crypto exchange called MRC GlobalPay. Dark slate background (#0B1220) with subtle hexagonal mesh pattern. Glowing emerald-green to mint-green gradient (#00E676 to #00C853) glassmorphism panel on the right. Bitcoin coin icon with soft neon glow on the left. Clean sans-serif white text reading "Swap 6,000+ Cryptos in 60 Seconds" with a smaller line "Lifetime BTC commissions". Fine grid lines, premium fintech aesthetic, Revolut-style minimalism, 4K, sharp, vector-clean, no people, no logos other than a small Bitcoin symbol.`,
+    image: banner1,
+    filename: "mrcglobalpay-banner-leaderboard.jpg",
+    aspect: "aspect-[16/9]",
   },
   {
     id: "medium-rect-dark",
-    name: "Banner 2 — Medium Rectangle (300×250) — Dark",
-    size: "300 × 250 px",
+    name: "Banner 2 — Medium Rectangle (Dark)",
+    size: "1024 × 1024 (use as 300×250)",
     theme: "Dark",
     overlay: "Non-Custodial. Regulated in Canada. Earn BTC.",
-    prompt: `Premium 300x250 medium rectangle banner. Dark navy gradient background (#0B1220 to #111B2D). Centered glowing emerald shield icon (#00E676) with a small Canadian maple leaf accent. Soft volumetric light, subtle radial glow. Bold white sans-serif headline "Non-Custodial Crypto Swaps". Smaller text "FINTRAC MSB · Bank of Canada PSP". Glass card with 12px blur, thin emerald border, rounded 16px corners. Fintech, institutional, trustworthy, 4K, no people.`,
+    image: banner2,
+    filename: "mrcglobalpay-banner-mediumrect-dark.jpg",
+    aspect: "aspect-square",
   },
   {
     id: "medium-rect-light",
-    name: "Banner 3 — Medium Rectangle (300×250) — Light",
-    size: "300 × 250 px",
+    name: "Banner 3 — Medium Rectangle (Light)",
+    size: "1024 × 1024 (use as 300×250)",
     theme: "Light",
     overlay: "Micro-Swaps from $0.30. No Sign-Up.",
-    prompt: `Clean 300x250 medium rectangle banner with off-white background (#F8FAFC) and subtle dotted grid. A single elegant Bitcoin coin in 3D isometric style with soft emerald-green (#00C853) shadow. Bold dark slate sans-serif headline "Micro-Swaps from $0.30". Subtext "No sign-up · No KYC for swaps". Thin emerald accent line. Apple-like minimalism, premium fintech, white space, sharp, 4K, no people.`,
+    image: banner3,
+    filename: "mrcglobalpay-banner-mediumrect-light.jpg",
+    aspect: "aspect-square",
   },
   {
     id: "skyscraper",
-    name: "Banner 4 — Wide Skyscraper (160×600)",
-    size: "160 × 600 px",
+    name: "Banner 4 — Wide Skyscraper",
+    size: "1080 × 1920 (use as 160×600)",
     theme: "Dark",
     overlay: "Earn BTC on Every Swap You Refer",
-    prompt: `Vertical 160x600 wide skyscraper banner. Dark gradient (#0B1220 top, #00251A bottom) with vertical neon-green light beam down the center. Stacked icons top to bottom: lightning bolt, Bitcoin coin, shield with maple leaf, dollar coin. Vertical white text reading "Lifetime BTC Commissions" with subtext "0.1% – 0.4% per swap". Glassmorphism panels, soft glow, 4K, sharp, no people, fintech aesthetic.`,
+    image: banner4,
+    filename: "mrcglobalpay-banner-skyscraper.jpg",
+    aspect: "aspect-[9/16]",
   },
   {
     id: "social-1200",
-    name: "Banner 5 — Social Share (1200×628)",
-    size: "1200 × 628 px",
+    name: "Banner 5 — Social Share",
+    size: "1024 × 1024 (use as 1200×628)",
     theme: "Dark",
     overlay: "The Smartest Way to Swap Crypto in 2026",
-    prompt: `Cinematic 1200x628 social share image (Twitter/Facebook/LinkedIn open graph). Dark slate background (#0A0F1C) with abstract flowing emerald-green to mint particle waves on the right side. On the left: bold large white sans-serif headline "The Smartest Way to Swap Crypto in 2026" with subtitle "Non-custodial · 6,000+ pairs · Under 60 seconds · Regulated in Canada". A small "MRC GlobalPay" wordmark in clean white at the bottom-left. Premium fintech, Revolut/Stripe-style, 4K, ultra-sharp, no people.`,
+    image: banner5,
+    filename: "mrcglobalpay-banner-social.jpg",
+    aspect: "aspect-square",
   },
   {
     id: "story-1080",
-    name: "Banner 6 — Mobile Story (1080×1920)",
-    size: "1080 × 1920 px",
+    name: "Banner 6 — Mobile Story",
+    size: "1080 × 1920 (Instagram / TikTok / Shorts)",
     theme: "Dark",
     overlay: "Swap. Earn BTC. Repeat.",
-    prompt: `Vertical 1080x1920 Instagram/TikTok/YouTube Shorts story banner. Full-bleed dark gradient background with glowing emerald-green orb in the center. Floating 3D Bitcoin, Ethereum, Solana, and USDT coins orbiting around a glassmorphism card. Massive bold white sans-serif text top: "SWAP. EARN BTC. REPEAT." Bottom call-to-action band: "6,000+ pairs · From $0.30 · Lifetime commissions". Premium cinematic fintech, motion-blur particles, 4K, no people, no faces.`,
+    image: banner6,
+    filename: "mrcglobalpay-banner-story.jpg",
+    aspect: "aspect-[9/16]",
   },
 ];
 
@@ -416,7 +436,7 @@ const MarketingMaterials = () => {
             {/* ─────────── BANNERS ─────────── */}
             <TabsContent value="banners" className="mt-8">
               <p className="mb-6 text-center text-sm text-muted-foreground">
-                Generate any banner instantly by pasting the prompt into Grok Imagine, Midjourney, DALL·E, or any AI image tool.
+                Six on-brand banners — preview, then download the full-resolution image. Pair with the suggested overlay text or use as-is.
               </p>
               <div className="grid gap-5 lg:grid-cols-2">
                 {banners.map((b) => (
@@ -442,17 +462,34 @@ const MarketingMaterials = () => {
                     <p className="mt-1 text-xs text-muted-foreground">
                       Size: <span className="font-mono">{b.size}</span>
                     </p>
+
+                    <div
+                      className={cn(
+                        "mt-3 overflow-hidden rounded-lg border border-border bg-muted/40",
+                        b.aspect,
+                      )}
+                    >
+                      <img
+                        src={b.image}
+                        alt={`${b.name} — ${b.overlay}`}
+                        loading="lazy"
+                        className="h-full w-full object-cover"
+                      />
+                    </div>
+
+                    <a
+                      href={b.image}
+                      download={b.filename}
+                      className="mt-3 inline-flex w-full items-center justify-center gap-2 rounded-lg border border-primary/40 bg-primary/10 px-3 py-2 font-display text-xs font-semibold text-primary transition-colors hover:bg-primary/20"
+                    >
+                      <Download className="h-3.5 w-3.5" /> Download banner
+                    </a>
+
                     <div className="mt-3">
                       <p className="mb-1.5 text-[11px] font-semibold uppercase tracking-wider text-muted-foreground">
-                        Text overlay
+                        Suggested overlay text
                       </p>
                       <CopyBlock text={b.overlay} label="Copy text" />
-                    </div>
-                    <div className="mt-3">
-                      <p className="mb-1.5 text-[11px] font-semibold uppercase tracking-wider text-muted-foreground">
-                        AI image prompt
-                      </p>
-                      <CopyBlock text={b.prompt} label="Copy prompt" />
                     </div>
                   </div>
                 ))}
