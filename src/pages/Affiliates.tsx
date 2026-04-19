@@ -13,6 +13,7 @@ import SiteHeader from "@/components/SiteHeader";
 import SiteFooter from "@/components/SiteFooter";
 import { ProgramsNav, ProgramsFooterLinks } from "@/components/ProgramsNav";
 import MsbTrustBar from "@/components/MsbTrustBar";
+import MarketingMaterials from "@/components/affiliates/MarketingMaterials";
 import EmbedWidget from "@/pages/EmbedWidget";
 import { supabase } from "@/integrations/supabase/client";
 import { getLangFromPath, langPath } from "@/i18n";
@@ -689,6 +690,9 @@ const Affiliates = () => {
             </p>
           </div>
         </section>
+
+        {/* READY-MADE MARKETING MATERIALS — full copy/paste assets */}
+        <MarketingMaterials />
 
         {/* DASHBOARD PREVIEWS */}
         <section className="border-b border-border bg-muted/30 py-16 sm:py-20">
