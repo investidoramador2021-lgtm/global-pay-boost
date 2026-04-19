@@ -197,9 +197,9 @@ Deno.serve(async (req) => {
         if (refundExtraId) v2Body.refundExtraId = refundExtraId;
         if (rateId) v2Body.rateId = rateId;
 
-        const response = await fetch(`${V2_BASE}/exchange/${endpoint}`, {
+        const response = await fetchWithKeyFallback(`${V2_BASE}/exchange/${endpoint}`, {
           method: 'POST',
-          headers: { ...authHeaders, 'Content-Type': 'application/json' },
+          headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify(v2Body),
         });
         const parsed = await parseJsonResponse(response);
@@ -305,9 +305,9 @@ Deno.serve(async (req) => {
         if (!from || !to || !address) return badRequest('Missing from/to/address');
         if (!isValidTicker(from) || !isValidTicker(to)) return badRequest('Invalid ticker');
         const f = splitNetwork(from), t = splitNetwork(to);
-        const response = await fetch(`${V2_BASE}/exchange/by-fixed-rate`, {
+        const response = await fetchWithKeyFallback(`${V2_BASE}/exchange/by-fixed-rate`, {
           method: 'POST',
-          headers: { ...authHeaders, 'Content-Type': 'application/json' },
+          headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({
             fromCurrency: f.ticker, toCurrency: t.ticker,
             fromNetwork: f.network, toNetwork: t.network,
