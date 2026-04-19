@@ -295,6 +295,8 @@ const BlogPostPage = () => {
                 </div>
               </header>
 
+              {priorityToken && <PriorityTokenHero token={priorityToken} langPrefix={langPrefix} />}
+
               {/* At a Glance summary */}
               <div className="mb-8 rounded-xl border border-primary/20 bg-primary/5 p-5 sm:p-6">
                 <p className="mb-2 flex items-center gap-2 font-display text-sm font-semibold text-primary">
