@@ -1,16 +1,17 @@
 /**
- * LiquidityAggregator — Priority Waterfall across StealthEX (se) > LetsExchange (le) > ChangeNOW (cn).
+ * LiquidityAggregator — Priority Waterfall: ChangeNOW (cn) → StealthEX (se) → LetsExchange (le).
  *
  * Strategy:
- *   Priority 1 (Lead): StealthEX — highest margin, always tried first.
- *   Priority 2 (Fallback): LetsExchange — used when SE cannot quote.
- *   Priority 3 (Reserved): ChangeNOW — last-resort coverage extension.
+ *   Priority 1 (Lead): ChangeNOW — primary provider, best margins.
+ *   Priority 2 (Fallback): StealthEX — second tier coverage.
+ *   Priority 3 (Reserved): LetsExchange — last-resort coverage extender.
  *
  * Failover on create-transaction is silent. Quote stage walks the waterfall and
- * picks the first provider returning a positive estimate.
+ * picks the first provider returning a positive estimate, guaranteeing at least
+ * one quote whenever any provider can serve the pair.
  *
  * Brand integrity: Provider names never leak to UI. Internal codes only:
- *   'se' = StealthEX, 'le' = LetsExchange, 'cn' = ChangeNOW.
+ *   'cn' = ChangeNOW, 'se' = StealthEX, 'le' = LetsExchange.
  */
 import {
   getEstimate as cnGetEstimate,
@@ -70,7 +71,22 @@ export async function getBestEstimate(
   amount: string,
   fixedRate = false
 ): Promise<AggregatedEstimate> {
-  // Priority 1: StealthEX
+  // Priority 1: ChangeNOW
+  let cn: EstimateResult | null = null;
+  try { cn = await cnGetEstimate(from, to, amount, fixedRate); } catch {}
+  const cnAmt = POSITIVE(cn?.estimatedAmount);
+  if (cnAmt > 0) {
+    return {
+      estimatedAmount: cnAmt,
+      transactionSpeedForecast: cn!.transactionSpeedForecast,
+      warningMessage: cn!.warningMessage,
+      provider: "cn",
+      isBestRate: true,
+      coverageFallback: false,
+    };
+  }
+
+  // Priority 2: StealthEX
   let se: EstimateResult | null = null;
   try { se = await seGetEstimate(from, to, amount); } catch {}
   const seAmt = POSITIVE(se?.estimatedAmount);
@@ -80,12 +96,12 @@ export async function getBestEstimate(
       transactionSpeedForecast: se!.transactionSpeedForecast,
       warningMessage: se!.warningMessage,
       provider: "se",
-      isBestRate: true,
-      coverageFallback: false,
+      isBestRate: false,
+      coverageFallback: true,
     };
   }
 
-  // Priority 2: LetsExchange
+  // Priority 3: LetsExchange
   let le: EstimateResult | null = null;
   try { le = await leGetEstimate(from, to, amount); } catch {}
   const leAmt = POSITIVE(le?.estimatedAmount);
@@ -100,32 +116,17 @@ export async function getBestEstimate(
     };
   }
 
-  // Priority 3: ChangeNOW (reserved coverage)
-  let cn: EstimateResult | null = null;
-  try { cn = await cnGetEstimate(from, to, amount, fixedRate); } catch {}
-  const cnAmt = POSITIVE(cn?.estimatedAmount);
-  if (cnAmt > 0) {
-    return {
-      estimatedAmount: cnAmt,
-      transactionSpeedForecast: cn!.transactionSpeedForecast,
-      warningMessage: cn!.warningMessage,
-      provider: "cn",
-      isBestRate: false,
-      coverageFallback: true,
-    };
-  }
-
   return {
     estimatedAmount: null as any,
     transactionSpeedForecast: null as any,
-    warningMessage: se?.warningMessage || le?.warningMessage || cn?.warningMessage || "Rate unavailable.",
-    provider: "se",
+    warningMessage: cn?.warningMessage || se?.warningMessage || le?.warningMessage || "Rate unavailable.",
+    provider: "cn",
     isBestRate: false,
   };
 }
 
 /**
- * Get min amount — waterfall SE → LE → CN.
+ * Get min amount — waterfall CN → SE → LE.
  */
 export async function getBestMinAmount(
   from: string,
@@ -133,15 +134,15 @@ export async function getBestMinAmount(
   fixedRate = false
 ): Promise<MinAmountResult> {
   try {
+    const r = await cnGetMinAmount(from, to, fixedRate);
+    if (r?.minAmount && r.minAmount > 0) return r;
+  } catch {}
+  try {
     const r = await seGetMinAmount(from, to);
     if (r?.minAmount && r.minAmount > 0) return r;
   } catch {}
   try {
-    const r = await leGetMinAmount(from, to);
-    if (r?.minAmount && r.minAmount > 0) return r;
-  } catch {}
-  try {
-    return await cnGetMinAmount(from, to, fixedRate);
+    return await leGetMinAmount(from, to);
   } catch {}
   return { minAmount: 0 };
 }
@@ -155,18 +156,18 @@ export async function getBestMinAmount(
  */
 export async function createBestTransaction(
   params: CreateTransactionParams,
-  preferredProvider: Provider = "se"
+  preferredProvider: Provider = "cn"
 ): Promise<AggregatedTransaction> {
   // Build waterfall with the preferred provider first, then the rest in priority order.
-  const PRIORITY: Provider[] = ["se", "le", "cn"];
+  const PRIORITY: Provider[] = ["cn", "se", "le"];
   const order: Provider[] = [preferredProvider, ...PRIORITY.filter(p => p !== preferredProvider)];
 
   const tryProvider = async (p: Provider): Promise<AggregatedTransaction | null> => {
     try {
       const tx =
+        p === "cn" ? await cnCreateTransaction(params) :
         p === "se" ? await seCreateTransaction(params) :
-        p === "le" ? await leCreateTransaction(params) :
-        await cnCreateTransaction(params);
+        await leCreateTransaction(params);
       if (tx?.id && tx?.payinAddress) return { ...tx, provider: p };
       return null;
     } catch (err) {
@@ -189,15 +190,15 @@ export async function createBestTransaction(
 
 /**
  * Get tx status from the correct provider based on stored tag.
- * Defaults to StealthEX (current Priority 1) if no provider info.
+ * Defaults to ChangeNOW (current Priority 1) if no provider info.
  */
 export async function getStatusByProvider(
   id: string,
-  provider: Provider = "se"
+  provider: Provider = "cn"
 ): Promise<TransactionStatus> {
+  if (provider === "cn") return cnGetStatus(id);
   if (provider === "se") return seGetTransactionStatus(id);
-  if (provider === "le") return leGetTransactionStatus(id);
-  return cnGetStatus(id);
+  return leGetTransactionStatus(id);
 }
 
 /**
