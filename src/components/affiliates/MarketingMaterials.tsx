@@ -126,9 +126,9 @@ const socials = [
 → 6,000+ pairs
 → Swap in under 60 seconds
 → From just $0.30
-→ Regulated Canadian MSB
+→ No account required
 
-And they pay LIFETIME BTC commissions to anyone who shares it 👇
+Worth a look 👇
 
 [YOUR-AFFILIATE-LINK]
 
@@ -140,10 +140,10 @@ And they pay LIFETIME BTC commissions to anyone who shares it 👇
     text: `Most "no-KYC" swaps are sketchy.
 
 MRC GlobalPay is different:
-✅ FINTRAC MSB C100000015
-✅ Bank of Canada PSP registered
 ✅ Non-custodial (you keep your keys)
-✅ Lifetime BTC affiliate revenue (0.1% – 0.4%)
+✅ 6,000+ trading pairs
+✅ Swaps complete in under 60 seconds
+✅ Micro-swaps from $0.30
 
 Try it → [YOUR-AFFILIATE-LINK]
 
@@ -158,9 +158,9 @@ Try it → [YOUR-AFFILIATE-LINK]
 • 6,000+ trading pairs
 • Swaps complete in under 60 seconds
 • Micro-swaps from $0.30 (perfect for cleaning up dust)
-• Fully regulated in Canada (FINTRAC MSB C100000015)
+• No account required
 
-I'm earning lifetime BTC every time someone uses my link 👇
+Give it a try 👇
 
 🔗 [YOUR-AFFILIATE-LINK]`,
   },
@@ -178,20 +178,18 @@ Try it: [YOUR-AFFILIATE-LINK]`,
   {
     platform: "LinkedIn",
     label: "LinkedIn Post — Professional",
-    text: `A quick note for anyone navigating the regulated side of crypto:
+    text: `A quick note for anyone navigating crypto swaps:
 
 I've been recommending MRC GlobalPay to clients and contacts because it solves three problems most exchanges don't:
 
 1. Non-custodial architecture — assets never sit on the platform
-2. Genuine Canadian regulatory standing (FINTRAC MSB C100000015 + Bank of Canada PSP registration)
+2. Trusted operator with a real corporate entity behind the product
 3. Practical UX — 6,000+ pairs, sub-60-second swaps, micro-swaps from $0.30
-
-They also run a transparent affiliate program (0.1% – 0.4% lifetime BTC commissions), which is how I'm sharing this.
 
 If you have a network that swaps crypto regularly, take a look:
 👉 [YOUR-AFFILIATE-LINK]
 
-#Fintech #Crypto #Compliance #Bitcoin`,
+#Fintech #Crypto #Bitcoin`,
   },
   {
     platform: "Instagram / Threads",
@@ -199,12 +197,10 @@ If you have a network that swaps crypto regularly, take a look:
     text: `Crypto swap tool I actually trust ⚡️
 
 🔐 Non-custodial (you keep control)
-🇨🇦 Regulated in Canada
 💸 Swap from just $0.30
 ⏱️ Done in under 60 seconds
 🪙 6,000+ pairs
-
-Lifetime BTC commissions if you share it.
+✅ No account required
 
 Link in bio → [YOUR-AFFILIATE-LINK]
 
