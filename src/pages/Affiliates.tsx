@@ -946,16 +946,50 @@ const Affiliates = () => {
         {/* FINAL CTA */}
         <section className="py-16 sm:py-20">
           <div className="container mx-auto max-w-2xl px-4 text-center">
-            <h2 className="font-display text-3xl font-bold text-foreground sm:text-4xl">{t("affiliates.finalCta.title")}</h2>
-            <p className="mt-3 font-body text-muted-foreground">{t("affiliates.finalCta.subtitle")}</p>
-            <div className="mt-7">
+            <div className="inline-flex items-center gap-2 rounded-full border border-primary/30 bg-primary/10 px-3 py-1 text-[11px] font-display font-semibold text-primary">
+              <Sparkles className="h-3 w-3" /> 60 seconds to your first link
+            </div>
+            <h2 className="mt-4 font-display text-3xl font-bold text-foreground sm:text-4xl">
+              Your BTC Wallet Is About to Get a Lot Busier
+            </h2>
+            <p className="mt-3 font-body text-muted-foreground leading-relaxed">
+              Join thousands of creators, wallet teams and crypto communities already earning lifetime BTC
+              with MRC GlobalPay. No signup, no minimums, no risk — just paste, copy, and earn.
+            </p>
+            <div className="mt-7 flex flex-col sm:flex-row items-center justify-center gap-3">
               <a
                 href="#generate"
-                className="btn-shimmer inline-flex items-center justify-center gap-2 rounded-xl bg-primary px-8 py-4 font-display text-base font-bold text-primary-foreground shadow-neon transition-all duration-100 hover:bg-primary/90 hover:-translate-y-0.5"
+                className="btn-shimmer inline-flex w-full sm:w-auto items-center justify-center gap-2 rounded-xl bg-primary px-8 py-4 font-display text-base font-bold text-primary-foreground shadow-neon transition-all duration-100 hover:bg-primary/90 hover:-translate-y-0.5"
               >
-                <Sparkles className="h-4 w-4" /> {t("affiliates.finalCta.button")}
+                <Sparkles className="h-4 w-4" /> Generate My Widget Now
+              </a>
+              <a
+                href={langPath(lang, "/partners")}
+                className="inline-flex w-full sm:w-auto items-center justify-center gap-2 rounded-xl border-2 border-primary/40 bg-background px-7 py-4 font-display text-sm font-bold text-primary transition-all hover:bg-primary/10 hover:border-primary"
+              >
+                Open Partner Dashboard <ArrowRight className="h-4 w-4" />
               </a>
             </div>
+
+            {/* Bottom cross-links */}
+            <div className="mt-8 flex flex-wrap items-center justify-center gap-2 text-xs">
+              <a
+                href={langPath(lang, "/partners")}
+                className="inline-flex items-center gap-1.5 rounded-full border border-border bg-card/60 px-3 py-1 font-display font-semibold text-muted-foreground transition-colors hover:border-primary/40 hover:text-primary"
+              >
+                Also check our Partner Program <ArrowRight className="h-3 w-3" />
+              </a>
+              <a
+                href={langPath(lang, "/referral")}
+                className="inline-flex items-center gap-1.5 rounded-full border border-border bg-card/60 px-3 py-1 font-display font-semibold text-muted-foreground transition-colors hover:border-primary/40 hover:text-primary"
+              >
+                Referral Program <ArrowRight className="h-3 w-3" />
+              </a>
+            </div>
+
+            <p className="mt-6 text-[11px] text-muted-foreground">
+              Promote with confidence — fully regulated in Canada (FINTRAC MSB #C100000015 · Bank of Canada PSP).
+            </p>
           </div>
         </section>
       </main>
