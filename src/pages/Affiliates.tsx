@@ -527,6 +527,7 @@ const Affiliates = () => {
               <p className="mt-3 inline-block rounded-full border border-primary/30 bg-primary/10 px-4 py-1.5 font-body text-xs sm:text-sm text-foreground/90">
                 ✨ Perfect for <span className="font-semibold text-primary">bloggers, YouTubers, wallet owners, and crypto communities</span> looking to earn passive income.
               </p>
+            </div>
 
             <div className="mt-10 relative">
               <div className="absolute inset-0 rounded-3xl bg-gradient-to-r from-primary/40 via-[hsl(var(--neon))]/30 to-primary/40 opacity-60 blur-md pointer-events-none" aria-hidden />
