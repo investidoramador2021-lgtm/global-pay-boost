@@ -545,7 +545,7 @@ const Affiliates = () => {
                 {t("affiliates.generator.asYouType")}
               </p>
               <p className="mt-3 inline-block rounded-full border border-primary/30 bg-primary/10 px-4 py-1.5 font-body text-xs sm:text-sm text-foreground/90">
-                ✨ Perfect for <span className="font-semibold text-primary">bloggers, YouTubers, wallet owners, and crypto communities</span> looking to earn passive income.
+                {t("affiliates.extra.generatorPerfectFor")} <span className="font-semibold text-primary">{t("affiliates.extra.generatorPerfectForBold")}</span> {t("affiliates.extra.generatorPerfectForEnd")}
               </p>
             </div>
 
@@ -585,23 +585,22 @@ const Affiliates = () => {
           <div className="container mx-auto max-w-5xl px-4">
             <div className="text-center max-w-2xl mx-auto">
               <div className="inline-flex items-center gap-2 rounded-full border border-primary/30 bg-primary/10 px-3 py-1 text-[11px] font-display font-semibold text-primary">
-                <Percent className="h-3 w-3" /> How You Get Paid
+                <Percent className="h-3 w-3" /> {t("affiliates.extra.tiersBadge")}
               </div>
               <h2 className="mt-4 font-display text-3xl font-bold text-foreground sm:text-4xl">
-                Transparent Commission Tiers
+                {t("affiliates.extra.tiersTitle")}
               </h2>
               <p className="mt-3 font-body text-muted-foreground leading-relaxed">
-                Every swap your referrals complete pays you a percentage of the swap volume — for life.
-                Your tier scales automatically with the volume your referrals generate each month.
+                {t("affiliates.extra.tiersSubtitle")}
               </p>
             </div>
 
             <div className="mt-10 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
               {[
-                { tier: "Starter", rate: "0.1%", range: "Up to $50k / mo", icon: Coins },
-                { tier: "Growth", rate: "0.2%", range: "$50k – $250k / mo", icon: TrendingUp },
-                { tier: "Pro", rate: "0.3%", range: "$250k – $1M / mo", icon: BarChart3 },
-                { tier: "Elite", rate: "0.4%", range: "$1M+ / mo", icon: Sparkles },
+                { tier: t("affiliates.extra.tierStarter"), rate: "0.1%", range: t("affiliates.extra.tierStarterRange"), icon: Coins },
+                { tier: t("affiliates.extra.tierGrowth"), rate: "0.2%", range: t("affiliates.extra.tierGrowthRange"), icon: TrendingUp },
+                { tier: t("affiliates.extra.tierPro"), rate: "0.3%", range: t("affiliates.extra.tierProRange"), icon: BarChart3 },
+                { tier: t("affiliates.extra.tierElite"), rate: "0.4%", range: t("affiliates.extra.tierEliteRange"), icon: Sparkles },
               ].map((c) => (
                 <div
                   key={c.tier}
@@ -618,7 +617,7 @@ const Affiliates = () => {
             </div>
 
             <p className="mt-6 text-center text-xs text-muted-foreground max-w-2xl mx-auto">
-              Tiers re-evaluate monthly. Lifetime attribution stays with you — even if a referral pauses and returns months later.
+              {t("affiliates.extra.tiersFooter")}
             </p>
           </div>
         </section>
@@ -631,14 +630,13 @@ const Affiliates = () => {
           <div className="container mx-auto max-w-6xl px-4">
             <div className="text-center max-w-2xl mx-auto">
               <div className="inline-flex items-center gap-2 rounded-full border border-primary/30 bg-primary/10 px-3 py-1 text-[11px] font-display font-semibold text-primary">
-                <LineChart className="h-3 w-3" /> Real-Time Dashboard
+                <LineChart className="h-3 w-3" /> {t("affiliates.extra.dashBadge")}
               </div>
               <h2 className="mt-4 font-display text-3xl font-bold text-foreground sm:text-4xl">
-                Track Earnings, Volume &amp; Payouts Live
+                {t("affiliates.extra.dashTitle")}
               </h2>
               <p className="mt-3 font-body text-muted-foreground leading-relaxed">
-                Upgrade to the Partner Program (free, ~2 minutes) to unlock live tracking — or keep it simple
-                with auto-payouts and no dashboard at all.
+                {t("affiliates.extra.dashSubtitle")}
               </p>
             </div>
 
