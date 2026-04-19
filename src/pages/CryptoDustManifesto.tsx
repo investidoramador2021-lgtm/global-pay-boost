@@ -51,7 +51,7 @@ const CryptoDustManifesto = () => {
         <title>The Master Guide to Crypto Dust Recovery | MRC GlobalPay</title>
         <meta
           name="description"
-          content="Strategic framework for non-custodial crypto dust conversion and cross-chain settlement. Convert assets from $0.30. 6,000+ tokens. No registration. FINTRAC-registered MSB."
+          content="Strategic framework for non-custodial crypto dust conversion and cross-chain settlement. Convert 6,000+ tokens from $0.30, no registration. FINTRAC MSB-registered."
         />
         <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1" />
         <link rel="canonical" href={canonical} />

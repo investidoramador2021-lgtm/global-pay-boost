@@ -14,7 +14,7 @@ const PermanentBridge = () => {
     <div className="min-h-screen bg-background">
       <Helmet>
         <title>Permanent Crypto Bridge — Reusable Deposit Address | MRC GlobalPay</title>
-        <meta name="description" content="Generate a permanent deposit address for recurring crypto conversions. No registration, no data stored. Download your receipt as a PDF." />
+        <meta name="description" content="Generate a reusable permanent deposit address for recurring crypto conversions across 6,000+ tokens. No registration, no data stored, downloadable PDF receipts." />
         <link rel="canonical" href={canonicalUrl} />
         <meta name="robots" content="index, follow" />
         <script type="application/ld+json">

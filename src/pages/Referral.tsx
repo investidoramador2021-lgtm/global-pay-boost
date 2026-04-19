@@ -7,7 +7,7 @@ const Referral = () => (
   <>
     <Helmet>
       <title>Referral Partner Program — Earn 15% | MRC GlobalPay</title>
-      <meta name="description" content="Earn 15% of every exchange fee with MRC GlobalPay's referral program. Weekly USDT/SOL payouts. No registration required for partners. Contact us for your unique tracking ID." />
+      <meta name="description" content="Earn 15% of every exchange fee with MRC GlobalPay's referral program. Weekly USDT/SOL payouts, no registration for partners. Contact us for your tracking ID." />
       <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1" />
       <link rel="canonical" href="https://mrcglobalpay.com/referral" />
       <meta property="og:title" content="Referral Partner Program — Earn 15% | MRC GlobalPay" />

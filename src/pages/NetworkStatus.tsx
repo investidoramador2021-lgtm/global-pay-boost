@@ -144,7 +144,7 @@ const NetworkStatus = () => {
     <>
       <Helmet>
         <title>Network Status — Live BTC, ETH &amp; SOL Uptime | MRC Global Pay</title>
-        <meta name="description" content="Live operational status of Bitcoin, Ethereum, and Solana swap networks on MRC Global Pay. Real-time latency monitoring, auto-refresh, and proactive congestion alerts. FINTRAC registered MSB." />
+        <meta name="description" content="Live operational status of Bitcoin, Ethereum, and Solana swap networks on MRC GlobalPay. Real-time latency, auto-refresh, congestion alerts. FINTRAC MSB-registered." />
         <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1" />
         <link rel="canonical" href="https://mrcglobalpay.com/status" />
         <meta property="og:title" content="Network Status — Live BTC, ETH & SOL Uptime | MRC Global Pay" />

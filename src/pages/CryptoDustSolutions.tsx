@@ -135,7 +135,7 @@ const CryptoDustSolutions = () => {
     <div className="min-h-screen bg-background">
       <Helmet>
         <title>Institutional Crypto Dust Solutions & Stateless Liquidity Recovery | MRC GlobalPay</title>
-        <meta name="description" content="Institutional-grade crypto dust consolidation. Recover fragmented cross-chain remnants into unified stablecoin assets through a FINTRAC-registered, non-custodial stateless sweep engine. From $0.30." />
+        <meta name="description" content="Institutional crypto dust consolidation: recover fragmented cross-chain remnants into unified stablecoins via a non-custodial sweep engine. From $0.30." />
         <link rel="canonical" href={canonicalUrl} />
         <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1" />
         <meta property="og:title" content="Institutional Crypto Dust Solutions — Stateless Liquidity Recovery | MRC GlobalPay" />
