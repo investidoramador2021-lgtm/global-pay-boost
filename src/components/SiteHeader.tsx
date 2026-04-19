@@ -43,6 +43,7 @@ const SiteHeader = () => {
     { label: "Affiliates", href: lp("/affiliates") },
     { label: t("nav.blog"), href: lp("/blog") },
     { label: t("nav.faq"), href: lp("/") + "#faq" },
+    { label: "Developer", href: lp("/developer") },
   ];
 
   return (
