@@ -11,7 +11,7 @@ const Compliance = () => (
       <title>Compliance — FINTRAC Registered MSB | MRC GlobalPay</title>
       <meta
         name="description"
-        content="MRC GlobalPay is a FINTRAC-registered Money Services Business (MSB C100000015) headquartered in Ottawa, Canada. Non-custodial crypto exchange with full AML/CTF compliance."
+        content="MRC GlobalPay is a FINTRAC-registered Money Services Business (MSB C100000015) in Ottawa, Canada — non-custodial crypto exchange with full AML/CTF compliance."
       />
       <meta name="robots" content="index, follow" />
       <link rel="canonical" href="https://mrcglobalpay.com/compliance" />

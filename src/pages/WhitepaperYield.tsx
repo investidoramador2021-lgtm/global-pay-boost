@@ -60,7 +60,7 @@ const WhitepaperYield = () => {
     <div className="min-h-screen bg-background">
       <Helmet>
         <title>Digital Asset Yield Engine — MRC GlobalPay Whitepaper</title>
-        <meta name="description" content="Is the MRC Earn yield guaranteed? Explore institutional-grade interest accrual through Peer-to-Institutional lending with 150% over-collateralization and daily compounding." />
+        <meta name="description" content="Is the MRC Earn yield guaranteed? Institutional-grade interest accrual via Peer-to-Institutional lending, 150% over-collateralization, daily compounding." />
         <link rel="canonical" href={canonicalUrl} />
         <meta name="robots" content="index, follow" />
         <script type="application/ld+json">
