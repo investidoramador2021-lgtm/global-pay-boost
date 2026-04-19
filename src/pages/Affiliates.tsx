@@ -72,9 +72,9 @@ const CopyButton = ({ text, label }: { text: string; label: string }) => {
   return (
     <button
       onClick={onClick}
-      className="btn-shimmer inline-flex w-full items-center justify-center gap-2 rounded-xl bg-primary px-6 py-3.5 font-display text-base font-bold text-primary-foreground shadow-neon transition-all duration-100 hover:bg-primary/90 hover:-translate-y-0.5"
+      className="btn-shimmer group inline-flex w-full items-center justify-center gap-2.5 rounded-xl bg-gradient-to-b from-primary to-[hsl(var(--neon))] px-6 py-4 font-display text-base font-extrabold uppercase tracking-wide text-primary-foreground shadow-[0_0_28px_-4px_hsl(var(--primary)/0.7)] ring-1 ring-primary/40 transition-all duration-150 hover:shadow-[0_0_40px_-2px_hsl(var(--primary)/0.9)] hover:-translate-y-0.5 hover:brightness-110 active:translate-y-0 min-h-[52px]"
     >
-      {copied ? <Check className="h-5 w-5" /> : <Copy className="h-5 w-5" />}
+      {copied ? <Check className="h-5 w-5" /> : <Copy className="h-5 w-5 transition-transform group-hover:scale-110" />}
       {copied ? t("affiliates.generator.copied") : label}
     </button>
   );
