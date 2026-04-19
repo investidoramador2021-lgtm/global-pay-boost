@@ -1,571 +1,501 @@
-import { useState, useMemo } from "react";
+import { useState } from "react";
 import { Helmet } from "react-helmet-async";
+import { Link, useLocation } from "react-router-dom";
 import {
-  Shield, Code2, Zap, Link2, Globe, Clock, ExternalLink, Terminal, FileJson,
-  Copy, Check, Layers, Paintbrush, DollarSign, Lock, ArrowRight, ChevronRight,
+  Code2, Zap, Globe, Terminal, FileJson, Copy, Check, Layers,
+  ArrowRight, Wallet, Monitor, Server, Sparkles, Shield, BookOpen,
+  ExternalLink, Webhook, KeyRound, GitBranch,
 } from "lucide-react";
 import { Tabs, TabsList, TabsTrigger, TabsContent } from "@/components/ui/tabs";
-import { Slider } from "@/components/ui/slider";
 import SiteHeader from "@/components/SiteHeader";
 import SiteFooter from "@/components/SiteFooter";
 import MsbTrustBar from "@/components/MsbTrustBar";
-
-/* ─── Static Data (SEO) ─── */
-
-const SUPPORTED_CHAINS = [
-  { name: "Bitcoin (BTC)", network: "Bitcoin", avgConfirm: "~10 min", ticker: "btc" },
-  { name: "Ethereum (ETH)", network: "Ethereum", avgConfirm: "~15 sec", ticker: "eth" },
-  { name: "Solana (SOL)", network: "Solana", avgConfirm: "~0.4 sec", ticker: "sol" },
-  { name: "BNB (BNB)", network: "BNB Smart Chain", avgConfirm: "~3 sec", ticker: "bnb" },
-  { name: "XRP (XRP)", network: "Ripple", avgConfirm: "~4 sec", ticker: "xrp" },
-  { name: "Tron (TRX)", network: "Tron", avgConfirm: "~3 sec", ticker: "trx" },
-  { name: "Litecoin (LTC)", network: "Litecoin", avgConfirm: "~2.5 min", ticker: "ltc" },
-  { name: "Dogecoin (DOGE)", network: "Dogecoin", avgConfirm: "~1 min", ticker: "doge" },
-  { name: "Cardano (ADA)", network: "Cardano", avgConfirm: "~20 sec", ticker: "ada" },
-  { name: "Polkadot (DOT)", network: "Polkadot", avgConfirm: "~6 sec", ticker: "dot" },
-  { name: "Avalanche (AVAX)", network: "Avalanche C-Chain", avgConfirm: "~2 sec", ticker: "avax" },
-  { name: "Polygon (MATIC)", network: "Polygon", avgConfirm: "~2 sec", ticker: "matic" },
-  { name: "Monero (XMR)", network: "Monero", avgConfirm: "~2 min", ticker: "xmr" },
-  { name: "Cosmos (ATOM)", network: "Cosmos Hub", avgConfirm: "~6 sec", ticker: "atom" },
-  { name: "Celestia (TIA)", network: "Celestia", avgConfirm: "~12 sec", ticker: "tia" },
-  { name: "Arbitrum (ARB)", network: "Arbitrum One", avgConfirm: "~0.3 sec", ticker: "arb" },
-  { name: "Optimism (OP)", network: "Optimism", avgConfirm: "~2 sec", ticker: "op" },
-  { name: "USDT (TRC-20)", network: "Tron", avgConfirm: "~3 sec", ticker: "usdt" },
-  { name: "USDC (ERC-20)", network: "Ethereum", avgConfirm: "~15 sec", ticker: "usdc" },
-];
-
-const DEEPLINK_EXAMPLES = [
-  { url: "https://mrcglobalpay.com/embed/widget?from=btc&to=usdt", desc: "BTC → USDT swap widget" },
-  { url: "https://mrcglobalpay.com/embed/widget?from=sol&to=usdt", desc: "SOL → USDT swap widget" },
-  { url: "https://mrcglobalpay.com/embed/widget?from=xrp&to=usdc", desc: "XRP → USDC swap widget" },
-  { url: "https://mrcglobalpay.com/#exchange", desc: "Main exchange (full page)" },
-  { url: "https://mrcglobalpay.com/swap/btc-usdc", desc: "BTC/USDC dedicated pair page" },
-  { url: "https://mrcglobalpay.com/solutions/how-to-swap-btc-to-usdc", desc: "BTC→USDC solution guide" },
-];
-
-/* ─── JSON-LD ─── */
-
-const jsonLd = {
-  "@context": "https://schema.org",
-  "@type": "WebPage",
-  name: "Developer Hub — Build Your Own Crypto Exchange | MRC GlobalPay",
-  description: "Access institutional-grade liquidity, 6,000+ assets, and automated settlement rails. Integrate our non-custodial API or Widget in minutes.",
-  url: "https://mrcglobalpay.com/developer",
-  isPartOf: { "@type": "WebSite", name: "MRC GlobalPay", url: "https://mrcglobalpay.com" },
-  publisher: {
-    "@type": "Organization", name: "MRC GlobalPay", url: "https://mrcglobalpay.com",
-    knowsAbout: ["Non-Custodial Swaps", "FINTRAC Compliance", "Crypto API", "White-Label Exchange"],
-  },
-  breadcrumb: {
-    "@type": "BreadcrumbList",
-    itemListElement: [
-      { "@type": "ListItem", position: 1, name: "Home", item: "https://mrcglobalpay.com" },
-      { "@type": "ListItem", position: 2, name: "Developer Hub", item: "https://mrcglobalpay.com/developer" },
-    ],
-  },
-};
-
-const faqJsonLd = {
-  "@context": "https://schema.org",
-  "@type": "FAQPage",
-  mainEntity: [
-    { "@type": "Question", name: "How do I embed the MRC GlobalPay swap widget?", acceptedAnswer: { "@type": "Answer", text: "Copy the one-line iframe snippet from the Developer Hub page and paste it into your HTML. The widget supports 6,000+ tokens with live pricing and requires no API key." } },
-    { "@type": "Question", name: "Can I pre-fill the swap pair via URL parameters?", acceptedAnswer: { "@type": "Answer", text: "Yes. Use ?from=BTC&to=USDT query parameters on the widget URL or the main exchange to pre-select trading pairs for your users." } },
-    { "@type": "Question", name: "Does MRC GlobalPay require an account?", acceptedAnswer: { "@type": "Answer", text: "MRC GlobalPay is a registration-free platform. You can swap crypto directly from your wallet without creating an account." } },
-  ],
-};
+import { getLangFromPath, langPath } from "@/i18n";
 
 /* ─── Code Snippets ─── */
+const SNIPPETS = {
+  iframe: `<iframe
+  src="https://mrcglobalpay.com/embed/widget?mode=dark&ref=YOUR_REF"
+  title="MRC GlobalPay — Instant Crypto Swap"
+  width="100%"
+  height="640"
+  loading="lazy"
+  referrerpolicy="strict-origin-when-cross-origin"
+  allow="clipboard-write"
+  style="border:0; border-radius:16px; max-width:520px; display:block; margin:0 auto;">
+</iframe>`,
 
-const API_SNIPPETS = {
-  currencies: `GET /api/v1/currencies
+  react: `import { useEffect } from "react";
 
-curl -s https://api.mrcglobalpay.com/currencies \\
-  -H "Accept: application/json"
+export function MRCSwapWidget({ refCode = "YOUR_REF", mode = "dark" }) {
+  return (
+    <iframe
+      src={\`https://mrcglobalpay.com/embed/widget?mode=\${mode}&ref=\${refCode}\`}
+      title="MRC GlobalPay Swap"
+      width="100%"
+      height="640"
+      loading="lazy"
+      style={{ border: 0, borderRadius: 16, maxWidth: 520 }}
+    />
+  );
+}`,
+
+  estimate: `// GET /api/v1/estimate
+// Get a real-time quote across 6,000+ assets
+
+curl -X GET "https://api.mrcglobalpay.com/v1/estimate?from=btc&to=eth&amount=0.1" \\
+  -H "Authorization: Bearer YOUR_API_KEY"
 
 // Response
 {
-  "currencies": [
+  "from": "btc",
+  "to": "eth",
+  "fromAmount": 0.1,
+  "toAmount": 1.8324,
+  "rate": 18.324,
+  "fee": 0.0005,
+  "estimatedTime": "~3 min",
+  "provider": "smart-route"
+}`,
+
+  createTx: `// POST /api/v1/transactions
+// Create a non-custodial swap transaction
+
+curl -X POST "https://api.mrcglobalpay.com/v1/transactions" \\
+  -H "Authorization: Bearer YOUR_API_KEY" \\
+  -H "Content-Type: application/json" \\
+  -d '{
+    "from": "btc",
+    "to": "eth",
+    "amount": 0.1,
+    "address": "0xRecipientWallet...",
+    "ref": "YOUR_REF"
+  }'
+
+// Response
+{
+  "id": "tx_a1b2c3d4",
+  "payinAddress": "bc1q...",
+  "expectedAmount": 0.1,
+  "status": "waiting",
+  "trackUrl": "https://mrcglobalpay.com/exchange/tx_a1b2c3d4"
+}`,
+
+  webhook: `// POST {your-webhook-url}
+// Real-time transaction status updates
+
+{
+  "event": "transaction.completed",
+  "id": "tx_a1b2c3d4",
+  "from": "btc",
+  "to": "eth",
+  "amountSent": 0.1,
+  "amountReceived": 1.8324,
+  "ref": "YOUR_REF",
+  "commission_btc": 0.00012,
+  "timestamp": "2026-04-19T14:32:11Z"
+}`,
+};
+
+/* ─── Copy Button ─── */
+const CopyBtn = ({ text }: { text: string }) => {
+  const [copied, setCopied] = useState(false);
+  return (
+    <button
+      onClick={async () => {
+        try {
+          await navigator.clipboard.writeText(text);
+          setCopied(true);
+          setTimeout(() => setCopied(false), 2000);
+        } catch { /* noop */ }
+      }}
+      className="absolute right-3 top-3 inline-flex items-center gap-1.5 rounded-lg border border-border bg-card/80 px-2.5 py-1.5 font-mono text-[11px] font-semibold text-muted-foreground backdrop-blur transition-colors hover:border-primary/40 hover:text-primary"
+      aria-label="Copy code"
+    >
+      {copied ? <Check className="h-3.5 w-3.5 text-primary" /> : <Copy className="h-3.5 w-3.5" />}
+      {copied ? "Copied" : "Copy"}
+    </button>
+  );
+};
+
+const CodeBlock = ({ code }: { code: string }) => (
+  <div className="relative">
+    <CopyBtn text={code} />
+    <pre className="overflow-x-auto rounded-xl border border-border/60 bg-[hsl(230_15%_6%)] p-4 sm:p-5 pr-20 font-mono text-[11px] sm:text-[12px] leading-relaxed text-foreground/90">
+      <code>{code}</code>
+    </pre>
+  </div>
+);
+
+/* ─── Page ─── */
+const DeveloperHub = () => {
+  const { pathname } = useLocation();
+  const lang = getLangFromPath(pathname);
+  const canonicalUrl = `https://mrcglobalpay.com${langPath(lang, "/developer")}`;
+
+  const STEPS = [
+    { n: 1, title: "Pick Your Path", desc: "Embed the widget for zero-code integration, or call the REST API for full control." },
+    { n: 2, title: "Get Your Ref Code", desc: "Generate a free affiliate ref token on /affiliates — no signup or KYC required." },
+    { n: 3, title: "Drop In & Earn", desc: "Paste the iframe or API key, go live, and earn 0.1%–0.4% lifetime BTC commissions." },
+  ];
+
+  const BENEFITS = [
     {
-      "ticker": "btc",
-      "name": "Bitcoin",
-      "network": "bitcoin",
-      "hasExternalId": false,
-      "isFiat": false
+      icon: Wallet,
+      title: "For Wallets",
+      desc: "Add in-wallet swaps across 6,000+ assets. Users never leave your app — funds move wallet-to-wallet, fully non-custodial.",
+      tag: "SDK + Widget",
     },
     {
-      "ticker": "eth",
-      "name": "Ethereum",
-      "network": "ethereum",
-      "hasExternalId": false,
-      "isFiat": false
-    }
-    // ... 6,000+ assets
-  ]
-}`,
-  transaction: `POST /api/v1/create_transaction
+      icon: Monitor,
+      title: "For Websites & Blogs",
+      desc: "Embed a branded swap widget in 30 seconds. Earn passive BTC commissions on every visitor trade.",
+      tag: "Iframe",
+    },
+    {
+      icon: Server,
+      title: "For Platforms & Exchanges",
+      desc: "REST API with real-time webhooks for transaction status, automated payouts, and institutional volume routing.",
+      tag: "REST + Webhooks",
+    },
+  ];
 
-curl -X POST https://api.mrcglobalpay.com/create_transaction \\
-  -H "Content-Type: application/json" \\
-  -d '{
-    "from": "btc",
-    "to": "eth",
-    "address": "0xYourEthAddress...",
-    "amount": 0.01
-  }'
+  const API_ENDPOINTS = [
+    { method: "GET", path: "/v1/estimate", desc: "Get a real-time quote for any pair" },
+    { method: "GET", path: "/v1/currencies", desc: "List all 6,000+ supported assets and networks" },
+    { method: "POST", path: "/v1/transactions", desc: "Create a non-custodial swap" },
+    { method: "GET", path: "/v1/transactions/{id}", desc: "Fetch transaction metadata and status" },
+    { method: "GET", path: "/v1/transactions/list", desc: "Ledger of all your trades — audit-ready" },
+    { method: "POST", path: "/v1/webhooks", desc: "Subscribe to real-time status updates" },
+  ];
 
-// Response
-{
-  "id": "txn_abc123...",
-  "payinAddress": "bc1q...",
-  "payoutAddress": "0xYourEthAddress...",
-  "fromCurrency": "btc",
-  "toCurrency": "eth",
-  "amount": 0.01,
-  "status": "waiting"
-}`,
-  widget: `<!-- One-line embed — no API key required -->
-<iframe
-  src="https://mrcglobalpay.com/embed/widget?from=btc&to=usdt"
-  width="400"
-  height="440"
-  style="border:none;border-radius:16px;"
-  allow="clipboard-write"
-  title="MRC GlobalPay Swap Widget"
-></iframe>
-
-<!-- Deep-link parameters -->
-<!-- ?from=sol&to=usdt   → Pre-select SOL→USDT -->
-<!-- ?tab=buysell         → Open Buy/Sell tab  -->`,
-};
-
-/* ─── Sub-components ─── */
-
-const CodeBlock = ({ code, lang = "bash" }: { code: string; lang?: string }) => {
-  const [copied, setCopied] = useState(false);
-  const handleCopy = () => {
-    navigator.clipboard.writeText(code);
-    setCopied(true);
-    setTimeout(() => setCopied(false), 2000);
+  const jsonLd = {
+    "@context": "https://schema.org",
+    "@type": "WebPage",
+    name: "Developer & Integration Hub — MRC GlobalPay",
+    description: "Embed the MRC GlobalPay swap widget or integrate via REST API. 6,000+ assets, non-custodial, lifetime BTC revenue share.",
+    url: canonicalUrl,
+    inLanguage: lang,
   };
-  return (
-    <div className="relative group">
-      <button
-        onClick={handleCopy}
-        className="absolute end-3 top-3 z-10 flex items-center gap-1 rounded-md border border-border bg-card px-2 py-1 font-body text-[10px] font-medium text-muted-foreground opacity-0 transition-opacity group-hover:opacity-100 hover:text-foreground"
-        title="Copy to clipboard"
-      >
-        {copied ? <><Check className="h-3 w-3 text-primary" /> Copied</> : <><Copy className="h-3 w-3" /> Copy</>}
-      </button>
-      <pre className="overflow-x-auto rounded-xl border border-border bg-[hsl(230_15%_8%)] p-5 pe-16 font-mono text-[13px] leading-relaxed text-[hsl(210_20%_88%)] selection:bg-primary/20">
-        <code>{code}</code>
-      </pre>
-    </div>
-  );
-};
-
-const EarningsEstimator = () => {
-  const [volume, setVolume] = useState([500000]);
-  const monthlyRevenue = useMemo(() => volume[0] * 0.004, [volume]);
-  const annualRevenue = useMemo(() => monthlyRevenue * 12, [monthlyRevenue]);
-  const fmt = (n: number) => n >= 1000 ? `$${(n / 1000).toFixed(n >= 10000 ? 0 : 1)}k` : `$${n.toFixed(0)}`;
 
   return (
-    <div className="rounded-2xl border border-border bg-card p-6 sm:p-8">
-      <div className="flex flex-col gap-6">
-        <div>
-          <label className="font-display text-sm font-semibold text-foreground block mb-1">
-            Monthly Transaction Volume
-          </label>
-          <p className="text-xs text-muted-foreground mb-4">Drag the slider to estimate your partner revenue at 0.4% commission.</p>
-          <Slider
-            min={10000}
-            max={5000000}
-            step={10000}
-            value={volume}
-            onValueChange={setVolume}
-            className="mb-2"
+    <>
+      <Helmet>
+        <title>Developer & Integration Hub — MRC GlobalPay</title>
+        <meta name="description" content="Embed the MRC GlobalPay swap widget or integrate via REST API. 6,000+ assets, non-custodial, lifetime BTC revenue share, FINTRAC-registered." />
+        <link rel="canonical" href={canonicalUrl} />
+        <meta property="og:title" content="Developer & Integration Hub — MRC GlobalPay" />
+        <meta property="og:description" content="Widget, REST API, webhooks, and SDKs for crypto swap integration. Lifetime BTC commissions." />
+        <meta property="og:url" content={canonicalUrl} />
+        <script type="application/ld+json">{JSON.stringify(jsonLd)}</script>
+      </Helmet>
+
+      <SiteHeader />
+
+      <main className="min-h-screen bg-background">
+        {/* HERO */}
+        <section className="relative overflow-hidden border-b border-border bg-[hsl(230_15%_6%)] py-16 sm:py-24">
+          <div
+            className="absolute inset-0 opacity-[0.04]"
+            style={{ backgroundImage: "radial-gradient(hsl(var(--neon)) 1px, transparent 1px)", backgroundSize: "28px 28px" }}
+            aria-hidden
           />
-          <div className="flex justify-between text-xs text-muted-foreground font-mono">
-            <span>$10k</span>
-            <span className="font-semibold text-foreground text-sm">{fmt(volume[0])}</span>
-            <span>$5M</span>
+          <div className="container relative mx-auto max-w-4xl px-4 text-center">
+            <span className="inline-flex items-center gap-2 rounded-full border border-primary/30 bg-primary/10 px-3 py-1 font-mono text-[11px] font-semibold uppercase tracking-widest text-primary">
+              <Code2 className="h-3.5 w-3.5" /> Developers
+            </span>
+            <h1 className="mt-6 font-display text-4xl font-extrabold leading-[1.05] tracking-tight text-foreground sm:text-5xl lg:text-6xl">
+              Developer &{" "}
+              <span className="bg-gradient-to-r from-primary to-[hsl(var(--neon))] bg-clip-text text-transparent">
+                Integration Hub
+              </span>
+            </h1>
+            <p className="mx-auto mt-5 max-w-2xl font-body text-base leading-relaxed text-muted-foreground sm:text-lg">
+              Embed our swap widget in 30 seconds or build directly on the REST API.{" "}
+              <span className="font-semibold text-foreground">6,000+ assets</span>, fully{" "}
+              <span className="font-semibold text-foreground">non-custodial</span>, with{" "}
+              <span className="font-semibold text-primary">lifetime BTC revenue share</span> on every referred trade.
+            </p>
+            <div className="mt-8 flex flex-col items-center justify-center gap-3 sm:flex-row">
+              <a
+                href="#widget"
+                className="btn-shimmer inline-flex items-center justify-center gap-2 rounded-xl bg-primary px-7 py-3.5 font-display text-sm font-bold text-primary-foreground shadow-neon transition-all hover:-translate-y-0.5 hover:bg-primary/90"
+              >
+                <Sparkles className="h-4 w-4" /> Embed Widget
+              </a>
+              <a
+                href="#api"
+                className="inline-flex items-center justify-center gap-2 rounded-xl border border-border bg-card px-6 py-3.5 font-display text-sm font-semibold text-foreground transition-colors hover:border-primary/40 hover:text-primary"
+              >
+                <Terminal className="h-4 w-4" /> View API Docs
+              </a>
+            </div>
+            <p className="mt-4 font-body text-xs text-muted-foreground">
+              Not a developer?{" "}
+              <Link to={langPath(lang, "/affiliates")} className="font-semibold text-primary hover:underline">
+                Generate a no-code widget on /affiliates →
+              </Link>
+            </p>
           </div>
-        </div>
-        <div className="grid grid-cols-2 gap-4">
-          <div className="rounded-xl border border-primary/20 bg-primary/5 p-4 text-center">
-            <p className="text-[10px] uppercase tracking-wider text-muted-foreground font-display font-semibold">Monthly Revenue</p>
-            <p className="font-display text-2xl font-bold text-primary mt-1">{fmt(monthlyRevenue)}</p>
-          </div>
-          <div className="rounded-xl border border-primary/20 bg-primary/5 p-4 text-center">
-            <p className="text-[10px] uppercase tracking-wider text-muted-foreground font-display font-semibold">Annual Revenue</p>
-            <p className="font-display text-2xl font-bold text-primary mt-1">{fmt(annualRevenue)}</p>
-          </div>
-        </div>
-        <a
-          href="/partners"
-          className="btn-shimmer inline-flex items-center justify-center gap-2 rounded-xl bg-primary px-6 py-3 font-display text-sm font-bold text-primary-foreground transition-all duration-100 hover:bg-primary/90"
-        >
-          Apply for Partnership <ArrowRight className="h-4 w-4" />
-        </a>
-      </div>
-    </div>
-  );
-};
+        </section>
 
-/* ─── Main Page ─── */
+        <MsbTrustBar />
 
-const DeveloperHub = () => (
-  <>
-    <Helmet>
-      <title>Developer Hub — Build Your Own Crypto Exchange | MRC GlobalPay</title>
-      <meta name="description" content="Access institutional-grade liquidity, 6,000+ assets, and automated settlement rails. Integrate our non-custodial API or Widget in minutes. Canadian MSB registered." />
-      <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1" />
-      <link rel="canonical" href="https://mrcglobalpay.com/developer" />
-      <meta property="og:title" content="Developer Hub — Build Your Own Crypto Exchange | MRC GlobalPay" />
-      <meta property="og:description" content="Access institutional-grade liquidity, 6,000+ assets, and automated settlement rails. Integrate in minutes." />
-      <meta property="og:url" content="https://mrcglobalpay.com/developer" />
-      <meta property="og:type" content="website" />
-      <meta property="og:site_name" content="MRC GlobalPay" />
-      <script type="application/ld+json">{JSON.stringify(jsonLd)}</script>
-      <script type="application/ld+json">{JSON.stringify(faqJsonLd)}</script>
-    </Helmet>
-
-    <SiteHeader />
-    <main className="min-h-screen bg-background">
-      {/* ═══ HERO ═══ */}
-      <section className="relative overflow-hidden border-b border-border bg-[hsl(230_15%_6%)] py-16 sm:py-24">
-        {/* Dot grid */}
-        <div className="absolute inset-0 opacity-[0.04]" style={{ backgroundImage: 'radial-gradient(hsl(var(--neon)) 1px, transparent 1px)', backgroundSize: '28px 28px' }} />
-        <div className="pointer-events-none absolute -start-40 top-10 h-80 w-80 rounded-full bg-primary/[0.06] blur-3xl" aria-hidden />
-        <div className="pointer-events-none absolute -end-32 bottom-10 h-64 w-64 rounded-full bg-[hsl(var(--neon-blue))]/[0.05] blur-3xl" aria-hidden />
-
-        <div className="container relative mx-auto max-w-[1200px] px-4">
-          {/* Breadcrumb */}
-          <nav aria-label="Breadcrumb" className="mb-8">
-            <ol className="flex items-center gap-2 text-xs text-[hsl(210_20%_60%)]">
-              <li><a href="/" className="hover:text-[hsl(210_20%_88%)]">Home</a></li>
-              <li>/</li>
-              <li className="text-[hsl(210_20%_88%)] font-medium">Developer Hub</li>
-            </ol>
-          </nav>
-
-          <div className="grid gap-10 lg:grid-cols-2 lg:items-center">
-            {/* Copy */}
-            <div>
-              <p className="font-display text-xs font-bold uppercase tracking-[0.2em] text-primary mb-4">Infrastructure for Builders</p>
-              <h1 className="font-display text-3xl font-extrabold leading-tight tracking-tight text-[hsl(210_20%_95%)] sm:text-4xl lg:text-[2.75rem]">
-                Build Your Own Crypto Exchange with{" "}
-                <span className="text-gradient-neon">MRC&nbsp;Global&nbsp;Pay.</span>
-              </h1>
-              <p className="mt-5 max-w-lg text-base leading-relaxed text-[hsl(210_20%_65%)] sm:text-lg">
-                Access institutional-grade liquidity, 6,000+ assets, and automated settlement rails.
-                Integrate our non-custodial API or Widget in minutes.
-              </p>
-              <div className="mt-8 flex flex-wrap gap-3">
-                <a
-                  href="#quick-start"
-                  className="btn-shimmer inline-flex items-center gap-2 rounded-xl bg-primary px-6 py-3 font-display text-sm font-bold text-primary-foreground transition-all duration-100 hover:bg-primary/90"
+        {/* GET STARTED */}
+        <section className="border-b border-border py-16 sm:py-20">
+          <div className="container mx-auto max-w-5xl px-4">
+            <div className="mx-auto max-w-2xl text-center">
+              <h2 className="font-display text-3xl font-bold tracking-tight text-foreground sm:text-4xl">Get started in 3 steps</h2>
+              <p className="mt-3 font-body text-base text-muted-foreground">From zero to live integration in under 5 minutes.</p>
+            </div>
+            <div className="mt-12 grid gap-5 sm:grid-cols-3">
+              {STEPS.map((s) => (
+                <div
+                  key={s.n}
+                  className="rounded-2xl border border-border bg-card p-6 transition-all hover:-translate-y-1 hover:border-primary/40 hover:shadow-elevated"
                 >
-                  View API Docs <ChevronRight className="h-4 w-4" />
-                </a>
-                <a
-                  href="/get-widget"
-                  className="inline-flex items-center gap-2 rounded-xl border border-[hsl(210_20%_25%)] bg-[hsl(230_15%_12%)] px-6 py-3 font-display text-sm font-semibold text-[hsl(210_20%_88%)] transition-all duration-100 hover:border-[hsl(210_20%_35%)] hover:bg-[hsl(230_15%_16%)]"
-                >
-                  Get Widget <ExternalLink className="h-4 w-4" />
-                </a>
-              </div>
-              {/* Stats */}
-              <div className="mt-8 grid grid-cols-3 gap-4">
-                {[
-                  { value: "6,000+", label: "Assets" },
-                  { value: "700+", label: "Liquidity Sources" },
-                  { value: "<60s", label: "Settlement" },
-                ].map((s) => (
-                  <div key={s.label} className="text-center">
-                    <p className="font-display text-xl font-extrabold text-primary sm:text-2xl">{s.value}</p>
-                    <p className="text-[10px] uppercase tracking-wider text-[hsl(210_20%_55%)] font-display font-semibold">{s.label}</p>
+                  <div className="flex h-10 w-10 items-center justify-center rounded-full bg-primary/10 font-display text-base font-bold text-primary ring-1 ring-primary/20">
+                    {s.n}
                   </div>
-                ))}
-              </div>
-            </div>
-
-            {/* Code Preview */}
-            <div className="relative rounded-2xl border border-[hsl(210_20%_18%)] bg-[hsl(230_15%_10%)] p-1">
-              <div className="flex items-center gap-1.5 px-4 py-2.5">
-                <span className="h-2.5 w-2.5 rounded-full bg-[hsl(0_80%_60%)]" />
-                <span className="h-2.5 w-2.5 rounded-full bg-[hsl(45_90%_55%)]" />
-                <span className="h-2.5 w-2.5 rounded-full bg-[hsl(140_70%_45%)]" />
-                <span className="ms-3 font-mono text-[10px] text-[hsl(210_20%_45%)]">create_transaction.sh</span>
-              </div>
-              <pre className="overflow-x-auto px-4 pb-4 font-mono text-[12px] leading-relaxed text-[hsl(210_20%_75%)]">
-                <code>{`curl -X POST https://api.mrcglobalpay.com/create_transaction \\
-  -H "Content-Type: application/json" \\
-  -d '{
-    "from": "btc",
-    "to": "eth",
-    "address": "0xYour...",
-    "amount": 0.01
-  }'
-
-# → { "id": "txn_abc...", "status": "waiting" }`}</code>
-              </pre>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* ═══ PRODUCT PILLARS ═══ */}
-      <section className="py-16 sm:py-20">
-        <div className="container mx-auto max-w-[1200px] px-4">
-          <p className="font-display text-xs font-bold uppercase tracking-[0.2em] text-primary text-center mb-2">Solutions</p>
-          <h2 className="font-display text-2xl font-bold text-foreground text-center sm:text-3xl mb-4">
-            Three ways to integrate
-          </h2>
-          <p className="mx-auto max-w-xl text-center text-muted-foreground mb-12">
-            From full API access to zero-code embeds — choose the integration depth that matches your product.
-          </p>
-
-          <div className="grid gap-6 sm:grid-cols-3">
-            {[
-              {
-                icon: Terminal,
-                title: "Exchange API",
-                subtitle: "Full control for custom apps",
-                desc: "RESTful endpoints for creating transactions, fetching rates, and managing settlements. Build a fully custom exchange experience with your own UI.",
-                cta: { label: "View API Docs", href: "#quick-start" },
-              },
-              {
-                icon: Code2,
-                title: "Instant Widget",
-                subtitle: "No-code solution for websites",
-                desc: "One-line iframe embed with live pricing, 6,000+ tokens, and deep-link parameters. No API key required — works out of the box on any website or blog.",
-                cta: { label: "Get Widget", href: "/get-widget" },
-              },
-              {
-                icon: Paintbrush,
-                title: "White-Label Solution",
-                subtitle: "Fully branded exchange",
-                desc: "Launch your own branded crypto exchange powered by MRC GlobalPay's institutional liquidity. Custom domain, your brand, our rails.",
-                cta: { label: "Contact Sales", href: "/partners" },
-              },
-            ].map((p) => (
-              <div key={p.title} className="group rounded-2xl border border-border bg-card p-6 transition-all hover:shadow-elevated hover:-translate-y-1">
-                <div className="flex h-11 w-11 items-center justify-center rounded-xl bg-primary/10 mb-4">
-                  <p.icon className="h-5 w-5 text-primary" />
+                  <h3 className="mt-4 font-display text-lg font-semibold text-foreground">{s.title}</h3>
+                  <p className="mt-2 font-body text-sm leading-relaxed text-muted-foreground">{s.desc}</p>
                 </div>
-                <h3 className="font-display text-lg font-bold text-foreground">{p.title}</h3>
-                <p className="text-xs text-primary font-semibold mb-2">{p.subtitle}</p>
-                <p className="text-sm text-muted-foreground leading-relaxed mb-4">{p.desc}</p>
-                <a href={p.cta.href} className="inline-flex items-center gap-1 text-sm font-semibold text-primary hover:underline">
-                  {p.cta.label} <ChevronRight className="h-3.5 w-3.5" />
-                </a>
-              </div>
-            ))}
+              ))}
+            </div>
           </div>
-        </div>
-      </section>
+        </section>
 
-      {/* ═══ B2B TRUST SIGNALS ═══ */}
-      <section className="border-y border-border bg-muted/30 py-16 sm:py-20">
-        <div className="container mx-auto max-w-[1200px] px-4">
-          <div className="grid gap-10 lg:grid-cols-2 lg:items-center">
-            <div>
-              <p className="font-display text-xs font-bold uppercase tracking-[0.2em] text-primary mb-2">Compliance</p>
-              <h2 className="font-display text-2xl font-bold text-foreground sm:text-3xl mb-4">
-                Why partner with a regulated Canadian MSB?
+        {/* BENEFITS */}
+        <section className="border-b border-border bg-muted/30 py-16 sm:py-20">
+          <div className="container mx-auto max-w-6xl px-4">
+            <div className="mx-auto max-w-2xl text-center">
+              <span className="inline-flex items-center gap-2 rounded-full border border-primary/20 bg-primary/5 px-3 py-1 font-mono text-[11px] font-semibold uppercase tracking-widest text-primary">
+                <Layers className="h-3 w-3" /> Built for every stack
+              </span>
+              <h2 className="mt-4 font-display text-3xl font-bold tracking-tight text-foreground sm:text-4xl">
+                One integration, three audiences
               </h2>
-              <p className="text-muted-foreground leading-relaxed mb-6">
-                MRC GlobalPay is a registered Money Services Business under FINTRAC (Canada).
-                Our non-custodial architecture means zero custody risk for you and your users — assets never touch our servers.
-              </p>
-              <div className="grid gap-4 sm:grid-cols-2">
-                {[
-                  { icon: Shield, title: "FINTRAC Compliant", desc: "MSB Registration C100000015. Full AML/ATF compliance." },
-                  { icon: Lock, title: "Non-Custodial", desc: "Zero custody risk. Assets move wallet-to-wallet." },
-                  { icon: Globe, title: "Global Fiat Rails", desc: "CAD, USD, BRL, EUR on-ramp via regulated gateway." },
-                  { icon: Zap, title: "Instant Settlement", desc: "Automated clearing in under 60 seconds." },
-                ].map((t) => (
-                  <div key={t.title} className="flex gap-3">
-                    <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-lg bg-primary/10">
-                      <t.icon className="h-4 w-4 text-primary" />
-                    </div>
-                    <div>
-                      <h3 className="font-display text-sm font-bold text-foreground">{t.title}</h3>
-                      <p className="text-xs text-muted-foreground mt-0.5">{t.desc}</p>
-                    </div>
-                  </div>
-                ))}
-              </div>
             </div>
-
-            {/* Earnings Estimator */}
-            <div>
-              <p className="font-display text-xs font-bold uppercase tracking-[0.2em] text-primary mb-3">Revenue Calculator</p>
-              <h3 className="font-display text-lg font-bold text-foreground mb-4">Estimate your partner earnings</h3>
-              <EarningsEstimator />
+            <div className="mt-10 grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
+              {BENEFITS.map(({ icon: Icon, title, desc, tag }) => (
+                <div
+                  key={title}
+                  className="group flex flex-col gap-3 rounded-2xl border border-border bg-card p-6 transition-all hover:-translate-y-1 hover:border-primary/40 hover:shadow-elevated"
+                >
+                  <div className="flex items-center justify-between">
+                    <div className="flex h-11 w-11 items-center justify-center rounded-xl bg-primary/10 ring-1 ring-primary/20">
+                      <Icon className="h-5 w-5 text-primary" aria-hidden />
+                    </div>
+                    <span className="rounded-full border border-primary/30 bg-primary/5 px-2.5 py-0.5 font-mono text-[10px] font-bold uppercase tracking-wider text-primary">
+                      {tag}
+                    </span>
+                  </div>
+                  <h3 className="font-display text-lg font-bold text-foreground">{title}</h3>
+                  <p className="font-body text-sm leading-relaxed text-muted-foreground">{desc}</p>
+                </div>
+              ))}
             </div>
           </div>
-        </div>
-      </section>
+        </section>
 
-      {/* ═══ TECHNICAL QUICK-START ═══ */}
-      <section id="quick-start" className="py-16 sm:py-20">
-        <div className="container mx-auto max-w-[1200px] px-4">
-          <p className="font-display text-xs font-bold uppercase tracking-[0.2em] text-primary text-center mb-2">Quick Start</p>
-          <h2 className="font-display text-2xl font-bold text-foreground text-center sm:text-3xl mb-4">
-            Integrate in minutes
-          </h2>
-          <p className="mx-auto max-w-xl text-center text-muted-foreground mb-10">
-            Three endpoints is all you need. No API key required for the widget — full API access available to partners.
-          </p>
+        {/* WIDGET INTEGRATION */}
+        <section id="widget" className="border-b border-border py-16 sm:py-20">
+          <div className="container mx-auto max-w-5xl px-4">
+            <div className="mx-auto max-w-2xl text-center">
+              <span className="inline-flex items-center gap-2 rounded-full border border-primary/20 bg-primary/5 px-3 py-1 font-mono text-[11px] font-semibold uppercase tracking-widest text-primary">
+                <Globe className="h-3 w-3" /> Widget Integration
+              </span>
+              <h2 className="mt-4 font-display text-3xl font-bold tracking-tight text-foreground sm:text-4xl">
+                Embed in 30 seconds
+              </h2>
+              <p className="mt-3 font-body text-base text-muted-foreground">
+                Drop a single iframe (or React component) onto your site. Fully responsive, theme-aware, and revenue-tracked.
+              </p>
+            </div>
 
-          <div className="mx-auto max-w-3xl">
-            <Tabs defaultValue="currencies">
-              <TabsList className="w-full justify-start bg-muted/50 rounded-xl p-1 mb-1">
-                <TabsTrigger value="currencies" className="rounded-lg font-mono text-xs">GET /currencies</TabsTrigger>
-                <TabsTrigger value="transaction" className="rounded-lg font-mono text-xs">POST /create_transaction</TabsTrigger>
-                <TabsTrigger value="widget" className="rounded-lg font-mono text-xs">Widget Embed</TabsTrigger>
+            <Tabs defaultValue="html" className="mt-10">
+              <TabsList className="mx-auto grid w-full max-w-md grid-cols-2">
+                <TabsTrigger value="html" className="font-display font-semibold">HTML / iframe</TabsTrigger>
+                <TabsTrigger value="react" className="font-display font-semibold">React Component</TabsTrigger>
               </TabsList>
-              <TabsContent value="currencies">
-                <CodeBlock code={API_SNIPPETS.currencies} />
+              <TabsContent value="html" className="mt-5">
+                <CodeBlock code={SNIPPETS.iframe} />
               </TabsContent>
-              <TabsContent value="transaction">
-                <CodeBlock code={API_SNIPPETS.transaction} />
-              </TabsContent>
-              <TabsContent value="widget">
-                <CodeBlock code={API_SNIPPETS.widget} lang="html" />
+              <TabsContent value="react" className="mt-5">
+                <CodeBlock code={SNIPPETS.react} />
               </TabsContent>
             </Tabs>
-          </div>
 
-          <div className="mt-8 text-center">
-            <a href="/get-widget" className="inline-flex items-center gap-2 text-sm font-semibold text-primary hover:underline">
-              Open Widget Generator <ExternalLink className="h-4 w-4" />
-            </a>
-          </div>
-        </div>
-      </section>
-
-      {/* ═══ FAQ ═══ */}
-      <section className="border-t border-border bg-muted/20 py-16 sm:py-20">
-        <div className="container mx-auto max-w-[1200px] px-4">
-          <h2 className="font-display text-2xl font-bold text-foreground text-center sm:text-3xl mb-10">Developer FAQ</h2>
-          <div className="mx-auto max-w-2xl space-y-3">
-            {[
-              { q: "How do I embed the MRC GlobalPay swap widget?", a: "Copy the one-line iframe snippet from the Quick Start section and paste it into your HTML. The widget supports 6,000+ tokens with live pricing and requires no API key." },
-              { q: "Can I pre-fill the swap pair via URL parameters?", a: "Yes. Use ?from=BTC&to=USDT query parameters on the widget URL or the main exchange to pre-select trading pairs for your users." },
-              { q: "Does MRC GlobalPay require an account?", a: "MRC GlobalPay is a registration-free platform. You can swap crypto directly from your wallet without creating an account. We are a Canadian-registered MSB with FINTRAC." },
-              { q: "Is there a rate limit on the widget?", a: "The embedded widget uses the same live pricing engine as our main site. There are no API keys or rate limits — it works out of the box." },
-              { q: "How does the partner revenue model work?", a: "Partners earn up to 0.4% commission on all API-driven transaction volume routed through their integration. Revenue is settled in BTC to your designated wallet on a recurring basis." },
-            ].map((faq) => (
-              <details key={faq.q} className="rounded-xl border border-border bg-card group">
-                <summary className="cursor-pointer px-5 py-4 font-display text-sm font-semibold text-foreground flex items-center justify-between">
-                  {faq.q}
-                  <ChevronRight className="h-4 w-4 text-muted-foreground transition-transform group-open:rotate-90" />
-                </summary>
-                <p className="px-5 pb-4 text-sm text-muted-foreground leading-relaxed">{faq.a}</p>
-              </details>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* ═══ DIRECTORY & ECOSYSTEM (SEO preservation) ═══ */}
-      <section className="border-t border-border py-16 sm:py-20">
-        <div className="container mx-auto max-w-[1200px] px-4">
-          <p className="font-display text-xs font-bold uppercase tracking-[0.2em] text-primary text-center mb-2">Directory & Ecosystem</p>
-          <h2 className="font-display text-2xl font-bold text-foreground text-center sm:text-3xl mb-10">
-            Supported Networks & Resources
-          </h2>
-
-          {/* Supported Chains */}
-          <div className="mb-12">
-            <h3 className="font-display text-lg font-bold text-foreground mb-4 flex items-center gap-2">
-              <Globe className="h-5 w-5 text-primary" />
-              Supported Networks &amp; Confirmation Speeds
-            </h3>
-            <div className="overflow-x-auto rounded-xl border border-border">
-              <table className="w-full text-sm">
-                <thead>
-                  <tr className="border-b border-border bg-muted/50">
-                    <th className="px-4 py-3 text-start font-display font-semibold text-foreground">Asset</th>
-                    <th className="px-4 py-3 text-start font-display font-semibold text-foreground">Network</th>
-                    <th className="px-4 py-3 text-start font-display font-semibold text-foreground">Ticker</th>
-                    <th className="px-4 py-3 text-start font-display font-semibold text-foreground">Avg Confirmation</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  {SUPPORTED_CHAINS.map((c) => (
-                    <tr key={c.ticker} className="border-b border-border last:border-0">
-                      <td className="px-4 py-2.5 font-medium text-foreground">{c.name}</td>
-                      <td className="px-4 py-2.5 text-muted-foreground">{c.network}</td>
-                      <td className="px-4 py-2.5"><code className="rounded bg-muted px-1.5 py-0.5 font-mono text-xs text-primary">{c.ticker}</code></td>
-                      <td className="px-4 py-2.5 text-muted-foreground flex items-center gap-1.5"><Clock className="h-3.5 w-3.5 text-primary/60" />{c.avgConfirm}</td>
-                    </tr>
-                  ))}
-                </tbody>
-              </table>
-            </div>
-            <p className="mt-2 text-xs text-muted-foreground">* Representative sample — 6,000+ tokens supported across all major blockchains.</p>
-          </div>
-
-          {/* Deep-links */}
-          <div className="mb-12">
-            <h3 className="font-display text-lg font-bold text-foreground mb-4 flex items-center gap-2">
-              <Link2 className="h-5 w-5 text-primary" />
-              URL Deep-Linking &amp; Swap Pairs
-            </h3>
-            <div className="overflow-x-auto rounded-xl border border-border">
-              <table className="w-full text-sm">
-                <thead>
-                  <tr className="border-b border-border bg-muted/50">
-                    <th className="px-4 py-3 text-start font-display font-semibold text-foreground">URL</th>
-                    <th className="px-4 py-3 text-start font-display font-semibold text-foreground">Description</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  {DEEPLINK_EXAMPLES.map((ex) => (
-                    <tr key={ex.url} className="border-b border-border last:border-0">
-                      <td className="px-4 py-2.5"><code className="text-xs font-mono text-primary break-all">{ex.url}</code></td>
-                      <td className="px-4 py-2.5 text-muted-foreground">{ex.desc}</td>
-                    </tr>
-                  ))}
-                </tbody>
-              </table>
+            <div className="mt-6 rounded-xl border border-primary/30 bg-primary/5 p-4 text-sm leading-relaxed text-foreground/90">
+              <span className="font-semibold text-primary">Tip · </span>
+              Generate a personalized widget with your <code className="font-mono text-xs">ref</code> code on{" "}
+              <Link to={langPath(lang, "/affiliates")} className="font-semibold text-primary hover:underline">/affiliates</Link>{" "}
+              — no signup, no KYC. Earn lifetime BTC commissions automatically.
             </div>
           </div>
+        </section>
 
-          {/* Related Resources */}
-          <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
-            {[
-              { label: "Widget Generator (Visual Builder)", href: "/get-widget" },
-              { label: "Compare MRC vs 50+ Exchanges", href: "/compare" },
-              { label: "Micro-Swap Solution Guides", href: "/solutions" },
-              { label: "Trust & Transparency Hub", href: "/learn" },
-              { label: "Why Non-Custodial Is Safer", href: "/learn/why-non-custodial-is-safer" },
-              { label: "FINTRAC MSB Registration", href: "/learn/canadian-fintrac-msb" },
-              { label: "Bot Manifest (JSON)", href: "/trading-bot-manifest.json" },
-              { label: "Full Compliance Documentation", href: "/compliance" },
-              { label: "Partner Program", href: "/partners" },
-            ].map((link) => (
-              <a
-                key={link.href}
-                href={link.href}
-                className="flex items-center gap-2 rounded-xl border border-border bg-card p-4 text-sm font-medium text-foreground transition-colors hover:border-primary/30 hover:bg-primary/5"
-              >
-                <ChevronRight className="h-4 w-4 text-primary shrink-0" />
-                {link.label}
-              </a>
-            ))}
+        {/* API DOCS */}
+        <section id="api" className="border-b border-border bg-muted/30 py-16 sm:py-20">
+          <div className="container mx-auto max-w-5xl px-4">
+            <div className="mx-auto max-w-2xl text-center">
+              <span className="inline-flex items-center gap-2 rounded-full border border-primary/20 bg-primary/5 px-3 py-1 font-mono text-[11px] font-semibold uppercase tracking-widest text-primary">
+                <Terminal className="h-3 w-3" /> REST API
+              </span>
+              <h2 className="mt-4 font-display text-3xl font-bold tracking-tight text-foreground sm:text-4xl">
+                API Documentation
+              </h2>
+              <p className="mt-3 font-body text-base text-muted-foreground">
+                Quote, create, and track non-custodial swaps. Authenticated via Bearer key, JSON in/out.
+              </p>
+            </div>
+
+            {/* Endpoint table */}
+            <div className="mt-10 overflow-hidden rounded-2xl border border-border bg-card">
+              <div className="grid grid-cols-12 gap-2 border-b border-border bg-muted/40 px-4 py-3 font-mono text-[10px] font-bold uppercase tracking-widest text-muted-foreground">
+                <div className="col-span-2">Method</div>
+                <div className="col-span-5">Endpoint</div>
+                <div className="col-span-5">Description</div>
+              </div>
+              {API_ENDPOINTS.map((ep) => (
+                <div key={ep.path} className="grid grid-cols-12 gap-2 border-b border-border/40 px-4 py-3 text-sm last:border-0 hover:bg-muted/20">
+                  <div className="col-span-2">
+                    <span className={`inline-flex items-center rounded-md px-2 py-0.5 font-mono text-[10px] font-bold ${
+                      ep.method === "GET"
+                        ? "bg-primary/10 text-primary ring-1 ring-primary/20"
+                        : "bg-[hsl(45_90%_55%)]/10 text-[hsl(45_90%_55%)] ring-1 ring-[hsl(45_90%_55%)]/20"
+                    }`}>
+                      {ep.method}
+                    </span>
+                  </div>
+                  <div className="col-span-5 font-mono text-xs text-foreground">{ep.path}</div>
+                  <div className="col-span-5 font-body text-xs text-muted-foreground">{ep.desc}</div>
+                </div>
+              ))}
+            </div>
+
+            {/* Code samples */}
+            <Tabs defaultValue="estimate" className="mt-10">
+              <TabsList className="grid w-full grid-cols-3">
+                <TabsTrigger value="estimate" className="font-display text-xs font-semibold sm:text-sm">
+                  <FileJson className="mr-1.5 h-3.5 w-3.5" /> Estimate
+                </TabsTrigger>
+                <TabsTrigger value="create" className="font-display text-xs font-semibold sm:text-sm">
+                  <Zap className="mr-1.5 h-3.5 w-3.5" /> Create Tx
+                </TabsTrigger>
+                <TabsTrigger value="webhook" className="font-display text-xs font-semibold sm:text-sm">
+                  <Webhook className="mr-1.5 h-3.5 w-3.5" /> Webhook
+                </TabsTrigger>
+              </TabsList>
+              <TabsContent value="estimate" className="mt-5">
+                <CodeBlock code={SNIPPETS.estimate} />
+              </TabsContent>
+              <TabsContent value="create" className="mt-5">
+                <CodeBlock code={SNIPPETS.createTx} />
+              </TabsContent>
+              <TabsContent value="webhook" className="mt-5">
+                <CodeBlock code={SNIPPETS.webhook} />
+              </TabsContent>
+            </Tabs>
+
+            {/* API key callout */}
+            <div className="mt-8 grid gap-4 sm:grid-cols-2">
+              <div className="rounded-2xl border border-border bg-card p-5">
+                <div className="flex items-center gap-2">
+                  <KeyRound className="h-4 w-4 text-primary" />
+                  <h3 className="font-display text-sm font-bold text-foreground">Get an API Key</h3>
+                </div>
+                <p className="mt-2 font-body text-xs leading-relaxed text-muted-foreground">
+                  API keys are issued through the Partner Portal with TOTP 2FA, IP whitelisting, and webhook URL configuration.
+                </p>
+                <Link
+                  to={langPath(lang, "/partners")}
+                  className="mt-3 inline-flex items-center gap-1 font-display text-xs font-bold uppercase tracking-wider text-primary hover:underline"
+                >
+                  Open Partner Portal <ArrowRight className="h-3 w-3" />
+                </Link>
+              </div>
+              <div className="rounded-2xl border border-border bg-card p-5">
+                <div className="flex items-center gap-2">
+                  <Shield className="h-4 w-4 text-primary" />
+                  <h3 className="font-display text-sm font-bold text-foreground">Auth & Security</h3>
+                </div>
+                <p className="mt-2 font-body text-xs leading-relaxed text-muted-foreground">
+                  Bearer token authentication. All requests over TLS 1.3. Webhook payloads signed with HMAC-SHA256.
+                </p>
+                <a
+                  href="/api-docs"
+                  className="mt-3 inline-flex items-center gap-1 font-display text-xs font-bold uppercase tracking-wider text-primary hover:underline"
+                >
+                  Full reference <ExternalLink className="h-3 w-3" />
+                </a>
+              </div>
+            </div>
           </div>
-        </div>
-      </section>
-    </main>
-    <MsbTrustBar />
-    <SiteFooter />
-  </>
-);
+        </section>
+
+        {/* AFFILIATES BRIDGE */}
+        <section className="border-b border-border py-16 sm:py-20">
+          <div className="container mx-auto max-w-4xl px-4">
+            <div className="relative overflow-hidden rounded-3xl border border-primary/30 bg-card p-8 sm:p-12 shadow-elevated">
+              <div className="absolute inset-0 bg-gradient-to-br from-primary/10 via-transparent to-[hsl(var(--neon))]/10" aria-hidden />
+              <div className="relative grid gap-6 sm:grid-cols-[1fr_auto] sm:items-center">
+                <div>
+                  <span className="inline-flex items-center gap-2 rounded-full border border-primary/30 bg-primary/10 px-3 py-1 font-mono text-[11px] font-semibold uppercase tracking-widest text-primary">
+                    <BookOpen className="h-3 w-3" /> No-code path
+                  </span>
+                  <h2 className="mt-3 font-display text-2xl font-bold tracking-tight text-foreground sm:text-3xl">
+                    Not a developer? Use the no-code generator.
+                  </h2>
+                  <p className="mt-3 font-body text-sm leading-relaxed text-muted-foreground sm:text-base">
+                    Bloggers, YouTubers, wallet owners, and crypto communities can generate a personalized widget in 30 seconds — no code, no signup, lifetime BTC payouts.
+                  </p>
+                </div>
+                <Link
+                  to={langPath(lang, "/affiliates")}
+                  className="btn-shimmer inline-flex items-center justify-center gap-2 rounded-xl bg-primary px-6 py-4 font-display text-sm font-bold uppercase tracking-wide text-primary-foreground shadow-neon transition-all hover:-translate-y-0.5 hover:bg-primary/90 sm:px-7"
+                >
+                  Go to Affiliates <ArrowRight className="h-4 w-4" />
+                </Link>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        {/* RESOURCES */}
+        <section className="py-16 sm:py-20">
+          <div className="container mx-auto max-w-5xl px-4">
+            <div className="mx-auto max-w-2xl text-center">
+              <h2 className="font-display text-3xl font-bold tracking-tight text-foreground sm:text-4xl">More resources</h2>
+              <p className="mt-3 font-body text-base text-muted-foreground">Everything you need to ship.</p>
+            </div>
+            <div className="mt-10 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+              {[
+                { icon: GitBranch, title: "GitHub Examples", desc: "Reference implementations in Next.js, Vue, and vanilla JS.", href: "https://github.com" },
+                { icon: Webhook, title: "Webhook Cookbook", desc: "Pattern library for handling status events safely.", href: "/learn" },
+                { icon: BookOpen, title: "Whitepapers", desc: "Architecture deep-dives on liquidity routing and shielded settlement.", href: "/whitepaper" },
+              ].map(({ icon: Icon, title, desc, href }) => (
+                <a
+                  key={title}
+                  href={href}
+                  className="group flex flex-col gap-3 rounded-2xl border border-border bg-card p-5 transition-all hover:-translate-y-1 hover:border-primary/40 hover:shadow-elevated"
+                >
+                  <Icon className="h-6 w-6 text-primary" aria-hidden />
+                  <h3 className="font-display text-base font-bold text-foreground">{title}</h3>
+                  <p className="font-body text-sm leading-relaxed text-muted-foreground">{desc}</p>
+                  <span className="mt-auto inline-flex items-center gap-1 pt-2 font-display text-xs font-bold uppercase tracking-wider text-primary">
+                    Explore <ArrowRight className="h-3 w-3" />
+                  </span>
+                </a>
+              ))}
+            </div>
+          </div>
+        </section>
+      </main>
+
+      <SiteFooter />
+    </>
+  );
+};
 
 export default DeveloperHub;
