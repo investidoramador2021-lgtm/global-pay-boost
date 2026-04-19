@@ -119,14 +119,19 @@ const BlogPostPage = () => {
   // Canonical always points to English URL to avoid "duplicate canonical" in GSC
   const postUrl = `https://mrcglobalpay.com/blog/${post.slug}`;
 
-  const jsonLd = {
-    "@context": "https://schema.org",
+  const priorityTokenForSchema = getPriorityTokenByBlogSlug(post.slug);
+
+  const articleNode = {
     "@type": "BlogPosting",
+    "@id": `${postUrl}#article`,
     headline: post.title,
     description: post.metaDescription,
     url: postUrl,
     datePublished: post.publishedAt,
     dateModified: post.updatedAt,
+    image: priorityTokenForSchema
+      ? `https://mrcglobalpay.com${priorityTokenForSchema.heroImage}`
+      : undefined,
     author: {
       "@type": "Person",
       name: post.author.name,
@@ -138,18 +143,15 @@ const BlogPostPage = () => {
       name: "MRC GlobalPay",
       url: "https://mrcglobalpay.com",
     },
-    mainEntityOfPage: {
-      "@type": "WebPage",
-      "@id": postUrl,
-    },
+    mainEntityOfPage: { "@type": "WebPage", "@id": postUrl },
     wordCount: post.content.split(/\s+/).length,
     articleSection: post.category,
     keywords: post.tags.join(", "),
   };
 
-  const breadcrumbJsonLd = {
-    "@context": "https://schema.org",
+  const breadcrumbNode = {
     "@type": "BreadcrumbList",
+    "@id": `${postUrl}#breadcrumb`,
     itemListElement: [
       { "@type": "ListItem", position: 1, name: "Home", item: `https://mrcglobalpay.com${lp("/")}` },
       { "@type": "ListItem", position: 2, name: "Blog", item: `https://mrcglobalpay.com${lp("/blog")}` },
@@ -157,10 +159,10 @@ const BlogPostPage = () => {
     ],
   };
 
-  const faqJsonLd = faqItems.length > 0
+  const faqNode = faqItems.length > 0
     ? {
-        "@context": "https://schema.org",
         "@type": "FAQPage",
+        "@id": `${postUrl}#faq`,
         mainEntity: faqItems.map((f) => ({
           "@type": "Question",
           name: f.question,
@@ -168,6 +170,52 @@ const BlogPostPage = () => {
         })),
       }
     : null;
+
+  // HowTo node — only emit for priority-token guides ("how-to-buy-X-2026")
+  // because they map cleanly to a 4-step swap procedure.
+  const howToNode = priorityTokenForSchema
+    ? {
+        "@type": "HowTo",
+        "@id": `${postUrl}#howto`,
+        name: `How to buy ${priorityTokenForSchema.name} (${priorityTokenForSchema.symbol}) in 2026`,
+        description: `Step-by-step guide to swap ${priorityTokenForSchema.widgetFrom.toUpperCase()} for ${priorityTokenForSchema.symbol} on MRC GlobalPay in under 90 seconds.`,
+        totalTime: "PT2M",
+        estimatedCost: { "@type": "MonetaryAmount", currency: "USD", value: "0.30" },
+        tool: [{ "@type": "HowToTool", name: `${priorityTokenForSchema.symbol}-compatible wallet` }],
+        step: [
+          {
+            "@type": "HowToStep",
+            position: 1,
+            name: "Open the swap widget",
+            text: `Open MRC GlobalPay and select ${priorityTokenForSchema.widgetFrom.toUpperCase()} as the source asset and ${priorityTokenForSchema.symbol} as the destination.`,
+            url: `https://mrcglobalpay.com${buildSwapDeepLink(priorityTokenForSchema)}`,
+          },
+          {
+            "@type": "HowToStep",
+            position: 2,
+            name: "Paste your wallet address",
+            text: `Paste a ${priorityTokenForSchema.symbol}-compatible wallet address. The address is validated in real time before any funds are accepted.`,
+          },
+          {
+            "@type": "HowToStep",
+            position: 3,
+            name: "Lock the rate",
+            text: "Confirm the quote — your exchange rate is locked for 60 seconds while you fund the deposit address.",
+          },
+          {
+            "@type": "HowToStep",
+            position: 4,
+            name: "Send the deposit and receive",
+            text: `Send the source asset to the displayed address. ${priorityTokenForSchema.symbol} arrives in your wallet in under 90 seconds with on-chain finality.`,
+          },
+        ],
+      }
+    : null;
+
+  const graphJsonLd = {
+    "@context": "https://schema.org",
+    "@graph": [articleNode, breadcrumbNode, faqNode, howToNode].filter(Boolean),
+  };
 
   const isInvoicePost = post.slug === "streamlined-global-settlement-mrc-invoicing";
   const financialServiceJsonLd = isInvoicePost
@@ -222,9 +270,7 @@ const BlogPostPage = () => {
         <meta name="twitter:description" content={effectiveMetaDescription} />
         <meta name="twitter:image" content={heroOgImage} />
         <link rel="alternate" type="application/rss+xml" title="MRC GlobalPay Blog RSS" href="https://mrcglobalpay.com/rss.xml" />
-        <script type="application/ld+json">{JSON.stringify(jsonLd)}</script>
-        <script type="application/ld+json">{JSON.stringify(breadcrumbJsonLd)}</script>
-        {faqJsonLd && <script type="application/ld+json">{JSON.stringify(faqJsonLd)}</script>}
+        <script type="application/ld+json">{JSON.stringify(graphJsonLd)}</script>
         {financialServiceJsonLd && <script type="application/ld+json">{JSON.stringify(financialServiceJsonLd)}</script>}
       </Helmet>
 
