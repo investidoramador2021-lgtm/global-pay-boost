@@ -437,6 +437,7 @@ const Affiliates = () => {
       </Helmet>
 
       <SiteHeader />
+      <ProgramsNav active="affiliates" />
 
       <main className="min-h-screen bg-background overflow-x-hidden">
         {/* HERO */}
@@ -995,6 +996,7 @@ const Affiliates = () => {
         </section>
       </main>
 
+      <ProgramsFooterLinks active="affiliates" />
       <SiteFooter />
     </>
   );
