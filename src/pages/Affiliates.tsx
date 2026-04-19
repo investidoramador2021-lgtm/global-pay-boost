@@ -453,16 +453,16 @@ const Affiliates = () => {
               <Shield className="h-3.5 w-3.5" /> {t("affiliates.hero.badge")}
             </div>
             <h1 className="mt-6 font-display text-[2rem] sm:text-5xl lg:text-6xl font-extrabold tracking-tight text-foreground leading-[1.05]">
-              Turn Every Crypto Click Into{" "}
+              {t("affiliates.extra.heroH1Pre")}{" "}
               <span className="bg-gradient-to-r from-primary to-[hsl(var(--neon))] bg-clip-text text-transparent">
-                Lifetime BTC Income
+                {t("affiliates.extra.heroH1Accent")}
               </span>
             </h1>
             <p className="mt-5 font-body text-base sm:text-xl text-muted-foreground max-w-2xl mx-auto leading-relaxed">
-              Embed our{" "}
-              <span className="text-foreground font-semibold">fully functional non-custodial swap widget</span>{" "}
-              in 60 seconds and earn{" "}
-              <span className="text-foreground font-semibold">0.1% – 0.4% of every swap, forever</span> — paid automatically in BTC. No signup, no minimums, no caps.
+              {t("affiliates.extra.heroSubtitle1")}{" "}
+              <span className="text-foreground font-semibold">{t("affiliates.extra.heroSubtitle2")}</span>{" "}
+              {t("affiliates.extra.heroSubtitle3")}{" "}
+              <span className="text-foreground font-semibold">{t("affiliates.extra.heroSubtitle4")}</span>{t("affiliates.extra.heroSubtitle5")}
             </p>
 
             {/* Top cross-links */}
@@ -471,13 +471,13 @@ const Affiliates = () => {
                 href={langPath(lang, "/partners")}
                 className="inline-flex items-center gap-1.5 rounded-full border border-border bg-card/60 px-3 py-1 font-display font-semibold text-muted-foreground transition-colors hover:border-primary/40 hover:text-primary"
               >
-                Also check our Partner Program <ArrowRight className="h-3 w-3" />
+                {t("affiliates.extra.crossPartner")} <ArrowRight className="h-3 w-3" />
               </a>
               <a
                 href={langPath(lang, "/referral")}
                 className="inline-flex items-center gap-1.5 rounded-full border border-border bg-card/60 px-3 py-1 font-display font-semibold text-muted-foreground transition-colors hover:border-primary/40 hover:text-primary"
               >
-                Referral Program <ArrowRight className="h-3 w-3" />
+                {t("affiliates.extra.crossReferral")} <ArrowRight className="h-3 w-3" />
               </a>
             </div>
             <div className="mt-5 flex flex-wrap items-center justify-center gap-2 text-[11px] font-display font-semibold">
@@ -545,7 +545,7 @@ const Affiliates = () => {
                 {t("affiliates.generator.asYouType")}
               </p>
               <p className="mt-3 inline-block rounded-full border border-primary/30 bg-primary/10 px-4 py-1.5 font-body text-xs sm:text-sm text-foreground/90">
-                ✨ Perfect for <span className="font-semibold text-primary">bloggers, YouTubers, wallet owners, and crypto communities</span> looking to earn passive income.
+                {t("affiliates.extra.generatorPerfectFor")} <span className="font-semibold text-primary">{t("affiliates.extra.generatorPerfectForBold")}</span> {t("affiliates.extra.generatorPerfectForEnd")}
               </p>
             </div>
 
@@ -585,23 +585,22 @@ const Affiliates = () => {
           <div className="container mx-auto max-w-5xl px-4">
             <div className="text-center max-w-2xl mx-auto">
               <div className="inline-flex items-center gap-2 rounded-full border border-primary/30 bg-primary/10 px-3 py-1 text-[11px] font-display font-semibold text-primary">
-                <Percent className="h-3 w-3" /> How You Get Paid
+                <Percent className="h-3 w-3" /> {t("affiliates.extra.tiersBadge")}
               </div>
               <h2 className="mt-4 font-display text-3xl font-bold text-foreground sm:text-4xl">
-                Transparent Commission Tiers
+                {t("affiliates.extra.tiersTitle")}
               </h2>
               <p className="mt-3 font-body text-muted-foreground leading-relaxed">
-                Every swap your referrals complete pays you a percentage of the swap volume — for life.
-                Your tier scales automatically with the volume your referrals generate each month.
+                {t("affiliates.extra.tiersSubtitle")}
               </p>
             </div>
 
             <div className="mt-10 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
               {[
-                { tier: "Starter", rate: "0.1%", range: "Up to $50k / mo", icon: Coins },
-                { tier: "Growth", rate: "0.2%", range: "$50k – $250k / mo", icon: TrendingUp },
-                { tier: "Pro", rate: "0.3%", range: "$250k – $1M / mo", icon: BarChart3 },
-                { tier: "Elite", rate: "0.4%", range: "$1M+ / mo", icon: Sparkles },
+                { tier: t("affiliates.extra.tierStarter"), rate: "0.1%", range: t("affiliates.extra.tierStarterRange"), icon: Coins },
+                { tier: t("affiliates.extra.tierGrowth"), rate: "0.2%", range: t("affiliates.extra.tierGrowthRange"), icon: TrendingUp },
+                { tier: t("affiliates.extra.tierPro"), rate: "0.3%", range: t("affiliates.extra.tierProRange"), icon: BarChart3 },
+                { tier: t("affiliates.extra.tierElite"), rate: "0.4%", range: t("affiliates.extra.tierEliteRange"), icon: Sparkles },
               ].map((c) => (
                 <div
                   key={c.tier}
@@ -618,7 +617,7 @@ const Affiliates = () => {
             </div>
 
             <p className="mt-6 text-center text-xs text-muted-foreground max-w-2xl mx-auto">
-              Tiers re-evaluate monthly. Lifetime attribution stays with you — even if a referral pauses and returns months later.
+              {t("affiliates.extra.tiersFooter")}
             </p>
           </div>
         </section>
@@ -631,14 +630,13 @@ const Affiliates = () => {
           <div className="container mx-auto max-w-6xl px-4">
             <div className="text-center max-w-2xl mx-auto">
               <div className="inline-flex items-center gap-2 rounded-full border border-primary/30 bg-primary/10 px-3 py-1 text-[11px] font-display font-semibold text-primary">
-                <LineChart className="h-3 w-3" /> Real-Time Dashboard
+                <LineChart className="h-3 w-3" /> {t("affiliates.extra.dashBadge")}
               </div>
               <h2 className="mt-4 font-display text-3xl font-bold text-foreground sm:text-4xl">
-                Track Earnings, Volume &amp; Payouts Live
+                {t("affiliates.extra.dashTitle")}
               </h2>
               <p className="mt-3 font-body text-muted-foreground leading-relaxed">
-                Upgrade to the Partner Program (free, ~2 minutes) to unlock live tracking — or keep it simple
-                with auto-payouts and no dashboard at all.
+                {t("affiliates.extra.dashSubtitle")}
               </p>
             </div>
 
@@ -647,32 +645,32 @@ const Affiliates = () => {
               <div className="rounded-2xl border border-border bg-card p-5 shadow-sm">
                 <div className="flex items-center justify-between">
                   <span className="font-display text-xs font-semibold uppercase tracking-wider text-muted-foreground">
-                    Lifetime Earnings
+                    {t("affiliates.extra.dashEarnings")}
                   </span>
                   <span className="inline-flex items-center gap-1 rounded-full bg-primary/15 px-2 py-0.5 font-mono text-[10px] font-semibold text-primary">
                     <Coins className="h-3 w-3" /> BTC
                   </span>
                 </div>
                 <div className="mt-3 font-mono text-3xl font-extrabold text-foreground">₿ 0.14582910</div>
-                <p className="mt-1 text-xs text-muted-foreground">≈ $14,250 USD · updated every 30s</p>
+                <p className="mt-1 text-xs text-muted-foreground">{t("affiliates.extra.dashEarningsCaption")}</p>
                 <div className="mt-4 flex h-2 overflow-hidden rounded-full bg-border/60">
                   <div className="h-full w-3/4 bg-gradient-to-r from-primary to-[hsl(var(--neon))]" />
                 </div>
-                <p className="mt-2 text-[11px] text-muted-foreground">75% to next tier (Pro · 0.3%)</p>
+                <p className="mt-2 text-[11px] text-muted-foreground">{t("affiliates.extra.dashEarningsProgress")}</p>
               </div>
 
               {/* Volume card */}
               <div className="rounded-2xl border border-border bg-card p-5 shadow-sm">
                 <div className="flex items-center justify-between">
                   <span className="font-display text-xs font-semibold uppercase tracking-wider text-muted-foreground">
-                    30-Day Volume
+                    {t("affiliates.extra.dashVolume")}
                   </span>
                   <span className="inline-flex items-center gap-1 text-[11px] font-semibold text-primary">
                     <TrendingUp className="h-3 w-3" /> +18.4%
                   </span>
                 </div>
                 <div className="mt-3 font-mono text-3xl font-extrabold text-foreground">$182,940</div>
-                <p className="mt-1 text-xs text-muted-foreground">347 swaps · 89 unique referrals</p>
+                <p className="mt-1 text-xs text-muted-foreground">{t("affiliates.extra.dashVolumeCaption")}</p>
                 <div className="mt-4 flex items-end gap-1 h-12">
                   {[40, 65, 50, 80, 70, 90, 100, 75, 85, 95, 88, 100].map((h, i) => (
                     <div
@@ -689,27 +687,27 @@ const Affiliates = () => {
               <div className="rounded-2xl border border-border bg-card p-5 shadow-sm">
                 <div className="flex items-center justify-between">
                   <span className="font-display text-xs font-semibold uppercase tracking-wider text-muted-foreground">
-                    Recent BTC Payouts
+                    {t("affiliates.extra.dashPayouts")}
                   </span>
                   <Wallet className="h-3.5 w-3.5 text-primary" />
                 </div>
                 <ul className="mt-3 space-y-2">
                   {[
-                    { date: "Apr 18", amount: "0.00428 BTC", status: "Confirmed" },
-                    { date: "Apr 11", amount: "0.00391 BTC", status: "Confirmed" },
-                    { date: "Apr 04", amount: "0.00512 BTC", status: "Confirmed" },
+                    { date: "Apr 18", amount: "0.00428 BTC" },
+                    { date: "Apr 11", amount: "0.00391 BTC" },
+                    { date: "Apr 04", amount: "0.00512 BTC" },
                   ].map((p) => (
                     <li key={p.date} className="flex items-center justify-between rounded-lg border border-border/60 bg-background/60 px-3 py-2 text-xs">
                       <span className="font-mono text-muted-foreground">{p.date}</span>
                       <span className="font-mono font-semibold text-foreground">{p.amount}</span>
                       <span className="inline-flex items-center gap-1 font-display text-[10px] font-semibold text-primary">
-                        <Check className="h-3 w-3" /> {p.status}
+                        <Check className="h-3 w-3" /> {t("affiliates.extra.dashPayoutStatus")}
                       </span>
                     </li>
                   ))}
                 </ul>
                 <p className="mt-3 text-[11px] text-muted-foreground">
-                  Auto-paid every 7 days once threshold is met.
+                  {t("affiliates.extra.dashPayoutsCaption")}
                 </p>
               </div>
             </div>
@@ -719,9 +717,9 @@ const Affiliates = () => {
                 href={langPath(lang, "/partners")}
                 className="btn-shimmer inline-flex items-center justify-center gap-2 rounded-xl bg-primary px-7 py-3.5 font-display text-sm font-bold text-primary-foreground shadow-neon transition-all duration-100 hover:bg-primary/90 hover:-translate-y-0.5"
               >
-                <Users className="h-4 w-4" /> Unlock the Full Dashboard <ArrowRight className="h-4 w-4" />
+                <Users className="h-4 w-4" /> {t("affiliates.extra.dashCta")} <ArrowRight className="h-4 w-4" />
               </a>
-              <p className="mt-3 text-xs text-muted-foreground">Free upgrade · no KYC · keep your widget &amp; payouts unchanged.</p>
+              <p className="mt-3 text-xs text-muted-foreground">{t("affiliates.extra.dashCtaNote")}</p>
             </div>
           </div>
         </section>
@@ -736,19 +734,16 @@ const Affiliates = () => {
                 </div>
                 <div className="min-w-0">
                   <div className="inline-flex items-center gap-2 rounded-full border border-primary/30 bg-primary/10 px-3 py-1 text-[11px] font-display font-semibold text-primary">
-                    Regulatory Edge
+                    {t("affiliates.extra.regBadge")}
                   </div>
                   <h2 className="mt-3 font-display text-2xl sm:text-3xl font-bold text-foreground tracking-tight">
-                    Promote a Platform Regulators Already Trust
+                    {t("affiliates.extra.regTitle")}
                   </h2>
                   <p className="mt-3 font-body text-sm sm:text-base text-muted-foreground leading-relaxed">
-                    MRC GlobalPay is operated by <span className="font-semibold text-foreground">MRC Pay International Corp</span>,
-                    a Canadian fintech registered as a{" "}
-                    <span className="font-semibold text-foreground">FINTRAC Money Services Business (#C100000015)</span>{" "}
-                    and an officially registered{" "}
-                    <span className="font-semibold text-foreground">Bank of Canada Payment Service Provider (PSP)</span>.
-                    That means every swap you refer flows through a fully supervised, AML-compliant, non-custodial pipeline —
-                    something the vast majority of swap aggregators simply cannot offer.
+                    {t("affiliates.extra.regBody1")} <span className="font-semibold text-foreground">{t("affiliates.extra.regBody2")}</span>{t("affiliates.extra.regBody3")}{" "}
+                    <span className="font-semibold text-foreground">{t("affiliates.extra.regBody4")}</span>{" "}
+                    {t("affiliates.extra.regBody5")}{" "}
+                    <span className="font-semibold text-foreground">{t("affiliates.extra.regBody6")}</span>{t("affiliates.extra.regBody7")}
                   </p>
                   <div className="mt-5 flex flex-wrap gap-2">
                     <a
@@ -757,7 +752,7 @@ const Affiliates = () => {
                       rel="noopener noreferrer"
                       className="inline-flex items-center gap-1.5 rounded-full border border-primary/40 bg-primary/10 px-3 py-1.5 text-xs font-display font-semibold text-primary transition-colors hover:bg-primary/20"
                     >
-                      <ExternalLink className="h-3 w-3" /> Verify FINTRAC MSB
+                      <ExternalLink className="h-3 w-3" /> {t("affiliates.extra.regVerifyFintrac")}
                     </a>
                     <a
                       href="https://www.bankofcanada.ca/core-functions/retail-payments-supervision/psp-registry/psp-registry-details/?account_id=408b884a-1aa1-ef11-a72d-0022483bf164"
@@ -765,11 +760,11 @@ const Affiliates = () => {
                       rel="noopener noreferrer"
                       className="inline-flex items-center gap-1.5 rounded-full border border-primary/40 bg-primary/10 px-3 py-1.5 text-xs font-display font-semibold text-primary transition-colors hover:bg-primary/20"
                     >
-                      <ExternalLink className="h-3 w-3" /> Verify Bank of Canada PSP
+                      <ExternalLink className="h-3 w-3" /> {t("affiliates.extra.regVerifyBoc")}
                     </a>
                   </div>
                   <p className="mt-4 text-xs text-muted-foreground">
-                    Use the official badges above in your content to instantly boost trust and conversion.
+                    {t("affiliates.extra.regNote")}
                   </p>
                 </div>
               </div>
@@ -783,13 +778,13 @@ const Affiliates = () => {
               <div className="absolute inset-0 bg-gradient-to-br from-primary/5 via-transparent to-[hsl(var(--neon))]/5" aria-hidden />
               <div className="relative">
                 <div className="inline-flex items-center gap-2 rounded-full border border-primary/30 bg-primary/10 px-3 py-1 text-[11px] font-display font-semibold text-primary">
-                  <Wallet className="h-3 w-3" /> Tracking & Payouts
+                  <Wallet className="h-3 w-3" /> {t("affiliates.extra.trackingBadge")}
                 </div>
                 <h2 className="mt-4 font-display text-3xl font-extrabold text-foreground sm:text-4xl tracking-tight">
                   {t("affiliates.tracking.title")}
                 </h2>
                 <p className="mt-4 font-body text-muted-foreground leading-relaxed max-w-2xl mx-auto">
-                  We track referrals privately using a secure reference. Commissions are paid automatically to the BTC wallet you provide — no dashboard required, no manual claims.
+                  {t("affiliates.extra.trackingBody")}
                 </p>
                 <div className="mt-7 flex flex-col sm:flex-row items-center justify-center gap-3">
                   <a
@@ -885,27 +880,26 @@ const Affiliates = () => {
         <section className="py-16 sm:py-20">
           <div className="container mx-auto max-w-2xl px-4 text-center">
             <div className="inline-flex items-center gap-2 rounded-full border border-primary/30 bg-primary/10 px-3 py-1 text-[11px] font-display font-semibold text-primary">
-              <Sparkles className="h-3 w-3" /> 60 seconds to your first link
+              <Sparkles className="h-3 w-3" /> {t("affiliates.extra.finalBadge")}
             </div>
             <h2 className="mt-4 font-display text-3xl font-bold text-foreground sm:text-4xl">
-              Your BTC Wallet Is About to Get a Lot Busier
+              {t("affiliates.extra.finalTitle")}
             </h2>
             <p className="mt-3 font-body text-muted-foreground leading-relaxed">
-              Join thousands of creators, wallet teams and crypto communities already earning lifetime BTC
-              with MRC GlobalPay. No signup, no minimums, no risk — just paste, copy, and earn.
+              {t("affiliates.extra.finalSubtitle")}
             </p>
             <div className="mt-7 flex flex-col sm:flex-row items-center justify-center gap-3">
               <a
                 href="#generate"
                 className="btn-shimmer inline-flex w-full sm:w-auto items-center justify-center gap-2 rounded-xl bg-primary px-8 py-4 font-display text-base font-bold text-primary-foreground shadow-neon transition-all duration-100 hover:bg-primary/90 hover:-translate-y-0.5"
               >
-                <Sparkles className="h-4 w-4" /> Generate My Widget Now
+                <Sparkles className="h-4 w-4" /> {t("affiliates.extra.finalCtaGenerate")}
               </a>
               <a
                 href={langPath(lang, "/partners")}
                 className="inline-flex w-full sm:w-auto items-center justify-center gap-2 rounded-xl border-2 border-primary/40 bg-background px-7 py-4 font-display text-sm font-bold text-primary transition-all hover:bg-primary/10 hover:border-primary"
               >
-                Open Partner Dashboard <ArrowRight className="h-4 w-4" />
+                {t("affiliates.extra.finalCtaDashboard")} <ArrowRight className="h-4 w-4" />
               </a>
             </div>
 
@@ -915,18 +909,18 @@ const Affiliates = () => {
                 href={langPath(lang, "/partners")}
                 className="inline-flex items-center gap-1.5 rounded-full border border-border bg-card/60 px-3 py-1 font-display font-semibold text-muted-foreground transition-colors hover:border-primary/40 hover:text-primary"
               >
-                Also check our Partner Program <ArrowRight className="h-3 w-3" />
+                {t("affiliates.extra.crossPartner")} <ArrowRight className="h-3 w-3" />
               </a>
               <a
                 href={langPath(lang, "/referral")}
                 className="inline-flex items-center gap-1.5 rounded-full border border-border bg-card/60 px-3 py-1 font-display font-semibold text-muted-foreground transition-colors hover:border-primary/40 hover:text-primary"
               >
-                Referral Program <ArrowRight className="h-3 w-3" />
+                {t("affiliates.extra.crossReferral")} <ArrowRight className="h-3 w-3" />
               </a>
             </div>
 
             <p className="mt-6 text-[11px] text-muted-foreground">
-              Promote with confidence — fully regulated in Canada (FINTRAC MSB #C100000015 · Bank of Canada PSP).
+              {t("affiliates.extra.finalRegNote")}
             </p>
           </div>
         </section>

@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { useTranslation } from "react-i18next";
 import {
   ImageIcon,
   Share2,
@@ -41,7 +42,8 @@ const downloadFile = async (url: string, filename: string) => {
   }
 };
 
-const CopyBlock = ({ text, label = "Copy" }: { text: string; label?: string }) => {
+const CopyBlock = ({ text, label }: { text: string; label?: string }) => {
+  const { t } = useTranslation();
   const [copied, setCopied] = useState(false);
   const onCopy = async () => {
     try {
@@ -64,335 +66,43 @@ const CopyBlock = ({ text, label = "Copy" }: { text: string; label?: string }) =
         className="absolute right-2 top-2 h-7 gap-1 text-[11px]"
       >
         {copied ? <Check className="h-3 w-3" /> : <Copy className="h-3 w-3" />}
-        {copied ? "Copied" : label}
+        {copied ? t("affiliates.materials.copied") : (label ?? t("affiliates.materials.copy"))}
       </Button>
     </div>
   );
 };
 
-/* ─────────── BANNERS ─────────── */
-const banners = [
-  {
-    id: "leaderboard",
-    name: "Banner 1 — Leaderboard",
-    size: "1920 × 1080 (use as 728×90)",
-    theme: "Dark",
-    overlay: "Swap 6,000+ Cryptos in Under 60 Seconds →",
-    image: banner1,
-    filename: "mrcglobalpay-banner-leaderboard.jpg",
-    aspect: "aspect-[16/9]",
-  },
-  {
-    id: "medium-rect-dark",
-    name: "Banner 2 — Medium Rectangle (Dark)",
-    size: "1024 × 1024 (use as 300×250)",
-    theme: "Dark",
-    overlay: "Non-Custodial. Fast. Trusted.",
-    image: banner2,
-    filename: "mrcglobalpay-banner-mediumrect-dark.jpg",
-    aspect: "aspect-square",
-  },
-  {
-    id: "medium-rect-light",
-    name: "Banner 3 — Medium Rectangle (Light)",
-    size: "1024 × 1024 (use as 300×250)",
-    theme: "Light",
-    overlay: "Micro-Swaps from $0.30. No Sign-Up.",
-    image: banner3,
-    filename: "mrcglobalpay-banner-mediumrect-light.jpg",
-    aspect: "aspect-square",
-  },
-  {
-    id: "skyscraper",
-    name: "Banner 4 — Wide Skyscraper",
-    size: "1080 × 1920 (use as 160×600)",
-    theme: "Dark",
-    overlay: "6,000+ Pairs. Swap in Seconds.",
-    image: banner4,
-    filename: "mrcglobalpay-banner-skyscraper.jpg",
-    aspect: "aspect-[9/16]",
-  },
-  {
-    id: "social-1200",
-    name: "Banner 5 — Social Share",
-    size: "1024 × 1024 (use as 1200×628)",
-    theme: "Dark",
-    overlay: "The Smartest Way to Swap Crypto in 2026",
-    image: banner5,
-    filename: "mrcglobalpay-banner-social.jpg",
-    aspect: "aspect-square",
-  },
-  {
-    id: "story-1080",
-    name: "Banner 6 — Mobile Story",
-    size: "1080 × 1920 (Instagram / TikTok / Shorts)",
-    theme: "Dark",
-    overlay: "Swap Smarter. Move Faster.",
-    image: banner6,
-    filename: "mrcglobalpay-banner-story.jpg",
-    aspect: "aspect-[9/16]",
-  },
-];
-
-/* ─────────── SOCIAL POSTS ─────────── */
-const socials = [
-  {
-    platform: "X (Twitter)",
-    label: "X Post 1 — Hook",
-    text: `Just found the cleanest non-custodial crypto swap I've used in years.
-
-→ 6,000+ pairs
-→ Swap in under 60 seconds
-→ From just $0.30
-→ No account required
-
-Worth a look 👇
-
-[YOUR-AFFILIATE-LINK]
-
-#Bitcoin #Crypto #DeFi`,
-  },
-  {
-    platform: "X (Twitter)",
-    label: "X Post 2 — Value Drop",
-    text: `Most "no-KYC" swaps are sketchy.
-
-MRC GlobalPay is different:
-✅ Non-custodial (you keep your keys)
-✅ 6,000+ trading pairs
-✅ Swaps complete in under 60 seconds
-✅ Micro-swaps from $0.30
-
-Try it → [YOUR-AFFILIATE-LINK]
-
-#Crypto #BTC #SelfCustody`,
-  },
-  {
-    platform: "Telegram",
-    label: "Telegram Post 1 — Channel Drop",
-    text: `🚀 New favorite swap tool: MRC GlobalPay
-
-• Non-custodial — your keys, your coins
-• 6,000+ trading pairs
-• Swaps complete in under 60 seconds
-• Micro-swaps from $0.30 (perfect for cleaning up dust)
-• No account required
-
-Give it a try 👇
-
-🔗 [YOUR-AFFILIATE-LINK]`,
-  },
-  {
-    platform: "Telegram",
-    label: "Telegram Post 2 — Quick Tip",
-    text: `💡 Tip for anyone holding leftover dust on multiple chains:
-
-MRC GlobalPay lets you swap from $0.30 — most exchanges won't even let you touch amounts that small.
-
-Non-custodial. No account. ~60 seconds.
-
-Try it: [YOUR-AFFILIATE-LINK]`,
-  },
-  {
-    platform: "LinkedIn",
-    label: "LinkedIn Post — Professional",
-    text: `A quick note for anyone navigating crypto swaps:
-
-I've been recommending MRC GlobalPay to clients and contacts because it solves three problems most exchanges don't:
-
-1. Non-custodial architecture — assets never sit on the platform
-2. Trusted operator with a real corporate entity behind the product
-3. Practical UX — 6,000+ pairs, sub-60-second swaps, micro-swaps from $0.30
-
-If you have a network that swaps crypto regularly, take a look:
-👉 [YOUR-AFFILIATE-LINK]
-
-#Fintech #Crypto #Bitcoin`,
-  },
-  {
-    platform: "Instagram / Threads",
-    label: "Instagram / Threads Post",
-    text: `Crypto swap tool I actually trust ⚡️
-
-🔐 Non-custodial (you keep control)
-💸 Swap from just $0.30
-⏱️ Done in under 60 seconds
-🪙 6,000+ pairs
-✅ No account required
-
-Link in bio → [YOUR-AFFILIATE-LINK]
-
-#crypto #bitcoin #web3 #defi #selfcustody`,
-  },
-];
-
-/* ─────────── EMAILS ─────────── */
-const emails = [
-  {
-    label: "Email 1 — Short (newsletter blurb)",
-    text: `Subject: A crypto swap tool I had to share
-
-Quick one — I've been using MRC GlobalPay for the last few weeks and it's quietly become my default.
-
-• Non-custodial (your keys stay yours)
-• 6,000+ trading pairs
-• Under 60 seconds per swap
-• From $0.30 — yes, even dust
-• No account required for swaps
-
-If you swap crypto at all, give it a try: [YOUR-AFFILIATE-LINK]
-
-Cheers,
-[YOUR-NAME]`,
-  },
-  {
-    label: "Email 2 — Medium (review-style)",
-    text: `Subject: The non-custodial swap I wish I'd found sooner
-
-Hey [FIRST-NAME],
-
-I get asked all the time which exchange I use for quick crypto swaps. For a while my answer was "depends on the chain." Not anymore.
-
-MRC GlobalPay has become my go-to, and here's why:
-
-🔐 Non-custodial — funds never sit on the platform
-⚡ 6,000+ pairs, swaps complete in under 60 seconds
-💸 Micro-swaps from $0.30 (perfect for clearing dust on Solana, BSC, TRON, etc.)
-🎯 No account needed for swaps
-
-Try it here:
-👉 [YOUR-AFFILIATE-LINK]
-
-If you have questions, just reply.
-
-— [YOUR-NAME]`,
-  },
-  {
-    label: "Email 3 — Long (full pitch)",
-    text: `Subject: I finally found a crypto swap that ticks every box
-
-Hey [FIRST-NAME],
-
-If you've been in crypto for more than five minutes, you know the pattern:
-
-→ Centralized exchanges are fast but custodial (and increasingly KYC-everything)
-→ DEX aggregators are non-custodial but slow, expensive, and chain-limited
-→ "No-KYC" swap sites are sketchy and almost never trustworthy
-
-I spent months looking for something in the middle. I found it.
-
-It's called MRC GlobalPay, and it's the cleanest non-custodial swap I've used:
-
-✅ Non-custodial — you keep your keys, every time
-✅ 6,000+ trading pairs across all major chains
-✅ Swaps settle in under 60 seconds
-✅ Micro-swaps from just $0.30 (huge for cleaning up dust)
-✅ Operated by MRC Pay International Corp out of Ottawa, Canada
-✅ No account required for swaps
-
-That last point matters. Most "anonymous" swap platforms are based in jurisdictions where there's zero recourse if something goes wrong. MRC is the opposite — a real corporate entity, on the record, but still non-custodial and still no-account-required for swaps.
-
-Try it once and see for yourself:
-👉 [YOUR-AFFILIATE-LINK]
-
-Reply if you want a walkthrough — happy to help.
-
-Talk soon,
-[YOUR-NAME]
-
-P.S. Even if you're skeptical, just try a $0.30 swap. It costs almost nothing and you'll see exactly how the flow works.`,
-  },
-];
-
-/* ─────────── VIDEO SCRIPT ─────────── */
-const videoScript = `🎬 60-SECOND VIDEO SCRIPT — "The Best Non-Custodial Crypto Swap of 2026"
-─────────────────────────────────────────────
-
-[0:00 – 0:05] HOOK (on-camera or text overlay)
-"If you swap crypto and you're still using centralized exchanges — stop. I'll show you something better in 60 seconds."
-
-[0:05 – 0:15] PROBLEM
-"Centralized exchanges hold your funds, ask for KYC on everything, and freeze accounts at random. DEXs are slow, expensive, and chain-limited. Most 'no-KYC' swaps? Sketchy and risky."
-
-[0:15 – 0:35] SOLUTION — MRC GlobalPay
-"This is MRC GlobalPay. It's non-custodial — you never give up your keys. It supports 6,000+ trading pairs across every major chain. Swaps complete in under 60 seconds. And you can swap as little as $0.30 — perfect for cleaning up dust. No account, no email required."
-
-[0:35 – 0:50] PROOF / DEMO
-"Here's the swap I just did — BTC to USDT, 47 seconds, no account, no email. Funds went straight to my wallet."
-
-[0:50 – 1:00] CTA
-"Link in the description — try a small swap and see for yourself. See you in the next one."
-
-─────────────────────────────────────────────
-📝 VIDEO DESCRIPTION TEMPLATE
-─────────────────────────────────────────────
-
-The fastest, cleanest non-custodial crypto swap I've used in 2026.
-
-🔗 Try MRC GlobalPay (my affiliate link): [YOUR-AFFILIATE-LINK]
-
-Why it's different:
-✅ Non-custodial — you keep your keys
-✅ 6,000+ pairs across all major chains
-✅ Swaps complete in under 60 seconds
-✅ Micro-swaps from $0.30
-✅ No account required for swaps
-
-💰 Affiliate disclosure: The link above is my referral link. If you swap through it, I may earn a small commission — at zero extra cost to you.
-
-⏱️ TIMESTAMPS
-0:00 Intro
-0:05 Why centralized exchanges suck
-0:15 What MRC GlobalPay actually is
-0:35 Live swap demo
-0:50 How to try it
-
-#Crypto #Bitcoin #NonCustodial #CryptoSwap #DeFi #SelfCustody #BTC #2026Crypto`;
-
-/* ─────────── BLOG POST ─────────── */
-const blogPost = `# The Best Non-Custodial Crypto Swap Platform in 2026
-
-If you've spent any time in crypto recently, you've felt the squeeze: centralized exchanges keep tightening KYC, "no-KYC" platforms look increasingly suspicious, and decentralized aggregators are still too slow and chain-limited for everyday use.
-
-There's finally a better option — and after testing it for several months, I'm convinced it's the most well-balanced non-custodial swap platform available in 2026.
-
-## Meet MRC GlobalPay
-
-[MRC GlobalPay]([YOUR-AFFILIATE-LINK]) is a non-custodial cryptocurrency exchange operated by MRC Pay International Corp, headquartered in Ottawa, Canada. Unlike most "anonymous" swap sites, it has a real corporate entity behind it — but it isn't a centralized exchange. Your funds never sit on the platform. Every swap is an atomic, non-custodial transaction, and you don't need an account to swap.
-
-## Why It Stands Out
-
-Here's what makes it different from every other swap I've tested:
-
-- **6,000+ trading pairs** across Bitcoin, Ethereum, Solana, BNB Chain, TRON, and dozens more.
-- **Sub-60-second swap times.** Most transactions settle in under a minute.
-- **Micro-swaps from just $0.30.** Almost no platform supports amounts this small — perfect for clearing dust on multi-chain wallets.
-- **Zero account required for swaps.** Sign-up is only needed if you want to use the partner or affiliate tools.
-- **Real corporate operator.** A real entity behind the product, headquartered in Ottawa.
-
-## Who Should Use It
-
-If you fall into any of these groups, it's worth trying:
-
-1. **Long-term holders** who occasionally rebalance and hate the friction of centralized exchanges.
-2. **Multi-chain users** drowning in dust they can't otherwise convert.
-3. **Self-custody advocates** who refuse to deposit funds anywhere.
-4. **Creators and educators** who want a clean tool they can recommend.
-
-## Try It Yourself
-
-The fastest way to evaluate MRC GlobalPay is to try a small swap — even $0.30 will show you the entire flow.
-
-👉 **[Start a swap on MRC GlobalPay →]([YOUR-AFFILIATE-LINK])**
-
-In a market full of bad options, it's rare to find a tool that's simultaneously non-custodial, fast, and easy. MRC GlobalPay is the first platform I've used in 2026 that ticks every box.
-
----
-
-*Disclosure: The links above are affiliate links. If you swap through them, I may earn a small commission at no extra cost to you.*`;
-
 /* ─────────── COMPONENT ─────────── */
 const MarketingMaterials = () => {
+  const { t } = useTranslation();
+
+  const banners = [
+    { id: "leaderboard", name: t("affiliates.materials.banner1Name"), size: "1920 × 1080 (use as 728×90)", theme: "Dark", overlay: t("affiliates.materials.banner1Overlay"), image: banner1, filename: "mrcglobalpay-banner-leaderboard.jpg", aspect: "aspect-[16/9]" },
+    { id: "medium-rect-dark", name: t("affiliates.materials.banner2Name"), size: "1024 × 1024 (use as 300×250)", theme: "Dark", overlay: t("affiliates.materials.banner2Overlay"), image: banner2, filename: "mrcglobalpay-banner-mediumrect-dark.jpg", aspect: "aspect-square" },
+    { id: "medium-rect-light", name: t("affiliates.materials.banner3Name"), size: "1024 × 1024 (use as 300×250)", theme: "Light", overlay: t("affiliates.materials.banner3Overlay"), image: banner3, filename: "mrcglobalpay-banner-mediumrect-light.jpg", aspect: "aspect-square" },
+    { id: "skyscraper", name: t("affiliates.materials.banner4Name"), size: "1080 × 1920 (use as 160×600)", theme: "Dark", overlay: t("affiliates.materials.banner4Overlay"), image: banner4, filename: "mrcglobalpay-banner-skyscraper.jpg", aspect: "aspect-[9/16]" },
+    { id: "social-1200", name: t("affiliates.materials.banner5Name"), size: "1024 × 1024 (use as 1200×628)", theme: "Dark", overlay: t("affiliates.materials.banner5Overlay"), image: banner5, filename: "mrcglobalpay-banner-social.jpg", aspect: "aspect-square" },
+    { id: "story-1080", name: t("affiliates.materials.banner6Name"), size: "1080 × 1920 (Instagram / TikTok / Shorts)", theme: "Dark", overlay: t("affiliates.materials.banner6Overlay"), image: banner6, filename: "mrcglobalpay-banner-story.jpg", aspect: "aspect-[9/16]" },
+  ];
+
+  const socials = [
+    { platform: t("affiliates.social.platformX"), label: t("affiliates.social.x1Label"), text: t("affiliates.social.x1Text") },
+    { platform: t("affiliates.social.platformX"), label: t("affiliates.social.x2Label"), text: t("affiliates.social.x2Text") },
+    { platform: t("affiliates.social.platformTelegram"), label: t("affiliates.social.tg1Label"), text: t("affiliates.social.tg1Text") },
+    { platform: t("affiliates.social.platformTelegram"), label: t("affiliates.social.tg2Label"), text: t("affiliates.social.tg2Text") },
+    { platform: t("affiliates.social.platformLinkedin"), label: t("affiliates.social.liLabel"), text: t("affiliates.social.liText") },
+    { platform: t("affiliates.social.platformInstagram"), label: t("affiliates.social.igLabel"), text: t("affiliates.social.igText") },
+  ];
+
+  const emails = [
+    { label: t("affiliates.emails.e1Label"), text: t("affiliates.emails.e1Text") },
+    { label: t("affiliates.emails.e2Label"), text: t("affiliates.emails.e2Text") },
+    { label: t("affiliates.emails.e3Label"), text: t("affiliates.emails.e3Text") },
+  ];
+
+  const videoScript = t("affiliates.video.script");
+  const blogPost = t("affiliates.blog.post");
+
   return (
     <section
       id="marketing-materials"
@@ -401,15 +111,15 @@ const MarketingMaterials = () => {
       <div className="container mx-auto max-w-6xl px-4">
         <div className="mx-auto max-w-3xl text-center">
           <div className="inline-flex items-center gap-2 rounded-full border border-primary/30 bg-primary/10 px-3 py-1 text-[11px] font-display font-semibold text-primary">
-            <Megaphone className="h-3 w-3" /> Copy. Paste. Promote.
+            <Megaphone className="h-3 w-3" /> {t("affiliates.materials.badge")}
           </div>
           <h2 className="mt-4 font-display text-3xl font-bold text-foreground sm:text-4xl">
-            Ready-Made Marketing Materials — Start Promoting in Minutes
+            {t("affiliates.materials.title")}
           </h2>
           <p className="mt-3 font-body text-muted-foreground leading-relaxed">
-            Every asset below is fully written, fully formatted, and ready to use right now. Copy any block, swap{" "}
+            {t("affiliates.materials.subtitle1")}{" "}
             <code className="rounded bg-muted px-1.5 py-0.5 font-mono text-xs">[YOUR-AFFILIATE-LINK]</code>{" "}
-            for your real link, and post. No design tools, no copywriting, no setup needed.
+            {t("affiliates.materials.subtitle2")}
           </p>
         </div>
 
@@ -417,26 +127,26 @@ const MarketingMaterials = () => {
           <Tabs defaultValue="banners" className="w-full">
             <TabsList className="grid w-full grid-cols-2 sm:grid-cols-5 h-auto">
               <TabsTrigger value="banners" className="gap-1.5 text-xs">
-                <ImageIcon className="h-3.5 w-3.5" /> Banners
+                <ImageIcon className="h-3.5 w-3.5" /> {t("affiliates.materials.tabBanners")}
               </TabsTrigger>
               <TabsTrigger value="social" className="gap-1.5 text-xs">
-                <Share2 className="h-3.5 w-3.5" /> Social
+                <Share2 className="h-3.5 w-3.5" /> {t("affiliates.materials.tabSocial")}
               </TabsTrigger>
               <TabsTrigger value="emails" className="gap-1.5 text-xs">
-                <Mail className="h-3.5 w-3.5" /> Emails
+                <Mail className="h-3.5 w-3.5" /> {t("affiliates.materials.tabEmails")}
               </TabsTrigger>
               <TabsTrigger value="video" className="gap-1.5 text-xs">
-                <Youtube className="h-3.5 w-3.5" /> Video
+                <Youtube className="h-3.5 w-3.5" /> {t("affiliates.materials.tabVideo")}
               </TabsTrigger>
               <TabsTrigger value="blog" className="gap-1.5 text-xs">
-                <FileText className="h-3.5 w-3.5" /> Blog
+                <FileText className="h-3.5 w-3.5" /> {t("affiliates.materials.tabBlog")}
               </TabsTrigger>
             </TabsList>
 
             {/* ─────────── BANNERS ─────────── */}
             <TabsContent value="banners" className="mt-8">
               <p className="mb-6 text-center text-sm text-muted-foreground">
-                Six on-brand banners — preview, then download the full-resolution image. Pair with the suggested overlay text or use as-is.
+                {t("affiliates.materials.bannersHeader")}
               </p>
               <div className="grid gap-5 lg:grid-cols-2">
                 {banners.map((b) => (
@@ -456,11 +166,11 @@ const MarketingMaterials = () => {
                             : "bg-primary/10 text-primary",
                         )}
                       >
-                        {b.theme}
+                        {b.theme === "Dark" ? t("affiliates.materials.themeDark") : t("affiliates.materials.themeLight")}
                       </span>
                     </div>
                     <p className="mt-1 text-xs text-muted-foreground">
-                      Size: <span className="font-mono">{b.size}</span>
+                      {t("affiliates.materials.size")}: <span className="font-mono">{b.size}</span>
                     </p>
 
                     <div
@@ -483,14 +193,14 @@ const MarketingMaterials = () => {
                       onClick={() => void downloadFile(b.image, b.filename)}
                       className="mt-3 inline-flex h-auto w-full items-center justify-center gap-2 rounded-lg border border-primary/40 bg-primary/10 px-3 py-2 font-display text-xs font-semibold text-primary transition-colors hover:bg-primary/20"
                     >
-                      <Download className="h-3.5 w-3.5" /> Download banner
+                      <Download className="h-3.5 w-3.5" /> {t("affiliates.materials.download")}
                     </Button>
 
                     <div className="mt-3">
                       <p className="mb-1.5 text-[11px] font-semibold uppercase tracking-wider text-muted-foreground">
-                        Suggested overlay text
+                        {t("affiliates.materials.suggestedOverlay")}
                       </p>
-                      <CopyBlock text={b.overlay} label="Copy text" />
+                      <CopyBlock text={b.overlay} label={t("affiliates.materials.copyText")} />
                     </div>
                   </div>
                 ))}
@@ -500,8 +210,9 @@ const MarketingMaterials = () => {
             {/* ─────────── SOCIAL ─────────── */}
             <TabsContent value="social" className="mt-8">
               <p className="mb-6 text-center text-sm text-muted-foreground">
-                Six ready-to-post templates — replace{" "}
-                <code className="rounded bg-muted px-1 py-0.5 font-mono text-xs">[YOUR-AFFILIATE-LINK]</code> and post.
+                {t("affiliates.materials.socialHeader1")}{" "}
+                <code className="rounded bg-muted px-1 py-0.5 font-mono text-xs">[YOUR-AFFILIATE-LINK]</code>{" "}
+                {t("affiliates.materials.socialHeader2")}
               </p>
               <div className="grid gap-5 lg:grid-cols-2">
                 {socials.map((s) => (
@@ -518,7 +229,7 @@ const MarketingMaterials = () => {
                       </span>
                     </div>
                     <div className="mt-3">
-                      <CopyBlock text={s.text} label="Copy post" />
+                      <CopyBlock text={s.text} label={t("affiliates.materials.copyPost")} />
                     </div>
                   </div>
                 ))}
@@ -528,7 +239,7 @@ const MarketingMaterials = () => {
             {/* ─────────── EMAILS ─────────── */}
             <TabsContent value="emails" className="mt-8">
               <p className="mb-6 text-center text-sm text-muted-foreground">
-                Three full email templates — short, medium, and long. Drop into any newsletter tool.
+                {t("affiliates.materials.emailsHeader")}
               </p>
               <div className="grid gap-5">
                 {emails.map((e) => (
@@ -540,7 +251,7 @@ const MarketingMaterials = () => {
                       {e.label}
                     </h3>
                     <div className="mt-3">
-                      <CopyBlock text={e.text} label="Copy email" />
+                      <CopyBlock text={e.text} label={t("affiliates.materials.copyEmail")} />
                     </div>
                   </div>
                 ))}
@@ -550,17 +261,17 @@ const MarketingMaterials = () => {
             {/* ─────────── VIDEO ─────────── */}
             <TabsContent value="video" className="mt-8">
               <p className="mb-6 text-center text-sm text-muted-foreground">
-                A complete 60-second script + YouTube/TikTok/Shorts description with affiliate disclosure.
+                {t("affiliates.materials.videoHeader")}
               </p>
               <div className="rounded-2xl border border-border bg-card p-5 shadow-sm">
                 <div className="flex items-center gap-2">
                   <Youtube className="h-5 w-5 text-primary" />
                   <h3 className="font-display text-base font-semibold text-foreground">
-                    60-Second Video Script + Description
+                    {t("affiliates.materials.videoTitle")}
                   </h3>
                 </div>
                 <div className="mt-3">
-                  <CopyBlock text={videoScript} label="Copy script" />
+                  <CopyBlock text={videoScript} label={t("affiliates.materials.copyScript")} />
                 </div>
               </div>
             </TabsContent>
@@ -568,17 +279,17 @@ const MarketingMaterials = () => {
             {/* ─────────── BLOG ─────────── */}
             <TabsContent value="blog" className="mt-8">
               <p className="mb-6 text-center text-sm text-muted-foreground">
-                A complete ~400-word blog article in Markdown. Paste into WordPress, Ghost, Medium, Substack, or any CMS.
+                {t("affiliates.materials.blogHeader")}
               </p>
               <div className="rounded-2xl border border-border bg-card p-5 shadow-sm">
                 <div className="flex items-center gap-2">
                   <FileText className="h-5 w-5 text-primary" />
                   <h3 className="font-display text-base font-semibold text-foreground">
-                    "The Best Non-Custodial Crypto Swap Platform in 2026"
+                    {t("affiliates.materials.blogTitle")}
                   </h3>
                 </div>
                 <div className="mt-3">
-                  <CopyBlock text={blogPost} label="Copy article" />
+                  <CopyBlock text={blogPost} label={t("affiliates.materials.copyArticle")} />
                 </div>
               </div>
             </TabsContent>
@@ -588,9 +299,8 @@ const MarketingMaterials = () => {
         <div className="mt-10 flex items-start gap-3 rounded-xl border border-primary/20 bg-primary/5 p-4 text-xs text-muted-foreground">
           <Sparkles className="mt-0.5 h-4 w-4 shrink-0 text-primary" />
           <p>
-            <strong className="text-foreground">Pro tip:</strong> Always disclose that you're using an affiliate
-            link — it builds trust and is required by most platforms (FTC, X, YouTube, etc.). Every template above
-            already includes a clean, friendly disclosure.
+            <strong className="text-foreground">{t("affiliates.materials.proTipLabel")}</strong>{" "}
+            {t("affiliates.materials.proTip")}
           </p>
         </div>
       </div>
