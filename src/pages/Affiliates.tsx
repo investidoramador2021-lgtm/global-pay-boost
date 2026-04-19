@@ -72,7 +72,7 @@ const CopyButton = ({ text, label }: { text: string; label: string }) => {
   return (
     <button
       onClick={onClick}
-      className="btn-shimmer group inline-flex w-full items-center justify-center gap-2.5 rounded-xl bg-gradient-to-b from-primary to-[hsl(var(--neon))] px-6 py-4 font-display text-base font-extrabold uppercase tracking-wide text-primary-foreground shadow-[0_0_28px_-4px_hsl(var(--primary)/0.7)] ring-1 ring-primary/40 transition-all duration-150 hover:shadow-[0_0_40px_-2px_hsl(var(--primary)/0.9)] hover:-translate-y-0.5 hover:brightness-110 active:translate-y-0 min-h-[52px]"
+      className="btn-shimmer group inline-flex w-full items-center justify-center gap-2.5 rounded-xl bg-gradient-to-b from-[hsl(var(--neon))] to-primary px-6 py-4 font-display text-base font-extrabold uppercase tracking-wide text-primary-foreground shadow-[0_0_36px_-2px_hsl(var(--primary)/0.85)] ring-2 ring-primary/50 transition-all duration-150 hover:shadow-[0_0_52px_0px_hsl(var(--neon)/0.95)] hover:-translate-y-0.5 hover:brightness-125 active:translate-y-0 min-h-[56px] sm:text-lg"
     >
       {copied ? <Check className="h-5 w-5" /> : <Copy className="h-5 w-5 transition-transform group-hover:scale-110" />}
       {copied ? t("affiliates.generator.copied") : label}
@@ -252,7 +252,7 @@ const WidgetGenerator = ({ lang }: { lang: string }) => {
               mrcglobalpay.com/embed/widget?mode={mode}{lang !== "en" ? `&lang=${lang}` : ""}
             </span>
           </div>
-          <div className="overflow-hidden rounded-2xl border border-border/60 bg-background mx-auto max-w-[520px] min-h-[600px] lg:min-h-[680px] flex">
+          <div className="overflow-hidden rounded-2xl border border-border/60 bg-background mx-auto max-w-[560px] min-h-[640px] md:min-h-[720px] lg:min-h-[760px] flex">
             {/* Inline render of the embed-only widget — Exchange tab only */}
             <div className="w-full">
               <EmbedWidget modeOverride={mode} langOverride={lang} />
@@ -523,6 +523,9 @@ const Affiliates = () => {
                 {t("affiliates.generator.subtitle")}{" "}
                 <span className="text-foreground font-semibold">{t("affiliates.generator.live")}</span>{" "}
                 {t("affiliates.generator.asYouType")}
+              </p>
+              <p className="mt-3 inline-block rounded-full border border-primary/30 bg-primary/10 px-4 py-1.5 font-body text-xs sm:text-sm text-foreground/90">
+                ✨ Perfect for <span className="font-semibold text-primary">bloggers, YouTubers, wallet owners, and crypto communities</span> looking to earn passive income.
               </p>
             </div>
 
