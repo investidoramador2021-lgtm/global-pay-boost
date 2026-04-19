@@ -290,6 +290,197 @@ const SwapPairLanding = ({
           </div>
         </section>
 
+        {/* RICH CONTENT — token-specific deep sections (background, why trending, use cases, pros/cons, price factors, how-to-swap, outlook) */}
+        {rich && (
+          <section className="bg-background py-14 sm:py-20 lg:py-24">
+            <div className="container mx-auto px-4">
+              <div className="mx-auto max-w-3xl space-y-12 sm:space-y-16">
+                {/* Background */}
+                <div>
+                  <h2 className="font-display text-2xl font-bold tracking-tight text-foreground sm:text-3xl lg:text-4xl">
+                    What is {assetAName} ({assetA})?
+                  </h2>
+                  <p className="mt-4 font-body text-base leading-relaxed text-muted-foreground sm:text-lg">
+                    {rich.background}
+                  </p>
+                </div>
+
+                {/* Why Trending */}
+                <div>
+                  <h2 className="flex items-center gap-3 font-display text-2xl font-bold tracking-tight text-foreground sm:text-3xl">
+                    <TrendingUp className="h-7 w-7 text-primary" />
+                    Why {assetA} is Trending in 2026
+                  </h2>
+                  <p className="mt-4 font-body text-base leading-relaxed text-muted-foreground sm:text-lg">
+                    {rich.whyTrending}
+                  </p>
+                </div>
+
+                {/* Use Cases */}
+                <div>
+                  <h2 className="font-display text-2xl font-bold tracking-tight text-foreground sm:text-3xl">
+                    Real Use Cases for {assetA}
+                  </h2>
+                  <ul className="mt-5 grid gap-3 sm:grid-cols-2">
+                    {rich.useCases.map((u, i) => (
+                      <li
+                        key={i}
+                        className="flex gap-3 rounded-xl border border-border bg-card p-4 shadow-card"
+                      >
+                        <CheckCircle2 className="mt-0.5 h-5 w-5 flex-shrink-0 text-primary" />
+                        <span className="font-body text-sm leading-relaxed text-muted-foreground">{u}</span>
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+
+                {/* Pros / Cons */}
+                <div>
+                  <h2 className="font-display text-2xl font-bold tracking-tight text-foreground sm:text-3xl">
+                    {assetA} Pros and Cons
+                  </h2>
+                  <div className="mt-5 grid gap-4 sm:grid-cols-2">
+                    <div className="rounded-xl border border-primary/20 bg-card p-5 shadow-card sm:p-6">
+                      <h3 className="flex items-center gap-2 font-display text-base font-bold text-foreground">
+                        <Check className="h-5 w-5 text-primary" />
+                        Strengths
+                      </h3>
+                      <ul className="mt-3 space-y-2.5">
+                        {rich.pros.map((p, i) => (
+                          <li key={i} className="flex gap-2 font-body text-sm leading-relaxed text-muted-foreground">
+                            <span className="mt-1 inline-block h-1.5 w-1.5 flex-shrink-0 rounded-full bg-primary" />
+                            <span>{p}</span>
+                          </li>
+                        ))}
+                      </ul>
+                    </div>
+                    <div className="rounded-xl border border-border bg-card p-5 shadow-card sm:p-6">
+                      <h3 className="flex items-center gap-2 font-display text-base font-bold text-foreground">
+                        <X className="h-5 w-5 text-muted-foreground" />
+                        Honest Risks
+                      </h3>
+                      <ul className="mt-3 space-y-2.5">
+                        {rich.cons.map((c, i) => (
+                          <li key={i} className="flex gap-2 font-body text-sm leading-relaxed text-muted-foreground">
+                            <span className="mt-1 inline-block h-1.5 w-1.5 flex-shrink-0 rounded-full bg-muted-foreground/60" />
+                            <span>{c}</span>
+                          </li>
+                        ))}
+                      </ul>
+                    </div>
+                  </div>
+                </div>
+
+                {/* Price Factors */}
+                <div>
+                  <h2 className="flex items-center gap-3 font-display text-2xl font-bold tracking-tight text-foreground sm:text-3xl">
+                    <AlertTriangle className="h-7 w-7 text-primary" />
+                    What Drives the {assetA} Price?
+                  </h2>
+                  <ul className="mt-5 space-y-2.5">
+                    {rich.priceFactors.map((f, i) => (
+                      <li key={i} className="flex gap-3 font-body text-sm leading-relaxed text-muted-foreground sm:text-base">
+                        <span className="mt-2 inline-block h-1.5 w-1.5 flex-shrink-0 rounded-full bg-primary" />
+                        <span>{f}</span>
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+
+                {/* How to swap step-by-step */}
+                <div>
+                  <h2 className="font-display text-2xl font-bold tracking-tight text-foreground sm:text-3xl">
+                    How to Swap {assetA} to {assetB} on MRC GlobalPay (Step-by-Step)
+                  </h2>
+                  <ol className="mt-5 space-y-4">
+                    {steps.map((s, i) => (
+                      <li
+                        key={i}
+                        className="flex gap-4 rounded-xl border border-border bg-card p-5 shadow-card sm:p-6"
+                      >
+                        <div className="flex h-9 w-9 flex-shrink-0 items-center justify-center rounded-full bg-primary/10 font-display text-sm font-bold text-primary">
+                          {i + 1}
+                        </div>
+                        <div>
+                          <h3 className="font-display text-sm font-semibold text-foreground sm:text-base">{s.title}</h3>
+                          <p className="mt-1.5 font-body text-sm leading-relaxed text-muted-foreground">{s.body}</p>
+                        </div>
+                      </li>
+                    ))}
+                  </ol>
+                  <div className="mt-6 flex flex-col items-stretch gap-3 sm:flex-row">
+                    <Button size="lg" className="shadow-neon" asChild>
+                      <a href="/#exchange">
+                        <Zap className="mr-2 h-5 w-5" />
+                        Swap {assetA} → {assetB} Now
+                      </a>
+                    </Button>
+                    {rich.relatedBlog && (
+                      <Button size="lg" variant="outline" asChild>
+                        <a href={lp(`/blog/${rich.relatedBlog.slug}`)}>
+                          <BookOpen className="mr-2 h-5 w-5" />
+                          Read: {rich.relatedBlog.title.split(":")[0]}
+                        </a>
+                      </Button>
+                    )}
+                  </div>
+                </div>
+
+                {/* Future Outlook */}
+                <div>
+                  <h2 className="font-display text-2xl font-bold tracking-tight text-foreground sm:text-3xl">
+                    {assetA} Outlook for 2026 and Beyond
+                  </h2>
+                  <p className="mt-4 font-body text-base leading-relaxed text-muted-foreground sm:text-lg">
+                    {rich.outlook}
+                  </p>
+                </div>
+
+                {/* Related Reads (curated cross-links) */}
+                <div className="rounded-2xl border border-primary/20 bg-accent/40 p-6 sm:p-8">
+                  <h2 className="font-display text-xl font-bold tracking-tight text-foreground sm:text-2xl">
+                    Related Reads
+                  </h2>
+                  <p className="mt-2 font-body text-sm text-muted-foreground">
+                    Continue your research with these hand-picked guides and pair pages.
+                  </p>
+                  <div className="mt-5 grid gap-3 sm:grid-cols-2">
+                    {rich.relatedBlog && (
+                      <a
+                        href={lp(`/blog/${rich.relatedBlog.slug}`)}
+                        className="group flex items-start gap-3 rounded-xl border border-border bg-card p-4 transition-colors hover:border-primary/40"
+                      >
+                        <BookOpen className="mt-0.5 h-5 w-5 flex-shrink-0 text-primary" />
+                        <div>
+                          <p className="font-display text-xs font-bold uppercase tracking-wider text-primary">Guide</p>
+                          <p className="mt-1 font-display text-sm font-semibold text-foreground group-hover:text-primary">
+                            {rich.relatedBlog.title}
+                          </p>
+                        </div>
+                      </a>
+                    )}
+                    {rich.relatedSwaps.map((s) => (
+                      <a
+                        key={s.slug}
+                        href={lp(`/swap/${s.slug}`)}
+                        className="group flex items-start gap-3 rounded-xl border border-border bg-card p-4 transition-colors hover:border-primary/40"
+                      >
+                        <ArrowRight className="mt-0.5 h-5 w-5 flex-shrink-0 text-primary" />
+                        <div>
+                          <p className="font-display text-xs font-bold uppercase tracking-wider text-primary">Pair</p>
+                          <p className="mt-1 font-display text-sm font-semibold text-foreground group-hover:text-primary">
+                            {s.label}
+                          </p>
+                        </div>
+                      </a>
+                    ))}
+                  </div>
+                </div>
+              </div>
+            </div>
+          </section>
+        )}
+
         {/* AI FAQ */}
         <section className="bg-accent py-14 sm:py-20 lg:py-28">
           <div className="container mx-auto px-4">
