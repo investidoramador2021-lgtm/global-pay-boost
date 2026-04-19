@@ -734,19 +734,16 @@ const Affiliates = () => {
                 </div>
                 <div className="min-w-0">
                   <div className="inline-flex items-center gap-2 rounded-full border border-primary/30 bg-primary/10 px-3 py-1 text-[11px] font-display font-semibold text-primary">
-                    Regulatory Edge
+                    {t("affiliates.extra.regBadge")}
                   </div>
                   <h2 className="mt-3 font-display text-2xl sm:text-3xl font-bold text-foreground tracking-tight">
-                    Promote a Platform Regulators Already Trust
+                    {t("affiliates.extra.regTitle")}
                   </h2>
                   <p className="mt-3 font-body text-sm sm:text-base text-muted-foreground leading-relaxed">
-                    MRC GlobalPay is operated by <span className="font-semibold text-foreground">MRC Pay International Corp</span>,
-                    a Canadian fintech registered as a{" "}
-                    <span className="font-semibold text-foreground">FINTRAC Money Services Business (#C100000015)</span>{" "}
-                    and an officially registered{" "}
-                    <span className="font-semibold text-foreground">Bank of Canada Payment Service Provider (PSP)</span>.
-                    That means every swap you refer flows through a fully supervised, AML-compliant, non-custodial pipeline —
-                    something the vast majority of swap aggregators simply cannot offer.
+                    {t("affiliates.extra.regBody1")} <span className="font-semibold text-foreground">{t("affiliates.extra.regBody2")}</span>{t("affiliates.extra.regBody3")}{" "}
+                    <span className="font-semibold text-foreground">{t("affiliates.extra.regBody4")}</span>{" "}
+                    {t("affiliates.extra.regBody5")}{" "}
+                    <span className="font-semibold text-foreground">{t("affiliates.extra.regBody6")}</span>{t("affiliates.extra.regBody7")}
                   </p>
                   <div className="mt-5 flex flex-wrap gap-2">
                     <a
@@ -755,7 +752,7 @@ const Affiliates = () => {
                       rel="noopener noreferrer"
                       className="inline-flex items-center gap-1.5 rounded-full border border-primary/40 bg-primary/10 px-3 py-1.5 text-xs font-display font-semibold text-primary transition-colors hover:bg-primary/20"
                     >
-                      <ExternalLink className="h-3 w-3" /> Verify FINTRAC MSB
+                      <ExternalLink className="h-3 w-3" /> {t("affiliates.extra.regVerifyFintrac")}
                     </a>
                     <a
                       href="https://www.bankofcanada.ca/core-functions/retail-payments-supervision/psp-registry/psp-registry-details/?account_id=408b884a-1aa1-ef11-a72d-0022483bf164"
@@ -763,11 +760,11 @@ const Affiliates = () => {
                       rel="noopener noreferrer"
                       className="inline-flex items-center gap-1.5 rounded-full border border-primary/40 bg-primary/10 px-3 py-1.5 text-xs font-display font-semibold text-primary transition-colors hover:bg-primary/20"
                     >
-                      <ExternalLink className="h-3 w-3" /> Verify Bank of Canada PSP
+                      <ExternalLink className="h-3 w-3" /> {t("affiliates.extra.regVerifyBoc")}
                     </a>
                   </div>
                   <p className="mt-4 text-xs text-muted-foreground">
-                    Use the official badges above in your content to instantly boost trust and conversion.
+                    {t("affiliates.extra.regNote")}
                   </p>
                 </div>
               </div>
@@ -781,13 +778,13 @@ const Affiliates = () => {
               <div className="absolute inset-0 bg-gradient-to-br from-primary/5 via-transparent to-[hsl(var(--neon))]/5" aria-hidden />
               <div className="relative">
                 <div className="inline-flex items-center gap-2 rounded-full border border-primary/30 bg-primary/10 px-3 py-1 text-[11px] font-display font-semibold text-primary">
-                  <Wallet className="h-3 w-3" /> Tracking & Payouts
+                  <Wallet className="h-3 w-3" /> {t("affiliates.extra.trackingBadge")}
                 </div>
                 <h2 className="mt-4 font-display text-3xl font-extrabold text-foreground sm:text-4xl tracking-tight">
                   {t("affiliates.tracking.title")}
                 </h2>
                 <p className="mt-4 font-body text-muted-foreground leading-relaxed max-w-2xl mx-auto">
-                  We track referrals privately using a secure reference. Commissions are paid automatically to the BTC wallet you provide — no dashboard required, no manual claims.
+                  {t("affiliates.extra.trackingBody")}
                 </p>
                 <div className="mt-7 flex flex-col sm:flex-row items-center justify-center gap-3">
                   <a
@@ -883,27 +880,26 @@ const Affiliates = () => {
         <section className="py-16 sm:py-20">
           <div className="container mx-auto max-w-2xl px-4 text-center">
             <div className="inline-flex items-center gap-2 rounded-full border border-primary/30 bg-primary/10 px-3 py-1 text-[11px] font-display font-semibold text-primary">
-              <Sparkles className="h-3 w-3" /> 60 seconds to your first link
+              <Sparkles className="h-3 w-3" /> {t("affiliates.extra.finalBadge")}
             </div>
             <h2 className="mt-4 font-display text-3xl font-bold text-foreground sm:text-4xl">
-              Your BTC Wallet Is About to Get a Lot Busier
+              {t("affiliates.extra.finalTitle")}
             </h2>
             <p className="mt-3 font-body text-muted-foreground leading-relaxed">
-              Join thousands of creators, wallet teams and crypto communities already earning lifetime BTC
-              with MRC GlobalPay. No signup, no minimums, no risk — just paste, copy, and earn.
+              {t("affiliates.extra.finalSubtitle")}
             </p>
             <div className="mt-7 flex flex-col sm:flex-row items-center justify-center gap-3">
               <a
                 href="#generate"
                 className="btn-shimmer inline-flex w-full sm:w-auto items-center justify-center gap-2 rounded-xl bg-primary px-8 py-4 font-display text-base font-bold text-primary-foreground shadow-neon transition-all duration-100 hover:bg-primary/90 hover:-translate-y-0.5"
               >
-                <Sparkles className="h-4 w-4" /> Generate My Widget Now
+                <Sparkles className="h-4 w-4" /> {t("affiliates.extra.finalCtaGenerate")}
               </a>
               <a
                 href={langPath(lang, "/partners")}
                 className="inline-flex w-full sm:w-auto items-center justify-center gap-2 rounded-xl border-2 border-primary/40 bg-background px-7 py-4 font-display text-sm font-bold text-primary transition-all hover:bg-primary/10 hover:border-primary"
               >
-                Open Partner Dashboard <ArrowRight className="h-4 w-4" />
+                {t("affiliates.extra.finalCtaDashboard")} <ArrowRight className="h-4 w-4" />
               </a>
             </div>
 
@@ -913,18 +909,18 @@ const Affiliates = () => {
                 href={langPath(lang, "/partners")}
                 className="inline-flex items-center gap-1.5 rounded-full border border-border bg-card/60 px-3 py-1 font-display font-semibold text-muted-foreground transition-colors hover:border-primary/40 hover:text-primary"
               >
-                Also check our Partner Program <ArrowRight className="h-3 w-3" />
+                {t("affiliates.extra.crossPartner")} <ArrowRight className="h-3 w-3" />
               </a>
               <a
                 href={langPath(lang, "/referral")}
                 className="inline-flex items-center gap-1.5 rounded-full border border-border bg-card/60 px-3 py-1 font-display font-semibold text-muted-foreground transition-colors hover:border-primary/40 hover:text-primary"
               >
-                Referral Program <ArrowRight className="h-3 w-3" />
+                {t("affiliates.extra.crossReferral")} <ArrowRight className="h-3 w-3" />
               </a>
             </div>
 
             <p className="mt-6 text-[11px] text-muted-foreground">
-              Promote with confidence — fully regulated in Canada (FINTRAC MSB #C100000015 · Bank of Canada PSP).
+              {t("affiliates.extra.finalRegNote")}
             </p>
           </div>
         </section>
