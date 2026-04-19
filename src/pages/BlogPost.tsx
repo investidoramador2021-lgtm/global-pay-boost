@@ -8,6 +8,7 @@ import BlogMarkdown from "@/components/blog/BlogMarkdown";
 import BlogLanguageToggle from "@/components/blog/BlogLanguageToggle";
 import TableOfContents, { extractHeadings } from "@/components/blog/TableOfContents";
 import SocialShare from "@/components/blog/SocialShare";
+import BlogSwapCrossLinks from "@/components/blog/BlogSwapCrossLinks";
 import { fetchPostBySlug, fetchRelatedPosts, findSlugLanguage, type BlogPost } from "@/lib/blog-data";
 import { getLangFromPath, langPath, supportedLanguages } from "@/i18n";
 import { TRANSLATED_BEGINNERS_GUIDE_POSTS } from "@/lib/blog/translated-beginners-guide-posts";
@@ -317,6 +318,8 @@ const BlogPostPage = () => {
 
               <TableOfContents markdown={post.content} />
               <BlogMarkdown content={post.content} />
+
+              <BlogSwapCrossLinks slug={post.slug} />
 
               <div className="mt-10 flex flex-wrap gap-2 border-t border-border pt-6">
                 {post.tags.map((tag) => (
