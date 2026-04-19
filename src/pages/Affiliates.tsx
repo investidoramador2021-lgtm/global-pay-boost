@@ -11,6 +11,7 @@ import {
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
 import SiteHeader from "@/components/SiteHeader";
 import SiteFooter from "@/components/SiteFooter";
+import { ProgramsNav, ProgramsFooterLinks } from "@/components/ProgramsNav";
 import MsbTrustBar from "@/components/MsbTrustBar";
 import EmbedWidget from "@/pages/EmbedWidget";
 import { supabase } from "@/integrations/supabase/client";

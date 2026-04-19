@@ -14,6 +14,7 @@ import {
 import SiteHeader from "@/components/SiteHeader";
 import SiteFooter from "@/components/SiteFooter";
 import MobileBottomNav from "@/components/MobileBottomNav";
+import { ProgramsNav, ProgramsFooterLinks } from "@/components/ProgramsNav";
 import { Link } from "react-router-dom";
 
 /* ── BTC address regex (mainnet: legacy, segwit, taproot) ── */

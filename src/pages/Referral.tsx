@@ -2,6 +2,7 @@ import { Helmet } from "react-helmet-async";
 import { Link, useLocation } from "react-router-dom";
 import SiteHeader from "@/components/SiteHeader";
 import SiteFooter from "@/components/SiteFooter";
+import { ProgramsNav, ProgramsFooterLinks } from "@/components/ProgramsNav";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import {
@@ -88,20 +89,9 @@ const Referral = () => {
       </Helmet>
 
       <SiteHeader />
+      <ProgramsNav active="referral" />
 
       <main className="min-h-screen bg-background">
-        {/* Top cross-links */}
-        <div className="border-b border-border/60 bg-muted/30">
-          <div className="container mx-auto flex flex-wrap items-center justify-center gap-x-6 gap-y-2 px-4 py-3 text-xs text-muted-foreground">
-            <span>Looking for higher tiers?</span>
-            <Link to={lp("/affiliates")} className="inline-flex items-center gap-1 font-medium text-primary hover:underline">
-              Affiliate Program (widget) <ArrowRight className="h-3 w-3" />
-            </Link>
-            <Link to={lp("/partners")} className="inline-flex items-center gap-1 font-medium text-primary hover:underline">
-              Partner Program (dashboard) <ArrowRight className="h-3 w-3" />
-            </Link>
-          </div>
-        </div>
 
         {/* Hero */}
         <section className="container mx-auto px-4 py-16 sm:py-24">
@@ -319,6 +309,7 @@ const Referral = () => {
         </section>
       </main>
 
+      <ProgramsFooterLinks active="referral" />
       <SiteFooter />
     </>
   );
