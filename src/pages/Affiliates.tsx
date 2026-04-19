@@ -361,11 +361,31 @@ const Affiliates = () => {
   ];
 
   const FAQS = [
-    { q: t("affiliates.faq.q1"), a: t("affiliates.faq.a1") },
-    { q: t("affiliates.faq.q2"), a: t("affiliates.faq.a2") },
-    { q: t("affiliates.faq.q3"), a: t("affiliates.faq.a3") },
-    { q: t("affiliates.faq.q4"), a: t("affiliates.faq.a4") },
-    { q: t("affiliates.faq.q5"), a: t("affiliates.faq.a5") },
+    {
+      q: t("affiliates.faq.q1"),
+      a: t("affiliates.faq.a1"),
+      tip: "Commissions range from 0.1% to 0.4% of swap volume — paid in BTC, for the lifetime of every referred user. No caps, no expirations.",
+    },
+    {
+      q: t("affiliates.faq.q2"),
+      a: t("affiliates.faq.a2"),
+      tip: "No signup, no KYC for affiliates. Just paste your email + BTC wallet, copy the widget or link, and start earning.",
+    },
+    {
+      q: t("affiliates.faq.q3"),
+      a: t("affiliates.faq.a3"),
+      tip: "Payouts are sent automatically to the BTC wallet you provided when generating your link — no manual claims required.",
+    },
+    {
+      q: t("affiliates.faq.q4"),
+      a: t("affiliates.faq.a4"),
+      tip: "The embed widget is fully functional: 6,000+ tokens, fixed or floating rates, $0.30 minimum. Identical to mrcglobalpay.com.",
+    },
+    {
+      q: t("affiliates.faq.q5"),
+      a: t("affiliates.faq.a5"),
+      tip: "MRC GlobalPay is a FINTRAC-registered Canadian MSB (#C100000015) and Bank of Canada Authorized PSP. Non-custodial — funds never leave the user's wallet flow.",
+    },
   ];
 
   const canonicalUrl = `https://mrcglobalpay.com${langPath(lang, "/affiliates")}`;
