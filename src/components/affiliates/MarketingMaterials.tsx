@@ -142,12 +142,12 @@ const MarketingMaterials = () => {
                       <span
                         className={cn(
                           "rounded-full px-2 py-0.5 text-[10px] font-semibold uppercase tracking-wider",
-                          b.theme === "Dark"
+                          b.theme === "dark"
                             ? "bg-foreground/10 text-foreground"
                             : "bg-primary/10 text-primary",
                         )}
                       >
-                        {b.theme === "Dark" ? t("affiliates.materials.themeDark") : t("affiliates.materials.themeLight")}
+                        {b.theme === "dark" ? t("affiliates.materials.themeDark") : t("affiliates.materials.themeLight")}
                       </span>
                     </div>
                     <p className="mt-1 text-xs text-muted-foreground">
