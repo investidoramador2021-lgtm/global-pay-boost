@@ -16,7 +16,12 @@ import { Button } from "@/components/ui/button";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { cn } from "@/lib/utils";
 
-import { bannerSpecs, createBannerDataUrl, downloadBanner } from "@/components/affiliates/bannerSvg";
+import { useEffect, useState as useReactState } from "react";
+import {
+  bannerSpecs,
+  downloadBanner,
+  renderBannerDataUrl,
+} from "@/components/affiliates/bannerOverlay";
 
 /* ─────────── Shared helpers ─────────── */
 const CopyBlock = ({ text, label }: { text: string; label?: string }) => {
@@ -55,16 +60,42 @@ const MarketingMaterials = () => {
   const lang = i18n.resolvedLanguage ?? i18n.language ?? "en";
   const dir = i18n.dir(lang) as "ltr" | "rtl";
 
-  const banners = bannerSpecs.map((spec, index) => {
-    const overlay = t(`affiliates.materials.banner${index + 1}Overlay`);
-    return {
-      ...spec,
-      name: t(`affiliates.materials.banner${index + 1}Name`),
-      size: `${spec.width} × ${spec.height}`,
-      overlay,
-      preview: createBannerDataUrl(spec, overlay, dir),
+  const banners = bannerSpecs.map((spec, index) => ({
+    ...spec,
+    name: t(`affiliates.materials.banner${index + 1}Name`),
+    size: `${spec.width} × ${spec.height}`,
+    overlay: t(`affiliates.materials.banner${index + 1}Overlay`),
+  }));
+
+  /* live previews: re-render whenever the language (and therefore overlay text) changes */
+  const [previews, setPreviews] = useReactState<Record<string, string>>({});
+  useEffect(() => {
+    let cancelled = false;
+    setPreviews({});
+    (async () => {
+      const entries = await Promise.all(
+        banners.map(async (b) => {
+          try {
+            const url = await renderBannerDataUrl({
+              spec: b,
+              text: b.overlay,
+              dir,
+            });
+            return [b.id, url] as const;
+          } catch {
+            return [b.id, b.image] as const;
+          }
+        }),
+      );
+      if (!cancelled) {
+        setPreviews(Object.fromEntries(entries));
+      }
+    })();
+    return () => {
+      cancelled = true;
     };
-  });
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [lang, dir]);
 
   const socials = [
     { platform: t("affiliates.social.platformX"), label: t("affiliates.social.x1Label"), text: t("affiliates.social.x1Text") },
