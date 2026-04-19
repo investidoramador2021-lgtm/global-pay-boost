@@ -224,19 +224,22 @@ const WidgetGenerator = ({ lang }: { lang: string }) => {
         {t("affiliates.generator.liveHint3")}
       </p>
 
-      {/* Preview */}
-      <div className="mt-8">
-        <div className="mb-3 flex items-center justify-between">
-          <p className="font-display text-[11px] uppercase tracking-wider font-semibold text-muted-foreground">
-            {t("affiliates.generator.previewLabel")} · {mode === "light" ? t("affiliates.generator.previewLight") : t("affiliates.generator.previewDark")} · {t("affiliates.generator.previewInteractive")}
+      {/* Preview — enlarged & prominent */}
+      <div className="mt-10">
+        <div className="mb-3 flex flex-wrap items-center justify-between gap-2">
+          <p className="font-display text-xs uppercase tracking-wider font-bold text-foreground">
+            <span className="text-primary">●</span> Live Widget Preview
+            <span className="ml-2 font-normal normal-case tracking-normal text-muted-foreground">
+              · {mode === "light" ? t("affiliates.generator.previewLight") : t("affiliates.generator.previewDark")} · {t("affiliates.generator.previewInteractive")}
+            </span>
           </p>
-          <span className="inline-flex items-center gap-1 text-[11px] text-muted-foreground">
+          <span className="inline-flex items-center gap-1 rounded-full border border-primary/30 bg-primary/5 px-2.5 py-0.5 text-[11px] font-semibold text-primary">
             <Smartphone className="h-3 w-3" /> {t("affiliates.generator.responsive")}
           </span>
         </div>
 
-        <div className="relative rounded-2xl border border-border bg-card p-3 sm:p-4 shadow-lg">
-          <div className="mb-2 flex items-center gap-1.5 rounded-lg border border-border/60 bg-muted/40 px-3 py-2">
+        <div className="relative rounded-3xl border-2 border-primary/40 bg-gradient-to-b from-card to-background p-3 sm:p-6 shadow-[0_0_40px_-12px_hsl(var(--primary)/0.5)]">
+          <div className="mb-3 flex items-center gap-1.5 rounded-lg border border-border/60 bg-muted/40 px-3 py-2">
             <span className="h-2.5 w-2.5 rounded-full bg-[hsl(0_70%_60%)]/70" />
             <span className="h-2.5 w-2.5 rounded-full bg-[hsl(45_90%_55%)]/70" />
             <span className="h-2.5 w-2.5 rounded-full bg-primary/70" />
@@ -244,13 +247,12 @@ const WidgetGenerator = ({ lang }: { lang: string }) => {
               mrcglobalpay.com/embed/widget?mode={mode}{lang !== "en" ? `&lang=${lang}` : ""}
             </span>
           </div>
-          <div className="overflow-hidden rounded-xl border border-border/60 bg-background">
-            {/* Inline render of the embed-only widget (Exchange tab only — no Buy/Private/Invoice/Loan
-                because those flows require KYC/compliance and cannot be embedded on third-party sites). */}
+          <div className="overflow-hidden rounded-2xl border border-border/60 bg-background mx-auto max-w-[480px]">
+            {/* Inline render of the embed-only widget — Exchange tab only */}
             <EmbedWidget modeOverride={mode} langOverride={lang} />
           </div>
-          <p className="mt-3 text-center text-[11px] text-muted-foreground">
-            {t("affiliates.generator.previewTry")}
+          <p className="mt-4 text-center text-xs text-muted-foreground max-w-2xl mx-auto leading-relaxed">
+            This widget works exactly like ChangeNOW's. Users can freely change any tokens and complete the full swap using our exact non-custodial flow. Fully responsive on desktop, tablets, and mobile.
           </p>
         </div>
       </div>
@@ -409,17 +411,18 @@ const Affiliates = () => {
             <div className="inline-flex items-center gap-2 rounded-full border border-primary/30 bg-primary/10 px-3 py-1 text-xs font-display font-semibold text-primary">
               <Shield className="h-3.5 w-3.5" /> {t("affiliates.hero.badge")}
             </div>
-            <h1 className="mt-6 font-display text-[2rem] sm:text-5xl lg:text-6xl font-extrabold tracking-tight text-foreground leading-[1.1]">
-              {t("affiliates.hero.earn")}{" "}
+            <h1 className="mt-6 font-display text-[2rem] sm:text-5xl lg:text-6xl font-extrabold tracking-tight text-foreground leading-[1.05]">
+              Earn{" "}
               <span className="bg-gradient-to-r from-primary to-[hsl(var(--neon))] bg-clip-text text-transparent">
-                {t("affiliates.hero.rate")}
+                0.1% – 0.4%
               </span>
               <br className="hidden sm:block" />
-              <span className="text-foreground"> {t("affiliates.hero.lifetime")}</span>
+              <span className="text-foreground"> Lifetime Commissions</span>
             </h1>
             <p className="mt-5 font-body text-base sm:text-xl text-muted-foreground max-w-2xl mx-auto leading-relaxed">
-              {t("affiliates.hero.subtitle")}{" "}
-              <span className="text-foreground font-semibold">{t("affiliates.hero.subtitleBold")}</span>.
+              Share our{" "}
+              <span className="text-foreground font-semibold">fully functional instant swap widget</span>{" "}
+              and get paid automatically to your BTC wallet — no signup, no minimums, no caps.
             </p>
             <div className="mt-5 flex flex-wrap items-center justify-center gap-2 text-[11px] font-display font-semibold">
               <span className="inline-flex items-center gap-1.5 rounded-full border border-border bg-card px-3 py-1 text-muted-foreground">
@@ -431,6 +434,24 @@ const Affiliates = () => {
               <span className="inline-flex items-center gap-1.5 rounded-full border border-border bg-card px-3 py-1 text-muted-foreground">
                 <Check className="h-3 w-3 text-primary" /> {t("affiliates.hero.chipLifetime")}
               </span>
+              <a
+                href="https://www10.fintrac-canafe.gc.ca/msb-esm/public/msb-search/search-by-name/?searchTerm=MRC+Pay+International"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex items-center gap-1.5 rounded-full border border-primary/40 bg-primary/10 px-3 py-1 text-primary transition-colors hover:bg-primary/20"
+                title="Verify on the official FINTRAC MSB Registry"
+              >
+                <Shield className="h-3 w-3" /> FINTRAC MSB
+              </a>
+              <a
+                href="https://www.bankofcanada.ca/core-functions/retail-payments-supervision/psp-registry/psp-registry-details/?account_id=408b884a-1aa1-ef11-a72d-0022483bf164"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex items-center gap-1.5 rounded-full border border-primary/40 bg-primary/10 px-3 py-1 text-primary transition-colors hover:bg-primary/20"
+                title="Verify on the official Bank of Canada PSP Registry"
+              >
+                <Shield className="h-3 w-3" /> Bank of Canada PSP
+              </a>
             </div>
             <div className="mt-8 flex flex-col sm:flex-row items-center justify-center gap-3">
               <a
@@ -507,13 +528,13 @@ const Affiliates = () => {
               <div className="absolute inset-0 bg-gradient-to-br from-primary/5 via-transparent to-[hsl(var(--neon))]/5" aria-hidden />
               <div className="relative">
                 <div className="inline-flex items-center gap-2 rounded-full border border-primary/30 bg-primary/10 px-3 py-1 text-[11px] font-display font-semibold text-primary">
-                  <Wallet className="h-3 w-3" /> {t("affiliates.tracking.badge")}
+                  <Wallet className="h-3 w-3" /> Tracking & Payouts
                 </div>
                 <h2 className="mt-4 font-display text-3xl font-extrabold text-foreground sm:text-4xl tracking-tight">
                   {t("affiliates.tracking.title")}
                 </h2>
                 <p className="mt-4 font-body text-muted-foreground leading-relaxed max-w-2xl mx-auto">
-                  {t("affiliates.tracking.body")}
+                  We track referrals privately using a secure reference. Commissions are paid automatically to the BTC wallet you provide — no dashboard required, no manual claims.
                 </p>
                 <div className="mt-7 flex flex-col sm:flex-row items-center justify-center gap-3">
                   <a
