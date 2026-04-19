@@ -25,6 +25,12 @@ const SwapTiaUsdt = lazy(() => import("./pages/SwapTiaUsdt.tsx"));
 const SwapMonadUsdt = lazy(() => import("./pages/SwapMonadUsdt.tsx"));
 const SwapPyusdUsdt = lazy(() => import("./pages/SwapPyusdUsdt.tsx"));
 const SwapBnbUsdc = lazy(() => import("./pages/SwapBnbUsdc.tsx"));
+const SwapPepeUsdt = lazy(() => import("./pages/SwapPepeUsdt.tsx"));
+const SwapDogeUsdt = lazy(() => import("./pages/SwapDogeUsdt.tsx"));
+const SwapTaoUsdt = lazy(() => import("./pages/SwapTaoUsdt.tsx"));
+const SwapSirenUsdt = lazy(() => import("./pages/SwapSirenUsdt.tsx"));
+const SwapBdagUsdt = lazy(() => import("./pages/SwapBdagUsdt.tsx"));
+const SwapBonkUsdt = lazy(() => import("./pages/SwapBonkUsdt.tsx"));
 const Blog = lazy(() => import("./pages/Blog.tsx"));
 const BlogPost = lazy(() => import("./pages/BlogPost.tsx"));
 const CryptoDustGuide = lazy(() => import("./pages/CryptoDustGuide.tsx"));
@@ -131,6 +137,12 @@ const AppRoutes = () => (
     <Route path="swap/monad-usdt" element={<SwapMonadUsdt />} />
     <Route path="swap/pyusd-usdt" element={<SwapPyusdUsdt />} />
     <Route path="swap/bnb-usdc" element={<SwapBnbUsdc />} />
+    <Route path="swap/pepe-usdt" element={<SwapPepeUsdt />} />
+    <Route path="swap/doge-usdt" element={<SwapDogeUsdt />} />
+    <Route path="swap/tao-usdt" element={<SwapTaoUsdt />} />
+    <Route path="swap/siren-usdt" element={<SwapSirenUsdt />} />
+    <Route path="swap/bdag-usdt" element={<SwapBdagUsdt />} />
+    <Route path="swap/bonk-usdt" element={<SwapBonkUsdt />} />
     <Route path="resources/crypto-dust-guide" element={<CryptoDustGuide />} />
     <Route path="resources/fractal-bitcoin-swap" element={<FractalBitcoinSwap />} />
     <Route path="transparency-security" element={<TransparencySecurity />} />

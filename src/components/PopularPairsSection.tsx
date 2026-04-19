@@ -23,6 +23,10 @@ const PAIRS_CONFIG = [
   { from: "ltc", to: "btc", fromName: "Litecoin", toName: "Bitcoin", href: "/exchange/ltc-to-btc", fromTicker: "LTC", toTicker: "BTC", amount: "1" },
   { from: "doge", to: "btc", fromName: "Dogecoin", toName: "Bitcoin", href: "/exchange/doge-to-btc", fromTicker: "DOGE", toTicker: "BTC", amount: "100" },
   { from: "trx", to: "usdterc20", fromName: "TRON", toName: "Tether", href: "/exchange/trx-to-usdt", fromTicker: "TRX", toTicker: "USDT", amount: "500" },
+  { from: "pepe", to: "usdterc20", fromName: "Pepe", toName: "Tether", href: "/exchange/pepe-to-usdt", fromTicker: "PEPE", toTicker: "USDT", amount: "1000000" },
+  { from: "hype", to: "usdterc20", fromName: "Hyperliquid", toName: "Tether", href: "/exchange/hype-to-usdt", fromTicker: "HYPE", toTicker: "USDT", amount: "10" },
+  { from: "tao", to: "usdterc20", fromName: "Bittensor", toName: "Tether", href: "/exchange/tao-to-usdt", fromTicker: "TAO", toTicker: "USDT", amount: "1" },
+  { from: "bonk", to: "usdterc20", fromName: "Bonk", toName: "Tether", href: "/exchange/bonk-to-usdt", fromTicker: "BONK", toTicker: "USDT", amount: "1000000" },
 ];
 
 const PopularPairsSection = () => {

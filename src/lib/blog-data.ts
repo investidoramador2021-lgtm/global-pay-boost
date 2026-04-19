@@ -10,6 +10,7 @@ import { BEGINNERS_GUIDE_EN, TRANSLATED_BEGINNERS_GUIDE_POSTS } from "@/lib/blog
 import { INVOICE_POST_EN, TRANSLATED_INVOICE_POSTS } from "@/lib/blog/translated-invoice-posts";
 import { VECHAIN_POST_EN, TRANSLATED_VECHAIN_POSTS } from "@/lib/blog/translated-vechain-posts";
 import { FEATURED_2026_POSTS } from "@/lib/blog/seed-featured-2026";
+import { TRENDING_2026_POSTS } from "@/lib/blog/seed-trending-2026";
 import type { BlogPost, BlogAuthor } from "@/lib/blog/types";
 
 export type { BlogPost, BlogAuthor } from "@/lib/blog/types";
@@ -51,6 +52,7 @@ export async function fetchAllPosts(): Promise<BlogPost[]> {
   const dbPosts = (data || []).map(dbRowToPost);
   const dbSlugs = new Set(dbPosts.map((post) => post.slug));
   const allSeedPosts = [
+    ...TRENDING_2026_POSTS,
     VECHAIN_POST_EN,
     ...FEATURED_2026_POSTS,
     ...SEED_POSTS,
@@ -84,6 +86,7 @@ const ALL_TRANSLATED_COLLECTIONS: Record<string, BlogPost>[] = [
 ];
 
 const ALL_ENGLISH_SEED_POSTS: BlogPost[] = [
+  ...TRENDING_2026_POSTS,
   VECHAIN_POST_EN,
   ...FEATURED_2026_POSTS,
   ...SEED_POSTS,
