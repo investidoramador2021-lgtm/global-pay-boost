@@ -225,11 +225,11 @@ const WidgetGenerator = ({ lang }: { lang: string }) => {
       </p>
 
       {/* Preview — enlarged & prominent */}
-      <div className="mt-10">
-        <div className="mb-3 flex flex-wrap items-center justify-between gap-2">
-          <p className="font-display text-xs uppercase tracking-wider font-bold text-foreground">
-            <span className="text-primary">●</span> Live Widget Preview
-            <span className="ml-2 font-normal normal-case tracking-normal text-muted-foreground">
+      <div className="mt-12">
+        <div className="mb-4 flex flex-wrap items-center justify-between gap-2">
+          <p className="font-display text-sm uppercase tracking-wider font-bold text-foreground">
+            <span className="text-primary animate-pulse">●</span> Live Widget Preview
+            <span className="ms-2 font-normal normal-case tracking-normal text-muted-foreground text-xs">
               · {mode === "light" ? t("affiliates.generator.previewLight") : t("affiliates.generator.previewDark")} · {t("affiliates.generator.previewInteractive")}
             </span>
           </p>
@@ -238,7 +238,7 @@ const WidgetGenerator = ({ lang }: { lang: string }) => {
           </span>
         </div>
 
-        <div className="relative rounded-3xl border-2 border-primary/40 bg-gradient-to-b from-card to-background p-3 sm:p-6 shadow-[0_0_40px_-12px_hsl(var(--primary)/0.5)]">
+        <div className="relative rounded-3xl border-2 border-primary/40 bg-gradient-to-b from-card to-background p-3 sm:p-6 shadow-[0_0_60px_-12px_hsl(var(--primary)/0.55)]">
           <div className="mb-3 flex items-center gap-1.5 rounded-lg border border-border/60 bg-muted/40 px-3 py-2">
             <span className="h-2.5 w-2.5 rounded-full bg-[hsl(0_70%_60%)]/70" />
             <span className="h-2.5 w-2.5 rounded-full bg-[hsl(45_90%_55%)]/70" />
@@ -247,11 +247,13 @@ const WidgetGenerator = ({ lang }: { lang: string }) => {
               mrcglobalpay.com/embed/widget?mode={mode}{lang !== "en" ? `&lang=${lang}` : ""}
             </span>
           </div>
-          <div className="overflow-hidden rounded-2xl border border-border/60 bg-background mx-auto max-w-[480px]">
+          <div className="overflow-hidden rounded-2xl border border-border/60 bg-background mx-auto max-w-[520px] min-h-[600px] lg:min-h-[680px] flex">
             {/* Inline render of the embed-only widget — Exchange tab only */}
-            <EmbedWidget modeOverride={mode} langOverride={lang} />
+            <div className="w-full">
+              <EmbedWidget modeOverride={mode} langOverride={lang} />
+            </div>
           </div>
-          <p className="mt-4 text-center text-xs text-muted-foreground max-w-2xl mx-auto leading-relaxed">
+          <p className="mt-5 text-center text-sm text-muted-foreground max-w-2xl mx-auto leading-relaxed">
             This widget works exactly like ChangeNOW's. Users can freely change any tokens and complete the full swap using our exact non-custodial flow. Fully responsive on desktop, tablets, and mobile.
           </p>
         </div>
