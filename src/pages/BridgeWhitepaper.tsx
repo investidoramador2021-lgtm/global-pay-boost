@@ -3,6 +3,8 @@ import { useTranslation } from "react-i18next";
 import { usePageUrl } from "@/hooks/use-page-url";
 import SiteHeader from "@/components/SiteHeader";
 import SiteFooter from "@/components/SiteFooter";
+import SocialShare from "@/components/blog/SocialShare";
+import StickyShareRail from "@/components/blog/StickyShareRail";
 import { motion } from "framer-motion";
 import { Link } from "react-router-dom";
 import { getLangFromPath, langPath } from "@/i18n";
