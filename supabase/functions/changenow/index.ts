@@ -115,7 +115,7 @@ Deno.serve(async (req) => {
 
     switch (action) {
       case 'currencies': {
-        const resp = await fetch(`${V2_BASE}/exchange/currencies?active=true&flow=standard`, { headers: authHeaders });
+        const resp = await fetchWithKeyFallback(`${V2_BASE}/exchange/currencies?active=true&flow=standard`);
         const parsed = await parseJsonResponse(resp);
         if (!resp.ok || !parsed.isJson) {
           console.error('v2 currencies failed:', parsed.text);
@@ -145,7 +145,7 @@ Deno.serve(async (req) => {
         const flow = params.fixedRate === 'true' ? 'fixed-rate' : 'standard';
         const f = splitNetwork(from), t = splitNetwork(to);
         const u = `${V2_BASE}/exchange/min-amount?fromCurrency=${f.ticker}&toCurrency=${t.ticker}&fromNetwork=${f.network}&toNetwork=${t.network}&flow=${flow}`;
-        const resp = await fetch(u, { headers: authHeaders });
+        const resp = await fetchWithKeyFallback(u);
         const parsed = await parseJsonResponse(resp);
         if (!resp.ok || !parsed.isJson) {
           console.error('v2 min-amount failed:', parsed.text);
@@ -163,7 +163,7 @@ Deno.serve(async (req) => {
         const rateId = params.fixedRate === 'true' ? '&useRateId=true' : '';
         const f = splitNetwork(from), t = splitNetwork(to);
         const u = `${V2_BASE}/exchange/estimated-amount?fromCurrency=${f.ticker}&toCurrency=${t.ticker}&fromNetwork=${f.network}&toNetwork=${t.network}&fromAmount=${amount}&flow=${flow}${rateId}`;
-        const resp = await fetch(u, { headers: authHeaders });
+        const resp = await fetchWithKeyFallback(u);
         const parsed = await parseJsonResponse(resp);
         if (!resp.ok || !parsed.isJson) {
           console.error('v2 estimate failed:', parsed.text);
@@ -275,7 +275,7 @@ Deno.serve(async (req) => {
         const id = params.id;
         if (!id) return badRequest('Missing id param');
         if (!isValidTxId(id)) return badRequest('Invalid transaction id format');
-        const resp = await fetch(`${V2_BASE}/exchange/by-id?id=${id}`, { headers: authHeaders });
+        const resp = await fetchWithKeyFallback(`${V2_BASE}/exchange/by-id?id=${id}`);
         const parsed = await parseJsonResponse(resp);
         if (!parsed.isJson) return jsonResponse({ error: 'Service unavailable.' }, 502);
         if (!resp.ok) return jsonResponse({ error: parsed.data?.message || 'Transaction not found.' }, resp.status);
@@ -292,7 +292,7 @@ Deno.serve(async (req) => {
         if (dateFrom) txUrl += `&dateFrom=${dateFrom}`;
         if (dateTo) txUrl += `&dateTo=${dateTo}`;
         if (status) txUrl += `&status=${status}`;
-        const resp = await fetch(txUrl, { headers: authHeaders });
+        const resp = await fetchWithKeyFallback(txUrl);
         const parsed = await parseJsonResponse(resp);
         if (!parsed.isJson) return jsonResponse({ error: 'Service unavailable.' }, 502);
         if (!resp.ok) return jsonResponse({ error: parsed.data?.message || 'List unavailable.' }, resp.status);
