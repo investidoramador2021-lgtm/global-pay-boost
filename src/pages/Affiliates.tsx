@@ -5,6 +5,8 @@ import {
   Shield, Zap, Link2, ArrowRight, Infinity as InfinityIcon,
   Image as ImageIcon, Code2, Lock, Copy, Check, ExternalLink,
   Mail, Sparkles, ArrowDownUp, Clock, Wallet, Sun, Moon, Smartphone,
+  Download, FileText, Youtube, Megaphone, BarChart3, TrendingUp, Coins,
+  Percent, LineChart, Users,
 } from "lucide-react";
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
 import SiteHeader from "@/components/SiteHeader";
@@ -363,28 +365,28 @@ const Affiliates = () => {
   const FAQS = [
     {
       q: t("affiliates.faq.q1"),
-      a: t("affiliates.faq.a1"),
-      tip: "Commissions range from 0.1% to 0.4% of swap volume — paid in BTC, for the lifetime of every referred user. No caps, no expirations.",
+      a: "You earn 0.1% to 0.4% of every swap your referrals make — for life. Tier depends on your monthly referred volume: 0.1% under $50k, 0.2% from $50k–$250k, 0.3% from $250k–$1M, and 0.4% above $1M. Commissions are paid in BTC directly to the wallet you provided when generating your link.",
+      tip: "No caps, no expirations, no clawbacks. As long as your referral keeps swapping, you keep earning.",
     },
     {
       q: t("affiliates.faq.q2"),
-      a: t("affiliates.faq.a2"),
-      tip: "No signup, no KYC for affiliates. Just paste your email + BTC wallet, copy the widget or link, and start earning.",
+      a: "No. There is zero signup, zero KYC, and zero approval process for affiliates. You just paste your email and a BTC payout wallet, copy the widget code or referral link, and you're live. Tracking starts on the very first click.",
+      tip: "If you want a real-time dashboard, API keys, and webhooks, upgrade to the Partner Program — also free, takes ~2 minutes.",
     },
     {
       q: t("affiliates.faq.q3"),
-      a: t("affiliates.faq.a3"),
-      tip: "Payouts are sent automatically to the BTC wallet you provided when generating your link — no manual claims required.",
+      a: "Commissions are aggregated and sent automatically to your BTC wallet on a rolling basis once the network-confirmed amount exceeds the minimum payout threshold. There are no manual claims, no invoices, and no waiting periods beyond on-chain confirmation.",
+      tip: "Use a wallet you fully control (not an exchange deposit address) so you never miss a payout.",
     },
     {
       q: t("affiliates.faq.q4"),
-      a: t("affiliates.faq.a4"),
-      tip: "The embed widget is fully functional: 6,000+ tokens, fixed or floating rates, $0.30 minimum. Identical to mrcglobalpay.com.",
+      a: "Yes — the embedded widget is the exact same engine that powers mrcglobalpay.com. Your visitors get 6,000+ tokens, fixed and floating rates, $0.30 minimum swaps, and the full non-custodial flow. They never need to leave your site.",
+      tip: "The widget is fully responsive on mobile, tablet, and desktop, and supports 13 languages out of the box.",
     },
     {
       q: t("affiliates.faq.q5"),
-      a: t("affiliates.faq.a5"),
-      tip: "MRC GlobalPay is a FINTRAC-registered Canadian MSB (#C100000015) and Bank of Canada Authorized PSP. Non-custodial — funds never leave the user's wallet flow.",
+      a: "MRC GlobalPay is operated by MRC Pay International Corp, a FINTRAC-registered Canadian Money Services Business (#C100000015) and a Bank of Canada–registered Payment Service Provider. We are non-custodial: user funds route directly through liquidity providers and never sit on our books. You can promote with full regulatory confidence.",
+      tip: "Both registrations are publicly verifiable on the official FINTRAC and Bank of Canada registries (linked in the hero).",
     },
   ];
 
