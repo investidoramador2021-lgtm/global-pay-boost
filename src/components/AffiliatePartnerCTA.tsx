@@ -99,7 +99,7 @@ const AffiliatePartnerCTA = () => {
                 <div className="mt-5 rounded-xl border border-border/60 bg-muted/40 p-3 font-mono text-[11px] text-muted-foreground">
                   <div className="mb-2 flex items-center gap-1.5">
                     <span className="h-2 w-2 rounded-full bg-destructive/60" />
-                    <span className="h-2 w-2 rounded-full bg-amber-400/70" />
+                    <span className="h-2 w-2 rounded-full bg-muted-foreground/50" />
                     <span className="h-2 w-2 rounded-full bg-primary/70" />
                     <span className="ms-2 text-[10px]">widget.html</span>
                   </div>
