@@ -75,6 +75,9 @@ const PopularPairsSection = () => {
           <p className="mt-3 font-body text-base text-muted-foreground sm:mt-4 sm:text-lg">
             Live rates aggregated from 700+ liquidity sources. Tap any pair to swap instantly from <span className="font-semibold text-foreground">$0.30</span> — non-custodial, no account.
           </p>
+          <p className="mt-2 font-body text-xs text-muted-foreground/80 sm:text-sm">
+            Trusted by early adopters and promoters worldwide.
+          </p>
         </div>
 
         {/* Horizontal carousel of top pairs */}
