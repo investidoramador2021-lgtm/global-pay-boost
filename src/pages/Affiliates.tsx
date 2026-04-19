@@ -3,7 +3,7 @@ import { Helmet } from "react-helmet-async";
 import { useTranslation } from "react-i18next";
 import {
   Shield, Zap, Link2, ArrowRight, Infinity as InfinityIcon,
-  Image as ImageIcon, Code2, Lock, Copy, Check,
+  Image as ImageIcon, Code2, Lock, Copy, Check, ExternalLink,
   Mail, Sparkles, ArrowDownUp, Clock, Wallet, Sun, Moon, Smartphone,
 } from "lucide-react";
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
