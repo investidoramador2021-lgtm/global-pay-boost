@@ -288,8 +288,17 @@ const WidgetGenerator = ({ lang }: { lang: string }) => {
           <pre className="rounded-lg border border-border/60 bg-[hsl(230_15%_6%)] p-3 overflow-x-auto font-mono text-[10px] sm:text-[11px] leading-relaxed text-foreground/90 max-h-64 whitespace-pre-wrap break-all">
             <code>{snippet}</code>
           </pre>
-          <div className="mt-4">
+          <div className="mt-4 grid gap-2 sm:grid-cols-[1fr_auto]">
             <CopyButton text={snippet} label={t("affiliates.generator.copyCode")} />
+            <a
+              href={previewUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex items-center justify-center gap-2 rounded-xl border-2 border-primary/50 bg-primary/10 px-5 py-4 font-display text-sm font-bold uppercase tracking-wide text-primary transition-all hover:bg-primary/20 hover:border-primary hover:-translate-y-0.5 min-h-[52px] whitespace-nowrap"
+              title="Open the embeddable widget in a new tab to test it"
+            >
+              <ExternalLink className="h-4 w-4" /> Test in New Tab
+            </a>
           </div>
           <p className="mt-3 text-[11px] text-muted-foreground">{t("affiliates.generator.embedHelp")}</p>
         </div>
