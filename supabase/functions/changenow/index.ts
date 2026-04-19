@@ -52,20 +52,43 @@ async function parseJsonResponse(response: Response) {
   catch { return { isJson: false as const, data: null, text }; }
 }
 
-// Split MRC ticker like "usdterc20" → { ticker: "usdt", network: "erc20" } for v2 API
-const NETWORK_SUFFIXES = [
-  'erc20', 'trc20', 'bsc', 'bep20', 'matic', 'polygon', 'sol', 'arc20', 'arb', 'op',
-  'ton', 'celo', 'apt', 'assethub', 'algo', 'sui', 'mon', 'zksync', 'base', 'lna',
-  'manta', 'avaxc',
-];
+// Map legacy MRC ticker (e.g. "usdterc20") → v2 { ticker, network }
+// Suffixes mapped to v2 network names (which differ from suffix names)
+const SUFFIX_TO_V2_NETWORK: Record<string, string> = {
+  erc20: 'eth',         // usdterc20 → usdt + eth
+  trc20: 'trx',         // usdttrc20 → usdt + trx
+  bsc: 'bsc',
+  bep20: 'bsc',
+  matic: 'matic',
+  polygon: 'matic',
+  sol: 'sol',
+  arc20: 'avaxc',       // usdtarc20 (AVAX C-CHAIN) → avaxc
+  arb: 'arbitrum',      // etharb → eth + arbitrum
+  arbitrum: 'arbitrum',
+  op: 'op',
+  ton: 'ton',
+  celo: 'celo',
+  apt: 'apt',
+  assethub: 'assethub',
+  algo: 'algo',
+  sui: 'sui',
+  mon: 'monad',
+  monad: 'monad',
+  zksync: 'zksync',
+  base: 'base',
+  lna: 'lna',
+  manta: 'manta',
+  avaxc: 'avaxc',
+};
+const SUFFIXES_SORTED = Object.keys(SUFFIX_TO_V2_NETWORK).sort((a, b) => b.length - a.length);
+
 function splitNetwork(raw: string): { ticker: string; network: string } {
   const lower = raw.toLowerCase();
-  for (const suf of NETWORK_SUFFIXES) {
+  for (const suf of SUFFIXES_SORTED) {
     if (lower.endsWith(suf) && lower.length > suf.length) {
-      return { ticker: lower.slice(0, -suf.length), network: suf };
+      return { ticker: lower.slice(0, -suf.length), network: SUFFIX_TO_V2_NETWORK[suf] };
     }
   }
-  // Default network = ticker itself (e.g. btc/btc, eth/eth)
   return { ticker: lower, network: lower };
 }
 
