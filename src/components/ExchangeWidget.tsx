@@ -4024,17 +4024,26 @@ const ExchangeWidget = ({ onTabChange, defaultFrom, defaultTo }: ExchangeWidgetP
 
             {txStatus?.status === "finished" && (
               <div className="mt-6 space-y-3">
-                <div className="flex flex-col items-center gap-2 rounded-xl border border-primary/20 bg-primary/[0.06] p-4 text-center">
-                  <span className="text-sm font-medium text-foreground">{t("widget.howWasExperience")}</span>
-                  <p className="text-xs text-muted-foreground">{t("widget.feedbackHelps")}</p>
+                <div className="flex flex-col items-center gap-2.5 rounded-2xl border border-primary/30 bg-primary/[0.08] p-5 text-center shadow-sm">
+                  <div className="flex items-center gap-1" aria-hidden="true">
+                    {[0, 1, 2, 3, 4].map((i) => (
+                      <svg key={i} viewBox="0 0 24 24" className="h-4 w-4 fill-[#00b67a]">
+                        <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z" />
+                      </svg>
+                    ))}
+                  </div>
+                  <span className="text-base font-semibold text-foreground">{t("widget.howWasExperience")}</span>
+                  <p className="text-xs leading-relaxed text-muted-foreground">{t("widget.feedbackHelps")}</p>
                   <a
                     href="https://www.trustpilot.com/evaluate/mrcglobalpay.com"
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="mt-1 inline-flex items-center gap-2 rounded-lg bg-[#00b67a] px-5 py-2.5 text-sm font-bold text-white transition-opacity hover:opacity-90"
+                    className="mt-1 inline-flex w-full items-center justify-center gap-2 rounded-xl bg-[#00b67a] px-5 py-3 text-sm font-bold text-white shadow-md transition-all hover:bg-[#00a36e] hover:shadow-lg active:scale-[0.98] sm:w-auto"
                   >
                     {t("widget.leaveReview")}
+                    <ExternalLink className="h-4 w-4" />
                   </a>
+                  <p className="text-[10px] text-muted-foreground/80">{t("widget.reviewFootnote")}</p>
                 </div>
                 <div className="flex gap-2">
                   <Button
