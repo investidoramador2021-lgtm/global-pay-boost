@@ -20,6 +20,7 @@ import ShadowSeoFaq from "@/components/ShadowSeoFaq";
 import TrendingEcosystems from "@/components/TrendingEcosystems";
 import GetTheAppBadges from "@/components/GetTheAppBadges";
 import BentoSpecsSection from "@/components/BentoSpecsSection";
+import HomeResourceCards from "@/components/HomeResourceCards";
 import WhyChooseSection from "@/components/WhyChooseSection";
 import LiveNetworkBadge from "@/components/LiveNetworkBadge";
 import PartnerProtocolCTA from "@/components/PartnerProtocolCTA";
@@ -186,6 +187,9 @@ const Index = () => {
           </div>
           <div className="cv-auto">
             <TrendingEcosystems />
+          </div>
+          <div className="cv-auto">
+            <HomeResourceCards />
           </div>
           <div className="cv-auto">
             <BentoSpecsSection />
