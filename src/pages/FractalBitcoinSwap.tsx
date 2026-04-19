@@ -67,7 +67,7 @@ const FractalBitcoinSwap = () => {
         <title>Fractal Bitcoin Swap | Instant FB to SOL & ETH | MRC GlobalPay</title>
         <meta
           name="description"
-          content="Swap Fractal Bitcoin to Solana, Ethereum, and 6,000+ tokens instantly. No account, no minimums. Non-custodial cross-chain swaps."
+          content="Swap Fractal Bitcoin (FB) to Solana, Ethereum, USDT, and 6,000+ tokens instantly from $0.30. Non-custodial cross-chain swaps with no account, no KYC, FINTRAC MSB-registered settlement."
         />
         <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1" />
         <link rel="canonical" href={pageUrl} />

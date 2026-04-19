@@ -109,7 +109,7 @@ const SolutionPage = () => {
     <>
       <Helmet>
         <title>{`How to Swap ${from_token} to ${to_token} — No Minimum (2026 Guide)`}</title>
-        <meta name="description" content={`Swap ${from_token} to ${to_token} from just $0.30. ${network_advantage}. Registration-free, non-custodial, under 60 seconds.`} />
+        <meta name="description" content={`Swap ${from_token} to ${to_token} from just $0.30 in under 60 seconds. ${network_advantage}. Registration-free, non-custodial, FINTRAC MSB-registered. 6,000+ tokens supported.`} />
         <link rel="canonical" href={pageUrl} />
         <meta property="og:title" content={`Swap ${from_token} to ${to_token} — No Minimum Deposit (2026)`} />
         <meta property="og:description" content={`${network_advantage}. From $0.30, registration-free.`} />

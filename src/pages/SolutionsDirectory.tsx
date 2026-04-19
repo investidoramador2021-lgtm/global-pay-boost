@@ -48,7 +48,7 @@ const SolutionsDirectory = () => {
         <title>Micro-Swap Solutions | Swap Any Crypto from $0.30 (2026)</title>
         <meta
           name="description"
-          content="Browse 16+ step-by-step guides for swapping crypto with no minimum deposit. BTC, ETH, SOL, DOGE, SHIB and more — all from $0.30."
+          content="Browse 16+ step-by-step guides for swapping crypto with no minimum deposit. BTC, ETH, SOL, DOGE, SHIB, PEPE and 6,000+ more — all from $0.30, non-custodial, registration-free."
         />
         <link rel="canonical" href={pageUrl} />
         <meta property="og:title" content="Micro-Swap Solutions | Swap Any Crypto from $0.30" />
