@@ -54,7 +54,7 @@ const LearnDirectory = () => {
         <title>Trust & Transparency Hub | MRC GlobalPay (2026)</title>
         <meta
           name="description"
-          content="Learn how MRC GlobalPay protects your crypto: non-custodial swap architecture, FINTRAC MSB registration, Fireblocks-grade security, and zero custody risk across 6,000+ supported assets."
+          content="Learn how MRC GlobalPay protects your crypto: non-custodial swap architecture, FINTRAC MSB registration, Fireblocks-grade security, zero custody risk. 6,000+ assets."
         />
         <link rel="canonical" href={pageUrl} />
         <meta property="og:title" content="Trust & Transparency Hub | MRC GlobalPay" />

@@ -13,7 +13,7 @@ const NotFound = () => {
     <>
       <Helmet>
         <title>Page Not Found — MRC GlobalPay</title>
-        <meta name="description" content="The page you requested could not be found. Return to MRC GlobalPay to instantly swap 6,000+ cryptocurrencies from $0.30 — registration-free, non-custodial, FINTRAC MSB-registered." />
+        <meta name="description" content="The page you requested could not be found. Return to MRC GlobalPay to instantly swap 6,000+ cryptocurrencies from $0.30 — registration-free and non-custodial." />
         <meta name="robots" content="index, follow" />
         <meta property="og:title" content="Page Not Found — MRC GlobalPay" />
         <meta property="og:description" content="The page you are looking for does not exist. Return to MRC GlobalPay to swap 6,000+ cryptocurrencies instantly from $0.30." />

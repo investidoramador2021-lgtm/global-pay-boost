@@ -195,7 +195,7 @@ const DevelopersApi = () => {
     <>
       <Helmet>
         <title>Solana Swap API Docs — 50+ Tokens | MRC Global Pay</title>
-        <meta name="description" content="Programmatic non-custodial Solana swap API. $0.30 minimum, registration-free liquidity for NOS, ONDO and 50+ assets. FINTRAC MSB. Built for arbitrage bots and AI agents." />
+        <meta name="description" content="Programmatic non-custodial Solana swap API. $0.30 minimum, registration-free liquidity for NOS, ONDO and 50+ assets. Built for arbitrage bots and AI agents." />
         <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1" />
         <link rel="canonical" href="https://mrcglobalpay.com/developers" />
         <meta property="og:title" content="Solana Swap API Documentation — MRC Global Pay" />

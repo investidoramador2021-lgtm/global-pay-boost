@@ -208,7 +208,7 @@ const Partners = () => {
     <>
       <Helmet>
         <title>Partner Program | MRC GlobalPay</title>
-        <meta name="description" content="Join the MRC GlobalPay Partner Program. Earn lifetime BTC commissions on every crypto swap settlement from your referral network. FINTRAC MSB-registered, weekly payouts, no minimums." />
+        <meta name="description" content="Join the MRC GlobalPay Partner Program. Earn lifetime BTC commissions on every crypto swap from your referral network. FINTRAC MSB-registered, weekly payouts." />
       </Helmet>
 
       <SiteHeader />

@@ -11,7 +11,7 @@ const PrivacyPolicy = () => {
   <>
     <Helmet>
       <title>Privacy Policy — MRC GlobalPay</title>
-      <meta name="description" content="MRC GlobalPay privacy policy: how we handle your data during non-custodial cryptocurrency swaps. No private keys stored, FINTRAC MSB-compliant, GDPR-aligned data minimization." />
+      <meta name="description" content="MRC GlobalPay privacy policy: how we handle your data during non-custodial crypto swaps. No private keys stored, FINTRAC MSB-compliant, GDPR-aligned." />
       <meta name="robots" content="index, follow" />
       <link rel="canonical" href={pageUrl} />
       <meta property="og:title" content="Privacy Policy — MRC GlobalPay" />

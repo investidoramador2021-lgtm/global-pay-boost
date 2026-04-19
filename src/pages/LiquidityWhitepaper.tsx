@@ -95,7 +95,7 @@ const LiquidityWhitepaper = () => {
         <title>Q2 2026 Liquidity Expansion — MRC GlobalPay Whitepaper</title>
         <meta
           name="description"
-          content="MRC GlobalPay's liquidity whitepaper: ZkSync USDC, USDS, EDGE, and Aptos CAKE integrations powering non-custodial cross-chain settlement for 900+ assets, FINTRAC MSB, $0.30 minimums."
+          content="MRC GlobalPay liquidity whitepaper: ZkSync USDC, USDS, EDGE and Aptos CAKE powering non-custodial cross-chain settlement for 900+ assets, $0.30 minimums."
         />
         <link rel="canonical" href={canonicalUrl} />
         <meta name="robots" content="index, follow" />
