@@ -78,7 +78,19 @@ Deno.serve(async (req) => {
     return jsonResponse({ error: 'CHANGENOW_API_KEY not configured' }, 500);
   }
 
-  const authHeaders = { 'x-changenow-api-key': apiKey };
+  // Some v2 endpoints (estimate, by-fixed-rate, by-id) require the PRIVATE key,
+  // others (currencies, min-amount) accept the PUBLIC key. We default to private when available.
+  const primaryKey = privateKey || apiKey;
+  const authHeaders = { 'x-changenow-api-key': primaryKey };
+  const fallbackHeaders = primaryKey === apiKey ? null : { 'x-changenow-api-key': apiKey };
+
+  async function fetchWithKeyFallback(url: string, init?: RequestInit) {
+    let resp = await fetch(url, { ...init, headers: { ...(init?.headers || {}), ...authHeaders } });
+    if (resp.status === 401 && fallbackHeaders) {
+      resp = await fetch(url, { ...init, headers: { ...(init?.headers || {}), ...fallbackHeaders } });
+    }
+    return resp;
+  }
 
   try {
     let params: Record<string, string> = {};
