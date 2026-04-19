@@ -107,10 +107,34 @@ Deno.serve(async (req) => {
   const authHeaders = { 'x-changenow-api-key': primaryKey };
   const fallbackHeaders = primaryKey === apiKey ? null : { 'x-changenow-api-key': apiKey };
 
+  // Retry transient network errors (connection resets, DNS hiccups) with exponential backoff.
+  async function fetchWithRetry(url: string, init?: RequestInit, attempts = 3): Promise<Response> {
+    let lastErr: unknown;
+    for (let i = 0; i < attempts; i++) {
+      try {
+        const resp = await fetch(url, init);
+        // Retry on 5xx upstream errors too (except 501 Not Implemented)
+        if (resp.status >= 500 && resp.status !== 501 && i < attempts - 1) {
+          await new Promise((r) => setTimeout(r, 200 * Math.pow(2, i)));
+          continue;
+        }
+        return resp;
+      } catch (err) {
+        lastErr = err;
+        const msg = err instanceof Error ? err.message : String(err);
+        console.warn(`fetch attempt ${i + 1}/${attempts} failed for ${url}: ${msg}`);
+        if (i < attempts - 1) {
+          await new Promise((r) => setTimeout(r, 200 * Math.pow(2, i)));
+        }
+      }
+    }
+    throw lastErr instanceof Error ? lastErr : new Error('fetch failed after retries');
+  }
+
   async function fetchWithKeyFallback(url: string, init?: RequestInit) {
-    let resp = await fetch(url, { ...init, headers: { ...(init?.headers || {}), ...authHeaders } });
+    let resp = await fetchWithRetry(url, { ...init, headers: { ...(init?.headers || {}), ...authHeaders } });
     if (resp.status === 401 && fallbackHeaders) {
-      resp = await fetch(url, { ...init, headers: { ...(init?.headers || {}), ...fallbackHeaders } });
+      resp = await fetchWithRetry(url, { ...init, headers: { ...(init?.headers || {}), ...fallbackHeaders } });
     }
     return resp;
   }
