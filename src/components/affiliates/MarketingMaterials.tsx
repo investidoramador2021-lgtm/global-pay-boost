@@ -67,16 +67,23 @@ const MarketingMaterials = () => {
   const resolveBannerImage = (index: number, fallback: string) => localizedImages[index] ?? fallback;
 
   const handleBannerDownload = async (src: string, filename: string) => {
-    const response = await fetch(src);
-    const blob = await response.blob();
-    const url = URL.createObjectURL(blob);
-    const a = document.createElement("a");
-    a.href = url;
-    a.download = filename;
-    document.body.appendChild(a);
-    a.click();
-    document.body.removeChild(a);
-    setTimeout(() => URL.revokeObjectURL(url), 1500);
+    try {
+      const response = await fetch(src);
+      if (!response.ok) throw new Error(`Failed to fetch banner: ${response.status}`);
+      const blob = await response.blob();
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement("a");
+      a.href = url;
+      a.download = filename;
+      a.rel = "noopener";
+      document.body.appendChild(a);
+      a.click();
+      document.body.removeChild(a);
+      setTimeout(() => URL.revokeObjectURL(url), 1500);
+    } catch (error) {
+      console.error("Banner download failed, opening in new tab:", error);
+      window.open(src, "_blank", "noopener,noreferrer");
+    }
   };
 
   const socials = [
