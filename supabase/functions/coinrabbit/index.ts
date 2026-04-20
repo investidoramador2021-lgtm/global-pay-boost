@@ -32,6 +32,12 @@ const TERMINAL_LOAN_STATUSES = new Set([
   'repaid', 'closed', 'liquidated', 'completed', 'finished', 'cancelled', 'canceled',
 ])
 
+// ─── In-memory earn status tracker ───
+const lastEarnStatus = new Map<string, string>()
+const TERMINAL_EARN_STATUSES = new Set([
+  'withdrawn', 'completed', 'closed', 'finished', 'cancelled', 'canceled',
+])
+
 function notifyTelegram(message: string, tag: string) {
   try {
     const supabaseUrl = Deno.env.get('SUPABASE_URL')
