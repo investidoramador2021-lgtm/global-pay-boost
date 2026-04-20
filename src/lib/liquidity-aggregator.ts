@@ -14,10 +14,12 @@
  *   'cn' = ChangeNOW, 'se' = StealthEX, 'le' = LetsExchange.
  */
 import {
+  getCurrencies as cnGetCurrencies,
   getEstimate as cnGetEstimate,
   getMinAmount as cnGetMinAmount,
   createTransaction as cnCreateTransaction,
   getTransactionStatus as cnGetStatus,
+  type Currency,
   type EstimateResult,
   type MinAmountResult,
   type CreateTransactionParams,
@@ -25,12 +27,14 @@ import {
   type TransactionStatus,
 } from "./changenow";
 import {
+  leGetCurrencies,
   leGetEstimate,
   leGetMinAmount,
   leCreateTransaction,
   leGetTransactionStatus,
 } from "./letsexchange";
 import {
+  seGetCurrencies,
   seGetEstimate,
   seGetMinAmount,
   seCreateTransaction,
