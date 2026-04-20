@@ -116,6 +116,32 @@ function authHeaders(apiKey: string, jwt?: string): Record<string, string> {
   }
 }
 
+// ─── Fetch CoinRabbit user profile (numeric id) ───
+async function getCoinrabbitUserId(apiKey: string, jwt: string): Promise<string | null> {
+  try {
+    const headers = authHeaders(apiKey, jwt)
+    const { response, responseBody } = await callProvider(`${BASE}/users`, { method: 'GET', headers })
+    if (!response.ok) {
+      console.error('[users] fetch failed', response.status, JSON.stringify(responseBody))
+      return null
+    }
+    const inner = unwrapResponse(responseBody)
+    // Try common shapes: { id }, { user: { id } }, [{ id }]
+    const candidate =
+      (inner && typeof inner === 'object' && 'id' in inner ? (inner as Record<string, unknown>).id : null) ??
+      (inner && typeof inner === 'object' && 'user' in inner ? ((inner as Record<string, unknown>).user as Record<string, unknown>)?.id : null) ??
+      (Array.isArray(inner) && inner.length > 0 ? (inner[0] as Record<string, unknown>)?.id : null)
+    if (candidate == null) {
+      console.error('[users] no id field in response', JSON.stringify(inner))
+      return null
+    }
+    return String(candidate)
+  } catch (e) {
+    console.error('[users] error:', e)
+    return null
+  }
+}
+
 // ─── Currencies catalog ───
 async function getCurrenciesCatalog(headers: Record<string, string>) {
   const { responseBody } = await callProvider(`${BASE}/currencies`, { method: 'GET', headers })
@@ -345,7 +371,14 @@ Deno.serve(async (req: Request) => {
 
       const currencyCode = body.currency.toUpperCase()
       const currencyNetwork = body.network || normalizeNetwork(p.currency_network || currencyCode)
-      const userId = String(p.user_id || p.external_id || `MRCGlobalPay_${Date.now()}`)
+
+      // Use JWT auth (x-user-token) for V2 earns endpoint
+      const jwt = await getJwt(apiKey)
+      const jwtHeaders = authHeaders(apiKey, jwt)
+
+      // Fetch numeric CoinRabbit user id; fallback to legacy string if unavailable
+      const cnUserId = await getCoinrabbitUserId(apiKey, jwt)
+      const userId = cnUserId || String(p.user_id || p.external_id || `MRCGlobalPay_${Date.now()}`)
 
       // V2 API flat payload: top-level currency_code/network, deposit.expected_amount as string
       const requestBody: Record<string, unknown> = {
@@ -358,10 +391,6 @@ Deno.serve(async (req: Request) => {
       }
       if (p.email) requestBody.email = String(p.email)
       if (p.phone) requestBody.phone = String(p.phone)
-
-      // Use JWT auth (x-user-token) for V2 earns endpoint
-      const jwt = await getJwt(apiKey)
-      const jwtHeaders = authHeaders(apiKey, jwt)
 
       console.log('[create-earn] body:', JSON.stringify(requestBody))
       const url = `${BASE}/earns`
