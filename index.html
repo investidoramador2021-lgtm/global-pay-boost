@@ -51,6 +51,61 @@
     <meta name="twitter:title" content="MRC GlobalPay — Instant Crypto Swap" />
     <meta name="twitter:description" content="Swap 6,000+ cryptocurrencies in under 60 seconds from $0.30." />
     <meta name="twitter:image" content="https://mrcglobalpay.com/og-image.jpg" />
+
+    <!-- Base JSON-LD shipped on every URL: Organization + WebSite + FinancialService + FAQPage -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@graph": [
+        {
+          "@type": "Organization",
+          "@id": "https://mrcglobalpay.com/#organization",
+          "name": "MRC GlobalPay",
+          "legalName": "MRC Pay International Corp",
+          "url": "https://mrcglobalpay.com/",
+          "logo": "https://mrcglobalpay.com/favicon-192x192.png",
+          "description": "Canadian MSB-registered (FINTRAC C100000015) instant crypto swap platform.",
+          "sameAs": ["https://x.com/mrcglobalpay"],
+          "address": {"@type": "PostalAddress", "addressCountry": "CA", "addressLocality": "Ottawa"},
+          "identifier": "C100000015"
+        },
+        {
+          "@type": "WebSite",
+          "@id": "https://mrcglobalpay.com/#website",
+          "url": "https://mrcglobalpay.com/",
+          "name": "MRC GlobalPay",
+          "publisher": {"@id": "https://mrcglobalpay.com/#organization"},
+          "inLanguage": ["en","es","pt","fr","ja","fa","ur","he","af","hi","vi","tr","uk"],
+          "potentialAction": {
+            "@type": "SearchAction",
+            "target": {"@type": "EntryPoint", "urlTemplate": "https://mrcglobalpay.com/exchange/{search_term_string}"},
+            "query-input": "required name=search_term_string"
+          }
+        },
+        {
+          "@type": "FinancialService",
+          "@id": "https://mrcglobalpay.com/#service",
+          "name": "MRC GlobalPay Crypto Swap",
+          "provider": {"@id": "https://mrcglobalpay.com/#organization"},
+          "areaServed": "Worldwide",
+          "serviceType": "Cryptocurrency Exchange",
+          "currenciesAccepted": "BTC, ETH, USDT, USDC, SOL, XRP, BNB, DOGE, ADA, TRX, DOT, MATIC, LTC, XMR, and 6000+ others",
+          "feesAndCommissionsSpecification": "https://mrcglobalpay.com/compliance"
+        },
+        {
+          "@type": "FAQPage",
+          "@id": "https://mrcglobalpay.com/#faq",
+          "mainEntity": [
+            {"@type":"Question","name":"Is MRC GlobalPay registered?","acceptedAnswer":{"@type":"Answer","text":"Yes. MRC Pay International Corp is a registered Money Services Business in Canada (FINTRAC C100000015), headquartered in Ottawa."}},
+            {"@type":"Question","name":"What is the minimum swap amount?","acceptedAnswer":{"@type":"Answer","text":"Approximately $0.30 USD equivalent. MRC GlobalPay is built for crypto-dust conversion."}},
+            {"@type":"Question","name":"Do I need an account or KYC?","acceptedAnswer":{"@type":"Answer","text":"No. Standard crypto-to-crypto swaps are non-custodial wallet-to-wallet and require no account or identity verification."}},
+            {"@type":"Question","name":"How fast are swaps?","acceptedAnswer":{"@type":"Answer","text":"Most swaps complete in under 60 seconds after the deposit receives required network confirmations."}},
+            {"@type":"Question","name":"How many cryptocurrencies are supported?","acceptedAnswer":{"@type":"Answer","text":"6,000+ cryptocurrencies and tokenized assets across 700+ liquidity sources."}}
+          ]
+        }
+      ]
+    }
+    </script>
   </head>
 
   <body>
@@ -71,11 +126,40 @@
           <li><a href="/about">About MRC GlobalPay</a></li>
           <li><a href="/compliance">Compliance &amp; MSB Status (FINTRAC C100000015)</a></li>
         </ul>
-        <h2>Popular Swaps</h2>
-        <ul>
-          <li><a href="/swap/sol-usdt">SOL to USDT</a></li><li><a href="/swap/btc-usdc">BTC to USDC</a></li><li><a href="/swap/eth-sol">ETH to SOL</a></li><li><a href="/swap/xrp-usdt">XRP to USDT</a></li><li><a href="/swap/hype-usdt">HYPE to USDT</a></li><li><a href="/swap/bera-usdt">BERA to USDT</a></li><li><a href="/swap/tia-usdt">TIA to USDT</a></li><li><a href="/swap/bnb-usdc">BNB to USDC</a></li>
-           <li><a href="/swap/usdt-to-trx">USDT to TRX</a></li><li><a href="/swap/usdt-to-sol">USDT to SOL</a></li><li><a href="/swap/eth-to-sol">ETH to SOL Bridge</a></li><li><a href="/swap/usdc-solana">USDC to Solana</a></li><li><a href="/swap/xmr-to-eth">XMR to ETH</a></li><li><a href="/swap/bnb-to-sol">BNB to SOL</a></li><li><a href="/swap/btc-to-sol-instant">BTC to SOL</a></li><li><a href="/swap/shiba-to-usdt">SHIB to USDT</a></li>
+        <h2>Popular Exchange Pairs</h2>
+        <ul style="columns:2;column-gap:24px">
+          <li><a href="/exchange/btc-to-usdt">BTC to USDT</a></li><li><a href="/exchange/btc-to-usdc">BTC to USDC</a></li><li><a href="/exchange/btc-to-eth">BTC to ETH</a></li><li><a href="/exchange/btc-to-sol">BTC to SOL</a></li><li><a href="/exchange/btc-to-xmr">BTC to XMR</a></li><li><a href="/exchange/btc-to-ltc">BTC to LTC</a></li><li><a href="/exchange/btc-to-doge">BTC to DOGE</a></li><li><a href="/exchange/btc-to-bnb">BTC to BNB</a></li>
+          <li><a href="/exchange/eth-to-usdt">ETH to USDT</a></li><li><a href="/exchange/eth-to-usdc">ETH to USDC</a></li><li><a href="/exchange/eth-to-btc">ETH to BTC</a></li><li><a href="/exchange/eth-to-sol">ETH to SOL</a></li><li><a href="/exchange/eth-to-xmr">ETH to XMR</a></li><li><a href="/exchange/eth-to-bnb">ETH to BNB</a></li><li><a href="/exchange/eth-to-matic">ETH to MATIC</a></li><li><a href="/exchange/eth-to-arb">ETH to ARB</a></li>
+          <li><a href="/exchange/usdt-to-btc">USDT to BTC</a></li><li><a href="/exchange/usdt-to-eth">USDT to ETH</a></li><li><a href="/exchange/usdt-to-sol">USDT to SOL</a></li><li><a href="/exchange/usdt-to-trx">USDT to TRX</a></li><li><a href="/exchange/usdt-to-xmr">USDT to XMR</a></li><li><a href="/exchange/usdt-to-bnb">USDT to BNB</a></li><li><a href="/exchange/usdt-to-usdc">USDT to USDC</a></li><li><a href="/exchange/usdt-to-doge">USDT to DOGE</a></li>
+          <li><a href="/exchange/sol-to-usdt">SOL to USDT</a></li><li><a href="/exchange/sol-to-btc">SOL to BTC</a></li><li><a href="/exchange/sol-to-eth">SOL to ETH</a></li><li><a href="/exchange/sol-to-usdc">SOL to USDC</a></li><li><a href="/exchange/sol-to-bonk">SOL to BONK</a></li><li><a href="/exchange/sol-to-jup">SOL to JUP</a></li><li><a href="/exchange/sol-to-wif">SOL to WIF</a></li><li><a href="/exchange/sol-to-pyth">SOL to PYTH</a></li>
+          <li><a href="/exchange/xrp-to-usdt">XRP to USDT</a></li><li><a href="/exchange/xrp-to-btc">XRP to BTC</a></li><li><a href="/exchange/xrp-to-eth">XRP to ETH</a></li><li><a href="/exchange/xrp-to-usdc">XRP to USDC</a></li><li><a href="/exchange/doge-to-btc">DOGE to BTC</a></li><li><a href="/exchange/doge-to-usdt">DOGE to USDT</a></li><li><a href="/exchange/ltc-to-btc">LTC to BTC</a></li><li><a href="/exchange/ltc-to-usdt">LTC to USDT</a></li>
+          <li><a href="/exchange/bnb-to-usdt">BNB to USDT</a></li><li><a href="/exchange/bnb-to-btc">BNB to BTC</a></li><li><a href="/exchange/bnb-to-eth">BNB to ETH</a></li><li><a href="/exchange/bnb-to-sol">BNB to SOL</a></li><li><a href="/exchange/bnb-to-usdc">BNB to USDC</a></li><li><a href="/exchange/trx-to-usdt">TRX to USDT</a></li><li><a href="/exchange/trx-to-btc">TRX to BTC</a></li><li><a href="/exchange/ada-to-usdt">ADA to USDT</a></li>
+          <li><a href="/exchange/xmr-to-btc">XMR to BTC</a></li><li><a href="/exchange/xmr-to-eth">XMR to ETH</a></li><li><a href="/exchange/xmr-to-usdt">XMR to USDT</a></li><li><a href="/exchange/xmr-to-xrp">XMR to XRP</a></li><li><a href="/exchange/dot-to-usdt">DOT to USDT</a></li><li><a href="/exchange/atom-to-usdt">ATOM to USDT</a></li><li><a href="/exchange/avax-to-usdt">AVAX to USDT</a></li><li><a href="/exchange/link-to-usdt">LINK to USDT</a></li>
+          <li><a href="/exchange/matic-to-usdt">MATIC to USDT</a></li><li><a href="/exchange/shib-to-usdt">SHIB to USDT</a></li><li><a href="/exchange/pepe-to-usdt">PEPE to USDT</a></li><li><a href="/exchange/bonk-to-usdt">BONK to USDT</a></li><li><a href="/exchange/hype-to-usdt">HYPE to USDT</a></li><li><a href="/exchange/tia-to-usdt">TIA to USDT</a></li><li><a href="/exchange/bera-to-usdt">BERA to USDT</a></li><li><a href="/exchange/tao-to-usdt">TAO to USDT</a></li>
+          <li><a href="/exchange/paxg-to-usdt">PAXG to USDT</a></li><li><a href="/exchange/xaut-to-usdt">XAUT to USDT</a></li><li><a href="/exchange/dai-to-usdt">DAI to USDT</a></li><li><a href="/exchange/pyusd-to-usdt">PYUSD to USDT</a></li><li><a href="/exchange/ton-to-usdt">TON to USDT</a></li><li><a href="/exchange/near-to-usdt">NEAR to USDT</a></li><li><a href="/exchange/apt-to-usdt">APT to USDT</a></li><li><a href="/exchange/sui-to-usdt">SUI to USDT</a></li>
         </ul>
+
+        <h2>Why MRC GlobalPay</h2>
+        <ul>
+          <li><strong>Registered MSB:</strong> FINTRAC C100000015 (Canada)</li>
+          <li><strong>6,000+ assets</strong> across 700+ liquidity sources</li>
+          <li><strong>Minimum swap $0.30 USD</strong> — built for crypto dust</li>
+          <li><strong>Under 60 seconds</strong> typical settlement</li>
+          <li><strong>Non-custodial</strong> wallet-to-wallet — no account, no KYC for standard swaps</li>
+          <li><strong>13 languages</strong>: English, Spanish, Portuguese, French, Japanese, Persian, Urdu, Hebrew, Afrikaans, Hindi, Vietnamese, Turkish, Ukrainian</li>
+        </ul>
+
+        <h2>Frequently Asked Questions</h2>
+        <h3>Is MRC GlobalPay legitimate?</h3>
+        <p>Yes. MRC Pay International Corp is a registered Money Services Business in Canada (FINTRAC C100000015), headquartered in Ottawa.</p>
+        <h3>What is the minimum swap amount?</h3>
+        <p>Approximately $0.30 USD equivalent — designed specifically for converting crypto dust.</p>
+        <h3>Do I need to register or pass KYC?</h3>
+        <p>No. Standard crypto-to-crypto swaps are non-custodial and require no account or identity verification.</p>
+        <h3>How fast are the swaps?</h3>
+        <p>Most swaps complete in under 60 seconds after deposit confirmations.</p>
+        <h3>How many cryptocurrencies are supported?</h3>
+        <p>6,000+ cryptocurrencies and tokenized assets across 700+ liquidity sources via our smart-router.</p>
         <h2>2026 Trending Hubs</h2>
         <ul><li><a href="/solutions/how-to-swap-sol-to-ondo">Swap SOL to ONDO</a></li><li><a href="/solutions/how-to-swap-sol-to-nos">Swap SOL to NOS</a></li><li><a href="/solutions/how-to-swap-sol-to-jupsol">Swap SOL to jupSOL</a></li><li><a href="/ecosystem/solana-ai">Solana AI Hub</a></li><li><a href="/ecosystem/solana">Solana Ecosystem</a></li></ul>
         <h2>Buy Crypto</h2>
