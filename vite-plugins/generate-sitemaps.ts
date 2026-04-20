@@ -23,12 +23,10 @@ import { join } from "node:path";
 
 const SUPABASE_URL = "https://tjikwxkmsfmyjkssvyoh.supabase.co";
 const FEED_BASE = `${SUPABASE_URL}/functions/v1/dynamic-feed?p=`;
-// SEO STRATEGY (2026-04): Cap total pair URLs at 1,000. Submitting 400k+
-// near-template pages was triggering Google's "Discovered — currently not
-// indexed" wave. We now submit only the highest-priority slice (returned
-// first by dynamic-feed, ordered by tier/popularity). Static + blog
-// sitemaps remain unchanged. Total sitemap size stays well under 15k URLs.
-const MAX_PAIR_URLS = 1000;
+// 1,000 URLs/file keeps each sitemap ~1.6 MB. Larger files (we previously
+// shipped 5,000/file = ~8.2 MB) are technically valid per sitemaps.org but
+// Googlebot frequently times out fetching them, which surfaces in Search
+// Console as "Couldn't fetch" on a random subset of children every crawl.
 const URLS_PER_FILE = 1000;
 const URL_RE = /<url>[\s\S]*?<\/url>/g;
 
@@ -86,7 +84,7 @@ export function generateSitemaps(outDir = "dist"): Plugin {
         const allUrls: string[] = [];
         let sourceIdx = 0;
         let consecutiveEmpty = 0;
-        while (consecutiveEmpty < 2 && sourceIdx < 100 && allUrls.length < MAX_PAIR_URLS) {
+        while (consecutiveEmpty < 2 && sourceIdx < 100) {
           const xml = await fetchSourceBatch(sourceIdx);
           if (!xml) {
             consecutiveEmpty++;
@@ -110,15 +108,7 @@ export function generateSitemaps(outDir = "dist"): Plugin {
           return;
         }
 
-        // Hard cap to keep total submitted URLs under ~15k (SEO trim).
-        if (allUrls.length > MAX_PAIR_URLS) {
-          log(
-            `Trimming pair URLs from ${allUrls.length.toLocaleString()} → ${MAX_PAIR_URLS.toLocaleString()} (top-priority slice).`,
-          );
-          allUrls.length = MAX_PAIR_URLS;
-        }
-
-        log(`Total pair URLs (after cap): ${allUrls.length.toLocaleString()}`);
+        log(`Total pair URLs: ${allUrls.length.toLocaleString()}`);
 
         // --- 2. Write static + blog sitemaps ------------------------------
         const childPaths: string[] = [];
