@@ -66,6 +66,7 @@ interface PairContent {
 
 function buildSeoHead(opts: {
   lang: string;
+  kind: RouteKind;
   from: string;
   to: string;
   fromName: string;
@@ -74,14 +75,14 @@ function buildSeoHead(opts: {
   description: string;
   canonical: string;
 }): string {
-  const { lang, from, to, fromName, toName, title, description, canonical } = opts;
+  const { lang, kind, from, to, fromName, toName, title, description, canonical } = opts;
   const fromUp = from.toUpperCase();
   const toUp = to.toUpperCase();
 
   // hreflang block — one entry per language + x-default
   const hreflangLinks = LANGS.map((l) => {
     const prefix = l === "en" ? "" : `/${l}`;
-    return `<link rel="alternate" hreflang="${l}" href="${SITE}${prefix}/exchange/${from}-to-${to}" />`;
+    return `<link rel="alternate" hreflang="${l}" href="${SITE}${prefix}${pairUrlPath(kind, from, to)}" />`;
   }).join("\n    ");
 
   const ogImage = `${SITE}/og-image.png`;
@@ -93,7 +94,7 @@ function buildSeoHead(opts: {
         "@type": "BreadcrumbList",
         itemListElement: [
           { "@type": "ListItem", position: 1, name: "Home", item: SITE },
-          { "@type": "ListItem", position: 2, name: "Exchange", item: `${SITE}/directory` },
+          { "@type": "ListItem", position: 2, name: kind === "exchange" ? "Exchange" : "Swap", item: `${SITE}/${kind === "exchange" ? "directory" : "swap"}` },
           { "@type": "ListItem", position: 3, name: `Swap ${fromUp} to ${toUp}`, item: canonical },
         ],
       },
