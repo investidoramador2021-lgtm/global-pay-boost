@@ -1,17 +1,19 @@
 /**
- * LiquidityAggregator — Priority Waterfall: ChangeNOW (cn) → StealthEX (se) → LetsExchange (le).
+ * LiquidityAggregator — Priority Waterfall:
+ *   ChangeNOW (cn) → SimpleSwap (ss) → StealthEX (se) → LetsExchange (le).
  *
  * Strategy:
- *   Priority 1 (Lead): ChangeNOW — primary provider, best margins.
- *   Priority 2 (Fallback): StealthEX — second tier coverage.
- *   Priority 3 (Reserved): LetsExchange — last-resort coverage extender.
+ *   Priority 1 (Lead):     ChangeNOW   — primary provider, 0.5% commission.
+ *   Priority 2 (Fallback): SimpleSwap  — secondary, matched 0.5% commission.
+ *   Priority 3 (Coverage): StealthEX   — third tier coverage.
+ *   Priority 4 (Reserved): LetsExchange — last-resort coverage extender.
  *
  * Failover on create-transaction is silent. Quote stage walks the waterfall and
  * picks the first provider returning a positive estimate, guaranteeing at least
  * one quote whenever any provider can serve the pair.
  *
  * Brand integrity: Provider names never leak to UI. Internal codes only:
- *   'cn' = ChangeNOW, 'se' = StealthEX, 'le' = LetsExchange.
+ *   'cn' = ChangeNOW, 'ss' = SimpleSwap, 'se' = StealthEX, 'le' = LetsExchange.
  */
 import {
   getCurrencies as cnGetCurrencies,
@@ -27,6 +29,13 @@ import {
   type TransactionStatus,
 } from "./changenow";
 import {
+  ssGetCurrencies,
+  ssGetEstimate,
+  ssGetMinAmount,
+  ssCreateTransaction,
+  ssGetTransactionStatus,
+} from "./simpleswap";
+import {
   leGetCurrencies,
   leGetEstimate,
   leGetMinAmount,
@@ -41,19 +50,20 @@ import {
   seGetTransactionStatus,
 } from "./stealthex";
 
-export type Provider = "se" | "le" | "cn";
+export type Provider = "cn" | "ss" | "se" | "le";
 
 export const PROVIDER_LABELS: Record<Provider, string> = {
+  cn: "ChangeNOW",
+  ss: "SimpleSwap",
   se: "StealthEX",
   le: "LetsExchange",
-  cn: "ChangeNOW",
 };
 
 export interface AggregatedEstimate extends EstimateResult {
   provider: Provider;
-  altAmount?: number | null; // Other provider's amount, for badge display
-  isBestRate?: boolean;      // True when LE is used (coverage extension)
-  coverageFallback?: boolean; // True when CN couldn't quote and LE filled in
+  altAmount?: number | null;
+  isBestRate?: boolean;
+  coverageFallback?: boolean;
 }
 
 export interface AggregatedTransaction extends TransactionResult {
@@ -65,20 +75,16 @@ const POSITIVE = (n: unknown): number =>
 
 /**
  * Aggregate the union of supported currencies from all providers.
- * Priority for metadata (name, image, etc.) when the same ticker exists in multiple providers:
- *   ChangeNOW (cn) > StealthEX (se) > LetsExchange (le).
- * This guarantees consistent text + logo while still surfacing tokens that are
- * only available on SE or LE (coverage extension).
- *
- * Failures from any single provider are silent — we still return whatever we have.
+ * Metadata priority on collisions: cn > ss > se > le.
  */
 export async function getAggregatedCurrencies(): Promise<Currency[]> {
   const settle = async <T,>(p: Promise<T>): Promise<T | null> => {
     try { return await p; } catch { return null; }
   };
 
-  const [cnRaw, seRaw, leRaw] = await Promise.all([
+  const [cnRaw, ssRaw, seRaw, leRaw] = await Promise.all([
     settle(cnGetCurrencies()),
+    settle(ssGetCurrencies()),
     settle(seGetCurrencies()),
     settle(leGetCurrencies()),
   ]);
@@ -92,13 +98,13 @@ export async function getAggregatedCurrencies(): Promise<Currency[]> {
   };
 
   const cn = toArray(cnRaw);
+  const ss = toArray(ssRaw);
   const se = toArray(seRaw);
   const le = toArray(leRaw);
 
-  // Merge by ticker, preferring CN metadata. Fill empty fields from lower-priority sources.
   const merged = new Map<string, Currency>();
 
-  const upsert = (c: Currency, source: Provider) => {
+  const upsert = (c: Currency) => {
     if (!c?.ticker) return;
     const key = c.ticker.toLowerCase();
     const existing = merged.get(key);
@@ -106,7 +112,6 @@ export async function getAggregatedCurrencies(): Promise<Currency[]> {
       merged.set(key, { ...c, ticker: key, isFiat: !!c.isFiat });
       return;
     }
-    // Backfill missing metadata from lower-priority sources for consistency.
     merged.set(key, {
       ...existing,
       name: existing.name || c.name,
@@ -120,18 +125,19 @@ export async function getAggregatedCurrencies(): Promise<Currency[]> {
     });
   };
 
-  // Order matters: CN first → wins on collisions.
-  cn.forEach((c) => upsert(c, "cn"));
-  se.forEach((c) => upsert(c, "se"));
-  le.forEach((c) => upsert(c, "le"));
+  // Priority order: CN first wins on collisions.
+  cn.forEach(upsert);
+  ss.forEach(upsert);
+  se.forEach(upsert);
+  le.forEach(upsert);
 
   return Array.from(merged.values()).filter((c) => !c.isFiat);
 }
+
 /**
- * Get best estimate using ChangeNOW-first coverage routing.
- * - If CN returns a valid positive amount → use CN (always, regardless of LE).
- * - If CN fails or returns 0/null → fall back to LE for coverage.
- * This protects margin while expanding the supported-token surface.
+ * Get best estimate via priority waterfall: CN → SS → SE → LE.
+ * The first provider returning a positive amount wins. SS+ are flagged as
+ * coverageFallback so the UI can surface a subtle indicator if desired.
  */
 export async function getBestEstimate(
   from: string,
@@ -154,7 +160,22 @@ export async function getBestEstimate(
     };
   }
 
-  // Priority 2: StealthEX
+  // Priority 2: SimpleSwap (matched 0.5% commission tier)
+  let ss: EstimateResult | null = null;
+  try { ss = await ssGetEstimate(from, to, amount); } catch {}
+  const ssAmt = POSITIVE(ss?.estimatedAmount);
+  if (ssAmt > 0) {
+    return {
+      estimatedAmount: ssAmt,
+      transactionSpeedForecast: ss!.transactionSpeedForecast,
+      warningMessage: ss!.warningMessage,
+      provider: "ss",
+      isBestRate: false,
+      coverageFallback: true,
+    };
+  }
+
+  // Priority 3: StealthEX
   let se: EstimateResult | null = null;
   try { se = await seGetEstimate(from, to, amount); } catch {}
   const seAmt = POSITIVE(se?.estimatedAmount);
@@ -169,7 +190,7 @@ export async function getBestEstimate(
     };
   }
 
-  // Priority 3: LetsExchange
+  // Priority 4: LetsExchange
   let le: EstimateResult | null = null;
   try { le = await leGetEstimate(from, to, amount); } catch {}
   const leAmt = POSITIVE(le?.estimatedAmount);
@@ -187,14 +208,14 @@ export async function getBestEstimate(
   return {
     estimatedAmount: null as any,
     transactionSpeedForecast: null as any,
-    warningMessage: cn?.warningMessage || se?.warningMessage || le?.warningMessage || "Rate unavailable.",
+    warningMessage: cn?.warningMessage || ss?.warningMessage || se?.warningMessage || le?.warningMessage || "Rate unavailable.",
     provider: "cn",
     isBestRate: false,
   };
 }
 
 /**
- * Get min amount — waterfall CN → SE → LE.
+ * Get min amount — waterfall CN → SS → SE → LE.
  */
 export async function getBestMinAmount(
   from: string,
@@ -203,6 +224,10 @@ export async function getBestMinAmount(
 ): Promise<MinAmountResult> {
   try {
     const r = await cnGetMinAmount(from, to, fixedRate);
+    if (r?.minAmount && r.minAmount > 0) return r;
+  } catch {}
+  try {
+    const r = await ssGetMinAmount(from, to);
     if (r?.minAmount && r.minAmount > 0) return r;
   } catch {}
   try {
@@ -217,23 +242,19 @@ export async function getBestMinAmount(
 
 /**
  * Create transaction with the winning provider, with silent failover.
- *
- * @param params - Standard transaction params
- * @param preferredProvider - The provider that won the quote
- * @returns Transaction + provider tag for downstream routing
  */
 export async function createBestTransaction(
   params: CreateTransactionParams,
   preferredProvider: Provider = "cn"
 ): Promise<AggregatedTransaction> {
-  // Build waterfall with the preferred provider first, then the rest in priority order.
-  const PRIORITY: Provider[] = ["cn", "se", "le"];
+  const PRIORITY: Provider[] = ["cn", "ss", "se", "le"];
   const order: Provider[] = [preferredProvider, ...PRIORITY.filter(p => p !== preferredProvider)];
 
   const tryProvider = async (p: Provider): Promise<AggregatedTransaction | null> => {
     try {
       const tx =
         p === "cn" ? await cnCreateTransaction(params) :
+        p === "ss" ? await ssCreateTransaction(params) :
         p === "se" ? await seCreateTransaction(params) :
         await leCreateTransaction(params);
       if (tx?.id && tx?.payinAddress) return { ...tx, provider: p };
@@ -258,20 +279,20 @@ export async function createBestTransaction(
 
 /**
  * Get tx status from the correct provider based on stored tag.
- * Defaults to ChangeNOW (current Priority 1) if no provider info.
+ * Defaults to ChangeNOW (Priority 1) for legacy txs missing provider info.
  */
 export async function getStatusByProvider(
   id: string,
   provider: Provider = "cn"
 ): Promise<TransactionStatus> {
   if (provider === "cn") return cnGetStatus(id);
+  if (provider === "ss") return ssGetTransactionStatus(id);
   if (provider === "se") return seGetTransactionStatus(id);
   return leGetTransactionStatus(id);
 }
 
 /**
  * Generate an MRC Global Pay-branded transaction ID.
- * Format: MRC-{12 chars} — used as the customer-facing reference.
  */
 export function generateMrcTxId(providerId: string): string {
   const slice = (providerId || "").replace(/[^a-zA-Z0-9]/g, "").slice(0, 8);
