@@ -117,6 +117,7 @@ const MoneroNodeWhitepaper = () => {
       </Helmet>
 
       <SiteHeader />
+      <StickyShareRail url={canonicalUrl} title={title} />
 
       <main className="min-h-screen bg-background">
         {/* Hero */}
