@@ -118,7 +118,7 @@ const MoneroNodeWhitepaper = () => {
 
       <main className="min-h-screen bg-background">
         {/* Hero */}
-        <section className="relative overflow-hidden border-b border-border bg-gradient-to-b from-orange-500/10 via-background to-background py-16 sm:py-24">
+        <section className="relative overflow-hidden border-b border-border bg-gradient-to-b from-primary/10 via-background to-background py-16 sm:py-24">
           <div className="mx-auto max-w-3xl px-4 text-center">
             <div className="mb-6 flex items-center justify-center gap-3 text-sm text-muted-foreground">
               <span className="flex items-center gap-1"><Calendar className="h-4 w-4" /> April 20, 2026</span>
