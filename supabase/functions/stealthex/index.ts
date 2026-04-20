@@ -65,6 +65,34 @@ Deno.serve(async (req) => {
     const action = params.action;
 
     switch (action) {
+      case 'currencies': {
+        const r = await fetch(seUrl('/currency', apiKey));
+        const p = await parseJson(r);
+        if (!r.ok || !p.isJson) {
+          console.error('SE currencies error:', p.text?.slice(0, 200));
+          return json([], 200);
+        }
+        const list: any[] = Array.isArray(p.data) ? p.data : (p.data?.data || p.data?.currencies || []);
+        const normalized = list
+          .filter((c: any) => c && (c.symbol || c.ticker))
+          .map((c: any) => {
+            const network = c.network || c.chain || c.protocol || '';
+            const symbol = String(c.symbol || c.ticker || '').toLowerCase();
+            return {
+              ticker: symbol,
+              name: c.name ? (network ? `${c.name} (${String(network).toUpperCase()})` : c.name) : symbol.toUpperCase(),
+              image: c.image || c.icon_url || c.icon || c.logo || '',
+              hasExternalId: !!c.has_extra_id || !!c.has_memo,
+              isFiat: false,
+              featured: !!c.popular,
+              isStable: !!c.is_stablecoin || !!c.stable,
+              supportsFixedRate: false,
+              network: String(network || '').toLowerCase(),
+              tokenContract: c.contract_address || null,
+            };
+          });
+        return json(normalized);
+      }
       case 'min-amount': {
         const from = params.from, to = params.to;
         if (!from || !to) return bad('Missing from/to');
