@@ -217,7 +217,7 @@ Deno.serve(async (req) => {
 
   const parsed = parsePath(targetPath);
   if (!parsed) {
-    // Not an exchange pair URL → just return the SPA shell unmodified
+    // Not a recognized pair URL (/exchange/* or /swap/*) → return SPA shell unmodified
     const shell = await fetchShell();
     return new Response(shell || "<!doctype html><html><body>Not found</body></html>", {
       status: 404,
