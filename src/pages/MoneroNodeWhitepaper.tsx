@@ -482,6 +482,10 @@ const MoneroNodeWhitepaper = () => {
                 ))}
               </div>
             </section>
+
+            <div className="mt-10">
+              <SocialShare url={canonicalUrl} title={title} description={metaDescription} />
+            </div>
           </div>
         </article>
       </main>
