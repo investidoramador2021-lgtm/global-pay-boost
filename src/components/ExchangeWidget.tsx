@@ -261,6 +261,60 @@ function networkLabel(c: { ticker: string; name: string }): string | null {
   return null;
 }
 
+// Brand-colored network badges (like ChangeNOW). Maps a normalized network label
+// to Tailwind bg/text classes. Falls back to neutral muted styling when unknown.
+const NETWORK_BADGE_STYLES: Record<string, string> = {
+  TRX: "bg-[#EF4444] text-white",
+  TRC20: "bg-[#EF4444] text-white",
+  TRON: "bg-[#EF4444] text-white",
+  ETH: "bg-[#60A5FA] text-white",
+  ERC20: "bg-[#60A5FA] text-white",
+  ETHEREUM: "bg-[#60A5FA] text-white",
+  BSC: "bg-[#F0B90B] text-black",
+  BEP20: "bg-[#F0B90B] text-black",
+  "BNB CHAIN": "bg-[#F0B90B] text-black",
+  SOL: "bg-[#9945FF] text-white",
+  SOLANA: "bg-[#9945FF] text-white",
+  SPL: "bg-[#9945FF] text-white",
+  MATIC: "bg-[#8247E5] text-white",
+  POLYGON: "bg-[#8247E5] text-white",
+  ARB: "bg-[#28A0F0] text-white",
+  ARBITRUM: "bg-[#28A0F0] text-white",
+  OP: "bg-[#FF0420] text-white",
+  OPTIMISM: "bg-[#FF0420] text-white",
+  BASE: "bg-[#0052FF] text-white",
+  AVAXC: "bg-[#E84142] text-white",
+  AVAX: "bg-[#E84142] text-white",
+  TON: "bg-[#0098EA] text-white",
+  APT: "bg-[#06D6A0] text-black",
+  APTOS: "bg-[#06D6A0] text-black",
+  CELO: "bg-[#FCFF52] text-black",
+  ALGO: "bg-[#000000] text-white",
+  ALGORAND: "bg-[#000000] text-white",
+  SUI: "bg-[#4DA2FF] text-white",
+  ZKSYNC: "bg-[#8C8DFC] text-white",
+  MON: "bg-[#7C3AED] text-white",
+  MONAD: "bg-[#7C3AED] text-white",
+  MANTA: "bg-[#1E40AF] text-white",
+  ASSETHUB: "bg-[#E6007A] text-white",
+};
+
+function networkBadgeClass(label: string | null | undefined): string {
+  if (!label) return "";
+  return NETWORK_BADGE_STYLES[label.toUpperCase()] || "bg-muted text-muted-foreground";
+}
+
+// Builds an extended descriptive name like "Tether USD (TRON)" when the raw
+// `name` doesn't already include the network. Mirrors ChangeNOW's UI labeling.
+function extendedName(c: { ticker: string; name: string }): string {
+  const baseName = c.name?.trim() || c.ticker.toUpperCase();
+  // Strip any pre-existing "(...)" so we control the network suffix.
+  const cleanBase = baseName.replace(/\s*\([^)]+\)\s*$/, "").trim();
+  const net = networkLabel(c);
+  if (!net) return cleanBase || baseName;
+  return `${cleanBase} (${net})`;
+}
+
 function normalizeTokenSearchValue(value: string): string {
   return value.toLowerCase().replace(/[^a-z0-9]/g, "");
 }
