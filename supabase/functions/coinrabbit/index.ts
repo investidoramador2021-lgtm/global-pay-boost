@@ -345,50 +345,38 @@ Deno.serve(async (req: Request) => {
 
       const currencyCode = body.currency.toUpperCase()
       const currencyNetwork = body.network || normalizeNetwork(p.currency_network || currencyCode)
+      const userId = String(p.user_id || p.external_id || `MRCGlobalPay_${Date.now()}`)
 
-      // V2 API expects currency as nested object: { code, network }
-      const requestBodyV2: Record<string, unknown> = {
-        currency: { code: currencyCode, network: currencyNetwork },
-        amount: body.amount,
-        external_id: 'MRCGlobalPay',
-      }
-      if (p.email) requestBodyV2.email = String(p.email)
-      if (p.phone) requestBodyV2.phone = String(p.phone)
-
-      // Fallback: flat structure
-      const requestBodyFlat: Record<string, unknown> = {
+      // V2 API flat payload: top-level currency_code/network, deposit.expected_amount as string
+      const requestBody: Record<string, unknown> = {
+        user_id: userId,
+        deposit: {
+          expected_amount: String(body.amount),
+        },
         currency_code: currencyCode,
         currency_network: currencyNetwork,
-        amount: body.amount,
-        external_id: 'MRCGlobalPay',
       }
-      if (p.email) requestBodyFlat.email = String(p.email)
-      if (p.phone) requestBodyFlat.phone = String(p.phone)
+      if (p.email) requestBody.email = String(p.email)
+      if (p.phone) requestBody.phone = String(p.phone)
 
-      console.log('[create-earn] body v2:', JSON.stringify(requestBodyV2))
+      // Use JWT auth (x-user-token) for V2 earns endpoint
+      const jwt = await getJwt(apiKey)
+      const jwtHeaders = authHeaders(apiKey, jwt)
+
+      console.log('[create-earn] body:', JSON.stringify(requestBody))
       const url = `${BASE}/earns`
-      let { response, responseBody } = await callProvider(url, {
-        method: 'POST', headers: h, body: JSON.stringify(requestBodyV2),
-      }, requestBodyV2)
+      const { response, responseBody } = await callProvider(url, {
+        method: 'POST', headers: jwtHeaders, body: JSON.stringify(requestBody),
+      }, requestBody)
 
-      // If V2 nested format fails, try flat format
-      if (!response.ok) {
-        console.log('[create-earn] v2 failed, trying flat format, status:', response.status)
-        const retry = await callProvider(url, {
-          method: 'POST', headers: h, body: JSON.stringify(requestBodyFlat),
-        }, requestBodyFlat)
-        response = retry.response
-        responseBody = retry.responseBody
-      }
-
-      if (response.status === 404) return json(buildProviderError(url, requestBodyV2, responseBody), 200)
+      if (response.status === 404) return json(buildProviderError(url, requestBody, responseBody), 200)
 
       if (!response.ok) {
         const msg = typeof responseBody === 'object' && responseBody ? JSON.stringify(responseBody) : String(responseBody)
         if (msg.includes('contact') || msg.includes('validat') || msg.includes('email') || msg.includes('phone')) {
           return json({ error: 'Please check your phone and email format (Include + for country code).', provider_error: responseBody }, 422)
         }
-        return json({ provider_error: responseBody, request_body_tried: [requestBodyV2, requestBodyFlat] }, response.status)
+        return json({ provider_error: responseBody, request_body: requestBody }, response.status)
       }
 
       const inner = unwrapResponse(responseBody)
