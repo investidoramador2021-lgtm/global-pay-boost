@@ -225,7 +225,7 @@ Deno.serve(async (req) => {
     });
   }
 
-  const { lang, from, to } = parsed;
+  const { lang, kind, from, to } = parsed;
 
   // Look up pre-generated SEO from the pairs table
   const supabase = createClient(
@@ -274,13 +274,12 @@ Deno.serve(async (req) => {
   const description = langContent?.description || pair?.seo_description || fallbackDesc;
   const h1 = langContent?.h1 || pair?.seo_h1 || fallbackH1;
 
-  // Self-referencing canonical per language (must match what DynamicExchange.tsx
-  // emits via Helmet, otherwise Google reports "Duplicate, Google chose different
-  // canonical than user"). x-default already points to the English URL in the
-  // hreflang block above.
-  const canonical = lang === "en"
-    ? `${SITE}/exchange/${from}-to-${to}`
-    : `${SITE}/${lang}/exchange/${from}-to-${to}`;
+  // Self-referencing canonical per language (must match what the React page
+  // emits via Helmet, otherwise Google reports "Duplicate, Google chose
+  // different canonical than user"). x-default already points to the English
+  // URL in the hreflang block above.
+  const path = pairUrlPath(kind, from, to);
+  const canonical = lang === "en" ? `${SITE}${path}` : `${SITE}/${lang}${path}`;
 
   const shell = await fetchShell();
   if (!shell) {
@@ -290,7 +289,7 @@ Deno.serve(async (req) => {
     });
   }
 
-  const seoHead = buildSeoHead({ lang, from, to, fromName, toName, title, description, canonical });
+  const seoHead = buildSeoHead({ lang, kind, from, to, fromName, toName, title, description, canonical });
   const noscriptBody = buildNoscriptBody({ from, to, fromName, toName, h1, description, canonical });
 
   // Inject SEO into <head> (right before </head>) and noscript content right after <body>
