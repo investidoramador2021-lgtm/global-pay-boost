@@ -1,0 +1,41 @@
+{
+  "$schema": "https://openapi.vercel.sh/vercel.json",
+  "cleanUrls": true,
+  "trailingSlash": false,
+  "redirects": [
+    {
+      "source": "/:path*",
+      "has": [{ "type": "host", "value": "www.mrcglobalpay.com" }],
+      "destination": "https://mrcglobalpay.com/:path*",
+      "permanent": true
+    }
+  ],
+  "rewrites": [
+    { "source": "/api/rates.json",            "destination": "https://tjikwxkmsfmyjkssvyoh.supabase.co/functions/v1/live-rates" },
+    { "source": "/api/v1/rates",              "destination": "https://tjikwxkmsfmyjkssvyoh.supabase.co/functions/v1/bot-rates" },
+    { "source": "/api/v1/health",             "destination": "https://tjikwxkmsfmyjkssvyoh.supabase.co/functions/v1/health" },
+    { "source": "/export/rates.xml",          "destination": "https://tjikwxkmsfmyjkssvyoh.supabase.co/functions/v1/rates-xml" },
+    { "source": "/feed.xml",                  "destination": "https://tjikwxkmsfmyjkssvyoh.supabase.co/functions/v1/live-feed" },
+    { "source": "/feed.rss",                  "destination": "https://tjikwxkmsfmyjkssvyoh.supabase.co/functions/v1/live-feed?format=rss" },
+    { "source": "/rss.xml",                   "destination": "https://tjikwxkmsfmyjkssvyoh.supabase.co/functions/v1/dynamic-feed?format=rss" },
+    { "source": "/blog/feed.xml",             "destination": "https://tjikwxkmsfmyjkssvyoh.supabase.co/functions/v1/dynamic-feed?format=rss" },
+    { "source": "/dynamic-sitemap.xml",       "destination": "https://tjikwxkmsfmyjkssvyoh.supabase.co/functions/v1/dynamic-feed?p=/" },
+    { "source": "/sitemap-static.xml",        "destination": "https://tjikwxkmsfmyjkssvyoh.supabase.co/functions/v1/dynamic-feed?p=/sitemap-static.xml" },
+    { "source": "/sitemap-blog.xml",          "destination": "https://tjikwxkmsfmyjkssvyoh.supabase.co/functions/v1/dynamic-feed?p=/sitemap-blog.xml" },
+    { "source": "/sitemap-pairs-:n.xml",      "destination": "https://tjikwxkmsfmyjkssvyoh.supabase.co/functions/v1/dynamic-feed?p=/sitemap-pairs-:n.xml" },
+
+    { "source": "/exchange/:slug",            "destination": "https://tjikwxkmsfmyjkssvyoh.supabase.co/functions/v1/seo-shell?path=/exchange/:slug" },
+    { "source": "/es/exchange/:slug",         "destination": "https://tjikwxkmsfmyjkssvyoh.supabase.co/functions/v1/seo-shell?path=/es/exchange/:slug" },
+    { "source": "/pt/exchange/:slug",         "destination": "https://tjikwxkmsfmyjkssvyoh.supabase.co/functions/v1/seo-shell?path=/pt/exchange/:slug" },
+    { "source": "/fr/exchange/:slug",         "destination": "https://tjikwxkmsfmyjkssvyoh.supabase.co/functions/v1/seo-shell?path=/fr/exchange/:slug" },
+    { "source": "/ja/exchange/:slug",         "destination": "https://tjikwxkmsfmyjkssvyoh.supabase.co/functions/v1/seo-shell?path=/ja/exchange/:slug" },
+    { "source": "/fa/exchange/:slug",         "destination": "https://tjikwxkmsfmyjkssvyoh.supabase.co/functions/v1/seo-shell?path=/fa/exchange/:slug" },
+    { "source": "/ur/exchange/:slug",         "destination": "https://tjikwxkmsfmyjkssvyoh.supabase.co/functions/v1/seo-shell?path=/ur/exchange/:slug" },
+    { "source": "/he/exchange/:slug",         "destination": "https://tjikwxkmsfmyjkssvyoh.supabase.co/functions/v1/seo-shell?path=/he/exchange/:slug" },
+    { "source": "/af/exchange/:slug",         "destination": "https://tjikwxkmsfmyjkssvyoh.supabase.co/functions/v1/seo-shell?path=/af/exchange/:slug" },
+    { "source": "/hi/exchange/:slug",         "destination": "https://tjikwxkmsfmyjkssvyoh.supabase.co/functions/v1/seo-shell?path=/hi/exchange/:slug" },
+    { "source": "/vi/exchange/:slug",         "destination": "https://tjikwxkmsfmyjkssvyoh.supabase.co/functions/v1/seo-shell?path=/vi/exchange/:slug" },
+    { "source": "/tr/exchange/:slug",         "destination": "https://tjikwxkmsfmyjkssvyoh.supabase.co/functions/v1/seo-shell?path=/tr/exchange/:slug" },
+    { "source": "/uk/exchange/:slug",         "destination": "https://tjikwxkmsfmyjkssvyoh.supabase.co/functions/v1/seo-shell?path=/uk/exchange/:slug" }
+  ]
+}
