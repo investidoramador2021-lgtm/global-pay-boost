@@ -387,6 +387,9 @@ const AuroraWhitepaper = () => {
               </details>
             ))}
           </div>
+          <div className="mt-10">
+            <SocialShare url={canonicalUrl} title={title} description={metaDescription} />
+          </div>
         </article>
       </main>
 
