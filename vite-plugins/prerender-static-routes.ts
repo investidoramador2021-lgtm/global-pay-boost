@@ -144,7 +144,16 @@ export function prerenderStaticRoutes(outDir = "dist"): Plugin {
             canonical,
           });
 
+          // Strip the shell's default <title>, <meta description>, canonical,
+          // hreflang, and og:* tags so per-route values don't conflict.
           let html = shell.replace(/<html\s+lang="[^"]*"/i, `<html lang="${lang}"`);
+          html = html.replace(/<title>[\s\S]*?<\/title>\s*/i, "");
+          html = html.replace(/<meta\s+name="description"[^>]*>\s*/gi, "");
+          html = html.replace(/<meta\s+name="robots"[^>]*>\s*/gi, "");
+          html = html.replace(/<link\s+rel="canonical"[^>]*>\s*/gi, "");
+          html = html.replace(/<link\s+rel="alternate"\s+hreflang[^>]*>\s*/gi, "");
+          html = html.replace(/<meta\s+property="og:[^"]+"[^>]*>\s*/gi, "");
+          html = html.replace(/<meta\s+name="twitter:[^"]+"[^>]*>\s*/gi, "");
           html = html.replace(/<\/head>/i, `${head}\n  </head>`);
           html = html.replace(/<body([^>]*)>/i, `<body$1>\n${noscript}`);
 
