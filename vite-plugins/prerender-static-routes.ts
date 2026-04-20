@@ -47,7 +47,7 @@ function buildHead(opts: {
   jsonLd?: Record<string, unknown>;
 }): string {
   const { lang, title, description, canonical, routePath, jsonLd } = opts;
-  const ogImage = `${SITE}/og-image.png`;
+  const ogImage = `${SITE}/og-image.jpg`;
 
   const hreflangLinks = LANGS.map((l) => {
     const prefix = l === "en" ? "" : `/${l}`;

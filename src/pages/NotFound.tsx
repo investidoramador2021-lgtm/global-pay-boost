@@ -19,11 +19,11 @@ const NotFound = () => {
         <meta property="og:description" content="The page you are looking for does not exist. Return to MRC GlobalPay to swap 6,000+ cryptocurrencies instantly from $0.30." />
         <meta property="og:type" content="website" />
         <meta property="og:site_name" content="MRC GlobalPay" />
-        <meta property="og:image" content="https://mrcglobalpay.com/og-image.png" />
+        <meta property="og:image" content="https://mrcglobalpay.com/og-image.jpg" />
         <meta name="twitter:card" content="summary_large_image" />
         <meta name="twitter:title" content="Page Not Found — MRC GlobalPay" />
         <meta name="twitter:description" content="The page you are looking for does not exist. Return to MRC GlobalPay to swap 6,000+ cryptocurrencies instantly." />
-        <meta name="twitter:image" content="https://mrcglobalpay.com/og-image.png" />
+        <meta name="twitter:image" content="https://mrcglobalpay.com/og-image.jpg" />
       </Helmet>
       <div className="flex min-h-screen items-center justify-center bg-muted">
         <div className="text-center max-w-lg px-4">
