@@ -161,6 +161,7 @@ export function prerenderStaticRoutes(outDir = "dist"): Plugin {
             jsonLd: seoForLang.jsonLd,
           });
           const noscript = buildNoscript({
+            lang,
             h1: seoForLang.h1,
             description: seoForLang.description,
             body: seoForLang.bodyHtml,
