@@ -217,12 +217,17 @@ const TransparencySecurity = () => {
             <h2 className="mb-8 text-center font-display text-2xl font-bold text-foreground sm:text-3xl">
               Liquidity & Technology Partners
             </h2>
-            <div className="grid gap-6 sm:grid-cols-3">
+            <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
               {[
                 {
                   name: "ChangeNOW",
                   role: "Primary Liquidity Aggregator",
                   desc: "Institutional-grade swap engine aggregating 300+ liquidity sources across centralized and decentralized markets.",
+                },
+                {
+                  name: "SimpleSwap",
+                  role: "Secondary Liquidity Provider",
+                  desc: "Automatic failover provider expanding token coverage with real-time rate quotes across 1,500+ assets.",
                 },
                 {
                   name: "Fireblocks",

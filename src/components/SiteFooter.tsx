@@ -274,6 +274,7 @@ const SiteFooter = () => {
               <div className="flex flex-wrap items-center justify-center gap-6 sm:justify-start">
                 {[
                   { name: "ChangeNOW", href: "https://changenow.io/" },
+                  { name: "SimpleSwap", href: "https://simpleswap.io/" },
                   { name: "LetsExchange", href: "https://letsexchange.io/" },
                   { name: "StealthEX", href: "https://stealthex.io/" },
                   { name: "Fireblocks", href: "https://www.fireblocks.com/" },
