@@ -8,7 +8,6 @@ import { QRCodeSVG } from "qrcode.react";
 import DestinationAddressInput, { tickerToAddressType } from "@/components/DestinationAddressInput";
 import { supabase } from "@/integrations/supabase/client";
 import {
-  getCurrencies,
   getEstimate,
   getMinAmount,
   createTransaction,
@@ -17,6 +16,7 @@ import {
   type TransactionResult,
   type TransactionStatus,
 } from "@/lib/changenow";
+import { getAggregatedCurrencies } from "@/lib/liquidity-aggregator";
 import { useToast } from "@/hooks/use-toast";
 import { usePushNotifications } from "@/hooks/use-push-notifications";
 
@@ -121,7 +121,7 @@ const PrivateTransferTab = () => {
 
   // Load currencies
   useEffect(() => {
-    getCurrencies()
+    getAggregatedCurrencies()
       .then((data) => {
         if (Array.isArray(data)) {
           setCurrencies(data);
