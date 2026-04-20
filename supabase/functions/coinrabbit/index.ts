@@ -371,7 +371,14 @@ Deno.serve(async (req: Request) => {
 
       const currencyCode = body.currency.toUpperCase()
       const currencyNetwork = body.network || normalizeNetwork(p.currency_network || currencyCode)
-      const userId = String(p.user_id || p.external_id || `MRCGlobalPay_${Date.now()}`)
+
+      // Use JWT auth (x-user-token) for V2 earns endpoint
+      const jwt = await getJwt(apiKey)
+      const jwtHeaders = authHeaders(apiKey, jwt)
+
+      // Fetch numeric CoinRabbit user id; fallback to legacy string if unavailable
+      const cnUserId = await getCoinrabbitUserId(apiKey, jwt)
+      const userId = cnUserId || String(p.user_id || p.external_id || `MRCGlobalPay_${Date.now()}`)
 
       // V2 API flat payload: top-level currency_code/network, deposit.expected_amount as string
       const requestBody: Record<string, unknown> = {
@@ -384,10 +391,6 @@ Deno.serve(async (req: Request) => {
       }
       if (p.email) requestBody.email = String(p.email)
       if (p.phone) requestBody.phone = String(p.phone)
-
-      // Use JWT auth (x-user-token) for V2 earns endpoint
-      const jwt = await getJwt(apiKey)
-      const jwtHeaders = authHeaders(apiKey, jwt)
 
       console.log('[create-earn] body:', JSON.stringify(requestBody))
       const url = `${BASE}/earns`
