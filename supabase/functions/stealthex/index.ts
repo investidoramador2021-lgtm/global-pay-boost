@@ -37,7 +37,7 @@ const seUrl = (path: string, key: string, extra: Record<string, string> = {}) =>
   return `${SE_BASE}${path}?${qp.toString()}`;
 };
 
-console.log(`[SE] boot rev=3 base=${SE_BASE} affiliate_active=${SE_AFFILIATE_ID ? 'yes' : 'no'} aff_len=${SE_AFFILIATE_ID.length}`);
+console.log(`[SE] boot rev=4-currencies base=${SE_BASE} affiliate_active=${SE_AFFILIATE_ID ? 'yes' : 'no'} aff_len=${SE_AFFILIATE_ID.length}`);
 
 Deno.serve(async (req) => {
   if (req.method === 'OPTIONS') return new Response(null, { headers: corsHeaders });
