@@ -98,7 +98,11 @@ export default defineConfig(({ mode }) => ({
       },
       workbox: {
         navigateFallback: "/index.html",
-        navigateFallbackDenylist: [/^\/~oauth/, /^\/\.well-known/],
+        navigateFallbackDenylist: [
+          /^\/~oauth/,
+          /^\/\.well-known/,
+          /\/.*\.(?:xml|txt|json)$/,
+        ],
         cleanupOutdatedCaches: true,
         clientsClaim: true,
         skipWaiting: true,
