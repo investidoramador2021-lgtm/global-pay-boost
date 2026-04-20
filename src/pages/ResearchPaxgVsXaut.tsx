@@ -106,12 +106,12 @@ const ResearchPaxgVsXaut = () => {
     mainEntityOfPage: {
       "@type": "WebPage",
       "@id": canonicalUrl,
-      isPartOf: { "@type": "WebSite", name: "MRC GlobalPay", url: BASE_URL },
+      isPartOf: { "@type": "WebSite", name: "MRC Global Pay", url: BASE_URL },
     },
-    author: { "@type": "Organization", name: "MRC GlobalPay Research" },
+    author: { "@type": "Organization", name: "MRC Global Pay Research" },
     publisher: {
       "@type": "Organization",
-      name: "MRC GlobalPay",
+      name: "MRC Global Pay",
       url: BASE_URL,
     },
     datePublished: "2026-04-15",
@@ -140,7 +140,7 @@ const ResearchPaxgVsXaut = () => {
         <meta property="og:description" content={meta.metaDescription} />
         <meta property="og:url" content={canonicalUrl} />
         <meta property="og:type" content="article" />
-        <meta property="og:site_name" content="MRC GlobalPay" />
+        <meta property="og:site_name" content="MRC Global Pay" />
         <meta property="og:image" content="https://mrcglobalpay.com/og-image.jpg" />
         <meta property="og:image:width" content="1200" />
         <meta property="og:image:height" content="630" />

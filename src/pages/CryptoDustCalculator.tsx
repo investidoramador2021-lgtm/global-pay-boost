@@ -102,14 +102,14 @@ export default function CryptoDustCalculator() {
   const schema = {
     "@context": "https://schema.org",
     "@type": "SoftwareApplication",
-    name: "MRC GlobalPay Crypto Dust Calculator",
+    name: "MRC Global Pay Crypto Dust Calculator",
     applicationCategory: "FinanceApplication",
     operatingSystem: "Web",
     offers: { "@type": "Offer", price: "0", priceCurrency: "USD" },
     description: "Calculate the purchasing power of small crypto balances (dust). Registration-free swaps starting at $0.30.",
     provider: {
       "@type": "Organization",
-      name: "MRC GlobalPay",
+      name: "MRC Global Pay",
       url: "https://mrcglobalpay.com",
       knowsAbout: ["Micro-transactions", "Blockchain Interoperability", "Non-Custodial Swaps"],
     },
@@ -122,12 +122,12 @@ export default function CryptoDustCalculator() {
       {
         "@type": "Question",
         name: "What is crypto dust?",
-        acceptedAnswer: { "@type": "Answer", text: "Crypto dust refers to tiny amounts of cryptocurrency too small to trade on most exchanges. MRC GlobalPay lets you swap dust starting at just $0.30." },
+        acceptedAnswer: { "@type": "Answer", text: "Crypto dust refers to tiny amounts of cryptocurrency too small to trade on most exchanges. MRC Global Pay lets you swap dust starting at just $0.30." },
       },
       {
         "@type": "Question",
         name: "Does the dust calculator require an account?",
-        acceptedAnswer: { "@type": "Answer", text: "No. MRC GlobalPay is registration-free. You can calculate and swap your crypto dust directly from your wallet without creating an account." },
+        acceptedAnswer: { "@type": "Answer", text: "No. MRC Global Pay is registration-free. You can calculate and swap your crypto dust directly from your wallet without creating an account." },
       },
     ],
   };
@@ -135,7 +135,7 @@ export default function CryptoDustCalculator() {
   return (
     <>
       <Helmet>
-        <title>2026 Crypto Dust Calculator | Convert Small Balances – MRC GlobalPay</title>
+        <title>2026 Crypto Dust Calculator | Convert Small Balances – MRC Global Pay</title>
         <meta name="description" content="Calculate the purchasing power of your crypto dust. Convert tiny BTC, ETH, SOL balances into USDC, PEPE, and more. Registration-free swaps from $0.30." />
         <link rel="canonical" href="https://mrcglobalpay.com/tools/crypto-dust-calculator" />
         <script type="application/ld+json">{JSON.stringify(schema)}</script>
@@ -291,7 +291,7 @@ export default function CryptoDustCalculator() {
             {/* Quick Facts */}
             <div className="mt-8 rounded-xl border border-primary/20 bg-primary/5 p-6">
               <h2 className="mb-3 flex items-center gap-2 text-lg font-bold text-foreground">
-                <Zap className="h-5 w-5 text-primary" /> Quick Facts – MRC GlobalPay Dust Calculator
+                <Zap className="h-5 w-5 text-primary" /> Quick Facts – MRC Global Pay Dust Calculator
               </h2>
               <ul className="grid gap-2 text-sm text-muted-foreground sm:grid-cols-2">
                 <li><strong className="text-foreground">Minimum Swap:</strong> $0.30 USD</li>
@@ -310,7 +310,7 @@ export default function CryptoDustCalculator() {
                 Crypto dust refers to tiny fractions of cryptocurrency left in your wallet after trades — amounts too small for most exchanges to process. These micro-balances accumulate across wallets and chains, often worth pennies to a few dollars each.
               </p>
               <p className="mb-4 text-muted-foreground">
-                MRC GlobalPay's Dust Calculator shows you the real-time purchasing power of these forgotten balances. With our <strong>$0.30 minimum</strong> and <strong>registration-free</strong> architecture, you can convert dust into usable tokens like USDC, PEPE, or SOL — directly from your wallet, with no account required.
+                MRC Global Pay's Dust Calculator shows you the real-time purchasing power of these forgotten balances. With our <strong>$0.30 minimum</strong> and <strong>registration-free</strong> architecture, you can convert dust into usable tokens like USDC, PEPE, or SOL — directly from your wallet, with no account required.
               </p>
               <h2 className="mb-4 text-xl font-bold text-foreground">How Does the Purchasing Power Calculation Work?</h2>
               <p className="mb-4 text-muted-foreground">
@@ -356,15 +356,15 @@ export default function CryptoDustCalculator() {
               <div className="space-y-4">
                 <div>
                   <h3 className="font-semibold text-foreground">What is crypto dust?</h3>
-                  <p className="text-sm text-muted-foreground">Crypto dust refers to tiny amounts of cryptocurrency too small to trade on most exchanges. MRC GlobalPay lets you swap dust starting at just $0.30.</p>
+                  <p className="text-sm text-muted-foreground">Crypto dust refers to tiny amounts of cryptocurrency too small to trade on most exchanges. MRC Global Pay lets you swap dust starting at just $0.30.</p>
                 </div>
                 <div>
                   <h3 className="font-semibold text-foreground">Does the dust calculator require an account?</h3>
-                  <p className="text-sm text-muted-foreground">No. MRC GlobalPay is registration-free. You can calculate and swap your crypto dust directly from your wallet without creating an account.</p>
+                  <p className="text-sm text-muted-foreground">No. MRC Global Pay is registration-free. You can calculate and swap your crypto dust directly from your wallet without creating an account.</p>
                 </div>
                 <div>
-                  <h3 className="font-semibold text-foreground">Is MRC GlobalPay safe to use?</h3>
-                  <p className="text-sm text-muted-foreground">Yes. MRC GlobalPay is a Canadian registered MSB (FINTRAC) and operates a non-custodial architecture — we never hold your private keys or funds. Assets are secured via ChangeNOW's institutional-grade Fireblocks infrastructure.</p>
+                  <h3 className="font-semibold text-foreground">Is MRC Global Pay safe to use?</h3>
+                  <p className="text-sm text-muted-foreground">Yes. MRC Global Pay is a Canadian registered MSB (FINTRAC) and operates a non-custodial architecture — we never hold your private keys or funds. Assets are secured via ChangeNOW's institutional-grade Fireblocks infrastructure.</p>
                 </div>
               </div>
             </div>

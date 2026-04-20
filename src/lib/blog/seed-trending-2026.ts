@@ -112,7 +112,7 @@ In all three cases, the right strategy is the same: size small, take profits inc
 
 ## Where to swap PEPE without an account
 
-You can swap PEPE on MRC GlobalPay without registration. The platform aggregates routing across multiple liquidity providers, locks the rate before you send funds, and settles in under 60 seconds. Minimum swap is $0.30, which makes it practical for testing the flow before scaling up.
+You can swap PEPE on MRC Global Pay without registration. The platform aggregates routing across multiple liquidity providers, locks the rate before you send funds, and settles in under 60 seconds. Minimum swap is $0.30, which makes it practical for testing the flow before scaling up.
 
 [Start a PEPE swap →](/exchange/usdt-to-pepe)
 
@@ -128,7 +128,7 @@ Yes, but indirectly. Most card-to-crypto on-ramps support BTC, ETH, USDT, and US
 
 ### Do I need to verify my identity to buy PEPE?
 
-On non-custodial swap aggregators like MRC GlobalPay, no KYC is required for typical retail volumes. Compliance reviews may apply at high notional sizes or when sourcing assets from flagged addresses.
+On non-custodial swap aggregators like MRC Global Pay, no KYC is required for typical retail volumes. Compliance reviews may apply at high notional sizes or when sourcing assets from flagged addresses.
 
 ### Is PEPE legal to buy in my country?
 
@@ -140,7 +140,7 @@ Under 60 seconds end-to-end on most days. Settlement waits on one Ethereum confi
 
 ### What is the minimum amount of PEPE I can buy?
 
-On MRC GlobalPay, the minimum swap is $0.30 worth of crypto. That gets you a meaningful PEPE balance even at peak prices. Smaller test transactions are encouraged before scaling up.
+On MRC Global Pay, the minimum swap is $0.30 worth of crypto. That gets you a meaningful PEPE balance even at peak prices. Smaller test transactions are encouraged before scaling up.
 
 ### Why is PEPE rising again in 2026?
 
@@ -234,7 +234,7 @@ In every scenario, the trade is the same: take profits in tranches, do not chase
 
 ## Where to swap DOGE without registration
 
-MRC GlobalPay supports DOGE swaps without account creation. Routing aggregates across multiple liquidity venues, the rate is locked before you fund, and minimum swap size is $0.30. Useful when you are testing the flow or making frequent small conversions.
+MRC Global Pay supports DOGE swaps without account creation. Routing aggregates across multiple liquidity venues, the rate is locked before you fund, and minimum swap size is $0.30. Useful when you are testing the flow or making frequent small conversions.
 
 [Buy DOGE in under 60 seconds →](/exchange/usdt-to-doge)
 
@@ -253,7 +253,7 @@ A non-custodial swap from USDT or BTC. Total time including wallet setup is unde
 
 ### Do I need to verify my identity to buy Dogecoin?
 
-On non-custodial aggregators like MRC GlobalPay, KYC is not required for typical retail volumes. Centralized exchanges that accept fiat will require KYC.
+On non-custodial aggregators like MRC Global Pay, KYC is not required for typical retail volumes. Centralized exchanges that accept fiat will require KYC.
 
 ### Can I buy DOGE with a debit card?
 
@@ -261,7 +261,7 @@ Most card on-ramps support DOGE indirectly through stablecoins. Direct DOGE card
 
 ### What is the smallest DOGE purchase possible?
 
-On MRC GlobalPay, $0.30 worth of crypto is the minimum swap. That is roughly 1–3 DOGE depending on price.
+On MRC Global Pay, $0.30 worth of crypto is the minimum swap. That is roughly 1–3 DOGE depending on price.
 
 ### Is DOGE different from Shiba Inu (SHIB)?
 
@@ -373,7 +373,7 @@ Across all scenarios, XRP's volatility profile is lower than memecoins but highe
 
 ## Where to swap XRP without an account
 
-MRC GlobalPay supports XRP swaps with no registration. Aggregated routing across multiple liquidity providers, locked rates, sub-minute settlement on the XRPL.
+MRC Global Pay supports XRP swaps with no registration. Aggregated routing across multiple liquidity providers, locked rates, sub-minute settlement on the XRPL.
 
 [Buy XRP now →](/exchange/usdt-to-xrp)
 
@@ -494,7 +494,7 @@ The asymmetry is favorable but not guaranteed.
 
 ## Where to swap HYPE without an account
 
-MRC GlobalPay supports HYPE swaps with no registration, handling bridging automatically. Useful when you want HYPE in your wallet without managing the native Hyperliquid bridge UI.
+MRC Global Pay supports HYPE swaps with no registration, handling bridging automatically. Useful when you want HYPE in your wallet without managing the native Hyperliquid bridge UI.
 
 [Buy HYPE now →](/exchange/usdt-to-hype)
 
@@ -522,7 +522,7 @@ Structural fee burn (a portion of Hyperliquid trading fees buy and burn HYPE) pl
 
 ### What is the minimum HYPE purchase?
 
-On MRC GlobalPay, $0.30 worth of crypto. That is enough to receive a meaningful HYPE balance for testing.
+On MRC Global Pay, $0.30 worth of crypto. That is enough to receive a meaningful HYPE balance for testing.
 
 ---
 
@@ -615,7 +615,7 @@ TAO has a thesis that survives serious scrutiny.
 
 ## Where to swap TAO without an account
 
-MRC GlobalPay supports TAO swaps with no registration. Aggregated liquidity, locked rates, sub-2-minute settlement.
+MRC Global Pay supports TAO swaps with no registration. Aggregated liquidity, locked rates, sub-2-minute settlement.
 
 [Buy TAO now →](/exchange/usdt-to-tao)
 
@@ -639,7 +639,7 @@ Listings have expanded throughout 2025. Check current availability on the exchan
 
 ### What is the minimum TAO swap?
 
-On MRC GlobalPay, $0.30 worth of crypto. Given TAO's price, expect to receive a small fractional balance at the minimum.
+On MRC Global Pay, $0.30 worth of crypto. Given TAO's price, expect to receive a small fractional balance at the minimum.
 
 ---
 
@@ -737,7 +737,7 @@ The honest framework for emerging tokens:
 
 ## Where to swap SIREN without an account
 
-MRC GlobalPay supports BEP-20 token swaps including SIREN with no registration. Useful for cleanly entering and exiting emerging-token positions.
+MRC Global Pay supports BEP-20 token swaps including SIREN with no registration. Useful for cleanly entering and exiting emerging-token positions.
 
 [Buy SIREN now →](/exchange/usdt-to-siren)
 
@@ -853,7 +853,7 @@ If you want exposure to BDAG in 2026:
 
 ## Where to swap BDAG without an account
 
-MRC GlobalPay supports BDAG swaps with no registration when liquidity is available across our routing partners. Aggregated quoting picks the best execution venue automatically.
+MRC Global Pay supports BDAG swaps with no registration when liquidity is available across our routing partners. Aggregated quoting picks the best execution venue automatically.
 
 [Buy BDAG now →](/exchange/usdt-to-bdag)
 
@@ -967,7 +967,7 @@ Single-point predictions for memecoins are not useful. The framework:
 
 ## Where to swap BONK without an account
 
-MRC GlobalPay supports BONK swaps with no registration. Solana settlement makes the full flow exceptionally fast.
+MRC Global Pay supports BONK swaps with no registration. Solana settlement makes the full flow exceptionally fast.
 
 [Buy BONK now →](/exchange/usdt-to-bonk)
 
@@ -995,7 +995,7 @@ BONK is the older, larger Solana memecoin. WIF (dogwifhat) is a newer Solana mem
 
 ### What is the smallest BONK swap?
 
-On MRC GlobalPay, $0.30 worth of crypto. Given BONK's price, expect to receive a large nominal BONK count at the minimum.
+On MRC Global Pay, $0.30 worth of crypto. Given BONK's price, expect to receive a large nominal BONK count at the minimum.
 
 ---
 

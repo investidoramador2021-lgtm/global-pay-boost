@@ -18,7 +18,7 @@ const MsbTrustBar = () => (
           rel="noopener noreferrer external"
           className="inline-flex items-center gap-2 rounded-full border border-primary/30 bg-primary/5 px-3 py-1.5 text-xs font-semibold text-foreground transition-colors hover:bg-primary/10 sm:text-sm"
           title="Verify on the official FINTRAC MSB Registry — opens in a new tab"
-          aria-label="Verify MRC GlobalPay registration #C100000015 on the official FINTRAC MSB Registry (opens in new tab)"
+          aria-label="Verify MRC Global Pay registration #C100000015 on the official FINTRAC MSB Registry (opens in new tab)"
         >
           <ShieldCheck className="h-4 w-4 text-primary" aria-hidden="true" />
           <span>Registered Canadian MSB&nbsp;·&nbsp;<span className="font-mono">#C100000015</span></span>
@@ -29,8 +29,8 @@ const MsbTrustBar = () => (
           target="_blank"
           rel="noopener noreferrer external"
           className="inline-flex items-center gap-2 rounded-full border border-primary/30 bg-primary/5 px-3 py-1.5 text-xs font-semibold text-foreground transition-colors hover:bg-primary/10 sm:text-sm"
-          title="Verify MRC GlobalPay on the official Bank of Canada PSP Registry — opens in a new tab"
-          aria-label="Verify MRC GlobalPay on the official Bank of Canada PSP Registry (opens in new tab)"
+          title="Verify MRC Global Pay on the official Bank of Canada PSP Registry — opens in a new tab"
+          aria-label="Verify MRC Global Pay on the official Bank of Canada PSP Registry (opens in new tab)"
         >
           <Landmark className="h-4 w-4 text-primary" aria-hidden="true" />
           <span>Bank of Canada — Authorized PSP</span>
@@ -38,7 +38,7 @@ const MsbTrustBar = () => (
         </a>
         <span
           className="inline-flex items-center gap-2 rounded-full border border-border/60 bg-background/60 px-3 py-1.5 text-xs font-semibold text-foreground sm:text-sm"
-          aria-label="Official FINTRAC compliance badge for MRC GlobalPay"
+          aria-label="Official FINTRAC compliance badge for MRC Global Pay"
           role="img"
         >
           <BadgeCheck className="h-4 w-4 text-primary" aria-hidden="true" />
@@ -46,7 +46,7 @@ const MsbTrustBar = () => (
         </span>
         <span
           className="inline-flex items-center gap-2 rounded-full border border-border/60 bg-background/60 px-3 py-1.5 text-xs font-semibold text-foreground sm:text-sm"
-          aria-label="Non-custodial swap engine badge — MRC GlobalPay never holds user funds"
+          aria-label="Non-custodial swap engine badge — MRC Global Pay never holds user funds"
           role="img"
         >
           <Lock className="h-4 w-4 text-primary" aria-hidden="true" />

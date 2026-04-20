@@ -104,19 +104,19 @@ const PROACTIVE_MESSAGES: Record<string, (name: string) => string> = {
 };
 
 const WELCOME_MESSAGES: Record<string, (name: string) => string> = {
-  en: (n) => `Welcome to MRC GlobalPay! I'm ${n}, your personal concierge. I can help you with **Swaps, Buying crypto, Private Transfers, Bridges, Invoices, Loans, and Earning yield**. What would you like to do today?`,
-  es: (n) => `¡Bienvenido a MRC GlobalPay! Soy ${n}, su concierge personal. Puedo ayudarle con **Intercambios, Compra de cripto, Transferencias Privadas, Puentes, Facturas, Préstamos y Ganancias**. ¿Qué desea hacer hoy?`,
-  pt: (n) => `Bem-vindo ao MRC GlobalPay! Sou ${n}, seu concierge pessoal. Posso ajudá-lo com **Trocas, Compra de cripto, Transferências Privadas, Bridges, Faturas, Empréstimos e Rendimentos**. O que deseja fazer hoje?`,
-  fr: (n) => `Bienvenue chez MRC GlobalPay ! Je suis ${n}, votre concierge personnel. Je peux vous aider avec **les Échanges, l'Achat de crypto, les Transferts Privés, les Ponts, les Factures, les Prêts et les Rendements**. Comment puis-je vous assister ?`,
-  ja: (n) => `MRC GlobalPayへようこそ！${n}です。**スワップ、暗号購入、プライベート送金、ブリッジ、請求書、ローン、利回り運用**のお手伝いができます。今日は何をされますか？`,
-  tr: (n) => `MRC GlobalPay'e hoş geldiniz! Ben ${n}, kişisel danışmanınız. **Takas, Kripto Satın Alma, Özel Transfer, Köprü, Fatura, Kredi ve Kazanç** konularında yardımcı olabilirim. Bugün ne yapmak istersiniz?`,
-  hi: (n) => `MRC GlobalPay में आपका स्वागत है! मैं ${n} हूँ। मैं **स्वैप, क्रिप्टो खरीद, प्राइवेट ट्रांसफर, ब्रिज, इनवॉइस, लोन और अर्निंग** में मदद कर सकता/सकती हूँ। आज क्या करना चाहेंगे?`,
-  vi: (n) => `Chào mừng đến MRC GlobalPay! Tôi là ${n}. Tôi có thể hỗ trợ bạn với **Hoán đổi, Mua crypto, Chuyển khoản Riêng tư, Cầu nối, Hóa đơn, Vay và Kiếm lợi nhuận**. Bạn muốn làm gì hôm nay?`,
-  af: (n) => `Welkom by MRC GlobalPay! Ek is ${n}. Ek kan jou help met **Ruil, Kripto Koop, Privaat Oordrag, Brug, Faktuur, Lenings en Verdienste**. Wat wil jy vandag doen?`,
-  fa: (n) => `به MRC GlobalPay خوش آمدید! من ${n} هستم. می‌توانم در **مبادله، خرید کریپتو، انتقال خصوصی، پل، فاکتور، وام و کسب سود** کمکتان کنم. امروز چه کاری می‌خواهید انجام دهید؟`,
-  ur: (n) => `MRC GlobalPay میں خوش آمدید! میں ${n} ہوں۔ میں **سواپ، کرپٹو خرید، پرائیویٹ ٹرانسفر، برج، انوائس، لون اور کمائی** میں مدد کر سکتا/سکتی ہوں۔ آج کیا کرنا چاہیں گے?`,
-  he: (n) => `ברוכים הבאים ל-MRC GlobalPay! אני ${n}. אני יכול/ה לעזור עם **המרות, קניית קריפטו, העברות פרטיות, גשרים, חשבוניות, הלוואות ותשואה**. מה תרצה/י לעשות היום?`,
-  uk: (n) => `Ласкаво просимо до MRC GlobalPay! Я ${n}. Можу допомогти зі **Свопами, Купівлею крипто, Приватними переказами, Мостами, Інвойсами, Кредитами та Заробітком**. Що бажаєте зробити сьогодні?`,
+  en: (n) => `Welcome to MRC Global Pay! I'm ${n}, your personal concierge. I can help you with **Swaps, Buying crypto, Private Transfers, Bridges, Invoices, Loans, and Earning yield**. What would you like to do today?`,
+  es: (n) => `¡Bienvenido a MRC Global Pay! Soy ${n}, su concierge personal. Puedo ayudarle con **Intercambios, Compra de cripto, Transferencias Privadas, Puentes, Facturas, Préstamos y Ganancias**. ¿Qué desea hacer hoy?`,
+  pt: (n) => `Bem-vindo ao MRC Global Pay! Sou ${n}, seu concierge pessoal. Posso ajudá-lo com **Trocas, Compra de cripto, Transferências Privadas, Bridges, Faturas, Empréstimos e Rendimentos**. O que deseja fazer hoje?`,
+  fr: (n) => `Bienvenue chez MRC Global Pay ! Je suis ${n}, votre concierge personnel. Je peux vous aider avec **les Échanges, l'Achat de crypto, les Transferts Privés, les Ponts, les Factures, les Prêts et les Rendements**. Comment puis-je vous assister ?`,
+  ja: (n) => `MRC Global Payへようこそ！${n}です。**スワップ、暗号購入、プライベート送金、ブリッジ、請求書、ローン、利回り運用**のお手伝いができます。今日は何をされますか？`,
+  tr: (n) => `MRC Global Pay'e hoş geldiniz! Ben ${n}, kişisel danışmanınız. **Takas, Kripto Satın Alma, Özel Transfer, Köprü, Fatura, Kredi ve Kazanç** konularında yardımcı olabilirim. Bugün ne yapmak istersiniz?`,
+  hi: (n) => `MRC Global Pay में आपका स्वागत है! मैं ${n} हूँ। मैं **स्वैप, क्रिप्टो खरीद, प्राइवेट ट्रांसफर, ब्रिज, इनवॉइस, लोन और अर्निंग** में मदद कर सकता/सकती हूँ। आज क्या करना चाहेंगे?`,
+  vi: (n) => `Chào mừng đến MRC Global Pay! Tôi là ${n}. Tôi có thể hỗ trợ bạn với **Hoán đổi, Mua crypto, Chuyển khoản Riêng tư, Cầu nối, Hóa đơn, Vay và Kiếm lợi nhuận**. Bạn muốn làm gì hôm nay?`,
+  af: (n) => `Welkom by MRC Global Pay! Ek is ${n}. Ek kan jou help met **Ruil, Kripto Koop, Privaat Oordrag, Brug, Faktuur, Lenings en Verdienste**. Wat wil jy vandag doen?`,
+  fa: (n) => `به MRC Global Pay خوش آمدید! من ${n} هستم. می‌توانم در **مبادله، خرید کریپتو، انتقال خصوصی، پل، فاکتور، وام و کسب سود** کمکتان کنم. امروز چه کاری می‌خواهید انجام دهید؟`,
+  ur: (n) => `MRC Global Pay میں خوش آمدید! میں ${n} ہوں۔ میں **سواپ، کرپٹو خرید، پرائیویٹ ٹرانسفر، برج، انوائس، لون اور کمائی** میں مدد کر سکتا/سکتی ہوں۔ آج کیا کرنا چاہیں گے?`,
+  he: (n) => `ברוכים הבאים ל-MRC Global Pay! אני ${n}. אני יכול/ה לעזור עם **המרות, קניית קריפטו, העברות פרטיות, גשרים, חשבוניות, הלוואות ותשואה**. מה תרצה/י לעשות היום?`,
+  uk: (n) => `Ласкаво просимо до MRC Global Pay! Я ${n}. Можу допомогти зі **Свопами, Купівлею крипто, Приватними переказами, Мостами, Інвойсами, Кредитами та Заробітком**. Що бажаєте зробити сьогодні?`,
 };
 
 /* ── Tab-aware contextual messages ── */
@@ -621,7 +621,7 @@ const SupportChatWidget = () => {
               </Button>
             </div>
             <p className="text-[10px] text-muted-foreground/50 mt-1.5 text-center">
-              MRC GlobalPay Concierge · Available 24/7
+              MRC Global Pay Concierge · Available 24/7
             </p>
           </div>
         </div>

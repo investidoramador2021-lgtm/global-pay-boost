@@ -673,7 +673,7 @@ const PrivateTransferTab = () => {
               <Button className="flex-1 bg-trust text-trust-foreground hover:bg-trust/90" size="lg" onClick={handleNewTransfer}>{t("widget.newTransfer")}</Button>
               {typeof navigator !== "undefined" && !!navigator.share && (
                 <Button variant="outline" size="lg" className="shrink-0" onClick={async () => {
-                  try { await navigator.share({ title: "Private Transfer Complete — MRC GlobalPay", text: `Shielded ${txStatus.fromCurrency?.toUpperCase()} → ${txStatus.toCurrency?.toUpperCase()} transfer completed on MRC GlobalPay.`, url: "https://mrcglobalpay.com/private-transfer" }); } catch {}
+                  try { await navigator.share({ title: "Private Transfer Complete — MRC Global Pay", text: `Shielded ${txStatus.fromCurrency?.toUpperCase()} → ${txStatus.toCurrency?.toUpperCase()} transfer completed on MRC Global Pay.`, url: "https://mrcglobalpay.com/private-transfer" }); } catch {}
                 }}>
                   <Share2 className="h-4 w-4 mr-1.5" /> {t("widget.share")}
                 </Button>

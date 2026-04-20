@@ -18,9 +18,9 @@ const categoryIcon: Record<string, typeof Shield> = {
 const jsonLd = {
   "@context": "https://schema.org",
   "@type": "CollectionPage",
-  name: "Trust & Transparency Hub — MRC GlobalPay",
+  name: "Trust & Transparency Hub — MRC Global Pay",
   description:
-    "Learn how MRC GlobalPay protects your assets with non-custodial architecture, FINTRAC compliance, and institutional-grade security.",
+    "Learn how MRC Global Pay protects your assets with non-custodial architecture, FINTRAC compliance, and institutional-grade security.",
   url: "https://mrcglobalpay.com/learn",
   mainEntity: {
     "@type": "ItemList",
@@ -34,7 +34,7 @@ const jsonLd = {
   },
   publisher: {
     "@type": "Organization",
-    name: "MRC GlobalPay",
+    name: "MRC Global Pay",
     url: "https://mrcglobalpay.com",
     knowsAbout: [
       "Non-Custodial Cryptocurrency Swaps",
@@ -51,13 +51,13 @@ const LearnDirectory = () => {
   return (
     <>
       <Helmet>
-        <title>Trust & Transparency Hub | MRC GlobalPay (2026)</title>
+        <title>Trust & Transparency Hub | MRC Global Pay (2026)</title>
         <meta
           name="description"
-          content="Learn how MRC GlobalPay protects your crypto: non-custodial swap architecture, FINTRAC MSB registration, Fireblocks-grade security, zero custody risk. 6,000+ assets."
+          content="Learn how MRC Global Pay protects your crypto: non-custodial swap architecture, FINTRAC MSB registration, Fireblocks-grade security, zero custody risk. 6,000+ assets."
         />
         <link rel="canonical" href={pageUrl} />
-        <meta property="og:title" content="Trust & Transparency Hub | MRC GlobalPay" />
+        <meta property="og:title" content="Trust & Transparency Hub | MRC Global Pay" />
         <meta property="og:description" content="Non-custodial architecture, FINTRAC compliance, and Fireblocks security." />
         <meta property="og:url" content={pageUrl} />
         <meta property="og:type" content="website" />
@@ -78,7 +78,7 @@ const LearnDirectory = () => {
               Trust & Transparency <span className="text-primary">Hub</span>
             </h1>
             <p className="mx-auto mt-4 max-w-2xl font-body text-lg leading-relaxed text-muted-foreground">
-              How MRC GlobalPay protects your assets with non-custodial architecture, Canadian MSB registration, and institutional-grade security via ChangeNOW & Fireblocks.
+              How MRC Global Pay protects your assets with non-custodial architecture, Canadian MSB registration, and institutional-grade security via ChangeNOW & Fireblocks.
             </p>
           </div>
         </section>
@@ -87,7 +87,7 @@ const LearnDirectory = () => {
         <section className="border-b border-border bg-primary/5 py-6">
           <div className="container mx-auto max-w-4xl px-4">
             <div className="flex flex-wrap items-center justify-center gap-x-8 gap-y-2 text-center font-body text-sm font-semibold text-foreground">
-              <span>🔒 MRC GlobalPay does <strong>not</strong> store user private keys.</span>
+              <span>🔒 MRC Global Pay does <strong>not</strong> store user private keys.</span>
               <span>🇨🇦 Registered Canadian MSB.</span>
               <span>✅ Zero-custody risk.</span>
             </div>

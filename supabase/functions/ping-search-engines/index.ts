@@ -205,7 +205,7 @@ serve(async (req) => {
 <methodCall>
   <methodName>weblogUpdates.ping</methodName>
   <params>
-    <param><value>MRC GlobalPay Blog</value></param>
+    <param><value>MRC Global Pay Blog</value></param>
     <param><value>${SITE}/blog</value></param>
     <param><value>${SITE}/rss.xml</value></param>
   </params>

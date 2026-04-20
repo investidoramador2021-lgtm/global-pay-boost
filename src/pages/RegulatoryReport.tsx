@@ -146,7 +146,7 @@ const RegulatoryReport = () => {
           <div className="border-t-2 border-gray-800 pt-4 mt-12">
             <p className="text-xs text-gray-500">This document is confidential and intended solely for regulatory purposes.</p>
             <p className="text-xs text-gray-500">Unauthorized distribution is strictly prohibited under Canadian federal law.</p>
-            <p className="text-xs text-gray-500 mt-2">© {new Date().getFullYear()} MRC GlobalPay Inc. All rights reserved.</p>
+            <p className="text-xs text-gray-500 mt-2">© {new Date().getFullYear()} MRC Global Pay Inc. All rights reserved.</p>
           </div>
 
           {/* Print button (hidden in print) */}

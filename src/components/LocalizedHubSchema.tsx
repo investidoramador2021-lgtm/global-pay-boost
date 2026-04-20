@@ -6,7 +6,7 @@ const BASE_URL = "https://mrcglobalpay.com";
 
 /**
  * Per-language FinancialService + Organization JSON-LD.
- * Tells AI Answer Engines (GPTBot, PerplexityBot, etc.) that MRC GlobalPay
+ * Tells AI Answer Engines (GPTBot, PerplexityBot, etc.) that MRC Global Pay
  * is a localized authority for each market — not just a translated site.
  */
 const HUB_META: Record<
@@ -15,7 +15,7 @@ const HUB_META: Record<
 > = {
   en: { areaServed: "Worldwide", languageName: "English" },
   es: { areaServed: "Spain", languageName: "Spanish" },
-  pt: { areaServed: "Brazil", languageName: "Portuguese", alternateName: "MRC GlobalPay Brasil" },
+  pt: { areaServed: "Brazil", languageName: "Portuguese", alternateName: "MRC Global Pay Brasil" },
   fr: { areaServed: "France", languageName: "French" },
   ja: { areaServed: "Japan", languageName: "Japanese" },
   fa: { areaServed: "Iran", languageName: "Persian" },
@@ -23,8 +23,8 @@ const HUB_META: Record<
   he: { areaServed: "Israel", languageName: "Hebrew" },
   af: { areaServed: "South Africa", languageName: "Afrikaans" },
   hi: { areaServed: "India", languageName: "Hindi" },
-  vi: { areaServed: "Vietnam", languageName: "Vietnamese", alternateName: "MRC GlobalPay Việt Nam" },
-  tr: { areaServed: "Turkey", languageName: "Turkish", alternateName: "MRC GlobalPay Türkiye" },
+  vi: { areaServed: "Vietnam", languageName: "Vietnamese", alternateName: "MRC Global Pay Việt Nam" },
+  tr: { areaServed: "Turkey", languageName: "Turkish", alternateName: "MRC Global Pay Türkiye" },
   uk: { areaServed: "Ukraine", languageName: "Ukrainian" },
 };
 
@@ -38,7 +38,7 @@ const LocalizedHubSchema = () => {
     {
       "@type": "Organization",
       "@id": `${BASE_URL}#org`,
-      name: "MRC GlobalPay",
+      name: "MRC Global Pay",
       ...(meta.alternateName && { alternateName: meta.alternateName }),
       url: BASE_URL,
       logo: `${BASE_URL}/icon-512.png`,
@@ -51,7 +51,7 @@ const LocalizedHubSchema = () => {
     {
       "@type": "FinancialService",
       "@id": `${url}#service`,
-      name: `MRC GlobalPay — ${meta.languageName} Hub`,
+      name: `MRC Global Pay — ${meta.languageName} Hub`,
       url,
       areaServed: meta.areaServed,
       knowsLanguage: lang,

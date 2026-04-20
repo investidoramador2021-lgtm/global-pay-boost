@@ -480,7 +480,7 @@ export default function LendDashboard() {
       <div className="flex items-start gap-3 rounded-lg border border-[#D4AF37]/20 bg-background/50 p-4">
         <AlertTriangle className="mt-0.5 h-5 w-5 flex-shrink-0 text-[#D4AF37]" />
         <p className="text-[10px] text-muted-foreground leading-relaxed">
-          {t("lendDash.disclaimer", "Live data is sourced from our technology partner's API and refreshes every 60 seconds. Withdraw, Repay, and Top Up require a registered account. MRC GlobalPay · MSB Registration C100000015.")}
+          {t("lendDash.disclaimer", "Live data is sourced from our technology partner's API and refreshes every 60 seconds. Withdraw, Repay, and Top Up require a registered account. MRC Global Pay · MSB Registration C100000015.")}
         </p>
       </div>
 

@@ -242,7 +242,7 @@ const InvoiceRequestTab = () => {
       await supabase.functions.invoke("telegram-notify", {
         body: {
           type: "swap",
-          message: `[MRC GlobalPay] 📄 Invoice Issued\nID: ${id}\nGross: ${cryptoAmount} ${tickerDisplay} (${fiatAmount} ${fiatCurrency})\nFee: ${serviceFeeAmount} ${tickerDisplay} (${SERVICE_FEE_PERCENT}%)\nNet: ${netCryptoAmount} ${tickerDisplay}\nPayer: ${payerName}\nIssuer: ${requesterName}\nExpiry: ${INVOICE_EXPIRY_HOURS}h`,
+          message: `[MRC Global Pay] 📄 Invoice Issued\nID: ${id}\nGross: ${cryptoAmount} ${tickerDisplay} (${fiatAmount} ${fiatCurrency})\nFee: ${serviceFeeAmount} ${tickerDisplay} (${SERVICE_FEE_PERCENT}%)\nNet: ${netCryptoAmount} ${tickerDisplay}\nPayer: ${payerName}\nIssuer: ${requesterName}\nExpiry: ${INVOICE_EXPIRY_HOURS}h`,
         },
       });
     } catch (err) {

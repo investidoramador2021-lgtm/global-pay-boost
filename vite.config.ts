@@ -27,7 +27,7 @@ export default defineConfig(({ mode }) => ({
       includeAssets: ["favicon.png", "favicon-32x32.png", "favicon-192x192.png", "icon-512x512.png", "shortcut-swap-96.png", "shortcut-wallet-96.png", "apple-touch-icon.png"],
       manifest: {
         id: "com.mrcglobalpay.app",
-        name: "MRC GlobalPay",
+        name: "MRC Global Pay",
         short_name: "MRC Pay",
         description: "Instant crypto swaps with no minimum. Swap dust from $0.30. Non-custodial wallet-to-wallet exchange for 500+ cryptocurrencies.",
         theme_color: "#FFD700",
@@ -69,14 +69,14 @@ export default defineConfig(({ mode }) => ({
             sizes: "1080x1920",
             type: "image/png",
             form_factor: "narrow" as any,
-            label: "MRC GlobalPay — Instant Crypto Swap",
+            label: "MRC Global Pay — Instant Crypto Swap",
           },
           {
             src: "/screenshot-wide.png",
             sizes: "1920x1080",
             type: "image/png",
             form_factor: "wide" as any,
-            label: "MRC GlobalPay — Desktop Dashboard",
+            label: "MRC Global Pay — Desktop Dashboard",
           },
         ],
         shortcuts: [

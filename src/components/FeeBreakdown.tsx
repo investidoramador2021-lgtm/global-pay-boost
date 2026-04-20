@@ -67,7 +67,7 @@ const FeeBreakdown = ({ receiveTicker, sendTicker }: FeeBreakdownProps) => {
 
             <div className="flex items-start justify-between gap-3">
               <div>
-                <div className="font-semibold text-foreground">MRC GlobalPay Fee</div>
+                <div className="font-semibold text-foreground">MRC Global Pay Fee</div>
                 <div className="text-[10px] text-muted-foreground">Platform service charge</div>
               </div>
               <span className="font-mono text-[11px] font-semibold text-trust">$0.00</span>

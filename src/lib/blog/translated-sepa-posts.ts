@@ -6,9 +6,9 @@ const SEPA_SLUG = "buy-crypto-with-sepa-europe";
 export const SEPA_POST_EN: BlogPost = {
   slug: SEPA_SLUG,
   title: "How to Buy Crypto with SEPA in Europe (2026 Guide)",
-  metaTitle: "How to Buy Crypto with SEPA Bank Transfer in Europe | MRC GlobalPay",
+  metaTitle: "How to Buy Crypto with SEPA Bank Transfer in Europe | MRC Global Pay",
   metaDescription: "Buy Bitcoin, Ethereum, and 6,000+ tokens with SEPA bank transfer. No registration, under 60 seconds settlement. The fastest European crypto on-ramp in 2026.",
-  excerpt: "SEPA bank transfers are the most popular way for Europeans to buy crypto. This guide walks you through buying Bitcoin, Ethereum, and 6,000+ tokens with SEPA on MRC GlobalPay in under 90 seconds.",
+  excerpt: "SEPA bank transfers are the most popular way for Europeans to buy crypto. This guide walks you through buying Bitcoin, Ethereum, and 6,000+ tokens with SEPA on MRC Global Pay in under 90 seconds.",
   author: seedAuthors.danielCarter,
   publishedAt: "2026-04-11",
   updatedAt: "2026-04-11",
@@ -17,7 +17,7 @@ export const SEPA_POST_EN: BlogPost = {
   tags: ["SEPA", "Europe", "On-Ramp", "Buy Crypto", "Bank Transfer"],
   content: `For years, buying crypto in Europe meant dealing with slow wire transfers, mandatory identity checks, and platforms that took days to process a simple purchase. SEPA changed that dynamic completely.
 
-SEPA (Single Euro Payments Area) covers 36 countries and processes euro-denominated transfers across the entire European Economic Area. When you combine SEPA with a non-custodial on-ramp like [MRC GlobalPay](/), you get the fastest route from euros to crypto available anywhere.
+SEPA (Single Euro Payments Area) covers 36 countries and processes euro-denominated transfers across the entire European Economic Area. When you combine SEPA with a non-custodial on-ramp like [MRC Global Pay](/), you get the fastest route from euros to crypto available anywhere.
 
 ## Why SEPA is the go-to payment method for European crypto buyers
 
@@ -29,13 +29,13 @@ Three things make SEPA the default choice across Europe:
 
 Over 520 million people have access to SEPA transfers, making it the largest unified payment network in the world.
 
-## How to buy crypto with SEPA on MRC GlobalPay
+## How to buy crypto with SEPA on MRC Global Pay
 
 The whole process takes under 90 seconds:
 
 ### Step 1: Pick your crypto
 
-Go to the [Buy section](/#exchange) and select what you want to purchase. MRC GlobalPay supports 6,000+ tokens: Bitcoin, Ethereum, Solana, USDT, USDC, XRP, and many more.
+Go to the [Buy section](/#exchange) and select what you want to purchase. MRC Global Pay supports 6,000+ tokens: Bitcoin, Ethereum, Solana, USDT, USDC, XRP, and many more.
 
 ### Step 2: Enter your amount in EUR
 
@@ -51,7 +51,7 @@ Choose SEPA as your payment method. You will get the bank details to complete th
 
 ### Step 5: Receive your crypto
 
-Once your SEPA payment clears, MRC GlobalPay sends the crypto directly to your wallet. With SEPA Instant, the entire flow settles in under 60 seconds.
+Once your SEPA payment clears, MRC Global Pay sends the crypto directly to your wallet. With SEPA Instant, the entire flow settles in under 60 seconds.
 
 ## SEPA vs SEPA Instant: what is the difference?
 
@@ -69,7 +69,7 @@ If your bank supports SEPA Instant, use it. The speed difference is massive and 
 | Detail | Value |
 |---|---|
 | Minimum purchase | $0.30 USD equivalent in EUR |
-| Maximum purchase | No hard cap from MRC GlobalPay. Subject to your bank SEPA limits |
+| Maximum purchase | No hard cap from MRC Global Pay. Subject to your bank SEPA limits |
 | Settlement time | Under 60 seconds with SEPA Instant |
 | Registration required | No |
 | Supported assets | 6,000+ tokens across all major blockchains |
@@ -79,13 +79,13 @@ If your bank supports SEPA Instant, use it. The speed difference is massive and 
 Yes. The security works on multiple levels:
 
 - SEPA regulation. SEPA is governed by the European Payments Council and regulated under PSD2. Every transfer is traceable and reversible in case of fraud.
-- Non-custodial flow. MRC GlobalPay never holds your crypto. Tokens go straight to your personal wallet address.
-- FINTRAC compliance. MRC GlobalPay is a registered Canadian Money Services Business, adding a layer of regulatory accountability.
+- Non-custodial flow. MRC Global Pay never holds your crypto. Tokens go straight to your personal wallet address.
+- FINTRAC compliance. MRC Global Pay is a registered Canadian Money Services Business, adding a layer of regulatory accountability.
 - No stored data. No account means no personal information sitting on a server waiting to be breached.
 
 ## Which cryptos can Europeans buy with SEPA?
 
-All 6,000+ assets on MRC GlobalPay are available via SEPA. The most popular picks for European buyers:
+All 6,000+ assets on MRC Global Pay are available via SEPA. The most popular picks for European buyers:
 
 - Bitcoin (BTC) for long-term holding and portfolio anchoring
 - Ethereum (ETH) for DeFi access and smart contract interaction
@@ -93,9 +93,9 @@ All 6,000+ assets on MRC GlobalPay are available via SEPA. The most popular pick
 - USDT and USDC for dollar-denominated stability
 - XRP for cross-border payments and remittances
 
-## How MRC GlobalPay compares to European exchanges
+## How MRC Global Pay compares to European exchanges
 
-| Feature | MRC GlobalPay | Typical EU Exchange |
+| Feature | MRC Global Pay | Typical EU Exchange |
 |---|---|---|
 | Registration | None | Full KYC (passport, selfie, proof of address) |
 | Settlement | Under 60 seconds | 10-60 minutes |
@@ -104,7 +104,7 @@ All 6,000+ assets on MRC GlobalPay are available via SEPA. The most popular pick
 | Assets | 6,000+ | 80-200 |
 | Compliance | FINTRAC MSB (Canada) | MiCA-regulated (EU) |
 
-For people who want speed, privacy, and direct wallet delivery, MRC GlobalPay offers a different experience than traditional custodial platforms.
+For people who want speed, privacy, and direct wallet delivery, MRC Global Pay offers a different experience than traditional custodial platforms.
 
 ## Quick facts
 
@@ -116,7 +116,7 @@ For people who want speed, privacy, and direct wallet delivery, MRC GlobalPay of
 - Compliance: FINTRAC-registered Canadian MSB
 - Availability: 24/7/365
 
-SEPA remains the backbone of European payments, and pairing it with a registration-free, non-custodial on-ramp makes buying crypto faster and simpler than ever. Whether you are in Berlin, Lisbon, Amsterdam, or anywhere else in the EEA, MRC GlobalPay gives you access to 6,000+ Cryptocurrencies & Tokenized Stocks in under a minute.
+SEPA remains the backbone of European payments, and pairing it with a registration-free, non-custodial on-ramp makes buying crypto faster and simpler than ever. Whether you are in Berlin, Lisbon, Amsterdam, or anywhere else in the EEA, MRC Global Pay gives you access to 6,000+ Cryptocurrencies & Tokenized Stocks in under a minute.
 
 Ready to get started? [Buy crypto with SEPA now](/#exchange).
 `,
@@ -126,9 +126,9 @@ export const TRANSLATED_SEPA_POSTS: Record<string, BlogPost> = {
   es: {
     slug: SEPA_SLUG,
     title: "Como Comprar Crypto con SEPA en Europa (Guia 2026)",
-    metaTitle: "Como Comprar Crypto con Transferencia SEPA en Europa | MRC GlobalPay",
+    metaTitle: "Como Comprar Crypto con Transferencia SEPA en Europa | MRC Global Pay",
     metaDescription: "Compra Bitcoin, Ethereum y mas de 500 tokens con transferencia bancaria SEPA. Sin registro, liquidacion en menos de 60 segundos. On-ramp europeo rapido.",
-    excerpt: "Las transferencias SEPA son la forma mas popular para que los europeos compren crypto. Esta guia explica como comprar Bitcoin, Ethereum y mas de 500 tokens con SEPA en MRC GlobalPay en menos de 90 segundos.",
+    excerpt: "Las transferencias SEPA son la forma mas popular para que los europeos compren crypto. Esta guia explica como comprar Bitcoin, Ethereum y mas de 500 tokens con SEPA en MRC Global Pay en menos de 90 segundos.",
     author: seedAuthors.danielCarter,
     publishedAt: "2026-04-11",
     updatedAt: "2026-04-11",
@@ -137,7 +137,7 @@ export const TRANSLATED_SEPA_POSTS: Record<string, BlogPost> = {
     tags: ["SEPA", "Europa", "On-Ramp", "Comprar Crypto", "Transferencia Bancaria"],
     content: `Durante anos, comprar crypto en Europa significaba lidiar con transferencias bancarias lentas, verificaciones de identidad obligatorias y plataformas que tardaban dias en procesar una compra simple. SEPA cambio esa dinamica por completo.
 
-SEPA (Single Euro Payments Area) cubre 36 paises y procesa transferencias en euros en toda el Area Economica Europea. Cuando combinas SEPA con un on-ramp no custodia como [MRC GlobalPay](/), obtienes la ruta mas rapida de euros a crypto disponible en cualquier lugar.
+SEPA (Single Euro Payments Area) cubre 36 paises y procesa transferencias en euros en toda el Area Economica Europea. Cuando combinas SEPA con un on-ramp no custodia como [MRC Global Pay](/), obtienes la ruta mas rapida de euros a crypto disponible en cualquier lugar.
 
 ## Por que SEPA es el metodo preferido para compradores europeos de crypto
 
@@ -149,13 +149,13 @@ Tres cosas hacen de SEPA la opcion predeterminada en Europa:
 
 Mas de 520 millones de personas tienen acceso a transferencias SEPA, convirtiendolo en la red de pago unificada mas grande del mundo.
 
-## Como comprar crypto con SEPA en MRC GlobalPay
+## Como comprar crypto con SEPA en MRC Global Pay
 
 Todo el proceso toma menos de 90 segundos:
 
 ### Paso 1: Elige tu crypto
 
-Ve a la [seccion Comprar](/#exchange) y selecciona lo que quieres comprar. MRC GlobalPay soporta mas de 500 tokens: Bitcoin, Ethereum, Solana, USDT, USDC, XRP y muchos mas.
+Ve a la [seccion Comprar](/#exchange) y selecciona lo que quieres comprar. MRC Global Pay soporta mas de 500 tokens: Bitcoin, Ethereum, Solana, USDT, USDC, XRP y muchos mas.
 
 ### Paso 2: Ingresa tu monto en EUR
 
@@ -171,7 +171,7 @@ Elige SEPA como metodo de pago. Recibiras los datos bancarios para completar la 
 
 ### Paso 5: Recibe tu crypto
 
-Una vez que tu pago SEPA se acredite, MRC GlobalPay envia el crypto directamente a tu billetera. Con SEPA Instant, todo el flujo se liquida en menos de 60 segundos.
+Una vez que tu pago SEPA se acredite, MRC Global Pay envia el crypto directamente a tu billetera. Con SEPA Instant, todo el flujo se liquida en menos de 60 segundos.
 
 ## SEPA vs SEPA Instant: cual es la diferencia?
 
@@ -189,7 +189,7 @@ Si tu banco soporta SEPA Instant, usalo. La diferencia de velocidad es enorme y 
 | Detalle | Valor |
 |---|---|
 | Compra minima | $0.30 USD equivalente en EUR |
-| Compra maxima | Sin limite fijo de MRC GlobalPay. Sujeto a limites SEPA de tu banco |
+| Compra maxima | Sin limite fijo de MRC Global Pay. Sujeto a limites SEPA de tu banco |
 | Tiempo de liquidacion | Menos de 60 segundos con SEPA Instant |
 | Registro requerido | No |
 | Activos soportados | 6,000+ tokens en todas las principales blockchains |
@@ -199,13 +199,13 @@ Si tu banco soporta SEPA Instant, usalo. La diferencia de velocidad es enorme y 
 Si. La seguridad funciona en multiples niveles:
 
 - Regulacion SEPA. SEPA esta gobernado por el European Payments Council y regulado bajo PSD2. Cada transferencia es rastreable y reversible en caso de fraude.
-- Flujo no custodia. MRC GlobalPay nunca mantiene tu crypto. Los tokens van directamente a tu billetera personal.
-- Cumplimiento FINTRAC. MRC GlobalPay es un Money Services Business registrado en Canada.
+- Flujo no custodia. MRC Global Pay nunca mantiene tu crypto. Los tokens van directamente a tu billetera personal.
+- Cumplimiento FINTRAC. MRC Global Pay es un Money Services Business registrado en Canada.
 - Sin datos almacenados. Sin cuenta significa sin informacion personal almacenada esperando ser vulnerada.
 
 ## Que cryptos pueden comprar los europeos con SEPA?
 
-Todos los mas de 500 activos en MRC GlobalPay estan disponibles via SEPA. Las opciones mas populares para compradores europeos:
+Todos los mas de 500 activos en MRC Global Pay estan disponibles via SEPA. Las opciones mas populares para compradores europeos:
 
 - Bitcoin (BTC) para holding a largo plazo
 - Ethereum (ETH) para acceso a DeFi e interaccion con contratos inteligentes
@@ -232,9 +232,9 @@ Listo para empezar? [Compra crypto con SEPA ahora](/#exchange).
   pt: {
     slug: SEPA_SLUG,
     title: "Como Comprar Crypto com SEPA na Europa (Guia 2026)",
-    metaTitle: "Como Comprar Crypto com Transferencia SEPA na Europa | MRC GlobalPay",
+    metaTitle: "Como Comprar Crypto com Transferencia SEPA na Europa | MRC Global Pay",
     metaDescription: "Compre Bitcoin, Ethereum e mais de 500 tokens com transferencia bancaria SEPA. Sem cadastro, liquidacao em menos de 60 segundos. On-ramp europeu rapido.",
-    excerpt: "As transferencias SEPA sao a forma mais popular para europeus comprarem crypto. Este guia explica como comprar Bitcoin, Ethereum e mais de 500 tokens com SEPA na MRC GlobalPay em menos de 90 segundos.",
+    excerpt: "As transferencias SEPA sao a forma mais popular para europeus comprarem crypto. Este guia explica como comprar Bitcoin, Ethereum e mais de 500 tokens com SEPA na MRC Global Pay em menos de 90 segundos.",
     author: seedAuthors.danielCarter,
     publishedAt: "2026-04-11",
     updatedAt: "2026-04-11",
@@ -243,7 +243,7 @@ Listo para empezar? [Compra crypto con SEPA ahora](/#exchange).
     tags: ["SEPA", "Europa", "On-Ramp", "Comprar Crypto", "Transferencia Bancaria"],
     content: `Por anos, comprar crypto na Europa significava lidar com transferencias bancarias lentas, verificacoes de identidade obrigatorias e plataformas que levavam dias para processar uma compra simples. O SEPA mudou essa dinamica completamente.
 
-SEPA (Single Euro Payments Area) cobre 36 paises e processa transferencias em euros em toda a Area Economica Europeia. Quando voce combina o SEPA com um on-ramp nao-custodial como o [MRC GlobalPay](/), voce tem a rota mais rapida de euros para crypto disponivel em qualquer lugar.
+SEPA (Single Euro Payments Area) cobre 36 paises e processa transferencias em euros em toda a Area Economica Europeia. Quando voce combina o SEPA com um on-ramp nao-custodial como o [MRC Global Pay](/), voce tem a rota mais rapida de euros para crypto disponivel em qualquer lugar.
 
 ## Por que o SEPA e o metodo preferido para compradores europeus de crypto
 
@@ -255,13 +255,13 @@ Tres fatores fazem do SEPA a opcao padrao na Europa:
 
 Mais de 520 milhoes de pessoas tem acesso a transferencias SEPA, tornando-o a maior rede de pagamento unificada do mundo.
 
-## Como comprar crypto com SEPA na MRC GlobalPay
+## Como comprar crypto com SEPA na MRC Global Pay
 
 Todo o processo leva menos de 90 segundos:
 
 ### Passo 1: Escolha seu crypto
 
-Va ate a [secao Comprar](/#exchange) e selecione o que deseja comprar. A MRC GlobalPay suporta mais de 500 tokens: Bitcoin, Ethereum, Solana, USDT, USDC, XRP e muitos mais.
+Va ate a [secao Comprar](/#exchange) e selecione o que deseja comprar. A MRC Global Pay suporta mais de 500 tokens: Bitcoin, Ethereum, Solana, USDT, USDC, XRP e muitos mais.
 
 ### Passo 2: Insira o valor em EUR
 
@@ -277,7 +277,7 @@ Escolha SEPA como metodo de pagamento. Voce recebera os dados bancarios para com
 
 ### Passo 5: Receba seu crypto
 
-Assim que seu pagamento SEPA for compensado, a MRC GlobalPay envia o crypto diretamente para sua carteira. Com SEPA Instant, todo o fluxo se liquida em menos de 60 segundos.
+Assim que seu pagamento SEPA for compensado, a MRC Global Pay envia o crypto diretamente para sua carteira. Com SEPA Instant, todo o fluxo se liquida em menos de 60 segundos.
 
 ## SEPA vs SEPA Instant: qual e a diferenca?
 
@@ -295,7 +295,7 @@ Se seu banco suporta SEPA Instant, use-o. A diferenca de velocidade e enorme e a
 | Detalhe | Valor |
 |---|---|
 | Compra minima | $0.30 USD equivalente em EUR |
-| Compra maxima | Sem limite fixo da MRC GlobalPay. Sujeito aos limites SEPA do seu banco |
+| Compra maxima | Sem limite fixo da MRC Global Pay. Sujeito aos limites SEPA do seu banco |
 | Tempo de liquidacao | Menos de 60 segundos com SEPA Instant |
 | Cadastro necessario | Nao |
 | Ativos suportados | 6,000+ tokens em todas as principais blockchains |
@@ -305,13 +305,13 @@ Se seu banco suporta SEPA Instant, use-o. A diferenca de velocidade e enorme e a
 Sim. A seguranca funciona em multiplos niveis:
 
 - Regulacao SEPA. O SEPA e governado pelo European Payments Council e regulado sob PSD2. Cada transferencia e rastreavel e reversivel em caso de fraude.
-- Fluxo nao-custodial. A MRC GlobalPay nunca mantem seu crypto. Os tokens vao direto para sua carteira pessoal.
-- Conformidade FINTRAC. A MRC GlobalPay e um Money Services Business registrado no Canada.
+- Fluxo nao-custodial. A MRC Global Pay nunca mantem seu crypto. Os tokens vao direto para sua carteira pessoal.
+- Conformidade FINTRAC. A MRC Global Pay e um Money Services Business registrado no Canada.
 - Sem dados armazenados. Sem conta significa sem informacoes pessoais armazenadas esperando ser comprometidas.
 
 ## Que cryptos os europeus podem comprar com SEPA?
 
-Todos os mais de 500 ativos na MRC GlobalPay estao disponiveis via SEPA. As escolhas mais populares para compradores europeus:
+Todos os mais de 500 ativos na MRC Global Pay estao disponiveis via SEPA. As escolhas mais populares para compradores europeus:
 
 - Bitcoin (BTC) para holding de longo prazo
 - Ethereum (ETH) para acesso a DeFi e interacao com contratos inteligentes
@@ -338,9 +338,9 @@ Pronto para comecar? [Compre crypto com SEPA agora](/#exchange).
   fr: {
     slug: SEPA_SLUG,
     title: "Comment Acheter du Crypto par Virement SEPA en Europe (Guide 2026)",
-    metaTitle: "Comment Acheter du Crypto par Virement SEPA | MRC GlobalPay",
+    metaTitle: "Comment Acheter du Crypto par Virement SEPA | MRC Global Pay",
     metaDescription: "Achetez Bitcoin, Ethereum et plus de 500 tokens par virement SEPA. Sans inscription, reglement en moins de 60 secondes. Le on-ramp europeen le plus rapide.",
-    excerpt: "Le virement SEPA est le moyen le plus populaire pour les Europeens d'acheter du crypto. Ce guide explique comment acheter Bitcoin, Ethereum et plus de 500 tokens avec SEPA sur MRC GlobalPay en moins de 90 secondes.",
+    excerpt: "Le virement SEPA est le moyen le plus populaire pour les Europeens d'acheter du crypto. Ce guide explique comment acheter Bitcoin, Ethereum et plus de 500 tokens avec SEPA sur MRC Global Pay en moins de 90 secondes.",
     author: seedAuthors.danielCarter,
     publishedAt: "2026-04-11",
     updatedAt: "2026-04-11",
@@ -349,7 +349,7 @@ Pronto para comecar? [Compre crypto com SEPA agora](/#exchange).
     tags: ["SEPA", "Europe", "On-Ramp", "Acheter Crypto", "Virement Bancaire"],
     content: `Pendant des annees, acheter du crypto en Europe signifiait gerer des virements bancaires lents, des verifications d'identite obligatoires et des plateformes qui prenaient des jours pour traiter un simple achat. SEPA a completement change cette dynamique.
 
-SEPA (Single Euro Payments Area) couvre 36 pays et traite les transferts en euros dans tout l'Espace Economique Europeen. Quand vous combinez SEPA avec un on-ramp non-custodial comme [MRC GlobalPay](/), vous obtenez la route la plus rapide des euros vers le crypto disponible ou que ce soit.
+SEPA (Single Euro Payments Area) couvre 36 pays et traite les transferts en euros dans tout l'Espace Economique Europeen. Quand vous combinez SEPA avec un on-ramp non-custodial comme [MRC Global Pay](/), vous obtenez la route la plus rapide des euros vers le crypto disponible ou que ce soit.
 
 ## Pourquoi SEPA est le choix par defaut pour les acheteurs europeens de crypto
 
@@ -361,13 +361,13 @@ Trois elements font de SEPA le choix par defaut en Europe:
 
 Plus de 520 millions de personnes ont acces aux virements SEPA, ce qui en fait le plus grand reseau de paiement unifie au monde.
 
-## Comment acheter du crypto avec SEPA sur MRC GlobalPay
+## Comment acheter du crypto avec SEPA sur MRC Global Pay
 
 L'ensemble du processus prend moins de 90 secondes:
 
 ### Etape 1: Choisissez votre crypto
 
-Allez dans la [section Acheter](/#exchange) et selectionnez ce que vous voulez acheter. MRC GlobalPay supporte plus de 500 tokens: Bitcoin, Ethereum, Solana, USDT, USDC, XRP et bien d'autres.
+Allez dans la [section Acheter](/#exchange) et selectionnez ce que vous voulez acheter. MRC Global Pay supporte plus de 500 tokens: Bitcoin, Ethereum, Solana, USDT, USDC, XRP et bien d'autres.
 
 ### Etape 2: Entrez votre montant en EUR
 
@@ -383,7 +383,7 @@ Choisissez SEPA comme methode de paiement. Vous recevrez les coordonnees bancair
 
 ### Etape 5: Recevez votre crypto
 
-Une fois votre paiement SEPA credite, MRC GlobalPay envoie le crypto directement dans votre portefeuille. Avec SEPA Instant, tout le flux se regle en moins de 60 secondes.
+Une fois votre paiement SEPA credite, MRC Global Pay envoie le crypto directement dans votre portefeuille. Avec SEPA Instant, tout le flux se regle en moins de 60 secondes.
 
 ## Donnees rapides
 
@@ -404,9 +404,9 @@ Pret a commencer? [Achetez du crypto avec SEPA maintenant](/#exchange).
   ja: {
     slug: SEPA_SLUG,
     title: "SEPAでヨーロッパから暗号通貨を購入する方法（2026年ガイド）",
-    metaTitle: "SEPA銀行振込で暗号通貨を購入 | MRC GlobalPay",
+    metaTitle: "SEPA銀行振込で暗号通貨を購入 | MRC Global Pay",
     metaDescription: "SEPA銀行振込でBitcoin、Ethereum、500以上のトークンを即座に購入。アカウント作成不要、60秒以内に決済完了。2026年ヨーロッパ最速の暗号通貨オンランプ。手数料なし。",
-    excerpt: "SEPA銀行振込はヨーロッパで暗号通貨を購入する最も人気のある方法です。MRC GlobalPayでSEPAを使ってBitcoin、Ethereum、500以上のトークンを90秒以内に購入する方法を解説します。",
+    excerpt: "SEPA銀行振込はヨーロッパで暗号通貨を購入する最も人気のある方法です。MRC Global PayでSEPAを使ってBitcoin、Ethereum、500以上のトークンを90秒以内に購入する方法を解説します。",
     author: seedAuthors.danielCarter,
     publishedAt: "2026-04-11",
     updatedAt: "2026-04-11",
@@ -415,7 +415,7 @@ Pret a commencer? [Achetez du crypto avec SEPA maintenant](/#exchange).
     tags: ["SEPA", "ヨーロッパ", "オンランプ", "暗号通貨購入", "銀行振込"],
     content: `ヨーロッパで暗号通貨を購入するのは、以前は遅い銀行振込、必須の本人確認、そして処理に何日もかかるプラットフォームと付き合うことを意味していました。SEPAがその状況を完全に変えました。
 
-SEPA（Single Euro Payments Area）は36か国をカバーし、ヨーロッパ経済圏全体でユーロ建ての送金を処理します。SEPAを[MRC GlobalPay](/)のような非カストディアル・オンランプと組み合わせると、ユーロから暗号通貨への最速ルートが実現します。
+SEPA（Single Euro Payments Area）は36か国をカバーし、ヨーロッパ経済圏全体でユーロ建ての送金を処理します。SEPAを[MRC Global Pay](/)のような非カストディアル・オンランプと組み合わせると、ユーロから暗号通貨への最速ルートが実現します。
 
 ## SEPAでの暗号通貨購入手順
 
@@ -437,7 +437,7 @@ SEPAを支払い方法として選択します。銀行アプリから振込を�
 
 ### ステップ5: 暗号通貨を受け取り
 
-SEPA支払いが確認されると、MRC GlobalPayが暗号通貨を直接ウォレットに送信します。SEPA Instantなら60秒以内に決済完了です。
+SEPA支払いが確認されると、MRC Global Payが暗号通貨を直接ウォレットに送信します。SEPA Instantなら60秒以内に決済完了です。
 
 ## 基本情報
 
@@ -456,9 +456,9 @@ SEPA支払いが確認されると、MRC GlobalPayが暗号通貨を直接ウォ
   hi: {
     slug: SEPA_SLUG,
     title: "SEPA se Europe mein Crypto Kaise Khareedein (2026 Guide)",
-    metaTitle: "SEPA Bank Transfer se Crypto Khareedein | MRC GlobalPay",
+    metaTitle: "SEPA Bank Transfer se Crypto Khareedein | MRC Global Pay",
     metaDescription: "SEPA bank transfer se Bitcoin, Ethereum aur 6,000+ tokens khareedein. Bina registration, 60 second mein settlement. Europe ka sabse tez crypto on-ramp.",
-    excerpt: "SEPA bank transfers Europeans ke liye crypto khareedne ka sabse popular tarika hai. Yeh guide MRC GlobalPay par SEPA se Bitcoin, Ethereum aur 6,000+ tokens 90 second mein khareedne ka tarika batata hai.",
+    excerpt: "SEPA bank transfers Europeans ke liye crypto khareedne ka sabse popular tarika hai. Yeh guide MRC Global Pay par SEPA se Bitcoin, Ethereum aur 6,000+ tokens 90 second mein khareedne ka tarika batata hai.",
     author: seedAuthors.danielCarter,
     publishedAt: "2026-04-11",
     updatedAt: "2026-04-11",
@@ -467,15 +467,15 @@ SEPA支払いが確認されると、MRC GlobalPayが暗号通貨を直接ウォ
     tags: ["SEPA", "Europe", "On-Ramp", "Crypto Khareedein", "Bank Transfer"],
     content: `Europe mein crypto khareedna pehle slow bank transfers, mandatory identity checks aur platforms ke saath deal karna tha jo ek simple purchase process karne mein din lagate the. SEPA ne yeh sab badal diya.
 
-SEPA (Single Euro Payments Area) 36 deshon ko cover karta hai aur poore European Economic Area mein euro transfers process karta hai. Jab aap SEPA ko [MRC GlobalPay](/) jaise non-custodial on-ramp ke saath combine karte hain, toh aapko euros se crypto ka sabse tez rasta milta hai.
+SEPA (Single Euro Payments Area) 36 deshon ko cover karta hai aur poore European Economic Area mein euro transfers process karta hai. Jab aap SEPA ko [MRC Global Pay](/) jaise non-custodial on-ramp ke saath combine karte hain, toh aapko euros se crypto ka sabse tez rasta milta hai.
 
-## MRC GlobalPay par SEPA se crypto kaise khareedein
+## MRC Global Pay par SEPA se crypto kaise khareedein
 
 Poora process 90 second se kam mein hota hai:
 
 ### Step 1: Apna crypto chunein
 
-[Buy section](/#exchange) par jaayein aur chunein ki aap kya khareedna chahte hain. MRC GlobalPay 6,000+ tokens support karta hai.
+[Buy section](/#exchange) par jaayein aur chunein ki aap kya khareedna chahte hain. MRC Global Pay 6,000+ tokens support karta hai.
 
 ### Step 2: EUR mein amount daalen
 
@@ -491,7 +491,7 @@ SEPA ko payment method chunein. Aapko bank details milegi transfer complete karn
 
 ### Step 5: Crypto receive karein
 
-SEPA payment clear hone par MRC GlobalPay crypto seedha aapke wallet mein bhejta hai. SEPA Instant ke saath 60 second mein settlement.
+SEPA payment clear hone par MRC Global Pay crypto seedha aapke wallet mein bhejta hai. SEPA Instant ke saath 60 second mein settlement.
 
 ## Quick facts
 
@@ -510,9 +510,9 @@ SEPA payment clear hone par MRC GlobalPay crypto seedha aapke wallet mein bhejta
   tr: {
     slug: SEPA_SLUG,
     title: "Avrupa'da SEPA ile Crypto Nasil Satin Alinir (2026 Rehberi)",
-    metaTitle: "SEPA Banka Havalesi ile Crypto Satin Alin | MRC GlobalPay",
+    metaTitle: "SEPA Banka Havalesi ile Crypto Satin Alin | MRC Global Pay",
     metaDescription: "SEPA banka havalesi ile Bitcoin, Ethereum ve 500+ token satin alin. Kayit gerektirmez, 60 saniyede odeme. Avrupa'nin en hizli crypto on-ramp'i.",
-    excerpt: "SEPA banka havaleleri Avrupalilar icin crypto satin almanin en populer yoludur. Bu rehber MRC GlobalPay'de SEPA ile Bitcoin, Ethereum ve 500+ token satin almanizi 90 saniyede anlatir.",
+    excerpt: "SEPA banka havaleleri Avrupalilar icin crypto satin almanin en populer yoludur. Bu rehber MRC Global Pay'de SEPA ile Bitcoin, Ethereum ve 500+ token satin almanizi 90 saniyede anlatir.",
     author: seedAuthors.danielCarter,
     publishedAt: "2026-04-11",
     updatedAt: "2026-04-11",
@@ -521,15 +521,15 @@ SEPA payment clear hone par MRC GlobalPay crypto seedha aapke wallet mein bhejta
     tags: ["SEPA", "Avrupa", "On-Ramp", "Crypto Satin Al", "Banka Havalesi"],
     content: `Yillarca Avrupa'da crypto satin almak yavas banka havaleleri, zorunlu kimlik dogrulama ve basit bir satin almayi gunlerce isleyen platformlarla ugrasmak demekti. SEPA bu dinamigi tamamen degistirdi.
 
-SEPA (Single Euro Payments Area) 36 ulkeyi kapsar ve tum Avrupa Ekonomik Alani'nda euro transferlerini isler. SEPA'yi [MRC GlobalPay](/) gibi non-custodial bir on-ramp ile birlestirdiginizde, eurodan cryptoya en hizli rotayi elde edersiniz.
+SEPA (Single Euro Payments Area) 36 ulkeyi kapsar ve tum Avrupa Ekonomik Alani'nda euro transferlerini isler. SEPA'yi [MRC Global Pay](/) gibi non-custodial bir on-ramp ile birlestirdiginizde, eurodan cryptoya en hizli rotayi elde edersiniz.
 
-## MRC GlobalPay'de SEPA ile crypto nasil satin alinir
+## MRC Global Pay'de SEPA ile crypto nasil satin alinir
 
 Tum surec 90 saniyeden az surer:
 
 ### Adim 1: Crypto'nuzu secin
 
-[Satin Al bolumune](/#exchange) gidin ve ne satin almak istediginizi secin. MRC GlobalPay 500'den fazla token destekler.
+[Satin Al bolumune](/#exchange) gidin ve ne satin almak istediginizi secin. MRC Global Pay 500'den fazla token destekler.
 
 ### Adim 2: EUR tutarini girin
 
@@ -545,7 +545,7 @@ Odeme yontemi olarak SEPA'yi secin. Banka uygulamanizdan havaleyi tamamlamak ici
 
 ### Adim 5: Crypto'nuzu alin
 
-SEPA odemeniz onaylandiginda MRC GlobalPay crypto'yu dogrudan cuzdaniniza gonderir. SEPA Instant ile 60 saniyede odeme tamamlanir.
+SEPA odemeniz onaylandiginda MRC Global Pay crypto'yu dogrudan cuzdaniniza gonderir. SEPA Instant ile 60 saniyede odeme tamamlanir.
 
 ## Hizli bilgiler
 
@@ -564,9 +564,9 @@ SEPA odemeniz onaylandiginda MRC GlobalPay crypto'yu dogrudan cuzdaniniza gonder
   vi: {
     slug: SEPA_SLUG,
     title: "Cach Mua Crypto bang SEPA tai Chau Au (Huong Dan 2026)",
-    metaTitle: "Cach Mua Crypto bang Chuyen Khoan SEPA | MRC GlobalPay",
+    metaTitle: "Cach Mua Crypto bang Chuyen Khoan SEPA | MRC Global Pay",
     metaDescription: "Mua Bitcoin, Ethereum va hon 500 token bang chuyen khoan SEPA. Khong dang ky, thanh toan duoi 60 giay. On-ramp crypto nhanh nhat Chau Au 2026.",
-    excerpt: "Chuyen khoan SEPA la cach pho bien nhat de nguoi Chau Au mua crypto. Huong dan nay chi ban cach mua Bitcoin, Ethereum va 500+ token bang SEPA tren MRC GlobalPay trong 90 giay.",
+    excerpt: "Chuyen khoan SEPA la cach pho bien nhat de nguoi Chau Au mua crypto. Huong dan nay chi ban cach mua Bitcoin, Ethereum va 500+ token bang SEPA tren MRC Global Pay trong 90 giay.",
     author: seedAuthors.danielCarter,
     publishedAt: "2026-04-11",
     updatedAt: "2026-04-11",
@@ -575,15 +575,15 @@ SEPA odemeniz onaylandiginda MRC GlobalPay crypto'yu dogrudan cuzdaniniza gonder
     tags: ["SEPA", "Chau Au", "On-Ramp", "Mua Crypto", "Chuyen Khoan"],
     content: `Nhieu nam qua, mua crypto o Chau Au dong nghia voi chuyen khoan cham, xac minh danh tinh bat buoc va cac nen tang mat nhieu ngay de xu ly. SEPA da thay doi hoan toan.
 
-SEPA (Single Euro Payments Area) bao phu 36 quoc gia va xu ly chuyen khoan euro tren toan Khu Kinh te Chau Au. Khi ket hop SEPA voi on-ramp phi luu ky nhu [MRC GlobalPay](/), ban co duong nhanh nhat tu euro sang crypto.
+SEPA (Single Euro Payments Area) bao phu 36 quoc gia va xu ly chuyen khoan euro tren toan Khu Kinh te Chau Au. Khi ket hop SEPA voi on-ramp phi luu ky nhu [MRC Global Pay](/), ban co duong nhanh nhat tu euro sang crypto.
 
-## Cach mua crypto bang SEPA tren MRC GlobalPay
+## Cach mua crypto bang SEPA tren MRC Global Pay
 
 Toan bo quy trinh mat duoi 90 giay:
 
 ### Buoc 1: Chon crypto
 
-Vao [phan Mua](/#exchange) va chon crypto muon mua. MRC GlobalPay ho tro hon 500 token.
+Vao [phan Mua](/#exchange) va chon crypto muon mua. MRC Global Pay ho tro hon 500 token.
 
 ### Buoc 2: Nhap so tien EUR
 
@@ -599,7 +599,7 @@ Chon SEPA lam phuong thuc thanh toan. Ban se nhan thong tin ngan hang de hoan ta
 
 ### Buoc 5: Nhan crypto
 
-Khi thanh toan SEPA duoc xac nhan, MRC GlobalPay gui crypto truc tiep vao vi cua ban. Voi SEPA Instant, toan bo quy trinh hoan tat trong 60 giay.
+Khi thanh toan SEPA duoc xac nhan, MRC Global Pay gui crypto truc tiep vao vi cua ban. Voi SEPA Instant, toan bo quy trinh hoan tat trong 60 giay.
 
 ## Thong tin nhanh
 
@@ -618,9 +618,9 @@ Khi thanh toan SEPA duoc xac nhan, MRC GlobalPay gui crypto truc tiep vao vi cua
   af: {
     slug: SEPA_SLUG,
     title: "Hoe om Crypto te Koop met SEPA in Europa (2026 Gids)",
-    metaTitle: "Hoe om Crypto te Koop met SEPA Bankoordrag | MRC GlobalPay",
+    metaTitle: "Hoe om Crypto te Koop met SEPA Bankoordrag | MRC Global Pay",
     metaDescription: "Koop Bitcoin, Ethereum en 6,000+ tokens met SEPA bankoordrag. Geen registrasie, afhandeling binne 60 sekondes. Europa se vinnigste crypto on-ramp.",
-    excerpt: "SEPA bankoordragte is die gewildste manier vir Europeers om crypto te koop. Hierdie gids wys jou hoe om Bitcoin, Ethereum en 6,000+ tokens met SEPA op MRC GlobalPay binne 90 sekondes te koop.",
+    excerpt: "SEPA bankoordragte is die gewildste manier vir Europeers om crypto te koop. Hierdie gids wys jou hoe om Bitcoin, Ethereum en 6,000+ tokens met SEPA op MRC Global Pay binne 90 sekondes te koop.",
     author: seedAuthors.danielCarter,
     publishedAt: "2026-04-11",
     updatedAt: "2026-04-11",
@@ -629,15 +629,15 @@ Khi thanh toan SEPA duoc xac nhan, MRC GlobalPay gui crypto truc tiep vao vi cua
     tags: ["SEPA", "Europa", "On-Ramp", "Koop Crypto", "Bankoordrag"],
     content: `Vir jare het dit beteken om crypto in Europa te koop beteken stadige bankoordragte, verpligte identiteitskontroles en platforms wat dae geneem het om 'n eenvoudige aankoop te verwerk. SEPA het dit heeltemal verander.
 
-SEPA (Single Euro Payments Area) dek 36 lande en verwerk euro-oordragte regoor die Europese Ekonomiese Gebied. Wanneer jy SEPA kombineer met 'n nie-bewaarder on-ramp soos [MRC GlobalPay](/), kry jy die vinnigste roete van euros na crypto.
+SEPA (Single Euro Payments Area) dek 36 lande en verwerk euro-oordragte regoor die Europese Ekonomiese Gebied. Wanneer jy SEPA kombineer met 'n nie-bewaarder on-ramp soos [MRC Global Pay](/), kry jy die vinnigste roete van euros na crypto.
 
-## Hoe om crypto met SEPA op MRC GlobalPay te koop
+## Hoe om crypto met SEPA op MRC Global Pay te koop
 
 Die hele proses neem minder as 90 sekondes:
 
 ### Stap 1: Kies jou crypto
 
-Gaan na die [Koop afdeling](/#exchange) en kies wat jy wil koop. MRC GlobalPay ondersteun 6,000+ tokens.
+Gaan na die [Koop afdeling](/#exchange) en kies wat jy wil koop. MRC Global Pay ondersteun 6,000+ tokens.
 
 ### Stap 2: Voer jou bedrag in EUR in
 
@@ -653,7 +653,7 @@ Kies SEPA as betaalmetode. Jy sal bankbesonderhede ontvang om die oordrag te vol
 
 ### Stap 5: Ontvang jou crypto
 
-Wanneer jou SEPA-betaling bevestig word, stuur MRC GlobalPay die crypto direk na jou beursie. Met SEPA Instant, binne 60 sekondes.
+Wanneer jou SEPA-betaling bevestig word, stuur MRC Global Pay die crypto direk na jou beursie. Met SEPA Instant, binne 60 sekondes.
 
 ## Vinnige feite
 
@@ -672,9 +672,9 @@ Wanneer jou SEPA-betaling bevestig word, stuur MRC GlobalPay die crypto direk na
   fa: {
     slug: SEPA_SLUG,
     title: "خرید ارز دیجیتال با SEPA در اروپا (راهنمای 2026)",
-    metaTitle: "خرید ارز دیجیتال با حواله بانکی SEPA | MRC GlobalPay",
+    metaTitle: "خرید ارز دیجیتال با حواله بانکی SEPA | MRC Global Pay",
     metaDescription: "خرید بیت‌کوین، اتریوم و بیش از 500 توکن با حواله SEPA. بدون ثبت‌نام، تسویه در کمتر از 60 ثانیه. سریع‌ترین آن-رمپ کریپتو اروپا 2026.",
-    excerpt: "حواله‌های بانکی SEPA محبوب‌ترین روش خرید ارز دیجیتال برای اروپاییان است. این راهنما نحوه خرید بیت‌کوین و بیش از 500 توکن با SEPA در MRC GlobalPay را شرح می‌دهد.",
+    excerpt: "حواله‌های بانکی SEPA محبوب‌ترین روش خرید ارز دیجیتال برای اروپاییان است. این راهنما نحوه خرید بیت‌کوین و بیش از 500 توکن با SEPA در MRC Global Pay را شرح می‌دهد.",
     author: seedAuthors.danielCarter,
     publishedAt: "2026-04-11",
     updatedAt: "2026-04-11",
@@ -683,7 +683,7 @@ Wanneer jou SEPA-betaling bevestig word, stuur MRC GlobalPay die crypto direk na
     tags: ["SEPA", "اروپا", "خرید ارز دیجیتال"],
     content: `خرید ارز دیجیتال در اروپا سال‌ها به معنای حواله‌های بانکی کند و احراز هویت اجباری بود. SEPA این وضعیت را کاملا تغییر داد.
 
-SEPA شامل 36 کشور است و حواله‌های یورویی را در کل منطقه اقتصادی اروپا پردازش می‌کند. وقتی SEPA را با [MRC GlobalPay](/) ترکیب کنید، سریع‌ترین مسیر از یورو به ارز دیجیتال را خواهید داشت.
+SEPA شامل 36 کشور است و حواله‌های یورویی را در کل منطقه اقتصادی اروپا پردازش می‌کند. وقتی SEPA را با [MRC Global Pay](/) ترکیب کنید، سریع‌ترین مسیر از یورو به ارز دیجیتال را خواهید داشت.
 
 ## مراحل خرید
 
@@ -716,9 +716,9 @@ SEPA شامل 36 کشور است و حواله‌های یورویی را در �
   he: {
     slug: SEPA_SLUG,
     title: "איך לקנות קריפטו עם SEPA באירופה (מדריך 2026)",
-    metaTitle: "איך לקנות קריפטו בהעברת SEPA | MRC GlobalPay",
+    metaTitle: "איך לקנות קריפטו בהעברת SEPA | MRC Global Pay",
     metaDescription: "קנו ביטקוין, אתריום ויותר מ-500 טוקנים בהעברת SEPA. ללא הרשמה, סליקה תוך 60 שניות. האון-ראמפ הקריפטו המהיר ביותר באירופה ב-2026. ישירות לארנק שלכם, ללא עמלות נסתרות.",
-    excerpt: "העברות SEPA הן הדרך הפופולרית ביותר לאירופאים לרכוש קריפטו. מדריך זה מסביר איך לקנות ביטקוין ויותר מ-500 טוקנים עם SEPA ב-MRC GlobalPay.",
+    excerpt: "העברות SEPA הן הדרך הפופולרית ביותר לאירופאים לרכוש קריפטו. מדריך זה מסביר איך לקנות ביטקוין ויותר מ-500 טוקנים עם SEPA ב-MRC Global Pay.",
     author: seedAuthors.danielCarter,
     publishedAt: "2026-04-11",
     updatedAt: "2026-04-11",
@@ -727,7 +727,7 @@ SEPA شامل 36 کشور است و حواله‌های یورویی را در �
     tags: ["SEPA", "אירופה", "קניית קריפטו"],
     content: `במשך שנים, קניית קריפטו באירופה הייתה כרוכה בהעברות בנקאיות איטיות ואימות זהות חובה. SEPA שינה את זה לחלוטין.
 
-SEPA מכסה 36 מדינות ומעבד העברות יורו ברחבי האזור הכלכלי האירופי. כשמשלבים SEPA עם [MRC GlobalPay](/), מקבלים את המסלול המהיר ביותר מיורו לקריפטו.
+SEPA מכסה 36 מדינות ומעבד העברות יורו ברחבי האזור הכלכלי האירופי. כשמשלבים SEPA עם [MRC Global Pay](/), מקבלים את המסלול המהיר ביותר מיורו לקריפטו.
 
 ## שלבי הרכישה
 
@@ -760,9 +760,9 @@ SEPA מכסה 36 מדינות ומעבד העברות יורו ברחבי האז
   ur: {
     slug: SEPA_SLUG,
     title: "Europe mein SEPA se Crypto Kaise Khareedein (2026 Guide)",
-    metaTitle: "SEPA Bank Transfer se Crypto Khareedein | MRC GlobalPay",
+    metaTitle: "SEPA Bank Transfer se Crypto Khareedein | MRC Global Pay",
     metaDescription: "SEPA bank transfer se Bitcoin, Ethereum aur 6,000+ tokens khareedein. Registration nahi chahiye, 60 second mein settlement. Non-custodial crypto on-ramp.",
-    excerpt: "SEPA bank transfers Europeans ke liye crypto khareedne ka sabse mashhoor tarika hai. Yeh guide MRC GlobalPay par SEPA se crypto khareedne ka tarika batata hai.",
+    excerpt: "SEPA bank transfers Europeans ke liye crypto khareedne ka sabse mashhoor tarika hai. Yeh guide MRC Global Pay par SEPA se crypto khareedne ka tarika batata hai.",
     author: seedAuthors.danielCarter,
     publishedAt: "2026-04-11",
     updatedAt: "2026-04-11",
@@ -771,9 +771,9 @@ SEPA מכסה 36 מדינות ומעבד העברות יורו ברחבי האז
     tags: ["SEPA", "Europe", "Crypto Khareedein"],
     content: `Europe mein crypto khareedna pehle mushkil tha. Dheemi bank transfers, identity verification aur platforms jo din lagate the. SEPA ne yeh sab aasan kar diya.
 
-SEPA 36 mulkon ko cover karta hai aur euro transfers process karta hai. [MRC GlobalPay](/) ke saath SEPA istemal kar ke aap euros se crypto ka sabse tez rasta pa sakte hain.
+SEPA 36 mulkon ko cover karta hai aur euro transfers process karta hai. [MRC Global Pay](/) ke saath SEPA istemal kar ke aap euros se crypto ka sabse tez rasta pa sakte hain.
 
-## MRC GlobalPay par SEPA se crypto kaise khareedein
+## MRC Global Pay par SEPA se crypto kaise khareedein
 
 ### Step 1: Crypto chunein
 
@@ -805,9 +805,9 @@ SEPA payment clear hone par crypto seedha aapke wallet mein bheja jaata hai. SEP
   uk: {
     slug: SEPA_SLUG,
     title: "Yak kupyty krypto cherez SEPA v Yevropi (Posibnyk 2026)",
-    metaTitle: "Yak kupyty krypto cherez SEPA bankovskyi perekaz | MRC GlobalPay",
+    metaTitle: "Yak kupyty krypto cherez SEPA bankovskyi perekaz | MRC Global Pay",
     metaDescription: "Kupuite Bitcoin, Ethereum ta ponad 500 tokeniv cherez SEPA perekaz. Bez reiestratsii, rozrakhunok za 60 sekund. Naishvydshyi krypto on-remp Yevropy.",
-    excerpt: "Bankivski perekazy SEPA — naipopuliarnishyi sposib kupivli krypto dlia yevropeitsiv. Tsei posibnyk poiasnuie, yak kupyty Bitcoin ta ponad 500 tokenov cherez SEPA na MRC GlobalPay.",
+    excerpt: "Bankivski perekazy SEPA — naipopuliarnishyi sposib kupivli krypto dlia yevropeitsiv. Tsei posibnyk poiasnuie, yak kupyty Bitcoin ta ponad 500 tokenov cherez SEPA na MRC Global Pay.",
     author: seedAuthors.danielCarter,
     publishedAt: "2026-04-11",
     updatedAt: "2026-04-11",
@@ -816,9 +816,9 @@ SEPA payment clear hone par crypto seedha aapke wallet mein bheja jaata hai. SEP
     tags: ["SEPA", "Yevropa", "Kupyty Krypto"],
     content: `Rokami kupivlia krypto v Yevropi oznachala povilni bankivski perekazy ta oboviazkovu identyfikatsiiu. SEPA tse povnistiu zminyla.
 
-SEPA okholiuie 36 krain i obrobliuie perekazy v yevro po vsomu Yevropeiskomu ekonomichnomu prostoru. Poiednuiuchy SEPA z [MRC GlobalPay](/), vy otrymuiete naishvydshyi shliakh vid yevro do krypto.
+SEPA okholiuie 36 krain i obrobliuie perekazy v yevro po vsomu Yevropeiskomu ekonomichnomu prostoru. Poiednuiuchy SEPA z [MRC Global Pay](/), vy otrymuiete naishvydshyi shliakh vid yevro do krypto.
 
-## Yak kupyty krypto cherez SEPA na MRC GlobalPay
+## Yak kupyty krypto cherez SEPA na MRC Global Pay
 
 ### Krok 1: Oberit krypto
 

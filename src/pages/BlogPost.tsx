@@ -140,7 +140,7 @@ const BlogPostPage = () => {
     },
     publisher: {
       "@type": "Organization",
-      name: "MRC GlobalPay",
+      name: "MRC Global Pay",
       url: "https://mrcglobalpay.com",
     },
     mainEntityOfPage: { "@type": "WebPage", "@id": postUrl },
@@ -178,7 +178,7 @@ const BlogPostPage = () => {
         "@type": "HowTo",
         "@id": `${postUrl}#howto`,
         name: `How to buy ${priorityTokenForSchema.name} (${priorityTokenForSchema.symbol}) in 2026`,
-        description: `Step-by-step guide to swap ${priorityTokenForSchema.widgetFrom.toUpperCase()} for ${priorityTokenForSchema.symbol} on MRC GlobalPay in under 90 seconds.`,
+        description: `Step-by-step guide to swap ${priorityTokenForSchema.widgetFrom.toUpperCase()} for ${priorityTokenForSchema.symbol} on MRC Global Pay in under 90 seconds.`,
         totalTime: "PT2M",
         estimatedCost: { "@type": "MonetaryAmount", currency: "USD", value: "0.30" },
         tool: [{ "@type": "HowToTool", name: `${priorityTokenForSchema.symbol}-compatible wallet` }],
@@ -187,7 +187,7 @@ const BlogPostPage = () => {
             "@type": "HowToStep",
             position: 1,
             name: "Open the swap widget",
-            text: `Open MRC GlobalPay and select ${priorityTokenForSchema.widgetFrom.toUpperCase()} as the source asset and ${priorityTokenForSchema.symbol} as the destination.`,
+            text: `Open MRC Global Pay and select ${priorityTokenForSchema.widgetFrom.toUpperCase()} as the source asset and ${priorityTokenForSchema.symbol} as the destination.`,
             url: `https://mrcglobalpay.com${buildSwapDeepLink(priorityTokenForSchema)}`,
           },
           {
@@ -222,10 +222,10 @@ const BlogPostPage = () => {
     ? {
         "@context": "https://schema.org",
         "@type": "FinancialService",
-        name: "MRC GlobalPay Crypto Invoicing",
+        name: "MRC Global Pay Crypto Invoicing",
         description: "Professional crypto invoicing with all-in pricing and 168-hour rate lock guarantee.",
         url: "https://mrcglobalpay.com/?tab=request",
-        provider: { "@type": "Organization", name: "MRC GlobalPay", url: "https://mrcglobalpay.com" },
+        provider: { "@type": "Organization", name: "MRC Global Pay", url: "https://mrcglobalpay.com" },
         serviceType: "CurrencyConversionService",
         hasOfferCatalog: {
           "@type": "OfferCatalog",
@@ -249,7 +249,7 @@ const BlogPostPage = () => {
   return (
     <>
       <Helmet>
-        <title>{effectiveMetaTitle.length > 60 ? effectiveMetaTitle.slice(0, 60).trim() : effectiveMetaTitle} | MRC GlobalPay</title>
+        <title>{effectiveMetaTitle.length > 60 ? effectiveMetaTitle.slice(0, 60).trim() : effectiveMetaTitle} | MRC Global Pay</title>
         <meta name="description" content={effectiveMetaDescription} />
         <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1" />
         <link rel="canonical" href={postUrl} />
@@ -257,7 +257,7 @@ const BlogPostPage = () => {
         <meta property="og:description" content={effectiveMetaDescription} />
         <meta property="og:type" content="article" />
         <meta property="og:url" content={postUrl} />
-        <meta property="og:site_name" content="MRC GlobalPay" />
+        <meta property="og:site_name" content="MRC Global Pay" />
         <meta property="og:image" content={heroOgImage} />
         <meta property="article:published_time" content={post.publishedAt} />
         <meta property="article:modified_time" content={post.updatedAt} />
@@ -266,10 +266,10 @@ const BlogPostPage = () => {
           <meta property="article:tag" content={tag} key={tag} />
         ))}
         <meta name="twitter:card" content="summary_large_image" />
-        <meta name="twitter:title" content={`${effectiveMetaTitle} | MRC GlobalPay`} />
+        <meta name="twitter:title" content={`${effectiveMetaTitle} | MRC Global Pay`} />
         <meta name="twitter:description" content={effectiveMetaDescription} />
         <meta name="twitter:image" content={heroOgImage} />
-        <link rel="alternate" type="application/rss+xml" title="MRC GlobalPay Blog RSS" href="https://mrcglobalpay.com/rss.xml" />
+        <link rel="alternate" type="application/rss+xml" title="MRC Global Pay Blog RSS" href="https://mrcglobalpay.com/rss.xml" />
         <script type="application/ld+json">{JSON.stringify(graphJsonLd)}</script>
         {financialServiceJsonLd && <script type="application/ld+json">{JSON.stringify(financialServiceJsonLd)}</script>}
       </Helmet>

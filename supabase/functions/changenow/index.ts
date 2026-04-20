@@ -320,7 +320,7 @@ Deno.serve(async (req) => {
         const toC = String(to).toUpperCase();
         const amountNum = Number(amount);
         const isHighValue = amountNum >= 10000;
-        const telegramMsg = `[MRC GlobalPay] ✅ New Swap: ${amount} ${fromC} ➔ ${toC}\nStatus: ChangeNOW v2 Verified\nID: ${txData?.id || 'N/A'}`;
+        const telegramMsg = `[MRC Global Pay] ✅ New Swap: ${amount} ${fromC} ➔ ${toC}\nStatus: ChangeNOW v2 Verified\nID: ${txData?.id || 'N/A'}`;
         notifyTelegram(isHighValue ? 'alert' : 'swap', isHighValue ? `🚨 HIGH VALUE\n${telegramMsg}` : telegramMsg);
 
         // ── Partner Attribution Engine ──
@@ -418,7 +418,7 @@ Deno.serve(async (req) => {
   } catch (error: unknown) {
     const msg = error instanceof Error ? error.message : 'Unknown error';
     console.error('ChangeNow API error:', msg);
-    notifyTelegram('error', `🚨 [MRC GlobalPay] API Error\n${msg}`);
+    notifyTelegram('error', `🚨 [MRC Global Pay] API Error\n${msg}`);
     return jsonResponse({ error: msg }, 500);
   }
 });

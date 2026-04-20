@@ -3,12 +3,12 @@ import type { BlogPost } from "./types";
 
 export const INVOICE_POST_EN: BlogPost = {
   slug: "streamlined-global-settlement-mrc-invoicing",
-  title: "Streamlined Global Settlement: Introducing MRC GlobalPay Invoicing",
-  metaTitle: "MRC GlobalPay Invoicing: All-In Pricing & 7-Day Rate Lock",
+  title: "Streamlined Global Settlement: Introducing MRC Global Pay Invoicing",
+  metaTitle: "MRC Global Pay Invoicing: All-In Pricing & 7-Day Rate Lock",
   metaDescription:
-    "How does MRC GlobalPay Invoicing guarantee settlement certainty? All fees included in the quoted rate, 168-hour rate lock, and instant crypto-to-wallet delivery.",
+    "How does MRC Global Pay Invoicing guarantee settlement certainty? All fees included in the quoted rate, 168-hour rate lock, and instant crypto-to-wallet delivery.",
   excerpt:
-    "MRC GlobalPay Invoicing is built for speed and certainty. All service fees are included in the quoted exchange rate — the amount you see is the exact amount settled. Rates are locked for 168 hours, giving businesses a full 7-day window of price stability.",
+    "MRC Global Pay Invoicing is built for speed and certainty. All service fees are included in the quoted exchange rate — the amount you see is the exact amount settled. Rates are locked for 168 hours, giving businesses a full 7-day window of price stability.",
   author: seedAuthors.danielCarter,
   publishedAt: "2026-04-12",
   updatedAt: "2026-04-12",
@@ -17,9 +17,9 @@ export const INVOICE_POST_EN: BlogPost = {
   tags: ["Invoicing", "Settlement", "Rate Lock", "All-In Pricing", "Crypto Payments"],
   content: `Settlement uncertainty kills deals. When a freelancer quotes a client in Bitcoin and the rate moves 4% before payment arrives, someone absorbs the loss. When a treasury manager issues a cross-border invoice in USDC and hidden fees quietly reduce the settled amount, trust erodes.
 
-MRC GlobalPay Invoicing was built to eliminate both problems — permanently.
+MRC Global Pay Invoicing was built to eliminate both problems — permanently.
 
-## What makes MRC GlobalPay Invoicing different?
+## What makes MRC Global Pay Invoicing different?
 
 Speed and certainty. Every design decision in the invoicing tool optimizes for one outcome: the requester knows exactly what they will receive, and the payer knows exactly what they owe. There are no surprises, no hidden deductions, and no post-settlement adjustments.
 
@@ -68,7 +68,7 @@ No accounts. No sign-ups. No intermediary custody. The entire flow is non-custod
 
 ## What about taxes and local compliance?
 
-MRC GlobalPay is a global settlement tool. We do not withhold taxes or provide tax advice. Local tax compliance — including reporting obligations, capital gains treatment, and VAT/GST implications — remains the sole responsibility of the client.
+MRC Global Pay is a global settlement tool. We do not withhold taxes or provide tax advice. Local tax compliance — including reporting obligations, capital gains treatment, and VAT/GST implications — remains the sole responsibility of the client.
 
 We recommend consulting a qualified tax advisor in your jurisdiction before using crypto invoicing for commercial transactions.
 
@@ -82,13 +82,13 @@ We recommend consulting a qualified tax advisor in your jurisdiction before usin
 
 ## How do I create my first invoice?
 
-Navigate to the [Invoice tool](/invoice) on MRC GlobalPay. No registration required. Fill in the payer details, set your amount, and hit Generate. Your client receives a professional payment link within seconds.
+Navigate to the [Invoice tool](/invoice) on MRC Global Pay. No registration required. Fill in the payer details, set your amount, and hit Generate. Your client receives a professional payment link within seconds.
 
 The rate is locked. The settlement is guaranteed. The amount you quoted is the amount you receive.
 
 ---
 
-*MRC GlobalPay is a registered Canadian MSB (C100000015). All service fees are included in the quoted exchange rate. Rate lock period: 168 hours (7 days). Local tax compliance is the responsibility of the client.*`,
+*MRC Global Pay is a registered Canadian MSB (C100000015). All service fees are included in the quoted exchange rate. Rate lock period: 168 hours (7 days). Local tax compliance is the responsibility of the client.*`,
 };
 
 export const TRANSLATED_INVOICE_POSTS: Record<string, BlogPost> = {
@@ -96,45 +96,45 @@ export const TRANSLATED_INVOICE_POSTS: Record<string, BlogPost> = {
   es: {
     ...INVOICE_POST_EN,
     slug: "streamlined-global-settlement-mrc-invoicing",
-    title: "Liquidación Global Optimizada: Facturación MRC GlobalPay",
-    metaTitle: "Facturación MRC GlobalPay: Precio Todo Incluido y Bloqueo de Tasa 7 Días",
+    title: "Liquidación Global Optimizada: Facturación MRC Global Pay",
+    metaTitle: "Facturación MRC Global Pay: Precio Todo Incluido y Bloqueo de Tasa 7 Días",
     metaDescription:
-      "Cómo garantiza la facturación de MRC GlobalPay la certeza de liquidación? Todas las comisiones incluidas en la tasa cotizada, bloqueo de tasa de 168 horas y entrega instantánea.",
+      "Cómo garantiza la facturación de MRC Global Pay la certeza de liquidación? Todas las comisiones incluidas en la tasa cotizada, bloqueo de tasa de 168 horas y entrega instantánea.",
     excerpt:
-      "La facturación de MRC GlobalPay está diseñada para velocidad y certeza. Todas las comisiones están incluidas en la tasa de cambio cotizada — el monto que ves es el monto exacto liquidado.",
+      "La facturación de MRC Global Pay está diseñada para velocidad y certeza. Todas las comisiones están incluidas en la tasa de cambio cotizada — el monto que ves es el monto exacto liquidado.",
     content: INVOICE_POST_EN.content,
   },
   pt: {
     ...INVOICE_POST_EN,
     slug: "streamlined-global-settlement-mrc-invoicing",
-    title: "Liquidação Global Otimizada: Faturamento MRC GlobalPay",
-    metaTitle: "Faturamento MRC GlobalPay: Preço All-In e Bloqueio de Taxa por 7 Dias",
+    title: "Liquidação Global Otimizada: Faturamento MRC Global Pay",
+    metaTitle: "Faturamento MRC Global Pay: Preço All-In e Bloqueio de Taxa por 7 Dias",
     metaDescription:
-      "Como o faturamento da MRC GlobalPay garante certeza na liquidação? Todas as taxas incluídas na cotação, bloqueio de taxa de 168 horas e entrega instantânea.",
+      "Como o faturamento da MRC Global Pay garante certeza na liquidação? Todas as taxas incluídas na cotação, bloqueio de taxa de 168 horas e entrega instantânea.",
     excerpt:
-      "O faturamento da MRC GlobalPay foi projetado para velocidade e certeza. Todas as taxas de serviço estão incluídas na taxa de câmbio cotada — o valor que você vê é o valor exato liquidado.",
+      "O faturamento da MRC Global Pay foi projetado para velocidade e certeza. Todas as taxas de serviço estão incluídas na taxa de câmbio cotada — o valor que você vê é o valor exato liquidado.",
     content: INVOICE_POST_EN.content,
   },
   ja: {
     ...INVOICE_POST_EN,
     slug: "streamlined-global-settlement-mrc-invoicing",
-    title: "グローバル決済の合理化：MRC GlobalPay請求書機能",
-    metaTitle: "MRC GlobalPay請求書：オールイン価格と7日間のレートロック",
+    title: "グローバル決済の合理化：MRC Global Pay請求書機能",
+    metaTitle: "MRC Global Pay請求書：オールイン価格と7日間のレートロック",
     metaDescription:
-      "MRC GlobalPayの請求書機能はどのように決済の確実性を保証しますか？すべての手数料が提示レートに含まれ、168時間のレートロックと即時暗号通貨配送を実現。",
+      "MRC Global Payの請求書機能はどのように決済の確実性を保証しますか？すべての手数料が提示レートに含まれ、168時間のレートロックと即時暗号通貨配送を実現。",
     excerpt:
-      "MRC GlobalPayの請求書機能は、スピードと確実性のために設計されています。すべてのサービス手数料は提示される為替レートに含まれており、表示される金額が正確な決済金額です。",
+      "MRC Global Payの請求書機能は、スピードと確実性のために設計されています。すべてのサービス手数料は提示される為替レートに含まれており、表示される金額が正確な決済金額です。",
     content: INVOICE_POST_EN.content,
   },
   fr: {
     ...INVOICE_POST_EN,
     slug: "streamlined-global-settlement-mrc-invoicing",
-    title: "Règlement mondial optimisé : Facturation MRC GlobalPay",
-    metaTitle: "Facturation MRC GlobalPay : Tarification tout compris et verrouillage de taux 7 jours",
+    title: "Règlement mondial optimisé : Facturation MRC Global Pay",
+    metaTitle: "Facturation MRC Global Pay : Tarification tout compris et verrouillage de taux 7 jours",
     metaDescription:
-      "Comment la facturation MRC GlobalPay garantit-elle la certitude du règlement ? Tous les frais inclus dans le taux coté, verrouillage de taux de 168 heures et livraison instantanée.",
+      "Comment la facturation MRC Global Pay garantit-elle la certitude du règlement ? Tous les frais inclus dans le taux coté, verrouillage de taux de 168 heures et livraison instantanée.",
     excerpt:
-      "La facturation MRC GlobalPay est conçue pour la rapidité et la certitude. Tous les frais de service sont inclus dans le taux de change coté — le montant affiché est le montant exact réglé.",
+      "La facturation MRC Global Pay est conçue pour la rapidité et la certitude. Tous les frais de service sont inclus dans le taux de change coté — le montant affiché est le montant exact réglé.",
     content: INVOICE_POST_EN.content,
   },
 };

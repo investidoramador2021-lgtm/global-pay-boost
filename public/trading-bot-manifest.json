@@ -1,9 +1,9 @@
 {
-  "name": "MRC GlobalPay — Trading Bot Manifest",
+  "name": "MRC Global Pay — Trading Bot Manifest",
   "version": "1.0.0",
   "description": "Top 10 dust-swap pairs with approximate rates and minimum thresholds. Updated periodically.",
   "provider": {
-    "name": "MRC GlobalPay",
+    "name": "MRC Global Pay",
     "msb": "C100000015",
     "jurisdiction": "Canada (FINTRAC)",
     "url": "https://mrcglobalpay.com",

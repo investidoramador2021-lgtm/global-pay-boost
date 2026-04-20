@@ -9,11 +9,11 @@ export const FEATURED_2026_POSTS: BlogPost[] = [
   {
     slug: "crypto-exchange-api-integration-2026-guide",
     title: "The 2026 Guide to Crypto Exchange API Integration: Beyond the Basics",
-    metaTitle: "Crypto Exchange API Integration 2026 | MRC GlobalPay",
+    metaTitle: "Crypto Exchange API Integration 2026 | MRC Global Pay",
     metaDescription:
-      "Embedded exchange APIs in 2026: REST vs WebSocket, security, and how MRC GlobalPay delivers Registration-Free access to 6,000+ assets.",
+      "Embedded exchange APIs in 2026: REST vs WebSocket, security, and how MRC Global Pay delivers Registration-Free access to 6,000+ assets.",
     excerpt:
-      "2026 is the year of the embedded exchange. This deep technical guide unpacks REST vs WebSocket data flow, non-custodial API security, and how MRC GlobalPay's high-fidelity infrastructure powers Registration-Free access to 6,000+ assets.",
+      "2026 is the year of the embedded exchange. This deep technical guide unpacks REST vs WebSocket data flow, non-custodial API security, and how MRC Global Pay's high-fidelity infrastructure powers Registration-Free access to 6,000+ assets.",
     author: seedAuthors.sophiaRamirez,
     publishedAt: "2026-04-17",
     updatedAt: "2026-04-17",
@@ -75,9 +75,9 @@ Production-grade integrations in 2026 use both, deliberately:
 
 Build your client as a thin adapter that exposes a single \`watchOrder(id)\` interface. The transport underneath should be swappable without touching product code.
 
-## Section 2: The MRC GlobalPay Edge — High-Fidelity APIs at Scale
+## Section 2: The MRC Global Pay Edge — High-Fidelity APIs at Scale
 
-MRC GlobalPay aggregates liquidity across multiple non-custodial providers and exposes a unified interface for **Registration-Free access to 6,000+ assets**. The engineering decisions behind that number are non-trivial.
+MRC Global Pay aggregates liquidity across multiple non-custodial providers and exposes a unified interface for **Registration-Free access to 6,000+ assets**. The engineering decisions behind that number are non-trivial.
 
 ### Liquidity Aggregation, Not Liquidity Resale
 
@@ -94,7 +94,7 @@ Reaching 6,000+ assets — including long-tail Layer 2 tokens, Solana ecosystem 
 - **Dynamic minimum calculation** that adjusts to upstream provider floors plus a safety buffer.
 - **Network selection UX** when the same ticker exists across multiple chains (USDT on ERC20 vs TRC20 vs BEP20 vs Solana).
 
-The MRC GlobalPay API encodes all of this into a single \`/estimate\` and \`/transactions\` contract. Your integration handles user input. The API handles correctness.
+The MRC Global Pay API encodes all of this into a single \`/estimate\` and \`/transactions\` contract. Your integration handles user input. The API handles correctness.
 
 ### Registration-Free by Design
 
@@ -125,9 +125,9 @@ Non-custodial does not mean carefree. Real risks remain:
 4. **Address validation at submission time** — never trust client-side validation alone.
 5. **Quote-to-execution latency monitoring** — a 60-second rate lock that arrives at the provider in 58 seconds is a slippage bug waiting to happen.
 
-### Comparison Table: Traditional API vs MRC GlobalPay Non-Custodial API
+### Comparison Table: Traditional API vs MRC Global Pay Non-Custodial API
 
-| Dimension | Traditional CEX API | MRC GlobalPay Non-Custodial API |
+| Dimension | Traditional CEX API | MRC Global Pay Non-Custodial API |
 |---|---|---|
 | User onboarding | Account creation + KYC required | Registration-Free, zero account |
 | Fund custody | CEX holds balances | Non-custodial, zero platform custody |
@@ -136,13 +136,13 @@ Non-custodial does not mean carefree. Real risks remain:
 | Settlement model | Internal book transfer + scheduled withdrawal | Direct on-chain settlement to user wallet |
 | Liquidity sourcing | Single venue order book | Multi-provider smart router, best-rate selection |
 | Failover behavior | Manual provider switching | Silent automatic failover between providers |
-| Compliance burden | Integrator inherits CEX KYC obligations | FINTRAC MSB compliance handled by MRC GlobalPay |
+| Compliance burden | Integrator inherits CEX KYC obligations | FINTRAC MSB compliance handled by MRC Global Pay |
 | Time-to-integrate | 4–12 weeks (vendor onboarding) | Hours (public API, no contract gating) |
 | Insider risk surface | Hot wallet, withdrawal keys, admin panels | None — no balances exist to compromise |
 
 ## A Note on the Comparison Approach
 
-If you prefer a consumer-side comparison rather than an engineering deep-dive, our companion piece — [Bitcoin ATMs vs MRC GlobalPay: The Honest Comparison](/blog/bitcoin-atms-vs-mrc-globalpay-honest-comparison) — breaks down the same non-custodial advantages from the end-user perspective, including the 15% fee problem with physical kiosks.
+If you prefer a consumer-side comparison rather than an engineering deep-dive, our companion piece — [Bitcoin ATMs vs MRC Global Pay: The Honest Comparison](/blog/bitcoin-atms-vs-mrc-globalpay-honest-comparison) — breaks down the same non-custodial advantages from the end-user perspective, including the 15% fee problem with physical kiosks.
 
 ## Implementation Checklist
 
@@ -169,10 +169,10 @@ The platforms that treat exchange functionality as a first-class API primitive �
   },
   {
     slug: "bitcoin-atms-vs-mrc-globalpay-honest-comparison",
-    title: "Bitcoin ATMs vs. MRC GlobalPay: The Honest Comparison",
-    metaTitle: "Bitcoin ATMs vs MRC GlobalPay: Honest 2026 Comparison",
+    title: "Bitcoin ATMs vs. MRC Global Pay: The Honest Comparison",
+    metaTitle: "Bitcoin ATMs vs MRC Global Pay: Honest 2026 Comparison",
     metaDescription:
-      "Bitcoin ATM fees can hit 15%. See how MRC GlobalPay delivers more BTC per dollar with 6,000+ assets and No Registration Required access.",
+      "Bitcoin ATM fees can hit 15%. See how MRC Global Pay delivers more BTC per dollar with 6,000+ assets and No Registration Required access.",
     excerpt:
       "Canada's Bitcoin ATM network keeps growing — but so do the fees, often hitting 15% per transaction. This honest comparison breaks down kiosk economics, asset variety, privacy, and why a Registration-Free digital alternative gets you significantly more crypto for the same dollar.",
     author: seedAuthors.elenaVolkova,
@@ -187,7 +187,7 @@ Canada hosts more Bitcoin ATMs per capita than almost any country on earth. Walk
 
 But the convenience comes at a price most users never calculate until after the receipt prints. Bitcoin ATM operators routinely charge **margins of 12% to 18%** on top of the spot price, and almost none of them disclose the spread cleanly before you insert your bills.
 
-This article is the honest, side-by-side breakdown: what BTC ATMs actually do, what they actually cost, and how a Registration-Free digital platform like MRC GlobalPay compares on every dimension that matters.
+This article is the honest, side-by-side breakdown: what BTC ATMs actually do, what they actually cost, and how a Registration-Free digital platform like MRC Global Pay compares on every dimension that matters.
 
 ## Section 1: How Bitcoin ATMs Work
 
@@ -216,12 +216,12 @@ A typical breakdown of where your dollar goes at a BTC ATM:
 | Regulatory / cash-handling overhead | 1% – 3% (baked into spread) |
 | Effective total cost | **12% – 18% of your purchase** |
 
-For comparison, MRC GlobalPay charges a transparent, all-inclusive fee on swaps and on-ramp purchases, with no markup hidden inside the displayed rate. On a $1,000 buy, the difference looks like this:
+For comparison, MRC Global Pay charges a transparent, all-inclusive fee on swaps and on-ramp purchases, with no markup hidden inside the displayed rate. On a $1,000 buy, the difference looks like this:
 
 | Platform | Fee Structure | BTC Received (at $100k BTC) |
 |---|---|---|
 | Typical Bitcoin ATM (15%) | $150 cost baked into spread | ~0.0085 BTC |
-| MRC GlobalPay | Transparent flat fee, competitive rate | ~0.0099 BTC |
+| MRC Global Pay | Transparent flat fee, competitive rate | ~0.0099 BTC |
 
 That is roughly **16% more Bitcoin for the same dollar** — every single time.
 
@@ -229,7 +229,7 @@ That is roughly **16% more Bitcoin for the same dollar** — every single time.
 
 A Bitcoin ATM is, almost by definition, a Bitcoin-only product. The most generous multi-coin kiosks support **3 to 5 assets**: BTC, ETH, LTC, USDT, and occasionally DOGE or BCH. That is the ceiling.
 
-MRC GlobalPay offers **6,000+ assets**, including:
+MRC Global Pay offers **6,000+ assets**, including:
 
 - All major Layer 1s (BTC, ETH, SOL, AVAX, BNB, TON, TRX, XRP)
 - The full stablecoin stack across every meaningful chain (USDT, USDC, DAI, PYUSD, USDS)
@@ -251,11 +251,11 @@ Bitcoin ATMs in Canada operate under FINTRAC obligations, which means:
 
 The "anonymous cash purchase" reputation of BTC ATMs has been outdated for years.
 
-MRC GlobalPay operates as a **Registered Canadian MSB (FINTRAC C100000015)** with a fundamentally different model: **No Registration Required** for the swap and on-ramp flows. You do not create an account. You do not upload ID for standard transactions. You enter a destination wallet, complete the purchase via supported payment methods, and the asset settles directly on-chain. The platform's compliance posture is institutional, while the user experience stays frictionless.
+MRC Global Pay operates as a **Registered Canadian MSB (FINTRAC C100000015)** with a fundamentally different model: **No Registration Required** for the swap and on-ramp flows. You do not create an account. You do not upload ID for standard transactions. You enter a destination wallet, complete the purchase via supported payment methods, and the asset settles directly on-chain. The platform's compliance posture is institutional, while the user experience stays frictionless.
 
 On speed, the comparison is equally stark:
 
-| Dimension | Bitcoin ATM | MRC GlobalPay |
+| Dimension | Bitcoin ATM | MRC Global Pay |
 |---|---|---|
 | Travel to location | 10–30 minutes | None — open browser |
 | Wait time at kiosk | 5–15 minutes (queues common) | None |
@@ -268,19 +268,19 @@ On speed, the comparison is equally stark:
 
 **Speed**
 - Bitcoin ATM: 45–90 minutes including travel and queue.
-- MRC GlobalPay: Under 5 minutes from open browser to confirmed transaction.
+- MRC Global Pay: Under 5 minutes from open browser to confirmed transaction.
 
 **Fees**
 - Bitcoin ATM: 12%–18% effective cost, hidden in spread.
-- MRC GlobalPay: Transparent flat fee, competitive aggregated rate.
+- MRC Global Pay: Transparent flat fee, competitive aggregated rate.
 
 **Asset Variety**
 - Bitcoin ATM: 3–5 assets, BTC-dominated.
-- MRC GlobalPay: 6,000+ assets across every major chain and ecosystem.
+- MRC Global Pay: 6,000+ assets across every major chain and ecosystem.
 
 **Physical Security**
 - Bitcoin ATM: Walking with cash, exposed at kiosk, camera footage retained, location-tracked.
-- MRC GlobalPay: Non-custodial, zero physical exposure, Registration-Free, your funds never sit on the platform.
+- MRC Global Pay: Non-custodial, zero physical exposure, Registration-Free, your funds never sit on the platform.
 
 ## A Note on the Engineering Side
 

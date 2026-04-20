@@ -44,10 +44,10 @@ const WhyChooseSection = () => (
     <div className="container mx-auto px-4">
       <div className="mx-auto max-w-2xl text-center">
         <span className="inline-flex items-center gap-2 rounded-full border border-primary/20 bg-primary/5 px-3 py-1 font-display text-[11px] font-semibold uppercase tracking-wider text-primary sm:text-xs">
-          Why MRC GlobalPay
+          Why MRC Global Pay
         </span>
         <h2 className="mt-4 font-display text-3xl font-extrabold tracking-tight text-foreground sm:text-4xl">
-          Why Traders Choose <span className="text-gradient-neon">MRC GlobalPay</span>
+          Why Traders Choose <span className="text-gradient-neon">MRC Global Pay</span>
         </h2>
         <p className="mt-3 font-body text-sm leading-relaxed text-muted-foreground sm:text-base">
           Built for both casual swappers and serious affiliate partners — backed by Canadian regulatory infrastructure.

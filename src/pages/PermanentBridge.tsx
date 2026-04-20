@@ -13,7 +13,7 @@ const PermanentBridge = () => {
   return (
     <div className="min-h-screen bg-background">
       <Helmet>
-        <title>Permanent Crypto Bridge — Reusable Deposit Address | MRC GlobalPay</title>
+        <title>Permanent Crypto Bridge — Reusable Deposit Address | MRC Global Pay</title>
         <meta name="description" content="Generate a reusable permanent deposit address for recurring crypto conversions across 6,000+ tokens. No registration, no data stored, downloadable PDF receipts." />
         <link rel="canonical" href={canonicalUrl} />
         <meta name="robots" content="index, follow" />
@@ -21,14 +21,14 @@ const PermanentBridge = () => {
           {JSON.stringify({
             "@context": "https://schema.org",
             "@type": "WebApplication",
-            "name": "MRC GlobalPay Permanent Bridge",
+            "name": "MRC Global Pay Permanent Bridge",
             "url": canonicalUrl,
             "applicationCategory": "FinanceApplication",
             "operatingSystem": "All",
             "description": "Generate permanent deposit addresses for recurring crypto-to-crypto conversions with zero data storage.",
             "provider": {
               "@type": "FinancialService",
-              "name": "MRC GlobalPay",
+              "name": "MRC Global Pay",
               "url": "https://mrcglobalpay.com",
               "sameAs": [
                 "https://www.linkedin.com/company/mrc-globalpay",
@@ -59,15 +59,15 @@ const PermanentBridge = () => {
                 "name": "How does a stateless bridge prevent session timeouts?",
                 "acceptedAnswer": {
                   "@type": "Answer",
-                  "text": "MRC GlobalPay derives deterministic deposit addresses from BIP-44 master paths, eliminating server-side session state. No TTL expiry, no address reuse — each bridge operation is atomically independent."
+                  "text": "MRC Global Pay derives deterministic deposit addresses from BIP-44 master paths, eliminating server-side session state. No TTL expiry, no address reuse — each bridge operation is atomically independent."
                 }
               },
               {
                 "@type": "Question",
-                "name": "Is MRC GlobalPay a regulated Canadian MSB?",
+                "name": "Is MRC Global Pay a regulated Canadian MSB?",
                 "acceptedAnswer": {
                   "@type": "Answer",
-                  "text": "Yes. MRC GlobalPay is FINTRAC-registered (MSB C100000015), headquartered at 100 Metcalfe Street, Ottawa, Ontario. All bridge operations comply with Canadian AML/CTF regulations under non-custodial architecture."
+                  "text": "Yes. MRC Global Pay is FINTRAC-registered (MSB C100000015), headquartered at 100 Metcalfe Street, Ottawa, Ontario. All bridge operations comply with Canadian AML/CTF regulations under non-custodial architecture."
                 }
               }
             ]

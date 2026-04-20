@@ -48,17 +48,17 @@ const Index = () => {
       {
         "@type": "Organization",
         "@id": `${homeUrl}#legalentity`,
-        name: "MRC GlobalPay",
+        name: "MRC Global Pay",
         url: homeUrl,
         logo: "https://mrcglobalpay.com/icon-512.png",
-        description: "MRC GlobalPay is a non-custodial crypto exchange — a Registered Canadian MSB (FINTRAC #C100000015) operated by MRC Pay International Corp.",
+        description: "MRC Global Pay is a non-custodial crypto exchange — a Registered Canadian MSB (FINTRAC #C100000015) operated by MRC Pay International Corp.",
         sameAs: ["https://twitter.com/mrcglobalpay"],
         identifier: "C100000015"
       },
       {
         "@type": "FinancialService",
         "@id": `${homeUrl}#organization`,
-        name: "MRC GlobalPay",
+        name: "MRC Global Pay",
         url: homeUrl,
         description: t("meta.description"),
         priceRange: "$0.30 - $$$",
@@ -113,7 +113,7 @@ const Index = () => {
       {
         "@type": "Service",
         "@id": `${homeUrl}#currency-conversion`,
-        name: "MRC GlobalPay Currency Conversion",
+        name: "MRC Global Pay Currency Conversion",
         provider: { "@id": `${homeUrl}#organization` },
         serviceType: "CurrencyConversionService",
         description: "Instant non-custodial conversion across 6,000+ cryptocurrencies, Trending AI tokens, and Tokenized Stocks (xStocks) with 0.5% inclusive fee and 168-hour rate lock on invoices",
@@ -125,7 +125,7 @@ const Index = () => {
       {
         "@type": "SoftwareApplication",
         "@id": `${homeUrl}#app`,
-        name: "MRC GlobalPay",
+        name: "MRC Global Pay",
         url: homeUrl,
         description: t("meta.description"),
         applicationCategory: "FinanceApplication",

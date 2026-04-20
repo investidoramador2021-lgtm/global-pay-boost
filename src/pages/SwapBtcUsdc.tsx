@@ -14,7 +14,7 @@ const SwapBtcUsdc = () => (
     extraFaqs={[
       {
         q: "Why choose USDC over USDT for BTC swaps in 2026?",
-        a: "USDC offers full regulatory transparency with monthly attestations. Institutional traders and compliance-conscious users prefer BTC/USDC for its auditability and 1:1 USD backing guarantee. Settlement: immediate on-chain finality on MRC GlobalPay.",
+        a: "USDC offers full regulatory transparency with monthly attestations. Institutional traders and compliance-conscious users prefer BTC/USDC for its auditability and 1:1 USD backing guarantee. Settlement: immediate on-chain finality on MRC Global Pay.",
       },
     ]}
   />

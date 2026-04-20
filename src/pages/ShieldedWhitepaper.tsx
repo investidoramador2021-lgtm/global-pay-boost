@@ -63,7 +63,7 @@ const ShieldedWhitepaper = () => {
         <meta property="og:description" content={wp("metaDesc")} />
         <meta property="og:type" content="article" />
         <meta property="og:url" content={canonicalUrl} />
-        <meta property="og:site_name" content="MRC GlobalPay" />
+        <meta property="og:site_name" content="MRC Global Pay" />
         <meta property="og:image" content={`https://mrcglobalpay.com${vaultAsset}`} />
         <meta property="og:image:width" content="1200" />
         <meta property="og:image:height" content="630" />
@@ -80,10 +80,10 @@ const ShieldedWhitepaper = () => {
             description: wp("metaDesc"),
             url: canonicalUrl,
             image: `https://mrcglobalpay.com${vaultAsset}`,
-            author: { "@type": "Organization", name: "MRC GlobalPay" },
+            author: { "@type": "Organization", name: "MRC Global Pay" },
             publisher: {
               "@type": "FinancialService",
-              name: "MRC GlobalPay",
+              name: "MRC Global Pay",
               url: "https://mrcglobalpay.com",
             },
           })}

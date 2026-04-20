@@ -708,7 +708,7 @@ export default function PartnerPortal() {
   return (
     <>
       <Helmet>
-        <title>{t("portal.metaTitle", "Institutional Partner Portal | MRC GlobalPay")}</title>
+        <title>{t("portal.metaTitle", "Institutional Partner Portal | MRC Global Pay")}</title>
         <meta name="description" content={t("portal.metaDesc", "Secure partner dashboard with 2FA, API key management, and real-time transaction monitoring.")} />
         <meta name="robots" content="index, follow" />
       </Helmet>

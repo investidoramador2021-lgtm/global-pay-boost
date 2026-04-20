@@ -41,7 +41,7 @@ const AUTHORS = [
 
 const INTERNAL_LINKS = [
   { text: "instant swap tool", url: "/#exchange" },
-  { text: "MRC GlobalPay", url: "/#exchange" },
+  { text: "MRC Global Pay", url: "/#exchange" },
   { text: "swap BTC to USDC", url: "/swap/btc-usdc" },
   { text: "swap SOL to USDT", url: "/swap/sol-usdt" },
   { text: "swap ETH to SOL", url: "/swap/eth-sol" },
@@ -187,7 +187,7 @@ serve(async (req) => {
     const systemPrompt = `You are ${author.name}, ${author.role}. ${author.bio}
 Credentials: ${author.credentials}
 
-You write expert-level blog posts for MRC GlobalPay (mrcglobalpay.com), an instant non-custodial crypto swap platform that aggregates liquidity from 700+ exchanges. The current date is ${new Date().toISOString().split("T")[0]}.
+You write expert-level blog posts for MRC Global Pay (mrcglobalpay.com), an instant non-custodial crypto swap platform that aggregates liquidity from 700+ exchanges. The current date is ${new Date().toISOString().split("T")[0]}.
 
 YOUR WRITING IDENTITY:
 - You are a REAL person with years of hands-on crypto experience

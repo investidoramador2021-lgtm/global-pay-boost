@@ -36,19 +36,19 @@ const SolutionPage = () => {
   const faqItems = [
     {
       q: `What is the minimum amount to swap ${from_token} to ${to_token}?`,
-      a: `MRC GlobalPay processes ${from_token} to ${to_token} swaps from just $0.30 — the industry's lowest minimum. Most competitors require $5–$50 minimum deposits, locking out small balances.`,
+      a: `MRC Global Pay processes ${from_token} to ${to_token} swaps from just $0.30 — the industry's lowest minimum. Most competitors require $5–$50 minimum deposits, locking out small balances.`,
     },
     {
       q: `Do I need to register to swap ${from_token} to ${to_token}?`,
-      a: `No. MRC GlobalPay is completely registration-free. No email, no ID, no account creation. Just select ${from_token} → ${to_token}, enter your amount, paste your wallet, and confirm.`,
+      a: `No. MRC Global Pay is completely registration-free. No email, no ID, no account creation. Just select ${from_token} → ${to_token}, enter your amount, paste your wallet, and confirm.`,
     },
     {
       q: `How long does a ${from_token} to ${to_token} swap take?`,
       a: `Most ${from_token} to ${to_token} swaps settle in under 60 seconds. Speed depends on network confirmation times, but our aggregated liquidity ensures the fastest available route.`,
     },
     {
-      q: `Is it safe to swap ${from_token} to ${to_token} on MRC GlobalPay?`,
-      a: `Yes. MRC GlobalPay is a Canadian Registered Money Services Business (MSB) under FINTRAC. All swaps are non-custodial and secured via Fireblocks infrastructure. We never hold your funds.`,
+      q: `Is it safe to swap ${from_token} to ${to_token} on MRC Global Pay?`,
+      a: `Yes. MRC Global Pay is a Canadian Registered Money Services Business (MSB) under FINTRAC. All swaps are non-custodial and secured via Fireblocks infrastructure. We never hold your funds.`,
     },
   ];
 
@@ -61,13 +61,13 @@ const SolutionPage = () => {
       url: pageUrl,
       totalTime: "PT1M",
       estimatedCost: { "@type": "MonetaryAmount", currency: "USD", value: "0.30" },
-      tool: [{ "@type": "HowToTool", name: "MRC GlobalPay Exchange" }],
+      tool: [{ "@type": "HowToTool", name: "MRC Global Pay Exchange" }],
       step: [
         {
           "@type": "HowToStep",
           position: 1,
           name: `Select ${from_token} → ${to_token}`,
-          text: `Open MRC GlobalPay and choose ${from_token} as your "Send" token and ${to_token} as your "Receive" token.`,
+          text: `Open MRC Global Pay and choose ${from_token} as your "Send" token and ${to_token} as your "Receive" token.`,
         },
         {
           "@type": "HowToStep",
@@ -186,13 +186,13 @@ const SolutionPage = () => {
                   a loss for most platforms.
                 </p>
                 <p>
-                  MRC GlobalPay solves this with <strong className="text-primary">aggregated liquidity</strong> and
+                  MRC Global Pay solves this with <strong className="text-primary">aggregated liquidity</strong> and
                   optimized routing. We process {from_token} → {to_token} swaps from just{" "}
                   <strong className="text-primary">$0.30</strong> by batching micro-transactions across
                   multiple liquidity pools. Our edge: <strong className="text-foreground">{network_advantage}</strong>.
                 </p>
                 <p>
-                  <a href={`/compare/mrc-vs-${relatedCompareSlug}`} className="text-primary hover:underline" title={`Compare MRC GlobalPay vs ${relatedCompareSlug}`}>
+                  <a href={`/compare/mrc-vs-${relatedCompareSlug}`} className="text-primary hover:underline" title={`Compare MRC Global Pay vs ${relatedCompareSlug}`}>
                     See how we compare to other exchanges →
                   </a>
                 </p>
@@ -209,7 +209,7 @@ const SolutionPage = () => {
                   {
                     step: "1",
                     title: `Select ${from_token} → ${to_token}`,
-                    desc: `Open MRC GlobalPay and choose ${from_token} as your "Send" token and ${to_token} as your "Receive" token. We support 6,000+ assets across all major chains.`,
+                    desc: `Open MRC Global Pay and choose ${from_token} as your "Send" token and ${to_token} as your "Receive" token. We support 6,000+ assets across all major chains.`,
                   },
                   {
                     step: "2",
@@ -272,7 +272,7 @@ const SolutionPage = () => {
                 <p className="font-body text-xs leading-relaxed text-muted-foreground">
                   Licensed &amp; compliant under FINTRAC. Your swaps are processed through a regulated money services business.
                 </p>
-                <a href="/transparency-security" className="mt-2 inline-block font-body text-xs text-primary hover:underline" title="View MRC GlobalPay compliance details">
+                <a href="/transparency-security" className="mt-2 inline-block font-body text-xs text-primary hover:underline" title="View MRC Global Pay compliance details">
                   View compliance details →
                 </a>
               </div>
@@ -300,7 +300,7 @@ const SolutionPage = () => {
               <a
                 href="/"
                 className="flex w-full items-center justify-center gap-2 rounded-lg bg-primary px-4 py-3 font-display text-sm font-bold text-primary-foreground transition-colors hover:bg-primary/90"
-                title={`Swap ${from_token} to ${to_token} now on MRC GlobalPay`}
+                title={`Swap ${from_token} to ${to_token} now on MRC Global Pay`}
               >
                 <Zap className="h-4 w-4" aria-hidden="true" />
                 Swap Now — From $0.30

@@ -656,7 +656,7 @@ const EmbedWidget = ({ modeOverride, langOverride }: EmbedWidgetProps = {}) => {
             rel="noopener"
             className={`text-[10px] ${C.textFaint} transition-colors hover:${C.textDim}`}
           >
-            {t("widget.poweredBy", "Powered by")} <span className="font-semibold">MRC GlobalPay</span>
+            {t("widget.poweredBy", "Powered by")} <span className="font-semibold">MRC Global Pay</span>
           </a>
         </div>
 

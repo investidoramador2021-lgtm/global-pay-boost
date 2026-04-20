@@ -89,7 +89,7 @@ Deno.serve(async (req) => {
       const secretBytes = crypto.getRandomValues(new Uint8Array(20));
       const secret = base32Encode(secretBytes);
       const backupCodes = generateBackupCodes();
-      const issuer = "MRC GlobalPay";
+      const issuer = "MRC Global Pay";
       const label = encodeURIComponent(user.email || "partner");
       const otpauthUrl = `otpauth://totp/${issuer}:${label}?secret=${secret}&issuer=${encodeURIComponent(issuer)}&algorithm=SHA1&digits=6&period=30`;
 

@@ -9,13 +9,13 @@ import { usePageUrl } from "@/hooks/use-page-url";
 const pageJsonLd = {
   "@context": "https://schema.org",
   "@type": "WebPage",
-  name: "Transparency & Security | MRC GlobalPay",
+  name: "Transparency & Security | MRC Global Pay",
   description:
     "Canadian MSB-compliant, non-custodial crypto swap platform. Learn about our security practices, liquidity partnerships, and audit status.",
   url: "https://mrcglobalpay.com/transparency-security",
   publisher: {
     "@type": "Organization",
-    name: "MRC GlobalPay",
+    name: "MRC Global Pay",
     url: "https://mrcglobalpay.com",
     address: {
       "@type": "PostalAddress",
@@ -33,7 +33,7 @@ const pageJsonLd = {
 const financialServiceJsonLd = {
   "@context": "https://schema.org",
   "@type": "FinancialService",
-  name: "MRC GlobalPay",
+  name: "MRC Global Pay",
   url: "https://mrcglobalpay.com",
   parentOrganization: {
     "@type": "Organization",
@@ -88,24 +88,24 @@ const TransparencySecurity = () => {
   return (
     <>
       <Helmet>
-        <title>Transparency & Security | MRC GlobalPay</title>
+        <title>Transparency & Security | MRC Global Pay</title>
         <meta
           name="description"
-          content="MRC GlobalPay operates as a Canadian MSB-compliant, non-custodial crypto exchange. Learn about our security audits, liquidity partners, and data practices."
+          content="MRC Global Pay operates as a Canadian MSB-compliant, non-custodial crypto exchange. Learn about our security audits, liquidity partners, and data practices."
         />
         <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1" />
         <link rel="canonical" href={pageUrl} />
-        <meta property="og:title" content="Transparency & Security | MRC GlobalPay" />
+        <meta property="og:title" content="Transparency & Security | MRC Global Pay" />
         <meta
           property="og:description"
           content="Canadian MSB-compliant, non-custodial crypto swap platform with institutional-grade security."
         />
         <meta property="og:url" content={pageUrl} />
         <meta property="og:type" content="website" />
-        <meta property="og:site_name" content="MRC GlobalPay" />
+        <meta property="og:site_name" content="MRC Global Pay" />
         <meta property="og:image" content="https://pub-bb2e103a32db4e198524a2e9ed8f35b4.r2.dev/22f69f45-cf65-4871-9af4-b68ab4027213/id-preview-243bf129--23f851ec-c820-43c7-bbe2-d2e830f7c268.lovable.app-1773521796493.png" />
         <meta name="twitter:card" content="summary_large_image" />
-        <meta name="twitter:title" content="Transparency & Security | MRC GlobalPay" />
+        <meta name="twitter:title" content="Transparency & Security | MRC Global Pay" />
         <meta name="twitter:description" content="Canadian MSB-compliant, non-custodial crypto swap platform with institutional-grade security." />
         <meta name="twitter:image" content="https://pub-bb2e103a32db4e198524a2e9ed8f35b4.r2.dev/22f69f45-cf65-4871-9af4-b68ab4027213/id-preview-243bf129--23f851ec-c820-43c7-bbe2-d2e830f7c268.lovable.app-1773521796493.png" />
         <script type="application/ld+json">{JSON.stringify(pageJsonLd)}</script>
@@ -125,7 +125,7 @@ const TransparencySecurity = () => {
               Transparency & Security
             </h1>
             <p className="mx-auto mt-4 max-w-2xl font-body text-lg leading-relaxed text-muted-foreground">
-              MRC GlobalPay is built on the principles of non-custodial architecture, regulatory
+              MRC Global Pay is built on the principles of non-custodial architecture, regulatory
               compliance, and institutional-grade security. Here's how we protect your swaps.
             </p>
           </div>
@@ -143,7 +143,7 @@ const TransparencySecurity = () => {
                   </h2>
                 </div>
                 <p className="font-body leading-relaxed text-muted-foreground">
-                  MRC GlobalPay operates under Canadian Money Services Business (MSB) regulations,
+                  MRC Global Pay operates under Canadian Money Services Business (MSB) regulations,
                   registered with FINTRAC. This ensures full compliance with anti-money laundering
                   (AML) and counter-terrorism financing (CTF) requirements while maintaining the
                   privacy-first, no-registration swap experience our users trust.
@@ -282,14 +282,14 @@ const TransparencySecurity = () => {
         <section className="border-t border-border bg-muted/20 py-12 sm:py-20">
           <div className="container mx-auto max-w-4xl px-4">
             <h2 className="mb-2 text-center font-display text-2xl font-bold text-foreground sm:text-3xl">
-              About MRC GlobalPay
+              About MRC Global Pay
             </h2>
             <p className="mx-auto mb-8 max-w-xl text-center font-body text-muted-foreground">
               Our mission is to make crypto accessible to everyone — regardless of balance size.
             </p>
             <div className="mx-auto max-w-2xl space-y-4 font-body leading-relaxed text-muted-foreground">
               <p>
-                MRC GlobalPay is a <strong className="text-foreground">registered Money Services Business (MSB)</strong> headquartered
+                MRC Global Pay is a <strong className="text-foreground">registered Money Services Business (MSB)</strong> headquartered
                 in Ottawa, Canada, operating under FINTRAC regulations. We provide non-custodial, instant crypto-to-crypto
                 swaps with industry-leading low minimums starting at $0.30.
               </p>

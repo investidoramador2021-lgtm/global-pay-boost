@@ -11,7 +11,7 @@ const SwapXrpBtc = () => (
     isFeatured
     headline={<>Swap XRP to BTC Instantly – <span className="text-gradient-neon">XRPL Speed Meets Bitcoin Settlement</span></>}
     subHeadline="Convert XRP into native Bitcoin in minutes. The XRP Ledger's 3–5 second finality means your funds clear our routing layer almost instantly — you only wait for Bitcoin confirmations."
-    whyText="XRP holders rotating into Bitcoin face fragmented liquidity across exchanges and high spreads on direct XRP/BTC books. MRC GlobalPay aggregates the best XRP/BTC routes across multiple providers, locks the quoted rate, and settles native BTC to your specified address. No registration. No custody. The XRPL's deterministic 3–5 second finality keeps the swap window tight even during volatile sessions."
+    whyText="XRP holders rotating into Bitcoin face fragmented liquidity across exchanges and high spreads on direct XRP/BTC books. MRC Global Pay aggregates the best XRP/BTC routes across multiple providers, locks the quoted rate, and settles native BTC to your specified address. No registration. No custody. The XRPL's deterministic 3–5 second finality keeps the swap window tight even during volatile sessions."
     extraFaqs={[
       {
         q: "Do I need an XRP destination tag?",

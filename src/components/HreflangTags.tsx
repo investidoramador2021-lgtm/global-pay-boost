@@ -46,7 +46,7 @@ const HreflangTags = () => {
 
       {/* OG URL must always match canonical */}
       <meta property="og:url" content={canonicalUrl} />
-      <meta property="og:site_name" content="MRC GlobalPay" />
+      <meta property="og:site_name" content="MRC Global Pay" />
 
       {/* Default robots */}
       <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1" />

@@ -12,9 +12,9 @@ const MoneroNodeWhitepaper = () => {
   const lang = getLangFromPath(pathname);
   const swapHref = langPath(lang, "/");
 
-  const title = "Enhanced XMR Swap Reliability on MRC GlobalPay — Powered by a Dedicated Monero Node in Our Network";
+  const title = "Enhanced XMR Swap Reliability on MRC Global Pay — Powered by a Dedicated Monero Node in Our Network";
   const metaDescription =
-    "MRC GlobalPay now runs a dedicated Monero node in our network — faster deposit detection, fewer failed swaps, and direct infrastructure support for the XMR network's decentralization.";
+    "MRC Global Pay now runs a dedicated Monero node in our network — faster deposit detection, fewer failed swaps, and direct infrastructure support for the XMR network's decentralization.";
 
   const jsonLd = {
     "@context": "https://schema.org",
@@ -23,15 +23,15 @@ const MoneroNodeWhitepaper = () => {
     description: metaDescription,
     datePublished: "2026-04-20",
     dateModified: "2026-04-20",
-    author: { "@type": "Organization", name: "MRC GlobalPay" },
+    author: { "@type": "Organization", name: "MRC Global Pay" },
     publisher: {
       "@type": "Organization",
-      name: "MRC GlobalPay",
+      name: "MRC Global Pay",
       logo: { "@type": "ImageObject", url: "https://mrcglobalpay.com/icon-512.png" },
     },
     mainEntityOfPage: canonicalUrl,
     keywords:
-      "Monero, XMR, dedicated Monero node, XMR swap, non-custodial Monero exchange, MRC GlobalPay Monero, privacy coin swap, FCMP++, Cuprate node, Monero delisting",
+      "Monero, XMR, dedicated Monero node, XMR swap, non-custodial Monero exchange, MRC Global Pay Monero, privacy coin swap, FCMP++, Cuprate node, Monero delisting",
   };
 
   const faqLd = {
@@ -51,15 +51,15 @@ const MoneroNodeWhitepaper = () => {
         name: "Is Monero legal to swap in 2026?",
         acceptedAnswer: {
           "@type": "Answer",
-          text: "Yes. Monero is legal to own and use in the United States, Canada, the European Union, the United Kingdom, and most other jurisdictions. No major country has criminalized XMR ownership. Regulatory action has targeted licensed exchange listings — not individual ownership or non-custodial swaps. MRC GlobalPay is a Canadian MSB operating within FINTRAC AML/ATF requirements, and XMR swaps are fully supported.",
+          text: "Yes. Monero is legal to own and use in the United States, Canada, the European Union, the United Kingdom, and most other jurisdictions. No major country has criminalized XMR ownership. Regulatory action has targeted licensed exchange listings — not individual ownership or non-custodial swaps. MRC Global Pay is a Canadian MSB operating within FINTRAC AML/ATF requirements, and XMR swaps are fully supported.",
         },
       },
       {
         "@type": "Question",
-        name: "Can I swap XMR on MRC GlobalPay without registration?",
+        name: "Can I swap XMR on MRC Global Pay without registration?",
         acceptedAnswer: {
           "@type": "Answer",
-          text: "Yes. MRC GlobalPay is a non-custodial platform and does not require registration or identity verification for standard swap volumes. You swap directly from your own wallet to your own wallet — no account, no email, no ID submission required.",
+          text: "Yes. MRC Global Pay is a non-custodial platform and does not require registration or identity verification for standard swap volumes. You swap directly from your own wallet to your own wallet — no account, no email, no ID submission required.",
         },
       },
       {
@@ -123,10 +123,10 @@ const MoneroNodeWhitepaper = () => {
             <div className="mb-6 flex items-center justify-center gap-3 text-sm text-muted-foreground">
               <span className="flex items-center gap-1"><Calendar className="h-4 w-4" /> April 20, 2026</span>
               <span className="flex items-center gap-1"><Clock className="h-4 w-4" /> 9 min read</span>
-              <span>MRC GlobalPay</span>
+              <span>MRC Global Pay</span>
             </div>
             <h1 className="mb-6 font-display text-3xl font-bold leading-tight text-foreground sm:text-4xl lg:text-5xl">
-              Enhanced XMR Swap Reliability on MRC GlobalPay — Powered by a Dedicated Monero Node in Our Network
+              Enhanced XMR Swap Reliability on MRC Global Pay — Powered by a Dedicated Monero Node in Our Network
             </h1>
             <p className="mx-auto max-w-2xl text-lg leading-relaxed text-muted-foreground">
               Most platforms supporting Monero swaps rely on public, shared nodes they don't control. Our network now includes a dedicated XMR node — which means faster transfer detection, fewer failed swaps during high-traffic periods, and a direct infrastructure stake in the Monero network's decentralization. Here's the full picture of what this means and why it matters in 2026.
@@ -215,7 +215,7 @@ const MoneroNodeWhitepaper = () => {
                 With a dedicated node integrated into our network, we are no longer dependent on the availability, speed, or reliability of public Monero nodes — many of which become overloaded precisely when network activity spikes, which is exactly when your swap is most likely to stall. Our network's direct node access means faster deposit detection, more consistent swap execution, and significantly fewer interruptions during peak periods.
               </p>
               <p className="mt-4 leading-8">
-                For users, the practical effect is simple: XMR swaps on MRC GlobalPay are less likely to show "awaiting deposit" timeouts, less likely to require manual support intervention, and more likely to complete in under 60 seconds — even during high Monero network activity.
+                For users, the practical effect is simple: XMR swaps on MRC Global Pay are less likely to show "awaiting deposit" timeouts, less likely to require manual support intervention, and more likely to complete in under 60 seconds — even during high Monero network activity.
               </p>
             </section>
 
@@ -231,7 +231,7 @@ const MoneroNodeWhitepaper = () => {
                 This is not a trivial point in 2026. As centralized exchange delistings have pushed Monero liquidity toward non-custodial and peer-to-peer platforms, the health of the underlying node network becomes more critical — not less. Fewer on-ramps means more load on fewer nodes. Services whose networks operate independent infrastructure, rather than relying on shared public nodes, actively contribute to the resilience that makes Monero's privacy meaningful.
               </p>
               <p className="mt-4 leading-8">
-                Adding a dedicated XMR node to our network is MRC GlobalPay's explicit infrastructure commitment to the Monero ecosystem — not just listing XMR as a supported asset, but participating in the network that makes XMR function.
+                Adding a dedicated XMR node to our network is MRC Global Pay's explicit infrastructure commitment to the Monero ecosystem — not just listing XMR as a supported asset, but participating in the network that makes XMR function.
               </p>
             </section>
 
@@ -273,7 +273,7 @@ const MoneroNodeWhitepaper = () => {
                       ["Japan (all licensed CEXs)", "Mandatory ban", "FSA directive since 2018", "Banned"],
                       ["India (registered platforms)", "FIU-IND enforcement", "AML reform Jan 2026", "Restricted Jan 2026"],
                       ["EU (MiCA framework)", "Enhanced due diligence required", "Not banned — compliance burden", "Restricted, not banned"],
-                      ["MRC GlobalPay (Canada)", "Full support maintained", "Non-custodial MSB model", "Available — no registration"],
+                      ["MRC Global Pay (Canada)", "Full support maintained", "Non-custodial MSB model", "Available — no registration"],
                     ].map(([exchange, action, reason, status]) => (
                       <tr key={exchange} className="border-b border-border/50">
                         <td className="px-3 py-3 font-medium text-foreground">{exchange}</td>
@@ -290,7 +290,7 @@ const MoneroNodeWhitepaper = () => {
                 The result: Monero's liquidity has concentrated into non-custodial platforms, peer-to-peer markets, and atomic swap protocols. Non-custodial swap volume has grown over 340% year-over-year in 2026. Monero itself is up over 120% in the last 12 months, with a multi-year high above $720 in January 2026, driven by what analysts describe as inelastic demand for untraceable liquidity as surveillance infrastructure on transparent chains expands.
               </p>
               <p className="mt-4 leading-8">
-                Monero is not declining under regulatory pressure — it is concentrating. Liquidity is moving from centralized venues with compliance overhead to non-custodial platforms that can support XMR without requiring traceability the protocol cannot provide. This is the market MRC GlobalPay is built for.
+                Monero is not declining under regulatory pressure — it is concentrating. Liquidity is moving from centralized venues with compliance overhead to non-custodial platforms that can support XMR without requiring traceability the protocol cannot provide. This is the market MRC Global Pay is built for.
               </p>
             </section>
 
@@ -303,7 +303,7 @@ const MoneroNodeWhitepaper = () => {
                 There is widespread confusion about Monero's legal status, often amplified by delisting headlines. The reality is more nuanced. Monero is legal to own, buy, sell, and use in the United States, Canada, the European Union, the United Kingdom, and most other major jurisdictions. No major country has criminalized Monero ownership. What regulators have targeted is licensed exchange support — requiring registered platforms to implement surveillance that Monero cannot technically accommodate.
               </p>
               <p className="mt-4 leading-8">
-                As a Canadian MSB registered with FINTRAC, MRC GlobalPay operates under AML/ATF obligations. Our non-custodial model allows us to maintain Monero support within these obligations — we handle compliance at the platform level without requiring users to submit identity documentation for standard swap volumes. XMR swaps on MRC GlobalPay are fully legal for users in Canada, the US, and most other jurisdictions where Monero ownership is permitted.
+                As a Canadian MSB registered with FINTRAC, MRC Global Pay operates under AML/ATF obligations. Our non-custodial model allows us to maintain Monero support within these obligations — we handle compliance at the platform level without requiring users to submit identity documentation for standard swap volumes. XMR swaps on MRC Global Pay are fully legal for users in Canada, the US, and most other jurisdictions where Monero ownership is permitted.
               </p>
             </section>
 
@@ -355,7 +355,7 @@ const MoneroNodeWhitepaper = () => {
             {/* How to swap */}
             <section>
               <h2 className="mb-4 mt-12 scroll-mt-24 font-display text-2xl font-bold leading-tight text-foreground sm:text-3xl">
-                How to swap XMR on MRC GlobalPay
+                How to swap XMR on MRC Global Pay
               </h2>
               <p className="mb-6 leading-8">
                 Whether you are swapping into XMR from BTC, ETH, USDT, or any other asset — or out of XMR into something else — the process is non-custodial, requires no registration, and completes in under 60 seconds.
@@ -381,7 +381,7 @@ const MoneroNodeWhitepaper = () => {
                   {
                     step: "4",
                     title: "Receive XMR directly in your wallet",
-                    desc: "XMR arrives in your self-custody wallet — typically within 60 seconds of confirmation. MRC GlobalPay never holds your Monero. Outbound XMR transfers are broadcast and tracked through our network's dedicated node with minimum latency.",
+                    desc: "XMR arrives in your self-custody wallet — typically within 60 seconds of confirmation. MRC Global Pay never holds your Monero. Outbound XMR transfers are broadcast and tracked through our network's dedicated node with minimum latency.",
                   },
                 ].map((item) => (
                   <div key={item.step} className="flex gap-5">
@@ -446,11 +446,11 @@ const MoneroNodeWhitepaper = () => {
                   },
                   {
                     q: "Is Monero legal to swap in 2026?",
-                    a: "Yes. Monero is legal to own and use in the United States, Canada, the European Union, the United Kingdom, and most other jurisdictions. No major country has criminalized XMR ownership. Regulatory action has targeted licensed exchange listings — not individual ownership or non-custodial swaps. MRC GlobalPay is a Canadian MSB operating within FINTRAC AML/ATF requirements, and XMR swaps are fully supported.",
+                    a: "Yes. Monero is legal to own and use in the United States, Canada, the European Union, the United Kingdom, and most other jurisdictions. No major country has criminalized XMR ownership. Regulatory action has targeted licensed exchange listings — not individual ownership or non-custodial swaps. MRC Global Pay is a Canadian MSB operating within FINTRAC AML/ATF requirements, and XMR swaps are fully supported.",
                   },
                   {
-                    q: "Can I swap XMR on MRC GlobalPay without registration?",
-                    a: "Yes. MRC GlobalPay is a non-custodial platform and does not require registration or identity verification for standard swap volumes. You swap directly from your own wallet to your own wallet — no account, no email, no ID submission required.",
+                    q: "Can I swap XMR on MRC Global Pay without registration?",
+                    a: "Yes. MRC Global Pay is a non-custodial platform and does not require registration or identity verification for standard swap volumes. You swap directly from your own wallet to your own wallet — no account, no email, no ID submission required.",
                   },
                   {
                     q: "What is the Cuprate node and why does it matter?",

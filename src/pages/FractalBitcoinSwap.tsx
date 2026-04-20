@@ -13,7 +13,7 @@ const guideJsonLd = {
   url: "https://mrcglobalpay.com/resources/fractal-bitcoin-swap",
   author: {
     "@type": "Organization",
-    name: "MRC GlobalPay",
+    name: "MRC Global Pay",
     url: "https://mrcglobalpay.com",
   },
   datePublished: "2026-03-01",
@@ -29,13 +29,13 @@ const howToJsonLd = {
   "@type": "HowTo",
   name: "How to Swap Fractal Bitcoin to Solana or ETH",
   description:
-    "Step-by-step guide to swapping Fractal BTC to Solana, Ethereum, or any EVM token using MRC GlobalPay.",
+    "Step-by-step guide to swapping Fractal BTC to Solana, Ethereum, or any EVM token using MRC Global Pay.",
   step: [
     {
       "@type": "HowToStep",
       position: 1,
       name: "Choose Fractal Bitcoin as the source",
-      text: "Open MRC GlobalPay and select Fractal Bitcoin (FB) from the 'You Send' dropdown.",
+      text: "Open MRC Global Pay and select Fractal Bitcoin (FB) from the 'You Send' dropdown.",
     },
     {
       "@type": "HowToStep",
@@ -64,7 +64,7 @@ const FractalBitcoinSwap = () => {
   return (
     <>
       <Helmet>
-        <title>Fractal Bitcoin Swap | Instant FB to SOL & ETH | MRC GlobalPay</title>
+        <title>Fractal Bitcoin Swap | Instant FB to SOL & ETH | MRC Global Pay</title>
         <meta
           name="description"
           content="Swap Fractal Bitcoin (FB) to Solana, Ethereum, USDT and 6,000+ tokens instantly from $0.30. Non-custodial cross-chain swaps with no account, no KYC, FINTRAC MSB."
@@ -78,10 +78,10 @@ const FractalBitcoinSwap = () => {
         />
         <meta property="og:type" content="article" />
         <meta property="og:url" content={pageUrl} />
-        <meta property="og:site_name" content="MRC GlobalPay" />
+        <meta property="og:site_name" content="MRC Global Pay" />
         <meta property="og:image" content="https://pub-bb2e103a32db4e198524a2e9ed8f35b4.r2.dev/22f69f45-cf65-4871-9af4-b68ab4027213/id-preview-243bf129--23f851ec-c820-43c7-bbe2-d2e830f7c268.lovable.app-1773521796493.png" />
         <meta name="twitter:card" content="summary_large_image" />
-        <meta name="twitter:title" content="Fractal Bitcoin Swap | Instant FB to SOL & ETH | MRC GlobalPay" />
+        <meta name="twitter:title" content="Fractal Bitcoin Swap | Instant FB to SOL & ETH | MRC Global Pay" />
         <meta name="twitter:description" content="Swap Fractal Bitcoin to Solana, Ethereum, and 6,000+ tokens instantly. No account required." />
         <meta name="twitter:image" content="https://pub-bb2e103a32db4e198524a2e9ed8f35b4.r2.dev/22f69f45-cf65-4871-9af4-b68ab4027213/id-preview-243bf129--23f851ec-c820-43c7-bbe2-d2e830f7c268.lovable.app-1773521796493.png" />
         <script type="application/ld+json">{JSON.stringify(guideJsonLd)}</script>
@@ -101,7 +101,7 @@ const FractalBitcoinSwap = () => {
           <div className="mb-8 rounded-xl border border-primary/20 bg-primary/5 p-5">
             <p className="font-body text-sm font-semibold uppercase tracking-wider text-primary mb-2">Quick Answer</p>
             <p className="font-body text-base leading-relaxed text-foreground">
-              To swap Fractal Bitcoin instantly, use MRC GlobalPay's non-custodial engine — select Fractal BTC as source, choose SOL or ETH as destination, and receive tokens in under 60 seconds. No account or minimums required.
+              To swap Fractal Bitcoin instantly, use MRC Global Pay's non-custodial engine — select Fractal BTC as source, choose SOL or ETH as destination, and receive tokens in under 60 seconds. No account or minimums required.
             </p>
           </div>
 
@@ -109,7 +109,7 @@ const FractalBitcoinSwap = () => {
             Instant Fractal Bitcoin Swaps: No Account, No Minimums
           </h1>
           <p className="mt-4 text-lg text-muted-foreground leading-relaxed">
-            Fractal Bitcoin represents the next evolution of Bitcoin scaling — and MRC GlobalPay
+            Fractal Bitcoin represents the next evolution of Bitcoin scaling — and MRC Global Pay
             is one of the first non-custodial platforms to support <strong>instant Fractal BTC swaps</strong> to
             Solana, Ethereum, and all major EVM chains.
           </p>
@@ -156,7 +156,7 @@ const FractalBitcoinSwap = () => {
             <p className="text-muted-foreground leading-relaxed">
               "Fractal Bitcoin swap" currently sits at just 9% keyword difficulty — meaning there's
               a massive organic traffic opportunity for platforms that establish authority in this
-              niche early. MRC GlobalPay is positioned as the first non-custodial aggregator to
+              niche early. MRC Global Pay is positioned as the first non-custodial aggregator to
               support Fractal BTC cross-chain swaps with zero minimums.
             </p>
           </section>
@@ -228,7 +228,7 @@ const FractalBitcoinSwap = () => {
                   Can I swap Fractal BTC without an account?
                 </h3>
                 <p className="text-muted-foreground leading-relaxed">
-                  Yes. MRC GlobalPay is fully non-custodial. No registration, no delays for standard
+                  Yes. MRC Global Pay is fully non-custodial. No registration, no delays for standard
                   amounts, and no minimums.
                 </p>
               </div>

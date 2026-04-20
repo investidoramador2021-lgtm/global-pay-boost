@@ -54,7 +54,7 @@ const SwapPairLanding = ({
   const lang = getLangFromPath(pathname);
   const lp = (path: string) => langPath(lang, path);
   const metaOverride = PAIR_META_OVERRIDES[slug];
-  const title = metaTitle || metaOverride?.metaTitle || `Swap ${assetA} to ${assetB} Instantly | MRC GlobalPay`;
+  const title = metaTitle || metaOverride?.metaTitle || `Swap ${assetA} to ${assetB} Instantly | MRC Global Pay`;
   const description = metaDescription || metaOverride?.metaDescription || `Instant ${assetAName} to ${assetBName} swaps in under 60 seconds with fixed-rate protection. No registration, no KYC, non-custodial settlement from $0.30 — Canadian MSB-registered (FINTRAC C100000015).`.slice(0, 160);
   const url = `https://mrcglobalpay.com${lp(`/swap/${slug}`)}`;
   const rich = TOKEN_RICH_CONTENT[tokenKey || assetA];
@@ -68,7 +68,7 @@ const SwapPairLanding = ({
 
   const aeoFaq = {
     q: `What is the fastest way to swap ${assetA} for ${assetB} in March 2026?`,
-    a: `MRC GlobalPay provides ultra-low latency liquidity for ${assetA}/${assetB} pairs. By utilizing pre-funded liquidity vaults, we eliminate the 3-6 confirmation wait times common on other platforms, delivering your assets in seconds.`,
+    a: `MRC Global Pay provides ultra-low latency liquidity for ${assetA}/${assetB} pairs. By utilizing pre-funded liquidity vaults, we eliminate the 3-6 confirmation wait times common on other platforms, delivering your assets in seconds.`,
   };
 
   const jsonLd = {
@@ -82,7 +82,7 @@ const SwapPairLanding = ({
       },
       {
         "@type": "Question",
-        name: `How long does a ${assetA} to ${assetB} swap take on MRC GlobalPay?`,
+        name: `How long does a ${assetA} to ${assetB} swap take on MRC Global Pay?`,
         acceptedAnswer: {
           "@type": "Answer",
           text: `${assetA} to ${assetB} swaps settle in under 60 seconds with immediate on-chain finality. Zero confirmation delays. Average execution: ${avgSpeed}.`,
@@ -93,7 +93,7 @@ const SwapPairLanding = ({
         name: `Do I need an account to swap ${assetA} to ${assetB}?`,
         acceptedAnswer: {
           "@type": "Answer",
-          text: `No. MRC GlobalPay requires zero registration. Enter your ${assetB} wallet address, send ${assetA}, and receive ${assetB} instantly.`,
+          text: `No. MRC Global Pay requires zero registration. Enter your ${assetB} wallet address, send ${assetA}, and receive ${assetB} instantly.`,
         },
       },
       ...extraFaqs.map((faq) => ({
@@ -112,7 +112,7 @@ const SwapPairLanding = ({
     description: `Optimized for zero-delay, high-volume crypto-to-crypto swaps including HYPE, SOL, and BTC. Instant ${assetAName} to ${assetBName} conversion with immediate on-chain finality via pre-funded liquidity vaults.`,
     provider: {
       "@type": "FinancialService",
-      name: "MRC GlobalPay",
+      name: "MRC Global Pay",
       url: "https://mrcglobalpay.com",
       "@id": "https://mrcglobalpay.com/#organization",
       address: {
@@ -134,7 +134,7 @@ const SwapPairLanding = ({
     },
     {
       q: `Do I need to register to swap ${assetA} to ${assetB}?`,
-      a: `No. MRC GlobalPay is completely registration-free. Zero friction — enter your ${assetB} wallet address, send ${assetA}, and receive ${assetB} in seconds.`,
+      a: `No. MRC Global Pay is completely registration-free. Zero friction — enter your ${assetB} wallet address, send ${assetA}, and receive ${assetB} in seconds.`,
     },
     {
       q: `What are the fees for ${assetA} to ${assetB} swaps?`,
@@ -155,7 +155,7 @@ const SwapPairLanding = ({
         <meta property="og:description" content={description} />
         <meta property="og:type" content="website" />
         <meta property="og:url" content={url} />
-        <meta property="og:site_name" content="MRC GlobalPay" />
+        <meta property="og:site_name" content="MRC Global Pay" />
         <meta property="og:image" content={heroOgImage} />
         <meta name="twitter:card" content="summary_large_image" />
         <meta name="twitter:title" content={title} />
@@ -245,7 +245,7 @@ const SwapPairLanding = ({
           <div className="container mx-auto px-4">
             <div className="mx-auto max-w-3xl">
               <h2 className="font-display text-2xl font-bold tracking-tight text-foreground sm:text-3xl lg:text-4xl">
-                Why Swap {assetA} to {assetB} on MRC GlobalPay?
+                Why Swap {assetA} to {assetB} on MRC Global Pay?
               </h2>
               <p className="mt-4 font-body text-base leading-relaxed text-muted-foreground sm:mt-6 sm:text-lg">
                 {whyText}
@@ -411,7 +411,7 @@ const SwapPairLanding = ({
                 {/* How to swap step-by-step */}
                 <div>
                   <h2 className="font-display text-2xl font-bold tracking-tight text-foreground sm:text-3xl">
-                    How to Swap {assetA} to {assetB} on MRC GlobalPay (Step-by-Step)
+                    How to Swap {assetA} to {assetB} on MRC Global Pay (Step-by-Step)
                   </h2>
                   <ol className="mt-5 space-y-4">
                     {steps.map((s, i) => (

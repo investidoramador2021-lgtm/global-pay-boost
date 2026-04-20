@@ -1,15 +1,15 @@
 {
   "meta": {
-    "title": "MRC GlobalPay | Trao Đổi Crypto Tức Thì từ $0.30 — Không Cần Đăng Ký",
-    "description": "Truy cập hơn 6.000 loại tiền điện tử và cổ phiếu token hóa ngay lập tức, không cần đăng ký. MRC GlobalPay là sàn giao dịch crypto không lưu ký, không yêu cầu tối thiểu, thanh toán dưới 60 giây. MSB Canada đã đăng ký.",
-    "ogTitle": "MRC GlobalPay | Trao Đổi Crypto Tức Thì từ $0.30"
+    "title": "MRC Global Pay | Trao Đổi Crypto Tức Thì từ $0.30 — Không Cần Đăng Ký",
+    "description": "Truy cập hơn 6.000 loại tiền điện tử và cổ phiếu token hóa ngay lập tức, không cần đăng ký. MRC Global Pay là sàn giao dịch crypto không lưu ký, không yêu cầu tối thiểu, thanh toán dưới 60 giây. MSB Canada đã đăng ký.",
+    "ogTitle": "MRC Global Pay | Trao Đổi Crypto Tức Thì từ $0.30"
   },
   "footer": {
     "legal": "Pháp lý",
     "privacy": "Chính sách bảo mật",
     "terms": "Điều khoản dịch vụ",
     "aml": "Chính sách AML",
-    "disclaimer": "MRC GlobalPay là MSB đã đăng ký tại Canada. Chúng tôi cung cấp dịch vụ không cần đăng ký cho hầu hết người dùng. Để duy trì an toàn và tuân thủ các tiêu chuẩn AML toàn cầu, hệ thống phòng ngừa rủi ro tự động có thể yêu cầu xác minh tiêu chuẩn cho các giao dịch có rủi ro cao."
+    "disclaimer": "MRC Global Pay là MSB đã đăng ký tại Canada. Chúng tôi cung cấp dịch vụ không cần đăng ký cho hầu hết người dùng. Để duy trì an toàn và tuân thủ các tiêu chuẩn AML toàn cầu, hệ thống phòng ngừa rủi ro tự động có thể yêu cầu xác minh tiêu chuẩn cho các giao dịch có rủi ro cao."
   },
   "nav": {
     "howItWorks": "Cách thức hoạt động",
@@ -29,7 +29,7 @@
     "trustNonCustodial": "Phi lưu ký",
     "trustSettlement": "Thanh toán trực tiếp",
     "dustTitle": "🧹 Dọn sạch ví của bạn",
-    "dustDescription": "Hầu hết các nền tảng có mức tối thiểu cao. MRC GlobalPay hỗ trợ micro-swap từ $0.30. Chuyển đổi bụi còn lại từ hơn 6.000 token ngay lập tức. Không cần đăng ký."
+    "dustDescription": "Hầu hết các nền tảng có mức tối thiểu cao. MRC Global Pay hỗ trợ micro-swap từ $0.30. Chuyển đổi bụi còn lại từ hơn 6.000 token ngay lập tức. Không cần đăng ký."
   },
   "howItWorks": {
     "heading": "Cách thức hoạt động",
@@ -308,7 +308,7 @@
     "pdfDestWallet": "Ví Đích",
     "pdfBridgeId": "Bridge ID",
     "pdfExtraId": "Extra ID / Memo",
-    "pdfFooter": "Quyền riêng tư: MRC GlobalPay không giữ tài sản. Thông tin này không được lưu trên máy chủ."
+    "pdfFooter": "Quyền riêng tư: MRC Global Pay không giữ tài sản. Thông tin này không được lưu trên máy chủ."
   },
   "explainer": {
     "buysell": {
@@ -432,7 +432,7 @@
     }
   },
   "whitepaper": {
-    "metaTitle": "Kiến Trúc Cầu Vĩnh Viễn — Sách Trắng Thể Chế | MRC GlobalPay",
+    "metaTitle": "Kiến Trúc Cầu Vĩnh Viễn — Sách Trắng Thể Chế | MRC Global Pay",
     "metaDesc": "Tính bền vững địa chỉ không trạng thái cho phép thanh toán thể chế tự động như thế nào?",
     "badge": "Không Trạng Thái & Không Giám Sát",
     "heroTitle": "Bền Vững Cơ Sở Hạ Tầng và Đường Ray Thanh Toán Tự Động cho Thanh Khoản Thể Chế Toàn Cầu",
@@ -446,7 +446,7 @@
     "s1Body": "Trong bối cảnh tài sản số hiện tại, mô hình sự kiện giao dịch tạo ra sự mong manh vận hành hệ thống cho quỹ doanh nghiệp và hoạt động khai thác công nghiệp.",
     "s2Tag": "Phần 02 — Giải Pháp",
     "s2Title": "Chuyển Đổi từ Sự Kiện sang Thanh Toán Bền Vững",
-    "s2Body": "MRC GlobalPay đã thiết kế Cầu Vĩnh Viễn để chuyển đổi thanh khoản phân mảnh thành tiện ích tài chính vĩnh viễn.",
+    "s2Body": "MRC Global Pay đã thiết kế Cầu Vĩnh Viễn để chuyển đổi thanh khoản phân mảnh thành tiện ích tài chính vĩnh viễn.",
     "vp1Title": "Sẵn Sàng Vận Hành",
     "vp1Desc": "Loại bỏ nhu cầu tương tác với giao diện cho mỗi giao dịch.",
     "vp2Title": "Hiệu Quả Hành Chính",
@@ -476,7 +476,7 @@
     "cta": "Thiết Lập Cầu Thể Chế Của Bạn"
   },
   "shieldedWp": {
-    "metaTitle": "Kiến Trúc Thanh Toán Được Bảo Vệ — Sách Trắng Thể Chế | MRC GlobalPay",
+    "metaTitle": "Kiến Trúc Thanh Toán Được Bảo Vệ — Sách Trắng Thể Chế | MRC Global Pay",
     "metaDesc": "Tách rời mạng thanh khoản bảo vệ quyền riêng tư doanh nghiệp như thế nào?",
     "badge": "Không Trạng Thái & Riêng Tư",
     "heroTitle": "Tách Rời Danh Tính On-Chain: Kiến Trúc Thanh Toán Được Bảo Vệ cho Chủ Quyền Quyền Riêng Tư Doanh Nghiệp",
@@ -490,7 +490,7 @@
     "s1Body": "Mỗi giao dịch on-chain tạo ra bản ghi vĩnh viễn. Đối với quỹ doanh nghiệp, sự minh bạch này là trách nhiệm hệ thống.",
     "s2Tag": "Phần 02 — Cơ Chế Tách Rời",
     "s2Title": "Tách Rời Mạng Thanh Khoản: Gián Đoạn Khả Năng Truy Vết ở Quy Mô Lớn",
-    "s2Body": "Kiến trúc Thanh Toán Được Bảo Vệ của MRC GlobalPay triển khai giao thức tách rời ba giai đoạn.",
+    "s2Body": "Kiến trúc Thanh Toán Được Bảo Vệ của MRC Global Pay triển khai giao thức tách rời ba giai đoạn.",
     "ph1Title": "Giai Đoạn I: Che Giấu Đầu Vào",
     "ph1Desc": "Tiền vào Lớp Thanh Khoản MRC qua định tuyến không giám sát.",
     "ph2Title": "Giai Đoạn II: Ngẫu Nhiên Hóa Đường Dẫn",
@@ -554,7 +554,7 @@
     "serviceFeeLabel": "Phí Dịch Vụ ({{percent}}%)",
     "serviceFeeNote": "Trừ từ thanh toán cuối cùng",
     "receiverGetsLabel": "Người Nhận Nhận Được",
-    "taxDisclaimer": "MRC GlobalPay không khấu trừ thuế. Nghĩa vụ thuế địa phương là trách nhiệm của khách hàng.",
+    "taxDisclaimer": "MRC Global Pay không khấu trừ thuế. Nghĩa vụ thuế địa phương là trách nhiệm của khách hàng.",
     "payPageTitle": "Thanh Toán Hóa Đơn",
     "payPageBilledTo": "Xuất Cho",
     "payPageRequestedAmount": "Số Tiền Yêu Cầu",
@@ -601,11 +601,11 @@
     "networkUnknown": "mạng này"
   },
   "sovereignWp": {
-    "metaTitle": "The Sovereign Settlement — Institutional Whitepaper | MRC GlobalPay",
-    "metaDesc": "How does stateless invoicing bypass correspondent banking? MRC GlobalPay's Sovereign Settlement protocol provides 168-hour exchange rate certainty for global commerce.",
+    "metaTitle": "The Sovereign Settlement — Institutional Whitepaper | MRC Global Pay",
+    "metaDesc": "How does stateless invoicing bypass correspondent banking? MRC Global Pay's Sovereign Settlement protocol provides 168-hour exchange rate certainty for global commerce.",
     "badge": "Chủ Quyền & Không Giữ Hộ",
     "heroTitle": "The Sovereign Settlement: Xóa Bỏ Ma Sát Thương Mại Toàn Cầu",
-    "heroSub": "The legacy financial system is no longer a facilitator of trade; it is a tax on it. MRC GlobalPay introduces Stateless Invoicing — a protocol designed to bypass correspondent banking and provide 168-hour exchange rate certainty.",
+    "heroSub": "The legacy financial system is no longer a facilitator of trade; it is a tax on it. MRC Global Pay introduces Stateless Invoicing — a protocol designed to bypass correspondent banking and provide 168-hour exchange rate certainty.",
     "tech1Label": "Rate Lock Engine",
     "tech2Label": "Cross-Chain Bridge",
     "tech3Label": "Inclusive Fee Layer",
@@ -615,7 +615,7 @@
     "s1Body": "Traditional banking relies on a fragile web of Vostro and Nostro accounts. This 'Ghost in the Machine' creates an illusion of liquidity while hiding systemic delays and predatory intermediary fees. Whether you are using an LTC Transaction Tracker to monitor movement or waiting on a standard wire, the friction remains the same. We replace human trust with mathematical certainty. By utilizing an ETH to SOL bridge architecture for high-speed cross-chain movement, we ensure that capital is never 'stuck' in the pipes of a legacy bank.",
     "s2Tag": "Section II — The 168-Hour Immutable Rate Lock",
     "s2Title": "A 7-Day Volatility Shield for Global Settlement",
-    "s2Body": "Volatility is the primary deterrent for corporate digital asset adoption. In the time it takes to settle a gold or iron ore contract, market fluctuations can erase profit margins. MRC GlobalPay eliminates this risk with a 7-Day Volatility Shield.",
+    "s2Body": "Volatility is the primary deterrent for corporate digital asset adoption. In the time it takes to settle a gold or iron ore contract, market fluctuations can erase profit margins. MRC Global Pay eliminates this risk with a 7-Day Volatility Shield.",
     "lockTitle": "The Lock",
     "lockDesc": "Once an invoice is generated, the exchange rate is frozen for 168 hours. This provides the stability of a Letter of Credit without the bank fee.",
     "guaranteeTitle": "The Guarantee",
@@ -648,8 +648,8 @@
     "cta": "Tạo Hóa Đơn Chủ Quyền"
   },
   "lend": {
-    "metaTitle": "Cho vay Crypto & Kiếm lời | Vay USDT với BTC/ETH/SOL | MRC GlobalPay",
-    "metaDesc": "Vay stablecoin bằng crypto hoặc kiếm lợi nhuận từ BTC, ETH và USDT. Không KYC. MRC GlobalPay — MSB Canada đã đăng ký.",
+    "metaTitle": "Cho vay Crypto & Kiếm lời | Vay USDT với BTC/ETH/SOL | MRC Global Pay",
+    "metaDesc": "Vay stablecoin bằng crypto hoặc kiếm lợi nhuận từ BTC, ETH và USDT. Không KYC. MRC Global Pay — MSB Canada đã đăng ký.",
     "heroBadge": "Quản lý MSB · Phi ủy thác",
     "heroTitle": "Crypto",
     "heroLending": "Cho vay",
@@ -699,7 +699,7 @@
     "stepActive": "Hoạt động",
     "stepActiveDesc": "Vị thế của bạn đang hoạt động",
     "complianceTitle": "Tuyên bố Tuân thủ:",
-    "complianceText": "Là doanh nghiệp dịch vụ tiền tệ đã đăng ký tại Canada (MSB — Số đăng ký C100000015), tất cả hoạt động cho vay qua MRC GlobalPay tuân theo hướng dẫn liên bang về Chống rửa tiền (AML) và Chống tài trợ khủng bố (ATF). Cho vay tiền mã hóa có rủi ro. Tài sản thế chấp có thể bị thanh lý nếu giá giảm dưới ngưỡng thanh lý. Đây không phải tư vấn tài chính.",
+    "complianceText": "Là doanh nghiệp dịch vụ tiền tệ đã đăng ký tại Canada (MSB — Số đăng ký C100000015), tất cả hoạt động cho vay qua MRC Global Pay tuân theo hướng dẫn liên bang về Chống rửa tiền (AML) và Chống tài trợ khủng bố (ATF). Cho vay tiền mã hóa có rủi ro. Tài sản thế chấp có thể bị thanh lý nếu giá giảm dưới ngưỡng thanh lý. Đây không phải tư vấn tài chính.",
     "collateralLabel": "Tài sản thế chấp",
     "collateralValueUsd": "Giá trị thế chấp (USD)",
     "maxLtv": "LTV tối đa",
@@ -717,7 +717,7 @@
       "phoneLabel": "Số Điện Thoại",
       "phonePlaceholder": "123 456 7890",
       "invalidPhone": "Vui lòng nhập số điện thoại hợp lệ",
-      "compliance": "MRC GlobalPay · Đăng ký MSB C100000015 · Dữ liệu được mã hóa và chỉ dùng cho cảnh báo.",
+      "compliance": "MRC Global Pay · Đăng ký MSB C100000015 · Dữ liệu được mã hóa và chỉ dùng cho cảnh báo.",
       "cancel": "Hủy",
       "confirm": "Xác Nhận & Tiếp Tục",
       "proTipTitle": "Mẹo Pro: Cảnh Báo An Ninh Tự Động",
@@ -782,7 +782,7 @@
     },
     "earnFaq": {
       "q1": "Có thời gian khóa không?",
-      "a1": "Không. MRC GlobalPay Earn hoàn toàn linh hoạt. Rút 24/7 không phí.",
+      "a1": "Không. MRC Global Pay Earn hoàn toàn linh hoạt. Rút 24/7 không phí.",
       "q2": "Lãi suất được trả bao lâu một lần?",
       "a2": "Lãi suất tích lũy hàng ngày và tự động lãi kép.",
       "q3": "Số tiền gửi tối thiểu là bao nhiêu?",
@@ -840,7 +840,7 @@
     "loginRequired": "Yêu cầu đăng nhập để {{action}}",
     "comingSoon": "Sắp ra mắt — liên hệ hỗ trợ",
     "authenticated": "Đăng nhập thành công",
-    "disclaimer": "Dữ liệu được lấy từ API của đối tác công nghệ và cập nhật mỗi ngày một lần hoặc khi bạn thực hiện thao tác quản lý (Trả nợ, Nạp thêm, Rút). MRC GlobalPay · Đăng ký MSB C100000015.",
+    "disclaimer": "Dữ liệu được lấy từ API của đối tác công nghệ và cập nhật mỗi ngày một lần hoặc khi bạn thực hiện thao tác quản lý (Trả nợ, Nạp thêm, Rút). MRC Global Pay · Đăng ký MSB C100000015.",
     "auth": {
       "createTitle": "Tạo tài khoản quản lý của bạn",
       "loginTitle": "Đăng nhập vào bảng điều khiển",
@@ -919,7 +919,7 @@
     "apiSettings": "API Settings",
     "logout": "Logout",
     "sessionExpired": "Session expired due to inactivity",
-    "metaTitle": "Cổng Đối Tác Tổ Chức | MRC GlobalPay",
+    "metaTitle": "Cổng Đối Tác Tổ Chức | MRC Global Pay",
     "metaDesc": "Secure partner dashboard with 2FA, API key management, and real-time transaction monitoring.",
     "docs": "Tài liệu API",
     "docsAmountDesc": "Amount of from_currency to swap. Minimum $0.30 equivalent.",
@@ -969,7 +969,7 @@
     "heroInstantly": "Tức thì",
     "snippetIntro": "Để đổi {{from}} sang {{to}}:",
     "snippetBody": "Nhập số tiền, dán địa chỉ ví {{to}} và gửi {{from}} đến địa chỉ nạp tiền. {{to}} của bạn sẽ đến trong {{settlement}}.",
-    "aggregatorNote": "MRC GlobalPay tổng hợp tỷ giá từ hơn 700 nguồn thanh khoản. MSB Canada (C100000015).",
+    "aggregatorNote": "MRC Global Pay tổng hợp tỷ giá từ hơn 700 nguồn thanh khoản. MSB Canada (C100000015).",
     "factSettlement": "Thanh toán",
     "factMinimum": "Tối thiểu",
     "factKyc": "Yêu cầu KYC",
@@ -995,7 +995,7 @@
     "whyFromBtc": "đa dạng hóa ngoài Bitcoin sang hệ sinh thái {{toName}}.",
     "whyToBtc": "tập trung danh mục vào Bitcoin.",
     "whyGeneric": "tái cân bằng danh mục giữa hai hệ sinh thái blockchain khác nhau.",
-    "whySwapOutro": "Trên MRC GlobalPay, giao dịch này thanh toán trong {{settlement}} không trượt giá.",
+    "whySwapOutro": "Trên MRC Global Pay, giao dịch này thanh toán trong {{settlement}} không trượt giá.",
     "networkTitle": "Chi tiết mạng và bảo mật",
     "networkSubtitle": "Thông số kỹ thuật cho cặp {{from}}/{{to}}.",
     "networkLabel": "Mạng:",
@@ -1004,7 +1004,7 @@
     "memoWarning": "{{name}} yêu cầu Memo/Tag đích.",
     "settlementInfra": "Cơ sở hạ tầng thanh toán:",
     "settlementInfraDesc": "Giao dịch được thực hiện qua kênh thanh khoản cấp tổ chức với hơn 700 nhà cung cấp.",
-    "trustTitle": "Tại sao giao dịch {{from}}/{{to}} trên MRC GlobalPay?",
+    "trustTitle": "Tại sao giao dịch {{from}}/{{to}} trên MRC Global Pay?",
     "trustNoAccount": "Không cần tài khoản",
     "trustNoAccountDesc": "Bắt đầu đổi trong vài giây.",
     "trustNonCustodial": "Phi lưu ký và an toàn",
@@ -1023,11 +1023,11 @@
     "faqMemoYes": "Có. {{toName}} yêu cầu mã nhận dạng bổ sung.",
     "faqMemoNo": "Không. {{toName}} không yêu cầu Memo hoặc Tag.",
     "faqKycQ": "Tôi có cần tạo tài khoản để đổi {{from}} sang {{to}} không?",
-    "faqKycA": "Không. MRC GlobalPay không yêu cầu tạo tài khoản hay xác minh danh tính. MSB Canada (C100000015).",
-    "faqFeesQ": "MRC GlobalPay tính phí gì cho {{from}} sang {{to}}?",
+    "faqKycA": "Không. MRC Global Pay không yêu cầu tạo tài khoản hay xác minh danh tính. MSB Canada (C100000015).",
+    "faqFeesQ": "MRC Global Pay tính phí gì cho {{from}} sang {{to}}?",
     "faqFeesA": "Không có phí ẩn. Tỷ giá hiển thị bao gồm phí dịch vụ và phí mạng.",
-    "faqSafeQ": "Đổi {{from}} sang {{to}} trên MRC GlobalPay có an toàn không?",
-    "faqSafeA": "Có. MRC GlobalPay là dịch vụ phi lưu ký hoàn toàn.",
+    "faqSafeQ": "Đổi {{from}} sang {{to}} trên MRC Global Pay có an toàn không?",
+    "faqSafeA": "Có. MRC Global Pay là dịch vụ phi lưu ký hoàn toàn.",
     "faqNetworkQ": "Nên dùng mạng blockchain nào để gửi {{from}}?",
     "faqNetworkA": "{{fromName}} sử dụng mạng {{network}}.",
     "faqNetworkContract": "Địa chỉ hợp đồng đã xác minh: {{contract}}",
@@ -1044,9 +1044,9 @@
   },
   "affiliates": {
     "meta": {
-      "title": "Chương Trình Đối Tác — Kiếm Hoa Hồng Crypto Trọn Đời | MRC GlobalPay",
-      "description": "Tạo widget đối tác MRC GlobalPay trong vài giây. Nhập email và ví BTC, chọn chế độ Sáng hoặc Tối, kiếm hoa hồng trọn đời 0.1%–0.4% tự động. MSB Canada đã đăng ký #C100000015.",
-      "ogTitle": "Chương Trình Đối Tác — Kiếm Hoa Hồng Crypto Trọn Đời | MRC GlobalPay",
+      "title": "Chương Trình Đối Tác — Kiếm Hoa Hồng Crypto Trọn Đời | MRC Global Pay",
+      "description": "Tạo widget đối tác MRC Global Pay trong vài giây. Nhập email và ví BTC, chọn chế độ Sáng hoặc Tối, kiếm hoa hồng trọn đời 0.1%–0.4% tự động. MSB Canada đã đăng ký #C100000015.",
+      "ogTitle": "Chương Trình Đối Tác — Kiếm Hoa Hồng Crypto Trọn Đời | MRC Global Pay",
       "ogDescription": "Tạo widget trong vài giây. Kiếm 0.1%–0.4% mỗi giao dịch, tự động vào ví BTC."
     },
     "hero": {
@@ -1054,7 +1054,7 @@
       "earn": "Kiếm",
       "rate": "0.1% – 0.4%",
       "lifetime": "Hoa Hồng Trọn Đời",
-      "subtitle": "Quảng bá MRC GlobalPay với widget hoán đổi tức thì hoặc liên kết đối tác và nhận thanh toán",
+      "subtitle": "Quảng bá MRC Global Pay với widget hoán đổi tức thì hoặc liên kết đối tác và nhận thanh toán",
       "subtitleBold": "tự động vào ví BTC của bạn",
       "chipNoReg": "Không cần đăng ký",
       "chipPaidBtc": "Trả bằng BTC, tự động",
@@ -1137,7 +1137,7 @@
       "learnMore": "Tìm hiểu thêm"
     },
     "why": {
-      "title": "Tại Sao MRC GlobalPay",
+      "title": "Tại Sao MRC Global Pay",
       "lifetime": "Hoa hồng trọn đời",
       "assets": "6.000+ tiền điện tử và cổ phiếu token hóa",
       "micro": "Vi giao dịch chỉ từ $0.30",
@@ -1203,7 +1203,7 @@
       "dashCtaNote": "Nâng cấp miễn phí · không KYC · widget và thanh toán không thay đổi.",
       "regBadge": "Lợi thế quy định",
       "regTitle": "Quảng bá nền tảng mà cơ quan quản lý đã tin tưởng",
-      "regBody1": "MRC GlobalPay được vận hành bởi",
+      "regBody1": "MRC Global Pay được vận hành bởi",
       "regBody2": "MRC Pay International Corp",
       "regBody3": ", một fintech Canada được đăng ký là",
       "regBody4": "Doanh nghiệp Dịch vụ Tiền tệ FINTRAC (#C100000015)",
@@ -1217,7 +1217,7 @@
       "trackingBody": "Chúng tôi theo dõi giới thiệu một cách riêng tư bằng tham chiếu bảo mật. Hoa hồng được trả tự động vào ví BTC bạn cung cấp — không cần dashboard, không cần khiếu nại thủ công.",
       "finalBadge": "60 giây tới link đầu tiên",
       "finalTitle": "Ví BTC của bạn sắp bận rộn hơn rất nhiều",
-      "finalSubtitle": "Tham gia cùng hàng nghìn nhà sáng tạo, đội ngũ ví và cộng đồng crypto đã kiếm BTC trọn đời với MRC GlobalPay. Không đăng ký, không tối thiểu, không rủi ro — chỉ cần dán, sao chép và kiếm tiền.",
+      "finalSubtitle": "Tham gia cùng hàng nghìn nhà sáng tạo, đội ngũ ví và cộng đồng crypto đã kiếm BTC trọn đời với MRC Global Pay. Không đăng ký, không tối thiểu, không rủi ro — chỉ cần dán, sao chép và kiếm tiền.",
       "finalCtaGenerate": "Tạo widget của tôi ngay",
       "finalCtaDashboard": "Mở Dashboard Đối tác",
       "finalRegNote": "Quảng bá tự tin — được quản lý đầy đủ tại Canada (FINTRAC MSB #C100000015 · PSP Bank of Canada)."
@@ -1275,29 +1275,29 @@
       "x1Label": "Bài X 1 — Móc câu",
       "x1Text": "Vừa tìm thấy swap crypto non-custodial sạch nhất tôi đã sử dụng trong nhiều năm.\n\n→ Hơn 6.000 cặp\n→ Swap dưới 60 giây\n→ Chỉ từ $0,30\n→ Không cần tài khoản\n\nĐáng xem 👇\n\n[YOUR-AFFILIATE-LINK]\n\n#Bitcoin #Crypto #DeFi",
       "x2Label": "Bài X 2 — Giá trị",
-      "x2Text": "Hầu hết swap \"không-KYC\" đều đáng ngờ.\n\nMRC GlobalPay khác biệt:\n✅ Non-custodial (bạn giữ chìa khóa)\n✅ Hơn 6.000 cặp giao dịch\n✅ Swap hoàn tất dưới 60 giây\n✅ Micro-swap từ $0,30\n\nThử ngay → [YOUR-AFFILIATE-LINK]\n\n#Crypto #BTC #SelfCustody",
+      "x2Text": "Hầu hết swap \"không-KYC\" đều đáng ngờ.\n\nMRC Global Pay khác biệt:\n✅ Non-custodial (bạn giữ chìa khóa)\n✅ Hơn 6.000 cặp giao dịch\n✅ Swap hoàn tất dưới 60 giây\n✅ Micro-swap từ $0,30\n\nThử ngay → [YOUR-AFFILIATE-LINK]\n\n#Crypto #BTC #SelfCustody",
       "tg1Label": "Bài Telegram 1 — Kênh",
-      "tg1Text": "🚀 Công cụ swap mới yêu thích: MRC GlobalPay\n\n• Non-custodial — chìa khóa của bạn, coin của bạn\n• Hơn 6.000 cặp giao dịch\n• Swap hoàn tất dưới 60 giây\n• Micro-swap từ $0,30 (hoàn hảo để dọn bụi)\n• Không cần tài khoản\n\nThử đi 👇\n\n🔗 [YOUR-AFFILIATE-LINK]",
+      "tg1Text": "🚀 Công cụ swap mới yêu thích: MRC Global Pay\n\n• Non-custodial — chìa khóa của bạn, coin của bạn\n• Hơn 6.000 cặp giao dịch\n• Swap hoàn tất dưới 60 giây\n• Micro-swap từ $0,30 (hoàn hảo để dọn bụi)\n• Không cần tài khoản\n\nThử đi 👇\n\n🔗 [YOUR-AFFILIATE-LINK]",
       "tg2Label": "Bài Telegram 2 — Mẹo nhanh",
-      "tg2Text": "💡 Mẹo cho ai đó còn bụi sót lại trên nhiều chuỗi:\n\nMRC GlobalPay cho phép bạn swap từ $0,30 — hầu hết sàn giao dịch không cho phép chạm vào số tiền nhỏ như vậy.\n\nNon-custodial. Không tài khoản. ~60 giây.\n\nThử: [YOUR-AFFILIATE-LINK]",
+      "tg2Text": "💡 Mẹo cho ai đó còn bụi sót lại trên nhiều chuỗi:\n\nMRC Global Pay cho phép bạn swap từ $0,30 — hầu hết sàn giao dịch không cho phép chạm vào số tiền nhỏ như vậy.\n\nNon-custodial. Không tài khoản. ~60 giây.\n\nThử: [YOUR-AFFILIATE-LINK]",
       "liLabel": "Bài LinkedIn — Chuyên nghiệp",
-      "liText": "Một ghi chú nhanh cho ai đó điều hướng swap crypto:\n\nTôi đang khuyến nghị MRC GlobalPay cho khách hàng và đối tác vì nó giải quyết ba vấn đề mà hầu hết sàn giao dịch không:\n\n1. Kiến trúc non-custodial — tài sản không bao giờ ở trên nền tảng\n2. Đơn vị vận hành đáng tin cậy với pháp nhân doanh nghiệp thực\n3. UX thực tế — hơn 6.000 cặp, swap dưới 60 giây, micro-swap từ $0,30\n\nNếu bạn có mạng lưới swap crypto thường xuyên, hãy xem qua:\n👉 [YOUR-AFFILIATE-LINK]\n\n#Fintech #Crypto #Bitcoin",
+      "liText": "Một ghi chú nhanh cho ai đó điều hướng swap crypto:\n\nTôi đang khuyến nghị MRC Global Pay cho khách hàng và đối tác vì nó giải quyết ba vấn đề mà hầu hết sàn giao dịch không:\n\n1. Kiến trúc non-custodial — tài sản không bao giờ ở trên nền tảng\n2. Đơn vị vận hành đáng tin cậy với pháp nhân doanh nghiệp thực\n3. UX thực tế — hơn 6.000 cặp, swap dưới 60 giây, micro-swap từ $0,30\n\nNếu bạn có mạng lưới swap crypto thường xuyên, hãy xem qua:\n👉 [YOUR-AFFILIATE-LINK]\n\n#Fintech #Crypto #Bitcoin",
       "igLabel": "Bài Instagram / Threads",
       "igText": "Công cụ swap crypto tôi thực sự tin tưởng ⚡️\n\n🔐 Non-custodial (bạn giữ kiểm soát)\n💸 Swap chỉ từ $0,30\n⏱️ Xong dưới 60 giây\n🪙 Hơn 6.000 cặp\n✅ Không cần tài khoản\n\nLink trong bio → [YOUR-AFFILIATE-LINK]\n\n#crypto #bitcoin #web3 #defi"
     },
     "emails": {
       "e1Label": "Email 1 — Ngắn (newsletter)",
-      "e1Text": "Chủ đề: Một công cụ swap crypto tôi phải chia sẻ\n\nNhanh thôi — tôi đã dùng MRC GlobalPay vài tuần qua và nó âm thầm trở thành mặc định của tôi.\n\n• Non-custodial (chìa khóa vẫn là của bạn)\n• Hơn 6.000 cặp giao dịch\n• Dưới 60 giây mỗi swap\n• Từ $0,30 — vâng, ngay cả bụi\n• Không cần tài khoản để swap\n\nNếu bạn có swap crypto chút nào, hãy thử: [YOUR-AFFILIATE-LINK]\n\nThân,\n[YOUR-NAME]",
+      "e1Text": "Chủ đề: Một công cụ swap crypto tôi phải chia sẻ\n\nNhanh thôi — tôi đã dùng MRC Global Pay vài tuần qua và nó âm thầm trở thành mặc định của tôi.\n\n• Non-custodial (chìa khóa vẫn là của bạn)\n• Hơn 6.000 cặp giao dịch\n• Dưới 60 giây mỗi swap\n• Từ $0,30 — vâng, ngay cả bụi\n• Không cần tài khoản để swap\n\nNếu bạn có swap crypto chút nào, hãy thử: [YOUR-AFFILIATE-LINK]\n\nThân,\n[YOUR-NAME]",
       "e2Label": "Email 2 — Trung bình (kiểu đánh giá)",
-      "e2Text": "Chủ đề: Swap non-custodial mà tôi ước tìm thấy sớm hơn\n\nXin chào [FIRST-NAME],\n\nTôi luôn được hỏi dùng sàn nào để swap crypto nhanh. Một thời gian câu trả lời của tôi là \"tùy chuỗi.\" Không còn nữa.\n\nMRC GlobalPay đã trở thành lựa chọn của tôi, và đây là lý do:\n\n🔐 Non-custodial — quỹ không bao giờ ở trên nền tảng\n⚡ Hơn 6.000 cặp, swap hoàn tất dưới 60 giây\n💸 Micro-swap từ $0,30 (hoàn hảo để dọn bụi trên Solana, BSC, TRON, v.v.)\n🎯 Không cần tài khoản để swap\n\nThử tại đây:\n👉 [YOUR-AFFILIATE-LINK]\n\nNếu có câu hỏi, cứ trả lời.\n\n— [YOUR-NAME]",
+      "e2Text": "Chủ đề: Swap non-custodial mà tôi ước tìm thấy sớm hơn\n\nXin chào [FIRST-NAME],\n\nTôi luôn được hỏi dùng sàn nào để swap crypto nhanh. Một thời gian câu trả lời của tôi là \"tùy chuỗi.\" Không còn nữa.\n\nMRC Global Pay đã trở thành lựa chọn của tôi, và đây là lý do:\n\n🔐 Non-custodial — quỹ không bao giờ ở trên nền tảng\n⚡ Hơn 6.000 cặp, swap hoàn tất dưới 60 giây\n💸 Micro-swap từ $0,30 (hoàn hảo để dọn bụi trên Solana, BSC, TRON, v.v.)\n🎯 Không cần tài khoản để swap\n\nThử tại đây:\n👉 [YOUR-AFFILIATE-LINK]\n\nNếu có câu hỏi, cứ trả lời.\n\n— [YOUR-NAME]",
       "e3Label": "Email 3 — Dài (pitch đầy đủ)",
-      "e3Text": "Chủ đề: Cuối cùng tôi đã tìm thấy swap crypto đánh dấu mọi ô\n\nXin chào [FIRST-NAME],\n\nNếu bạn đã ở trong crypto hơn năm phút, bạn biết mô hình:\n\n→ Sàn tập trung nhanh nhưng custodial (và ngày càng KYC mọi thứ)\n→ Bộ tổng hợp DEX non-custodial nhưng chậm, đắt, và giới hạn chuỗi\n→ Trang swap \"không-KYC\" đáng ngờ và hầu như không bao giờ đáng tin cậy\n\nTôi đã dành nhiều tháng tìm kiếm điều gì đó ở giữa. Tôi đã tìm thấy.\n\nNó được gọi là MRC GlobalPay, và đó là swap non-custodial sạch nhất tôi đã sử dụng:\n\n✅ Non-custodial — bạn giữ chìa khóa của mình, mỗi lần\n✅ Hơn 6.000 cặp giao dịch trên tất cả các chuỗi chính\n✅ Swap hoàn tất dưới 60 giây\n✅ Micro-swap chỉ từ $0,30 (rất tốt để dọn bụi)\n✅ Vận hành bởi MRC Pay International Corp tại Ottawa, Canada\n✅ Không cần tài khoản để swap\n\nĐiểm cuối quan trọng. Hầu hết các nền tảng swap \"ẩn danh\" đều có trụ sở tại các khu vực pháp lý nơi không có biện pháp khắc phục nếu có sự cố. MRC thì ngược lại — một pháp nhân doanh nghiệp thực, được ghi nhận, nhưng vẫn non-custodial và vẫn không cần tài khoản để swap.\n\nThử một lần và tự xem:\n👉 [YOUR-AFFILIATE-LINK]\n\nTrả lời nếu bạn muốn hướng dẫn — sẵn lòng giúp đỡ.\n\nNói chuyện sớm,\n[YOUR-NAME]\n\nT.B. Ngay cả khi bạn nghi ngờ, chỉ thử một swap $0,30. Gần như không tốn gì và bạn sẽ thấy chính xác cách dòng chảy hoạt động."
+      "e3Text": "Chủ đề: Cuối cùng tôi đã tìm thấy swap crypto đánh dấu mọi ô\n\nXin chào [FIRST-NAME],\n\nNếu bạn đã ở trong crypto hơn năm phút, bạn biết mô hình:\n\n→ Sàn tập trung nhanh nhưng custodial (và ngày càng KYC mọi thứ)\n→ Bộ tổng hợp DEX non-custodial nhưng chậm, đắt, và giới hạn chuỗi\n→ Trang swap \"không-KYC\" đáng ngờ và hầu như không bao giờ đáng tin cậy\n\nTôi đã dành nhiều tháng tìm kiếm điều gì đó ở giữa. Tôi đã tìm thấy.\n\nNó được gọi là MRC Global Pay, và đó là swap non-custodial sạch nhất tôi đã sử dụng:\n\n✅ Non-custodial — bạn giữ chìa khóa của mình, mỗi lần\n✅ Hơn 6.000 cặp giao dịch trên tất cả các chuỗi chính\n✅ Swap hoàn tất dưới 60 giây\n✅ Micro-swap chỉ từ $0,30 (rất tốt để dọn bụi)\n✅ Vận hành bởi MRC Pay International Corp tại Ottawa, Canada\n✅ Không cần tài khoản để swap\n\nĐiểm cuối quan trọng. Hầu hết các nền tảng swap \"ẩn danh\" đều có trụ sở tại các khu vực pháp lý nơi không có biện pháp khắc phục nếu có sự cố. MRC thì ngược lại — một pháp nhân doanh nghiệp thực, được ghi nhận, nhưng vẫn non-custodial và vẫn không cần tài khoản để swap.\n\nThử một lần và tự xem:\n👉 [YOUR-AFFILIATE-LINK]\n\nTrả lời nếu bạn muốn hướng dẫn — sẵn lòng giúp đỡ.\n\nNói chuyện sớm,\n[YOUR-NAME]\n\nT.B. Ngay cả khi bạn nghi ngờ, chỉ thử một swap $0,30. Gần như không tốn gì và bạn sẽ thấy chính xác cách dòng chảy hoạt động."
     },
     "video": {
-      "script": "🎬 KỊCH BẢN VIDEO 60 GIÂY — \"Swap Crypto Non-Custodial Tốt Nhất 2026\"\n─────────────────────────────────────────────\n\n[0:00 – 0:05] MÓC CÂU (trên camera hoặc lớp phủ văn bản)\n\"Nếu bạn swap crypto và vẫn dùng sàn tập trung — dừng lại. Tôi sẽ chỉ cho bạn điều tốt hơn trong 60 giây.\"\n\n[0:05 – 0:15] VẤN ĐỀ\n\"Sàn tập trung giữ quỹ của bạn, yêu cầu KYC mọi thứ, và đóng băng tài khoản ngẫu nhiên. DEX chậm, đắt, và giới hạn chuỗi. Hầu hết swap 'không-KYC'? Đáng ngờ và rủi ro.\"\n\n[0:15 – 0:35] GIẢI PHÁP — MRC GlobalPay\n\"Đây là MRC GlobalPay. Non-custodial — bạn không bao giờ giao chìa khóa. Hỗ trợ hơn 6.000 cặp giao dịch trên mọi chuỗi chính. Swap hoàn tất dưới 60 giây. Và bạn có thể swap chỉ từ $0,30 — hoàn hảo để dọn bụi. Không tài khoản, không cần email.\"\n\n[0:35 – 0:50] BẰNG CHỨNG / DEMO\n\"Đây là swap tôi vừa thực hiện — BTC sang USDT, 47 giây, không tài khoản, không email. Quỹ chuyển thẳng đến ví của tôi.\"\n\n[0:50 – 1:00] CTA\n\"Link trong mô tả — thử một swap nhỏ và tự xem. Hẹn gặp lại trong video tiếp theo.\"\n\n─────────────────────────────────────────────\n📝 MẪU MÔ TẢ VIDEO\n─────────────────────────────────────────────\n\nSwap crypto non-custodial nhanh nhất, sạch nhất tôi đã dùng năm 2026.\n\n🔗 Thử MRC GlobalPay (link affiliate của tôi): [YOUR-AFFILIATE-LINK]\n\nTại sao khác biệt:\n✅ Non-custodial — bạn giữ chìa khóa\n✅ Hơn 6.000 cặp trên tất cả chuỗi chính\n✅ Swap hoàn tất dưới 60 giây\n✅ Micro-swap từ $0,30\n✅ Không cần tài khoản để swap\n\n💰 Tiết lộ affiliate: Link trên là link giới thiệu của tôi. Nếu bạn swap qua đó, tôi có thể nhận hoa hồng nhỏ — không tốn thêm chi phí cho bạn.\n\n⏱️ DẤU THỜI GIAN\n0:00 Giới thiệu\n0:05 Tại sao sàn tập trung tệ\n0:15 MRC GlobalPay thực sự là gì\n0:35 Demo swap trực tiếp\n0:50 Cách thử\n\n#Crypto #Bitcoin #NonCustodial #CryptoSwap #DeFi #BTC"
+      "script": "🎬 KỊCH BẢN VIDEO 60 GIÂY — \"Swap Crypto Non-Custodial Tốt Nhất 2026\"\n─────────────────────────────────────────────\n\n[0:00 – 0:05] MÓC CÂU (trên camera hoặc lớp phủ văn bản)\n\"Nếu bạn swap crypto và vẫn dùng sàn tập trung — dừng lại. Tôi sẽ chỉ cho bạn điều tốt hơn trong 60 giây.\"\n\n[0:05 – 0:15] VẤN ĐỀ\n\"Sàn tập trung giữ quỹ của bạn, yêu cầu KYC mọi thứ, và đóng băng tài khoản ngẫu nhiên. DEX chậm, đắt, và giới hạn chuỗi. Hầu hết swap 'không-KYC'? Đáng ngờ và rủi ro.\"\n\n[0:15 – 0:35] GIẢI PHÁP — MRC Global Pay\n\"Đây là MRC Global Pay. Non-custodial — bạn không bao giờ giao chìa khóa. Hỗ trợ hơn 6.000 cặp giao dịch trên mọi chuỗi chính. Swap hoàn tất dưới 60 giây. Và bạn có thể swap chỉ từ $0,30 — hoàn hảo để dọn bụi. Không tài khoản, không cần email.\"\n\n[0:35 – 0:50] BẰNG CHỨNG / DEMO\n\"Đây là swap tôi vừa thực hiện — BTC sang USDT, 47 giây, không tài khoản, không email. Quỹ chuyển thẳng đến ví của tôi.\"\n\n[0:50 – 1:00] CTA\n\"Link trong mô tả — thử một swap nhỏ và tự xem. Hẹn gặp lại trong video tiếp theo.\"\n\n─────────────────────────────────────────────\n📝 MẪU MÔ TẢ VIDEO\n─────────────────────────────────────────────\n\nSwap crypto non-custodial nhanh nhất, sạch nhất tôi đã dùng năm 2026.\n\n🔗 Thử MRC Global Pay (link affiliate của tôi): [YOUR-AFFILIATE-LINK]\n\nTại sao khác biệt:\n✅ Non-custodial — bạn giữ chìa khóa\n✅ Hơn 6.000 cặp trên tất cả chuỗi chính\n✅ Swap hoàn tất dưới 60 giây\n✅ Micro-swap từ $0,30\n✅ Không cần tài khoản để swap\n\n💰 Tiết lộ affiliate: Link trên là link giới thiệu của tôi. Nếu bạn swap qua đó, tôi có thể nhận hoa hồng nhỏ — không tốn thêm chi phí cho bạn.\n\n⏱️ DẤU THỜI GIAN\n0:00 Giới thiệu\n0:05 Tại sao sàn tập trung tệ\n0:15 MRC Global Pay thực sự là gì\n0:35 Demo swap trực tiếp\n0:50 Cách thử\n\n#Crypto #Bitcoin #NonCustodial #CryptoSwap #DeFi #BTC"
     },
     "blog": {
-      "post": "# Nền Tảng Swap Crypto Non-Custodial Tốt Nhất 2026\n\nNếu bạn đã dành thời gian trong crypto gần đây, bạn đã cảm nhận sự siết chặt: sàn tập trung tiếp tục thắt chặt KYC, nền tảng \"không-KYC\" trông ngày càng đáng ngờ, và bộ tổng hợp phi tập trung vẫn quá chậm và giới hạn chuỗi cho sử dụng hàng ngày.\n\nCuối cùng đã có lựa chọn tốt hơn — và sau vài tháng thử nghiệm, tôi tin rằng đây là nền tảng swap non-custodial cân bằng nhất hiện có năm 2026.\n\n## Gặp gỡ MRC GlobalPay\n\nMRC GlobalPay là nền tảng swap crypto non-custodial vận hành bởi MRC Pay International Corp, một fintech có trụ sở tại Ottawa, Canada. Nó được đăng ký là Doanh Nghiệp Dịch Vụ Tiền với FINTRAC (#C100000015).\n\nNó cung cấp:\n\n- **Kiến trúc non-custodial** — quỹ của bạn không bao giờ ở trên nền tảng\n- **Hơn 6.000 cặp giao dịch** trên tất cả các chuỗi chính\n- **Swap dưới 60 giây**\n- **Micro-swap từ $0,30** — hoàn hảo để dọn bụi\n- **Không cần tài khoản để swap**\n\n## Tại sao quan trọng\n\nHầu hết các giải pháp swap crypto thuộc một trong hai phe: custodial và được quản lý nhưng xâm phạm, hoặc non-custodial nhưng có danh tiếng đáng ngờ. MRC GlobalPay giải quyết cả hai cùng lúc — một pháp nhân doanh nghiệp Canada thực với sự giám sát quy định đầy đủ, nhưng với luồng người dùng vẫn non-custodial từ đầu đến cuối.\n\n## Tự thử\n\nKhuyến nghị của tôi: bắt đầu với một swap nhỏ — đúng nghĩa $0,30 là đủ. Bạn sẽ hiểu luồng, trải nghiệm tốc độ, và tự đánh giá.\n\n👉 [Thử MRC GlobalPay](https://mrcglobalpay.com/?ref=YOUR-CODE)\n\n*Tiết lộ: Các link trong bài viết này là link affiliate. Nếu bạn swap qua đó, tôi có thể nhận hoa hồng nhỏ — không tốn thêm chi phí cho bạn. Tôi chỉ giới thiệu các nền tảng tôi thực sự sử dụng và tin tưởng.*"
+      "post": "# Nền Tảng Swap Crypto Non-Custodial Tốt Nhất 2026\n\nNếu bạn đã dành thời gian trong crypto gần đây, bạn đã cảm nhận sự siết chặt: sàn tập trung tiếp tục thắt chặt KYC, nền tảng \"không-KYC\" trông ngày càng đáng ngờ, và bộ tổng hợp phi tập trung vẫn quá chậm và giới hạn chuỗi cho sử dụng hàng ngày.\n\nCuối cùng đã có lựa chọn tốt hơn — và sau vài tháng thử nghiệm, tôi tin rằng đây là nền tảng swap non-custodial cân bằng nhất hiện có năm 2026.\n\n## Gặp gỡ MRC Global Pay\n\nMRC Global Pay là nền tảng swap crypto non-custodial vận hành bởi MRC Pay International Corp, một fintech có trụ sở tại Ottawa, Canada. Nó được đăng ký là Doanh Nghiệp Dịch Vụ Tiền với FINTRAC (#C100000015).\n\nNó cung cấp:\n\n- **Kiến trúc non-custodial** — quỹ của bạn không bao giờ ở trên nền tảng\n- **Hơn 6.000 cặp giao dịch** trên tất cả các chuỗi chính\n- **Swap dưới 60 giây**\n- **Micro-swap từ $0,30** — hoàn hảo để dọn bụi\n- **Không cần tài khoản để swap**\n\n## Tại sao quan trọng\n\nHầu hết các giải pháp swap crypto thuộc một trong hai phe: custodial và được quản lý nhưng xâm phạm, hoặc non-custodial nhưng có danh tiếng đáng ngờ. MRC Global Pay giải quyết cả hai cùng lúc — một pháp nhân doanh nghiệp Canada thực với sự giám sát quy định đầy đủ, nhưng với luồng người dùng vẫn non-custodial từ đầu đến cuối.\n\n## Tự thử\n\nKhuyến nghị của tôi: bắt đầu với một swap nhỏ — đúng nghĩa $0,30 là đủ. Bạn sẽ hiểu luồng, trải nghiệm tốc độ, và tự đánh giá.\n\n👉 [Thử MRC Global Pay](https://mrcglobalpay.com/?ref=YOUR-CODE)\n\n*Tiết lộ: Các link trong bài viết này là link affiliate. Nếu bạn swap qua đó, tôi có thể nhận hoa hồng nhỏ — không tốn thêm chi phí cho bạn. Tôi chỉ giới thiệu các nền tảng tôi thực sự sử dụng và tin tưởng.*"
     }
   }
 }

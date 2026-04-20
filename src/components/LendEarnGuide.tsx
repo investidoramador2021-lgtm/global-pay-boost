@@ -187,7 +187,7 @@ const EARN_FAQ = [
     aKey: "lendGuide.earnFaq.a1",
     fallbackQ: "Is there a lock-up period?",
     fallbackA:
-      "No. MRC GlobalPay Earn is completely flexible. You can withdraw your full principal and all earned interest at any time, 24/7, with no penalties and no withdrawal fees.",
+      "No. MRC Global Pay Earn is completely flexible. You can withdraw your full principal and all earned interest at any time, 24/7, with no penalties and no withdrawal fees.",
   },
   {
     qKey: "lendGuide.earnFaq.q2",

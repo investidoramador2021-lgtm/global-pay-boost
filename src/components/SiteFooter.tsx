@@ -46,14 +46,14 @@ const buyLinks = [
 ];
 
 const resourceLinks = [
-  { label: "How It Works", href: "/#how-it-works", title: "Learn how MRC GlobalPay crypto swaps work" },
-  { label: "Features", href: "/#features", title: "Explore MRC GlobalPay exchange features" },
+  { label: "How It Works", href: "/#how-it-works", title: "Learn how MRC Global Pay crypto swaps work" },
+  { label: "Features", href: "/#features", title: "Explore MRC Global Pay exchange features" },
   { label: "Swap Pairs", href: "/#swap-pairs", title: "Browse all supported swap pairs" },
   { label: "Blog", href: "/blog", title: "Read crypto guides and market analysis" },
   { label: "FAQ", href: "/#faq", title: "Frequently asked questions about crypto swaps" },
   { label: "Get Widget", href: "/get-widget", title: "Embed a free crypto swap widget on your website" },
   { label: "Developer Hub", href: "/developer", title: "Widget integration docs, URL deep-linking, and supported chains" },
-  { label: "Affiliate Program", href: "/affiliates", title: "Earn 0.1%–0.4% lifetime commissions promoting MRC GlobalPay" },
+  { label: "Affiliate Program", href: "/affiliates", title: "Earn 0.1%–0.4% lifetime commissions promoting MRC Global Pay" },
   { label: "How to Swap Dust", href: "/resources/crypto-dust-guide", title: "Guide to converting small crypto balances" },
   { label: "Fractal BTC Bridge", href: "/resources/fractal-bitcoin-swap", title: "Bridge Fractal Bitcoin to other networks" },
   { label: "Best Place to Buy Solana", href: "/guides/best-place-to-buy-solana", title: "Find the best place to buy Solana" },
@@ -117,7 +117,7 @@ const expertiseLinks = [
   { label: "Non-Custodial Swaps", href: "/transparency-security", title: "How non-custodial crypto swaps work" },
   { label: "Micro-Swap FAQ", href: "/#faq", title: "Frequently asked questions about micro-swaps" },
   { label: "AML Compliance", href: "/aml", title: "Our Anti-Money Laundering policy and compliance" },
-  { label: "Compare Exchanges", href: "/compare", title: "Compare MRC GlobalPay vs 50+ crypto exchanges" },
+  { label: "Compare Exchanges", href: "/compare", title: "Compare MRC Global Pay vs 50+ crypto exchanges" },
   { label: "Swap Solutions", href: "/solutions", title: "Browse all micro-swap solution guides" },
   { label: "MSB Compliance / About", href: "/about", title: "Canadian MSB registration and compliance information" },
   { label: "Referral Program", href: "/referral", title: "Earn 15% referral commission on every swap" },
@@ -125,7 +125,7 @@ const expertiseLinks = [
 ];
 
 const securityLegalLinks = [
-  { label: "Trust & Transparency Hub", href: "/learn", title: "Learn how MRC GlobalPay protects your assets" },
+  { label: "Trust & Transparency Hub", href: "/learn", title: "Learn how MRC Global Pay protects your assets" },
   { label: "Non-Custodial Exchange", href: "/learn/why-non-custodial-is-safer", title: "Why non-custodial is safer for your crypto" },
   { label: "FINTRAC MSB Registration", href: "/learn/canadian-fintrac-msb", title: "Our Canadian MSB registration details" },
   { label: "Our Liquidity Partners", href: "/learn/our-liquidity-partners", title: "ChangeNOW & Fireblocks partner security" },
@@ -180,7 +180,7 @@ const SiteFooter = () => {
         {/* Brand + main nav */}
         <div className="grid gap-8 sm:grid-cols-2 sm:gap-12 lg:grid-cols-4 xl:grid-cols-5">
           <div>
-            <a href={lp("/")} title="MRC GlobalPay — Registration-Free Crypto Exchange" className="font-display text-lg font-bold tracking-tight text-foreground sm:text-xl">
+            <a href={lp("/")} title="MRC Global Pay — Registration-Free Crypto Exchange" className="font-display text-lg font-bold tracking-tight text-foreground sm:text-xl">
               MRC<span className="text-primary">GlobalPay</span>
             </a>
             <p className="mt-3 font-body text-sm leading-relaxed text-muted-foreground sm:mt-4">
@@ -197,17 +197,17 @@ const SiteFooter = () => {
             </h3>
             <ul className="mt-3 space-y-2 sm:mt-4 sm:space-y-3">
               <li>
-                <a href={lp("/privacy")} title="MRC GlobalPay Privacy Policy" className="font-body text-sm text-muted-foreground transition-colors hover:text-foreground">
+                <a href={lp("/privacy")} title="MRC Global Pay Privacy Policy" className="font-body text-sm text-muted-foreground transition-colors hover:text-foreground">
                   {t("footer.privacy")}
                 </a>
               </li>
               <li>
-                <a href={lp("/terms")} title="MRC GlobalPay Terms of Service" className="font-body text-sm font-semibold text-foreground transition-colors hover:text-primary">
+                <a href={lp("/terms")} title="MRC Global Pay Terms of Service" className="font-body text-sm font-semibold text-foreground transition-colors hover:text-primary">
                   {t("footer.terms")}
                 </a>
               </li>
               <li>
-                <a href={lp("/aml")} title="MRC GlobalPay AML Policy" className="font-body text-sm text-muted-foreground transition-colors hover:text-foreground">
+                <a href={lp("/aml")} title="MRC Global Pay AML Policy" className="font-body text-sm text-muted-foreground transition-colors hover:text-foreground">
                   {t("footer.aml")}
                 </a>
               </li>
@@ -244,14 +244,14 @@ const SiteFooter = () => {
         <div className="mt-8 border-t border-border pt-8">
           <div className="grid gap-8 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
             <FooterLinkList langPrefix={lp} title="Popular Comparisons" links={[
-              { label: "MRC vs Binance", href: "/compare/mrc-vs-binance", title: "Compare MRC GlobalPay vs Binance" },
-              { label: "MRC vs Coinbase", href: "/compare/mrc-vs-coinbase", title: "Compare MRC GlobalPay vs Coinbase" },
-              { label: "MRC vs ChangeNOW", href: "/compare/mrc-vs-changenow", title: "Compare MRC GlobalPay vs ChangeNOW" },
-              { label: "MRC vs Changelly", href: "/compare/mrc-vs-changelly", title: "Compare MRC GlobalPay vs Changelly" },
-              { label: "MRC vs SimpleSwap", href: "/compare/mrc-vs-simpleswap", title: "Compare MRC GlobalPay vs SimpleSwap" },
-              { label: "MRC vs Uniswap", href: "/compare/mrc-vs-uniswap", title: "Compare MRC GlobalPay vs Uniswap" },
-              { label: "MRC vs Kraken", href: "/compare/mrc-vs-kraken", title: "Compare MRC GlobalPay vs Kraken" },
-              { label: "MRC vs THORChain", href: "/compare/mrc-vs-thorchain", title: "Compare MRC GlobalPay vs THORChain" },
+              { label: "MRC vs Binance", href: "/compare/mrc-vs-binance", title: "Compare MRC Global Pay vs Binance" },
+              { label: "MRC vs Coinbase", href: "/compare/mrc-vs-coinbase", title: "Compare MRC Global Pay vs Coinbase" },
+              { label: "MRC vs ChangeNOW", href: "/compare/mrc-vs-changenow", title: "Compare MRC Global Pay vs ChangeNOW" },
+              { label: "MRC vs Changelly", href: "/compare/mrc-vs-changelly", title: "Compare MRC Global Pay vs Changelly" },
+              { label: "MRC vs SimpleSwap", href: "/compare/mrc-vs-simpleswap", title: "Compare MRC Global Pay vs SimpleSwap" },
+              { label: "MRC vs Uniswap", href: "/compare/mrc-vs-uniswap", title: "Compare MRC Global Pay vs Uniswap" },
+              { label: "MRC vs Kraken", href: "/compare/mrc-vs-kraken", title: "Compare MRC Global Pay vs Kraken" },
+              { label: "MRC vs THORChain", href: "/compare/mrc-vs-thorchain", title: "Compare MRC Global Pay vs THORChain" },
               { label: "All Comparisons →", href: "/compare", title: "View all 50+ exchange comparisons" },
             ]} />
             <FooterLinkList langPrefix={lp} title="Ecosystem & Prices" links={ecosystemLinks} />
@@ -322,7 +322,7 @@ const SiteFooter = () => {
             </h3>
             <p className="font-body text-xs leading-relaxed text-muted-foreground">
               {t("footer.disclaimer")}{" "}
-              <a href={lp("/transparency-security")} title="View MRC GlobalPay transparency and security practices" className="text-primary hover:underline">
+              <a href={lp("/transparency-security")} title="View MRC Global Pay transparency and security practices" className="text-primary hover:underline">
                 View our transparency &amp; security practices
               </a>
             </p>
@@ -350,14 +350,14 @@ const SiteFooter = () => {
               data-style-width="100%"
               data-token="7bcf2cb1-257b-45b3-ba85-1bc33cf80fa7"
             >
-              <a href="https://www.trustpilot.com/review/mrcglobalpay.com" target="_blank" rel="noopener" title="MRC GlobalPay reviews on Trustpilot">Trustpilot</a>
+              <a href="https://www.trustpilot.com/review/mrcglobalpay.com" target="_blank" rel="noopener" title="MRC Global Pay reviews on Trustpilot">Trustpilot</a>
             </div>
           </div>
           {/* Author / Expertise Attribution */}
           <div className="mb-4 rounded-lg border border-border bg-muted/30 px-4 py-3">
             <p className="font-body text-[11px] leading-relaxed text-muted-foreground">
               <strong className="text-foreground/70">Technical content by</strong>{" "}
-              <a href="/about" className="text-foreground/80 underline decoration-foreground/20 underline-offset-2 hover:decoration-foreground/50">MRC GlobalPay Technical Architecture Team</a> — FINTRAC-registered MSB (C100000015) specializing in non-custodial cross-chain settlement infrastructure.
+              <a href="/about" className="text-foreground/80 underline decoration-foreground/20 underline-offset-2 hover:decoration-foreground/50">MRC Global Pay Technical Architecture Team</a> — FINTRAC-registered MSB (C100000015) specializing in non-custodial cross-chain settlement infrastructure.
             </p>
           </div>
 
@@ -385,7 +385,7 @@ const FintracFooterBlock = () => {
               href={FINTRAC_REGISTRY_URL}
               target="_blank"
               rel="noopener noreferrer"
-              title="Verify MRC GlobalPay on the official FINTRAC MSB Registry"
+              title="Verify MRC Global Pay on the official FINTRAC MSB Registry"
               className="text-primary underline decoration-primary/30 underline-offset-2 hover:decoration-primary/70 transition-colors"
             >
               Registered Money Services Business (MSB): C100000015
@@ -407,7 +407,7 @@ const FintracFooterBlock = () => {
           href={FINTRAC_REGISTRY_URL}
           target="_blank"
           rel="noopener noreferrer"
-          title="Verify MRC GlobalPay on the official FINTRAC MSB Registry — opens in a new tab"
+          title="Verify MRC Global Pay on the official FINTRAC MSB Registry — opens in a new tab"
           className="inline-flex items-center gap-1.5 rounded-full border border-primary/30 bg-primary/5 px-3 py-1 transition-colors hover:bg-primary/10"
         >
           <Shield className="h-3.5 w-3.5 text-primary" />
@@ -418,7 +418,7 @@ const FintracFooterBlock = () => {
           href="https://www.bankofcanada.ca/core-functions/retail-payments-supervision/psp-registry/psp-registry-details/?account_id=408b884a-1aa1-ef11-a72d-0022483bf164"
           target="_blank"
           rel="noopener noreferrer"
-          title="Verify MRC GlobalPay on the official Bank of Canada PSP Registry — opens in a new tab"
+          title="Verify MRC Global Pay on the official Bank of Canada PSP Registry — opens in a new tab"
           className="inline-flex items-center gap-1.5 rounded-full border border-primary/30 bg-primary/5 px-3 py-1 transition-colors hover:bg-primary/10"
         >
           <Shield className="h-3.5 w-3.5 text-primary" />

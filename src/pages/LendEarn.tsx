@@ -209,7 +209,7 @@ function DepositModal({ open, onClose, sendAddress, amount, currency, txId, type
             )}
 
             <p className="text-[10px] text-muted-foreground text-center leading-relaxed">
-              {t("lend.modal.compliance", "MRC GlobalPay · MSB Registration C100000015 · FINTRAC Regulated")}
+              {t("lend.modal.compliance", "MRC Global Pay · MSB Registration C100000015 · FINTRAC Regulated")}
             </p>
           </div>
         </DialogContent>
@@ -390,7 +390,7 @@ function ContactConfirmModal({ open, onClose, onConfirm, loading, type }: Contac
           )}
 
           <p className="text-[10px] text-muted-foreground text-center leading-relaxed">
-            {t("lend.contact.compliance", "MRC GlobalPay · MSB Registration C100000015 · Your data is encrypted and only used for transaction alerts.")}
+            {t("lend.contact.compliance", "MRC Global Pay · MSB Registration C100000015 · Your data is encrypted and only used for transaction alerts.")}
           </p>
         </div>
         <DialogFooter>
@@ -1024,7 +1024,7 @@ function YieldDashboard() {
               </Button>
 
               <p className="text-[10px] text-muted-foreground text-center">
-                {t("lend.modal.compliance", "MRC GlobalPay · MSB Registration C100000015 · FINTRAC Regulated")}
+                {t("lend.modal.compliance", "MRC Global Pay · MSB Registration C100000015 · FINTRAC Regulated")}
               </p>
             </CardContent>
           </Card>
@@ -1174,7 +1174,7 @@ export default function LendEarn() {
             { "@type": "Question", "name": "What happens if my collateral value drops?", "acceptedAnswer": { "@type": "Answer", "text": "You will receive notifications when your collateral approaches the liquidation threshold. You can top up additional collateral at any time to maintain a healthy LTV ratio." }},
             { "@type": "Question", "name": "Is there a minimum or maximum loan amount?", "acceptedAnswer": { "@type": "Answer", "text": "The minimum loan amount depends on the collateral asset and is shown in the calculator. There is no hard maximum." }},
             { "@type": "Question", "name": "Can I repay my loan early?", "acceptedAnswer": { "@type": "Answer", "text": "Yes. There are no early repayment penalties. You can repay the principal plus accrued interest at any time to unlock your collateral." }},
-            { "@type": "Question", "name": "Is there a lock-up period for Earn?", "acceptedAnswer": { "@type": "Answer", "text": "No. MRC GlobalPay Earn is completely flexible. You can withdraw your full principal and all earned interest at any time with no penalties." }},
+            { "@type": "Question", "name": "Is there a lock-up period for Earn?", "acceptedAnswer": { "@type": "Answer", "text": "No. MRC Global Pay Earn is completely flexible. You can withdraw your full principal and all earned interest at any time with no penalties." }},
             { "@type": "Question", "name": "How often is interest paid?", "acceptedAnswer": { "@type": "Answer", "text": "Interest is accrued daily and automatically compounded into your balance." }},
           ]
         })}</script>

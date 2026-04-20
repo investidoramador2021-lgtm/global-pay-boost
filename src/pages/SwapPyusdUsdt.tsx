@@ -10,16 +10,16 @@ const SwapPyusdUsdt = () => (
     avgSpeed="22s"
     isFeatured
     headline={<>Instant PYUSD to SOL Swap – <span className="text-gradient-neon">Regulated-Grade Liquidity, Zero Delays</span></>}
-    subHeadline="Secure, regulated-grade liquidity for PayPal USD on Solana. Bypass delays and swap in seconds. MRC GlobalPay's liquidity rails are specifically optimized for PYUSD's cross-chain settlement."
-    whyText="PayPal USD (PYUSD) bridges traditional finance and crypto, backed by one of the world's largest payment processors. MRC GlobalPay's 2026 liquidity architecture utilizes pre-funded vaults and direct-to-protocol routing — eliminating the 3–6 confirmation wait times common on standard exchanges. Deep PYUSD/SOL liquidity pools ensure sub-minute execution with immediate on-chain finality and zero slippage."
+    subHeadline="Secure, regulated-grade liquidity for PayPal USD on Solana. Bypass delays and swap in seconds. MRC Global Pay's liquidity rails are specifically optimized for PYUSD's cross-chain settlement."
+    whyText="PayPal USD (PYUSD) bridges traditional finance and crypto, backed by one of the world's largest payment processors. MRC Global Pay's 2026 liquidity architecture utilizes pre-funded vaults and direct-to-protocol routing — eliminating the 3–6 confirmation wait times common on standard exchanges. Deep PYUSD/SOL liquidity pools ensure sub-minute execution with immediate on-chain finality and zero slippage."
     extraFaqs={[
       {
-        q: "Why is MRC GlobalPay the fastest way to swap PYUSD?",
+        q: "Why is MRC Global Pay the fastest way to swap PYUSD?",
         a: "Our 2026 liquidity architecture utilizes pre-funded vaults and direct-to-protocol routing. This eliminates the 3–6 confirmation wait times common on standard exchanges, delivering assets to your wallet in under 60 seconds.",
       },
       {
         q: "Can I swap PYUSD to SOL instantly without confirmation delays?",
-        a: "Yes. MRC GlobalPay eliminates the standard confirmation wait for PYUSD conversions. Our pre-funded SOL vaults execute swaps with immediate settlement — no exchange withdrawal queues, no network delays.",
+        a: "Yes. MRC Global Pay eliminates the standard confirmation wait for PYUSD conversions. Our pre-funded SOL vaults execute swaps with immediate settlement — no exchange withdrawal queues, no network delays.",
       },
       {
         q: "Is PYUSD exchange available with no confirmation delay?",

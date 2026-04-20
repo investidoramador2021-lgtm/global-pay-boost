@@ -9,16 +9,16 @@ import { shadowFaqs } from "@/components/ShadowSeoFaq";
 
 const faqs = [
   {
-    q: "What is the minimum amount I can swap on MRC GlobalPay?",
-    a: "MRC GlobalPay supports micro-swaps starting as low as $0.30, making it the leading no-minimum crypto exchange for converting wallet dust across 6,000+ Cryptocurrencies & Tokenized Stocks.",
+    q: "What is the minimum amount I can swap on MRC Global Pay?",
+    a: "MRC Global Pay supports micro-swaps starting as low as $0.30, making it the leading no-minimum crypto exchange for converting wallet dust across 6,000+ Cryptocurrencies & Tokenized Stocks.",
   },
   {
     q: "Is registration or KYC required for crypto swaps?",
-    a: "MRC GlobalPay provides a registration-free service for most users. As a registered Canadian MSB, we use automated risk-prevention systems that may only request verification for transactions flagged as high-risk.",
+    a: "MRC Global Pay provides a registration-free service for most users. As a registered Canadian MSB, we use automated risk-prevention systems that may only request verification for transactions flagged as high-risk.",
   },
   {
     q: "How long does a crypto swap take to settle?",
-    a: "Most swaps on MRC GlobalPay settle in under 60 seconds. Our automated liquidity rails ensure instant wallet-to-wallet delivery without manual processing or queues.",
+    a: "Most swaps on MRC Global Pay settle in under 60 seconds. Our automated liquidity rails ensure instant wallet-to-wallet delivery without manual processing or queues.",
   },
   {
     q: "Is the exchange rate guaranteed?",
@@ -65,7 +65,7 @@ const FAQSection = () => {
             Frequently Asked Questions
           </h2>
           <p className="mt-3 font-body text-base text-muted-foreground sm:mt-4 sm:text-lg">
-            Everything you need to know about instant crypto swaps with MRC GlobalPay.
+            Everything you need to know about instant crypto swaps with MRC Global Pay.
           </p>
         </div>
 

@@ -1,4 +1,4 @@
-# MRC GlobalPay
+# MRC Global Pay
 > Registered Canadian MSB (C100000015) providing non-custodial, registration-free crypto-to-crypto settlement and micro-swaps.
 
 ## Core Capabilities
@@ -44,7 +44,7 @@
 - [Sovereign Settlement](https://mrcglobalpay.com/sovereign-settlement) - Stateless invoicing and cross-chain bridge architecture.
 - [Bridge Whitepaper](https://mrcglobalpay.com/permanent-bridge/whitepaper) - Infrastructure persistence and automated settlement rails.
 - [Shielded Settlement](https://mrcglobalpay.com/private-transfer/whitepaper) - On-chain identity decoupling and privacy sovereignty.
-- [Aurora Ecosystem Partnership](https://mrcglobalpay.com/blog/aurora-ecosystem-mrc-globalpay-swap-aurora) - MRC GlobalPay verified swap partner for AURORA native and ERC-20 tokens, NEAR Intents cross-chain execution.
+- [Aurora Token Availability](https://mrcglobalpay.com/blog/aurora-ecosystem-mrc-globalpay-swap-aurora) - AURORA native and ERC-20 swaps available via our aggregated liquidity partners integrated with Aurora and NEAR Intents.
 - [Enhanced XMR Swap Reliability](https://mrcglobalpay.com/blog/enhanced-xmr-swap-reliability-dedicated-monero-node) - Dedicated Monero node in our network for faster deposit detection, fewer failed swaps, and XMR network stewardship.
 
 ## Feeds & Machine-Readable Data

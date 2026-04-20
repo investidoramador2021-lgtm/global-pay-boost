@@ -277,7 +277,7 @@ export default function DynamicExchange() {
     ? (pairSeo.content_json as Record<string, { title?: string; description?: string; h1?: string }>)[lang]
     : null;
 
-  const title = pairLangContent?.title || pairSeo?.seo_title || `${dx("heroTitle", { from: fromUp, to: toUp })} — ${dx("ctaSubtitle")} | MRC GlobalPay`;
+  const title = pairLangContent?.title || pairSeo?.seo_title || `${dx("heroTitle", { from: fromUp, to: toUp })} — ${dx("ctaSubtitle")} | MRC Global Pay`;
   const description = pairLangContent?.description || pairSeo?.seo_description || `Convert ${fromName} (${fromUp}) to ${toName} (${toUp}) in under 60 seconds with no account required. Compare rates from 700+ liquidity sources. Canadian MSB-registered (C100000015). Step-by-step guide, network details, and live rates.`;
   const seoH1 = pairLangContent?.h1 || pairSeo?.seo_h1 || null;
   // Localized self-referencing canonical: each language version IS its own
@@ -324,9 +324,9 @@ export default function DynamicExchange() {
       {
         "@type": "HowTo",
         name: `How to Swap ${fromUp} to ${toUp}`,
-        description: `Step-by-step guide to convert ${fromName} to ${toName} instantly on MRC GlobalPay.`,
+        description: `Step-by-step guide to convert ${fromName} to ${toName} instantly on MRC Global Pay.`,
         totalTime: "PT2M",
-        tool: { "@type": "SoftwareApplication", name: "MRC GlobalPay", operatingSystem: "Web Browser", applicationCategory: "FinanceApplication" },
+        tool: { "@type": "SoftwareApplication", name: "MRC Global Pay", operatingSystem: "Web Browser", applicationCategory: "FinanceApplication" },
         step: [
           { "@type": "HowToStep", position: 1, name: "Select your pair", text: `Choose ${fromUp} as the source currency and ${toUp} as the destination in the swap widget.` },
           { "@type": "HowToStep", position: 2, name: "Enter amount", text: `Enter the amount of ${fromUp} you want to convert. The minimum is approximately $0.30 USD equivalent.` },
@@ -340,7 +340,7 @@ export default function DynamicExchange() {
           {
             "@type": "Question",
             name: `What is the minimum ${fromUp} required to swap for ${toUp}?`,
-            acceptedAnswer: { "@type": "Answer", text: `The minimum swap amount is approximately $0.30 USD equivalent in ${fromUp}. MRC GlobalPay supports micro-swaps starting from crypto dust amounts, making it ideal for converting small balances.` },
+            acceptedAnswer: { "@type": "Answer", text: `The minimum swap amount is approximately $0.30 USD equivalent in ${fromUp}. MRC Global Pay supports micro-swaps starting from crypto dust amounts, making it ideal for converting small balances.` },
           },
           {
             "@type": "Question",
@@ -360,17 +360,17 @@ export default function DynamicExchange() {
           {
             "@type": "Question",
             name: `Can I swap ${fromUp} to ${toUp} without KYC or identity verification?`,
-            acceptedAnswer: { "@type": "Answer", text: `Yes. MRC GlobalPay is a registered Canadian Money Services Business (MSB #C100000015, FINTRAC-supervised). Standard crypto-to-crypto swaps do not require account creation, email registration, or identity verification. The service is non-custodial — your funds are never held by MRC GlobalPay.` },
+            acceptedAnswer: { "@type": "Answer", text: `Yes. MRC Global Pay is a registered Canadian Money Services Business (MSB #C100000015, FINTRAC-supervised). Standard crypto-to-crypto swaps do not require account creation, email registration, or identity verification. The service is non-custodial — your funds are never held by MRC Global Pay.` },
           },
           {
             "@type": "Question",
-            name: `What fees does MRC GlobalPay charge for ${fromUp} to ${toUp} swaps?`,
-            acceptedAnswer: { "@type": "Answer", text: `MRC GlobalPay charges a small network fee that is transparently displayed before you confirm the swap. There are no hidden fees, no spread markup, and no withdrawal fees. The rate shown is the rate you get.` },
+            name: `What fees does MRC Global Pay charge for ${fromUp} to ${toUp} swaps?`,
+            acceptedAnswer: { "@type": "Answer", text: `MRC Global Pay charges a small network fee that is transparently displayed before you confirm the swap. There are no hidden fees, no spread markup, and no withdrawal fees. The rate shown is the rate you get.` },
           },
           {
             "@type": "Question",
-            name: `Is it safe to swap ${fromUp} to ${toUp} on MRC GlobalPay?`,
-            acceptedAnswer: { "@type": "Answer", text: `Yes. MRC GlobalPay operates a fully non-custodial swap service — we never hold your private keys or funds. The platform is operated by MRC Pay International Corp., a FINTRAC-registered MSB headquartered in Ottawa, Canada. All swaps are executed through audited liquidity partners with real-time settlement.` },
+            name: `Is it safe to swap ${fromUp} to ${toUp} on MRC Global Pay?`,
+            acceptedAnswer: { "@type": "Answer", text: `Yes. MRC Global Pay operates a fully non-custodial swap service — we never hold your private keys or funds. The platform is operated by MRC Pay International Corp., a FINTRAC-registered MSB headquartered in Ottawa, Canada. All swaps are executed through audited liquidity partners with real-time settlement.` },
           },
           {
             "@type": "Question",
@@ -381,7 +381,7 @@ export default function DynamicExchange() {
       },
       {
         "@type": "SoftwareApplication",
-        name: "MRC GlobalPay",
+        name: "MRC Global Pay",
         applicationCategory: "FinanceApplication",
         operatingSystem: "Web, Android, iOS",
         offers: { "@type": "Offer", price: "0", priceCurrency: "USD" },
@@ -407,7 +407,7 @@ export default function DynamicExchange() {
         <meta property="og:description" content={description} />
         <meta property="og:type" content="website" />
         <meta property="og:url" content={canonicalUrl} />
-        <meta property="og:site_name" content="MRC GlobalPay" />
+        <meta property="og:site_name" content="MRC Global Pay" />
         <meta property="og:image" content="https://mrcglobalpay.com/og-image.jpg" />
         <meta property="og:image:width" content="1200" />
         <meta property="og:image:height" content="630" />
@@ -486,7 +486,7 @@ export default function DynamicExchange() {
 
               {/* SEO content injection — dynamic per-pair pitch directly under the calculator */}
               <p className="mt-4 text-center text-sm text-[#C4C8D0] leading-relaxed sm:text-base">
-                Securely swap <strong className="text-white">{fromUp}</strong> for <strong className="text-white">{toUp}</strong> at the best live rates. MRC GlobalPay provides regulated liquidity for {fromName} holders looking to diversify into {toName} instantly.
+                Securely swap <strong className="text-white">{fromUp}</strong> for <strong className="text-white">{toUp}</strong> at the best live rates. MRC Global Pay provides regulated liquidity for {fromName} holders looking to diversify into {toName} instantly.
               </p>
             </div>
           </div>
@@ -872,7 +872,7 @@ export default function DynamicExchange() {
                               <a
                                 href={href}
                                 className="block rounded-xl border border-primary/30 bg-primary/5 px-4 py-3 transition-colors hover:border-primary/60 hover:bg-primary/10"
-                                title={`Swap ${from.toUpperCase()} to ${to.toUpperCase()} instantly on MRC GlobalPay`}
+                                title={`Swap ${from.toUpperCase()} to ${to.toUpperCase()} instantly on MRC Global Pay`}
                               >
                                 <div className="text-[10px] uppercase tracking-wider text-primary">Popular</div>
                                 <div className="mt-1 font-display text-sm font-bold text-foreground">

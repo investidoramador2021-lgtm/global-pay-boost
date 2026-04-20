@@ -11,7 +11,7 @@ const SwapTaoUsdt = () => (
     isFeatured
     headline={<>Swap TAO to USDT Instantly – <span className="text-gradient-neon">Decentralized AI Liquidity</span></>}
     subHeadline="Convert Bittensor (TAO) to USDT in under two minutes. Substrate-native delivery. Aggregated TAO liquidity across multiple top-tier providers. Locked rate before funding."
-    whyText="TAO swap volume surged through 2025–2026 following the most recent Bittensor halving and continued maturation of subnet output. MRC GlobalPay handles the Substrate-format addressing automatically and routes TAO/USDT through deep-liquidity venues — delivering clean execution without bridging hassle. The displayed rate is the receive amount."
+    whyText="TAO swap volume surged through 2025–2026 following the most recent Bittensor halving and continued maturation of subnet output. MRC Global Pay handles the Substrate-format addressing automatically and routes TAO/USDT through deep-liquidity venues — delivering clean execution without bridging hassle. The displayed rate is the receive amount."
     extraFaqs={[
       {
         q: "What address format do I need for a TAO swap?",

@@ -80,8 +80,8 @@ export default function ExchangeDirectory() {
   }, [assets, filter]);
 
   const canonicalUrl = "https://mrcglobalpay.com/directory";
-  const title = `Exchange Directory — All ${totalPairs.toLocaleString()} Crypto Swap Pairs | MRC GlobalPay`;
-  const description = `Browse every supported crypto swap pair on MRC GlobalPay. ${totalAssets}+ assets, ${totalPairs.toLocaleString()} live pairs. Canadian MSB-registered (C100000015), no account required.`;
+  const title = `Exchange Directory — All ${totalPairs.toLocaleString()} Crypto Swap Pairs | MRC Global Pay`;
+  const description = `Browse every supported crypto swap pair on MRC Global Pay. ${totalAssets}+ assets, ${totalPairs.toLocaleString()} live pairs. Canadian MSB-registered (C100000015), no account required.`;
 
   const jsonLd = {
     "@context": "https://schema.org",
@@ -98,7 +98,7 @@ export default function ExchangeDirectory() {
         name: title,
         description,
         url: canonicalUrl,
-        isPartOf: { "@type": "WebSite", name: "MRC GlobalPay", url: "https://mrcglobalpay.com" },
+        isPartOf: { "@type": "WebSite", name: "MRC Global Pay", url: "https://mrcglobalpay.com" },
       },
     ],
   };
@@ -140,7 +140,7 @@ export default function ExchangeDirectory() {
                 Exchange Directory
               </h1>
               <p className="mt-4 max-w-2xl font-body text-base leading-relaxed text-muted-foreground sm:text-lg">
-                Browse every supported swap pair and asset on MRC GlobalPay. {totalAssets > 0 && (
+                Browse every supported swap pair and asset on MRC Global Pay. {totalAssets > 0 && (
                   <>
                     <strong className="text-foreground">{totalAssets}+ assets</strong> ·{" "}
                     <strong className="text-foreground">{totalPairs.toLocaleString()} live pairs</strong>.

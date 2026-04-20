@@ -16,7 +16,7 @@ import { getLangFromPath, langPath } from "@/i18n";
 const SNIPPETS = {
   iframe: `<iframe
   src="https://mrcglobalpay.com/embed/widget?mode=dark&ref=YOUR_REF"
-  title="MRC GlobalPay — Instant Crypto Swap"
+  title="MRC Global Pay — Instant Crypto Swap"
   width="100%"
   height="640"
   loading="lazy"
@@ -31,7 +31,7 @@ export function MRCSwapWidget({ refCode = "YOUR_REF", mode = "dark" }) {
   return (
     <iframe
       src={\`https://mrcglobalpay.com/embed/widget?mode=\${mode}&ref=\${refCode}\`}
-      title="MRC GlobalPay Swap"
+      title="MRC Global Pay Swap"
       width="100%"
       height="640"
       loading="lazy"
@@ -172,8 +172,8 @@ const DeveloperHub = () => {
   const jsonLd = {
     "@context": "https://schema.org",
     "@type": "WebPage",
-    name: "Developer & Integration Hub — MRC GlobalPay",
-    description: "Embed the MRC GlobalPay swap widget or integrate via REST API. 6,000+ assets, non-custodial, lifetime BTC revenue share.",
+    name: "Developer & Integration Hub — MRC Global Pay",
+    description: "Embed the MRC Global Pay swap widget or integrate via REST API. 6,000+ assets, non-custodial, lifetime BTC revenue share.",
     url: canonicalUrl,
     inLanguage: lang,
   };
@@ -181,10 +181,10 @@ const DeveloperHub = () => {
   return (
     <>
       <Helmet>
-        <title>Developer & Integration Hub — MRC GlobalPay</title>
-        <meta name="description" content="Embed the MRC GlobalPay swap widget or integrate via REST API. 6,000+ assets, non-custodial, lifetime BTC revenue share, FINTRAC-registered." />
+        <title>Developer & Integration Hub — MRC Global Pay</title>
+        <meta name="description" content="Embed the MRC Global Pay swap widget or integrate via REST API. 6,000+ assets, non-custodial, lifetime BTC revenue share, FINTRAC-registered." />
         <link rel="canonical" href={canonicalUrl} />
-        <meta property="og:title" content="Developer & Integration Hub — MRC GlobalPay" />
+        <meta property="og:title" content="Developer & Integration Hub — MRC Global Pay" />
         <meta property="og:description" content="Widget, REST API, webhooks, and SDKs for crypto swap integration. Lifetime BTC commissions." />
         <meta property="og:url" content={canonicalUrl} />
         <script type="application/ld+json">{JSON.stringify(jsonLd)}</script>

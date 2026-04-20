@@ -17,7 +17,7 @@ export const researchMeta: Record<SupportedLanguage, ResearchMeta> = {
     metaDescription: "PAXG vs. XAUt 2026: The institutional guide to tokenized gold. Compare NYDFS regulation vs. Swiss offshore liquidity, fees, and DeFi yield. Read more.",
     updated: "April 2026",
     readTime: "11 min read",
-    author: "MRC GlobalPay Research",
+    author: "MRC Global Pay Research",
     swapNowCta: "Swap Now",
   },
   es: {
@@ -26,7 +26,7 @@ export const researchMeta: Record<SupportedLanguage, ResearchMeta> = {
     metaDescription: "PAXG vs. XAUt 2026: La guía institucional del oro tokenizado. Compara regulación NYDFS vs. liquidez suiza, comisiones y rendimiento DeFi.",
     updated: "Abril 2026",
     readTime: "11 min de lectura",
-    author: "MRC GlobalPay Research",
+    author: "MRC Global Pay Research",
     swapNowCta: "Intercambiar ahora",
   },
   pt: {
@@ -35,7 +35,7 @@ export const researchMeta: Record<SupportedLanguage, ResearchMeta> = {
     metaDescription: "PAXG vs. XAUt 2026: O guia institucional do ouro tokenizado. Compare regulação NYDFS vs. liquidez suíça, taxas e rendimento DeFi.",
     updated: "Abril 2026",
     readTime: "11 min de leitura",
-    author: "MRC GlobalPay Research",
+    author: "MRC Global Pay Research",
     swapNowCta: "Trocar Agora",
   },
   fr: {
@@ -44,7 +44,7 @@ export const researchMeta: Record<SupportedLanguage, ResearchMeta> = {
     metaDescription: "PAXG vs. XAUt 2026 : Le guide institutionnel de l'or tokenisé. Comparez la réglementation NYDFS vs. la liquidité suisse, les frais et le rendement DeFi.",
     updated: "Avril 2026",
     readTime: "11 min de lecture",
-    author: "MRC GlobalPay Research",
+    author: "MRC Global Pay Research",
     swapNowCta: "Échanger maintenant",
   },
   ja: {
@@ -53,7 +53,7 @@ export const researchMeta: Record<SupportedLanguage, ResearchMeta> = {
     metaDescription: "PAXG vs. XAUt 2026：トークン化された金の機関投資家向けガイド。NYDFS規制とスイスのオフショア流動性、手数料、DeFi利回りを比較。",
     updated: "2026年4月",
     readTime: "11分で読める",
-    author: "MRC GlobalPay Research",
+    author: "MRC Global Pay Research",
     swapNowCta: "今すぐスワップ",
   },
   fa: {
@@ -62,7 +62,7 @@ export const researchMeta: Record<SupportedLanguage, ResearchMeta> = {
     metaDescription: "PAXG در مقابل XAUt 2026: راهنمای نهادی طلای توکنیزه‌شده. مقایسه مقررات NYDFS در مقابل نقدینگی سوئیس، کارمزدها و بازده DeFi.",
     updated: "آوریل 2026",
     readTime: "11 دقیقه مطالعه",
-    author: "MRC GlobalPay Research",
+    author: "MRC Global Pay Research",
     swapNowCta: "اکنون مبادله کنید",
   },
   ur: {
@@ -71,7 +71,7 @@ export const researchMeta: Record<SupportedLanguage, ResearchMeta> = {
     metaDescription: "PAXG بمقابلہ XAUt 2026: ٹوکنائزڈ سونے کی ادارہ جاتی گائیڈ۔ NYDFS ریگولیشن بمقابلہ سوئس لیکویڈیٹی، فیس اور DeFi ریٹرن کا موازنہ۔",
     updated: "اپریل 2026",
     readTime: "11 منٹ پڑھنے کا وقت",
-    author: "MRC GlobalPay Research",
+    author: "MRC Global Pay Research",
     swapNowCta: "ابھی سواپ کریں",
   },
   he: {
@@ -80,7 +80,7 @@ export const researchMeta: Record<SupportedLanguage, ResearchMeta> = {
     metaDescription: "PAXG מול XAUt 2026: המדריך המוסדי לזהב מטוקנ. השוו רגולציית NYDFS מול נזילות שוויצרית, עמלות ותשואת DeFi.",
     updated: "אפריל 2026",
     readTime: "11 דקות קריאה",
-    author: "MRC GlobalPay Research",
+    author: "MRC Global Pay Research",
     swapNowCta: "החלף עכשיו",
   },
   af: {
@@ -89,7 +89,7 @@ export const researchMeta: Record<SupportedLanguage, ResearchMeta> = {
     metaDescription: "PAXG vs. XAUt 2026: Die institusionele gids tot getokeniseerde goud. Vergelyk NYDFS-regulering vs. Switserse likiditeit, fooie en DeFi-opbrengs.",
     updated: "April 2026",
     readTime: "11 min lees",
-    author: "MRC GlobalPay Research",
+    author: "MRC Global Pay Research",
     swapNowCta: "Ruil Nou",
   },
   hi: {
@@ -98,7 +98,7 @@ export const researchMeta: Record<SupportedLanguage, ResearchMeta> = {
     metaDescription: "PAXG बनाम XAUt 2026: टोकनाइज़्ड गोल्ड की संस्थागत गाइड। NYDFS विनियमन बनाम स्विस तरलता, शुल्क और DeFi यील्ड की तुलना करें।",
     updated: "अप्रैल 2026",
     readTime: "11 मिनट पढ़ने का समय",
-    author: "MRC GlobalPay Research",
+    author: "MRC Global Pay Research",
     swapNowCta: "अभी स्वैप करें",
   },
   vi: {
@@ -107,7 +107,7 @@ export const researchMeta: Record<SupportedLanguage, ResearchMeta> = {
     metaDescription: "PAXG vs. XAUt 2026: Hướng dẫn dành cho tổ chức về vàng token hóa. So sánh quy định NYDFS vs. thanh khoản Thụy Sĩ, phí và lợi suất DeFi.",
     updated: "Tháng 4, 2026",
     readTime: "11 phút đọc",
-    author: "MRC GlobalPay Research",
+    author: "MRC Global Pay Research",
     swapNowCta: "Hoán đổi ngay",
   },
   tr: {
@@ -116,7 +116,7 @@ export const researchMeta: Record<SupportedLanguage, ResearchMeta> = {
     metaDescription: "PAXG vs. XAUt 2026: Tokenize altın için kurumsal rehber. NYDFS düzenlemesi vs. İsviçre likiditesi, ücretler ve DeFi getirisi karşılaştırması.",
     updated: "Nisan 2026",
     readTime: "11 dk okuma",
-    author: "MRC GlobalPay Research",
+    author: "MRC Global Pay Research",
     swapNowCta: "Şimdi Takas Et",
   },
   uk: {
@@ -125,7 +125,7 @@ export const researchMeta: Record<SupportedLanguage, ResearchMeta> = {
     metaDescription: "PAXG проти XAUt 2026: Інституційний посібник з токенізованого золота. Порівняйте регулювання NYDFS та швейцарську ліквідність, комісії та дохідність DeFi.",
     updated: "Квітень 2026",
     readTime: "11 хв читання",
-    author: "MRC GlobalPay Research",
+    author: "MRC Global Pay Research",
     swapNowCta: "Обміняти зараз",
   },
 };
@@ -162,7 +162,7 @@ export const faqs = [
   },
   {
     q: "How do I swap PAXG or XAUt without KYC?",
-    a: "MRC GlobalPay supports non-custodial PAXG and XAUt swaps with no registration required. As a Canadian MSB, the platform is compliant with AML regulations while eliminating unnecessary KYC friction.",
+    a: "MRC Global Pay supports non-custodial PAXG and XAUt swaps with no registration required. As a Canadian MSB, the platform is compliant with AML regulations while eliminating unnecessary KYC friction.",
   },
 ];
 

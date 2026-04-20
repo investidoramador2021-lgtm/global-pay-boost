@@ -8,14 +8,14 @@ import { usePageUrl } from "@/hooks/use-page-url";
 const guideJsonLd = {
   "@context": "https://schema.org",
   "@type": "Product",
-  name: "MRC GlobalPay Crypto Dust Swap Service",
+  name: "MRC Global Pay Crypto Dust Swap Service",
   description:
     "Convert unspendable crypto dust into usable assets. $0.30 minimum. No registration required. Non-custodial, 6,000+ tokens supported.",
   image: "https://mrcglobalpay.com/icon-512x512.png",
   url: "https://mrcglobalpay.com/resources/crypto-dust-guide",
   brand: {
     "@type": "Brand",
-    name: "MRC GlobalPay",
+    name: "MRC Global Pay",
   },
   offers: {
     "@type": "Offer",
@@ -33,13 +33,13 @@ const howToJsonLd = {
   "@type": "HowTo",
   name: "How to Swap Crypto Dust for Under $1",
   description:
-    "Step-by-step guide to converting small, unspendable crypto balances into usable tokens using MRC GlobalPay.",
+    "Step-by-step guide to converting small, unspendable crypto balances into usable tokens using MRC Global Pay.",
   step: [
     {
       "@type": "HowToStep",
       position: 1,
       name: "Select your dust token",
-      text: "Open MRC GlobalPay and choose the token you want to swap from the list of 6,000+ supported assets.",
+      text: "Open MRC Global Pay and choose the token you want to swap from the list of 6,000+ supported assets.",
     },
     {
       "@type": "HowToStep",
@@ -62,7 +62,7 @@ const howToJsonLd = {
   ],
   tool: {
     "@type": "HowToTool",
-    name: "MRC GlobalPay Exchange Widget",
+    name: "MRC Global Pay Exchange Widget",
   },
   totalTime: "PT2M",
 };
@@ -89,7 +89,7 @@ const dustFaqJsonLd = {
     },
     {
       "@type": "Question",
-      name: "How Does MRC GlobalPay Process Swaps from $0.30?",
+      name: "How Does MRC Global Pay Process Swaps from $0.30?",
       acceptedAnswer: {
         "@type": "Answer",
         text: "Our non-custodial engine connects directly to protocol-level liquidity pools — eliminating the order-book overhead that forces other platforms to set high minimums. This architecture enables genuine crypto dust swaps starting at $0.30.",
@@ -97,10 +97,10 @@ const dustFaqJsonLd = {
     },
     {
       "@type": "Question",
-      name: "Is there a minimum for crypto swaps on MRC GlobalPay?",
+      name: "Is there a minimum for crypto swaps on MRC Global Pay?",
       acceptedAnswer: {
         "@type": "Answer",
-        text: "No. MRC GlobalPay is a no minimum crypto exchange that processes swaps as low as $0.30, depending on the coin pair.",
+        text: "No. MRC Global Pay is a no minimum crypto exchange that processes swaps as low as $0.30, depending on the coin pair.",
       },
     },
     {
@@ -119,21 +119,21 @@ const CryptoDustGuide = () => {
   return (
     <>
       <Helmet>
-        <title>Crypto Dust Swap Guide — $0.30 Minimum, No Registration Required | MRC GlobalPay</title>
+        <title>Crypto Dust Swap Guide — $0.30 Minimum, No Registration Required | MRC Global Pay</title>
         <meta
           name="description"
           content="The complete 2026 guide to swapping crypto dust. $0.30 minimum, no registration required. Convert unspendable wallet balances with 6,000+ tokens supported."
         />
         <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1" />
         <link rel="canonical" href={pageUrl} />
-        <meta property="og:title" content="Crypto Dust Swap Guide — $0.30 Minimum, No Registration Required | MRC GlobalPay" />
+        <meta property="og:title" content="Crypto Dust Swap Guide — $0.30 Minimum, No Registration Required | MRC Global Pay" />
         <meta
           property="og:description"
           content="Convert unspendable crypto dust into usable assets. $0.30 minimum, no registration required. 6,000+ tokens supported."
         />
         <meta property="og:type" content="article" />
         <meta property="og:url" content={pageUrl} />
-        <meta property="og:site_name" content="MRC GlobalPay" />
+        <meta property="og:site_name" content="MRC Global Pay" />
         <meta property="og:image" content="https://pub-bb2e103a32db4e198524a2e9ed8f35b4.r2.dev/22f69f45-cf65-4871-9af4-b68ab4027213/id-preview-243bf129--23f851ec-c820-43c7-bbe2-d2e830f7c268.lovable.app-1773521796493.png" />
         <meta name="twitter:card" content="summary_large_image" />
         <meta name="twitter:title" content="Crypto Dust Swap Guide — $0.30 Minimum, No Registration Required" />
@@ -160,7 +160,7 @@ const CryptoDustGuide = () => {
               At a Glance
             </p>
             <p className="font-body text-base leading-relaxed text-foreground">
-              The most efficient way to swap crypto dust is using a non-custodial aggregator like MRC GlobalPay that supports transactions as low as $0.30 — no account, no minimums, and 6,000+ tokens supported.
+              The most efficient way to swap crypto dust is using a non-custodial aggregator like MRC Global Pay that supports transactions as low as $0.30 — no account, no minimums, and 6,000+ tokens supported.
             </p>
             <ul className="mt-3 space-y-1 font-body text-sm text-foreground/80">
               <li className="flex items-center gap-2"><span className="text-primary">•</span> Minimum swap: $0.30</li>
@@ -226,7 +226,7 @@ const CryptoDustGuide = () => {
               A true <strong>low fee micro-swap</strong> platform must solve two problems simultaneously:
               remove minimum thresholds <em>and</em> keep fees proportional. If a swap costs $3 in fees
               on a $0.50 trade, the minimum is effectively $3 regardless of what the UI says.
-              MRC GlobalPay aggregates liquidity from top-tier providers to keep fees competitive
+              MRC Global Pay aggregates liquidity from top-tier providers to keep fees competitive
               even on the smallest trades.
             </p>
           </section>
@@ -234,7 +234,7 @@ const CryptoDustGuide = () => {
           {/* Section 3 */}
           <section className="mb-12">
             <h2 id="how-does-mrc-globalpay-process-swaps-from-030" className="scroll-mt-24 font-display text-2xl font-bold text-foreground mb-4">
-              How Does MRC GlobalPay Process Swaps from $0.30?
+              How Does MRC Global Pay Process Swaps from $0.30?
             </h2>
             <p className="text-muted-foreground leading-relaxed mb-4">
               Our non-custodial engine connects directly to protocol-level liquidity pools —
@@ -310,7 +310,7 @@ const CryptoDustGuide = () => {
               Which Chains &amp; Tokens Support Dust Swaps?
             </h2>
             <p className="text-muted-foreground leading-relaxed mb-4">
-              MRC GlobalPay supports over 500 assets across all major chains — including Ethereum,
+              MRC Global Pay supports over 500 assets across all major chains — including Ethereum,
               Solana, BNB Chain, Avalanche, Polygon, Arbitrum, Optimism, and Fractal Bitcoin.
               Whether you're consolidating ETH dust or recovering forgotten SOL, we've got you covered.
             </p>
@@ -342,7 +342,7 @@ const CryptoDustGuide = () => {
             <div className="space-y-6">
               <div>
                 <h3 className="font-display text-lg font-semibold text-foreground mb-2">
-                  Is there a minimum for crypto swaps on MRC GlobalPay?
+                  Is there a minimum for crypto swaps on MRC Global Pay?
                 </h3>
                 <p className="text-muted-foreground leading-relaxed">
                   No. We are a <strong>no minimum crypto exchange</strong> that processes swaps as

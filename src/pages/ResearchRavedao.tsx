@@ -14,7 +14,7 @@ const CANONICAL = `${BASE_URL}${PAGE_PATH}`;
 const PUBLISHED = "2026-04-16T00:00:00Z";
 
 const META_TITLE =
-  "RaveDAO (RAVE) Research: 6,000% Rally Analysis & Risk Report | MRC GlobalPay";
+  "RaveDAO (RAVE) Research: 6,000% Rally Analysis & Risk Report | MRC Global Pay";
 const META_DESCRIPTION =
   "A deep dive into RaveDAO (RAVE) tokenomics, the April 2026 short squeeze, and critical supply concentration risks. Learn how to swap RAVE securely via a Canadian MSB.";
 const META_KEYWORDS =
@@ -52,7 +52,7 @@ const faqs = [
   },
   {
     q: "Is it safe to swap RAVE in Canada?",
-    a: "Yes. MRC GlobalPay is a registered Canadian Money Services Business (MSB #C100000015) supervised by FINTRAC. Swaps are non-custodial, require no registration for standard volumes, and settle wallet-to-wallet in under 60 seconds.",
+    a: "Yes. MRC Global Pay is a registered Canadian Money Services Business (MSB #C100000015) supervised by FINTRAC. Swaps are non-custodial, require no registration for standard volumes, and settle wallet-to-wallet in under 60 seconds.",
   },
   {
     q: "What are the fees to swap RAVE to USDT or ETH?",
@@ -80,10 +80,10 @@ const articleSchema = {
   description: META_DESCRIPTION,
   datePublished: PUBLISHED,
   dateModified: PUBLISHED,
-  author: { "@type": "Organization", name: "MRC GlobalPay Research" },
+  author: { "@type": "Organization", name: "MRC Global Pay Research" },
   publisher: {
     "@type": "Organization",
-    name: "MRC GlobalPay",
+    name: "MRC Global Pay",
     logo: { "@type": "ImageObject", url: `${BASE_URL}/icon-512.png` },
   },
   mainEntityOfPage: { "@type": "WebPage", "@id": CANONICAL },
@@ -94,7 +94,7 @@ const articleSchema = {
 const softwareSchema = {
   "@context": "https://schema.org",
   "@type": "SoftwareApplication",
-  name: "MRC GlobalPay — RAVE Swap",
+  name: "MRC Global Pay — RAVE Swap",
   applicationCategory: "FinanceApplication",
   operatingSystem: "Web",
   url: `${BASE_URL}/exchange/rave-to-usdt`,
@@ -128,13 +128,13 @@ const ResearchRavedao = () => {
         <meta property="og:image" content={`${BASE_URL}${ogRavedaoImage}`} />
         <meta property="og:image:width" content="1200" />
         <meta property="og:image:height" content="630" />
-        <meta property="og:image:alt" content="RaveDAO (RAVE) Research — 6,000% Rally & Risk Report by MRC GlobalPay" />
+        <meta property="og:image:alt" content="RaveDAO (RAVE) Research — 6,000% Rally & Risk Report by MRC Global Pay" />
         <meta property="article:published_time" content={PUBLISHED} />
         <meta name="twitter:card" content="summary_large_image" />
         <meta name="twitter:title" content={META_TITLE} />
         <meta name="twitter:description" content={META_DESCRIPTION} />
         <meta name="twitter:image" content={`${BASE_URL}${ogRavedaoImage}`} />
-        <meta name="twitter:image:alt" content="RaveDAO (RAVE) Research — 6,000% Rally & Risk Report by MRC GlobalPay" />
+        <meta name="twitter:image:alt" content="RaveDAO (RAVE) Research — 6,000% Rally & Risk Report by MRC Global Pay" />
         <script type="application/ld+json">{JSON.stringify(articleSchema)}</script>
         <script type="application/ld+json">{JSON.stringify(softwareSchema)}</script>
         <script type="application/ld+json">{JSON.stringify(faqSchema)}</script>
@@ -157,7 +157,7 @@ const ResearchRavedao = () => {
         </h1>
 
         <p className="mt-4 text-sm text-muted-foreground">
-          Updated April 16, 2026 · 12 min read · MRC GlobalPay Research
+          Updated April 16, 2026 · 12 min read · MRC Global Pay Research
         </p>
 
         <p className="mt-6 text-base leading-relaxed text-foreground/90 sm:text-lg">
@@ -393,7 +393,7 @@ const ResearchRavedao = () => {
         <h2>How to swap RAVE without registration</h2>
         <p>
           If you're holding RAVE and want to exit into <Link to="/exchange/eth-to-usdt">USDT</Link>, ETH,
-          or any other asset — or if you want to acquire RAVE from another crypto position — MRC GlobalPay
+          or any other asset — or if you want to acquire RAVE from another crypto position — MRC Global Pay
           supports{" "}
           <Link to="/exchange">non-custodial swaps</Link> with no registration required, processing in
           under 60 seconds. As a{" "}
