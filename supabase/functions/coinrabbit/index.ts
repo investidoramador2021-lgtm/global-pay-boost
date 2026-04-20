@@ -103,16 +103,15 @@ async function getJwt(apiKey: string): Promise<string> {
 
 function authHeaders(apiKey: string, jwt?: string): Record<string, string> {
   if (jwt) {
-    // JWT-authenticated: include both JWT and API key (some endpoints need both)
+    // CoinRabbit V2: raw JWT in x-user-token (no "Bearer" prefix)
     return {
       'Content-Type': 'application/json',
-      'Authorization': `Bearer ${jwt}`,
+      'x-user-token': jwt.trim(),
       'x-api-key': apiKey,
     }
   }
   return {
     'Content-Type': 'application/json',
-    'Authorization': `Bearer ${apiKey}`,
     'x-api-key': apiKey,
   }
 }
