@@ -9,6 +9,7 @@ import { PRIVATE_TRANSFER_POST_EN, TRANSLATED_PRIVATE_TRANSFER_POSTS } from "@/l
 import { BEGINNERS_GUIDE_EN, TRANSLATED_BEGINNERS_GUIDE_POSTS } from "@/lib/blog/translated-beginners-guide-posts";
 import { INVOICE_POST_EN, TRANSLATED_INVOICE_POSTS } from "@/lib/blog/translated-invoice-posts";
 import { VECHAIN_POST_EN, TRANSLATED_VECHAIN_POSTS } from "@/lib/blog/translated-vechain-posts";
+import { PARTNER_PRIVATE_TRANSFER_POST_EN, TRANSLATED_PARTNER_PRIVATE_TRANSFER_POSTS } from "@/lib/blog/translated-partner-private-transfers";
 import { FEATURED_2026_POSTS } from "@/lib/blog/seed-featured-2026";
 import { TRENDING_2026_POSTS } from "@/lib/blog/seed-trending-2026";
 import {
