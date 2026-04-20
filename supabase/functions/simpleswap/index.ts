@@ -1,5 +1,3 @@
-import "jsr:@supabase/functions-js/edge-runtime.d.ts";
-
 /**
  * SimpleSwap v3 provider edge function — crypto-to-crypto only.
  *
