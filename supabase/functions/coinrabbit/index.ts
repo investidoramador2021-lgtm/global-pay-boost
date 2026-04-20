@@ -557,7 +557,31 @@ Deno.serve(async (req: Request) => {
         const jwtHeaders = authHeaders(apiKey, jwt)
         const url = `${BASE}/earns/${encodeURIComponent(String(p.id))}`
         const { response, responseBody } = await callProvider(url, { method: 'GET', headers: jwtHeaders })
-        if (response.ok) return json(unwrapResponse(responseBody), 200)
+        if (response.ok) {
+          const inner = unwrapResponse(responseBody) as Record<string, unknown> | null
+          try {
+            const earnId = String(p.id)
+            const newStatus = String((inner?.status ?? inner?.state ?? '') as string).toLowerCase().trim()
+            if (newStatus) {
+              const prev = lastEarnStatus.get(earnId)
+              if (prev && prev !== newStatus && TERMINAL_EARN_STATUSES.has(newStatus)) {
+                const ts = new Date().toISOString()
+                const emoji = newStatus === 'withdrawn' ? '💸' : newStatus === 'completed' ? '✅' : '⚪'
+                const text =
+                  `${emoji} <b>Earn ${newStatus.toUpperCase()}</b>\n` +
+                  `• Earn ID: <code>${earnId}</code>\n` +
+                  `• Previous Status: ${prev}\n` +
+                  `• Final Status: <b>${newStatus}</b>\n` +
+                  `• Timestamp: <code>${ts}</code>`
+                notifyTelegram(text, 'earn-status')
+              }
+              lastEarnStatus.set(earnId, newStatus)
+            }
+          } catch (e) {
+            console.error('[earn-status] transition detection error:', e)
+          }
+          return json(inner, 200)
+        }
         return json({
           result: false, error: 'Status fetch failed', status: response.status,
           provider_response: responseBody,
