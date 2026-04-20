@@ -70,7 +70,7 @@ function buildSeoHead(opts: {
     return `<link rel="alternate" hreflang="${l}" href="${SITE}${prefix}/exchange/${from}-to-${to}" />`;
   }).join("\n    ");
 
-  const ogImage = `${SITE}/og-image.jpg`;
+  const ogImage = `${SITE}/og-image.png`;
 
   const jsonLd = {
     "@context": "https://schema.org",

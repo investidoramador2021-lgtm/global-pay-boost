@@ -4,7 +4,6 @@ import path from "path";
 import { componentTagger } from "lovable-tagger";
 import { VitePWA } from "vite-plugin-pwa";
 import { generateSitemaps } from "./vite-plugins/generate-sitemaps";
-import { prerenderStaticRoutes } from "./vite-plugins/prerender-static-routes";
 
 // https://vitejs.dev/config/
 export default defineConfig(({ mode }) => ({
@@ -19,7 +18,6 @@ export default defineConfig(({ mode }) => ({
     react(),
     mode === "development" && componentTagger(),
     generateSitemaps(),
-    prerenderStaticRoutes(),
     VitePWA({
       registerType: "autoUpdate",
       devOptions: { enabled: false },
