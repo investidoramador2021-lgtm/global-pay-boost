@@ -26,13 +26,13 @@ const FEATURED_HERO_IMAGES: Record<string, string> = {
 
 const WHITEPAPERS = [
   {
-    title: "MRC Global Pay Joins the Aurora Ecosystem: Swap AURORA Tokens Instantly, No Registration Required",
-    subtitle: "Aurora Ecosystem · NEAR Intents",
-    excerpt: "MRC Global Pay is now a verified swap partner in the Aurora ecosystem. Swap AURORA native and ERC-20 tokens instantly — 500+ pairs, sub-60-second settlement, no registration required.",
+    title: "Swap AURORA Tokens on MRC Global Pay: Native & ERC-20 via Our Aggregated Liquidity Network",
+    subtitle: "Aurora · NEAR Intents · Asset Availability",
+    excerpt: "AURORA tokens (native and ERC-20) are available to swap on MRC Global Pay through our aggregated liquidity partners that are integrated with the Aurora and NEAR Intents infrastructure. No registration required.",
     path: "/blog/aurora-ecosystem-mrc-globalpay-swap-aurora",
     icon: Network,
     accent: "160 100% 45%",
-    category: "Ecosystem Announcement",
+    category: "Asset Availability",
     tags: ["AURORA", "NEAR Intents", "Cross-Chain", "Non-Custodial"],
   },
   {
