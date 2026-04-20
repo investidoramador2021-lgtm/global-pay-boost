@@ -410,15 +410,6 @@ const MoneroNodeWhitepaper = () => {
               </p>
             </section>
 
-            {/* Two-column comparison: Aurora and broader landscape */}
-            <section>
-              <h2 className="mb-4 mt-12 scroll-mt-24 font-display text-2xl font-bold leading-tight text-foreground sm:text-3xl">
-                Aurora and the broader cross-chain landscape in 2026
-              </h2>
-              {/* Note: The user's original text has this section heading but it doesn't match the Monero context.
-                   However, per instruction, we keep the text exactly as provided. Actually — re-reading, the user text does NOT have this section.
-                   The Monero text does NOT include the "Aurora and the broader cross-chain landscape" section. Removing. */}
-            </section>
 
             {/* CTA */}
             <section className="mt-16 rounded-2xl border border-primary/30 bg-gradient-to-br from-primary/10 via-background to-background p-8 text-center sm:p-12">

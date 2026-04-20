@@ -36,6 +36,16 @@ const WHITEPAPERS = [
     tags: ["AURORA", "NEAR Intents", "Cross-Chain", "Non-Custodial"],
   },
   {
+    title: "Enhanced XMR Swap Reliability on MRC GlobalPay — Powered by a Dedicated Monero Node in Our Network",
+    subtitle: "Monero Infrastructure · XMR Node",
+    excerpt: "Our network now includes a dedicated Monero node — faster deposit detection, fewer failed swaps, and direct infrastructure support for the XMR network's decentralization.",
+    path: "/blog/enhanced-xmr-swap-reliability-dedicated-monero-node",
+    icon: Server,
+    accent: "25 100% 55%",
+    category: "Infrastructure Announcement",
+    tags: ["Monero", "XMR", "Dedicated Node", "Privacy"],
+  },
+  {
     title: "Infrastructure Persistence & Automated Settlement Rails",
     subtitle: "Permanent Bridge Architecture",
     excerpt: "How Stateless Address Persistence and Deterministic Routing transform fragmented liquidity into a permanent financial utility for corporate treasuries and industrial mining.",
