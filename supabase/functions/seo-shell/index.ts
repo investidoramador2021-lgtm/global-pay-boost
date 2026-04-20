@@ -217,11 +217,15 @@ Deno.serve(async (req) => {
 
   const parsed = parsePath(targetPath);
   if (!parsed) {
-    // Not a recognized pair URL (/exchange/* or /swap/*) → return SPA shell unmodified
+    // Not a recognized pair URL (e.g. /swap/eth-to-usdt-instantly handled by
+    // KeywordPage). Return the SPA shell so React can route normally.
     const shell = await fetchShell();
     return new Response(shell || "<!doctype html><html><body>Not found</body></html>", {
-      status: 404,
-      headers: { "Content-Type": "text/html; charset=utf-8", "Cache-Control": "no-store" },
+      status: 200,
+      headers: {
+        "Content-Type": "text/html; charset=utf-8",
+        "Cache-Control": "public, max-age=60, s-maxage=300",
+      },
     });
   }
 
