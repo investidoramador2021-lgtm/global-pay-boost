@@ -934,7 +934,7 @@
     "logout": "Logout",
     "sessionExpired": "Session expired due to inactivity",
     "metaTitle": "Institutional Partner Portal | MRC GlobalPay",
-    "metaDesc": "Secure partner dashboard with 2FA, API key management, and real-time transaction monitoring.",
+    "metaDesc": "Secure MRC GlobalPay partner dashboard with TOTP 2FA, encrypted API key management, real-time transaction monitoring, and lifetime BTC commission tracking.",
     "docs": "API Documentation",
     "docsAmountDesc": "Amount of from_currency to swap. Minimum $0.30 equivalent.",
     "docsAmountOutDesc": "Final amount delivered to the recipient.",
@@ -1061,7 +1061,7 @@
       "title": "Affiliate Program — Earn Lifetime Crypto Commissions | MRC GlobalPay",
       "description": "Generate your MRC GlobalPay affiliate widget in seconds. Enter your email and BTC wallet, choose Light or Dark mode, and earn 0.1%–0.4% lifetime commissions paid automatically to your wallet. Registered Canadian MSB #C100000015.",
       "ogTitle": "Affiliate Program — Earn Lifetime Crypto Commissions | MRC GlobalPay",
-      "ogDescription": "Generate your widget in seconds. Earn 0.1%–0.4% on every swap, paid automatically to your BTC wallet."
+      "ogDescription": "Generate your MRC GlobalPay affiliate widget in seconds. Earn 0.1%–0.4% lifetime BTC commissions on every swap, paid automatically — no minimum payout."
     },
     "hero": {
       "badge": "Affiliate Program · Lifetime Payouts",
