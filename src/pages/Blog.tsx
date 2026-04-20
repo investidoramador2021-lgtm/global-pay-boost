@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import { Helmet } from "react-helmet-async";
 import { Link, useLocation } from "react-router-dom";
-import { Calendar, Clock, ArrowRight, FileText, Shield, Landmark, Zap, ScrollText, DollarSign, TrendingUp, Coins, Sparkles, Network } from "lucide-react";
+import { Calendar, Clock, ArrowRight, FileText, Shield, Landmark, Zap, ScrollText, DollarSign, TrendingUp, Coins, Sparkles, Network, Server } from "lucide-react";
 import SiteHeader from "@/components/SiteHeader";
 import SiteFooter from "@/components/SiteFooter";
 import { fetchAllPosts, type BlogPost } from "@/lib/blog-data";
@@ -34,6 +34,16 @@ const WHITEPAPERS = [
     accent: "160 100% 45%",
     category: "Ecosystem Announcement",
     tags: ["AURORA", "NEAR Intents", "Cross-Chain", "Non-Custodial"],
+  },
+  {
+    title: "Enhanced XMR Swap Reliability on MRC GlobalPay — Powered by a Dedicated Monero Node in Our Network",
+    subtitle: "Monero Infrastructure · XMR Node",
+    excerpt: "Our network now includes a dedicated Monero node — faster deposit detection, fewer failed swaps, and direct infrastructure support for the XMR network's decentralization.",
+    path: "/blog/enhanced-xmr-swap-reliability-dedicated-monero-node",
+    icon: Server,
+    accent: "25 100% 55%",
+    category: "Infrastructure Announcement",
+    tags: ["Monero", "XMR", "Dedicated Node", "Privacy"],
   },
   {
     title: "Infrastructure Persistence & Automated Settlement Rails",
