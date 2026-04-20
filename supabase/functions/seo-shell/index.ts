@@ -124,7 +124,7 @@ function buildSeoHead(opts: {
     <meta name="robots" content="index,follow,max-image-preview:large,max-snippet:-1,max-video-preview:-1" />
     <link rel="canonical" href="${escapeAttr(canonical)}" />
     ${hreflangLinks}
-    <link rel="alternate" hreflang="x-default" href="${SITE}/exchange/${from}-to-${to}" />
+    <link rel="alternate" hreflang="x-default" href="${SITE}${pairUrlPath(kind, from, to)}" />
     <meta property="og:type" content="website" />
     <meta property="og:title" content="${escapeAttr(title)}" />
     <meta property="og:description" content="${escapeAttr(description)}" />
