@@ -3,6 +3,8 @@ import { Link, useLocation } from "react-router-dom";
 import { ArrowRight, Calendar, Clock, Network } from "lucide-react";
 import SiteHeader from "@/components/SiteHeader";
 import SiteFooter from "@/components/SiteFooter";
+import SocialShare from "@/components/blog/SocialShare";
+import StickyShareRail from "@/components/blog/StickyShareRail";
 import { usePageUrl } from "@/hooks/use-page-url";
 import { getLangFromPath, langPath } from "@/i18n";
 
@@ -97,6 +99,7 @@ const AuroraWhitepaper = () => {
       </Helmet>
 
       <SiteHeader />
+      <StickyShareRail url={canonicalUrl} title={title} />
 
       <main className="mx-auto max-w-3xl px-4 py-10 sm:py-14">
         {/* Header */}
@@ -383,6 +386,9 @@ const AuroraWhitepaper = () => {
                 <p className="mt-3 font-body text-sm leading-relaxed text-muted-foreground">{item.a}</p>
               </details>
             ))}
+          </div>
+          <div className="mt-10">
+            <SocialShare url={canonicalUrl} title={title} description={metaDescription} />
           </div>
         </article>
       </main>

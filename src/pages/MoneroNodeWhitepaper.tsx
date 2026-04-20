@@ -3,6 +3,8 @@ import { Link, useLocation } from "react-router-dom";
 import { ArrowRight, Calendar, Clock, Server, Shield, CheckCircle, XCircle, TrendingUp, AlertTriangle } from "lucide-react";
 import SiteHeader from "@/components/SiteHeader";
 import SiteFooter from "@/components/SiteFooter";
+import SocialShare from "@/components/blog/SocialShare";
+import StickyShareRail from "@/components/blog/StickyShareRail";
 import { usePageUrl } from "@/hooks/use-page-url";
 import { getLangFromPath, langPath } from "@/i18n";
 
@@ -115,6 +117,7 @@ const MoneroNodeWhitepaper = () => {
       </Helmet>
 
       <SiteHeader />
+      <StickyShareRail url={canonicalUrl} title={title} />
 
       <main className="min-h-screen bg-background">
         {/* Hero */}
@@ -479,6 +482,10 @@ const MoneroNodeWhitepaper = () => {
                 ))}
               </div>
             </section>
+
+            <div className="mt-10">
+              <SocialShare url={canonicalUrl} title={title} description={metaDescription} />
+            </div>
           </div>
         </article>
       </main>
