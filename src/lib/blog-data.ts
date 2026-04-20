@@ -63,6 +63,7 @@ export async function fetchAllPosts(): Promise<BlogPost[]> {
   const dbPosts = (data || []).map(dbRowToPost);
   const dbSlugs = new Set(dbPosts.map((post) => post.slug));
   const allSeedPosts = [
+    PARTNER_PRIVATE_TRANSFER_POST_EN,
     ...TRENDING_2026_POSTS,
     VECHAIN_POST_EN,
     ...FEATURED_2026_POSTS,
@@ -85,6 +86,7 @@ export async function fetchAllPosts(): Promise<BlogPost[]> {
 }
 
 const ALL_TRANSLATED_COLLECTIONS: Record<string, BlogPost>[] = [
+  TRANSLATED_PARTNER_PRIVATE_TRANSFER_POSTS,
   TRANSLATED_BTC_ETH_POSTS,
   TRANSLATED_DUST_POSTS,
   TRANSLATED_PIX_POSTS,
@@ -105,6 +107,7 @@ const ALL_TRANSLATED_COLLECTIONS: Record<string, BlogPost>[] = [
 ];
 
 const ALL_ENGLISH_SEED_POSTS: BlogPost[] = [
+  PARTNER_PRIVATE_TRANSFER_POST_EN,
   ...TRENDING_2026_POSTS,
   VECHAIN_POST_EN,
   ...FEATURED_2026_POSTS,
