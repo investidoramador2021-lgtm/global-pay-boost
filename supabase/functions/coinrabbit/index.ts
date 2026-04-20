@@ -26,6 +26,27 @@ type CoinrabbitCurrency = {
 let cachedJwt: string | null = null
 let jwtExpiresAt = 0
 
+// ─── In-memory loan status tracker (for status-change Telegram alerts) ───
+const lastLoanStatus = new Map<string, string>()
+const TERMINAL_LOAN_STATUSES = new Set([
+  'repaid', 'closed', 'liquidated', 'completed', 'finished', 'cancelled', 'canceled',
+])
+
+function notifyTelegram(message: string, tag: string) {
+  try {
+    const supabaseUrl = Deno.env.get('SUPABASE_URL')
+    const serviceKey = Deno.env.get('SUPABASE_SERVICE_ROLE_KEY')
+    if (!supabaseUrl || !serviceKey) return
+    fetch(`${supabaseUrl}/functions/v1/telegram-notify`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json', Authorization: `Bearer ${serviceKey}` },
+      body: JSON.stringify({ type: 'alert', message }),
+    }).catch((e) => console.error(`[${tag}] telegram notify failed:`, e))
+  } catch (e) {
+    console.error(`[${tag}] telegram block error:`, e)
+  }
+}
+
 function json(data: unknown, status = 200) {
   return new Response(JSON.stringify(data), {
     status,
