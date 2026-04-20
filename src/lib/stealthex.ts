@@ -1,5 +1,5 @@
 import { supabase } from "@/integrations/supabase/client";
-import type { EstimateResult, MinAmountResult, CreateTransactionParams, TransactionResult, TransactionStatus } from "./changenow";
+import type { Currency, EstimateResult, MinAmountResult, CreateTransactionParams, TransactionResult, TransactionStatus } from "./changenow";
 
 async function callSE(params: Record<string, string>, method: 'GET' | 'POST' = 'GET', body?: object) {
   if (method === 'POST') {
@@ -16,6 +16,10 @@ async function callSE(params: Record<string, string>, method: 'GET' | 'POST' = '
   });
   if (error) throw new Error(error.message);
   return data;
+}
+
+export async function seGetCurrencies(): Promise<Currency[]> {
+  return callSE({ action: 'currencies' });
 }
 
 export async function seGetMinAmount(from: string, to: string): Promise<MinAmountResult> {

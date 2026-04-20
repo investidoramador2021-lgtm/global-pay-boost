@@ -14,10 +14,12 @@
  *   'cn' = ChangeNOW, 'se' = StealthEX, 'le' = LetsExchange.
  */
 import {
+  getCurrencies as cnGetCurrencies,
   getEstimate as cnGetEstimate,
   getMinAmount as cnGetMinAmount,
   createTransaction as cnCreateTransaction,
   getTransactionStatus as cnGetStatus,
+  type Currency,
   type EstimateResult,
   type MinAmountResult,
   type CreateTransactionParams,
@@ -25,12 +27,14 @@ import {
   type TransactionStatus,
 } from "./changenow";
 import {
+  leGetCurrencies,
   leGetEstimate,
   leGetMinAmount,
   leCreateTransaction,
   leGetTransactionStatus,
 } from "./letsexchange";
 import {
+  seGetCurrencies,
   seGetEstimate,
   seGetMinAmount,
   seCreateTransaction,
@@ -59,6 +63,70 @@ export interface AggregatedTransaction extends TransactionResult {
 const POSITIVE = (n: unknown): number =>
   typeof n === "number" && isFinite(n) && n > 0 ? n : 0;
 
+/**
+ * Aggregate the union of supported currencies from all providers.
+ * Priority for metadata (name, image, etc.) when the same ticker exists in multiple providers:
+ *   ChangeNOW (cn) > StealthEX (se) > LetsExchange (le).
+ * This guarantees consistent text + logo while still surfacing tokens that are
+ * only available on SE or LE (coverage extension).
+ *
+ * Failures from any single provider are silent — we still return whatever we have.
+ */
+export async function getAggregatedCurrencies(): Promise<Currency[]> {
+  const settle = async <T,>(p: Promise<T>): Promise<T | null> => {
+    try { return await p; } catch { return null; }
+  };
+
+  const [cnRaw, seRaw, leRaw] = await Promise.all([
+    settle(cnGetCurrencies()),
+    settle(seGetCurrencies()),
+    settle(leGetCurrencies()),
+  ]);
+
+  const toArray = (raw: unknown): Currency[] => {
+    if (Array.isArray(raw)) return raw as Currency[];
+    if (raw && typeof raw === "object" && Array.isArray((raw as { data?: unknown }).data)) {
+      return (raw as { data: Currency[] }).data;
+    }
+    return [];
+  };
+
+  const cn = toArray(cnRaw);
+  const se = toArray(seRaw);
+  const le = toArray(leRaw);
+
+  // Merge by ticker, preferring CN metadata. Fill empty fields from lower-priority sources.
+  const merged = new Map<string, Currency>();
+
+  const upsert = (c: Currency, source: Provider) => {
+    if (!c?.ticker) return;
+    const key = c.ticker.toLowerCase();
+    const existing = merged.get(key);
+    if (!existing) {
+      merged.set(key, { ...c, ticker: key, isFiat: !!c.isFiat });
+      return;
+    }
+    // Backfill missing metadata from lower-priority sources for consistency.
+    merged.set(key, {
+      ...existing,
+      name: existing.name || c.name,
+      image: existing.image || c.image,
+      network: existing.network || c.network,
+      tokenContract: existing.tokenContract || c.tokenContract,
+      hasExternalId: existing.hasExternalId || c.hasExternalId,
+      isStable: existing.isStable || c.isStable,
+      featured: existing.featured || c.featured,
+      supportsFixedRate: existing.supportsFixedRate || c.supportsFixedRate,
+    });
+  };
+
+  // Order matters: CN first → wins on collisions.
+  cn.forEach((c) => upsert(c, "cn"));
+  se.forEach((c) => upsert(c, "se"));
+  le.forEach((c) => upsert(c, "le"));
+
+  return Array.from(merged.values()).filter((c) => !c.isFiat);
+}
 /**
  * Get best estimate using ChangeNOW-first coverage routing.
  * - If CN returns a valid positive amount → use CN (always, regardless of LE).

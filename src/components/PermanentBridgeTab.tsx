@@ -7,11 +7,11 @@ import { Input } from "@/components/ui/input";
 import { QRCodeSVG } from "qrcode.react";
 import DestinationAddressInput, { tickerToAddressType } from "@/components/DestinationAddressInput";
 import {
-  getCurrencies,
   createFixedAddress,
   type Currency,
   type FixedAddressResult,
 } from "@/lib/changenow";
+import { getAggregatedCurrencies } from "@/lib/liquidity-aggregator";
 import { useToast } from "@/hooks/use-toast";
 
 const POPULAR_TICKERS = ["btc", "eth", "usdt", "usdttrc20", "sol", "xrp", "bnb", "ltc", "usdc", "trx"];
@@ -74,7 +74,7 @@ const PermanentBridgeTab = () => {
   const searchToRef = useRef<HTMLInputElement>(null);
 
   useEffect(() => {
-    getCurrencies()
+    getAggregatedCurrencies()
       .then((list) => {
         const active = list.filter((c: Currency) => !c.isFiat);
         setCurrencies(active);

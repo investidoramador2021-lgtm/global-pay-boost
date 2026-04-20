@@ -3,7 +3,6 @@ import { useSearchParams, useLocation } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import { ChevronDown, Loader2, X, Copy, Check, ArrowLeft } from "lucide-react";
 import {
-  getCurrencies,
   getEstimate,
   getMinAmount,
   createTransaction,
@@ -12,6 +11,7 @@ import {
   type TransactionResult,
   type TransactionStatus,
 } from "@/lib/changenow";
+import { getAggregatedCurrencies } from "@/lib/liquidity-aggregator";
 
 export const SUPPORTED_LANGS = ["en", "es", "pt", "fr", "ja", "fa", "ur", "he", "af", "hi", "vi", "tr", "uk"];
 
@@ -164,7 +164,7 @@ const EmbedWidget = ({ modeOverride, langOverride }: EmbedWidgetProps = {}) => {
 
     const loadCurrencies = async () => {
       try {
-        const data = await getCurrencies();
+        const data = await getAggregatedCurrencies();
         if (!Array.isArray(data) || cancelled) return;
 
         // Show ALL crypto assets (exclude fiat). Featured tokens float to the top.
