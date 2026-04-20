@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import { Helmet } from "react-helmet-async";
 import { Link, useLocation } from "react-router-dom";
-import { Calendar, Clock, ArrowRight, FileText, Shield, Landmark, Zap, ScrollText, DollarSign, TrendingUp, Coins, Sparkles } from "lucide-react";
+import { Calendar, Clock, ArrowRight, FileText, Shield, Landmark, Zap, ScrollText, DollarSign, TrendingUp, Coins, Sparkles, Network } from "lucide-react";
 import SiteHeader from "@/components/SiteHeader";
 import SiteFooter from "@/components/SiteFooter";
 import { fetchAllPosts, type BlogPost } from "@/lib/blog-data";
@@ -25,6 +25,16 @@ const FEATURED_HERO_IMAGES: Record<string, string> = {
 };
 
 const WHITEPAPERS = [
+  {
+    title: "MRC GlobalPay Joins the Aurora Ecosystem: Swap AURORA Tokens Instantly, No Registration Required",
+    subtitle: "Aurora Ecosystem · NEAR Intents",
+    excerpt: "MRC GlobalPay is now a verified swap partner in the Aurora ecosystem. Swap AURORA native and ERC-20 tokens instantly — 500+ pairs, sub-60-second settlement, no registration required.",
+    path: "/blog/aurora-ecosystem-mrc-globalpay-swap-aurora",
+    icon: Network,
+    accent: "160 100% 45%",
+    category: "Ecosystem Announcement",
+    tags: ["AURORA", "NEAR Intents", "Cross-Chain", "Non-Custodial"],
+  },
   {
     title: "Infrastructure Persistence & Automated Settlement Rails",
     subtitle: "Permanent Bridge Architecture",
