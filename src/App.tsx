@@ -72,6 +72,7 @@ const LiquidityWhitepaper = lazy(() => import("./pages/LiquidityWhitepaper.tsx")
 const WhitepaperLoans = lazy(() => import("./pages/WhitepaperLoans.tsx"));
 const WhitepaperYield = lazy(() => import("./pages/WhitepaperYield.tsx"));
 const SovereignWhitepaper = lazy(() => import("./pages/SovereignWhitepaper.tsx"));
+const AuroraWhitepaper = lazy(() => import("./pages/AuroraWhitepaper.tsx"));
 const Partners = lazy(() => import("./pages/Partners.tsx"));
 const PartnerDashboard = lazy(() => import("./pages/PartnerDashboard.tsx"));
 const AdminPortal = lazy(() => import("./pages/AdminPortal.tsx"));
@@ -196,6 +197,7 @@ const AppRoutes = () => (
     <Route path="guide/crypto-dust" element={<CryptoDustManifesto />} />
     <Route path="liquidity-expansion" element={<LiquidityWhitepaper />} />
     <Route path="sovereign-settlement" element={<SovereignWhitepaper />} />
+    <Route path="blog/aurora-ecosystem-mrc-globalpay-swap-aurora" element={<AuroraWhitepaper />} />
     <Route path="unsubscribe" element={<Unsubscribe />} />
     <Route path="partners" element={<Partners />} />
     <Route path="dashboard" element={<PartnerDashboard />} />
