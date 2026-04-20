@@ -64,11 +64,21 @@ const KeywordLanding = ({ data }: Props) => {
     : isMoneroNoKyc
     ? "Buy Monero – Registration-Free XMR Swap | MRC GlobalPay"
     : `${keyword.length > 30 ? keyword.slice(0, 30).trim() : keyword} | MRC GlobalPay`;
+  const buildFallbackDescription = (hook: string, kw: string) => {
+    // Target 140-160 chars for optimal Bing/Google snippet display
+    const base = `${hook} Swap ${kw} from $0.30 with no account, no KYC, and lifetime BTC rebates. Non-custodial settlement across 6,000+ tokens — Canadian MSB.`;
+    if (base.length >= 140 && base.length <= 165) return base;
+    if (base.length > 165) {
+      return `${hook} Swap ${kw} from $0.30 — no account, no KYC. Non-custodial across 6,000+ tokens. Canadian MSB-registered.`.slice(0, 160);
+    }
+    // Pad if still short
+    return `${base} Settles in under 60 seconds with fixed-rate protection.`.slice(0, 160);
+  };
   const description = data.customDescription
     ? data.customDescription
     : isMoneroNoKyc
-    ? "Buy Monero (XMR) with no registration required. Non-custodial swap from $0.30 with 0.5% flat fee. The most private way to acquire XMR in 2026."
-    : `${benefitHook} Swap from $0.30 with no account. 6,000+ tokens on MRC GlobalPay.`;
+    ? "Buy Monero (XMR) with no registration required. Non-custodial swap from $0.30 with a 0.5% flat fee — the most private way to acquire XMR in 2026 with lifetime BTC rebates."
+    : buildFallbackDescription(benefitHook, keyword);
 
   const defaultFaqs = [
     {

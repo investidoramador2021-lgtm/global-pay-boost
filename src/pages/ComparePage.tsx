@@ -138,7 +138,7 @@ const ComparePage = () => {
     <>
       <Helmet>
         <title>{`MRC GlobalPay vs ${competitor.name} (2026) | Best Alternative`}</title>
-        <meta name="description" content={`Compare MRC GlobalPay vs ${competitor.name}: $0.30 min vs $${competitor.min_swap_usd}. ${competitor.mrc_advantage}. Registration-free, non-custodial.`} />
+        <meta name="description" content={`MRC GlobalPay vs ${competitor.name}: $0.30 minimum swap vs $${competitor.min_swap_usd}. ${competitor.mrc_advantage}. Registration-free, non-custodial, FINTRAC-registered Canadian MSB with lifetime BTC rebates.`.slice(0, 160)} />
         <link rel="canonical" href={pageUrl} />
         <meta property="og:title" content={`MRC GlobalPay vs ${competitor.name} — 2026 Comparison`} />
         <meta property="og:description" content={`$0.30 minimum vs $${competitor.min_swap_usd}. ${competitor.mrc_advantage}.`} />
