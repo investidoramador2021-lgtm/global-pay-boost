@@ -299,6 +299,12 @@ export default function DynamicExchange() {
     href: `https://mrcglobalpay.com${l === "en" ? "" : `/${l}`}/exchange/${fromLower}-to-${toLower}`,
   }));
 
+  // Soft-404 hardening: if SEO row marks pair invalid, OR both assets failed to load
+  // after the queries settled, mark the page noindex so Google doesn't index thin/empty
+  // pair pages. We still render the SPA (no URL is removed from the sitemap).
+  const isInvalidPair = pairSeo?.is_valid === false ||
+    (!isLoading && !fromAsset && !toAsset);
+
   const fromNetwork = fromAsset?.network || "";
   const toNetwork = toAsset?.network || "";
   const fromContract = fromAsset?.token_contract || null;
@@ -396,7 +402,7 @@ export default function DynamicExchange() {
         <html lang={lang} />
         <title>{title}</title>
         <meta name="description" content={description} />
-        <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1" />
+        <meta name="robots" content={isInvalidPair ? "noindex, follow" : "index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1"} />
         <meta name="keywords" content={`${fromUp} to ${toUp}, swap ${fromUp} ${toUp}, ${fromName} to ${toName}, fixed rate crypto swap Canada, guaranteed crypto exchange rates, FINTRAC MSB crypto exchange, non-custodial crypto swap, instant ${fromUp} exchange`} />
         <link rel="canonical" href={canonicalUrl} />
         {hreflangAlternates.map((alt) => (
