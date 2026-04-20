@@ -168,20 +168,65 @@ Deno.serve(async (req) => {
           console.error('v2 currencies failed:', parsed.text);
           return jsonResponse([], 200);
         }
-        // Map v2 → legacy v1 shape used by frontend
-        const mapped = (parsed.data as any[]).map((c: any) => ({
-          ticker: c.ticker || c.legacyTicker,
-          name: c.name,
-          image: c.image,
-          hasExternalId: !!c.hasExternalId,
-          isExtraIdSupported: !!c.isExtraIdSupported,
-          isFiat: !!c.isFiat,
-          featured: !!c.featured,
-          isStable: !!c.isStable,
-          supportsFixedRate: !!c.supportsFixedRate,
-          network: c.network,
-          tokenContract: c.tokenContract || null,
-        }));
+        // v2 returns same `ticker` (e.g. "usdt") for many networks. Reconstruct the
+        // legacy compound MRC ticker (e.g. "usdttrc20") so each network variant is a
+        // unique entry across providers and the frontend's POPULAR_TICKERS / display
+        // maps continue to work.
+        // Reverse map: v2 network → preferred legacy suffix (first match wins).
+        const NETWORK_TO_SUFFIX: Record<string, string> = {
+          eth: 'erc20',
+          trx: 'trc20',
+          bsc: 'bsc',
+          matic: 'matic',
+          sol: 'sol',
+          avaxc: 'arc20',
+          arbitrum: 'arb',
+          op: 'op',
+          ton: 'ton',
+          celo: 'celo',
+          apt: 'apt',
+          assethub: 'assethub',
+          algo: 'algo',
+          sui: 'sui',
+          monad: 'mon',
+          zksync: 'zksync',
+          base: 'base',
+          lna: 'lna',
+          manta: 'manta',
+        };
+
+        // Track first-seen ticker so the "native" entry keeps a clean symbol
+        // (btc/btc → "btc", eth/eth → "eth"), and only secondary networks get suffixed.
+        const seenNative = new Set<string>();
+        const mapped = (parsed.data as any[]).map((c: any) => {
+          const baseTicker = String(c.ticker || c.legacyTicker || '').toLowerCase();
+          const network = String(c.network || '').toLowerCase();
+          let outTicker = baseTicker;
+          if (baseTicker && network && baseTicker !== network) {
+            const suf = NETWORK_TO_SUFFIX[network];
+            if (suf) outTicker = `${baseTicker}${suf}`;
+          }
+          // Native chain coin keeps the bare ticker; if a duplicate slips through,
+          // append the network for uniqueness.
+          if (seenNative.has(outTicker)) {
+            outTicker = network ? `${outTicker}${network}` : outTicker;
+          } else {
+            seenNative.add(outTicker);
+          }
+          return {
+            ticker: outTicker,
+            name: c.name,
+            image: c.image,
+            hasExternalId: !!c.hasExternalId,
+            isExtraIdSupported: !!c.isExtraIdSupported,
+            isFiat: !!c.isFiat,
+            featured: !!c.featured,
+            isStable: !!c.isStable,
+            supportsFixedRate: !!c.supportsFixedRate,
+            network,
+            tokenContract: c.tokenContract || null,
+          };
+        });
         return jsonResponse(mapped);
       }
 
