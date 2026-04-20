@@ -216,8 +216,8 @@ const NetworkStatus = () => {
               <div className="flex items-center gap-3">
                 <StatusIcon status={allOperational ? "operational" : "degraded"} />
                 <div>
-                  <p className="text-sm font-medium text-foreground">ChangeNOW Liquidity Provider</p>
-                  <p className="text-xs text-muted-foreground">Non-custodial swap execution</p>
+                  <p className="text-sm font-medium text-foreground">Multi-Provider Liquidity Aggregator</p>
+                  <p className="text-xs text-muted-foreground">Non-custodial execution with automatic failover across 4 networks</p>
                 </div>
               </div>
               <Badge variant="outline" className={`text-[10px] ${statusColor(allOperational ? "operational" : "degraded")}`}>
