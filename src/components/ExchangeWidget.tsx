@@ -16,12 +16,12 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { QRCodeSVG } from "qrcode.react";
 import {
-  getCurrencies,
   type Currency,
   type TransactionResult,
   type TransactionStatus,
 } from "@/lib/changenow";
 import {
+  getAggregatedCurrencies,
   getBestEstimate,
   getBestMinAmount,
   createBestTransaction,
@@ -1244,7 +1244,7 @@ const ExchangeWidget = ({ onTabChange, defaultFrom, defaultTo }: ExchangeWidgetP
         liquidityPending = true;
       }
 
-      getCurrencies()
+      getAggregatedCurrencies()
         .then((rawResp) => {
           // Defensive: API may return [...] OR {data: [...]} depending on transport/proxy
           const data: Currency[] | null = Array.isArray(rawResp)
