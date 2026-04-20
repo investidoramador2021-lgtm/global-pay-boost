@@ -19,7 +19,15 @@ async function callSE(params: Record<string, string>, method: 'GET' | 'POST' = '
 }
 
 export async function seGetCurrencies(): Promise<Currency[]> {
-  return callSE({ action: 'currencies' });
+  // Resilient: SE currencies is optional coverage extender. If the edge function
+  // hasn't redeployed yet or upstream is down, return [] so the aggregator still
+  // merges CN + LE without surfacing a console error.
+  try {
+    const data = await callSE({ action: 'currencies' });
+    return Array.isArray(data) ? data : [];
+  } catch {
+    return [];
+  }
 }
 
 export async function seGetMinAmount(from: string, to: string): Promise<MinAmountResult> {
