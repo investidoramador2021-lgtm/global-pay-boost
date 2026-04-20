@@ -46,3 +46,39 @@ export async function ssCreateTransaction(params: CreateTransactionParams): Prom
 export async function ssGetTransactionStatus(id: string): Promise<TransactionStatus> {
   return callSS({ action: 'tx-status', id });
 }
+
+// ===== FIAT (Buy on-ramp fallback) =====
+// Used as a coverage fallback when Guardarian can't quote/create a fiat→crypto pair.
+// Mirrors the Guardarian redirect-handoff model: returns a redirectUrl for KYC + card.
+
+export interface SSFiatEstimate {
+  estimatedAmount: number | null;
+  warningMessage?: string | null;
+}
+
+export interface SSFiatTransaction {
+  id: string;
+  redirectUrl: string;
+  status: string;
+  fromCurrency: string;
+  toCurrency: string;
+  fromAmount: string;
+  toAmount: string | null;
+}
+
+export async function ssFiatEstimate(from: string, to: string, amount: string): Promise<SSFiatEstimate> {
+  return callSS({ action: 'fiat-estimate', from, to, amount });
+}
+
+export async function ssFiatCreateTransaction(params: {
+  from: string;
+  to: string;
+  amount: string | number;
+  address: string;
+  extraId?: string;
+  refundAddress?: string;
+  email?: string;
+}): Promise<SSFiatTransaction> {
+  return callSS({ action: 'fiat-create-transaction' }, 'POST', params);
+}
+
