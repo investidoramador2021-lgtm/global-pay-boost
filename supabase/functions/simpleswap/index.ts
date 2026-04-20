@@ -274,6 +274,92 @@ Deno.serve(async (req) => {
         });
       }
 
+      // ===== FIAT (Buy on-ramp) =====
+      // SimpleSwap uses the same API key for fiat. Fiat tickers (usd, eur, etc.)
+      // are sent without a network; crypto leg keeps ticker+network split.
+      case 'fiat-estimate': {
+        const fromCurrency = String(params.from || '').toLowerCase();
+        const toCurrency = String(params.to || '').toLowerCase();
+        const amount = String(params.amount || '');
+        if (!fromCurrency || !toCurrency || !amount) return bad('Missing from/to/amount');
+        if (!isTicker(fromCurrency) || !isTicker(toCurrency)) return bad('Invalid ticker');
+        if (!isAmount(amount)) return bad('Invalid amount');
+        const FIAT = new Set(['usd', 'eur', 'gbp', 'cad', 'aud', 'jpy', 'chf', 'nzd', 'sek', 'nok', 'dkk', 'pln', 'brl', 'mxn']);
+        const fromIsFiat = FIAT.has(fromCurrency);
+        const toIsFiat = FIAT.has(toCurrency);
+        const fromSplit = fromIsFiat ? { ticker: fromCurrency, network: '' } : splitTickerNetwork(fromCurrency);
+        const toSplit = toIsFiat ? { ticker: toCurrency, network: '' } : splitTickerNetwork(toCurrency);
+        const qp = new URLSearchParams({
+          tickerFrom: fromSplit.ticker,
+          tickerTo: toSplit.ticker,
+          amount: String(amount),
+          fiat: 'true',
+        });
+        if (fromSplit.network) qp.set('networkFrom', fromSplit.network);
+        if (toSplit.network) qp.set('networkTo', toSplit.network);
+        const r = await fetch(`${SS_BASE}/estimates?${qp.toString()}`, { headers });
+        const p = await parseJson(r);
+        if (!r.ok || !p.isJson) {
+          console.error(`SS fiat-estimate [${r.status}] ${fromCurrency}->${toCurrency} resp=${p.text?.slice(0,300)}`);
+          return json({ estimatedAmount: null, warningMessage: 'Rate unavailable.' });
+        }
+        const est = Number(p.data?.estimatedAmount || p.data?.estimated_amount || p.data?.amount_to || 0);
+        return json({ estimatedAmount: est, warningMessage: null });
+      }
+
+      case 'fiat-create-transaction': {
+        if (!postBody) return bad('POST body required');
+        const { from, to, amount, address, extraId, refundAddress, email } = postBody as Record<string, any>;
+        if (!from || !to || !amount || !address) return bad('Missing required fields');
+        const fromCurrency = String(from).toLowerCase();
+        const toCurrency = String(to).toLowerCase();
+        if (!isTicker(fromCurrency) || !isTicker(toCurrency)) return bad('Invalid ticker');
+        const FIAT = new Set(['usd', 'eur', 'gbp', 'cad', 'aud', 'jpy', 'chf', 'nzd', 'sek', 'nok', 'dkk', 'pln', 'brl', 'mxn']);
+        const fromIsFiat = FIAT.has(fromCurrency);
+        const toIsFiat = FIAT.has(toCurrency);
+        const fromSplit = fromIsFiat ? { ticker: fromCurrency, network: '' } : splitTickerNetwork(fromCurrency);
+        const toSplit = toIsFiat ? { ticker: toCurrency, network: '' } : splitTickerNetwork(toCurrency);
+
+        const body: Record<string, unknown> = {
+          tickerFrom: fromSplit.ticker,
+          tickerTo: toSplit.ticker,
+          amount: String(amount),
+          addressTo: String(address),
+          extraIdTo: extraId || '',
+          userRefundAddress: refundAddress || '',
+          userRefundExtraId: '',
+          fiat: true,
+        };
+        if (fromSplit.network) body.networkFrom = fromSplit.network;
+        if (toSplit.network) body.networkTo = toSplit.network;
+        if (email) body.userEmail = String(email);
+
+        const r = await fetch(`${SS_BASE}/exchanges`, {
+          method: 'POST',
+          headers: { ...headers, 'Content-Type': 'application/json' },
+          body: JSON.stringify(body),
+        });
+        const p = await parseJson(r);
+        if (!p.isJson) {
+          console.error('SS fiat create-tx non-JSON:', p.text?.slice(0, 300));
+          return json({ error: 'Provider unavailable.' }, 502);
+        }
+        if (!r.ok) {
+          console.error(`SS fiat create-tx [${r.status}] resp=${JSON.stringify(p.data).slice(0,400)}`);
+          return json({ error: p.data?.message || p.data?.error || p.data?.description || 'Provider error.' }, r.status);
+        }
+        const d = p.data?.result || p.data;
+        return json({
+          id: d.id,
+          redirectUrl: d.redirectUrl || d.redirect_url || d.checkoutUrl || d.checkout_url || '',
+          status: String(d.status || 'waiting').toLowerCase(),
+          fromCurrency: fromSplit.ticker,
+          toCurrency: toSplit.ticker,
+          fromAmount: String(d.amountFrom || d.amount_from || amount),
+          toAmount: d.amountTo || d.amount_to ? String(d.amountTo || d.amount_to) : null,
+        });
+      }
+
       default:
         return bad(`Invalid action: ${action}`);
     }
