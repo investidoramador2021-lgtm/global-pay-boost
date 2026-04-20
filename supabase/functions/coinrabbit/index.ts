@@ -116,6 +116,32 @@ function authHeaders(apiKey: string, jwt?: string): Record<string, string> {
   }
 }
 
+// ─── Fetch CoinRabbit user profile (numeric id) ───
+async function getCoinrabbitUserId(apiKey: string, jwt: string): Promise<string | null> {
+  try {
+    const headers = authHeaders(apiKey, jwt)
+    const { response, responseBody } = await callProvider(`${BASE}/users`, { method: 'GET', headers })
+    if (!response.ok) {
+      console.error('[users] fetch failed', response.status, JSON.stringify(responseBody))
+      return null
+    }
+    const inner = unwrapResponse(responseBody)
+    // Try common shapes: { id }, { user: { id } }, [{ id }]
+    const candidate =
+      (inner && typeof inner === 'object' && 'id' in inner ? (inner as Record<string, unknown>).id : null) ??
+      (inner && typeof inner === 'object' && 'user' in inner ? ((inner as Record<string, unknown>).user as Record<string, unknown>)?.id : null) ??
+      (Array.isArray(inner) && inner.length > 0 ? (inner[0] as Record<string, unknown>)?.id : null)
+    if (candidate == null) {
+      console.error('[users] no id field in response', JSON.stringify(inner))
+      return null
+    }
+    return String(candidate)
+  } catch (e) {
+    console.error('[users] error:', e)
+    return null
+  }
+}
+
 // ─── Currencies catalog ───
 async function getCurrenciesCatalog(headers: Record<string, string>) {
   const { responseBody } = await callProvider(`${BASE}/currencies`, { method: 'GET', headers })
