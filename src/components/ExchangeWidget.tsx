@@ -544,12 +544,16 @@ const CurrencyListView = ({ currencies: items, onSelect }: { currencies: Currenc
               {c.ticker.slice(0, 2)}
             </span>
           )}
-          <div className="flex min-w-0 flex-1 items-center">
-            <span className="font-display text-sm font-semibold uppercase text-foreground shrink-0">{displayTicker(c)}</span>
-            {networkLabel(c) && (
-              <span className="ms-1.5 shrink-0 rounded bg-muted px-1.5 py-0.5 font-body text-[10px] uppercase text-muted-foreground">{networkLabel(c)}</span>
-            )}
-            <span className="ms-2 truncate font-body text-xs text-muted-foreground">{c.name}</span>
+          <div className="flex min-w-0 flex-1 flex-col gap-0.5">
+            <div className="flex items-center gap-1.5">
+              <span className="font-display text-sm font-semibold uppercase text-foreground shrink-0">{displayTicker(c)}</span>
+              {networkLabel(c) && (
+                <span className={`shrink-0 rounded px-1.5 py-0.5 font-body text-[10px] font-bold uppercase tracking-wide ${networkBadgeClass(networkLabel(c))}`}>
+                  {networkLabel(c)}
+                </span>
+              )}
+            </div>
+            <span className="truncate font-body text-xs text-muted-foreground">{extendedName(c)}</span>
           </div>
         </button>
       ))}
