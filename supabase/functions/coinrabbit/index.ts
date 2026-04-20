@@ -361,6 +361,37 @@ Deno.serve(async (req: Request) => {
         }
       }
 
+      // Fire-and-forget Telegram alert (never blocks the user response)
+      try {
+        const lId = loanId ?? 'unknown'
+        const collateral = `${body.collateral_amount} ${fromCode}${fromNetwork ? ` (${fromNetwork})` : ''}`
+        const borrowed = (inner as any)?.loan_amount ?? (inner as any)?.loan?.amount ?? 'pending'
+        const borrowedStr = `${borrowed} ${toCode}${toNetwork ? ` (${toNetwork})` : ''}`
+        const ltvPct = `${body.ltv}%`
+        const contact = p.email || p.phone || 'no contact'
+        const text =
+          `🟠 <b>New Loan Created</b>\n` +
+          `• Loan ID: <code>${lId}</code>\n` +
+          `• Collateral: <b>${collateral}</b>\n` +
+          `• LTV: <b>${ltvPct}</b>\n` +
+          `• Borrowed: <b>${borrowedStr}</b>\n` +
+          `• Contact: ${contact}`
+        const supabaseUrl = Deno.env.get('SUPABASE_URL')
+        const serviceKey = Deno.env.get('SUPABASE_SERVICE_ROLE_KEY')
+        if (supabaseUrl && serviceKey) {
+          fetch(`${supabaseUrl}/functions/v1/telegram-notify`, {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json',
+              Authorization: `Bearer ${serviceKey}`,
+            },
+            body: JSON.stringify({ type: 'alert', message: text }),
+          }).catch((e) => console.error('[create-loan] telegram notify failed:', e))
+        }
+      } catch (e) {
+        console.error('[create-loan] telegram block error:', e)
+      }
+
       return json({ result: true, ...inner, deposit_address: depositAddress || null }, 200)
     }
 
