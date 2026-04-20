@@ -26,6 +26,27 @@ type CoinrabbitCurrency = {
 let cachedJwt: string | null = null
 let jwtExpiresAt = 0
 
+// ─── In-memory loan status tracker (for status-change Telegram alerts) ───
+const lastLoanStatus = new Map<string, string>()
+const TERMINAL_LOAN_STATUSES = new Set([
+  'repaid', 'closed', 'liquidated', 'completed', 'finished', 'cancelled', 'canceled',
+])
+
+function notifyTelegram(message: string, tag: string) {
+  try {
+    const supabaseUrl = Deno.env.get('SUPABASE_URL')
+    const serviceKey = Deno.env.get('SUPABASE_SERVICE_ROLE_KEY')
+    if (!supabaseUrl || !serviceKey) return
+    fetch(`${supabaseUrl}/functions/v1/telegram-notify`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json', Authorization: `Bearer ${serviceKey}` },
+      body: JSON.stringify({ type: 'alert', message }),
+    }).catch((e) => console.error(`[${tag}] telegram notify failed:`, e))
+  } catch (e) {
+    console.error(`[${tag}] telegram block error:`, e)
+  }
+}
+
 function json(data: unknown, status = 200) {
   return new Response(JSON.stringify(data), {
     status,
@@ -483,7 +504,32 @@ Deno.serve(async (req: Request) => {
         console.log('[loan-status] Fetching with JWT, headers:', JSON.stringify(Object.keys(jwtHeaders)))
         const { response, responseBody } = await callProvider(url, { method: 'GET', headers: jwtHeaders })
         console.log('[loan-status] Response:', response.status, JSON.stringify(responseBody))
-        if (response.ok) return json(unwrapResponse(responseBody), 200)
+        if (response.ok) {
+          const inner = unwrapResponse(responseBody) as Record<string, unknown> | null
+          // Detect status transitions to terminal states (repaid / liquidated / closed)
+          try {
+            const loanId = String(p.id)
+            const newStatus = String((inner?.status ?? inner?.state ?? '') as string).toLowerCase().trim()
+            if (newStatus) {
+              const prev = lastLoanStatus.get(loanId)
+              if (prev && prev !== newStatus && TERMINAL_LOAN_STATUSES.has(newStatus)) {
+                const ts = new Date().toISOString()
+                const emoji = newStatus === 'liquidated' ? '🔴' : newStatus === 'repaid' ? '✅' : '⚪'
+                const text =
+                  `${emoji} <b>Loan ${newStatus.toUpperCase()}</b>\n` +
+                  `• Loan ID: <code>${loanId}</code>\n` +
+                  `• Previous Status: ${prev}\n` +
+                  `• Final Status: <b>${newStatus}</b>\n` +
+                  `• Timestamp: <code>${ts}</code>`
+                notifyTelegram(text, 'loan-status')
+              }
+              lastLoanStatus.set(loanId, newStatus)
+            }
+          } catch (e) {
+            console.error('[loan-status] transition detection error:', e)
+          }
+          return json(inner, 200)
+        }
         // Return full diagnostics on failure
         return json({ 
           result: false, error: 'Status fetch failed', status: response.status,
