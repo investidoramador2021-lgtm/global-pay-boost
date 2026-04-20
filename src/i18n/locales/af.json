@@ -1,15 +1,15 @@
 {
   "meta": {
-    "title": "MRC GlobalPay | Onmiddellike Kripto Ruil vanaf $0.30 — Geen Registrasie",
-    "description": "Kry onmiddellik toegang tot 6,000+ kriptogeldeenhede en getokeniseerde aandele, sonder registrasie. MRC GlobalPay is 'n nie-bewaarder kripto-uitruil sonder minimum ruil, vereffen in minder as 60 sekondes. Geregistreerde Kanadese MSB.",
-    "ogTitle": "MRC GlobalPay | Onmiddellike Kripto Ruil vanaf $0.30"
+    "title": "MRC Global Pay | Onmiddellike Kripto Ruil vanaf $0.30 — Geen Registrasie",
+    "description": "Kry onmiddellik toegang tot 6,000+ kriptogeldeenhede en getokeniseerde aandele, sonder registrasie. MRC Global Pay is 'n nie-bewaarder kripto-uitruil sonder minimum ruil, vereffen in minder as 60 sekondes. Geregistreerde Kanadese MSB.",
+    "ogTitle": "MRC Global Pay | Onmiddellike Kripto Ruil vanaf $0.30"
   },
   "footer": {
     "legal": "Regskundig",
     "privacy": "Privaatheidsbeleid",
     "terms": "Diensvoorwaardes",
     "aml": "AML-beleid",
-    "disclaimer": "MRC GlobalPay is 'n geregistreerde Kanadese MSB. Ons bied 'n registrasievrye diens vir die meeste gebruikers. Om veiligheid en nakoming van globale AML-standaarde te handhaaf, kan ons outomatiese risikovoorkomingstelsel soms standaardverifikasie vir hoërisiko-transaksies versoek."
+    "disclaimer": "MRC Global Pay is 'n geregistreerde Kanadese MSB. Ons bied 'n registrasievrye diens vir die meeste gebruikers. Om veiligheid en nakoming van globale AML-standaarde te handhaaf, kan ons outomatiese risikovoorkomingstelsel soms standaardverifikasie vir hoërisiko-transaksies versoek."
   },
   "nav": {
     "howItWorks": "Hoe Dit Werk",
@@ -29,7 +29,7 @@
     "trustNonCustodial": "Nie-Bewarend",
     "trustSettlement": "Direkte Verrekening",
     "dustTitle": "🧹 Maak Jou Beursie Skoon",
-    "dustDescription": "Die meeste platforms het hoë minimums. MRC GlobalPay ondersteun mikro-ruilings vanaf $0.30. Verander oorblywende stof van 6,000+ tokens onmiddellik. Geen registrasie."
+    "dustDescription": "Die meeste platforms het hoë minimums. MRC Global Pay ondersteun mikro-ruilings vanaf $0.30. Verander oorblywende stof van 6,000+ tokens onmiddellik. Geen registrasie."
   },
   "howItWorks": {
     "heading": "Hoe Dit Werk",
@@ -308,7 +308,7 @@
     "pdfDestWallet": "Bestemming Beursie",
     "pdfBridgeId": "Bridge ID",
     "pdfExtraId": "Extra ID / Memo",
-    "pdfFooter": "Privaatheid Eerste: MRC GlobalPay is nie-bewaarnemend. Hierdie inligting word nie op ons bedieners gestoor nie."
+    "pdfFooter": "Privaatheid Eerste: MRC Global Pay is nie-bewaarnemend. Hierdie inligting word nie op ons bedieners gestoor nie."
   },
   "explainer": {
     "buysell": {
@@ -432,7 +432,7 @@
     }
   },
   "whitepaper": {
-    "metaTitle": "Permanente Brug Argitektuur — Institusionele Witskrif | MRC GlobalPay",
+    "metaTitle": "Permanente Brug Argitektuur — Institusionele Witskrif | MRC Global Pay",
     "metaDesc": "Hoe maak staatlose adres-volharding outomatiese institusionele vereffening moontlik?",
     "badge": "Staatloos en Nie-Bewaarnemend",
     "heroTitle": "Infrastruktuur Volharding en Outomatiese Vereffeningspore vir Globale Institusionele Likiditeit",
@@ -446,7 +446,7 @@
     "s1Body": "In die huidige digitale bate-landskap veroorsaak die kortstondige ruilmodel sistemiese operasionele brosheid vir korporatiewe tesourie en industriële mynbou-operasies.",
     "s2Tag": "Afdeling 02 — Die Oplossing",
     "s2Title": "Van Gebeurtenis-gebaseerd na Permanente Vereffening",
-    "s2Body": "MRC GlobalPay het die Permanente Brug ontwerp om gefragmenteerde likiditeit in 'n permanente finansiële nut te omskep.",
+    "s2Body": "MRC Global Pay het die Permanente Brug ontwerp om gefragmenteerde likiditeit in 'n permanente finansiële nut te omskep.",
     "vp1Title": "Operasionele Gereedheid",
     "vp1Desc": "Elimineer die behoefte om met 'n koppelvlak te werk vir elke transaksie.",
     "vp2Title": "Administratiewe Doeltreffendheid",
@@ -476,7 +476,7 @@
     "cta": "Vestig U Institusionele Brug"
   },
   "shieldedWp": {
-    "metaTitle": "Beskermde Vereffeningsargitektuur — Institusionele Witskrif | MRC GlobalPay",
+    "metaTitle": "Beskermde Vereffeningsargitektuur — Institusionele Witskrif | MRC Global Pay",
     "metaDesc": "Hoe beskerm likiditeitsnetwerk-ontkoppeling korporatiewe privaatheid?",
     "badge": "Staatloos en Privaat",
     "heroTitle": "Ontkoppeling van On-Chain Identiteit: Beskermde Vereffeningsargitektuur vir Korporatiewe Privaatheidssoewereiniteit",
@@ -490,7 +490,7 @@
     "s1Body": "Elke on-chain transaksie skep 'n permanente rekord. Vir korporatiewe tesourie is hierdie deursigtigheid 'n sistemiese aanspreeklikheid.",
     "s2Tag": "Afdeling 02 — Die Meganika van Ontkoppeling",
     "s2Title": "Likiditeitsnetwerk-ontkoppeling: Naspoorbaarheidsonderbreking op Skaal",
-    "s2Body": "MRC GlobalPay se Beskermde Vereffeningsargitektuur implementeer 'n driefase-ontkoppelingsprotokol.",
+    "s2Body": "MRC Global Pay se Beskermde Vereffeningsargitektuur implementeer 'n driefase-ontkoppelingsprotokol.",
     "ph1Title": "Fase I: Insetmaskering",
     "ph1Desc": "Fondse tree die MRC Likiditeitslaag binne deur nie-bewaarnemende roetevinding.",
     "ph2Title": "Fase II: Padveranderlikheid",
@@ -554,7 +554,7 @@
     "serviceFeeLabel": "Diensfooi ({{percent}}%)",
     "serviceFeeNote": "Afgetrek van finale verrekening",
     "receiverGetsLabel": "Ontvanger Ontvang",
-    "taxDisclaimer": "MRC GlobalPay hou nie belasting terug nie. Plaaslike belastingverpligtinge is die kliënt se verantwoordelikheid.",
+    "taxDisclaimer": "MRC Global Pay hou nie belasting terug nie. Plaaslike belastingverpligtinge is die kliënt se verantwoordelikheid.",
     "payPageTitle": "Betaal Faktuur",
     "payPageBilledTo": "Gefaktureer Aan",
     "payPageRequestedAmount": "Aangevraagde Bedrag",
@@ -601,11 +601,11 @@
     "networkUnknown": "hierdie netwerk"
   },
   "sovereignWp": {
-    "metaTitle": "The Sovereign Settlement — Institutional Whitepaper | MRC GlobalPay",
-    "metaDesc": "How does stateless invoicing bypass correspondent banking? MRC GlobalPay's Sovereign Settlement protocol provides 168-hour exchange rate certainty for global commerce.",
+    "metaTitle": "The Sovereign Settlement — Institutional Whitepaper | MRC Global Pay",
+    "metaDesc": "How does stateless invoicing bypass correspondent banking? MRC Global Pay's Sovereign Settlement protocol provides 168-hour exchange rate certainty for global commerce.",
     "badge": "Soewerein & Nie-Bewaring",
     "heroTitle": "The Sovereign Settlement: Die Wrywing van Globale Handel Uitwis",
-    "heroSub": "The legacy financial system is no longer a facilitator of trade; it is a tax on it. MRC GlobalPay introduces Stateless Invoicing — a protocol designed to bypass correspondent banking and provide 168-hour exchange rate certainty.",
+    "heroSub": "The legacy financial system is no longer a facilitator of trade; it is a tax on it. MRC Global Pay introduces Stateless Invoicing — a protocol designed to bypass correspondent banking and provide 168-hour exchange rate certainty.",
     "tech1Label": "Rate Lock Engine",
     "tech2Label": "Cross-Chain Bridge",
     "tech3Label": "Inclusive Fee Layer",
@@ -615,7 +615,7 @@
     "s1Body": "Traditional banking relies on a fragile web of Vostro and Nostro accounts. This 'Ghost in the Machine' creates an illusion of liquidity while hiding systemic delays and predatory intermediary fees. Whether you are using an LTC Transaction Tracker to monitor movement or waiting on a standard wire, the friction remains the same. We replace human trust with mathematical certainty. By utilizing an ETH to SOL bridge architecture for high-speed cross-chain movement, we ensure that capital is never 'stuck' in the pipes of a legacy bank.",
     "s2Tag": "Section II — The 168-Hour Immutable Rate Lock",
     "s2Title": "A 7-Day Volatility Shield for Global Settlement",
-    "s2Body": "Volatility is the primary deterrent for corporate digital asset adoption. In the time it takes to settle a gold or iron ore contract, market fluctuations can erase profit margins. MRC GlobalPay eliminates this risk with a 7-Day Volatility Shield.",
+    "s2Body": "Volatility is the primary deterrent for corporate digital asset adoption. In the time it takes to settle a gold or iron ore contract, market fluctuations can erase profit margins. MRC Global Pay eliminates this risk with a 7-Day Volatility Shield.",
     "lockTitle": "The Lock",
     "lockDesc": "Once an invoice is generated, the exchange rate is frozen for 168 hours. This provides the stability of a Letter of Credit without the bank fee.",
     "guaranteeTitle": "The Guarantee",
@@ -648,8 +648,8 @@
     "cta": "Genereer Soewereine Faktuur"
   },
   "lend": {
-    "metaTitle": "Kripto-lenings en Verdien | Leen USDT teen BTC/ETH/SOL | MRC GlobalPay",
-    "metaDesc": "Leen stablecoins teen jou kripto of verdien opbrengs op BTC, ETH en USDT. Geen KYC nie. MRC GlobalPay — Geregistreerde Kanadese MSB.",
+    "metaTitle": "Kripto-lenings en Verdien | Leen USDT teen BTC/ETH/SOL | MRC Global Pay",
+    "metaDesc": "Leen stablecoins teen jou kripto of verdien opbrengs op BTC, ETH en USDT. Geen KYC nie. MRC Global Pay — Geregistreerde Kanadese MSB.",
     "heroBadge": "MSB-gereguleer · Nie-bewarend",
     "heroTitle": "Kripto",
     "heroLending": "Lenings",
@@ -699,7 +699,7 @@
     "stepActive": "Aktief",
     "stepActiveDesc": "Jou posisie is aktief",
     "complianceTitle": "Nakomingsverklaring:",
-    "complianceText": "As 'n geregistreerde Kanadese Gelddienstemaatskappy (MSB — Registrasienr. C100000015), volg alle leningsbedrywighede via MRC GlobalPay die federale Anti-Geldwassery (AML) en Anti-Terreurfinansiering (ATF) riglyne. Kriptovaluta-lenings behels risiko. Kollateraal kan gelikwideer word as pryse onder die likwidasiedrempel val. Dit is nie finansiële advies nie.",
+    "complianceText": "As 'n geregistreerde Kanadese Gelddienstemaatskappy (MSB — Registrasienr. C100000015), volg alle leningsbedrywighede via MRC Global Pay die federale Anti-Geldwassery (AML) en Anti-Terreurfinansiering (ATF) riglyne. Kriptovaluta-lenings behels risiko. Kollateraal kan gelikwideer word as pryse onder die likwidasiedrempel val. Dit is nie finansiële advies nie.",
     "collateralLabel": "Kollaterale Bate",
     "collateralValueUsd": "Kollateraalwaarde (USD)",
     "maxLtv": "Maksimum LTV",
@@ -717,7 +717,7 @@
       "phoneLabel": "Telefoonnommer",
       "phonePlaceholder": "123 456 7890",
       "invalidPhone": "Voer asseblief 'n geldige nommer in",
-      "compliance": "MRC GlobalPay · MSB-registrasie C100000015 · U data is geënkripteer.",
+      "compliance": "MRC Global Pay · MSB-registrasie C100000015 · U data is geënkripteer.",
       "cancel": "Kanselleer",
       "confirm": "Bevestig & Gaan Voort",
       "proTipTitle": "Pro Wenk: Outomatiese Sekuriteitswaarskuwings",
@@ -782,7 +782,7 @@
     },
     "earnFaq": {
       "q1": "Is daar 'n sluitperiode?",
-      "a1": "Nee. MRC GlobalPay Earn is heeltemal buigsaam. Onttrek 24/7 sonder boetes.",
+      "a1": "Nee. MRC Global Pay Earn is heeltemal buigsaam. Onttrek 24/7 sonder boetes.",
       "q2": "Hoe gereeld word rente betaal?",
       "a2": "Rente loop daagliks op en word outomaties saamgestel.",
       "q3": "Wat is die minimum deposito?",
@@ -840,7 +840,7 @@
     "loginRequired": "Aanmelding vereis vir {{action}}",
     "comingSoon": "Binnekort beskikbaar — kontak ondersteuning",
     "authenticated": "Suksesvol aangemeld",
-    "disclaimer": "Data word verkry van ons tegnologievennoot se API en verfris een keer per dag of wanneer jy 'n bestuursaksie uitvoer (Terugbetaal, Hervul, Onttrek). MRC GlobalPay · MSB-registrasie C100000015.",
+    "disclaimer": "Data word verkry van ons tegnologievennoot se API en verfris een keer per dag of wanneer jy 'n bestuursaksie uitvoer (Terugbetaal, Hervul, Onttrek). MRC Global Pay · MSB-registrasie C100000015.",
     "auth": {
       "createTitle": "Skep jou bestuursrekening",
       "loginTitle": "Teken in by kontrolepaneel",
@@ -919,7 +919,7 @@
     "apiSettings": "API Settings",
     "logout": "Logout",
     "sessionExpired": "Session expired due to inactivity",
-    "metaTitle": "Institusionele Vennootportaal | MRC GlobalPay",
+    "metaTitle": "Institusionele Vennootportaal | MRC Global Pay",
     "metaDesc": "Secure partner dashboard with 2FA, API key management, and real-time transaction monitoring.",
     "docs": "API Dokumentasie",
     "docsAmountDesc": "Amount of from_currency to swap. Minimum $0.30 equivalent.",
@@ -969,7 +969,7 @@
     "heroInstantly": "Onmiddellik",
     "snippetIntro": "Om {{from}} na {{to}} te ruil:",
     "snippetBody": "Voer jou bedrag in, plak jou {{to}} beursie-adres en stuur {{from}} na die deposito-adres. Jou {{to}} kom binne {{settlement}} aan.",
-    "aggregatorNote": "MRC GlobalPay versamel tariewe van 700+ liquiditeitsbronne. Kanadese MSB (C100000015).",
+    "aggregatorNote": "MRC Global Pay versamel tariewe van 700+ liquiditeitsbronne. Kanadese MSB (C100000015).",
     "factSettlement": "Vereffening",
     "factMinimum": "Minimum",
     "factKyc": "KYC vereis",
@@ -995,7 +995,7 @@
     "whyFromBtc": "verder as Bitcoin na {{toName}} se ekosisteem te diversifiseer.",
     "whyToBtc": "jou besittings in Bitcoin te konsolideer.",
     "whyGeneric": "jou portefeulje tussen twee verskillende blokketting-ekosisteme te herbalanseer.",
-    "whySwapOutro": "Op MRC GlobalPay word hierdie ruiling binne {{settlement}} afgehandel sonder glyding.",
+    "whySwapOutro": "Op MRC Global Pay word hierdie ruiling binne {{settlement}} afgehandel sonder glyding.",
     "networkTitle": "Netwerk- en sekuriteitsbesonderhede",
     "networkSubtitle": "Tegniese spesifikasies vir die {{from}}/{{to}} ruilpaar.",
     "networkLabel": "Netwerk:",
@@ -1004,7 +1004,7 @@
     "memoWarning": "{{name}} vereis 'n Memo/Bestemmingstag.",
     "settlementInfra": "Vereffeningsinfrastruktuur:",
     "settlementInfraDesc": "Hierdie ruiling word uitgevoer deur institusionele vlak likiditeitsroetes met 700+ verskaffers.",
-    "trustTitle": "Hoekom {{from}}/{{to}} op MRC GlobalPay verhandel?",
+    "trustTitle": "Hoekom {{from}}/{{to}} op MRC Global Pay verhandel?",
     "trustNoAccount": "Geen rekening nodig",
     "trustNoAccountDesc": "Begin binne sekondes ruil.",
     "trustNonCustodial": "Nie-bewaarnemend en veilig",
@@ -1023,11 +1023,11 @@
     "faqMemoYes": "Ja. {{toName}} vereis 'n addisionele identifiseerder.",
     "faqMemoNo": "Nee. {{toName}} vereis nie 'n Memo of Tag nie.",
     "faqKycQ": "Moet ek 'n rekening skep om {{from}} na {{to}} te ruil?",
-    "faqKycA": "Nee. MRC GlobalPay vereis nie rekeningskepping of identiteitsverifikasie nie. Kanadese MSB (C100000015).",
-    "faqFeesQ": "Watter fooie hef MRC GlobalPay vir {{from}} na {{to}}?",
+    "faqKycA": "Nee. MRC Global Pay vereis nie rekeningskepping of identiteitsverifikasie nie. Kanadese MSB (C100000015).",
+    "faqFeesQ": "Watter fooie hef MRC Global Pay vir {{from}} na {{to}}?",
     "faqFeesA": "Geen versteekte fooie. Die tarief sluit diens- en netwerkfooie in.",
-    "faqSafeQ": "Is dit veilig om {{from}} na {{to}} op MRC GlobalPay te ruil?",
-    "faqSafeA": "Ja. MRC GlobalPay bedryf 'n volledig nie-bewaarnemende diens.",
+    "faqSafeQ": "Is dit veilig om {{from}} na {{to}} op MRC Global Pay te ruil?",
+    "faqSafeA": "Ja. MRC Global Pay bedryf 'n volledig nie-bewaarnemende diens.",
     "faqNetworkQ": "Watter blokkettingnetwerk moet ek gebruik om {{from}} te stuur?",
     "faqNetworkA": "{{fromName}} gebruik die {{network}} netwerk.",
     "faqNetworkContract": "Die geverifieerde kontrakadres is: {{contract}}",
@@ -1044,9 +1044,9 @@
   },
   "affiliates": {
     "meta": {
-      "title": "Affiliate Program — Verdien Lewenslange Krypto Kommissies | MRC GlobalPay",
-      "description": "Genereer jou MRC GlobalPay affiliate-widget in sekondes. Voer jou e-pos en BTC-beursie in, kies Lig of Donker modus, en verdien 0.1%–0.4% lewenslange kommissies outomaties betaal. Geregistreerde Kanadese MSB #C100000015.",
-      "ogTitle": "Affiliate Program — Verdien Lewenslange Krypto Kommissies | MRC GlobalPay",
+      "title": "Affiliate Program — Verdien Lewenslange Krypto Kommissies | MRC Global Pay",
+      "description": "Genereer jou MRC Global Pay affiliate-widget in sekondes. Voer jou e-pos en BTC-beursie in, kies Lig of Donker modus, en verdien 0.1%–0.4% lewenslange kommissies outomaties betaal. Geregistreerde Kanadese MSB #C100000015.",
+      "ogTitle": "Affiliate Program — Verdien Lewenslange Krypto Kommissies | MRC Global Pay",
       "ogDescription": "Genereer jou widget in sekondes. Verdien 0.1%–0.4% per ruil, outomaties na jou BTC-beursie."
     },
     "hero": {
@@ -1054,7 +1054,7 @@
       "earn": "Verdien",
       "rate": "0.1% – 0.4%",
       "lifetime": "Lewenslange Kommissies",
-      "subtitle": "Bevorder MRC GlobalPay met ons kitsruil-widget of affiliate-skakel en kry betaal",
+      "subtitle": "Bevorder MRC Global Pay met ons kitsruil-widget of affiliate-skakel en kry betaal",
       "subtitleBold": "outomaties in jou BTC-beursie",
       "chipNoReg": "Geen registrasie nodig nie",
       "chipPaidBtc": "Betaal in BTC, outomaties",
@@ -1137,7 +1137,7 @@
       "learnMore": "Lees meer"
     },
     "why": {
-      "title": "Hoekom MRC GlobalPay",
+      "title": "Hoekom MRC Global Pay",
       "lifetime": "Lewenslange kommissies",
       "assets": "6,000+ kriptokurrensieë en getokeniseerde aandele",
       "micro": "Mikro-ruile vanaf net $0.30",
@@ -1203,7 +1203,7 @@
       "dashCtaNote": "Gratis opgradering · geen KYC · jou widget en uitbetalings bly dieselfde.",
       "regBadge": "Regulatoriese voordeel",
       "regTitle": "Bevorder 'n platform wat reguleerders reeds vertrou",
-      "regBody1": "MRC GlobalPay word bedryf deur",
+      "regBody1": "MRC Global Pay word bedryf deur",
       "regBody2": "MRC Pay International Corp",
       "regBody3": ", 'n Kanadese fintech geregistreer as 'n",
       "regBody4": "FINTRAC Geld-Diens-Besigheid (#C100000015)",
@@ -1217,7 +1217,7 @@
       "trackingBody": "Ons spoor verwysings privaat na met 'n veilige verwysing. Kommissies word outomaties betaal aan die BTC-beursie wat jy verskaf — geen paneelbord nodig, geen handmatige eise nie.",
       "finalBadge": "60 sekondes tot jou eerste skakel",
       "finalTitle": "Jou BTC-beursie gaan baie besiger raak",
-      "finalSubtitle": "Sluit aan by duisende skeppers, beursie-spanne en kripto-gemeenskappe wat reeds lewenslange BTC met MRC GlobalPay verdien. Geen registrasie, geen minimum, geen risiko — net plak, kopieer en verdien.",
+      "finalSubtitle": "Sluit aan by duisende skeppers, beursie-spanne en kripto-gemeenskappe wat reeds lewenslange BTC met MRC Global Pay verdien. Geen registrasie, geen minimum, geen risiko — net plak, kopieer en verdien.",
       "finalCtaGenerate": "Genereer my widget nou",
       "finalCtaDashboard": "Maak Vennoot-paneelbord oop",
       "finalRegNote": "Bevorder met selfvertroue — volledig gereguleer in Kanada (FINTRAC MSB #C100000015 · Bank van Kanada PSP)."
@@ -1275,29 +1275,29 @@
       "x1Label": "X Plasing 1 — Hook",
       "x1Text": "Het pas die skoonste nie-bewaring krypto-ruil gevind wat ek in jare gebruik het.\n\n→ 6,000+ pare\n→ Ruil in onder 60 sekondes\n→ Vanaf net $0.30\n→ Geen rekening nodig nie\n\nWerd 'n kyk 👇\n\n[YOUR-AFFILIATE-LINK]\n\n#Bitcoin #Krypto #DeFi",
       "x2Label": "X Plasing 2 — Waarde",
-      "x2Text": "Die meeste \"geen-KYC\" ruilings is verdag.\n\nMRC GlobalPay is anders:\n✅ Nie-bewaring (jy hou jou sleutels)\n✅ 6,000+ handelspare\n✅ Ruilings voltooi in onder 60 sekondes\n✅ Mikro-ruilings vanaf $0.30\n\nProbeer dit → [YOUR-AFFILIATE-LINK]\n\n#Krypto #BTC #SelfBewaring",
+      "x2Text": "Die meeste \"geen-KYC\" ruilings is verdag.\n\nMRC Global Pay is anders:\n✅ Nie-bewaring (jy hou jou sleutels)\n✅ 6,000+ handelspare\n✅ Ruilings voltooi in onder 60 sekondes\n✅ Mikro-ruilings vanaf $0.30\n\nProbeer dit → [YOUR-AFFILIATE-LINK]\n\n#Krypto #BTC #SelfBewaring",
       "tg1Label": "Telegram Plasing 1 — Kanaal",
-      "tg1Text": "🚀 Nuwe gunsteling ruil-instrument: MRC GlobalPay\n\n• Nie-bewaring — jou sleutels, jou munte\n• 6,000+ handelspare\n• Ruilings voltooi in onder 60 sekondes\n• Mikro-ruilings vanaf $0.30 (perfek vir die opruim van stof)\n• Geen rekening nodig nie\n\nGee dit 'n kans 👇\n\n🔗 [YOUR-AFFILIATE-LINK]",
+      "tg1Text": "🚀 Nuwe gunsteling ruil-instrument: MRC Global Pay\n\n• Nie-bewaring — jou sleutels, jou munte\n• 6,000+ handelspare\n• Ruilings voltooi in onder 60 sekondes\n• Mikro-ruilings vanaf $0.30 (perfek vir die opruim van stof)\n• Geen rekening nodig nie\n\nGee dit 'n kans 👇\n\n🔗 [YOUR-AFFILIATE-LINK]",
       "tg2Label": "Telegram Plasing 2 — Vinnige Wenk",
-      "tg2Text": "💡 Wenk vir enigeen wat oorblywende stof op verskeie kettings hou:\n\nMRC GlobalPay laat jou toe om vanaf $0.30 te ruil — die meeste beurse sal nie eens toelaat dat jy klein bedrae aanraak nie.\n\nNie-bewaring. Geen rekening. ~60 sekondes.\n\nProbeer: [YOUR-AFFILIATE-LINK]",
+      "tg2Text": "💡 Wenk vir enigeen wat oorblywende stof op verskeie kettings hou:\n\nMRC Global Pay laat jou toe om vanaf $0.30 te ruil — die meeste beurse sal nie eens toelaat dat jy klein bedrae aanraak nie.\n\nNie-bewaring. Geen rekening. ~60 sekondes.\n\nProbeer: [YOUR-AFFILIATE-LINK]",
       "liLabel": "LinkedIn Plasing — Professioneel",
-      "liText": "'n Vinnige nota vir enigeen wat krypto-ruilings navigeer:\n\nEk beveel MRC GlobalPay aan kliënte en kontakte aan omdat dit drie probleme oplos wat die meeste beurse nie aanspreek nie:\n\n1. Nie-bewaring argitektuur — bates sit nooit op die platform nie\n2. Vertroude operateur met 'n werklike korporatiewe entiteit agter die produk\n3. Praktiese UX — 6,000+ pare, sub-60-sekonde ruilings, mikro-ruilings vanaf $0.30\n\nAs jy 'n netwerk het wat gereeld krypto ruil, kyk:\n👉 [YOUR-AFFILIATE-LINK]\n\n#Fintech #Krypto #Bitcoin",
+      "liText": "'n Vinnige nota vir enigeen wat krypto-ruilings navigeer:\n\nEk beveel MRC Global Pay aan kliënte en kontakte aan omdat dit drie probleme oplos wat die meeste beurse nie aanspreek nie:\n\n1. Nie-bewaring argitektuur — bates sit nooit op die platform nie\n2. Vertroude operateur met 'n werklike korporatiewe entiteit agter die produk\n3. Praktiese UX — 6,000+ pare, sub-60-sekonde ruilings, mikro-ruilings vanaf $0.30\n\nAs jy 'n netwerk het wat gereeld krypto ruil, kyk:\n👉 [YOUR-AFFILIATE-LINK]\n\n#Fintech #Krypto #Bitcoin",
       "igLabel": "Instagram / Threads Plasing",
       "igText": "Krypto-ruil instrument wat ek werklik vertrou ⚡️\n\n🔐 Nie-bewaring (jy hou beheer)\n💸 Ruil vanaf net $0.30\n⏱️ Klaar in onder 60 sekondes\n🪙 6,000+ pare\n✅ Geen rekening nodig nie\n\nSkakel in bio → [YOUR-AFFILIATE-LINK]\n\n#krypto #bitcoin #web3 #defi"
     },
     "emails": {
       "e1Label": "E-pos 1 — Kort (nuusbrief)",
-      "e1Text": "Onderwerp: 'n Krypto-ruil instrument wat ek moes deel\n\nVinnig — ek gebruik MRC GlobalPay vir die afgelope paar weke en dit het stilweg my verstek geword.\n\n• Nie-bewaring (jou sleutels bly joune)\n• 6,000+ handelspare\n• Onder 60 sekondes per ruil\n• Vanaf $0.30 — ja, selfs stof\n• Geen rekening nodig vir ruilings nie\n\nAs jy enigsins krypto ruil, gee dit 'n kans: [YOUR-AFFILIATE-LINK]\n\nGroete,\n[YOUR-NAME]",
+      "e1Text": "Onderwerp: 'n Krypto-ruil instrument wat ek moes deel\n\nVinnig — ek gebruik MRC Global Pay vir die afgelope paar weke en dit het stilweg my verstek geword.\n\n• Nie-bewaring (jou sleutels bly joune)\n• 6,000+ handelspare\n• Onder 60 sekondes per ruil\n• Vanaf $0.30 — ja, selfs stof\n• Geen rekening nodig vir ruilings nie\n\nAs jy enigsins krypto ruil, gee dit 'n kans: [YOUR-AFFILIATE-LINK]\n\nGroete,\n[YOUR-NAME]",
       "e2Label": "E-pos 2 — Medium (resensie-styl)",
-      "e2Text": "Onderwerp: Die nie-bewaring ruil wat ek vroeër wou gevind het\n\nHi [FIRST-NAME],\n\nEk word heeltyd gevra watter beurs ek vir vinnige krypto-ruilings gebruik. Vir 'n ruk was my antwoord \"hang van die ketting af.\" Nie meer nie.\n\nMRC GlobalPay het my gunsteling geword, en hier is hoekom:\n\n🔐 Nie-bewaring — fondse sit nooit op die platform nie\n⚡ 6,000+ pare, ruilings voltooi in onder 60 sekondes\n💸 Mikro-ruilings vanaf $0.30 (perfek vir die opruim van stof op Solana, BSC, TRON, ens.)\n🎯 Geen rekening nodig vir ruilings nie\n\nProbeer dit hier:\n👉 [YOUR-AFFILIATE-LINK]\n\nAs jy vrae het, antwoord net.\n\n— [YOUR-NAME]",
+      "e2Text": "Onderwerp: Die nie-bewaring ruil wat ek vroeër wou gevind het\n\nHi [FIRST-NAME],\n\nEk word heeltyd gevra watter beurs ek vir vinnige krypto-ruilings gebruik. Vir 'n ruk was my antwoord \"hang van die ketting af.\" Nie meer nie.\n\nMRC Global Pay het my gunsteling geword, en hier is hoekom:\n\n🔐 Nie-bewaring — fondse sit nooit op die platform nie\n⚡ 6,000+ pare, ruilings voltooi in onder 60 sekondes\n💸 Mikro-ruilings vanaf $0.30 (perfek vir die opruim van stof op Solana, BSC, TRON, ens.)\n🎯 Geen rekening nodig vir ruilings nie\n\nProbeer dit hier:\n👉 [YOUR-AFFILIATE-LINK]\n\nAs jy vrae het, antwoord net.\n\n— [YOUR-NAME]",
       "e3Label": "E-pos 3 — Lank (volledige aanbod)",
-      "e3Text": "Onderwerp: Ek het uiteindelik 'n krypto-ruil gevind wat elke blokkie merk\n\nHi [FIRST-NAME],\n\nAs jy meer as vyf minute in krypto was, ken jy die patroon:\n\n→ Gesentraliseerde beurse is vinnig maar in bewaring (en al hoe meer KYC-alles)\n→ DEX-aggregators is nie-bewaring maar stadig, duur en kettingbeperk\n→ \"Geen-KYC\" ruil-werwe is verdag en byna nooit betroubaar nie\n\nEk het maande spandeer om iets in die middel te soek. Ek het dit gevind.\n\nDit word MRC GlobalPay genoem, en dit is die skoonste nie-bewaring ruil wat ek gebruik het:\n\n✅ Nie-bewaring — jy hou jou sleutels, elke keer\n✅ 6,000+ handelspare oor alle hoof kettings\n✅ Ruilings betaal in onder 60 sekondes\n✅ Mikro-ruilings vanaf net $0.30 (groot vir die opruim van stof)\n✅ Bedryf deur MRC Pay International Corp uit Ottawa, Kanada\n✅ Geen rekening nodig vir ruilings nie\n\nDaardie laaste punt maak saak. Die meeste \"anonieme\" ruil-platforms is gebaseer in jurisdiksies waar daar geen verhaal is as iets verkeerd loop nie. MRC is die teenoorgestelde — 'n werklike korporatiewe entiteit, op die rekord, maar steeds nie-bewaring en steeds geen-rekening-nodig vir ruilings.\n\nProbeer dit een keer en sien self:\n👉 [YOUR-AFFILIATE-LINK]\n\nAntwoord as jy 'n deurloop wil hê — bly om te help.\n\nPraat gou,\n[YOUR-NAME]\n\nP.S. Selfs as jy skepties is, probeer net 'n $0.30 ruil. Dit kos amper niks en jy sal presies sien hoe die vloei werk."
+      "e3Text": "Onderwerp: Ek het uiteindelik 'n krypto-ruil gevind wat elke blokkie merk\n\nHi [FIRST-NAME],\n\nAs jy meer as vyf minute in krypto was, ken jy die patroon:\n\n→ Gesentraliseerde beurse is vinnig maar in bewaring (en al hoe meer KYC-alles)\n→ DEX-aggregators is nie-bewaring maar stadig, duur en kettingbeperk\n→ \"Geen-KYC\" ruil-werwe is verdag en byna nooit betroubaar nie\n\nEk het maande spandeer om iets in die middel te soek. Ek het dit gevind.\n\nDit word MRC Global Pay genoem, en dit is die skoonste nie-bewaring ruil wat ek gebruik het:\n\n✅ Nie-bewaring — jy hou jou sleutels, elke keer\n✅ 6,000+ handelspare oor alle hoof kettings\n✅ Ruilings betaal in onder 60 sekondes\n✅ Mikro-ruilings vanaf net $0.30 (groot vir die opruim van stof)\n✅ Bedryf deur MRC Pay International Corp uit Ottawa, Kanada\n✅ Geen rekening nodig vir ruilings nie\n\nDaardie laaste punt maak saak. Die meeste \"anonieme\" ruil-platforms is gebaseer in jurisdiksies waar daar geen verhaal is as iets verkeerd loop nie. MRC is die teenoorgestelde — 'n werklike korporatiewe entiteit, op die rekord, maar steeds nie-bewaring en steeds geen-rekening-nodig vir ruilings.\n\nProbeer dit een keer en sien self:\n👉 [YOUR-AFFILIATE-LINK]\n\nAntwoord as jy 'n deurloop wil hê — bly om te help.\n\nPraat gou,\n[YOUR-NAME]\n\nP.S. Selfs as jy skepties is, probeer net 'n $0.30 ruil. Dit kos amper niks en jy sal presies sien hoe die vloei werk."
     },
     "video": {
-      "script": "🎬 60-SEKONDE VIDEO-SKRIF — \"Die Beste Nie-Bewaring Krypto-Ruil van 2026\"\n─────────────────────────────────────────────\n\n[0:00 – 0:05] HOOK (op-kamera of teksoorlê)\n\"As jy krypto ruil en jy gebruik nog gesentraliseerde beurse — stop. Ek wys jou iets beter in 60 sekondes.\"\n\n[0:05 – 0:15] PROBLEEM\n\"Gesentraliseerde beurse hou jou fondse, vra KYC op alles, en bevries rekeninge willekeurig. DEXs is stadig, duur en kettingbeperk. Die meeste 'geen-KYC' ruilings? Verdag en riskant.\"\n\n[0:15 – 0:35] OPLOSSING — MRC GlobalPay\n\"Dit is MRC GlobalPay. Dit is nie-bewaring — jy gee nooit jou sleutels op nie. Dit ondersteun 6,000+ handelspare oor elke hoof ketting. Ruilings voltooi in onder 60 sekondes. En jy kan so min as $0.30 ruil — perfek vir die opruim van stof. Geen rekening, geen e-pos vereis nie.\"\n\n[0:35 – 0:50] BEWYS / DEMO\n\"Hier is die ruil wat ek pas gedoen het — BTC na USDT, 47 sekondes, geen rekening, geen e-pos. Fondse het reguit na my beursie gegaan.\"\n\n[0:50 – 1:00] CTA\n\"Skakel in die beskrywing — probeer 'n klein ruil en sien self. Sien jou in die volgende een.\"\n\n─────────────────────────────────────────────\n📝 VIDEO-BESKRYWING SJABLOON\n─────────────────────────────────────────────\n\nDie vinnigste, skoonste nie-bewaring krypto-ruil wat ek in 2026 gebruik het.\n\n🔗 Probeer MRC GlobalPay (my filiaalskakel): [YOUR-AFFILIATE-LINK]\n\nWaarom dit anders is:\n✅ Nie-bewaring — jy hou jou sleutels\n✅ 6,000+ pare oor alle hoof kettings\n✅ Ruilings voltooi in onder 60 sekondes\n✅ Mikro-ruilings vanaf $0.30\n✅ Geen rekening nodig vir ruilings nie\n\n💰 Filiaalbekendmaking: Die skakel hierbo is my verwysingskakel. As jy daardeur ruil, mag ek 'n klein kommissie verdien — teen geen ekstra koste vir jou nie.\n\n⏱️ TYDSTEMPELS\n0:00 Inleiding\n0:05 Hoekom gesentraliseerde beurse sleg is\n0:15 Wat MRC GlobalPay werklik is\n0:35 Lewendige ruil-demo\n0:50 Hoe om te probeer\n\n#Krypto #Bitcoin #NieBewaring #KryptoRuil #DeFi #BTC"
+      "script": "🎬 60-SEKONDE VIDEO-SKRIF — \"Die Beste Nie-Bewaring Krypto-Ruil van 2026\"\n─────────────────────────────────────────────\n\n[0:00 – 0:05] HOOK (op-kamera of teksoorlê)\n\"As jy krypto ruil en jy gebruik nog gesentraliseerde beurse — stop. Ek wys jou iets beter in 60 sekondes.\"\n\n[0:05 – 0:15] PROBLEEM\n\"Gesentraliseerde beurse hou jou fondse, vra KYC op alles, en bevries rekeninge willekeurig. DEXs is stadig, duur en kettingbeperk. Die meeste 'geen-KYC' ruilings? Verdag en riskant.\"\n\n[0:15 – 0:35] OPLOSSING — MRC Global Pay\n\"Dit is MRC Global Pay. Dit is nie-bewaring — jy gee nooit jou sleutels op nie. Dit ondersteun 6,000+ handelspare oor elke hoof ketting. Ruilings voltooi in onder 60 sekondes. En jy kan so min as $0.30 ruil — perfek vir die opruim van stof. Geen rekening, geen e-pos vereis nie.\"\n\n[0:35 – 0:50] BEWYS / DEMO\n\"Hier is die ruil wat ek pas gedoen het — BTC na USDT, 47 sekondes, geen rekening, geen e-pos. Fondse het reguit na my beursie gegaan.\"\n\n[0:50 – 1:00] CTA\n\"Skakel in die beskrywing — probeer 'n klein ruil en sien self. Sien jou in die volgende een.\"\n\n─────────────────────────────────────────────\n📝 VIDEO-BESKRYWING SJABLOON\n─────────────────────────────────────────────\n\nDie vinnigste, skoonste nie-bewaring krypto-ruil wat ek in 2026 gebruik het.\n\n🔗 Probeer MRC Global Pay (my filiaalskakel): [YOUR-AFFILIATE-LINK]\n\nWaarom dit anders is:\n✅ Nie-bewaring — jy hou jou sleutels\n✅ 6,000+ pare oor alle hoof kettings\n✅ Ruilings voltooi in onder 60 sekondes\n✅ Mikro-ruilings vanaf $0.30\n✅ Geen rekening nodig vir ruilings nie\n\n💰 Filiaalbekendmaking: Die skakel hierbo is my verwysingskakel. As jy daardeur ruil, mag ek 'n klein kommissie verdien — teen geen ekstra koste vir jou nie.\n\n⏱️ TYDSTEMPELS\n0:00 Inleiding\n0:05 Hoekom gesentraliseerde beurse sleg is\n0:15 Wat MRC Global Pay werklik is\n0:35 Lewendige ruil-demo\n0:50 Hoe om te probeer\n\n#Krypto #Bitcoin #NieBewaring #KryptoRuil #DeFi #BTC"
     },
     "blog": {
-      "post": "# Die Beste Nie-Bewaring Krypto-Ruil Platform in 2026\n\nAs jy enige tyd in krypto onlangs spandeer het, het jy die druk gevoel: gesentraliseerde beurse hou aan om KYC te verstrak, \"geen-KYC\" platforms lyk al hoe meer verdag, en gedesentraliseerde aggregators is steeds te stadig en kettingbeperk vir alledaagse gebruik.\n\nDaar is uiteindelik 'n beter opsie — en na verskeie maande se toetsing, is ek oortuig dat dit die mees gebalanseerde nie-bewaring ruil-platform is wat in 2026 beskikbaar is.\n\n## Ontmoet MRC GlobalPay\n\nMRC GlobalPay is 'n nie-bewaring krypto-ruil platform bedryf deur MRC Pay International Corp, 'n fintech gebaseer in Ottawa, Kanada. Dit is geregistreer as 'n Geld Dienste Besigheid by FINTRAC (#C100000015).\n\nDit bied:\n\n- **Nie-bewaring argitektuur** — jou fondse sit nooit op die platform nie\n- **6,000+ handelspare** oor alle hoof kettings\n- **Sub-60-sekonde ruilings**\n- **Mikro-ruilings vanaf $0.30** — perfek vir die opruim van stof\n- **Geen rekening nodig vir ruilings nie**\n\n## Hoekom dit saak maak\n\nDie meeste krypto-ruil oplossings val in een van twee kampe: in bewaring en gereguleer maar indringend, of nie-bewaring maar met twyfelagtige reputasie. MRC GlobalPay los albei tegelyk op — 'n werklike Kanadese korporatiewe entiteit met volle regulatoriese toesig, tog met 'n gebruikersvloei wat van end-tot-end nie-bewaring bly.\n\n## Probeer self\n\nMy aanbeveling: begin met 'n klein ruil — letterlik $0.30 is genoeg. Jy sal die vloei verstaan, die spoed ervaar, en self oordeel.\n\n👉 [Probeer MRC GlobalPay](https://mrcglobalpay.com/?ref=YOUR-CODE)\n\n*Bekendmaking: Die skakels in hierdie artikel is filiaalskakels. As jy daardeur ruil, mag ek 'n klein kommissie verdien — teen geen ekstra koste vir jou nie. Ek beveel slegs platforms aan wat ek werklik gebruik en vertrou.*"
+      "post": "# Die Beste Nie-Bewaring Krypto-Ruil Platform in 2026\n\nAs jy enige tyd in krypto onlangs spandeer het, het jy die druk gevoel: gesentraliseerde beurse hou aan om KYC te verstrak, \"geen-KYC\" platforms lyk al hoe meer verdag, en gedesentraliseerde aggregators is steeds te stadig en kettingbeperk vir alledaagse gebruik.\n\nDaar is uiteindelik 'n beter opsie — en na verskeie maande se toetsing, is ek oortuig dat dit die mees gebalanseerde nie-bewaring ruil-platform is wat in 2026 beskikbaar is.\n\n## Ontmoet MRC Global Pay\n\nMRC Global Pay is 'n nie-bewaring krypto-ruil platform bedryf deur MRC Pay International Corp, 'n fintech gebaseer in Ottawa, Kanada. Dit is geregistreer as 'n Geld Dienste Besigheid by FINTRAC (#C100000015).\n\nDit bied:\n\n- **Nie-bewaring argitektuur** — jou fondse sit nooit op die platform nie\n- **6,000+ handelspare** oor alle hoof kettings\n- **Sub-60-sekonde ruilings**\n- **Mikro-ruilings vanaf $0.30** — perfek vir die opruim van stof\n- **Geen rekening nodig vir ruilings nie**\n\n## Hoekom dit saak maak\n\nDie meeste krypto-ruil oplossings val in een van twee kampe: in bewaring en gereguleer maar indringend, of nie-bewaring maar met twyfelagtige reputasie. MRC Global Pay los albei tegelyk op — 'n werklike Kanadese korporatiewe entiteit met volle regulatoriese toesig, tog met 'n gebruikersvloei wat van end-tot-end nie-bewaring bly.\n\n## Probeer self\n\nMy aanbeveling: begin met 'n klein ruil — letterlik $0.30 is genoeg. Jy sal die vloei verstaan, die spoed ervaar, en self oordeel.\n\n👉 [Probeer MRC Global Pay](https://mrcglobalpay.com/?ref=YOUR-CODE)\n\n*Bekendmaking: Die skakels in hierdie artikel is filiaalskakels. As jy daardeur ruil, mag ek 'n klein kommissie verdien — teen geen ekstra koste vir jou nie. Ek beveel slegs platforms aan wat ek werklik gebruik en vertrou.*"
     }
   }
 }

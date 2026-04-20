@@ -11,7 +11,7 @@ const SwapTaoBtc = () => (
     isFeatured
     headline={<>Swap TAO to BTC Instantly – <span className="text-gradient-neon">Convert Decentralized AI Yield into Bitcoin</span></>}
     subHeadline="Convert Bittensor (TAO) directly into native Bitcoin. Substrate-native withdrawal, cross-chain routing, and Bitcoin settlement — all in one locked quote, no exchange account required."
-    whyText="TAO subnet operators and miners earning rewards in Bittensor's native token historically faced friction converting yield into long-term Bitcoin holdings — most CEX routes still require KYC and impose tight withdrawal limits on TAO. MRC GlobalPay handles TAO → BTC in a single quote, sourced across multiple top-tier liquidity providers, with native BTC delivery to your specified Bitcoin address."
+    whyText="TAO subnet operators and miners earning rewards in Bittensor's native token historically faced friction converting yield into long-term Bitcoin holdings — most CEX routes still require KYC and impose tight withdrawal limits on TAO. MRC Global Pay handles TAO → BTC in a single quote, sourced across multiple top-tier liquidity providers, with native BTC delivery to your specified Bitcoin address."
     extraFaqs={[
       {
         q: "Can I send TAO directly from a Bittensor wallet?",

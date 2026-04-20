@@ -43,7 +43,7 @@ const IOSInstallSheet = ({ open, onClose }: IOSInstallSheetProps) => {
             </button>
 
             <div className="mb-6 text-center">
-              <h3 className="font-display text-lg font-bold text-foreground">Install MRC GlobalPay</h3>
+              <h3 className="font-display text-lg font-bold text-foreground">Install MRC Global Pay</h3>
               <p className="mt-1 font-body text-sm text-muted-foreground">Add to your Home Screen for the best experience</p>
             </div>
 

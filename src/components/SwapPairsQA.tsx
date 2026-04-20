@@ -9,13 +9,13 @@ import { Helmet } from "react-helmet-async";
 const swapPairs = [
   {
     pair: "BTC to USDT",
-    q: "How long does a BTC to USDT swap take on MRC GlobalPay?",
+    q: "How long does a BTC to USDT swap take on MRC Global Pay?",
     a: "Our liquidity rails execute BTC to USDT swaps instantly, typically settling in under 1 minute. Bitcoin network confirmations are the only variable — we start processing the moment the first confirmation arrives.",
   },
   {
     pair: "ETH to SOL",
     q: "Can I swap ETH to SOL without creating an account?",
-    a: "Yes. MRC GlobalPay requires zero registration. Enter your SOL wallet address, send your ETH to our deposit address, and receive SOL in your wallet within 45-90 seconds on average.",
+    a: "Yes. MRC Global Pay requires zero registration. Enter your SOL wallet address, send your ETH to our deposit address, and receive SOL in your wallet within 45-90 seconds on average.",
   },
   {
     pair: "USDT to BTC",
@@ -29,13 +29,13 @@ const swapPairs = [
   },
   {
     pair: "XRP to ETH",
-    q: "How does MRC GlobalPay handle XRP to ETH cross-chain swaps?",
+    q: "How does MRC Global Pay handle XRP to ETH cross-chain swaps?",
     a: "Our automated settlement engine handles cross-chain routing seamlessly. You send XRP, our system locks the rate, executes the conversion, and delivers ETH to your wallet — all in one flow, typically under 2 minutes.",
   },
   {
     pair: "DOGE to BTC",
     q: "Are DOGE to BTC swaps available 24/7?",
-    a: "Absolutely. MRC GlobalPay operates 24/7/365 with no downtime. DOGE to BTC swaps run on fully automated liquidity rails, so you can swap at any time — weekends, holidays, any hour.",
+    a: "Absolutely. MRC Global Pay operates 24/7/365 with no downtime. DOGE to BTC swaps run on fully automated liquidity rails, so you can swap at any time — weekends, holidays, any hour.",
   },
   {
     pair: "BNB to ETH",
@@ -44,7 +44,7 @@ const swapPairs = [
   },
   {
     pair: "LTC to USDT",
-    q: "How secure are LTC to USDT swaps on MRC GlobalPay?",
+    q: "How secure are LTC to USDT swaps on MRC Global Pay?",
     a: "Every swap is encrypted end-to-end. We never custody your funds — crypto flows directly between your wallet and our liquidity partners. No accounts, no stored data, no attack surface.",
   },
 ];

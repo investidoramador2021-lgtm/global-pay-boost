@@ -61,20 +61,20 @@ const WhitepaperLoans = () => {
   return (
     <div className="min-h-screen bg-background">
       <Helmet>
-        <title>Crypto-Collateralized Liquidity Solutions — MRC GlobalPay Whitepaper</title>
-        <meta name="description" content="How do crypto-collateralized loans work in Canada? MRC GlobalPay's non-custodial lending framework optimizes capital efficiency under FINTRAC MSB regulation." />
+        <title>Crypto-Collateralized Liquidity Solutions — MRC Global Pay Whitepaper</title>
+        <meta name="description" content="How do crypto-collateralized loans work in Canada? MRC Global Pay's non-custodial lending framework optimizes capital efficiency under FINTRAC MSB regulation." />
         <link rel="canonical" href={canonicalUrl} />
         <meta name="robots" content="index, follow, max-image-preview:large" />
-        <meta property="og:title" content="Crypto-Collateralized Liquidity Solutions — MRC GlobalPay Whitepaper" />
-        <meta property="og:description" content="MRC GlobalPay's non-custodial lending framework: capital efficiency under FINTRAC MSB regulation." />
+        <meta property="og:title" content="Crypto-Collateralized Liquidity Solutions — MRC Global Pay Whitepaper" />
+        <meta property="og:description" content="MRC Global Pay's non-custodial lending framework: capital efficiency under FINTRAC MSB regulation." />
         <meta property="og:type" content="article" />
         <meta property="og:url" content={canonicalUrl} />
-        <meta property="og:site_name" content="MRC GlobalPay" />
+        <meta property="og:site_name" content="MRC Global Pay" />
         <meta property="og:image" content="https://mrcglobalpay.com/og-image.jpg" />
         <meta property="og:image:width" content="1200" />
         <meta property="og:image:height" content="630" />
         <meta name="twitter:card" content="summary_large_image" />
-        <meta name="twitter:title" content="Crypto-Collateralized Liquidity Solutions — MRC GlobalPay" />
+        <meta name="twitter:title" content="Crypto-Collateralized Liquidity Solutions — MRC Global Pay" />
         <meta name="twitter:description" content="Non-custodial lending under FINTRAC MSB regulation." />
         <meta name="twitter:image" content="https://mrcglobalpay.com/og-image.jpg" />
         <script type="application/ld+json">
@@ -83,18 +83,18 @@ const WhitepaperLoans = () => {
             "@type": "TechArticle",
             name: "Crypto-Collateralized Liquidity Solutions",
             headline: "Optimizing Capital Efficiency through Non-Custodial Lending Frameworks",
-            description: "MRC GlobalPay's lending protocol enables liquidity access without divestment of digital assets through decentralized collateral management and Canadian MSB oversight.",
+            description: "MRC Global Pay's lending protocol enables liquidity access without divestment of digital assets through decentralized collateral management and Canadian MSB oversight.",
             url: canonicalUrl,
             image: "https://mrcglobalpay.com/og-image.jpg",
             datePublished: "2026-04-14",
             identifier: "MRC-WP-LOAN-2026",
-            author: { "@type": "Organization", name: "MRC GlobalPay" },
-            publisher: { "@type": "FinancialService", name: "MRC GlobalPay", url: "https://mrcglobalpay.com" },
+            author: { "@type": "Organization", name: "MRC Global Pay" },
+            publisher: { "@type": "FinancialService", name: "MRC Global Pay", url: "https://mrcglobalpay.com" },
           })}
         </script>
       </Helmet>
       <HreflangTags />
-      <StickyShareRail url={canonicalUrl} title="Crypto-Collateralized Liquidity Solutions — MRC GlobalPay Whitepaper" />
+      <StickyShareRail url={canonicalUrl} title="Crypto-Collateralized Liquidity Solutions — MRC Global Pay Whitepaper" />
       <SiteHeader />
 
       {/* Hero */}
@@ -131,7 +131,7 @@ const WhitepaperLoans = () => {
                   <h2 className="text-lg font-bold text-foreground font-serif">Executive Summary</h2>
                 </div>
                 <p className="text-muted-foreground leading-relaxed">
-                  This paper outlines the methodology of MRC GlobalPay's lending protocol, which enables liquidity access
+                  This paper outlines the methodology of MRC Global Pay's lending protocol, which enables liquidity access
                   without the divestment of digital assets. By utilizing a decentralized collateral management system integrated
                   with Canadian MSB regulatory oversight, MRC provides a secure alternative to traditional liquidation, mitigating
                   tax exposure and maintaining market upside.
@@ -149,7 +149,7 @@ const WhitepaperLoans = () => {
                 </h2>
                 <p className="text-muted-foreground leading-relaxed">
                   Traditional asset liquidation triggers immediate capital gains tax events and eliminates potential future
-                  appreciation. MRC GlobalPay solves this via a Loan-to-Value (LTV) driven credit facility. Users deposit
+                  appreciation. MRC Global Pay solves this via a Loan-to-Value (LTV) driven credit facility. Users deposit
                   crypto collateral and receive stablecoin liquidity without selling — preserving their position and
                   deferring taxable events.
                 </p>
@@ -162,7 +162,7 @@ const WhitepaperLoans = () => {
 
                 <div className="grid sm:grid-cols-2 gap-4">
                   {[
-                    { icon: Shield, title: "Collateral Custody", desc: "Assets are managed via non-custodial smart contracts. MRC GlobalPay does not maintain private key access, ensuring insolvency protection for the user." },
+                    { icon: Shield, title: "Collateral Custody", desc: "Assets are managed via non-custodial smart contracts. MRC Global Pay does not maintain private key access, ensuring insolvency protection for the user." },
                     { icon: AlertTriangle, title: "Margin Maintenance", desc: "Three-tier risk notification system — Green (Safe), Yellow (Warning at 75% LTV), Red (Liquidation threshold at 85% LTV)." },
                   ].map((item) => (
                     <div key={item.title} className="rounded-xl border border-border bg-card p-5 space-y-2">
@@ -199,7 +199,7 @@ const WhitepaperLoans = () => {
                 className="prose prose-lg dark:prose-invert max-w-none">
                 <h2 className="text-2xl font-semibold text-foreground font-serif">Regulatory Compliance</h2>
                 <p className="text-muted-foreground leading-relaxed">
-                  Operating under FINTRAC guidelines in Canada, MRC GlobalPay implements rigorous KYC/AML protocols,
+                  Operating under FINTRAC guidelines in Canada, MRC Global Pay implements rigorous KYC/AML protocols,
                   ensuring that all liquidity provided meets international banking standards for transparency and provenance.
                   As a <span className="font-semibold text-primary">Registered Canadian MSB (C100000015)</span>,
                   the platform maintains full regulatory accountability while delivering non-custodial settlement.
@@ -227,8 +227,8 @@ const WhitepaperLoans = () => {
       <section className="container mx-auto max-w-3xl px-4 pb-16">
         <SocialShare
           url={canonicalUrl}
-          title="Crypto-Collateralized Liquidity Solutions — MRC GlobalPay Whitepaper"
-          description="MRC GlobalPay's non-custodial lending framework optimizes capital efficiency under FINTRAC MSB regulation."
+          title="Crypto-Collateralized Liquidity Solutions — MRC Global Pay Whitepaper"
+          description="MRC Global Pay's non-custodial lending framework optimizes capital efficiency under FINTRAC MSB regulation."
         />
       </section>
 

@@ -8,19 +8,19 @@ const AMLPolicy = () => {
   return (
   <>
     <Helmet>
-      <title>AML Policy — MRC GlobalPay</title>
-      <meta name="description" content="MRC GlobalPay anti-money laundering (AML) policy for cryptocurrency exchange services. Learn about our FINTRAC compliance and transaction monitoring procedures." />
+      <title>AML Policy — MRC Global Pay</title>
+      <meta name="description" content="MRC Global Pay anti-money laundering (AML) policy for cryptocurrency exchange services. Learn about our FINTRAC compliance and transaction monitoring procedures." />
       <meta name="robots" content="index, follow" />
       <link rel="canonical" href={pageUrl} />
-      <meta property="og:title" content="AML Policy — MRC GlobalPay" />
-      <meta property="og:description" content="MRC GlobalPay anti-money laundering (AML) policy for cryptocurrency exchange services. FINTRAC compliance and transaction monitoring." />
+      <meta property="og:title" content="AML Policy — MRC Global Pay" />
+      <meta property="og:description" content="MRC Global Pay anti-money laundering (AML) policy for cryptocurrency exchange services. FINTRAC compliance and transaction monitoring." />
       <meta property="og:url" content={pageUrl} />
       <meta property="og:type" content="website" />
-      <meta property="og:site_name" content="MRC GlobalPay" />
+      <meta property="og:site_name" content="MRC Global Pay" />
       <meta property="og:image" content="https://pub-bb2e103a32db4e198524a2e9ed8f35b4.r2.dev/22f69f45-cf65-4871-9af4-b68ab4027213/id-preview-243bf129--23f851ec-c820-43c7-bbe2-d2e830f7c268.lovable.app-1773521796493.png" />
       <meta name="twitter:card" content="summary_large_image" />
-      <meta name="twitter:title" content="AML Policy — MRC GlobalPay" />
-        <meta name="twitter:description" content="MRC GlobalPay anti-money laundering (AML) policy. FINTRAC compliance and transaction monitoring." />
+      <meta name="twitter:title" content="AML Policy — MRC Global Pay" />
+        <meta name="twitter:description" content="MRC Global Pay anti-money laundering (AML) policy. FINTRAC compliance and transaction monitoring." />
         <meta name="twitter:image" content="https://pub-bb2e103a32db4e198524a2e9ed8f35b4.r2.dev/22f69f45-cf65-4871-9af4-b68ab4027213/id-preview-243bf129--23f851ec-c820-43c7-bbe2-d2e830f7c268.lovable.app-1773521796493.png" />
     </Helmet>
     <SiteHeader />
@@ -30,11 +30,11 @@ const AMLPolicy = () => {
         <p><strong>Last updated:</strong> March 14, 2026</p>
 
         <h2 className="text-xl font-semibold text-foreground">1. Purpose</h2>
-        <p>MRC GlobalPay is committed to preventing money laundering, terrorist financing, and other financial crimes. This policy outlines our compliance measures.</p>
+        <p>MRC Global Pay is committed to preventing money laundering, terrorist financing, and other financial crimes. This policy outlines our compliance measures.</p>
 
         <h2 className="text-xl font-semibold text-foreground">2. Regulatory Status</h2>
         <p>
-          MRC GlobalPay is a <strong>FINTRAC-registered Money Services Business (MSB: C100000015)</strong> and an{" "}
+          MRC Global Pay is a <strong>FINTRAC-registered Money Services Business (MSB: C100000015)</strong> and an{" "}
           <a
             href="https://www.bankofcanada.ca/core-functions/retail-payments-supervision/psp-registry/psp-registry-details/?account_id=408b884a-1aa1-ef11-a72d-0022483bf164"
             target="_blank"

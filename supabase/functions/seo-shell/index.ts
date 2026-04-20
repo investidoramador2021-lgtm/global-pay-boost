@@ -108,7 +108,7 @@ function buildSeoHead(opts: {
         },
         provider: {
           "@type": "FinancialService",
-          name: "MRC GlobalPay",
+          name: "MRC Global Pay",
           url: SITE,
         },
       },
@@ -129,7 +129,7 @@ function buildSeoHead(opts: {
     <meta property="og:title" content="${escapeAttr(title)}" />
     <meta property="og:description" content="${escapeAttr(description)}" />
     <meta property="og:url" content="${escapeAttr(canonical)}" />
-    <meta property="og:site_name" content="MRC GlobalPay" />
+    <meta property="og:site_name" content="MRC Global Pay" />
     <meta property="og:image" content="${ogImage}" />
     <meta property="og:locale" content="${lang === "en" ? "en_US" : lang}" />
     <meta name="twitter:card" content="summary_large_image" />
@@ -160,7 +160,7 @@ function buildNoscriptBody(opts: {
         <h1>${escapeHtml(h1)}</h1>
         <p>${escapeHtml(description)}</p>
         <h2>Swap ${escapeHtml(fromName)} (${fromUp}) to ${escapeHtml(toName)} (${toUp})</h2>
-        <p>MRC GlobalPay is a registered Canadian Money Services Business (FINTRAC MSB #C100000015) offering instant ${fromUp} → ${toUp} conversions in under 60 seconds. No account, no KYC for standard swaps. Minimum swap value is approximately $0.30 USD.</p>
+        <p>MRC Global Pay is a registered Canadian Money Services Business (FINTRAC MSB #C100000015) offering instant ${fromUp} → ${toUp} conversions in under 60 seconds. No account, no KYC for standard swaps. Minimum swap value is approximately $0.30 USD.</p>
         <h2>How it works</h2>
         <ol>
           <li>Enter the amount of ${fromUp} you want to swap.</li>
@@ -170,11 +170,11 @@ function buildNoscriptBody(opts: {
         </ol>
         <h2>Frequently asked questions</h2>
         <h3>What is the minimum ${fromUp} I can swap for ${toUp}?</h3>
-        <p>Approximately $0.30 USD equivalent in ${fromUp}. MRC GlobalPay supports micro-swaps from crypto dust.</p>
+        <p>Approximately $0.30 USD equivalent in ${fromUp}. MRC Global Pay supports micro-swaps from crypto dust.</p>
         <h3>How long does a ${fromUp} to ${toUp} swap take?</h3>
         <p>Most swaps complete in under 60 seconds after the required network confirmations are received.</p>
         <h3>Do I need to register or pass KYC to swap ${fromUp} for ${toUp}?</h3>
-        <p>No. Standard crypto-to-crypto swaps on MRC GlobalPay are non-custodial and require no account or identity verification.</p>
+        <p>No. Standard crypto-to-crypto swaps on MRC Global Pay are non-custodial and require no account or identity verification.</p>
         <p><a href="${escapeAttr(canonical)}">Open the live ${fromUp} → ${toUp} swap interface</a></p>
       </div>
     </noscript>
@@ -270,7 +270,7 @@ Deno.serve(async (req) => {
   const contentJson = pair?.content_json as Record<string, PairContent> | undefined;
   const langContent = contentJson?.[lang];
 
-  const fallbackTitle = `Swap ${fromUp} to ${toUp} Instantly | MRC GlobalPay`;
+  const fallbackTitle = `Swap ${fromUp} to ${toUp} Instantly | MRC Global Pay`;
   const fallbackDesc = `Convert ${fromName} (${fromUp}) to ${toName} (${toUp}) in under 60 seconds. No account required, MSB-registered (C100000015). Best rates from 700+ liquidity sources.`;
   const fallbackH1 = `${fromUp} → ${toUp} Instant Swap`;
 

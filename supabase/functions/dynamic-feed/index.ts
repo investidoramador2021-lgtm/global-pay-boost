@@ -262,7 +262,7 @@ Deno.serve(async (req) => {
       <link>${SITE}/blog/${p.slug}</link>
       <guid isPermaLink="true">${SITE}/blog/${p.slug}</guid>
       <description>${escapeXml(p.excerpt || "")}</description>
-      <dc:creator>${escapeXml(p.author_name || "MRC GlobalPay")}</dc:creator>
+      <dc:creator>${escapeXml(p.author_name || "MRC Global Pay")}</dc:creator>
       <pubDate>${new Date(p.published_at).toUTCString()}</pubDate>
       <category>${escapeXml(p.category || "")}</category>
       <atom:link rel="alternate" hreflang="en" href="${SITE}/blog/${p.slug}" />
@@ -274,7 +274,7 @@ ${altLinks}
     const rss = `<?xml version="1.0" encoding="UTF-8"?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:xhtml="http://www.w3.org/1999/xhtml">
   <channel>
-    <title>MRC GlobalPay Blog</title>
+    <title>MRC Global Pay Blog</title>
     <link>${SITE}/blog</link>
     <description>Expert guides, market analysis, and security insights for cryptocurrency trading and instant swaps.</description>
     <language>en-us</language>

@@ -10,19 +10,19 @@ const PrivacyPolicy = () => {
   return (
   <>
     <Helmet>
-      <title>Privacy Policy — MRC GlobalPay</title>
-      <meta name="description" content="MRC GlobalPay privacy policy: how we handle your data during non-custodial crypto swaps. No private keys stored, FINTRAC MSB-compliant, GDPR-aligned." />
+      <title>Privacy Policy — MRC Global Pay</title>
+      <meta name="description" content="MRC Global Pay privacy policy: how we handle your data during non-custodial crypto swaps. No private keys stored, FINTRAC MSB-compliant, GDPR-aligned." />
       <meta name="robots" content="index, follow" />
       <link rel="canonical" href={pageUrl} />
-      <meta property="og:title" content="Privacy Policy — MRC GlobalPay" />
-      <meta property="og:description" content="MRC GlobalPay privacy policy. Learn how we handle your data during cryptocurrency exchanges. Non-custodial, no private keys stored." />
+      <meta property="og:title" content="Privacy Policy — MRC Global Pay" />
+      <meta property="og:description" content="MRC Global Pay privacy policy. Learn how we handle your data during cryptocurrency exchanges. Non-custodial, no private keys stored." />
       <meta property="og:url" content={pageUrl} />
       <meta property="og:type" content="website" />
-      <meta property="og:site_name" content="MRC GlobalPay" />
+      <meta property="og:site_name" content="MRC Global Pay" />
       <meta property="og:image" content="https://pub-bb2e103a32db4e198524a2e9ed8f35b4.r2.dev/22f69f45-cf65-4871-9af4-b68ab4027213/id-preview-243bf129--23f851ec-c820-43c7-bbe2-d2e830f7c268.lovable.app-1773521796493.png" />
       <meta name="twitter:card" content="summary_large_image" />
-      <meta name="twitter:title" content="Privacy Policy — MRC GlobalPay" />
-        <meta name="twitter:description" content="MRC GlobalPay privacy policy. Learn how we handle your data during cryptocurrency exchanges." />
+      <meta name="twitter:title" content="Privacy Policy — MRC Global Pay" />
+        <meta name="twitter:description" content="MRC Global Pay privacy policy. Learn how we handle your data during cryptocurrency exchanges." />
         <meta name="twitter:image" content="https://pub-bb2e103a32db4e198524a2e9ed8f35b4.r2.dev/22f69f45-cf65-4871-9af4-b68ab4027213/id-preview-243bf129--23f851ec-c820-43c7-bbe2-d2e830f7c268.lovable.app-1773521796493.png" />
     </Helmet>
     <SiteHeader />
@@ -49,7 +49,7 @@ const PrivacyPolicy = () => {
             Privacy Policy
           </h1>
           <p className="mt-3 font-body text-base text-muted-foreground sm:text-lg">
-            How MRC GlobalPay protects your data during cryptocurrency exchanges.
+            How MRC Global Pay protects your data during cryptocurrency exchanges.
           </p>
           <p className="mt-2 font-body text-sm text-muted-foreground">
             <strong className="text-foreground">Last updated:</strong> March 15, 2026
@@ -67,7 +67,7 @@ const PrivacyPolicy = () => {
             </div>
             <div className="space-y-3 font-body text-sm leading-relaxed text-muted-foreground sm:text-base">
               <p>
-                MRC GlobalPay ("we", "our", "us") is a <strong className="text-foreground">non-custodial</strong> cryptocurrency swap platform. This Privacy Policy describes how we collect, use, and protect information when you use our services at mrcglobalpay.com (the "Service").
+                MRC Global Pay ("we", "our", "us") is a <strong className="text-foreground">non-custodial</strong> cryptocurrency swap platform. This Privacy Policy describes how we collect, use, and protect information when you use our services at mrcglobalpay.com (the "Service").
               </p>
               <p>
                 By using the Service, you consent to the practices described in this policy. If you do not agree, please discontinue use of the Service.
@@ -85,7 +85,7 @@ const PrivacyPolicy = () => {
               <div className="rounded-xl border border-primary/20 bg-primary/5 p-4 sm:p-5">
                 <p className="font-semibold text-foreground">🔐 We do NOT store private keys or custodial funds.</p>
                 <p className="mt-1">
-                  MRC GlobalPay is fully non-custodial. At no point do we have access to, store, or manage your private keys, seed phrases, or wallet passwords. All funds flow directly between your wallet and our liquidity partners.
+                  MRC Global Pay is fully non-custodial. At no point do we have access to, store, or manage your private keys, seed phrases, or wallet passwords. All funds flow directly between your wallet and our liquidity partners.
                 </p>
               </div>
               <p>We collect <strong className="text-foreground">only the minimum data</strong> required to facilitate your swap:</p>
@@ -154,7 +154,7 @@ const PrivacyPolicy = () => {
               <h2 className="font-display text-xl font-bold text-primary sm:text-2xl">5. Cookies & Local Storage</h2>
             </div>
             <div className="space-y-4 font-body text-sm leading-relaxed text-muted-foreground sm:text-base">
-              <p>MRC GlobalPay uses minimal client-side storage:</p>
+              <p>MRC Global Pay uses minimal client-side storage:</p>
               <ul className="ml-4 list-disc space-y-2">
                 <li><strong className="text-foreground">Local Storage</strong> — Used to store your theme preference (light/dark mode) and recent swap history for your convenience. This data remains on your device and is never transmitted to our servers.</li>
                 <li><strong className="text-foreground">Service Worker Cache</strong> — Core application assets are cached locally for faster loading and offline access. No personal data is stored in the cache.</li>
@@ -239,7 +239,7 @@ const PrivacyPolicy = () => {
             <div className="space-y-3 font-body text-sm leading-relaxed text-muted-foreground sm:text-base">
               <p>For privacy-related inquiries, data requests, or concerns, please contact:</p>
               <div className="rounded-xl border border-border bg-card p-4 sm:p-5">
-                <p className="font-semibold text-foreground">MRC GlobalPay — Privacy Team</p>
+                <p className="font-semibold text-foreground">MRC Global Pay — Privacy Team</p>
                 <p>
                   Email:{" "}
                   <a href="mailto:privacy@mrcglobalpay.com" className="font-semibold text-primary underline underline-offset-2 hover:text-primary/80">

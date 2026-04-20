@@ -1,8 +1,8 @@
-# MRC GlobalPay | Regulated $0.30 Crypto Settlement Rail
+# MRC Global Pay | Regulated $0.30 Crypto Settlement Rail
 
 > **Canadian MSB Registration: C100000015** — [Verify on FINTRAC Registry](https://fintrac-canafe.canada.ca/msb-esm/reg-eng)
 
-MRC GlobalPay is a non-custodial, registration-free crypto exchange platform supporting 500+ tokens with settlement from **$0.30 USD** in under 60 seconds. https://mrcglobalpay.com
+MRC Global Pay is a non-custodial, registration-free crypto exchange platform supporting 500+ tokens with settlement from **$0.30 USD** in under 60 seconds. https://mrcglobalpay.com
 
 This repository contains the machine-readable infrastructure, bot-accessible manifests, and frontend source for the platform.
 
@@ -40,7 +40,7 @@ fetch('https://mrcglobalpay.com/trading-bot-manifest.json')
 
 ```json
 {
-  "platform": "MRC GlobalPay",
+  "platform": "MRC Global Pay",
   "status": "Registered MSB",
   "msb_id": "C100000015",
   "min_swap_usd": 0.30,
@@ -69,7 +69,7 @@ fetch('https://mrcglobalpay.com/trading-bot-manifest.json')
 - **Registered Money Services Business (MSB)** under FINTRAC, Canada
 - **Registration Number**: `C100000015`
 - **Verification**: [FINTRAC MSB Registry](https://fintrac-canafe.canada.ca/msb-esm/reg-eng) → Search `C100000015`
-- **Legal Entity**: MRC GlobalPay
+- **Legal Entity**: MRC Global Pay
 - **Jurisdiction**: Ottawa, Ontario, Canada
 
 ---
@@ -102,4 +102,4 @@ npm run dev
 
 ## 📄 License
 
-Proprietary — © 2026 MRC GlobalPay. All rights reserved.
+Proprietary — © 2026 MRC Global Pay. All rights reserved.

@@ -122,10 +122,10 @@ const NetworkStatus = () => {
     name: "Network Status — MRC Global Pay",
     description: "Live operational status of Bitcoin, Ethereum, and Solana networks on MRC Global Pay. Real-time uptime monitoring for non-custodial swaps.",
     url: "https://mrcglobalpay.com/status",
-    isPartOf: { "@type": "WebSite", name: "MRC GlobalPay", url: "https://mrcglobalpay.com" },
+    isPartOf: { "@type": "WebSite", name: "MRC Global Pay", url: "https://mrcglobalpay.com" },
     publisher: {
       "@type": "Organization",
-      name: "MRC GlobalPay",
+      name: "MRC Global Pay",
       url: "https://mrcglobalpay.com",
       description: "Registered Canadian MSB (FINTRAC C100000015) providing non-custodial cryptocurrency exchange services.",
       knowsAbout: ["Bitcoin", "Ethereum", "Solana", "Blockchain Infrastructure"],
@@ -144,14 +144,14 @@ const NetworkStatus = () => {
     <>
       <Helmet>
         <title>Network Status — Live BTC, ETH &amp; SOL Uptime | MRC Global Pay</title>
-        <meta name="description" content="Live operational status of Bitcoin, Ethereum, and Solana swap networks on MRC GlobalPay. Real-time latency, auto-refresh, congestion alerts. FINTRAC MSB-registered." />
+        <meta name="description" content="Live operational status of Bitcoin, Ethereum, and Solana swap networks on MRC Global Pay. Real-time latency, auto-refresh, congestion alerts. FINTRAC MSB-registered." />
         <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1" />
         <link rel="canonical" href="https://mrcglobalpay.com/status" />
         <meta property="og:title" content="Network Status — Live BTC, ETH & SOL Uptime | MRC Global Pay" />
         <meta property="og:description" content="Real-time operational status of Bitcoin, Ethereum, and Solana swap networks. Latency monitoring with auto-refresh." />
         <meta property="og:url" content="https://mrcglobalpay.com/status" />
         <meta property="og:type" content="website" />
-        <meta property="og:site_name" content="MRC GlobalPay" />
+        <meta property="og:site_name" content="MRC Global Pay" />
         <meta name="twitter:card" content="summary" />
         <meta name="twitter:title" content="Network Status — MRC Global Pay" />
         <meta name="twitter:description" content="Live uptime monitoring for BTC, ETH, and SOL swap networks." />

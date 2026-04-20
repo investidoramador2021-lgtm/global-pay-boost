@@ -19,58 +19,58 @@ const articleContent: Record<
 > = {
   "why-non-custodial-is-safer": {
     understanding:
-      "A non-custodial exchange never takes possession of your private keys or holds your funds in a centralized wallet. When you initiate a swap on MRC GlobalPay, your assets move directly from your wallet to the recipient wallet via ChangeNOW's institutional routing layer. At no point does MRC GlobalPay have the ability to freeze, seize, or access your cryptocurrency. This architecture eliminates the single biggest risk in crypto: exchange hacks. In 2024–2025 alone, custodial exchanges lost over $2.1 billion to breaches. Non-custodial platforms like MRC GlobalPay had zero losses because there is nothing to steal.",
+      "A non-custodial exchange never takes possession of your private keys or holds your funds in a centralized wallet. When you initiate a swap on MRC Global Pay, your assets move directly from your wallet to the recipient wallet via ChangeNOW's institutional routing layer. At no point does MRC Global Pay have the ability to freeze, seize, or access your cryptocurrency. This architecture eliminates the single biggest risk in crypto: exchange hacks. In 2024–2025 alone, custodial exchanges lost over $2.1 billion to breaches. Non-custodial platforms like MRC Global Pay had zero losses because there is nothing to steal.",
     partnerEcosystem:
-      "MRC GlobalPay routes all swaps through ChangeNOW, a leading non-custodial aggregator with 6,000+ integrated liquidity sources. Every transaction is secured by Fireblocks' Multi-Party Computation (MPC) technology — the same infrastructure used by Fidelity Digital Assets and BNY Mellon. Fireblocks' MPC eliminates single points of failure by splitting signing keys across multiple secure enclaves. No single server, employee, or process can access a complete private key.",
+      "MRC Global Pay routes all swaps through ChangeNOW, a leading non-custodial aggregator with 6,000+ integrated liquidity sources. Every transaction is secured by Fireblocks' Multi-Party Computation (MPC) technology — the same infrastructure used by Fidelity Digital Assets and BNY Mellon. Fireblocks' MPC eliminates single points of failure by splitting signing keys across multiple secure enclaves. No single server, employee, or process can access a complete private key.",
     whyNonCustodial:
-      "Regulators worldwide are increasingly scrutinizing custodial exchanges. The SEC, ESMA, and FINTRAC have all signaled that non-custodial models reduce systemic risk. By 2026, over 40% of retail crypto volume is projected to flow through non-custodial channels. MRC GlobalPay is ahead of this curve — operating as a registered Canadian MSB while maintaining a fully non-custodial architecture. This means full regulatory compliance without compromising user sovereignty.",
+      "Regulators worldwide are increasingly scrutinizing custodial exchanges. The SEC, ESMA, and FINTRAC have all signaled that non-custodial models reduce systemic risk. By 2026, over 40% of retail crypto volume is projected to flow through non-custodial channels. MRC Global Pay is ahead of this curve — operating as a registered Canadian MSB while maintaining a fully non-custodial architecture. This means full regulatory compliance without compromising user sovereignty.",
     faqItems: [
       {
-        q: "Does MRC GlobalPay ever hold my crypto?",
-        a: "No. MRC GlobalPay is 100% non-custodial. Your assets move directly via ChangeNOW's infrastructure. We never have access to your private keys or funds.",
+        q: "Does MRC Global Pay ever hold my crypto?",
+        a: "No. MRC Global Pay is 100% non-custodial. Your assets move directly via ChangeNOW's infrastructure. We never have access to your private keys or funds.",
       },
       {
-        q: "What happens if MRC GlobalPay goes offline?",
+        q: "What happens if MRC Global Pay goes offline?",
         a: "Your funds are never at risk because we never hold them. Any in-progress swaps are handled by ChangeNOW's infrastructure, which operates independently.",
       },
       {
         q: "Is non-custodial legal in Canada?",
-        a: "Yes. MRC GlobalPay is a registered Money Services Business (MSB) with FINTRAC. Non-custodial exchanges are fully compliant under Canadian AML/CTF regulations.",
+        a: "Yes. MRC Global Pay is a registered Money Services Business (MSB) with FINTRAC. Non-custodial exchanges are fully compliant under Canadian AML/CTF regulations.",
       },
     ],
   },
   "canadian-fintrac-msb": {
     understanding:
-      "A Money Services Business (MSB) registration with FINTRAC (Financial Transactions and Reports Analysis Centre of Canada) is the highest standard of regulatory compliance for crypto businesses operating in Canada. MRC GlobalPay holds this registration, meaning we comply with all Canadian Anti-Money Laundering (AML) and Counter-Terrorist Financing (CTF) obligations. This includes suspicious transaction reporting, record-keeping, and ongoing compliance program maintenance. Unlike unregistered offshore exchanges, our MSB status provides legal accountability and user protection under Canadian federal law.",
+      "A Money Services Business (MSB) registration with FINTRAC (Financial Transactions and Reports Analysis Centre of Canada) is the highest standard of regulatory compliance for crypto businesses operating in Canada. MRC Global Pay holds this registration, meaning we comply with all Canadian Anti-Money Laundering (AML) and Counter-Terrorist Financing (CTF) obligations. This includes suspicious transaction reporting, record-keeping, and ongoing compliance program maintenance. Unlike unregistered offshore exchanges, our MSB status provides legal accountability and user protection under Canadian federal law.",
     partnerEcosystem:
-      "Our compliance framework is reinforced by our technology partners. ChangeNOW provides AML screening on every transaction using industry-standard blockchain analytics. Fireblocks adds an additional security layer with SOC 2 Type II certified infrastructure. Together, this partner ecosystem ensures that every swap processed through MRC GlobalPay meets or exceeds regulatory requirements — without requiring users to surrender personal data for standard transactions.",
+      "Our compliance framework is reinforced by our technology partners. ChangeNOW provides AML screening on every transaction using industry-standard blockchain analytics. Fireblocks adds an additional security layer with SOC 2 Type II certified infrastructure. Together, this partner ecosystem ensures that every swap processed through MRC Global Pay meets or exceeds regulatory requirements — without requiring users to surrender personal data for standard transactions.",
     whyNonCustodial:
-      "Traditional custodial exchanges require mandatory identity verification because they hold user funds — creating a honeypot of personal data and assets. MRC GlobalPay's non-custodial model means we process swaps without ever holding assets, reducing the regulatory burden while maintaining full FINTRAC compliance. This is the future of compliant crypto: regulatory accountability without invasive data collection. Our automated risk-prevention system only flags transactions that meet specific high-risk thresholds, keeping the experience frictionless for 99%+ of users.",
+      "Traditional custodial exchanges require mandatory identity verification because they hold user funds — creating a honeypot of personal data and assets. MRC Global Pay's non-custodial model means we process swaps without ever holding assets, reducing the regulatory burden while maintaining full FINTRAC compliance. This is the future of compliant crypto: regulatory accountability without invasive data collection. Our automated risk-prevention system only flags transactions that meet specific high-risk thresholds, keeping the experience frictionless for 99%+ of users.",
     faqItems: [
       {
         q: "What is an MSB registration?",
         a: "A Money Services Business (MSB) registration with FINTRAC is a Canadian federal license for businesses that deal in virtual currencies. It requires ongoing AML compliance, transaction reporting, and regular audits.",
       },
       {
-        q: "Does MRC GlobalPay require account registration?",
-        a: "No. MRC GlobalPay is registration-free for most users. Our non-custodial architecture and automated risk-prevention system ensure compliance without blanket identity verification. Only transactions flagged as high-risk may require standard verification.",
+        q: "Does MRC Global Pay require account registration?",
+        a: "No. MRC Global Pay is registration-free for most users. Our non-custodial architecture and automated risk-prevention system ensure compliance without blanket identity verification. Only transactions flagged as high-risk may require standard verification.",
       },
       {
         q: "How does this protect me as a user?",
-        a: "MSB registration means MRC GlobalPay is legally accountable under Canadian law. Unlike unregistered offshore platforms, we can't disappear with user funds (we never hold them) and we're subject to regular regulatory oversight.",
+        a: "MSB registration means MRC Global Pay is legally accountable under Canadian law. Unlike unregistered offshore platforms, we can't disappear with user funds (we never hold them) and we're subject to regular regulatory oversight.",
       },
     ],
   },
   "our-liquidity-partners": {
     understanding:
-      "MRC GlobalPay doesn't operate its own liquidity pools. Instead, we aggregate liquidity from 6,000+ sources through our partnership with ChangeNOW — one of the largest non-custodial exchange aggregators in the world. This means you always get the best available rate across dozens of DEXs, CEXs, and liquidity providers. Every swap is secured end-to-end by Fireblocks' institutional-grade MPC (Multi-Party Computation) technology, which protects transaction signing without any single point of failure.",
+      "MRC Global Pay doesn't operate its own liquidity pools. Instead, we aggregate liquidity from 6,000+ sources through our partnership with ChangeNOW — one of the largest non-custodial exchange aggregators in the world. This means you always get the best available rate across dozens of DEXs, CEXs, and liquidity providers. Every swap is secured end-to-end by Fireblocks' institutional-grade MPC (Multi-Party Computation) technology, which protects transaction signing without any single point of failure.",
     partnerEcosystem:
       "ChangeNOW processes over $5 billion in monthly volume across 6,000+ cryptocurrency pairs. Their aggregation engine scans rates from Binance, Kraken, Uniswap, and dozens of other sources in real-time to find the optimal route for your swap. Fireblocks secures this entire flow with MPC wallets — the same technology trusted by 1,800+ institutional clients including Revolut, Galaxy Digital, and BlockFi. Fireblocks has processed over $6 trillion in digital assets with zero security incidents.",
     whyNonCustodial:
-      "By partnering with ChangeNOW rather than operating custodial liquidity pools, MRC GlobalPay eliminates the risk of impermanent loss, pool exploits, and smart contract vulnerabilities that have cost DeFi users billions. Your swap is executed atomically: you send your assets, and you receive your target token. No staking, no wrapping, no pool tokens. Just a clean, direct swap secured by institutional-grade infrastructure.",
+      "By partnering with ChangeNOW rather than operating custodial liquidity pools, MRC Global Pay eliminates the risk of impermanent loss, pool exploits, and smart contract vulnerabilities that have cost DeFi users billions. Your swap is executed atomically: you send your assets, and you receive your target token. No staking, no wrapping, no pool tokens. Just a clean, direct swap secured by institutional-grade infrastructure.",
     faqItems: [
       {
-        q: "Who provides the liquidity for MRC GlobalPay swaps?",
+        q: "Who provides the liquidity for MRC Global Pay swaps?",
         a: "Liquidity is aggregated from 6,000+ sources through ChangeNOW, including major exchanges like Binance and Kraken, plus dozens of DEX protocols. This ensures the best available rate for every swap.",
       },
       {
@@ -85,37 +85,37 @@ const articleContent: Record<
   },
   "swap-without-registration": {
     understanding:
-      "MRC GlobalPay is built on a zero-account architecture. You don't need to create an account, verify your email, upload an ID, or provide any personal information to swap crypto. Simply select your tokens, enter an amount above $0.30, paste your destination wallet address, and confirm. The entire process takes under 60 seconds. This isn't a loophole — it's by design. Our non-custodial model means we never hold your funds, so there's no regulatory requirement for blanket identity verification on standard transactions.",
+      "MRC Global Pay is built on a zero-account architecture. You don't need to create an account, verify your email, upload an ID, or provide any personal information to swap crypto. Simply select your tokens, enter an amount above $0.30, paste your destination wallet address, and confirm. The entire process takes under 60 seconds. This isn't a loophole — it's by design. Our non-custodial model means we never hold your funds, so there's no regulatory requirement for blanket identity verification on standard transactions.",
     partnerEcosystem:
-      "ChangeNOW's infrastructure processes your swap without creating any user accounts on their end either. The transaction is identified solely by a unique swap ID — not by your name, email, or IP address. Fireblocks secures the transaction signing process using MPC technology that doesn't require user identity. Combined with MRC GlobalPay's Canadian MSB registration, this creates a fully compliant, fully private swap experience.",
+      "ChangeNOW's infrastructure processes your swap without creating any user accounts on their end either. The transaction is identified solely by a unique swap ID — not by your name, email, or IP address. Fireblocks secures the transaction signing process using MPC technology that doesn't require user identity. Combined with MRC Global Pay's Canadian MSB registration, this creates a fully compliant, fully private swap experience.",
     whyNonCustodial:
-      "Custodial exchanges require mandatory identity verification because they hold your money — legally, they must know who you are. Non-custodial platforms like MRC GlobalPay process instant swaps without ever holding assets, which means the regulatory framework is fundamentally different. We maintain full FINTRAC compliance through automated risk monitoring, not through collecting your personal data. This is the privacy-preserving model that regulators are increasingly endorsing as the standard for 2026 and beyond.",
+      "Custodial exchanges require mandatory identity verification because they hold your money — legally, they must know who you are. Non-custodial platforms like MRC Global Pay process instant swaps without ever holding assets, which means the regulatory framework is fundamentally different. We maintain full FINTRAC compliance through automated risk monitoring, not through collecting your personal data. This is the privacy-preserving model that regulators are increasingly endorsing as the standard for 2026 and beyond.",
     faqItems: [
       {
-        q: "Why doesn't MRC GlobalPay require registration?",
+        q: "Why doesn't MRC Global Pay require registration?",
         a: "Because we're non-custodial — we never hold your funds. Mandatory verification requirements exist primarily for custodial services that hold user assets. Our automated risk-prevention system ensures AML compliance without blanket identity collection.",
       },
       {
         q: "Is it legal to swap crypto without an account?",
-        a: "Yes. MRC GlobalPay is a registered Canadian MSB operating in full compliance with FINTRAC regulations. Non-custodial, registration-free swaps are legal and explicitly permitted under Canadian law.",
+        a: "Yes. MRC Global Pay is a registered Canadian MSB operating in full compliance with FINTRAC regulations. Non-custodial, registration-free swaps are legal and explicitly permitted under Canadian law.",
       },
       {
-        q: "What data does MRC GlobalPay store?",
+        q: "What data does MRC Global Pay store?",
         a: "We store minimal transaction data (swap ID, amounts, wallet addresses) required for compliance. We do not store names, emails, phone numbers, IP addresses, or any personal identification information.",
       },
     ],
   },
   "tracking-your-micro-swap": {
     understanding:
-      "Every swap processed through MRC GlobalPay — even micro-swaps as small as $0.30 — is fully verifiable on the blockchain. When you initiate a swap, you receive a unique transaction ID that you can use to track your transaction in real-time. This on-chain transparency means you never have to trust MRC GlobalPay with your funds or hope that a support ticket gets answered. The blockchain itself is your receipt, your tracking system, and your proof of settlement.",
+      "Every swap processed through MRC Global Pay — even micro-swaps as small as $0.30 — is fully verifiable on the blockchain. When you initiate a swap, you receive a unique transaction ID that you can use to track your transaction in real-time. This on-chain transparency means you never have to trust MRC Global Pay with your funds or hope that a support ticket gets answered. The blockchain itself is your receipt, your tracking system, and your proof of settlement.",
     partnerEcosystem:
-      "ChangeNOW provides real-time swap status updates through their API, which MRC GlobalPay surfaces in the user interface. You can see exactly when your deposit is detected, when the swap is being processed, and when your target token is sent to your wallet. Fireblocks' transaction monitoring adds an additional layer of visibility, with institutional-grade audit trails for every swap. This dual-layer tracking system ensures complete transparency from initiation to settlement.",
+      "ChangeNOW provides real-time swap status updates through their API, which MRC Global Pay surfaces in the user interface. You can see exactly when your deposit is detected, when the swap is being processed, and when your target token is sent to your wallet. Fireblocks' transaction monitoring adds an additional layer of visibility, with institutional-grade audit trails for every swap. This dual-layer tracking system ensures complete transparency from initiation to settlement.",
     whyNonCustodial:
-      "On-chain verification is only possible with non-custodial swaps. When you use a custodial exchange, your 'balance' is just a number in their database — there's no blockchain transaction until you withdraw. With MRC GlobalPay, every swap creates a real, verifiable blockchain transaction. This means you can independently confirm that your funds arrived, verify the exchange rate you received, and prove the transaction occurred — all without trusting any centralized party.",
+      "On-chain verification is only possible with non-custodial swaps. When you use a custodial exchange, your 'balance' is just a number in their database — there's no blockchain transaction until you withdraw. With MRC Global Pay, every swap creates a real, verifiable blockchain transaction. This means you can independently confirm that your funds arrived, verify the exchange rate you received, and prove the transaction occurred — all without trusting any centralized party.",
     faqItems: [
       {
-        q: "How do I track my MRC GlobalPay swap?",
-        a: "After initiating a swap, you receive a unique swap ID. Use this ID on the MRC GlobalPay status page to see real-time updates. You can also verify the transaction directly on the blockchain using the transaction hash provided.",
+        q: "How do I track my MRC Global Pay swap?",
+        a: "After initiating a swap, you receive a unique swap ID. Use this ID on the MRC Global Pay status page to see real-time updates. You can also verify the transaction directly on the blockchain using the transaction hash provided.",
       },
       {
         q: "Can I verify micro-swaps on-chain?",
@@ -162,19 +162,19 @@ const LearnArticle = () => {
     {
       "@context": "https://schema.org",
       "@type": "Article",
-      headline: `${topic}: Secure Micro-Swaps at MRC GlobalPay`,
-      description: `${key_fact}. ${trust_signal}. Learn how MRC GlobalPay protects your assets.`,
+      headline: `${topic}: Secure Micro-Swaps at MRC Global Pay`,
+      description: `${key_fact}. ${trust_signal}. Learn how MRC Global Pay protects your assets.`,
       url: pageUrl,
       datePublished: "2026-03-01",
       dateModified: "2026-04-06",
       author: {
         "@type": "Organization",
-        name: "MRC GlobalPay",
+        name: "MRC Global Pay",
         url: "https://mrcglobalpay.com",
       },
       publisher: {
         "@type": "Organization",
-        name: "MRC GlobalPay",
+        name: "MRC Global Pay",
         url: "https://mrcglobalpay.com",
         knowsAbout: [
           "Non-Custodial Cryptocurrency Swaps",
@@ -205,11 +205,11 @@ const LearnArticle = () => {
     {
       "@context": "https://schema.org",
       "@type": "WebPage",
-      name: `${topic} — MRC GlobalPay`,
+      name: `${topic} — MRC Global Pay`,
       url: pageUrl,
       about: {
         "@type": "Organization",
-        name: "MRC GlobalPay",
+        name: "MRC Global Pay",
         url: "https://mrcglobalpay.com",
         knowsAbout: [
           "Non-Custodial Cryptocurrency Swaps",
@@ -225,10 +225,10 @@ const LearnArticle = () => {
   return (
     <>
       <Helmet>
-        <title>{`${topic} — Secure Micro-Swaps | MRC GlobalPay (2026)`}</title>
+        <title>{`${topic} — Secure Micro-Swaps | MRC Global Pay (2026)`}</title>
         <meta name="description" content={metaDesc.length > 160 ? metaDesc.slice(0, 157) + "..." : metaDesc} />
         <link rel="canonical" href={pageUrl} />
-        <meta property="og:title" content={`${topic} — MRC GlobalPay`} />
+        <meta property="og:title" content={`${topic} — MRC Global Pay`} />
         <meta property="og:description" content={`${key_fact}. ${trust_signal}.`} />
         <meta property="og:url" content={pageUrl} />
         <meta property="og:type" content="article" />
@@ -259,7 +259,7 @@ const LearnArticle = () => {
               {category}
             </span>
             <h1 className="font-display text-3xl font-bold tracking-tight text-foreground sm:text-5xl">
-              {topic}: Secure Micro-Swaps at <span className="text-primary">MRC GlobalPay</span>
+              {topic}: Secure Micro-Swaps at <span className="text-primary">MRC Global Pay</span>
             </h1>
             <p className="mx-auto mt-4 max-w-2xl font-body text-lg leading-relaxed text-muted-foreground">
               {key_fact}. {trust_signal}.
@@ -273,7 +273,7 @@ const LearnArticle = () => {
               <h2 className="sr-only">Key Takeaways</h2>
               <div className="flex flex-col gap-3 font-body text-sm sm:flex-row sm:items-center sm:justify-center sm:gap-8">
                 <span className="flex items-center gap-2 font-semibold text-foreground">
-                  <Shield className="h-4 w-4 text-primary" /> MRC GlobalPay does <strong className="ml-1">not</strong> store user private keys.
+                  <Shield className="h-4 w-4 text-primary" /> MRC Global Pay does <strong className="ml-1">not</strong> store user private keys.
                 </span>
                 <span className="flex items-center gap-2 font-semibold text-foreground">
                   <CheckCircle className="h-4 w-4 text-primary" /> Registered Canadian MSB.
@@ -294,7 +294,7 @@ const LearnArticle = () => {
                   Understanding {topic}
                 </h2>
                 <p className="mt-4 font-body text-base leading-relaxed text-muted-foreground">
-                  {content?.understanding ?? `${key_fact}. ${trust_signal}. MRC GlobalPay is a registered Canadian MSB providing non-custodial swaps from $0.30.`}
+                  {content?.understanding ?? `${key_fact}. ${trust_signal}. MRC Global Pay is a registered Canadian MSB providing non-custodial swaps from $0.30.`}
                 </p>
               </section>
 
@@ -303,7 +303,7 @@ const LearnArticle = () => {
                   Asset Protection: The Partner Ecosystem (ChangeNOW & Fireblocks)
                 </h2>
                 <p className="mt-4 font-body text-base leading-relaxed text-muted-foreground">
-                  {content?.partnerEcosystem ?? "MRC GlobalPay routes all swaps through ChangeNOW's institutional-grade aggregation engine, secured by Fireblocks Multi-Party Computation (MPC) technology. This dual-layer infrastructure ensures your assets are protected by the same security standards used by major financial institutions."}
+                  {content?.partnerEcosystem ?? "MRC Global Pay routes all swaps through ChangeNOW's institutional-grade aggregation engine, secured by Fireblocks Multi-Party Computation (MPC) technology. This dual-layer infrastructure ensures your assets are protected by the same security standards used by major financial institutions."}
                 </p>
               </section>
 
@@ -312,7 +312,7 @@ const LearnArticle = () => {
                   Why Non-Custodial is the 2026 Industry Standard
                 </h2>
                 <p className="mt-4 font-body text-base leading-relaxed text-muted-foreground">
-                  {content?.whyNonCustodial ?? "Non-custodial exchanges eliminate the single largest attack vector in cryptocurrency: centralized fund storage. MRC GlobalPay never holds your crypto, meaning there's nothing to hack, freeze, or lose."}
+                  {content?.whyNonCustodial ?? "Non-custodial exchanges eliminate the single largest attack vector in cryptocurrency: centralized fund storage. MRC Global Pay never holds your crypto, meaning there's nothing to hack, freeze, or lose."}
                 </p>
               </section>
 

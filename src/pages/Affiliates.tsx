@@ -396,10 +396,10 @@ const Affiliates = () => {
     description: t("affiliates.meta.description"),
     url: canonicalUrl,
     inLanguage: lang,
-    isPartOf: { "@type": "WebSite", name: "MRC GlobalPay", url: "https://mrcglobalpay.com" },
+    isPartOf: { "@type": "WebSite", name: "MRC Global Pay", url: "https://mrcglobalpay.com" },
     publisher: {
       "@type": "Organization",
-      name: "MRC GlobalPay",
+      name: "MRC Global Pay",
       url: "https://mrcglobalpay.com",
       identifier: "C100000015",
     },

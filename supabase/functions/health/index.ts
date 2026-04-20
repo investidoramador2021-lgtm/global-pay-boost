@@ -15,7 +15,7 @@ Deno.serve(async (req) => {
     engine: "Non-Custodial Swap Engine v2",
     uptime: "99.98%",
     provider: {
-      name: "MRC GlobalPay",
+      name: "MRC Global Pay",
       msb: "C100000015",
       jurisdiction: "Canada (FINTRAC)",
     },

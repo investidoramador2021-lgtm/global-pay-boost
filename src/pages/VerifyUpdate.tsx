@@ -143,7 +143,7 @@ const VerifyUpdate = () => {
   return (
     <>
       <Helmet>
-        <title>Secure Account Update | MRC GlobalPay</title>
+        <title>Secure Account Update | MRC Global Pay</title>
         <meta name="robots" content="index, follow" />
       </Helmet>
 

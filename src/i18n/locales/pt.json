@@ -1,15 +1,15 @@
 {
   "meta": {
-    "title": "MRC GlobalPay | Trocas sem Cadastro desde $0.30",
-    "description": "Acesse mais de 6.000 criptomoedas e ações tokenizadas instantaneamente, sem cadastro. MRC GlobalPay é uma exchange cripto não-custodial sem mínimo de troca, liquidado em menos de 60 segundos. MSB canadense registrado.",
-    "ogTitle": "MRC GlobalPay | Troca de Cripto sem Mínimo desde $0.30"
+    "title": "MRC Global Pay | Trocas sem Cadastro desde $0.30",
+    "description": "Acesse mais de 6.000 criptomoedas e ações tokenizadas instantaneamente, sem cadastro. MRC Global Pay é uma exchange cripto não-custodial sem mínimo de troca, liquidado em menos de 60 segundos. MSB canadense registrado.",
+    "ogTitle": "MRC Global Pay | Troca de Cripto sem Mínimo desde $0.30"
   },
   "footer": {
     "legal": "Legal",
     "privacy": "Política de Privacidade",
     "terms": "Termos de Serviço",
     "aml": "Política AML",
-    "disclaimer": "MRC GlobalPay é um MSB canadense registrado. Oferecemos um serviço sem cadastro para a maioria dos usuários. Para manter a segurança e conformidade com os padrões globais AML, nosso sistema automatizado de prevenção de riscos pode ocasionalmente solicitar verificação padrão para transações sinalizadas como de alto risco."
+    "disclaimer": "MRC Global Pay é um MSB canadense registrado. Oferecemos um serviço sem cadastro para a maioria dos usuários. Para manter a segurança e conformidade com os padrões globais AML, nosso sistema automatizado de prevenção de riscos pode ocasionalmente solicitar verificação padrão para transações sinalizadas como de alto risco."
   },
   "nav": {
     "howItWorks": "Como Funciona",
@@ -29,7 +29,7 @@
     "trustNonCustodial": "Não Custodial",
     "trustSettlement": "Liquidação Direta",
     "dustTitle": "🧹 Limpe Sua Carteira",
-    "dustDescription": "A maioria das plataformas tem mínimos altos. MRC GlobalPay suporta micro-trocas a partir de $0.30. Converta o pó restante de mais de 6.000 tokens instantaneamente. Sem cadastro."
+    "dustDescription": "A maioria das plataformas tem mínimos altos. MRC Global Pay suporta micro-trocas a partir de $0.30. Converta o pó restante de mais de 6.000 tokens instantaneamente. Sem cadastro."
   },
   "howItWorks": {
     "heading": "Como Funciona",
@@ -308,7 +308,7 @@
     "pdfDestWallet": "Carteira Destino",
     "pdfBridgeId": "ID do Bridge",
     "pdfExtraId": "Extra ID / Memo",
-    "pdfFooter": "Privacidade em Primeiro Lugar: MRC GlobalPay não é custodial. Estas informações não são armazenadas em nossos servidores. Guarde este recibo."
+    "pdfFooter": "Privacidade em Primeiro Lugar: MRC Global Pay não é custodial. Estas informações não são armazenadas em nossos servidores. Guarde este recibo."
   },
   "explainer": {
     "buysell": {
@@ -432,8 +432,8 @@
     }
   },
   "whitepaper": {
-    "metaTitle": "Arquitetura de Bridge Permanente — Whitepaper Institucional | MRC GlobalPay",
-    "metaDesc": "Como a persistência de endereços stateless permite liquidação institucional automatizada? O Bridge Permanente do MRC GlobalPay elimina sessões de troca efêmeras.",
+    "metaTitle": "Arquitetura de Bridge Permanente — Whitepaper Institucional | MRC Global Pay",
+    "metaDesc": "Como a persistência de endereços stateless permite liquidação institucional automatizada? O Bridge Permanente do MRC Global Pay elimina sessões de troca efêmeras.",
     "badge": "Stateless e Não Custodial",
     "heroTitle": "Persistência de Infraestrutura e Trilhos de Liquidação Automatizada para Liquidez Institucional Global",
     "heroSub": "Da troca efêmera baseada em sessão para infraestrutura de liquidação permanente e não custodial que permanece ativa indefinidamente.",
@@ -446,7 +446,7 @@
     "s1Body": "No cenário atual de ativos digitais, o modelo de evento transacional introduz fragilidade operacional sistêmica para tesourarias corporativas, operações de mineração industrial e consultorias internacionais. A janela de expiração de 20 minutos é um ponto de atrito que convida ao erro humano e à falha de liquidação.",
     "s2Tag": "Seção 02 — A Solução",
     "s2Title": "De Trocas Baseadas em Eventos para Liquidação Persistente",
-    "s2Body": "O MRC GlobalPay projetou o Bridge Permanente para transformar liquidez fragmentada em uma utilidade financeira permanente, fornecendo um trilho de liquidação não custodial que permanece ativo indefinidamente.",
+    "s2Body": "O MRC Global Pay projetou o Bridge Permanente para transformar liquidez fragmentada em uma utilidade financeira permanente, fornecendo um trilho de liquidação não custodial que permanece ativo indefinidamente.",
     "vp1Title": "Prontidão Operacional",
     "vp1Desc": "Elimine a necessidade de interagir com uma interface para cada transação. Uma vez estabelecido, funciona como um processo automatizado silencioso.",
     "vp2Title": "Eficiência Administrativa",
@@ -476,8 +476,8 @@
     "cta": "Estabeleça Seu Bridge Institucional"
   },
   "shieldedWp": {
-    "metaTitle": "Arquitetura de Liquidação Blindada — Whitepaper Institucional | MRC GlobalPay",
-    "metaDesc": "Como o desacoplamento de redes de liquidez protege a privacidade corporativa? O roteamento blindado do MRC GlobalPay quebra a vinculação de identidade on-chain.",
+    "metaTitle": "Arquitetura de Liquidação Blindada — Whitepaper Institucional | MRC Global Pay",
+    "metaDesc": "Como o desacoplamento de redes de liquidez protege a privacidade corporativa? O roteamento blindado do MRC Global Pay quebra a vinculação de identidade on-chain.",
     "badge": "Stateless e Privado",
     "heroTitle": "Desacoplamento de Identidade On-Chain: Arquitetura de Liquidação Blindada para Soberania de Privacidade Corporativa",
     "heroSub": "Quebrando o vínculo determinístico entre carteiras de origem e destino através de roteamento não custodial de redes de liquidez.",
@@ -490,7 +490,7 @@
     "s1Body": "Cada transação on-chain cria um registro permanente e imutável vinculando remetente ao destinatário. Para tesourarias corporativas, essa transparência é uma responsabilidade sistêmica.",
     "s2Tag": "Seção 02 — A Mecânica do Desacoplamento",
     "s2Title": "Desacoplamento de Rede de Liquidez: Interrupção de Rastreabilidade em Escala",
-    "s2Body": "A Arquitetura de Liquidação Blindada do MRC GlobalPay implementa um protocolo de desacoplamento em três fases.",
+    "s2Body": "A Arquitetura de Liquidação Blindada do MRC Global Pay implementa um protocolo de desacoplamento em três fases.",
     "ph1Title": "Fase I: Mascaramento de Entrada",
     "ph1Desc": "Os fundos entram na Camada de Liquidez MRC através de roteamento não custodial, indistinguível do tráfego padrão de exchange.",
     "ph2Title": "Fase II: Randomização de Rota",
@@ -546,7 +546,7 @@
     "serviceFeeLabel": "Taxa de Serviço ({{percent}}%)",
     "serviceFeeNote": "Deduzida da liquidação final",
     "receiverGetsLabel": "O Receptor Recebe",
-    "taxDisclaimer": "MRC GlobalPay não retém impostos. As obrigações fiscais locais são de responsabilidade exclusiva do cliente.",
+    "taxDisclaimer": "MRC Global Pay não retém impostos. As obrigações fiscais locais são de responsabilidade exclusiva do cliente.",
     "payPageTitle": "Pagar Fatura",
     "payPageBilledTo": "Faturado Para",
     "payPageRequestedAmount": "Valor Solicitado",
@@ -601,11 +601,11 @@
     "networkUnknown": "esta rede"
   },
   "sovereignWp": {
-    "metaTitle": "The Sovereign Settlement — Whitepaper Institucional | MRC GlobalPay",
-    "metaDesc": "Como o faturamento sem estado contorna o sistema bancário correspondente? O protocolo Sovereign Settlement da MRC GlobalPay oferece certeza de taxa de câmbio de 168 horas para o comércio global.",
+    "metaTitle": "The Sovereign Settlement — Whitepaper Institucional | MRC Global Pay",
+    "metaDesc": "Como o faturamento sem estado contorna o sistema bancário correspondente? O protocolo Sovereign Settlement da MRC Global Pay oferece certeza de taxa de câmbio de 168 horas para o comércio global.",
     "badge": "Soberano e Não-Custodial",
     "heroTitle": "The Sovereign Settlement: Eliminando a Fricção do Comércio Global",
-    "heroSub": "O sistema financeiro legado não é mais um facilitador do comércio; é um imposto sobre ele. A MRC GlobalPay apresenta o Faturamento Sem Estado — um protocolo projetado para contornar o banco correspondente e fornecer certeza de taxa de câmbio por 168 horas.",
+    "heroSub": "O sistema financeiro legado não é mais um facilitador do comércio; é um imposto sobre ele. A MRC Global Pay apresenta o Faturamento Sem Estado — um protocolo projetado para contornar o banco correspondente e fornecer certeza de taxa de câmbio por 168 horas.",
     "tech1Label": "Motor de Bloqueio de Taxa",
     "tech2Label": "Ponte Cross-Chain",
     "tech3Label": "Camada de Taxa Inclusiva",
@@ -615,7 +615,7 @@
     "s1Body": "O sistema bancário tradicional depende de uma frágil rede de contas Vostro e Nostro. Este 'Fantasma na Máquina' cria uma ilusão de liquidez enquanto esconde atrasos sistêmicos e taxas intermediárias predatórias. Seja usando um LTC Transaction Tracker para monitorar movimentação ou esperando uma transferência padrão, a fricção permanece a mesma. Substituímos a confiança humana pela certeza matemática. Utilizando uma arquitetura de ponte ETH para SOL para movimento cross-chain de alta velocidade, garantimos que o capital nunca fique 'preso' nos canos de um banco legado.",
     "s2Tag": "Seção II — Bloqueio Imutável de Taxa de 168 Horas",
     "s2Title": "Um Escudo de Volatilidade de 7 Dias para Liquidação Global",
-    "s2Body": "A volatilidade é o principal impedimento para a adoção corporativa de ativos digitais. No tempo que leva para liquidar um contrato de ouro ou minério de ferro, as flutuações do mercado podem apagar as margens de lucro. A MRC GlobalPay elimina esse risco com um Escudo de Volatilidade de 7 Dias.",
+    "s2Body": "A volatilidade é o principal impedimento para a adoção corporativa de ativos digitais. No tempo que leva para liquidar um contrato de ouro ou minério de ferro, as flutuações do mercado podem apagar as margens de lucro. A MRC Global Pay elimina esse risco com um Escudo de Volatilidade de 7 Dias.",
     "lockTitle": "O Bloqueio",
     "lockDesc": "Uma vez gerada a fatura, a taxa de câmbio é congelada por 168 horas. Isso fornece a estabilidade de uma Carta de Crédito sem a taxa bancária.",
     "guaranteeTitle": "A Garantia",
@@ -648,8 +648,8 @@
     "cta": "Gerar Fatura Soberana"
   },
   "lend": {
-    "metaTitle": "Empréstimos Cripto e Rendimento | Empreste USDT com BTC/ETH/SOL | MRC GlobalPay",
-    "metaDesc": "Empreste stablecoins com cripto ou ganhe rendimento em BTC, ETH e USDT. Sem KYC. MRC GlobalPay — MSB canadense registrado.",
+    "metaTitle": "Empréstimos Cripto e Rendimento | Empreste USDT com BTC/ETH/SOL | MRC Global Pay",
+    "metaDesc": "Empreste stablecoins com cripto ou ganhe rendimento em BTC, ETH e USDT. Sem KYC. MRC Global Pay — MSB canadense registrado.",
     "heroBadge": "Regulado MSB · Não Custodial",
     "heroTitle": "Cripto",
     "heroLending": "Empréstimos",
@@ -699,7 +699,7 @@
     "stepActive": "Ativo",
     "stepActiveDesc": "Sua posição está ativa",
     "complianceTitle": "Aviso de Conformidade:",
-    "complianceText": "Como empresa canadense registrada de Serviços Monetários (MSB — Registro No. C100000015), todas as operações de empréstimo realizadas pela MRC GlobalPay seguem as diretrizes federais contra Lavagem de Dinheiro (AML) e Financiamento do Terrorismo (ATF). Empréstimos em criptomoedas envolvem risco. A garantia pode ser liquidada se os preços caírem abaixo do limiar de liquidação. Isto não é aconselhamento financeiro.",
+    "complianceText": "Como empresa canadense registrada de Serviços Monetários (MSB — Registro No. C100000015), todas as operações de empréstimo realizadas pela MRC Global Pay seguem as diretrizes federais contra Lavagem de Dinheiro (AML) e Financiamento do Terrorismo (ATF). Empréstimos em criptomoedas envolvem risco. A garantia pode ser liquidada se os preços caírem abaixo do limiar de liquidação. Isto não é aconselhamento financeiro.",
     "collateralLabel": "Ativo de Garantia",
     "collateralValueUsd": "Valor da Garantia (USD)",
     "maxLtv": "LTV Máximo",
@@ -717,7 +717,7 @@
       "phoneLabel": "Número de Telefone",
       "phonePlaceholder": "123 456 7890",
       "invalidPhone": "Por favor insira um número válido",
-      "compliance": "MRC GlobalPay · Registro MSB C100000015 · Seus dados são criptografados e usados apenas para alertas.",
+      "compliance": "MRC Global Pay · Registro MSB C100000015 · Seus dados são criptografados e usados apenas para alertas.",
       "cancel": "Cancelar",
       "confirm": "Confirmar e Prosseguir",
       "proTipTitle": "Dica Pro: Alertas de Segurança Automatizados",
@@ -782,7 +782,7 @@
     },
     "earnFaq": {
       "q1": "Existe um período de bloqueio?",
-      "a1": "Não. MRC GlobalPay Earn é completamente flexível. Você pode retirar seu capital completo e todos os juros ganhos a qualquer momento, 24/7, sem penalidades e sem taxas de retirada.",
+      "a1": "Não. MRC Global Pay Earn é completamente flexível. Você pode retirar seu capital completo e todos os juros ganhos a qualquer momento, 24/7, sem penalidades e sem taxas de retirada.",
       "q2": "Com que frequência os juros são pagos?",
       "a2": "Os juros são acumulados diariamente e capitalizados automaticamente em seu saldo. Seus ganhos geram rendimento adicional ao longo do tempo sem ação manual.",
       "q3": "Qual é o depósito mínimo?",
@@ -840,7 +840,7 @@
     "loginRequired": "Login necessário para {{action}}",
     "comingSoon": "Em breve — entre em contato com o suporte",
     "authenticated": "Login realizado com sucesso",
-    "disclaimer": "Os dados são obtidos da API do nosso parceiro tecnológico e atualizam uma vez por dia ou ao executar uma ação de gestão (Pagar, Recarregar, Retirar). MRC GlobalPay · Registro MSB C100000015.",
+    "disclaimer": "Os dados são obtidos da API do nosso parceiro tecnológico e atualizam uma vez por dia ou ao executar uma ação de gestão (Pagar, Recarregar, Retirar). MRC Global Pay · Registro MSB C100000015.",
     "auth": {
       "createTitle": "Crie sua conta de gerenciamento",
       "loginTitle": "Entrar no painel",
@@ -919,7 +919,7 @@
     "apiSettings": "Configurações de API",
     "logout": "Sair",
     "sessionExpired": "Sessão expirada por inatividade",
-    "metaTitle": "Portal Institucional de Parceiros | MRC GlobalPay",
+    "metaTitle": "Portal Institucional de Parceiros | MRC Global Pay",
     "metaDesc": "Painel de parceiros seguro com 2FA, gerenciamento de chaves API e monitoramento de transações em tempo real.",
     "docs": "Documentação API",
     "docsAmountDesc": "Amount of from_currency to swap. Minimum $0.30 equivalent.",
@@ -969,7 +969,7 @@
     "heroInstantly": "Instantaneamente",
     "snippetIntro": "Para trocar {{from}} para {{to}}:",
     "snippetBody": "Insira seu valor, cole seu endereço de carteira {{to}} e envie {{from}} para o endereço de depósito. Seu {{to}} chega em {{settlement}}. Sem conta, sem KYC, sem mínimo além de $0.30 USD.",
-    "aggregatorNote": "MRC GlobalPay agrega taxas de mais de 700 fontes de liquidez para encontrar a melhor taxa de câmbio {{from}}/{{to}} em tempo real. Somos um MSB canadense (C100000015) operando trocas não-custodiais.",
+    "aggregatorNote": "MRC Global Pay agrega taxas de mais de 700 fontes de liquidez para encontrar a melhor taxa de câmbio {{from}}/{{to}} em tempo real. Somos um MSB canadense (C100000015) operando trocas não-custodiais.",
     "factSettlement": "Liquidação",
     "factMinimum": "Mínimo",
     "factKyc": "KYC necessário",
@@ -995,7 +995,7 @@
     "whyFromBtc": "diversifique além do Bitcoin para o ecossistema de {{toName}}.",
     "whyToBtc": "consolide suas posições em Bitcoin, a criptomoeda mais líquida e amplamente aceita.",
     "whyGeneric": "rebalanceie seu portfólio entre dois ecossistemas blockchain distintos.",
-    "whySwapOutro": "Na MRC GlobalPay, esta troca é liquidada em {{settlement}} sem derrapagem — o que você vê é o que você recebe.",
+    "whySwapOutro": "Na MRC Global Pay, esta troca é liquidada em {{settlement}} sem derrapagem — o que você vê é o que você recebe.",
     "networkTitle": "Detalhes de rede e segurança",
     "networkSubtitle": "Especificações técnicas para o par {{from}}/{{to}}. Verifique os endereços de contrato antes de enviar fundos.",
     "networkLabel": "Rede:",
@@ -1004,7 +1004,7 @@
     "memoWarning": "{{name}} requer um Memo/Tag de destino.",
     "settlementInfra": "Infraestrutura de liquidação:",
     "settlementInfraDesc": "Esta troca é executada através de trilhos de liquidez de nível institucional agregando mais de 700 provedores. O processo é não-custodial e está em conformidade com as regulamentações canadenses FINTRAC.",
-    "trustTitle": "Por que operar {{from}}/{{to}} na MRC GlobalPay?",
+    "trustTitle": "Por que operar {{from}}/{{to}} na MRC Global Pay?",
     "trustNoAccount": "Sem conta necessária",
     "trustNoAccountDesc": "Comece a trocar em segundos. Sem email, sem telefone, sem selfie.",
     "trustNonCustodial": "Não-custodial e seguro",
@@ -1016,18 +1016,18 @@
     "faqTitle": "{{from}} para {{to}} — Perguntas frequentes",
     "faqSubtitle": "Tudo que você precisa saber sobre converter {{fromName}} para {{toName}}.",
     "faqMinQ": "Qual é o valor mínimo de {{from}} para trocar por {{to}}?",
-    "faqMinA": "O valor mínimo é aproximadamente $0.30 USD equivalente em {{from}}. MRC GlobalPay é projetado para micro-trocas e \"poeira cripto\".",
+    "faqMinA": "O valor mínimo é aproximadamente $0.30 USD equivalente em {{from}}. MRC Global Pay é projetado para micro-trocas e \"poeira cripto\".",
     "faqTimeQ": "Quanto tempo leva uma troca de {{from}} para {{to}}?",
     "faqTimeA": "O tempo total depende da velocidade de confirmação da rede de {{fromName}}. {{from}} normalmente requer {{confirmations}} confirmação(ões) ({{fromSettlement}}). A maioria das trocas é concluída em menos de 2 minutos.",
     "faqMemoQ": "{{to}} requer um Memo, Tag ou ID extra?",
     "faqMemoYes": "Sim. {{toName}} usa um identificador adicional. Não incluí-lo resultará em perda permanente de fundos.",
     "faqMemoNo": "Não. {{toName}} não requer um Memo ou Tag. Basta fornecer seu endereço de carteira {{to}}.",
     "faqKycQ": "Preciso criar uma conta ou verificar minha identidade para trocar {{from}} por {{to}}?",
-    "faqKycA": "Não. MRC GlobalPay não requer criação de conta nem verificação de identidade para trocas padrão. Somos um MSB canadense registrado (C100000015).",
-    "faqFeesQ": "Quais taxas a MRC GlobalPay cobra por {{from}} para {{to}}?",
+    "faqKycA": "Não. MRC Global Pay não requer criação de conta nem verificação de identidade para trocas padrão. Somos um MSB canadense registrado (C100000015).",
+    "faqFeesQ": "Quais taxas a MRC Global Pay cobra por {{from}} para {{to}}?",
     "faqFeesA": "Não há taxas ocultas. A taxa exibida inclui uma pequena taxa de serviço e a taxa de rede. Sem taxa de saque nem margem adicional.",
-    "faqSafeQ": "É seguro usar a MRC GlobalPay para trocar {{from}} por {{to}}?",
-    "faqSafeA": "Sim. MRC GlobalPay opera um serviço completamente não-custodial. A plataforma é operada por MRC Pay International Corp., um MSB registrado na FINTRAC.",
+    "faqSafeQ": "É seguro usar a MRC Global Pay para trocar {{from}} por {{to}}?",
+    "faqSafeA": "Sim. MRC Global Pay opera um serviço completamente não-custodial. A plataforma é operada por MRC Pay International Corp., um MSB registrado na FINTRAC.",
     "faqNetworkQ": "Qual rede blockchain devo usar para enviar {{from}}?",
     "faqNetworkA": "Para esta troca, {{fromName}} usa a rede {{network}}. Certifique-se de que sua carteira seja compatível.",
     "faqNetworkContract": "O endereço de contrato verificado é: {{contract}}",
@@ -1044,9 +1044,9 @@
   },
   "affiliates": {
     "meta": {
-      "title": "Programa de Afiliados — Ganhe Comissões Cripto Vitalícias | MRC GlobalPay",
-      "description": "Gere seu widget de afiliado MRC GlobalPay em segundos. Insira seu e-mail e carteira BTC, escolha modo Claro ou Escuro, e ganhe comissões vitalícias de 0,1%–0,4% pagas automaticamente. MSB Canadense Registrado #C100000015.",
-      "ogTitle": "Programa de Afiliados — Ganhe Comissões Cripto Vitalícias | MRC GlobalPay",
+      "title": "Programa de Afiliados — Ganhe Comissões Cripto Vitalícias | MRC Global Pay",
+      "description": "Gere seu widget de afiliado MRC Global Pay em segundos. Insira seu e-mail e carteira BTC, escolha modo Claro ou Escuro, e ganhe comissões vitalícias de 0,1%–0,4% pagas automaticamente. MSB Canadense Registrado #C100000015.",
+      "ogTitle": "Programa de Afiliados — Ganhe Comissões Cripto Vitalícias | MRC Global Pay",
       "ogDescription": "Gere seu widget em segundos. Ganhe 0,1%–0,4% em cada swap, pago automaticamente para sua carteira BTC."
     },
     "hero": {
@@ -1054,7 +1054,7 @@
       "earn": "Ganhe",
       "rate": "0,1% – 0,4%",
       "lifetime": "de Comissões Vitalícias",
-      "subtitle": "Promova a MRC GlobalPay com nosso widget de swap instantâneo ou link de afiliado e receba",
+      "subtitle": "Promova a MRC Global Pay com nosso widget de swap instantâneo ou link de afiliado e receba",
       "subtitleBold": "automaticamente na sua carteira BTC",
       "chipNoReg": "Sem cadastro necessário",
       "chipPaidBtc": "Pago em BTC, automaticamente",
@@ -1137,7 +1137,7 @@
       "learnMore": "Saiba mais"
     },
     "why": {
-      "title": "Por Que MRC GlobalPay",
+      "title": "Por Que MRC Global Pay",
       "lifetime": "Comissões vitalícias",
       "assets": "6.000+ criptomoedas e ações tokenizadas",
       "micro": "Micro-swaps a partir de $0,30",
@@ -1203,7 +1203,7 @@
       "dashCtaNote": "Upgrade grátis · sem KYC · seu widget e pagamentos não mudam.",
       "regBadge": "Vantagem regulatória",
       "regTitle": "Promova uma plataforma em que reguladores já confiam",
-      "regBody1": "MRC GlobalPay é operada pela",
+      "regBody1": "MRC Global Pay é operada pela",
       "regBody2": "MRC Pay International Corp",
       "regBody3": ", uma fintech canadense registrada como",
       "regBody4": "Empresa de Serviços Monetários FINTRAC (#C100000015)",
@@ -1217,7 +1217,7 @@
       "trackingBody": "Rastreamos indicações de forma privada com uma referência segura. Comissões pagas automaticamente para a wallet BTC informada — sem painel obrigatório, sem reivindicação manual.",
       "finalBadge": "60 segundos até seu primeiro link",
       "finalTitle": "Sua wallet BTC está prestes a ficar muito mais ativa",
-      "finalSubtitle": "Junte-se a milhares de criadores, equipes de wallets e comunidades cripto que já ganham BTC vitalício com MRC GlobalPay. Sem cadastro, sem mínimos, sem risco — só colar, copiar e ganhar.",
+      "finalSubtitle": "Junte-se a milhares de criadores, equipes de wallets e comunidades cripto que já ganham BTC vitalício com MRC Global Pay. Sem cadastro, sem mínimos, sem risco — só colar, copiar e ganhar.",
       "finalCtaGenerate": "Gerar meu widget agora",
       "finalCtaDashboard": "Abrir painel de parceiros",
       "finalRegNote": "Promova com confiança — totalmente regulada no Canadá (FINTRAC MSB #C100000015 · PSP do Banco do Canadá)."
@@ -1275,29 +1275,29 @@
       "x1Label": "Post X 1 — Gancho",
       "x1Text": "Acabei de encontrar o swap cripto não-custodial mais limpo que já usei em anos.\n\n→ 6.000+ pares\n→ Swap em menos de 60 segundos\n→ A partir de $0,30\n→ Sem conta\n\nVale conferir 👇\n\n[YOUR-AFFILIATE-LINK]\n\n#Bitcoin #Cripto #DeFi",
       "x2Label": "Post X 2 — Valor direto",
-      "x2Text": "A maioria dos swaps \"sem KYC\" é suspeita.\n\nMRC GlobalPay é diferente:\n✅ Não-custodial (você fica com as chaves)\n✅ 6.000+ pares\n✅ Swaps em menos de 60 segundos\n✅ Micro-swaps desde $0,30\n\nExperimente → [YOUR-AFFILIATE-LINK]\n\n#Cripto #BTC #Autocustódia",
+      "x2Text": "A maioria dos swaps \"sem KYC\" é suspeita.\n\nMRC Global Pay é diferente:\n✅ Não-custodial (você fica com as chaves)\n✅ 6.000+ pares\n✅ Swaps em menos de 60 segundos\n✅ Micro-swaps desde $0,30\n\nExperimente → [YOUR-AFFILIATE-LINK]\n\n#Cripto #BTC #Autocustódia",
       "tg1Label": "Post Telegram 1 — Para canal",
-      "tg1Text": "🚀 Nova ferramenta favorita de swap: MRC GlobalPay\n\n• Não-custodial — suas chaves, suas moedas\n• 6.000+ pares de trading\n• Swaps em menos de 60 segundos\n• Micro-swaps desde $0,30 (perfeito para limpar dust)\n• Sem conta\n\nExperimente 👇\n\n🔗 [YOUR-AFFILIATE-LINK]",
+      "tg1Text": "🚀 Nova ferramenta favorita de swap: MRC Global Pay\n\n• Não-custodial — suas chaves, suas moedas\n• 6.000+ pares de trading\n• Swaps em menos de 60 segundos\n• Micro-swaps desde $0,30 (perfeito para limpar dust)\n• Sem conta\n\nExperimente 👇\n\n🔗 [YOUR-AFFILIATE-LINK]",
       "tg2Label": "Post Telegram 2 — Dica rápida",
-      "tg2Text": "💡 Dica para quem tem dust em várias chains:\n\nMRC GlobalPay permite swap a partir de $0,30 — a maioria das exchanges nem deixa mexer em valores tão pequenos.\n\nNão-custodial. Sem conta. ~60 segundos.\n\nExperimente: [YOUR-AFFILIATE-LINK]",
+      "tg2Text": "💡 Dica para quem tem dust em várias chains:\n\nMRC Global Pay permite swap a partir de $0,30 — a maioria das exchanges nem deixa mexer em valores tão pequenos.\n\nNão-custodial. Sem conta. ~60 segundos.\n\nExperimente: [YOUR-AFFILIATE-LINK]",
       "liLabel": "Post LinkedIn — Profissional",
-      "liText": "Uma observação rápida para quem trabalha com swaps cripto:\n\nTenho recomendado o MRC GlobalPay para clientes e contatos porque resolve três problemas que a maioria das exchanges não resolve:\n\n1. Arquitetura não-custodial — ativos nunca ficam na plataforma\n2. Operador confiável com entidade corporativa real por trás\n3. UX prática — 6.000+ pares, swaps em menos de 60 segundos, micro-swaps desde $0,30\n\nSe você tem uma rede que faz swap cripto regularmente, dê uma olhada:\n👉 [YOUR-AFFILIATE-LINK]\n\n#Fintech #Cripto #Bitcoin",
+      "liText": "Uma observação rápida para quem trabalha com swaps cripto:\n\nTenho recomendado o MRC Global Pay para clientes e contatos porque resolve três problemas que a maioria das exchanges não resolve:\n\n1. Arquitetura não-custodial — ativos nunca ficam na plataforma\n2. Operador confiável com entidade corporativa real por trás\n3. UX prática — 6.000+ pares, swaps em menos de 60 segundos, micro-swaps desde $0,30\n\nSe você tem uma rede que faz swap cripto regularmente, dê uma olhada:\n👉 [YOUR-AFFILIATE-LINK]\n\n#Fintech #Cripto #Bitcoin",
       "igLabel": "Post Instagram / Threads",
       "igText": "Ferramenta de swap cripto em que realmente confio ⚡️\n\n🔐 Não-custodial (você no controle)\n💸 Swap a partir de $0,30\n⏱️ Pronto em menos de 60 segundos\n🪙 6.000+ pares\n✅ Sem conta\n\nLink na bio → [YOUR-AFFILIATE-LINK]\n\n#cripto #bitcoin #web3 #defi #autocustodia"
     },
     "emails": {
       "e1Label": "E-mail 1 — Curto (newsletter)",
-      "e1Text": "Assunto: Uma ferramenta de swap cripto que precisei compartilhar\n\nRapidinho — venho usando o MRC GlobalPay nas últimas semanas e ele virou meu padrão silenciosamente.\n\n• Não-custodial (suas chaves continuam suas)\n• 6.000+ pares\n• Menos de 60 segundos por swap\n• A partir de $0,30 — sim, até dust\n• Sem conta para fazer swap\n\nSe você faz qualquer swap, experimente: [YOUR-AFFILIATE-LINK]\n\nAbraço,\n[YOUR-NAME]",
+      "e1Text": "Assunto: Uma ferramenta de swap cripto que precisei compartilhar\n\nRapidinho — venho usando o MRC Global Pay nas últimas semanas e ele virou meu padrão silenciosamente.\n\n• Não-custodial (suas chaves continuam suas)\n• 6.000+ pares\n• Menos de 60 segundos por swap\n• A partir de $0,30 — sim, até dust\n• Sem conta para fazer swap\n\nSe você faz qualquer swap, experimente: [YOUR-AFFILIATE-LINK]\n\nAbraço,\n[YOUR-NAME]",
       "e2Label": "E-mail 2 — Médio (estilo review)",
-      "e2Text": "Assunto: O swap não-custodial que eu queria ter encontrado antes\n\nOlá [FIRST-NAME],\n\nSempre me perguntam qual exchange uso para swaps cripto rápidos. Por um tempo eu respondia \"depende da chain\". Agora não mais.\n\nMRC GlobalPay virou minha referência, e eis o porquê:\n\n🔐 Não-custodial — fundos nunca ficam na plataforma\n⚡ 6.000+ pares, swaps em menos de 60 segundos\n💸 Micro-swaps desde $0,30 (ótimo para dust em Solana, BSC, TRON, etc.)\n🎯 Sem conta para swaps\n\nExperimente:\n👉 [YOUR-AFFILIATE-LINK]\n\nSe tiver dúvidas, é só responder.\n\n— [YOUR-NAME]",
+      "e2Text": "Assunto: O swap não-custodial que eu queria ter encontrado antes\n\nOlá [FIRST-NAME],\n\nSempre me perguntam qual exchange uso para swaps cripto rápidos. Por um tempo eu respondia \"depende da chain\". Agora não mais.\n\nMRC Global Pay virou minha referência, e eis o porquê:\n\n🔐 Não-custodial — fundos nunca ficam na plataforma\n⚡ 6.000+ pares, swaps em menos de 60 segundos\n💸 Micro-swaps desde $0,30 (ótimo para dust em Solana, BSC, TRON, etc.)\n🎯 Sem conta para swaps\n\nExperimente:\n👉 [YOUR-AFFILIATE-LINK]\n\nSe tiver dúvidas, é só responder.\n\n— [YOUR-NAME]",
       "e3Label": "E-mail 3 — Longo (apresentação completa)",
-      "e3Text": "Assunto: Finalmente achei um swap cripto que cumpre tudo\n\nOlá [FIRST-NAME],\n\nSe você está em cripto há mais de cinco minutos, conhece o padrão:\n\n→ Exchanges centralizadas são rápidas mas custodiantes (e cada vez mais KYC)\n→ Agregadores DEX são não-custodiais mas lentos, caros e limitados a uma chain\n→ Sites \"sem KYC\" são suspeitos e quase nunca confiáveis\n\nPassei meses procurando algo no meio. Encontrei.\n\nSe chama MRC GlobalPay e é o swap não-custodial mais limpo que já usei:\n\n✅ Não-custodial — você sempre fica com as chaves\n✅ 6.000+ pares em todas as principais chains\n✅ Swaps em menos de 60 segundos\n✅ Micro-swaps desde apenas $0,30 (excelente para dust)\n✅ Operada pela MRC Pay International Corp em Ottawa, Canadá\n✅ Sem conta para swaps\n\nEsse último ponto é importante. A maioria das plataformas \"anônimas\" fica em jurisdições sem recurso se algo der errado. MRC é o oposto — entidade corporativa real, registrada, mas ainda não-custodial e sem necessidade de conta.\n\nExperimente:\n👉 [YOUR-AFFILIATE-LINK]\n\nResponda se quiser um passo a passo — fico feliz em ajudar.\n\nAté,\n[YOUR-NAME]\n\nP.S. Mesmo cético, faça um swap de $0,30. Custa quase nada e você vê todo o fluxo."
+      "e3Text": "Assunto: Finalmente achei um swap cripto que cumpre tudo\n\nOlá [FIRST-NAME],\n\nSe você está em cripto há mais de cinco minutos, conhece o padrão:\n\n→ Exchanges centralizadas são rápidas mas custodiantes (e cada vez mais KYC)\n→ Agregadores DEX são não-custodiais mas lentos, caros e limitados a uma chain\n→ Sites \"sem KYC\" são suspeitos e quase nunca confiáveis\n\nPassei meses procurando algo no meio. Encontrei.\n\nSe chama MRC Global Pay e é o swap não-custodial mais limpo que já usei:\n\n✅ Não-custodial — você sempre fica com as chaves\n✅ 6.000+ pares em todas as principais chains\n✅ Swaps em menos de 60 segundos\n✅ Micro-swaps desde apenas $0,30 (excelente para dust)\n✅ Operada pela MRC Pay International Corp em Ottawa, Canadá\n✅ Sem conta para swaps\n\nEsse último ponto é importante. A maioria das plataformas \"anônimas\" fica em jurisdições sem recurso se algo der errado. MRC é o oposto — entidade corporativa real, registrada, mas ainda não-custodial e sem necessidade de conta.\n\nExperimente:\n👉 [YOUR-AFFILIATE-LINK]\n\nResponda se quiser um passo a passo — fico feliz em ajudar.\n\nAté,\n[YOUR-NAME]\n\nP.S. Mesmo cético, faça um swap de $0,30. Custa quase nada e você vê todo o fluxo."
     },
     "video": {
-      "script": "🎬 ROTEIRO DE VÍDEO 60 SEGUNDOS — \"O melhor swap cripto não-custodial de 2026\"\n─────────────────────────────────────────────\n\n[0:00 – 0:05] GANCHO (na câmera ou texto sobreposto)\n\"Se você faz swap cripto e ainda usa exchanges centralizadas — pare. Em 60 segundos te mostro algo melhor.\"\n\n[0:05 – 0:15] PROBLEMA\n\"Exchanges centralizadas seguram seus fundos, pedem KYC pra tudo e congelam contas aleatoriamente. DEXs são lentas, caras e limitadas a uma chain. Os swaps 'sem KYC'? Suspeitos e arriscados.\"\n\n[0:15 – 0:35] SOLUÇÃO — MRC GlobalPay\n\"Este é o MRC GlobalPay. É não-custodial — você nunca entrega suas chaves. Suporta 6.000+ pares em todas as principais chains. Swaps em menos de 60 segundos. E você pode trocar a partir de $0,30 — perfeito pra limpar dust. Sem conta, sem e-mail.\"\n\n[0:35 – 0:50] PROVA / DEMO\n\"Aqui o swap que acabei de fazer — BTC para USDT, 47 segundos, sem conta, sem e-mail. Os fundos foram direto pra minha wallet.\"\n\n[0:50 – 1:00] CTA\n\"Link na descrição — faça um swap pequeno e veja por si mesmo. Te vejo no próximo.\"\n\n─────────────────────────────────────────────\n📝 MODELO DE DESCRIÇÃO DE VÍDEO\n─────────────────────────────────────────────\n\nO swap cripto não-custodial mais rápido e limpo que usei em 2026.\n\n🔗 Experimente o MRC GlobalPay (meu link de afiliado): [YOUR-AFFILIATE-LINK]\n\nPor que é diferente:\n✅ Não-custodial — você fica com as chaves\n✅ 6.000+ pares em todas as principais chains\n✅ Swaps em menos de 60 segundos\n✅ Micro-swaps desde $0,30\n✅ Sem conta para swaps\n\n💰 Divulgação de afiliado: o link acima é meu link de indicação. Se você fizer swap por ele, posso ganhar uma pequena comissão — sem custo extra para você.\n\n⏱️ TIMESTAMPS\n0:00 Intro\n0:05 Por que exchanges centralizadas falham\n0:15 O que é o MRC GlobalPay\n0:35 Demo de swap ao vivo\n0:50 Como experimentar\n\n#Cripto #Bitcoin #NaoCustodial #SwapCripto #DeFi #Autocustodia #BTC #Cripto2026"
+      "script": "🎬 ROTEIRO DE VÍDEO 60 SEGUNDOS — \"O melhor swap cripto não-custodial de 2026\"\n─────────────────────────────────────────────\n\n[0:00 – 0:05] GANCHO (na câmera ou texto sobreposto)\n\"Se você faz swap cripto e ainda usa exchanges centralizadas — pare. Em 60 segundos te mostro algo melhor.\"\n\n[0:05 – 0:15] PROBLEMA\n\"Exchanges centralizadas seguram seus fundos, pedem KYC pra tudo e congelam contas aleatoriamente. DEXs são lentas, caras e limitadas a uma chain. Os swaps 'sem KYC'? Suspeitos e arriscados.\"\n\n[0:15 – 0:35] SOLUÇÃO — MRC Global Pay\n\"Este é o MRC Global Pay. É não-custodial — você nunca entrega suas chaves. Suporta 6.000+ pares em todas as principais chains. Swaps em menos de 60 segundos. E você pode trocar a partir de $0,30 — perfeito pra limpar dust. Sem conta, sem e-mail.\"\n\n[0:35 – 0:50] PROVA / DEMO\n\"Aqui o swap que acabei de fazer — BTC para USDT, 47 segundos, sem conta, sem e-mail. Os fundos foram direto pra minha wallet.\"\n\n[0:50 – 1:00] CTA\n\"Link na descrição — faça um swap pequeno e veja por si mesmo. Te vejo no próximo.\"\n\n─────────────────────────────────────────────\n📝 MODELO DE DESCRIÇÃO DE VÍDEO\n─────────────────────────────────────────────\n\nO swap cripto não-custodial mais rápido e limpo que usei em 2026.\n\n🔗 Experimente o MRC Global Pay (meu link de afiliado): [YOUR-AFFILIATE-LINK]\n\nPor que é diferente:\n✅ Não-custodial — você fica com as chaves\n✅ 6.000+ pares em todas as principais chains\n✅ Swaps em menos de 60 segundos\n✅ Micro-swaps desde $0,30\n✅ Sem conta para swaps\n\n💰 Divulgação de afiliado: o link acima é meu link de indicação. Se você fizer swap por ele, posso ganhar uma pequena comissão — sem custo extra para você.\n\n⏱️ TIMESTAMPS\n0:00 Intro\n0:05 Por que exchanges centralizadas falham\n0:15 O que é o MRC Global Pay\n0:35 Demo de swap ao vivo\n0:50 Como experimentar\n\n#Cripto #Bitcoin #NaoCustodial #SwapCripto #DeFi #Autocustodia #BTC #Cripto2026"
     },
     "blog": {
-      "post": "# A melhor plataforma de swap cripto não-custodial em 2026\n\nSe você passou algum tempo em cripto recentemente, sentiu a pressão: exchanges centralizadas apertam o KYC, plataformas \"sem KYC\" parecem cada vez mais suspeitas, e agregadores descentralizados ainda são lentos demais e limitados a uma chain pro uso diário.\n\nFinalmente há uma opção melhor — e depois de testá-la por vários meses, estou convencido de que é a plataforma de swap não-custodial mais equilibrada disponível em 2026.\n\n## Conheça o MRC GlobalPay\n\n[MRC GlobalPay]([YOUR-AFFILIATE-LINK]) é uma exchange cripto não-custodial operada pela MRC Pay International Corp, com sede em Ottawa, Canadá. Diferente da maioria dos sites de swap \"anônimos\", tem uma entidade corporativa real por trás — mas não é uma exchange centralizada. Seus fundos nunca ficam na plataforma. Cada swap é uma transação atômica não-custodial, e você não precisa de conta para fazer swap.\n\n## Por que se destaca\n\nO que diferencia de qualquer outro swap que testei:\n\n- **6.000+ pares** em Bitcoin, Ethereum, Solana, BNB Chain, TRON e dezenas mais.\n- **Swaps em menos de 60 segundos.** A maioria das transações liquida em menos de um minuto.\n- **Micro-swaps desde apenas $0,30.** Quase nenhuma plataforma suporta valores tão pequenos — ideal para limpar dust em wallets multi-chain.\n- **Sem conta para swaps.** Cadastro só é necessário se quiser usar as ferramentas de parceiro ou afiliado.\n- **Operador corporativo real.** Entidade real por trás do produto, com sede em Ottawa.\n\n## Quem deve usar\n\nSe você se encaixa em algum destes grupos, vale experimentar:\n\n1. **Holders de longo prazo** que rebalanceiam ocasionalmente e odeiam a fricção das exchanges centralizadas.\n2. **Usuários multi-chain** afogados em dust que não conseguem converter de outra forma.\n3. **Defensores da autocustódia** que se recusam a depositar fundos em qualquer lugar.\n4. **Criadores e educadores** que querem uma ferramenta limpa para recomendar.\n\n## Experimente você mesmo\n\nA forma mais rápida de avaliar o MRC GlobalPay é fazer um swap pequeno — até $0,30 já mostra o fluxo completo.\n\n👉 **[Inicie um swap no MRC GlobalPay →]([YOUR-AFFILIATE-LINK])**\n\nEm um mercado cheio de opções ruins, é raro encontrar uma ferramenta que seja simultaneamente não-custodial, rápida e fácil. MRC GlobalPay é a primeira plataforma que usei em 2026 que cumpre tudo.\n\n---\n\n*Divulgação: os links acima são links de afiliado. Se você fizer swap por eles, posso ganhar uma pequena comissão sem custo extra para você.*"
+      "post": "# A melhor plataforma de swap cripto não-custodial em 2026\n\nSe você passou algum tempo em cripto recentemente, sentiu a pressão: exchanges centralizadas apertam o KYC, plataformas \"sem KYC\" parecem cada vez mais suspeitas, e agregadores descentralizados ainda são lentos demais e limitados a uma chain pro uso diário.\n\nFinalmente há uma opção melhor — e depois de testá-la por vários meses, estou convencido de que é a plataforma de swap não-custodial mais equilibrada disponível em 2026.\n\n## Conheça o MRC Global Pay\n\n[MRC Global Pay]([YOUR-AFFILIATE-LINK]) é uma exchange cripto não-custodial operada pela MRC Pay International Corp, com sede em Ottawa, Canadá. Diferente da maioria dos sites de swap \"anônimos\", tem uma entidade corporativa real por trás — mas não é uma exchange centralizada. Seus fundos nunca ficam na plataforma. Cada swap é uma transação atômica não-custodial, e você não precisa de conta para fazer swap.\n\n## Por que se destaca\n\nO que diferencia de qualquer outro swap que testei:\n\n- **6.000+ pares** em Bitcoin, Ethereum, Solana, BNB Chain, TRON e dezenas mais.\n- **Swaps em menos de 60 segundos.** A maioria das transações liquida em menos de um minuto.\n- **Micro-swaps desde apenas $0,30.** Quase nenhuma plataforma suporta valores tão pequenos — ideal para limpar dust em wallets multi-chain.\n- **Sem conta para swaps.** Cadastro só é necessário se quiser usar as ferramentas de parceiro ou afiliado.\n- **Operador corporativo real.** Entidade real por trás do produto, com sede em Ottawa.\n\n## Quem deve usar\n\nSe você se encaixa em algum destes grupos, vale experimentar:\n\n1. **Holders de longo prazo** que rebalanceiam ocasionalmente e odeiam a fricção das exchanges centralizadas.\n2. **Usuários multi-chain** afogados em dust que não conseguem converter de outra forma.\n3. **Defensores da autocustódia** que se recusam a depositar fundos em qualquer lugar.\n4. **Criadores e educadores** que querem uma ferramenta limpa para recomendar.\n\n## Experimente você mesmo\n\nA forma mais rápida de avaliar o MRC Global Pay é fazer um swap pequeno — até $0,30 já mostra o fluxo completo.\n\n👉 **[Inicie um swap no MRC Global Pay →]([YOUR-AFFILIATE-LINK])**\n\nEm um mercado cheio de opções ruins, é raro encontrar uma ferramenta que seja simultaneamente não-custodial, rápida e fácil. MRC Global Pay é a primeira plataforma que usei em 2026 que cumpre tudo.\n\n---\n\n*Divulgação: os links acima são links de afiliado. Se você fizer swap por eles, posso ganhar uma pequena comissão sem custo extra para você.*"
     }
   }
 }

@@ -22,8 +22,8 @@ const CompareDirectory = () => {
   const jsonLd = {
     "@context": "https://schema.org",
     "@type": "CollectionPage",
-    name: "MRC GlobalPay vs All Competitors — 2026 Comparison Directory",
-    description: "Compare MRC GlobalPay against 50+ crypto exchanges. Side-by-side feature comparisons, fees, minimums, and more.",
+    name: "MRC Global Pay vs All Competitors — 2026 Comparison Directory",
+    description: "Compare MRC Global Pay against 50+ crypto exchanges. Side-by-side feature comparisons, fees, minimums, and more.",
     url: pageUrl,
     mainEntity: {
       "@type": "ItemList",
@@ -31,7 +31,7 @@ const CompareDirectory = () => {
       itemListElement: COMPETITORS.map((c, i) => ({
         "@type": "ListItem",
         position: i + 1,
-        name: `MRC GlobalPay vs ${c.name}`,
+        name: `MRC Global Pay vs ${c.name}`,
         url: `https://mrcglobalpay.com/compare/mrc-vs-${c.slug}`,
       })),
     },
@@ -40,10 +40,10 @@ const CompareDirectory = () => {
   return (
     <>
       <Helmet>
-        <title>MRC GlobalPay vs 50+ Exchanges | 2026 Comparison</title>
-        <meta name="description" content="Compare MRC GlobalPay against 50+ crypto exchanges. Side-by-side feature comparisons covering fees, minimums, verification policies, speed, and more." />
+        <title>MRC Global Pay vs 50+ Exchanges | 2026 Comparison</title>
+        <meta name="description" content="Compare MRC Global Pay against 50+ crypto exchanges. Side-by-side feature comparisons covering fees, minimums, verification policies, speed, and more." />
         <link rel="canonical" href={pageUrl} />
-        <meta property="og:title" content="MRC GlobalPay vs 50+ Exchanges | 2026 Comparison" />
+        <meta property="og:title" content="MRC Global Pay vs 50+ Exchanges | 2026 Comparison" />
         <meta property="og:description" content="Side-by-side comparisons against ChangeNOW, Binance, Coinbase, and 47 more exchanges." />
         <meta property="og:url" content={pageUrl} />
         <meta property="og:type" content="website" />
@@ -60,7 +60,7 @@ const CompareDirectory = () => {
               50+ Comparisons
             </span>
             <h1 className="font-display text-3xl font-bold tracking-tight text-foreground sm:text-5xl">
-              MRC GlobalPay vs Every Exchange
+              MRC Global Pay vs Every Exchange
             </h1>
             <p className="mx-auto mt-4 max-w-2xl font-body text-lg leading-relaxed text-muted-foreground">
               See exactly how we compare against every major crypto exchange, DEX, and bridge protocol. Feature-by-feature, no bias.
@@ -91,7 +91,7 @@ const CompareDirectory = () => {
                 <a
                   key={c.slug}
                   href={`/compare/mrc-vs-${c.slug}`}
-                  title={`Compare MRC GlobalPay vs ${c.name} — fees, minimums, speed`}
+                  title={`Compare MRC Global Pay vs ${c.name} — fees, minimums, speed`}
                   className="group rounded-xl border border-border bg-card p-5 transition-all hover:border-primary/40 hover:shadow-md"
                 >
                   <h3 className="font-display text-sm font-bold text-foreground group-hover:text-primary">

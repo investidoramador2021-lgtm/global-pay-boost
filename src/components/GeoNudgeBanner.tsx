@@ -33,19 +33,19 @@ const COUNTRY_TO_LANG: Record<string, SupportedLanguage> = {
 
 /** Localized invitation copy */
 const COPY: Record<SupportedLanguage, { msg: string; cta: string; dismiss: string }> = {
-  en: { msg: "View MRC GlobalPay in your local language for region-specific rates.", cta: "Switch", dismiss: "Dismiss" },
+  en: { msg: "View MRC Global Pay in your local language for region-specific rates.", cta: "Switch", dismiss: "Dismiss" },
   tr: { msg: "Türkiye'ye özel oranlar için Türkçe sürüme geçin.", cta: "Geç", dismiss: "Kapat" },
-  vi: { msg: "Xem MRC GlobalPay bằng tiếng Việt với tỷ giá dành riêng cho Việt Nam.", cta: "Chuyển", dismiss: "Đóng" },
-  pt: { msg: "Veja a MRC GlobalPay em português com taxas para o Brasil.", cta: "Mudar", dismiss: "Fechar" },
-  es: { msg: "Ver MRC GlobalPay en español con tasas locales.", cta: "Cambiar", dismiss: "Cerrar" },
-  fr: { msg: "Affichez MRC GlobalPay en français avec des taux locaux.", cta: "Changer", dismiss: "Fermer" },
-  ja: { msg: "MRC GlobalPayを日本語で表示します。", cta: "切替", dismiss: "閉じる" },
-  fa: { msg: "MRC GlobalPay را به فارسی مشاهده کنید.", cta: "تغییر", dismiss: "بستن" },
-  ur: { msg: "MRC GlobalPay اردو میں دیکھیں۔", cta: "تبدیل", dismiss: "بند" },
-  he: { msg: "צפו ב-MRC GlobalPay בעברית.", cta: "החלף", dismiss: "סגור" },
-  af: { msg: "Bekyk MRC GlobalPay in Afrikaans.", cta: "Wissel", dismiss: "Maak toe" },
-  hi: { msg: "MRC GlobalPay को हिंदी में देखें।", cta: "बदलें", dismiss: "बंद" },
-  uk: { msg: "Переглянути MRC GlobalPay українською.", cta: "Змінити", dismiss: "Закрити" },
+  vi: { msg: "Xem MRC Global Pay bằng tiếng Việt với tỷ giá dành riêng cho Việt Nam.", cta: "Chuyển", dismiss: "Đóng" },
+  pt: { msg: "Veja a MRC Global Pay em português com taxas para o Brasil.", cta: "Mudar", dismiss: "Fechar" },
+  es: { msg: "Ver MRC Global Pay en español con tasas locales.", cta: "Cambiar", dismiss: "Cerrar" },
+  fr: { msg: "Affichez MRC Global Pay en français avec des taux locaux.", cta: "Changer", dismiss: "Fermer" },
+  ja: { msg: "MRC Global Payを日本語で表示します。", cta: "切替", dismiss: "閉じる" },
+  fa: { msg: "MRC Global Pay را به فارسی مشاهده کنید.", cta: "تغییر", dismiss: "بستن" },
+  ur: { msg: "MRC Global Pay اردو میں دیکھیں۔", cta: "تبدیل", dismiss: "بند" },
+  he: { msg: "צפו ב-MRC Global Pay בעברית.", cta: "החלף", dismiss: "סגור" },
+  af: { msg: "Bekyk MRC Global Pay in Afrikaans.", cta: "Wissel", dismiss: "Maak toe" },
+  hi: { msg: "MRC Global Pay को हिंदी में देखें।", cta: "बदलें", dismiss: "बंद" },
+  uk: { msg: "Переглянути MRC Global Pay українською.", cta: "Змінити", dismiss: "Закрити" },
 };
 
 /**

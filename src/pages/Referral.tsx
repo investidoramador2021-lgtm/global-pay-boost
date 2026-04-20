@@ -52,14 +52,14 @@ const Referral = () => {
   return (
     <>
       <Helmet>
-        <title>Referral Program — Earn Lifetime BTC on Every Swap | MRC GlobalPay</title>
+        <title>Referral Program — Earn Lifetime BTC on Every Swap | MRC Global Pay</title>
         <meta
           name="description"
           content="Share one link, earn lifetime BTC commissions on every crypto swap. No registration, no minimums. Backed by FINTRAC MSB C100000015 and Bank of Canada PSP registration."
         />
         <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1" />
         <link rel="canonical" href="https://mrcglobalpay.com/referral" />
-        <meta property="og:title" content="Referral Program — Earn Lifetime BTC on Every Swap | MRC GlobalPay" />
+        <meta property="og:title" content="Referral Program — Earn Lifetime BTC on Every Swap | MRC Global Pay" />
         <meta
           property="og:description"
           content="Refer users to a regulated Canadian non-custodial swap platform and earn lifetime BTC commissions. Zero setup, paid automatically."
@@ -71,11 +71,11 @@ const Referral = () => {
           "@context": "https://schema.org",
           "@type": "WebPage",
           name: "Referral Program",
-          description: "Earn lifetime BTC commissions by referring users to MRC GlobalPay, a FINTRAC-registered Canadian non-custodial crypto swap platform.",
+          description: "Earn lifetime BTC commissions by referring users to MRC Global Pay, a FINTRAC-registered Canadian non-custodial crypto swap platform.",
           url: "https://mrcglobalpay.com/referral",
           publisher: {
             "@type": "Organization",
-            name: "MRC GlobalPay",
+            name: "MRC Global Pay",
             description: "Registered Canadian MSB (FINTRAC C100000015) and Bank of Canada PSP — non-custodial cryptocurrency exchange.",
           },
           breadcrumb: {
@@ -103,7 +103,7 @@ const Referral = () => {
               Share One Link. <span className="text-primary">Earn Lifetime BTC.</span>
             </h1>
             <p className="mt-6 font-body text-lg leading-relaxed text-muted-foreground">
-              The simplest way to earn from MRC GlobalPay. Recommend our regulated, non-custodial crypto swap to friends, followers, or clients — and receive automatic Bitcoin commissions on every swap they make, for life.
+              The simplest way to earn from MRC Global Pay. Recommend our regulated, non-custodial crypto swap to friends, followers, or clients — and receive automatic Bitcoin commissions on every swap they make, for life.
             </p>
             <div className="mt-8 flex flex-col items-center justify-center gap-3 sm:flex-row">
               <Button size="lg" asChild>
@@ -127,7 +127,7 @@ const Referral = () => {
         <section className="container mx-auto px-4 pb-16">
           <div className="mx-auto max-w-5xl">
             <h2 className="font-display text-2xl font-bold text-foreground sm:text-3xl text-center">
-              Why people refer MRC GlobalPay
+              Why people refer MRC Global Pay
             </h2>
             <p className="mt-3 text-center font-body text-sm text-muted-foreground max-w-2xl mx-auto">
               We pay real Bitcoin, on a regulated Canadian platform, with zero friction for you or the person you refer.
@@ -206,7 +206,7 @@ const Referral = () => {
                   Refer with confidence — not to an offshore exchange
                 </h2>
                 <p className="mt-3 mx-auto max-w-2xl font-body text-sm leading-relaxed text-muted-foreground">
-                  MRC GlobalPay is operated by MRC Pay International Corp from Ottawa, Canada. We are a fully registered Money Services Business and a registered Payment Service Provider — your audience is referred to a compliant, non-custodial platform.
+                  MRC Global Pay is operated by MRC Pay International Corp from Ottawa, Canada. We are a fully registered Money Services Business and a registered Payment Service Provider — your audience is referred to a compliant, non-custodial platform.
                 </p>
               </div>
               <div className="mt-8 grid gap-4 sm:grid-cols-2">

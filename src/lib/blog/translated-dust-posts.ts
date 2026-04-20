@@ -9,7 +9,7 @@ export const TRANSLATED_DUST_POSTS: Record<string, BlogPost> = {
     slug: SLUG,
     title: "Cómo Convertir Polvo Cripto en Stablecoins en 2026: Guía para Limpiar Tu Wallet",
     metaTitle: "Convertir Polvo Cripto a USDT/USDC en 2026 – Mínimo $0.30",
-    metaDescription: "Aprende a consolidar saldos pequeños e intransferibles (polvo cripto) en USDT o USDC con el servicio sin registro de MRC GlobalPay. Desde solo $0.30.",
+    metaDescription: "Aprende a consolidar saldos pequeños e intransferibles (polvo cripto) en USDT o USDC con el servicio sin registro de MRC Global Pay. Desde solo $0.30.",
     excerpt: "Tienes saldos diminutos dispersos en varias cadenas? Esta guía te muestra cómo barrer el polvo cripto hacia stablecoins como USDT o USDC — desde solo $0.30, sin necesidad de registro.",
     author: seedAuthors.elenaVolkova,
     publishedAt: "2026-04-02",
@@ -38,7 +38,7 @@ La mayoría de los exchanges centralizados establecen mínimos de intercambio en
 
 Tres cosas cambiaron este año:
 
-1. **Los mínimos de los agregadores bajaron.** Servicios como [MRC GlobalPay](/) ahora soportan intercambios desde solo **$0.30**.
+1. **Los mínimos de los agregadores bajaron.** Servicios como [MRC Global Pay](/) ahora soportan intercambios desde solo **$0.30**.
 2. **El enrutamiento multi-cadena mejoró.** Los agregadores modernos obtienen liquidez de más de 700 pares de trading.
 3. **Los costos de gas se normalizaron.** La mayoría de las redes L1 y L2 ahora ofrecen transacciones predecibles y de bajo costo.
 
@@ -55,7 +55,7 @@ Abre cada wallet que uses. Lista cada saldo menor a $5.
 
 ### Paso 3: Usa un agregador de mínimo bajo
 
-Ve al [widget de intercambio de MRC GlobalPay](/#exchange). El intercambio mínimo es **$0.30**.
+Ve al [widget de intercambio de MRC Global Pay](/#exchange). El intercambio mínimo es **$0.30**.
 
 1. Selecciona tu token de polvo (ej. MATIC, BNB, SOL)
 2. Establece el destino como USDT o USDC
@@ -70,20 +70,20 @@ Trabaja sistemáticamente en cada wallet. La mayoría de los intercambios se com
 
 ## Qué tokens de polvo puedes intercambiar?
 
-MRC GlobalPay soporta más de 500 monedas. Consulta nuestra [página completa de pares de intercambio](/swap) para la lista completa.
+MRC Global Pay soporta más de 500 monedas. Consulta nuestra [página completa de pares de intercambio](/swap) para la lista completa.
 
 ## Es seguro intercambiar polvo a través de un agregador?
 
 Sí, siempre que uses un servicio **no custodial**:
 
-- Tus fondos **nunca son retenidos** por MRC GlobalPay
+- Tus fondos **nunca son retenidos** por MRC Global Pay
 - Los intercambios se ejecutan mediante **transacciones atómicas**
 - Mantienes **control total** de tus claves privadas
 - El servicio es operado por un **MSB canadiense registrado**
 
 ## La conclusión?
 
-El polvo cripto no es inútil — solo es inconveniente. En 2026, herramientas como MRC GlobalPay han eliminado la fricción. Con un mínimo de $0.30, acceso sin registro y soporte para más de 500 tokens, no hay razón para dejar valor inactivo.
+El polvo cripto no es inútil — solo es inconveniente. En 2026, herramientas como MRC Global Pay han eliminado la fricción. Con un mínimo de $0.30, acceso sin registro y soporte para más de 500 tokens, no hay razón para dejar valor inactivo.
 
 ---
 
@@ -99,7 +99,7 @@ El polvo cripto no es inútil — solo es inconveniente. En 2026, herramientas c
     slug: SLUG,
     title: "Como Trocar Poeira Cripto por Stablecoins em 2026: Guia para Limpar Sua Carteira",
     metaTitle: "Conversor de Poeira Cripto para USDT/USDC em 2026 – Mínimo $0.30",
-    metaDescription: "Aprenda a consolidar saldos pequenos e intransferíveis (poeira cripto) em USDT ou USDC com o serviço sem cadastro da MRC GlobalPay. A partir de apenas $0.30.",
+    metaDescription: "Aprenda a consolidar saldos pequenos e intransferíveis (poeira cripto) em USDT ou USDC com o serviço sem cadastro da MRC Global Pay. A partir de apenas $0.30.",
     excerpt: "Tem saldos minúsculos espalhados por várias redes? Este guia mostra como varrer a poeira cripto para stablecoins como USDT ou USDC — a partir de apenas $0.30, sem cadastro.",
     author: seedAuthors.elenaVolkova,
     publishedAt: "2026-04-02",
@@ -126,7 +126,7 @@ A maioria das exchanges centralizadas define mínimos de negociação entre $5 e
 
 ## Por que 2026 é o ano para limpar sua carteira?
 
-1. **Os mínimos dos agregadores caíram.** Serviços como [MRC GlobalPay](/) agora suportam trocas a partir de apenas **$0.30**.
+1. **Os mínimos dos agregadores caíram.** Serviços como [MRC Global Pay](/) agora suportam trocas a partir de apenas **$0.30**.
 2. **O roteamento multi-chain melhorou.** Agregadores modernos obtêm liquidez de mais de 700 pares de trading.
 3. **Os custos de gas se normalizaram.**
 
@@ -143,7 +143,7 @@ Abra todas as carteiras que você usa. Liste cada saldo abaixo de $5.
 
 ### Passo 3: Use um conversor de poeira cripto com mínimo baixo
 
-Vá ao [widget de troca da MRC GlobalPay](/#exchange). A troca mínima é **$0.30**.
+Vá ao [widget de troca da MRC Global Pay](/#exchange). A troca mínima é **$0.30**.
 
 1. Selecione seu token de poeira (ex. MATIC, BNB, SOL)
 2. Defina o destino como USDT ou USDC
@@ -160,14 +160,14 @@ Trabalhe sistematicamente em cada carteira. A maioria das trocas é concluída e
 
 Sim, desde que você use um serviço **não custodial**:
 
-- Seus fundos **nunca são retidos** pela MRC GlobalPay
+- Seus fundos **nunca são retidos** pela MRC Global Pay
 - As trocas executam via **transações atômicas**
 - Você mantém **controle total** de suas chaves privadas
 - O serviço é operado por um **MSB canadense registrado**
 
 ## A conclusão?
 
-Poeira cripto não é inútil — é apenas inconveniente. Em 2026, ferramentas como MRC GlobalPay removeram a fricção. Com um mínimo de $0.30, acesso sem cadastro e suporte para mais de 500 tokens, não há razão para deixar valor parado.
+Poeira cripto não é inútil — é apenas inconveniente. Em 2026, ferramentas como MRC Global Pay removeram a fricção. Com um mínimo de $0.30, acesso sem cadastro e suporte para mais de 500 tokens, não há razão para deixar valor parado.
 
 ---
 
@@ -183,7 +183,7 @@ Poeira cripto não é inútil — é apenas inconveniente. Em 2026, ferramentas 
     slug: SLUG,
     title: "Comment Échanger la Poussière Crypto Contre des Stablecoins en 2026 : Guide pour Nettoyer Votre Portefeuille",
     metaTitle: "Échanger la Poussière Crypto contre USDT/USDC en 2026 – Minimum 0,30 $",
-    metaDescription: "Apprenez à consolider les petits soldes inéchangeables (poussière crypto) en USDT ou USDC avec le service sans inscription de MRC GlobalPay. À partir de 0,30 $.",
+    metaDescription: "Apprenez à consolider les petits soldes inéchangeables (poussière crypto) en USDT ou USDC avec le service sans inscription de MRC Global Pay. À partir de 0,30 $.",
     excerpt: "De minuscules soldes résiduels éparpillés sur plusieurs chaînes ? Ce guide vous montre comment balayer la poussière crypto vers des stablecoins — à partir de seulement 0,30 $, sans inscription.",
     author: seedAuthors.elenaVolkova,
     publishedAt: "2026-04-02",
@@ -203,7 +203,7 @@ La poussière crypto désigne les petits soldes de tokens — généralement inf
 
 ## Pourquoi 2026 est l'année pour nettoyer votre portefeuille ?
 
-1. **Les minimums des agrégateurs ont baissé.** Des services comme [MRC GlobalPay](/) supportent désormais des échanges à partir de seulement **0,30 $**.
+1. **Les minimums des agrégateurs ont baissé.** Des services comme [MRC Global Pay](/) supportent désormais des échanges à partir de seulement **0,30 $**.
 2. **Le routage multi-chaînes s'est amélioré.**
 3. **Les frais de gas se sont normalisés.**
 
@@ -220,7 +220,7 @@ Ouvrez chaque portefeuille. Listez chaque solde inférieur à 5 $.
 
 ### Étape 3 : Utilisez un agrégateur à minimum bas
 
-Allez sur le [widget d'échange de MRC GlobalPay](/#exchange). L'échange minimum est de **0,30 $**.
+Allez sur le [widget d'échange de MRC Global Pay](/#exchange). L'échange minimum est de **0,30 $**.
 
 Le processus est **sans inscription** et **non-custodial**.
 
@@ -228,7 +228,7 @@ Le processus est **sans inscription** et **non-custodial**.
 
 ## La conclusion ?
 
-La poussière crypto n'est pas sans valeur — elle est juste peu pratique. En 2026, des outils comme MRC GlobalPay ont supprimé la friction. Avec un minimum de 0,30 $, un accès sans inscription et le support de plus de 500 tokens, il n'y a aucune raison de laisser de la valeur inactive.
+La poussière crypto n'est pas sans valeur — elle est juste peu pratique. En 2026, des outils comme MRC Global Pay ont supprimé la friction. Avec un minimum de 0,30 $, un accès sans inscription et le support de plus de 500 tokens, il n'y a aucune raison de laisser de la valeur inactive.
 
 ---
 
@@ -244,7 +244,7 @@ La poussière crypto n'est pas sans valeur — elle est juste peu pratique. En 2
     slug: SLUG,
     title: "2026年にクリプトダストをステーブルコインに交換する方法：ウォレット整理ガイド",
     metaTitle: "クリプトダストをUSDT/USDCに交換 2026年 – 最小$0.30から",
-    metaDescription: "MRC GlobalPayの登録不要サービスで、取引不可能な小額残高（クリプトダスト）をUSDTまたはUSDCに統合する方法を学びましょう。わずか$0.30から。",
+    metaDescription: "MRC Global Payの登録不要サービスで、取引不可能な小額残高（クリプトダスト）をUSDTまたはUSDCに統合する方法を学びましょう。わずか$0.30から。",
     excerpt: "複数のチェーンに散らばった小さな残高がありませんか？このガイドでは、クリプトダストをUSDTやUSDCなどのステーブルコインに変換する方法を紹介します。最小$0.30から、アカウント不要です。",
     author: seedAuthors.elenaVolkova,
     publishedAt: "2026-04-02",
@@ -264,7 +264,7 @@ La poussière crypto n'est pas sans valeur — elle est juste peu pratique. En 2
 
 ## 2026年がウォレット整理の年である理由は？
 
-1. **アグリゲーターの最小額が下がりました。**[MRC GlobalPay](/)のようなサービスは、わずか**$0.30**からのスワップに対応しています。
+1. **アグリゲーターの最小額が下がりました。**[MRC Global Pay](/)のようなサービスは、わずか**$0.30**からのスワップに対応しています。
 2. **マルチチェーンルーティングが改善されました。**
 3. **ガスコストが安定しました。**
 
@@ -281,7 +281,7 @@ La poussière crypto n'est pas sans valeur — elle est juste peu pratique. En 2
 
 ### ステップ3：低最小額アグリゲーターを使用する
 
-[MRC GlobalPayの交換ウィジェット](/#exchange)にアクセスしてください。最小スワップ額は**$0.30**です。
+[MRC Global Payの交換ウィジェット](/#exchange)にアクセスしてください。最小スワップ額は**$0.30**です。
 
 プロセス全体が**登録不要**で**非カストディアル**です。アカウントを作成する必要はありません。
 
@@ -289,7 +289,7 @@ La poussière crypto n'est pas sans valeur — elle est juste peu pratique. En 2
 
 ## 結論は？
 
-クリプトダストは無価値ではありません — ただ不便なだけです。2026年、MRC GlobalPayのようなツールがその摩擦を取り除きました。$0.30の最小額、登録不要のアクセス、500以上のトークンのサポートで、忘れたウォレットに価値を放置する理由はありません。
+クリプトダストは無価値ではありません — ただ不便なだけです。2026年、MRC Global Payのようなツールがその摩擦を取り除きました。$0.30の最小額、登録不要のアクセス、500以上のトークンのサポートで、忘れたウォレットに価値を放置する理由はありません。
 
 ---
 
@@ -305,7 +305,7 @@ La poussière crypto n'est pas sans valeur — elle est juste peu pratique. En 2
     slug: SLUG,
     title: "איך להמיר אבק קריפטו לסטייבלקוינס ב-2026: מדריך לניקוי הארנק שלך",
     metaTitle: "המרת אבק קריפטו ל-USDT/USDC ב-2026 – מינימום $0.30",
-    metaDescription: "למדו כיצד לאחד יתרות קטנות ובלתי-סחירות (אבק קריפטו) ל-USDT או USDC עם שירות ללא הרשמה של MRC GlobalPay. החל מ-$0.30 בלבד.",
+    metaDescription: "למדו כיצד לאחד יתרות קטנות ובלתי-סחירות (אבק קריפטו) ל-USDT או USDC עם שירות ללא הרשמה של MRC Global Pay. החל מ-$0.30 בלבד.",
     excerpt: "יש לכם יתרות זעירות מפוזרות על פני רשתות שונות? המדריך הזה מראה לכם איך לטאטא אבק קריפטו לסטייבלקוינס — החל מ-$0.30 בלבד, ללא הרשמה.",
     author: seedAuthors.elenaVolkova,
     publishedAt: "2026-04-02",
@@ -325,7 +325,7 @@ La poussière crypto n'est pas sans valeur — elle est juste peu pratique. En 2
 
 ## למה 2026 היא השנה לנקות את הארנק?
 
-1. **המינימום של האגרגטורים ירד.** שירותים כמו [MRC GlobalPay](/) תומכים כעת בהמרות החל מ-**$0.30** בלבד.
+1. **המינימום של האגרגטורים ירד.** שירותים כמו [MRC Global Pay](/) תומכים כעת בהמרות החל מ-**$0.30** בלבד.
 2. **הניתוב הרב-שרשרתי השתפר.**
 3. **עלויות הגז התייצבו.**
 
@@ -340,7 +340,7 @@ La poussière crypto n'est pas sans valeur — elle est juste peu pratique. En 2
 
 ### שלב 3: השתמשו באגרגטור עם מינימום נמוך
 
-גשו ל[ווידג'ט ההמרה של MRC GlobalPay](/#exchange). ההמרה המינימלית היא **$0.30**.
+גשו ל[ווידג'ט ההמרה של MRC Global Pay](/#exchange). ההמרה המינימלית היא **$0.30**.
 
 התהליך כולו הוא **ללא הרשמה** ו**לא משמורני**. אין צורך ליצור חשבון.
 
@@ -348,7 +348,7 @@ La poussière crypto n'est pas sans valeur — elle est juste peu pratique. En 2
 
 ## השורה התחתונה?
 
-אבק קריפטו אינו חסר ערך — הוא פשוט לא נוח. ב-2026, כלים כמו MRC GlobalPay הסירו את החיכוך. עם מינימום של $0.30, גישה ללא הרשמה ותמיכה ביותר מ-500 טוקנים, אין סיבה להשאיר ערך בלי שימוש.
+אבק קריפטו אינו חסר ערך — הוא פשוט לא נוח. ב-2026, כלים כמו MRC Global Pay הסירו את החיכוך. עם מינימום של $0.30, גישה ללא הרשמה ותמיכה ביותר מ-500 טוקנים, אין סיבה להשאיר ערך בלי שימוש.
 
 ---
 
@@ -364,7 +364,7 @@ La poussière crypto n'est pas sans valeur — elle est juste peu pratique. En 2
     slug: SLUG,
     title: "چگونه گرد و غبار کریپتو را به استیبل‌کوین تبدیل کنیم در ۲۰۲۶: راهنمای تمیز کردن کیف پول",
     metaTitle: "تبدیل گرد و غبار کریپتو به USDT/USDC در ۲۰۲۶ – حداقل $۰.۳۰",
-    metaDescription: "یاد بگیرید چگونه موجودی‌های کوچک غیرقابل معامله (گرد و غبار کریپتو) را به USDT یا USDC با خدمات بدون ثبت‌نام MRC GlobalPay تبدیل کنید. از تنها $۰.۳۰.",
+    metaDescription: "یاد بگیرید چگونه موجودی‌های کوچک غیرقابل معامله (گرد و غبار کریپتو) را به USDT یا USDC با خدمات بدون ثبت‌نام MRC Global Pay تبدیل کنید. از تنها $۰.۳۰.",
     excerpt: "موجودی‌های ریز پراکنده در شبکه‌های مختلف دارید؟ این راهنما نشان می‌دهد چگونه گرد و غبار کریپتو را به استیبل‌کوین‌ها تبدیل کنید — از تنها $۰.۳۰، بدون ثبت‌نام.",
     author: seedAuthors.elenaVolkova,
     publishedAt: "2026-04-02",
@@ -382,7 +382,7 @@ La poussière crypto n'est pas sans valeur — elle est juste peu pratique. En 2
 
 ## چرا ۲۰۲۶ سال تمیز کردن کیف پول شماست؟
 
-1. **حداقل آگریگاتورها کاهش یافت.** سرویس‌هایی مانند [MRC GlobalPay](/) اکنون تبادلات از تنها **$۰.۳۰** را پشتیبانی می‌کنند.
+1. **حداقل آگریگاتورها کاهش یافت.** سرویس‌هایی مانند [MRC Global Pay](/) اکنون تبادلات از تنها **$۰.۳۰** را پشتیبانی می‌کنند.
 2. **مسیریابی چند زنجیره‌ای بهبود یافت.**
 3. **هزینه‌های گاز عادی شد.**
 
@@ -394,7 +394,7 @@ La poussière crypto n'est pas sans valeur — elle est juste peu pratique. En 2
 
 ### مرحله ۳: از آگریگاتور با حداقل پایین استفاده کنید
 
-به [ویجت تبادل MRC GlobalPay](/#exchange) بروید. حداقل تبادل **$۰.۳۰** است.
+به [ویجت تبادل MRC Global Pay](/#exchange) بروید. حداقل تبادل **$۰.۳۰** است.
 
 کل فرآیند **بدون ثبت‌نام** و **غیرحضانتی** است.
 
@@ -402,7 +402,7 @@ La poussière crypto n'est pas sans valeur — elle est juste peu pratique. En 2
 
 ## نتیجه‌گیری?
 
-گرد و غبار کریپتو بی‌ارزش نیست — فقط ناخوشایند است. در ۲۰۲۶، ابزارهایی مانند MRC GlobalPay اصطکاک را حذف کرده‌اند.
+گرد و غبار کریپتو بی‌ارزش نیست — فقط ناخوشایند است. در ۲۰۲۶، ابزارهایی مانند MRC Global Pay اصطکاک را حذف کرده‌اند.
 
 ---
 
@@ -418,7 +418,7 @@ La poussière crypto n'est pas sans valeur — elle est juste peu pratique. En 2
     slug: SLUG,
     title: "2026 میں کرپٹو ڈسٹ کو سٹیبل کوائنز میں تبدیل کرنے کا طریقہ: اپنا والٹ صاف کریں",
     metaTitle: "چھوٹی رقم کا تبادلہ USDT/USDC میں 2026 – کم از کم $0.30",
-    metaDescription: "MRC GlobalPay کی بغیر رجسٹریشن سروس سے چھوٹے، ناقابل تجارت بیلنس (کرپٹو ڈسٹ) کو USDT یا USDC میں تبدیل کرنا سیکھیں۔ صرف $0.30 سے۔",
+    metaDescription: "MRC Global Pay کی بغیر رجسٹریشن سروس سے چھوٹے، ناقابل تجارت بیلنس (کرپٹو ڈسٹ) کو USDT یا USDC میں تبدیل کرنا سیکھیں۔ صرف $0.30 سے۔",
     excerpt: "مختلف چینز پر بکھرے ہوئے چھوٹے بیلنس ہیں؟ یہ گائیڈ دکھاتی ہے کہ کرپٹو ڈسٹ کو سٹیبل کوائنز میں کیسے تبدیل کریں — صرف $0.30 سے، بغیر رجسٹریشن۔",
     author: seedAuthors.elenaVolkova,
     publishedAt: "2026-04-02",
@@ -436,7 +436,7 @@ La poussière crypto n'est pas sans valeur — elle est juste peu pratique. En 2
 
 ## 2026 اپنا والٹ صاف کرنے کا سال کیوں ہے؟
 
-1. **ایگریگیٹرز کی کم از کم حد کم ہوئی۔** [MRC GlobalPay](/) جیسی سروسز اب صرف **$0.30** سے تبادلے کی حمایت کرتی ہیں۔
+1. **ایگریگیٹرز کی کم از کم حد کم ہوئی۔** [MRC Global Pay](/) جیسی سروسز اب صرف **$0.30** سے تبادلے کی حمایت کرتی ہیں۔
 2. **ملٹی چین روٹنگ بہتر ہوئی۔**
 3. **گیس کے اخراجات معمول پر آئے۔**
 
@@ -448,7 +448,7 @@ La poussière crypto n'est pas sans valeur — elle est juste peu pratique. En 2
 
 ### مرحلہ 3: کم از کم حد والا ایگریگیٹر استعمال کریں
 
-[MRC GlobalPay کے ایکسچینج ویجیٹ](/#exchange) پر جائیں۔ کم از کم تبادلہ **$0.30** ہے۔
+[MRC Global Pay کے ایکسچینج ویجیٹ](/#exchange) پر جائیں۔ کم از کم تبادلہ **$0.30** ہے۔
 
 پورا عمل **بغیر رجسٹریشن** اور **غیر تحویلی** ہے۔
 
@@ -456,7 +456,7 @@ La poussière crypto n'est pas sans valeur — elle est juste peu pratique. En 2
 
 ## خلاصہ؟
 
-کرپٹو ڈسٹ بے قیمت نہیں — صرف تکلیف دہ ہے۔ 2026 میں، MRC GlobalPay جیسے ٹولز نے رکاوٹ ختم کر دی ہے۔
+کرپٹو ڈسٹ بے قیمت نہیں — صرف تکلیف دہ ہے۔ 2026 میں، MRC Global Pay جیسے ٹولز نے رکاوٹ ختم کر دی ہے۔
 
 ---
 
@@ -472,7 +472,7 @@ La poussière crypto n'est pas sans valeur — elle est juste peu pratique. En 2
     slug: SLUG,
     title: "2026 में क्रिप्टो डस्ट को स्टेबलकॉइन में कैसे बदलें: अपना वॉलेट साफ करने की गाइड",
     metaTitle: "क्रिप्टो डस्ट को USDT/USDC में बदलें 2026 – न्यूनतम $0.30",
-    metaDescription: "MRC GlobalPay की पंजीकरण-मुक्त सेवा से छोटी, अव्यापारिक शेष राशि (क्रिप्टो डस्ट) को USDT या USDC में समेकित करना सीखें। केवल $0.30 से।",
+    metaDescription: "MRC Global Pay की पंजीकरण-मुक्त सेवा से छोटी, अव्यापारिक शेष राशि (क्रिप्टो डस्ट) को USDT या USDC में समेकित करना सीखें। केवल $0.30 से।",
     excerpt: "कई चेन पर बिखरी हुई छोटी शेष राशि? यह गाइड दिखाती है कि क्रिप्टो डस्ट को स्टेबलकॉइन में कैसे बदलें — केवल $0.30 से, बिना किसी खाते के।",
     author: seedAuthors.elenaVolkova,
     publishedAt: "2026-04-02",
@@ -490,7 +490,7 @@ La poussière crypto n'est pas sans valeur — elle est juste peu pratique. En 2
 
 ## 2026 अपना वॉलेट साफ करने का साल क्यों है?
 
-1. **एग्रीगेटर न्यूनतम घटा।** [MRC GlobalPay](/) जैसी सेवाएं अब केवल **$0.30** से स्वैप का समर्थन करती हैं।
+1. **एग्रीगेटर न्यूनतम घटा।** [MRC Global Pay](/) जैसी सेवाएं अब केवल **$0.30** से स्वैप का समर्थन करती हैं।
 
 ## डस्ट को स्टेबलकॉइन में कैसे बदलें: चरण दर चरण?
 
@@ -500,7 +500,7 @@ La poussière crypto n'est pas sans valeur — elle est juste peu pratique. En 2
 
 ### चरण 3: कम न्यूनतम वाला एग्रीगेटर उपयोग करें
 
-[MRC GlobalPay के एक्सचेंज विजेट](/#exchange) पर जाएं। न्यूनतम स्वैप **$0.30** है।
+[MRC Global Pay के एक्सचेंज विजेट](/#exchange) पर जाएं। न्यूनतम स्वैप **$0.30** है।
 
 पूरी प्रक्रिया **पंजीकरण-मुक्त** और **गैर-कस्टोडियल** है।
 
@@ -508,7 +508,7 @@ La poussière crypto n'est pas sans valeur — elle est juste peu pratique. En 2
 
 ## निष्कर्ष?
 
-क्रिप्टो डस्ट बेकार नहीं है — बस असुविधाजनक है। 2026 में, MRC GlobalPay जैसे टूल ने घर्षण दूर कर दिया है।
+क्रिप्टो डस्ट बेकार नहीं है — बस असुविधाजनक है। 2026 में, MRC Global Pay जैसे टूल ने घर्षण दूर कर दिया है।
 
 ---
 
@@ -524,7 +524,7 @@ La poussière crypto n'est pas sans valeur — elle est juste peu pratique. En 2
     slug: SLUG,
     title: "Cách Đổi Bụi Crypto Sang Stablecoin Năm 2026: Hướng Dẫn Dọn Ví",
     metaTitle: "Đổi Bụi Crypto sang USDT/USDC 2026 – Tối thiểu $0.30",
-    metaDescription: "Tìm hiểu cách hợp nhất số dư nhỏ không thể giao dịch (bụi crypto) thành USDT hoặc USDC với dịch vụ không cần đăng ký của MRC GlobalPay. Chỉ từ $0.30.",
+    metaDescription: "Tìm hiểu cách hợp nhất số dư nhỏ không thể giao dịch (bụi crypto) thành USDT hoặc USDC với dịch vụ không cần đăng ký của MRC Global Pay. Chỉ từ $0.30.",
     excerpt: "Có số dư nhỏ rải rác trên nhiều chuỗi? Hướng dẫn này chỉ bạn cách quét bụi crypto thành stablecoin — chỉ từ $0.30, không cần tài khoản.",
     author: seedAuthors.elenaVolkova,
     publishedAt: "2026-04-02",
@@ -542,7 +542,7 @@ Bụi crypto đề cập đến các số dư token nhỏ — thường dưới 
 
 ## Tại sao 2026 là năm để dọn ví?
 
-1. **Mức tối thiểu của bộ tổng hợp giảm.** Các dịch vụ như [MRC GlobalPay](/) hiện hỗ trợ hoán đổi chỉ từ **$0.30**.
+1. **Mức tối thiểu của bộ tổng hợp giảm.** Các dịch vụ như [MRC Global Pay](/) hiện hỗ trợ hoán đổi chỉ từ **$0.30**.
 
 ## Cách quét bụi sang stablecoin: từng bước?
 
@@ -552,7 +552,7 @@ Bụi crypto đề cập đến các số dư token nhỏ — thường dưới 
 
 ### Bước 3: Sử dụng bộ tổng hợp mức tối thiểu thấp
 
-Truy cập [widget trao đổi của MRC GlobalPay](/#exchange). Hoán đổi tối thiểu là **$0.30**.
+Truy cập [widget trao đổi của MRC Global Pay](/#exchange). Hoán đổi tối thiểu là **$0.30**.
 
 Toàn bộ quy trình **không cần đăng ký** và **không giám sát**.
 
@@ -560,7 +560,7 @@ Toàn bộ quy trình **không cần đăng ký** và **không giám sát**.
 
 ## Kết luận?
 
-Bụi crypto không phải là vô giá trị — chỉ là bất tiện. Năm 2026, các công cụ như MRC GlobalPay đã loại bỏ ma sát.
+Bụi crypto không phải là vô giá trị — chỉ là bất tiện. Năm 2026, các công cụ như MRC Global Pay đã loại bỏ ma sát.
 
 ---
 
@@ -576,7 +576,7 @@ Bụi crypto không phải là vô giá trị — chỉ là bất tiện. Năm 2
     slug: SLUG,
     title: "2026'da Kripto Tozunu Stablecoin'lere Nasıl Çevirirsiniz: Cüzdanınızı Temizleme Rehberi",
     metaTitle: "Kripto Tozunu USDT/USDC'ye Çevirin 2026 – Minimum $0.30",
-    metaDescription: "MRC GlobalPay'in kayıt gerektirmeyen hizmetiyle küçük, takas edilemeyen bakiyeleri (kripto tozu) USDT veya USDC'ye dönüştürmeyi öğrenin. Sadece $0.30'dan başlayan.",
+    metaDescription: "MRC Global Pay'in kayıt gerektirmeyen hizmetiyle küçük, takas edilemeyen bakiyeleri (kripto tozu) USDT veya USDC'ye dönüştürmeyi öğrenin. Sadece $0.30'dan başlayan.",
     excerpt: "Birden fazla zincire dağılmış küçük bakiyeleriniz mi var? Bu rehber kripto tozunu stablecoin'lere nasıl süpüreceğinizi gösterir — sadece $0.30'dan, kayıt gerektirmeden.",
     author: seedAuthors.elenaVolkova,
     publishedAt: "2026-04-02",
@@ -594,7 +594,7 @@ Kripto tozu, genellikle $5'ın altındaki küçük token bakiyelerini ifade eder
 
 ## 2026 neden cüzdanınızı temizleme yılıdır?
 
-1. **Toplayıcı minimumları düştü.** [MRC GlobalPay](/) gibi hizmetler artık sadece **$0.30**'dan takas desteği sunuyor.
+1. **Toplayıcı minimumları düştü.** [MRC Global Pay](/) gibi hizmetler artık sadece **$0.30**'dan takas desteği sunuyor.
 
 ## Tozu stablecoin'lere nasıl süpürürsünüz: adım adım?
 
@@ -604,7 +604,7 @@ Kripto tozu, genellikle $5'ın altındaki küçük token bakiyelerini ifade eder
 
 ### Adım 3: Düşük minimumlu toplayıcı kullanın
 
-[MRC GlobalPay takas widget'ına](/#exchange) gidin. Minimum takas **$0.30**'dır.
+[MRC Global Pay takas widget'ına](/#exchange) gidin. Minimum takas **$0.30**'dır.
 
 Tüm süreç **kayıt gerektirmez** ve **emanetsizdir**.
 
@@ -612,7 +612,7 @@ Tüm süreç **kayıt gerektirmez** ve **emanetsizdir**.
 
 ## Sonuç?
 
-Kripto tozu değersiz değildir — sadece zahmetlidir. 2026'da MRC GlobalPay gibi araçlar sürtünmeyi ortadan kaldırdı.
+Kripto tozu değersiz değildir — sadece zahmetlidir. 2026'da MRC Global Pay gibi araçlar sürtünmeyi ortadan kaldırdı.
 
 ---
 
@@ -628,7 +628,7 @@ Kripto tozu değersiz değildir — sadece zahmetlidir. 2026'da MRC GlobalPay gi
     slug: SLUG,
     title: "Як обміняти крипто-пил на стейблкоїни у 2026: посібник з очищення гаманця",
     metaTitle: "Обмін крипто-пилу на USDT/USDC 2026 – мінімум $0.30",
-    metaDescription: "Дізнайтеся, як об'єднати малі, необмінні залишки (крипто-пил) у USDT або USDC за допомогою сервісу без реєстрації MRC GlobalPay. Від $0.30.",
+    metaDescription: "Дізнайтеся, як об'єднати малі, необмінні залишки (крипто-пил) у USDT або USDC за допомогою сервісу без реєстрації MRC Global Pay. Від $0.30.",
     excerpt: "Маєте крихітні залишки, розкидані по різних мережах? Цей посібник показує, як перетворити крипто-пил на стейблкоїни — від $0.30, без реєстрації.",
     author: seedAuthors.elenaVolkova,
     publishedAt: "2026-04-02",
@@ -646,7 +646,7 @@ Kripto tozu değersiz değildir — sadece zahmetlidir. 2026'da MRC GlobalPay gi
 
 ## Чому 2026 — рік для очищення гаманця?
 
-1. **Мінімуми агрегаторів знизились.** Такі сервіси як [MRC GlobalPay](/) тепер підтримують обміни від **$0.30**.
+1. **Мінімуми агрегаторів знизились.** Такі сервіси як [MRC Global Pay](/) тепер підтримують обміни від **$0.30**.
 
 ## Як перетворити пил на стейблкоїни: крок за кроком?
 
@@ -656,7 +656,7 @@ Kripto tozu değersiz değildir — sadece zahmetlidir. 2026'da MRC GlobalPay gi
 
 ### Крок 3: Використайте агрегатор з низьким мінімумом
 
-Перейдіть до [віджета обміну MRC GlobalPay](/#exchange). Мінімальний обмін — **$0.30**.
+Перейдіть до [віджета обміну MRC Global Pay](/#exchange). Мінімальний обмін — **$0.30**.
 
 Весь процес **без реєстрації** та **некастодіальний**.
 
@@ -664,7 +664,7 @@ Kripto tozu değersiz değildir — sadece zahmetlidir. 2026'da MRC GlobalPay gi
 
 ## Підсумок?
 
-Крипто-пил не безцінний — просто незручний. У 2026, інструменти як MRC GlobalPay усунули тертя.
+Крипто-пил не безцінний — просто незручний. У 2026, інструменти як MRC Global Pay усунули тертя.
 
 ---
 
@@ -680,7 +680,7 @@ Kripto tozu değersiz değildir — sadece zahmetlidir. 2026'da MRC GlobalPay gi
     slug: SLUG,
     title: "Hoe om Kripto-stof na Stablecoins te Ruil in 2026: 'n Gids om Jou Beursie Skoon te Maak",
     metaTitle: "Ruil Kripto-stof na USDT/USDC in 2026 – Minimum $0.30",
-    metaDescription: "Leer hoe om klein, onverhandelbare balanse (kripto-stof) na USDT of USDC te konsolideer met MRC GlobalPay se registrasievrye diens. Vanaf slegs $0.30.",
+    metaDescription: "Leer hoe om klein, onverhandelbare balanse (kripto-stof) na USDT of USDC te konsolideer met MRC Global Pay se registrasievrye diens. Vanaf slegs $0.30.",
     excerpt: "Het jy klein balanse oor verskeie kettings versprei? Hierdie gids wys jou hoe om kripto-stof na stablecoins te vee — vanaf slegs $0.30, sonder registrasie.",
     author: seedAuthors.elenaVolkova,
     publishedAt: "2026-04-02",
@@ -698,7 +698,7 @@ Kripto-stof verwys na klein token-balanse — tipies onder $5 — wat ledig in j
 
 ## Waarom is 2026 die jaar om jou beursie skoon te maak?
 
-1. **Aggregator-minimums het gedaal.** Dienste soos [MRC GlobalPay](/) ondersteun nou ruilings vanaf slegs **$0.30**.
+1. **Aggregator-minimums het gedaal.** Dienste soos [MRC Global Pay](/) ondersteun nou ruilings vanaf slegs **$0.30**.
 
 ## Hoe om stof na stablecoins te vee: stap vir stap?
 
@@ -708,7 +708,7 @@ Kripto-stof verwys na klein token-balanse — tipies onder $5 — wat ledig in j
 
 ### Stap 3: Gebruik 'n lae-minimum aggregator
 
-Gaan na [MRC GlobalPay se ruil-widget](/#exchange). Die minimum ruil is **$0.30**.
+Gaan na [MRC Global Pay se ruil-widget](/#exchange). Die minimum ruil is **$0.30**.
 
 Die hele proses is **registrasievry** en **nie-bewarend**.
 
@@ -716,7 +716,7 @@ Die hele proses is **registrasievry** en **nie-bewarend**.
 
 ## Die slotsom?
 
-Kripto-stof is nie waardeloos nie — dit is net ongerief. In 2026 het gereedskap soos MRC GlobalPay die wrywing verwyder.
+Kripto-stof is nie waardeloos nie — dit is net ongerief. In 2026 het gereedskap soos MRC Global Pay die wrywing verwyder.
 
 ---
 

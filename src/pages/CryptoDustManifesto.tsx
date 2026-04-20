@@ -50,18 +50,18 @@ const CryptoDustManifesto = () => {
   return (
     <>
       <Helmet>
-        <title>The Master Guide to Crypto Dust Recovery | MRC GlobalPay</title>
+        <title>The Master Guide to Crypto Dust Recovery | MRC Global Pay</title>
         <meta
           name="description"
           content="Strategic framework for non-custodial crypto dust conversion and cross-chain settlement. Convert 6,000+ tokens from $0.30, no registration. FINTRAC MSB-registered."
         />
         <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1" />
         <link rel="canonical" href={canonical} />
-        <meta property="og:title" content="The Master Guide to Crypto Dust Recovery | MRC GlobalPay" />
+        <meta property="og:title" content="The Master Guide to Crypto Dust Recovery | MRC Global Pay" />
         <meta property="og:description" content="Convert crypto dust from $0.30 — no registration, 6,000+ assets, under 60 seconds." />
         <meta property="og:type" content="article" />
         <meta property="og:url" content={canonical} />
-        <meta property="og:site_name" content="MRC GlobalPay" />
+        <meta property="og:site_name" content="MRC Global Pay" />
         <meta property="og:image" content="https://mrcglobalpay.com/og-image.jpg" />
         <meta property="og:image:width" content="1200" />
         <meta property="og:image:height" content="630" />
@@ -72,7 +72,7 @@ const CryptoDustManifesto = () => {
         <script type="application/ld+json">{JSON.stringify(articleJsonLd)}</script>
       </Helmet>
 
-      <StickyShareRail url={canonical} title="The Master Guide to Crypto Dust Recovery | MRC GlobalPay" />
+      <StickyShareRail url={canonical} title="The Master Guide to Crypto Dust Recovery | MRC Global Pay" />
 
       <SiteHeader />
 
@@ -271,7 +271,7 @@ const CryptoDustManifesto = () => {
                     <thead>
                       <tr className="border-b border-border bg-muted">
                         <th className="px-4 py-3 text-left font-display font-semibold text-foreground">Feature</th>
-                        <th className="px-4 py-3 text-left font-display font-semibold text-primary">MRC GlobalPay</th>
+                        <th className="px-4 py-3 text-left font-display font-semibold text-primary">MRC Global Pay</th>
                         <th className="px-4 py-3 text-left font-display font-semibold text-muted-foreground">Typical Exchange</th>
                       </tr>
                     </thead>
@@ -429,7 +429,7 @@ const CryptoDustManifesto = () => {
           <div className="mx-auto mt-10 max-w-3xl">
             <SocialShare
               url={canonical}
-              title="The Master Guide to Crypto Dust Recovery | MRC GlobalPay"
+              title="The Master Guide to Crypto Dust Recovery | MRC Global Pay"
               description="Strategic framework for non-custodial crypto dust conversion and cross-chain settlement."
             />
           </div>

@@ -237,7 +237,7 @@ const AuditInspector = () => {
   const exportPDF = () => {
     const doc = new jsPDF({ orientation: "landscape" });
     doc.setFontSize(16);
-    doc.text("MRC GlobalPay — FINTRAC Transaction Report", 14, 20);
+    doc.text("MRC Global Pay — FINTRAC Transaction Report", 14, 20);
     doc.setFontSize(8);
     doc.text(`MSB Registration: C100000015 | Generated: ${new Date().toISOString()}`, 14, 28);
     doc.setFontSize(7);
@@ -272,7 +272,7 @@ const AuditInspector = () => {
   if (stage === "login") {
     return (
       <div className="min-h-screen flex items-center justify-center bg-background p-4">
-        <Helmet><title>Admin Inspector | MRC GlobalPay</title><meta name="robots" content="index, follow" /></Helmet>
+        <Helmet><title>Admin Inspector | MRC Global Pay</title><meta name="robots" content="index, follow" /></Helmet>
         <Card className="w-full max-w-md border-primary/20">
           <CardHeader className="text-center">
             <Shield className="mx-auto h-10 w-10 text-primary mb-2" />
@@ -331,7 +331,7 @@ const AuditInspector = () => {
   // ── Inspector Dashboard ──
   return (
     <>
-      <Helmet><title>Transaction Inspector | MRC GlobalPay</title><meta name="robots" content="index, follow" /></Helmet>
+      <Helmet><title>Transaction Inspector | MRC Global Pay</title><meta name="robots" content="index, follow" /></Helmet>
       <SiteHeader />
       <main className="min-h-screen bg-background pt-20 pb-12 px-4">
         <div className="max-w-7xl mx-auto">

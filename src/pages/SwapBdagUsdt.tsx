@@ -10,7 +10,7 @@ const SwapBdagUsdt = () => (
     avgSpeed="75s"
     headline={<>Swap BDAG to USDT Instantly – <span className="text-gradient-neon">Aggregated DAG Liquidity</span></>}
     subHeadline="Convert BlockDAG (BDAG) to USDT in under 90 seconds. Aggregated routing across supported BDAG venues. Locked rate before funding. No account required."
-    whyText="BlockDAG (BDAG) is one of the more aggressively traded emerging Layer 1 tokens of 2025–2026. MRC GlobalPay aggregates available BDAG/USDT liquidity across multiple routing partners, picks the highest-output venue automatically, and locks the rate before you send. Settlement times depend on routing depth — typically 60–90 seconds end-to-end."
+    whyText="BlockDAG (BDAG) is one of the more aggressively traded emerging Layer 1 tokens of 2025–2026. MRC Global Pay aggregates available BDAG/USDT liquidity across multiple routing partners, picks the highest-output venue automatically, and locks the rate before you send. Settlement times depend on routing depth — typically 60–90 seconds end-to-end."
     extraFaqs={[
       {
         q: "Is BDAG liquidity available 24/7?",

@@ -213,8 +213,8 @@ const Partners = () => {
   return (
     <>
       <Helmet>
-        <title>Partner Program | MRC GlobalPay</title>
-        <meta name="description" content="Join the MRC GlobalPay Partner Program. Earn lifetime BTC commissions on every crypto swap from your referral network. FINTRAC MSB-registered, weekly payouts." />
+        <title>Partner Program | MRC Global Pay</title>
+        <meta name="description" content="Join the MRC Global Pay Partner Program. Earn lifetime BTC commissions on every crypto swap from your referral network. FINTRAC MSB-registered, weekly payouts." />
       </Helmet>
 
       <SiteHeader />
@@ -246,7 +246,7 @@ const Partners = () => {
                 </h1>
 
                 <p className="text-lg text-muted-foreground leading-relaxed max-w-xl">
-                  The MRC GlobalPay Partner Program pays{" "}
+                  The MRC Global Pay Partner Program pays{" "}
                   <span className="text-foreground font-semibold">0.1% – 0.2% in BTC</span>{" "}
                   on every settlement your network generates — tracked live in a private dashboard,
                   paid automatically, and built for high-volume referrers.
@@ -601,7 +601,7 @@ const Partners = () => {
                   A Partner Program Backed by Real Canadian Regulation
                 </h2>
                 <p className="mt-3 text-sm sm:text-base text-muted-foreground leading-relaxed">
-                  MRC GlobalPay is operated by{" "}
+                  MRC Global Pay is operated by{" "}
                   <span className="font-semibold text-foreground">MRC Pay International Corp</span>,
                   a Canadian fintech registered as a{" "}
                   <span className="font-semibold text-foreground">FINTRAC Money Services Business (#C100000015)</span>{" "}

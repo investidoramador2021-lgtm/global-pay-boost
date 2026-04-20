@@ -61,20 +61,20 @@ const WhitepaperYield = () => {
   return (
     <div className="min-h-screen bg-background">
       <Helmet>
-        <title>Digital Asset Yield Engine — MRC GlobalPay Whitepaper</title>
+        <title>Digital Asset Yield Engine — MRC Global Pay Whitepaper</title>
         <meta name="description" content="Is the MRC Earn yield guaranteed? Institutional-grade interest accrual via Peer-to-Institutional lending, 150% over-collateralization, daily compounding." />
         <link rel="canonical" href={canonicalUrl} />
         <meta name="robots" content="index, follow, max-image-preview:large" />
-        <meta property="og:title" content="Digital Asset Yield Engine — MRC GlobalPay Whitepaper" />
+        <meta property="og:title" content="Digital Asset Yield Engine — MRC Global Pay Whitepaper" />
         <meta property="og:description" content="Institutional-grade interest accrual via Peer-to-Institutional lending, 150% over-collateralization, daily compounding." />
         <meta property="og:type" content="article" />
         <meta property="og:url" content={canonicalUrl} />
-        <meta property="og:site_name" content="MRC GlobalPay" />
+        <meta property="og:site_name" content="MRC Global Pay" />
         <meta property="og:image" content="https://mrcglobalpay.com/og-image.jpg" />
         <meta property="og:image:width" content="1200" />
         <meta property="og:image:height" content="630" />
         <meta name="twitter:card" content="summary_large_image" />
-        <meta name="twitter:title" content="Digital Asset Yield Engine — MRC GlobalPay" />
+        <meta name="twitter:title" content="Digital Asset Yield Engine — MRC Global Pay" />
         <meta name="twitter:description" content="Daily compounding via Peer-to-Institutional lending with 150% over-collateralization." />
         <meta name="twitter:image" content="https://mrcglobalpay.com/og-image.jpg" />
         <script type="application/ld+json">
@@ -83,18 +83,18 @@ const WhitepaperYield = () => {
             "@type": "TechArticle",
             name: "The Digital Asset Yield Engine",
             headline: "Institutional-Grade Interest Accrual and Risk Management",
-            description: "MRC GlobalPay Earn protocol delivers daily compounding interest via Peer-to-Institutional lending pools with 150% over-collateralization.",
+            description: "MRC Global Pay Earn protocol delivers daily compounding interest via Peer-to-Institutional lending pools with 150% over-collateralization.",
             url: canonicalUrl,
             image: "https://mrcglobalpay.com/og-image.jpg",
             datePublished: "2026-04-14",
             identifier: "MRC-WP-EARN-2026",
-            author: { "@type": "Organization", name: "MRC GlobalPay" },
-            publisher: { "@type": "FinancialService", name: "MRC GlobalPay", url: "https://mrcglobalpay.com" },
+            author: { "@type": "Organization", name: "MRC Global Pay" },
+            publisher: { "@type": "FinancialService", name: "MRC Global Pay", url: "https://mrcglobalpay.com" },
           })}
         </script>
       </Helmet>
       <HreflangTags />
-      <StickyShareRail url={canonicalUrl} title="Digital Asset Yield Engine — MRC GlobalPay Whitepaper" />
+      <StickyShareRail url={canonicalUrl} title="Digital Asset Yield Engine — MRC Global Pay Whitepaper" />
       <SiteHeader />
 
       {/* Hero */}
@@ -131,7 +131,7 @@ const WhitepaperYield = () => {
                   <h2 className="text-lg font-bold text-foreground font-serif">Executive Summary</h2>
                 </div>
                 <p className="text-muted-foreground leading-relaxed">
-                  The MRC GlobalPay 'Earn' protocol is a high-fidelity yield generation engine designed for stablecoin
+                  The MRC Global Pay 'Earn' protocol is a high-fidelity yield generation engine designed for stablecoin
                   and digital asset optimization. This document explores the mechanics of daily compound interest,
                   over-collateralized lending pools, and the security protocols that protect principal capital while
                   delivering consistent returns.
@@ -226,7 +226,7 @@ const WhitepaperYield = () => {
       <section className="container mx-auto max-w-3xl px-4 pb-16">
         <SocialShare
           url={canonicalUrl}
-          title="Digital Asset Yield Engine — MRC GlobalPay Whitepaper"
+          title="Digital Asset Yield Engine — MRC Global Pay Whitepaper"
           description="Institutional-grade interest accrual via Peer-to-Institutional lending, 150% over-collateralization."
         />
       </section>

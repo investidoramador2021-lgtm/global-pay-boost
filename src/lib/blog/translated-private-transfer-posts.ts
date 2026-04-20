@@ -3,7 +3,7 @@ import type { BlogPost } from "./types";
 
 const PRIVATE_TRANSFER_SLUG = "how-to-privately-transfer-crypto";
 
-const CONTENT_EN = `You cannot hide a transaction on a public blockchain, but you can break the linkability between your wallets. MRC GlobalPay's Private Transfer feature uses shielded routing to ensure that while a transaction is delivered successfully, the sender and recipient's direct connection remains obscured from public observation.
+const CONTENT_EN = `You cannot hide a transaction on a public blockchain, but you can break the linkability between your wallets. MRC Global Pay's Private Transfer feature uses shielded routing to ensure that while a transaction is delivered successfully, the sender and recipient's direct connection remains obscured from public observation.
 
 ## Why privacy matters for operational security in 2026
 
@@ -23,9 +23,9 @@ Linkability forms through repetition:
 
 Once a pattern forms, any observer with basic on-chain analytics can reconstruct your payment graph — even without knowing your identity.
 
-## How does MRC GlobalPay's Private Transfer work?
+## How does MRC Global Pay's Private Transfer work?
 
-MRC GlobalPay's [Private Transfer](/private-transfer) feature adds a layer of friction against correlation. Instead of a direct "A to B" path, your assets are routed through our [liquidity aggregation](/blog/understanding-crypto-liquidity-aggregation) layers.
+MRC Global Pay's [Private Transfer](/private-transfer) feature adds a layer of friction against correlation. Instead of a direct "A to B" path, your assets are routed through our [liquidity aggregation](/blog/understanding-crypto-liquidity-aggregation) layers.
 
 ### What shielded routing does
 
@@ -64,13 +64,13 @@ Before every private transfer, run through these five steps:
 | Standard wallet transfer | None | Fast | Low | None |
 | CoinJoin / mixing | High | Slow (hours) | Medium | High (flagged by exchanges) |
 | Privacy coins (XMR/ZEC) | Very high | Medium | Low | High (delistings) |
-| MRC GlobalPay Private Transfer | Meaningful | Fast (under 60s) | Standard rates | Low (MSB-compliant) |
+| MRC Global Pay Private Transfer | Meaningful | Fast (under 60s) | Standard rates | Low (MSB-compliant) |
 
-MRC GlobalPay's approach is designed for professionals who need practical privacy without triggering compliance red flags. The routing operates within a [registered Canadian MSB framework](/about), which means the service meets FINTRAC requirements while still providing meaningful linkability reduction.
+MRC Global Pay's approach is designed for professionals who need practical privacy without triggering compliance red flags. The routing operates within a [registered Canadian MSB framework](/about), which means the service meets FINTRAC requirements while still providing meaningful linkability reduction.
 
 ## What is the future of private crypto transfers?
 
-While full anonymity is a high bar on a public ledger, meaningful privacy is achievable with the right tools. By integrating non-custodial swaps with shielded routing, MRC GlobalPay provides the bridge between transparency and security.
+While full anonymity is a high bar on a public ledger, meaningful privacy is achievable with the right tools. By integrating non-custodial swaps with shielded routing, MRC Global Pay provides the bridge between transparency and security.
 
 The trend in 2026 points toward "selective disclosure" — where users control what is visible and to whom. Private Transfer is built for this future: compliant, fast, and designed for real-world operational needs.
 
@@ -81,7 +81,7 @@ export const PRIVATE_TRANSFER_POST_EN: BlogPost = {
   title: "How to Send Crypto Privately in 2026: Breaking On-Chain Linkability",
   metaTitle: "How to Send Crypto Privately in 2026 | Shielded Routing Guide",
   metaDescription: "Break on-chain linkability with shielded routing. Send crypto privately through liquidity pools — fixed rate, no registration, under 60 seconds. MSB-compliant.",
-  excerpt: "You cannot hide a transaction on a public blockchain, but you can break the linkability between your wallets. Learn how MRC GlobalPay's Private Transfer uses shielded routing to obscure direct wallet connections.",
+  excerpt: "You cannot hide a transaction on a public blockchain, but you can break the linkability between your wallets. Learn how MRC Global Pay's Private Transfer uses shielded routing to obscure direct wallet connections.",
   author: seedAuthors.marcusChen,
   publishedAt: "2026-04-11",
   updatedAt: "2026-04-11",
@@ -97,7 +97,7 @@ export const TRANSLATED_PRIVATE_TRANSFER_POSTS: Record<string, BlogPost> = {
     title: "Como Enviar Crypto de Forma Privada em 2026: Quebrando a Rastreabilidade On-Chain",
     metaTitle: "Como Enviar Crypto Privadamente em 2026 | Roteamento Blindado",
     metaDescription: "Quebre a rastreabilidade on-chain com roteamento blindado. Envie crypto por pools de liquidez — taxa fixa, sem cadastro, menos de 60 segundos. MSB registrado.",
-    excerpt: "Voce nao pode esconder uma transacao em uma blockchain publica, mas pode quebrar a ligacao entre suas carteiras. Saiba como o Private Transfer do MRC GlobalPay usa roteamento blindado.",
+    excerpt: "Voce nao pode esconder uma transacao em uma blockchain publica, mas pode quebrar a ligacao entre suas carteiras. Saiba como o Private Transfer do MRC Global Pay usa roteamento blindado.",
     author: seedAuthors.marcusChen,
     publishedAt: "2026-04-11",
     updatedAt: "2026-04-11",
@@ -111,7 +111,7 @@ export const TRANSLATED_PRIVATE_TRANSFER_POSTS: Record<string, BlogPost> = {
     title: "Como Enviar Crypto de Forma Privada en 2026: Rompiendo la Trazabilidad On-Chain",
     metaTitle: "Como Enviar Crypto Privadamente en 2026 | Enrutamiento Blindado",
     metaDescription: "Rompe la trazabilidad on-chain con enrutamiento blindado. Envia crypto por pools de liquidez — tasa fija, sin registro, menos de 60 segundos. MSB registrado.",
-    excerpt: "No puedes ocultar una transaccion en una blockchain publica, pero puedes romper la vinculacion entre tus carteras. Descubre como Private Transfer de MRC GlobalPay usa enrutamiento blindado.",
+    excerpt: "No puedes ocultar una transaccion en una blockchain publica, pero puedes romper la vinculacion entre tus carteras. Descubre como Private Transfer de MRC Global Pay usa enrutamiento blindado.",
     author: seedAuthors.marcusChen,
     publishedAt: "2026-04-11",
     updatedAt: "2026-04-11",
@@ -125,7 +125,7 @@ export const TRANSLATED_PRIVATE_TRANSFER_POSTS: Record<string, BlogPost> = {
     title: "Comment Envoyer des Cryptos en Prive en 2026 : Briser la Tracabilite On-Chain",
     metaTitle: "Envoyer des Cryptos en Prive en 2026 | Routage Blinde",
     metaDescription: "Brisez la tracabilite on-chain avec le routage blinde. Envoyez des cryptos via des pools de liquidite — taux fixe, sans inscription, moins de 60 secondes.",
-    excerpt: "Vous ne pouvez pas cacher une transaction sur une blockchain publique, mais vous pouvez briser le lien entre vos portefeuilles. Decouvrez le routage blinde de MRC GlobalPay.",
+    excerpt: "Vous ne pouvez pas cacher une transaction sur une blockchain publique, mais vous pouvez briser le lien entre vos portefeuilles. Decouvrez le routage blinde de MRC Global Pay.",
     author: seedAuthors.marcusChen,
     publishedAt: "2026-04-11",
     updatedAt: "2026-04-11",
@@ -139,7 +139,7 @@ export const TRANSLATED_PRIVATE_TRANSFER_POSTS: Record<string, BlogPost> = {
     title: "2026年に暗号資産をプライベートに送金する方法：オンチェーン追跡性の遮断",
     metaTitle: "暗号資産をプライベートに送金する方法 2026 | シールドルーティング",
     metaDescription: "シールドルーティングでオンチェーン追跡性を遮断。流動性プールを通じてプライベートに暗号資産を送金。固定レート、登録不要、60秒以内。MSB準拠。",
-    excerpt: "パブリックブロックチェーン上でトランザクションを隠すことはできませんが、ウォレット間のリンク可能性を断ち切ることはできます。MRC GlobalPayのシールドルーティングについて解説します。",
+    excerpt: "パブリックブロックチェーン上でトランザクションを隠すことはできませんが、ウォレット間のリンク可能性を断ち切ることはできます。MRC Global Payのシールドルーティングについて解説します。",
     author: seedAuthors.marcusChen,
     publishedAt: "2026-04-11",
     updatedAt: "2026-04-11",
@@ -153,7 +153,7 @@ export const TRANSLATED_PRIVATE_TRANSFER_POSTS: Record<string, BlogPost> = {
     title: "2026'da Kripto Nasil Gizli Transfer Edilir: On-Chain Izlenebilirligin Kirilmasi",
     metaTitle: "Kripto Gizli Transfer 2026 | Korunmali Yonlendirme",
     metaDescription: "Korunmali yonlendirme ile on-chain izlenebilirligi kirin. Likidite havuzlari uzerinden gizli kripto gonderin — sabit oran, kayit yok, 60 saniyenin altinda.",
-    excerpt: "Halka acik bir blok zincirinde bir islemi gizleyemezsiniz, ancak cuzdanlariniz arasindaki baglantilari kirabilirsiniz. MRC GlobalPay'in korunmali yonlendirmesini kesfet.",
+    excerpt: "Halka acik bir blok zincirinde bir islemi gizleyemezsiniz, ancak cuzdanlariniz arasindaki baglantilari kirabilirsiniz. MRC Global Pay'in korunmali yonlendirmesini kesfet.",
     author: seedAuthors.marcusChen,
     publishedAt: "2026-04-11",
     updatedAt: "2026-04-11",

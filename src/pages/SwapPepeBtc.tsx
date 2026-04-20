@@ -11,7 +11,7 @@ const SwapPepeBtc = () => (
     isFeatured
     headline={<>Swap PEPE to BTC Instantly – <span className="text-gradient-neon">Lock Profits in Hard Money</span></>}
     subHeadline="Convert PEPE memecoin gains directly into Bitcoin without an exchange account. Cross-chain routing handles the ERC-20 → BTC bridge in a single quote, locked rate, no hidden spread."
-    whyText="Memecoin traders historically lose 30%+ of paper gains during the multi-step exit through stables and back into BTC. MRC GlobalPay collapses that into a single PEPE → BTC swap with one locked quote. Native BTC delivery to your hardware wallet, Lightning, or any standard Bitcoin address — no IOU coins, no wrapped intermediaries."
+    whyText="Memecoin traders historically lose 30%+ of paper gains during the multi-step exit through stables and back into BTC. MRC Global Pay collapses that into a single PEPE → BTC swap with one locked quote. Native BTC delivery to your hardware wallet, Lightning, or any standard Bitcoin address — no IOU coins, no wrapped intermediaries."
     extraFaqs={[
       {
         q: "Can I swap PEPE directly to native Bitcoin?",

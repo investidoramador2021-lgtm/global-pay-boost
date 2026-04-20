@@ -18,13 +18,13 @@ const PrivateTransfer = () => {
   const jsonLd = {
     "@context": "https://schema.org",
     "@type": ["FinancialService", "Service"],
-    name: "MRC GlobalPay Private Transfer",
+    name: "MRC Global Pay Private Transfer",
     url: pageUrl,
     description: "Send crypto privately with shielded routing. Fixed-rate guaranteed transfers through liquidity pools that mask the sender's wallet address. No registration required.",
     provider: {
       "@type": "Organization",
       "@id": "https://mrcglobalpay.com/#organization",
-      name: "MRC GlobalPay",
+      name: "MRC Global Pay",
       url: "https://mrcglobalpay.com",
       address: {
         "@type": "PostalAddress",
@@ -53,17 +53,17 @@ const PrivateTransfer = () => {
   return (
     <>
       <Helmet>
-        <title>Private Crypto Transfer — Shielded Routing | MRC GlobalPay</title>
-        <meta name="description" content="Send crypto without exposing your wallet. MRC GlobalPay's Private Transfer uses shielded routing through liquidity pools. Fixed-rate, no registration, 6,000+ tokens." />
+        <title>Private Crypto Transfer — Shielded Routing | MRC Global Pay</title>
+        <meta name="description" content="Send crypto without exposing your wallet. MRC Global Pay's Private Transfer uses shielded routing through liquidity pools. Fixed-rate, no registration, 6,000+ tokens." />
         <meta name="robots" content="index, follow" />
         <link rel="canonical" href="https://mrcglobalpay.com/private-transfer" />
-        <meta property="og:title" content="Private Crypto Transfer — Shielded Routing | MRC GlobalPay" />
+        <meta property="og:title" content="Private Crypto Transfer — Shielded Routing | MRC Global Pay" />
         <meta property="og:description" content="Send crypto without exposing your wallet. Shielded routing through liquidity pools. Fixed-rate, no registration." />
         <meta property="og:type" content="website" />
         <meta property="og:url" content={pageUrl} />
-        <meta property="og:site_name" content="MRC GlobalPay" />
+        <meta property="og:site_name" content="MRC Global Pay" />
         <meta name="twitter:card" content="summary_large_image" />
-        <meta name="twitter:title" content="Private Crypto Transfer — Shielded Routing | MRC GlobalPay" />
+        <meta name="twitter:title" content="Private Crypto Transfer — Shielded Routing | MRC Global Pay" />
         <meta name="twitter:description" content="Send crypto without exposing your wallet. Shielded routing through liquidity pools." />
         <script type="application/ld+json">{JSON.stringify(jsonLd)}</script>
       </Helmet>
@@ -144,9 +144,9 @@ const PrivateTransfer = () => {
           <div className="space-y-4">
             {[
               { q: "Is my wallet address truly hidden from the recipient?", a: "Yes. Your deposit goes to a one-time generated address. Funds are pooled and routed through aggregated liquidity before delivery. The recipient's on-chain history shows no connection to your wallet." },
-              { q: "What currencies support private transfers?", a: "All 6,000+ cryptocurrencies available on MRC GlobalPay support private transfers. This includes Bitcoin, Ethereum, Solana, USDT, USDC, and many more across all major blockchains." },
+              { q: "What currencies support private transfers?", a: "All 6,000+ cryptocurrencies available on MRC Global Pay support private transfers. This includes Bitcoin, Ethereum, Solana, USDT, USDC, and many more across all major blockchains." },
               { q: "Are private transfers more expensive?", a: "No. Private transfers use the same competitive exchange rates as standard swaps. There are no additional fees for shielded routing." },
-              { q: "Do I need to create an account?", a: "No. MRC GlobalPay is fully permissionless. No registration required for standard transfers, no personal data needed." },
+              { q: "Do I need to create an account?", a: "No. MRC Global Pay is fully permissionless. No registration required for standard transfers, no personal data needed." },
             ].map((faq, i) => (
               <div key={i} className="rounded-xl border border-border bg-card p-4">
                 <h3 className="font-display text-sm font-bold text-foreground">{faq.q}</h3>

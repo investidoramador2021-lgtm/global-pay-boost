@@ -10,7 +10,7 @@ const SwapSirenUsdt = () => (
     avgSpeed="35s"
     headline={<>Swap SIREN to USDT Instantly – <span className="text-gradient-neon">Clean BNB Chain Execution</span></>}
     subHeadline="Convert SIREN to USDT in under 60 seconds with verified BEP-20 routing. Locked rate before funding. No account required. Sub-cent BNB Chain gas."
-    whyText="SIREN trades on BNB Chain (BEP-20) with growing on-chain liquidity through 2026. MRC GlobalPay aggregates SIREN/USDT routing across verified BNB Chain venues — verifying contract integrity at quote time and locking the rate before you send. Settlement uses BNB Chain's 3-second finality, then routes USDT to your network of choice."
+    whyText="SIREN trades on BNB Chain (BEP-20) with growing on-chain liquidity through 2026. MRC Global Pay aggregates SIREN/USDT routing across verified BNB Chain venues — verifying contract integrity at quote time and locking the rate before you send. Settlement uses BNB Chain's 3-second finality, then routes USDT to your network of choice."
     extraFaqs={[
       {
         q: "Which network does my USDT arrive on after a SIREN swap?",
@@ -18,7 +18,7 @@ const SwapSirenUsdt = () => (
       },
       {
         q: "How do I avoid buying a fake SIREN contract?",
-        a: "MRC GlobalPay routes only against the verified canonical SIREN contract. When using direct DEX routes elsewhere, always cross-reference the contract address through CoinGecko, CoinMarketCap, or BscScan before approving any transaction.",
+        a: "MRC Global Pay routes only against the verified canonical SIREN contract. When using direct DEX routes elsewhere, always cross-reference the contract address through CoinGecko, CoinMarketCap, or BscScan before approving any transaction.",
       },
       {
         q: "What is the minimum SIREN swap?",

@@ -8,10 +8,10 @@ const FINTRAC_URL = "https://fintrac-canafe.canada.ca/msb-esm/reg-eng";
 const Compliance = () => (
   <>
     <Helmet>
-      <title>Compliance — FINTRAC Registered MSB | MRC GlobalPay</title>
+      <title>Compliance — FINTRAC Registered MSB | MRC Global Pay</title>
       <meta
         name="description"
-        content="MRC GlobalPay is a FINTRAC-registered Money Services Business (MSB C100000015) in Ottawa, Canada — non-custodial crypto exchange with full AML/CTF compliance."
+        content="MRC Global Pay is a FINTRAC-registered Money Services Business (MSB C100000015) in Ottawa, Canada — non-custodial crypto exchange with full AML/CTF compliance."
       />
       <meta name="robots" content="index, follow" />
       <link rel="canonical" href="https://mrcglobalpay.com/compliance" />
@@ -20,7 +20,7 @@ const Compliance = () => (
           "@context": "https://schema.org",
           "@type": "FinancialService",
           "@id": "https://mrcglobalpay.com/#organization",
-          name: "MRC GlobalPay",
+          name: "MRC Global Pay",
           legalName: "MRC Global Pay",
           url: "https://mrcglobalpay.com",
           description:
@@ -58,7 +58,7 @@ const Compliance = () => (
               FINTRAC-Registered Canadian MSB
             </h1>
             <p className="mt-4 font-body text-base leading-relaxed text-muted-foreground sm:text-lg">
-              MRC GlobalPay operates as a fully registered Money Services Business under
+              MRC Global Pay operates as a fully registered Money Services Business under
               Canada's Proceeds of Crime (Money Laundering) and Terrorist Financing Act.
             </p>
           </div>
@@ -144,7 +144,7 @@ const Compliance = () => (
             </h2>
             <div className="mt-6 space-y-4 font-body text-base leading-relaxed text-muted-foreground">
               <p>
-                Unlike custodial exchanges that hold user deposits, MRC GlobalPay routes
+                Unlike custodial exchanges that hold user deposits, MRC Global Pay routes
                 swaps directly between the user's wallet and our liquidity partners.
                 This eliminates counterparty risk while maintaining full regulatory compliance.
               </p>

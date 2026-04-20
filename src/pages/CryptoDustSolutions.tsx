@@ -30,13 +30,13 @@ const buildJsonLd = (url: string) => ({
   financialService: {
     "@context": "https://schema.org",
     "@type": "FinancialService",
-    name: "MRC GlobalPay Institutional Dust Consolidation",
+    name: "MRC Global Pay Institutional Dust Consolidation",
     url,
     description:
       "Institutional-grade crypto dust recovery and stateless liquidity consolidation. Consolidate fragmented cross-chain remnants into unified stablecoin assets through a FINTRAC-registered, non-custodial sweep engine.",
     provider: {
       "@type": "Organization",
-      name: "MRC GlobalPay",
+      name: "MRC Global Pay",
       url: "https://mrcglobalpay.com",
       address: {
         "@type": "PostalAddress",
@@ -61,15 +61,15 @@ const buildJsonLd = (url: string) => ({
         name: "How to sweep crypto dust safely?",
         acceptedAnswer: {
           "@type": "Answer",
-          text: "MRC GlobalPay's stateless sweep engine consolidates dust balances starting at $0.30 with no registration, no custody, and no IP logging. Select your dust token, enter the amount, and swap to a stablecoin like USDT or USDC in under 60 seconds through a FINTRAC-registered MSB.",
+          text: "MRC Global Pay's stateless sweep engine consolidates dust balances starting at $0.30 with no registration, no custody, and no IP logging. Select your dust token, enter the amount, and swap to a stablecoin like USDT or USDC in under 60 seconds through a FINTRAC-registered MSB.",
         },
       },
       {
         "@type": "Question",
-        name: "Is MRC GlobalPay regulated?",
+        name: "Is MRC Global Pay regulated?",
         acceptedAnswer: {
           "@type": "Answer",
-          text: "Yes. MRC GlobalPay is a FINTRAC-registered Money Services Business (MSB C100000015) headquartered at 100 Metcalfe Street, Ottawa, Ontario, Canada. All operations comply with Canadian AML/CTF regulations while maintaining non-custodial settlement architecture.",
+          text: "Yes. MRC Global Pay is a FINTRAC-registered Money Services Business (MSB C100000015) headquartered at 100 Metcalfe Street, Ottawa, Ontario, Canada. All operations comply with Canadian AML/CTF regulations while maintaining non-custodial settlement architecture.",
         },
       },
       {
@@ -85,7 +85,7 @@ const buildJsonLd = (url: string) => ({
         name: "What is crypto dust?",
         acceptedAnswer: {
           "@type": "Answer",
-          text: "Crypto dust refers to tiny token balances — often worth less than $1 — that remain in wallets after trades. These fragments are typically too small to send or swap on most exchanges due to minimum thresholds and network fees. MRC GlobalPay processes swaps starting at just $0.30, making institutional-scale dust recovery viable.",
+          text: "Crypto dust refers to tiny token balances — often worth less than $1 — that remain in wallets after trades. These fragments are typically too small to send or swap on most exchanges due to minimum thresholds and network fees. MRC Global Pay processes swaps starting at just $0.30, making institutional-scale dust recovery viable.",
         },
       },
     ],
@@ -112,9 +112,9 @@ const specCards: SpecCard[] = [
 /* ---------- FAQ ---------- */
 const faqs = [
   { q: "How to sweep crypto dust safely?", a: "Select your dust token from 6,000+ supported assets, enter the micro-balance amount, choose a target stablecoin (USDT, USDC, etc.), and execute the swap through our non-custodial settlement engine. No registration required for qualifying amounts, with settlement in under 60 seconds via a FINTRAC-registered Money Services Business." },
-  { q: "Is MRC GlobalPay regulated?", a: "Yes. MRC GlobalPay operates as a FINTRAC-registered Money Services Business (MSB C100000015) headquartered at 100 Metcalfe Street, Ottawa, Ontario, Canada K1P 5M1. Our regulatory status ensures full compliance with Canadian Anti-Money Laundering and Counter-Terrorist Financing (AML/CTF) regulations while maintaining a non-custodial architecture that never takes possession of user funds." },
+  { q: "Is MRC Global Pay regulated?", a: "Yes. MRC Global Pay operates as a FINTRAC-registered Money Services Business (MSB C100000015) headquartered at 100 Metcalfe Street, Ottawa, Ontario, Canada K1P 5M1. Our regulatory status ensures full compliance with Canadian Anti-Money Laundering and Counter-Terrorist Financing (AML/CTF) regulations while maintaining a non-custodial architecture that never takes possession of user funds." },
   { q: "What are the benefits of stateless dust recovery?", a: "Stateless architecture eliminates session persistence overhead, address-reuse risk, and TTL expiry failures. By deriving deterministic deposit addresses from BIP-44 master paths, our sweep engine processes high-frequency remnant consolidation without database state. This enables atomic sweeps across 50+ blockchains with sub-60-second finality and zero intermediary holding." },
-  { q: "What is crypto dust and why does it matter?", a: "Crypto dust refers to tiny token balances — often worth less than $1 — that remain in wallets after trades. Across the global crypto economy, billions of dollars in aggregate value are locked in these micro-fragments. MRC GlobalPay's institutional consolidation engine processes swaps starting at just $0.30, making dust recovery viable for both retail users and institutional portfolio managers." },
+  { q: "What is crypto dust and why does it matter?", a: "Crypto dust refers to tiny token balances — often worth less than $1 — that remain in wallets after trades. Across the global crypto economy, billions of dollars in aggregate value are locked in these micro-fragments. MRC Global Pay's institutional consolidation engine processes swaps starting at just $0.30, making dust recovery viable for both retail users and institutional portfolio managers." },
   { q: "Can I consolidate dust from multiple blockchains simultaneously?", a: "Yes. Our cross-chain liquidity mesh supports 50+ blockchains including Ethereum, Solana, BNB Chain, Polygon, Avalanche, Arbitrum, Optimism, Base, and dozens more. Each sweep utilizes hash-time-locked contracts (HTLCs) to guarantee atomic execution — either all legs complete, or the entire transaction reverts." },
 ];
 
@@ -134,15 +134,15 @@ const CryptoDustSolutions = () => {
   return (
     <div className="min-h-screen bg-background">
       <Helmet>
-        <title>Institutional Crypto Dust Solutions & Stateless Liquidity Recovery | MRC GlobalPay</title>
+        <title>Institutional Crypto Dust Solutions & Stateless Liquidity Recovery | MRC Global Pay</title>
         <meta name="description" content="Institutional crypto dust consolidation: recover fragmented cross-chain remnants into unified stablecoins via a non-custodial sweep engine. From $0.30." />
         <link rel="canonical" href={canonicalUrl} />
         <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1" />
-        <meta property="og:title" content="Institutional Crypto Dust Solutions — Stateless Liquidity Recovery | MRC GlobalPay" />
+        <meta property="og:title" content="Institutional Crypto Dust Solutions — Stateless Liquidity Recovery | MRC Global Pay" />
         <meta property="og:description" content="Recover and reclaim lost crypto liquidity. Consolidate micro-balances across 50+ chains into stablecoins. Non-custodial. FINTRAC-registered. $0.30 minimum." />
         <meta property="og:type" content="article" />
         <meta property="og:url" content={canonicalUrl} />
-        <meta property="og:site_name" content="MRC GlobalPay" />
+        <meta property="og:site_name" content="MRC Global Pay" />
         <script type="application/ld+json">{JSON.stringify(jsonLd.financialService)}</script>
         <script type="application/ld+json">{JSON.stringify(jsonLd.faq)}</script>
       </Helmet>
@@ -170,7 +170,7 @@ const CryptoDustSolutions = () => {
               </p>
               <p className="mx-auto mt-4 max-w-2xl font-body text-sm leading-relaxed text-muted-foreground sm:text-base">
                 Consolidate fragmented cross-chain remnants into unified stablecoin assets through
-                MRC GlobalPay's{" "}
+                MRC Global Pay's{" "}
                 <Link to={langPathFn("/permanent-bridge")} className="text-primary underline decoration-primary/30 underline-offset-2 hover:decoration-primary">
                   stateless mapping infrastructure
                 </Link>
@@ -282,7 +282,7 @@ const CryptoDustSolutions = () => {
                     UTXO-based blockchains introduce additional complexity. Each Bitcoin transaction produces change outputs, and over time, wallets accumulate dozens of sub-economic UTXOs. Consolidating these requires a multi-input transaction where each additional input increases the byte-weight and thus the fee. Without specialized tooling, institutional treasuries face a compounding fragmentation problem where the cost of cleanup grows faster than the dust itself.
                   </p>
                   <p>
-                    MRC GlobalPay's{" "}
+                    MRC Global Pay's{" "}
                     <Link to={langPathFn("/tools/crypto-dust-calculator")} className="text-primary underline decoration-primary/30 underline-offset-2 hover:decoration-primary">
                       dust recovery calculator
                     </Link>{" "}
@@ -298,7 +298,7 @@ const CryptoDustSolutions = () => {
                 </h2>
                 <div className="mt-6 space-y-4 font-body text-sm leading-relaxed text-muted-foreground sm:text-base">
                   <p>
-                    The MRC GlobalPay consolidation engine operates on a <strong className="text-foreground">stateless architecture</strong> — a deliberate design decision that eliminates the session persistence, database overhead, and TTL (Time-to-Live) expiry failures that plague conventional exchange platforms. Where centralized services maintain server-side session state for each user interaction, our engine derives{" "}
+                    The MRC Global Pay consolidation engine operates on a <strong className="text-foreground">stateless architecture</strong> — a deliberate design decision that eliminates the session persistence, database overhead, and TTL (Time-to-Live) expiry failures that plague conventional exchange platforms. Where centralized services maintain server-side session state for each user interaction, our engine derives{" "}
                     <strong className="text-foreground">deterministic deposit addresses</strong> from BIP-44 hierarchical master paths, enabling each consolidation request to be self-contained and atomically independent.
                   </p>
                   <p>
@@ -323,7 +323,7 @@ const CryptoDustSolutions = () => {
                     </p>
                   </div>
                   <p>
-                    The technical decoupling extends to our liquidity sourcing. Rather than maintaining proprietary order books — which create custodial exposure and regulatory complexity — MRC GlobalPay aggregates across{" "}
+                    The technical decoupling extends to our liquidity sourcing. Rather than maintaining proprietary order books — which create custodial exposure and regulatory complexity — MRC Global Pay aggregates across{" "}
                     <strong className="text-foreground">700+ liquidity sources</strong> including decentralized exchanges (Uniswap, Raydium, PancakeSwap), cross-chain bridges, and institutional OTC desks. Each{" "}
                     <Link to={langPathFn("/")} className="text-primary underline decoration-primary/30 underline-offset-2 hover:decoration-primary">
                       non-custodial stablecoin settlement
@@ -349,7 +349,7 @@ const CryptoDustSolutions = () => {
                     Wallet dusting attacks represent one of the most sophisticated threat vectors in modern blockchain forensics. Attackers distribute tiny amounts of cryptocurrency — often fractions of a cent — to thousands of wallet addresses simultaneously. When recipients unknowingly include these dust inputs in subsequent transactions, the attacker can correlate the dust UTXO with the recipient's primary holdings, effectively de-anonymizing wallet clusters and mapping financial relationships.
                   </p>
                   <p>
-                    The MRC GlobalPay{" "}
+                    The MRC Global Pay{" "}
                     <Link to={langPathFn("/private-transfer")} className="text-primary underline decoration-primary/30 underline-offset-2 hover:decoration-primary">
                       shielded settlement architecture
                     </Link>{" "}
@@ -390,10 +390,10 @@ const CryptoDustSolutions = () => {
                 </h2>
                 <div className="mt-6 space-y-4 font-body text-sm leading-relaxed text-muted-foreground sm:text-base">
                   <p>
-                    MRC GlobalPay operates as a <strong className="text-foreground">FINTRAC-registered Money Services Business</strong> (MSB Registration Number C100000015), headquartered at 100 Metcalfe Street, Ottawa, Ontario, Canada K1P 5M1. This regulatory standing provides institutional clients with a level of counterparty assurance that unregistered DeFi protocols and offshore exchanges cannot match.
+                    MRC Global Pay operates as a <strong className="text-foreground">FINTRAC-registered Money Services Business</strong> (MSB Registration Number C100000015), headquartered at 100 Metcalfe Street, Ottawa, Ontario, Canada K1P 5M1. This regulatory standing provides institutional clients with a level of counterparty assurance that unregistered DeFi protocols and offshore exchanges cannot match.
                   </p>
                   <p>
-                    The Canadian MSB framework imposes rigorous obligations including ongoing transaction monitoring, suspicious transaction reporting (STR), large value transaction reporting (LVTR), and comprehensive record-keeping requirements. MRC GlobalPay fulfills these obligations through automated compliance infrastructure while maintaining a{" "}
+                    The Canadian MSB framework imposes rigorous obligations including ongoing transaction monitoring, suspicious transaction reporting (STR), large value transaction reporting (LVTR), and comprehensive record-keeping requirements. MRC Global Pay fulfills these obligations through automated compliance infrastructure while maintaining a{" "}
                     <strong className="text-foreground">non-custodial settlement model</strong> — a critical distinction that separates our platform from custodial exchanges that must hold and safeguard client assets.
                   </p>
                   <p>

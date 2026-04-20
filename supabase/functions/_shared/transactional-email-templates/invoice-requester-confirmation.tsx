@@ -101,7 +101,7 @@ const InvoiceRequesterConfirmationEmail = ({
 
         <Section style={taxSection}>
           <Text style={taxText}>
-            MRC GlobalPay does not withhold taxes. Local tax liabilities are the sole responsibility of the client.
+            MRC Global Pay does not withhold taxes. Local tax liabilities are the sole responsibility of the client.
           </Text>
         </Section>
 

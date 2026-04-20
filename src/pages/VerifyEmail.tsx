@@ -49,7 +49,7 @@ const VerifyEmail = () => {
   return (
     <>
       <Helmet>
-        <title>Verify Email | MRC GlobalPay</title>
+        <title>Verify Email | MRC Global Pay</title>
         <meta name="robots" content="index, follow" />
       </Helmet>
       <SiteHeader />

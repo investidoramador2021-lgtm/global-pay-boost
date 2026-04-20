@@ -21,7 +21,7 @@ const specs: SpecCard[] = [
   { icon: Layers, title: "Cross-Chain Atomic Settlement", body: "Hash-time-locked contracts (HTLCs) guarantee atomic execution. Either both legs of a cross-chain swap complete, or the entire transaction reverts — eliminating counterparty risk.", span: "wide" },
   { icon: FileCheck, title: "Audit-Ready Transaction Proofs", body: "Every settlement generates a downloadable PDF receipt with cryptographic signatures, block confirmations, and timestamped routing metadata for institutional audit trails." },
   { icon: Zap, title: "Sub-60s Finality", body: "Median settlement time of 23 seconds across top-50 assets. Lightning-fast execution via pre-staged liquidity pools and parallel mempool monitoring." },
-  { icon: ShieldCheck, title: "Non-Custodial by Design", body: "At no point does MRC GlobalPay take custody of user funds. Direct wallet-to-wallet routing ensures assets move from sender to recipient without intermediary holding risk.", span: "wide" },
+  { icon: ShieldCheck, title: "Non-Custodial by Design", body: "At no point does MRC Global Pay take custody of user funds. Direct wallet-to-wallet routing ensures assets move from sender to recipient without intermediary holding risk.", span: "wide" },
 ];
 
 const gridContainer = {

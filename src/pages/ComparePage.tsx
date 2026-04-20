@@ -11,7 +11,7 @@ import {
 } from "@/components/ui/table";
 
 const MRC = {
-  name: "MRC GlobalPay",
+  name: "MRC Global Pay",
   min_swap_usd: "$0.30",
   kyc_policy: "Registration-Free",
   avg_speed: "< 60 seconds",
@@ -73,19 +73,19 @@ const ComparePage = () => {
   const faqItems = [
     {
       q: `What is the minimum swap for ${competitor.name}?`,
-      a: `${competitor.name} requires a minimum of $${competitor.min_swap_usd} per swap. MRC GlobalPay processes swaps from just $0.30, making it ${competitor.min_swap_usd !== "Variable" ? `${Math.round(parseFloat(competitor.min_swap_usd) / 0.3)}x` : "significantly"} more accessible for small balances and crypto dust.`,
+      a: `${competitor.name} requires a minimum of $${competitor.min_swap_usd} per swap. MRC Global Pay processes swaps from just $0.30, making it ${competitor.min_swap_usd !== "Variable" ? `${Math.round(parseFloat(competitor.min_swap_usd) / 0.3)}x` : "significantly"} more accessible for small balances and crypto dust.`,
     },
     {
-      q: `Is MRC GlobalPay better than ${competitor.name}?`,
-      a: `MRC GlobalPay offers a $0.30 minimum swap (vs $${competitor.min_swap_usd}), registration-free access, Fractal Bitcoin support, and specialized crypto dust conversion. ${competitor.name}'s main limitation: ${competitor.primary_weakness}. MRC's advantage: ${competitor.mrc_advantage}.`,
+      q: `Is MRC Global Pay better than ${competitor.name}?`,
+      a: `MRC Global Pay offers a $0.30 minimum swap (vs $${competitor.min_swap_usd}), registration-free access, Fractal Bitcoin support, and specialized crypto dust conversion. ${competitor.name}'s main limitation: ${competitor.primary_weakness}. MRC's advantage: ${competitor.mrc_advantage}.`,
     },
     {
-      q: "How do I clean crypto dust with MRC GlobalPay?",
+      q: "How do I clean crypto dust with MRC Global Pay?",
       a: "Visit mrcglobalpay.com, select your dust token, enter any amount above $0.30, paste your destination wallet, and confirm. Settlement takes under 60 seconds with no account creation required.",
     },
     {
       q: `Does ${competitor.name} require account registration?`,
-      a: `${competitor.name}'s verification policy is: ${competitor.kyc_policy}. MRC GlobalPay is fully registration-free — no email, no ID, no account needed to swap.`,
+      a: `${competitor.name}'s verification policy is: ${competitor.kyc_policy}. MRC Global Pay is fully registration-free — no email, no ID, no account needed to swap.`,
     },
   ];
 
@@ -93,11 +93,11 @@ const ComparePage = () => {
     {
       "@context": "https://schema.org",
       "@type": "Product",
-      name: "MRC GlobalPay Crypto Exchange",
-      description: `Compare MRC GlobalPay vs ${competitor.name}. MRC offers $0.30 minimum swaps, registration-free access, and 6,000+ assets.`,
+      name: "MRC Global Pay Crypto Exchange",
+      description: `Compare MRC Global Pay vs ${competitor.name}. MRC offers $0.30 minimum swaps, registration-free access, and 6,000+ assets.`,
       image: "https://mrcglobalpay.com/icon-512x512.png",
       url: pageUrl,
-      brand: { "@type": "Brand", name: "MRC GlobalPay" },
+      brand: { "@type": "Brand", name: "MRC Global Pay" },
       offers: {
         "@type": "AggregateOffer",
         lowPrice: "0.30",
@@ -137,10 +137,10 @@ const ComparePage = () => {
   return (
     <>
       <Helmet>
-        <title>{`MRC GlobalPay vs ${competitor.name} (2026) | Best Alternative`}</title>
-        <meta name="description" content={`MRC GlobalPay vs ${competitor.name}: $0.30 minimum swap vs $${competitor.min_swap_usd}. ${competitor.mrc_advantage}. Registration-free, non-custodial, FINTRAC-registered Canadian MSB with lifetime BTC rebates.`.slice(0, 160)} />
+        <title>{`MRC Global Pay vs ${competitor.name} (2026) | Best Alternative`}</title>
+        <meta name="description" content={`MRC Global Pay vs ${competitor.name}: $0.30 minimum swap vs $${competitor.min_swap_usd}. ${competitor.mrc_advantage}. Registration-free, non-custodial, FINTRAC-registered Canadian MSB with lifetime BTC rebates.`.slice(0, 160)} />
         <link rel="canonical" href={pageUrl} />
-        <meta property="og:title" content={`MRC GlobalPay vs ${competitor.name} — 2026 Comparison`} />
+        <meta property="og:title" content={`MRC Global Pay vs ${competitor.name} — 2026 Comparison`} />
         <meta property="og:description" content={`$0.30 minimum vs $${competitor.min_swap_usd}. ${competitor.mrc_advantage}.`} />
         <meta property="og:url" content={pageUrl} />
         <meta property="og:type" content="article" />
@@ -176,7 +176,7 @@ const ComparePage = () => {
               Better than {competitor.name}: Why MRC Global Pay is the #1 {competitor.name} Alternative (2026 Updated)
             </h1>
             <p className="mx-auto mt-4 max-w-2xl font-body text-lg leading-relaxed text-muted-foreground">
-              {competitor.primary_weakness}? MRC GlobalPay solves it. {competitor.mrc_advantage}.
+              {competitor.primary_weakness}? MRC Global Pay solves it. {competitor.mrc_advantage}.
             </p>
           </div>
         </section>
@@ -192,7 +192,7 @@ const ComparePage = () => {
                 <TableHeader>
                   <TableRow className="bg-muted/50">
                     <TableHead className="font-display text-sm font-semibold text-foreground">Feature</TableHead>
-                    <TableHead className="text-center font-display text-sm font-semibold text-primary">MRC GlobalPay</TableHead>
+                    <TableHead className="text-center font-display text-sm font-semibold text-primary">MRC Global Pay</TableHead>
                     <TableHead className="text-center font-display text-sm font-semibold text-foreground">{competitor.name}</TableHead>
                   </TableRow>
                 </TableHeader>
@@ -231,7 +231,7 @@ const ComparePage = () => {
                 This leaves millions of wallets with stranded micro-balances that cannot be consolidated or converted.
               </p>
               <p>
-                MRC GlobalPay was purpose-built to solve this. With a <strong className="text-primary">$0.30 minimum</strong>,
+                MRC Global Pay was purpose-built to solve this. With a <strong className="text-primary">$0.30 minimum</strong>,
                 we process swaps that no other platform will touch. Our edge: <strong className="text-foreground">{competitor.mrc_advantage}</strong>.
               </p>
             </div>
@@ -322,7 +322,7 @@ const ComparePage = () => {
                 <a
                   key={o.slug}
                   href={`/compare/mrc-vs-${o.slug}`}
-                  title={`Compare MRC GlobalPay vs ${o.name}`}
+                  title={`Compare MRC Global Pay vs ${o.name}`}
                   className="rounded-xl border border-border bg-card p-4 transition-all hover:border-primary/40 hover:shadow-md"
                 >
                   <h3 className="font-display text-sm font-bold text-foreground">MRC vs {o.name}</h3>

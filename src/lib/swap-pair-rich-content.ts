@@ -543,7 +543,7 @@ export const buildSwapSteps = (assetA: string, assetB: string, assetAName: strin
     body: `You need a self-custody wallet that holds ${assetBName}. For most assets, MetaMask, Trust Wallet, or a hardware wallet (Ledger / Trezor) is sufficient. Verify the receive-network compatibility before generating an address. Never share your seed phrase.`,
   },
   {
-    title: `Open the MRC GlobalPay swap widget`,
+    title: `Open the MRC Global Pay swap widget`,
     body: `Use our main swap widget on the homepage. Select ${assetA} as the "from" asset and ${assetB} as the "to" asset. The interface auto-detects supported networks and shows live aggregated rates from multiple liquidity providers.`,
   },
   {
@@ -572,7 +572,7 @@ export interface PairMetaOverride {
 
 export const PAIR_META_OVERRIDES: Record<string, PairMetaOverride> = {
   "pepe-usdt": {
-    metaTitle: "Swap PEPE to USDT in Under 60 Seconds | MRC GlobalPay",
+    metaTitle: "Swap PEPE to USDT in Under 60 Seconds | MRC Global Pay",
     metaDescription:
       "Convert PEPE to USDT instantly with locked rates and deep ERC-20 liquidity. No registration, $0.30 minimum, FINTRAC MSB-registered. The amount quoted is what you receive.",
   },
@@ -582,12 +582,12 @@ export const PAIR_META_OVERRIDES: Record<string, PairMetaOverride> = {
       "Convert PEPE memecoin gains directly into native Bitcoin. Single locked quote, no exchange account, hardware-wallet compatible. Cross-chain routing in one settlement.",
   },
   "doge-usdt": {
-    metaTitle: "Swap Dogecoin (DOGE) to USDT Instantly | MRC GlobalPay",
+    metaTitle: "Swap Dogecoin (DOGE) to USDT Instantly | MRC Global Pay",
     metaDescription:
       "Convert DOGE to USDT in under a minute with native Dogecoin chain settlement. Pre-funded USDT vaults, no account, no KYC for retail volumes, $0.30 minimum.",
   },
   "doge-btc": {
-    metaTitle: "Swap DOGE to BTC Without an Exchange | MRC GlobalPay",
+    metaTitle: "Swap DOGE to BTC Without an Exchange | MRC Global Pay",
     metaDescription:
       "Convert Dogecoin directly to native Bitcoin in under 10 minutes. No registration, no custody, no wrapped tokens. The quoted BTC amount is the amount delivered.",
   },
@@ -617,7 +617,7 @@ export const PAIR_META_OVERRIDES: Record<string, PairMetaOverride> = {
       "Convert Bittensor (TAO) to USDT in under 90 seconds. Substrate-format addressing handled automatically. Aggregated TAO liquidity, locked rate before funding.",
   },
   "tao-btc": {
-    metaTitle: "Swap TAO to Bitcoin Without KYC | MRC GlobalPay",
+    metaTitle: "Swap TAO to Bitcoin Without KYC | MRC Global Pay",
     metaDescription:
       "Convert Bittensor (TAO) directly into native Bitcoin. Substrate-native deposit, cross-chain routing, BTC settlement. Single locked quote, no exchange account.",
   },

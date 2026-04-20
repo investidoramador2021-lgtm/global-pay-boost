@@ -6,9 +6,9 @@ const CARD_SLUG = "buy-crypto-with-card-payment";
 export const CARD_POST_EN: BlogPost = {
   slug: CARD_SLUG,
   title: "How to Buy Crypto Instantly with a Credit or Debit Card (2026 Guide)",
-  metaTitle: "Buy Crypto with Credit Card or Debit Card Instantly | MRC GlobalPay",
+  metaTitle: "Buy Crypto with Credit Card or Debit Card Instantly | MRC Global Pay",
   metaDescription: "Buy Bitcoin, Ethereum, and 6,000+ tokens with your Visa or Mastercard. No account needed, under 60 seconds delivery. The simplest card-to-crypto on-ramp in 2026.",
-  excerpt: "Credit and debit cards remain the fastest way to buy crypto worldwide. This guide covers how to purchase Bitcoin, Ethereum, and 6,000+ tokens with Visa or Mastercard on MRC GlobalPay in under a minute.",
+  excerpt: "Credit and debit cards remain the fastest way to buy crypto worldwide. This guide covers how to purchase Bitcoin, Ethereum, and 6,000+ tokens with Visa or Mastercard on MRC Global Pay in under a minute.",
   author: seedAuthors.sophiaRamirez,
   publishedAt: "2026-04-11",
   updatedAt: "2026-04-11",
@@ -17,7 +17,7 @@ export const CARD_POST_EN: BlogPost = {
   tags: ["Card Payment", "Visa", "Mastercard", "Buy Crypto", "On-Ramp"],
   content: `Buying crypto should be as simple as any online purchase. You enter your card details, confirm the amount, and receive tokens in your wallet. That is exactly what card-to-crypto on-ramps deliver in 2026.
 
-Whether you hold a Visa, Mastercard, or virtual debit card, you can go from fiat to crypto in under 60 seconds on [MRC GlobalPay](/). No exchange account. No identity verification. No waiting around.
+Whether you hold a Visa, Mastercard, or virtual debit card, you can go from fiat to crypto in under 60 seconds on [MRC Global Pay](/). No exchange account. No identity verification. No waiting around.
 
 ## Why card payments are the most popular crypto on-ramp
 
@@ -29,13 +29,13 @@ Three reasons card payments dominate global crypto purchases:
 
 For first-time buyers especially, card payments remove every barrier between curiosity and ownership.
 
-## How to buy crypto with a card on MRC GlobalPay
+## How to buy crypto with a card on MRC Global Pay
 
 The process takes under 60 seconds from start to finish:
 
 ### Step 1: Select your crypto
 
-Go to the [Buy section](/#exchange) and pick the token you want. MRC GlobalPay supports 6,000+ assets: Bitcoin, Ethereum, Solana, USDT, USDC, XRP, and hundreds more.
+Go to the [Buy section](/#exchange) and pick the token you want. MRC Global Pay supports 6,000+ assets: Bitcoin, Ethereum, Solana, USDT, USDC, XRP, and hundreds more.
 
 ### Step 2: Enter the amount
 
@@ -51,7 +51,7 @@ Choose card as your payment method. Enter your Visa or Mastercard details. The p
 
 ### Step 5: Receive your crypto
 
-Once your card payment clears (usually within seconds), MRC GlobalPay sends the tokens directly to your wallet. The whole flow completes in under a minute.
+Once your card payment clears (usually within seconds), MRC Global Pay sends the tokens directly to your wallet. The whole flow completes in under a minute.
 
 ## Which cards work?
 
@@ -84,9 +84,9 @@ The $0.30 minimum is the lowest in the industry. This makes card purchases viabl
 Yes. Here is how security works across the transaction:
 
 - 3D Secure authentication. Every card payment goes through your bank's 3D Secure verification (the popup that asks for your bank password or sends an SMS code). This prevents unauthorized use of your card.
-- Non-custodial delivery. MRC GlobalPay never holds your crypto. Tokens go directly from the liquidity source to your personal wallet.
+- Non-custodial delivery. MRC Global Pay never holds your crypto. Tokens go directly from the liquidity source to your personal wallet.
 - No stored card data. Your card number is processed by our PCI-DSS compliant payment partner and is never stored on our servers.
-- FINTRAC compliance. MRC GlobalPay is a registered Canadian Money Services Business with full regulatory oversight.
+- FINTRAC compliance. MRC Global Pay is a registered Canadian Money Services Business with full regulatory oversight.
 
 ## Card payments vs other payment methods
 
@@ -107,11 +107,11 @@ A few practical things to keep in mind:
 - Use a debit card to avoid cash advance fees that some credit card issuers charge on crypto purchases.
 - If your bank declines the first attempt, call them and confirm you authorized the purchase. Most banks whitelist crypto merchants after a single call.
 - For larger amounts, consider splitting into multiple smaller transactions to stay within your card's per-transaction limit.
-- Keep your transaction receipt email for your records. MRC GlobalPay sends one automatically.
+- Keep your transaction receipt email for your records. MRC Global Pay sends one automatically.
 
 ## Which cryptos can you buy with a card?
 
-Every asset on MRC GlobalPay is available for card purchase. The most popular choices:
+Every asset on MRC Global Pay is available for card purchase. The most popular choices:
 
 - Bitcoin (BTC) for long-term holding and portfolio anchoring
 - Ethereum (ETH) for DeFi access and smart contract interaction
@@ -138,9 +138,9 @@ export const TRANSLATED_CARD_POSTS: Record<string, BlogPost> = {
   es: {
     slug: CARD_SLUG,
     title: "Como Comprar Crypto al Instante con Tarjeta de Credito o Debito (Guia 2026)",
-    metaTitle: "Compra Crypto con Tarjeta de Credito o Debito al Instante | MRC GlobalPay",
+    metaTitle: "Compra Crypto con Tarjeta de Credito o Debito al Instante | MRC Global Pay",
     metaDescription: "Compra Bitcoin, Ethereum y mas de 500 tokens con tu Visa o Mastercard. Sin cuenta, entrega en menos de 60 segundos. El on-ramp con tarjeta mas simple de 2026.",
-    excerpt: "Las tarjetas de credito y debito siguen siendo la forma mas rapida de comprar crypto en el mundo. Esta guia explica como comprar Bitcoin, Ethereum y mas de 500 tokens con Visa o Mastercard en MRC GlobalPay en menos de un minuto.",
+    excerpt: "Las tarjetas de credito y debito siguen siendo la forma mas rapida de comprar crypto en el mundo. Esta guia explica como comprar Bitcoin, Ethereum y mas de 500 tokens con Visa o Mastercard en MRC Global Pay en menos de un minuto.",
     author: seedAuthors.sophiaRamirez,
     publishedAt: "2026-04-11",
     updatedAt: "2026-04-11",
@@ -149,7 +149,7 @@ export const TRANSLATED_CARD_POSTS: Record<string, BlogPost> = {
     tags: ["Pago con Tarjeta", "Visa", "Mastercard", "Comprar Crypto", "On-Ramp"],
     content: `Comprar crypto deberia ser tan simple como cualquier compra online. Ingresas los datos de tu tarjeta, confirmas el monto y recibes tokens en tu billetera. Eso es exactamente lo que los on-ramps de tarjeta a crypto ofrecen en 2026.
 
-Ya sea que tengas Visa, Mastercard o una tarjeta de debito virtual, puedes pasar de moneda fiat a crypto en menos de 60 segundos en [MRC GlobalPay](/). Sin cuenta de exchange. Sin verificacion de identidad. Sin esperas.
+Ya sea que tengas Visa, Mastercard o una tarjeta de debito virtual, puedes pasar de moneda fiat a crypto en menos de 60 segundos en [MRC Global Pay](/). Sin cuenta de exchange. Sin verificacion de identidad. Sin esperas.
 
 ## Por que los pagos con tarjeta son el on-ramp crypto mas popular
 
@@ -161,13 +161,13 @@ Tres razones por las que los pagos con tarjeta dominan las compras globales de c
 
 Para compradores primerizos especialmente, los pagos con tarjeta eliminan toda barrera entre la curiosidad y la propiedad.
 
-## Como comprar crypto con tarjeta en MRC GlobalPay
+## Como comprar crypto con tarjeta en MRC Global Pay
 
 El proceso toma menos de 60 segundos de principio a fin:
 
 ### Paso 1: Selecciona tu crypto
 
-Ve a la [seccion Comprar](/#exchange) y elige el token que quieres. MRC GlobalPay soporta mas de 500 activos: Bitcoin, Ethereum, Solana, USDT, USDC, XRP y cientos mas.
+Ve a la [seccion Comprar](/#exchange) y elige el token que quieres. MRC Global Pay soporta mas de 500 activos: Bitcoin, Ethereum, Solana, USDT, USDC, XRP y cientos mas.
 
 ### Paso 2: Ingresa el monto
 
@@ -183,7 +183,7 @@ Elige tarjeta como metodo de pago. Ingresa los datos de tu Visa o Mastercard. El
 
 ### Paso 5: Recibe tu crypto
 
-Una vez que tu pago con tarjeta se procese (generalmente en segundos), MRC GlobalPay envia los tokens directamente a tu billetera. Todo el flujo se completa en menos de un minuto.
+Una vez que tu pago con tarjeta se procese (generalmente en segundos), MRC Global Pay envia los tokens directamente a tu billetera. Todo el flujo se completa en menos de un minuto.
 
 ## Que tarjetas funcionan?
 
@@ -216,9 +216,9 @@ El minimo de $0.30 es el mas bajo de la industria. Esto hace que las compras con
 Si. Asi funciona la seguridad en la transaccion:
 
 - Autenticacion 3D Secure. Cada pago con tarjeta pasa por la verificacion 3D Secure de tu banco (la ventana emergente que pide tu contrasena bancaria o envia un codigo SMS). Esto previene el uso no autorizado de tu tarjeta.
-- Entrega no custodia. MRC GlobalPay nunca retiene tu crypto. Los tokens van directamente desde la fuente de liquidez a tu billetera personal.
+- Entrega no custodia. MRC Global Pay nunca retiene tu crypto. Los tokens van directamente desde la fuente de liquidez a tu billetera personal.
 - Sin datos de tarjeta almacenados. Tu numero de tarjeta es procesado por nuestro socio de pagos compatible con PCI-DSS y nunca se almacena en nuestros servidores.
-- Cumplimiento FINTRAC. MRC GlobalPay es un Negocio de Servicios Monetarios canadiense registrado con supervision regulatoria completa.
+- Cumplimiento FINTRAC. MRC Global Pay es un Negocio de Servicios Monetarios canadiense registrado con supervision regulatoria completa.
 
 ## Pagos con tarjeta vs otros metodos de pago
 
@@ -249,9 +249,9 @@ Los pagos con tarjeta son el on-ramp universal a crypto. Sin numeros de ruta de 
   pt: {
     slug: CARD_SLUG,
     title: "Como Comprar Crypto Instantaneamente com Cartao de Credito ou Debito (Guia 2026)",
-    metaTitle: "Compre Crypto com Cartao de Credito ou Debito Instantaneamente | MRC GlobalPay",
+    metaTitle: "Compre Crypto com Cartao de Credito ou Debito Instantaneamente | MRC Global Pay",
     metaDescription: "Compre Bitcoin, Ethereum e mais de 500 tokens com seu Visa ou Mastercard. Sem conta, entrega em menos de 60 segundos. O on-ramp com cartao mais simples de 2026.",
-    excerpt: "Cartoes de credito e debito continuam sendo a forma mais rapida de comprar crypto no mundo. Este guia mostra como comprar Bitcoin, Ethereum e mais de 500 tokens com Visa ou Mastercard na MRC GlobalPay em menos de um minuto.",
+    excerpt: "Cartoes de credito e debito continuam sendo a forma mais rapida de comprar crypto no mundo. Este guia mostra como comprar Bitcoin, Ethereum e mais de 500 tokens com Visa ou Mastercard na MRC Global Pay em menos de um minuto.",
     author: seedAuthors.sophiaRamirez,
     publishedAt: "2026-04-11",
     updatedAt: "2026-04-11",
@@ -260,7 +260,7 @@ Los pagos con tarjeta son el on-ramp universal a crypto. Sin numeros de ruta de 
     tags: ["Pagamento com Cartao", "Visa", "Mastercard", "Comprar Crypto", "On-Ramp"],
     content: `Comprar crypto deveria ser tao simples quanto qualquer compra online. Voce digita os dados do cartao, confirma o valor e recebe tokens na sua carteira. E exatamente isso que os on-ramps de cartao para crypto oferecem em 2026.
 
-Seja Visa, Mastercard ou cartao de debito virtual, voce pode ir de moeda fiduciaria para crypto em menos de 60 segundos na [MRC GlobalPay](/). Sem conta em exchange. Sem verificacao de identidade. Sem espera.
+Seja Visa, Mastercard ou cartao de debito virtual, voce pode ir de moeda fiduciaria para crypto em menos de 60 segundos na [MRC Global Pay](/). Sem conta em exchange. Sem verificacao de identidade. Sem espera.
 
 ## Por que pagamentos com cartao sao o on-ramp crypto mais popular
 
@@ -272,13 +272,13 @@ Tres razoes pelas quais pagamentos com cartao dominam as compras globais de cryp
 
 Para compradores de primeira viagem especialmente, pagamentos com cartao removem toda barreira entre curiosidade e propriedade.
 
-## Como comprar crypto com cartao na MRC GlobalPay
+## Como comprar crypto com cartao na MRC Global Pay
 
 O processo leva menos de 60 segundos do inicio ao fim:
 
 ### Passo 1: Selecione seu crypto
 
-Va ate a [secao Comprar](/#exchange) e escolha o token que deseja. A MRC GlobalPay suporta mais de 500 ativos: Bitcoin, Ethereum, Solana, USDT, USDC, XRP e centenas mais.
+Va ate a [secao Comprar](/#exchange) e escolha o token que deseja. A MRC Global Pay suporta mais de 500 ativos: Bitcoin, Ethereum, Solana, USDT, USDC, XRP e centenas mais.
 
 ### Passo 2: Digite o valor
 
@@ -294,7 +294,7 @@ Escolha cartao como metodo de pagamento. Insira os dados do seu Visa ou Masterca
 
 ### Passo 5: Receba seu crypto
 
-Assim que o pagamento com cartao for processado (geralmente em segundos), a MRC GlobalPay envia os tokens diretamente para sua carteira. Todo o fluxo se completa em menos de um minuto.
+Assim que o pagamento com cartao for processado (geralmente em segundos), a MRC Global Pay envia os tokens diretamente para sua carteira. Todo o fluxo se completa em menos de um minuto.
 
 ## Quais cartoes funcionam?
 
@@ -327,9 +327,9 @@ O minimo de $0.30 e o mais baixo da industria. Isso torna compras com cartao via
 Sim. Veja como a seguranca funciona na transacao:
 
 - Autenticacao 3D Secure. Todo pagamento com cartao passa pela verificacao 3D Secure do seu banco. Isso previne uso nao autorizado do seu cartao.
-- Entrega nao custodial. A MRC GlobalPay nunca retEM seu crypto. Os tokens vao diretamente da fonte de liquidez para sua carteira pessoal.
+- Entrega nao custodial. A MRC Global Pay nunca retEM seu crypto. Os tokens vao diretamente da fonte de liquidez para sua carteira pessoal.
 - Sem dados de cartao armazenados. Seu numero de cartao e processado pelo nosso parceiro de pagamentos compativel com PCI-DSS e nunca e armazenado nos nossos servidores.
-- Conformidade FINTRAC. A MRC GlobalPay e um Negocio de Servicos Monetarios canadense registrado.
+- Conformidade FINTRAC. A MRC Global Pay e um Negocio de Servicos Monetarios canadense registrado.
 
 ## Dados rapidos
 
@@ -348,9 +348,9 @@ Pagamentos com cartao sao o on-ramp universal para crypto. Sem numeros de roteam
   fr: {
     slug: CARD_SLUG,
     title: "Comment Acheter du Crypto Instantanement par Carte Bancaire (Guide 2026)",
-    metaTitle: "Acheter du Crypto par Carte Bancaire Instantanement | MRC GlobalPay",
+    metaTitle: "Acheter du Crypto par Carte Bancaire Instantanement | MRC Global Pay",
     metaDescription: "Achetez Bitcoin, Ethereum et 6,000+ tokens avec votre Visa ou Mastercard. Sans compte, livraison en moins de 60 secondes. On-ramp carte-crypto le plus simple.",
-    excerpt: "Les cartes bancaires restent le moyen le plus rapide d'acheter du crypto dans le monde. Ce guide explique comment acheter du Bitcoin, Ethereum et plus de 500 tokens avec Visa ou Mastercard sur MRC GlobalPay en moins d'une minute.",
+    excerpt: "Les cartes bancaires restent le moyen le plus rapide d'acheter du crypto dans le monde. Ce guide explique comment acheter du Bitcoin, Ethereum et plus de 500 tokens avec Visa ou Mastercard sur MRC Global Pay en moins d'une minute.",
     author: seedAuthors.sophiaRamirez,
     publishedAt: "2026-04-11",
     updatedAt: "2026-04-11",
@@ -359,7 +359,7 @@ Pagamentos com cartao sao o on-ramp universal para crypto. Sem numeros de roteam
     tags: ["Paiement par Carte", "Visa", "Mastercard", "Acheter Crypto", "On-Ramp"],
     content: `Acheter du crypto devrait etre aussi simple que n'importe quel achat en ligne. Vous entrez les details de votre carte, confirmez le montant et recevez des tokens dans votre portefeuille. C'est exactement ce que les on-ramps carte-vers-crypto offrent en 2026.
 
-Que vous ayez une Visa, Mastercard ou une carte de debit virtuelle, vous pouvez passer de la monnaie fiduciaire au crypto en moins de 60 secondes sur [MRC GlobalPay](/). Pas de compte d'exchange. Pas de verification d'identite. Pas d'attente.
+Que vous ayez une Visa, Mastercard ou une carte de debit virtuelle, vous pouvez passer de la monnaie fiduciaire au crypto en moins de 60 secondes sur [MRC Global Pay](/). Pas de compte d'exchange. Pas de verification d'identite. Pas d'attente.
 
 ## Pourquoi les paiements par carte sont le on-ramp crypto le plus populaire
 
@@ -371,13 +371,13 @@ Trois raisons pour lesquelles les paiements par carte dominent les achats crypto
 
 Pour les acheteurs debutants en particulier, les paiements par carte suppriment toute barriere entre la curiosite et la propriete.
 
-## Comment acheter du crypto par carte sur MRC GlobalPay
+## Comment acheter du crypto par carte sur MRC Global Pay
 
 Le processus prend moins de 60 secondes du debut a la fin:
 
 ### Etape 1: Selectionnez votre crypto
 
-Allez dans la [section Acheter](/#exchange) et choisissez le token que vous voulez. MRC GlobalPay supporte plus de 500 actifs: Bitcoin, Ethereum, Solana, USDT, USDC, XRP et des centaines d'autres.
+Allez dans la [section Acheter](/#exchange) et choisissez le token que vous voulez. MRC Global Pay supporte plus de 500 actifs: Bitcoin, Ethereum, Solana, USDT, USDC, XRP et des centaines d'autres.
 
 ### Etape 2: Entrez le montant
 
@@ -393,7 +393,7 @@ Choisissez carte comme methode de paiement. Entrez les details de votre Visa ou 
 
 ### Etape 5: Recevez votre crypto
 
-Une fois votre paiement par carte traite (generalement en quelques secondes), MRC GlobalPay envoie les tokens directement dans votre portefeuille. Tout le processus se termine en moins d'une minute.
+Une fois votre paiement par carte traite (generalement en quelques secondes), MRC Global Pay envoie les tokens directement dans votre portefeuille. Tout le processus se termine en moins d'une minute.
 
 ## Faits rapides
 
@@ -412,9 +412,9 @@ Les paiements par carte sont l'on-ramp universel vers le crypto. Pas de numeros 
   ja: {
     slug: CARD_SLUG,
     title: "クレジットカード・デビットカードで暗号通貨を即座に購入する方法（2026年ガイド）",
-    metaTitle: "クレジットカード・デビットカードで暗号通貨を即座に購入 | MRC GlobalPay",
+    metaTitle: "クレジットカード・デビットカードで暗号通貨を即座に購入 | MRC Global Pay",
     metaDescription: "VisaやMastercardでBitcoin、Ethereum、500以上のトークンを即座に購入。アカウント不要、60秒以内にウォレットへ届きます。最もシンプルなカード決済の暗号通貨オンランプ。",
-    excerpt: "クレジットカードとデビットカードは世界中で暗号通貨を購入する最速の方法です。このガイドでは、MRC GlobalPayでVisaやMastercardを使ってBitcoin、Ethereum、500以上のトークンを1分以内に購入する方法を説明します。",
+    excerpt: "クレジットカードとデビットカードは世界中で暗号通貨を購入する最速の方法です。このガイドでは、MRC Global PayでVisaやMastercardを使ってBitcoin、Ethereum、500以上のトークンを1分以内に購入する方法を説明します。",
     author: seedAuthors.sophiaRamirez,
     publishedAt: "2026-04-11",
     updatedAt: "2026-04-11",
@@ -423,7 +423,7 @@ Les paiements par carte sont l'on-ramp universel vers le crypto. Pas de numeros 
     tags: ["カード決済", "Visa", "Mastercard", "暗号通貨購入", "オンランプ"],
     content: `暗号通貨の購入は、オンラインでの買い物と同じくらい簡単であるべきです。カード情報を入力し、金額を確認し、ウォレットでトークンを受け取る。2026年のカード・トゥ・クリプトのオンランプはまさにそれを実現しています。
 
-Visa、Mastercard、またはバーチャルデビットカードをお持ちなら、[MRC GlobalPay](/)で60秒以内に法定通貨から暗号通貨に変換できます。取引所のアカウント不要。本人確認不要。待ち時間なし。
+Visa、Mastercard、またはバーチャルデビットカードをお持ちなら、[MRC Global Pay](/)で60秒以内に法定通貨から暗号通貨に変換できます。取引所のアカウント不要。本人確認不要。待ち時間なし。
 
 ## カード決済が最も人気のある暗号通貨オンランプである理由
 
@@ -433,13 +433,13 @@ Visa、Mastercard、またはバーチャルデビットカードをお持ちな
 2. リーチ。世界中に40億人以上のVisaおよびMastercardの保有者がいます。カードがあれば、暗号通貨にアクセスできます。
 3. 利便性。誰もがオンラインでカードで支払う方法を知っています。新しいアプリのインストールも、銀行のログインも、支払いコードのスキャンも不要です。
 
-## MRC GlobalPayでカードを使って暗号通貨を購入する方法
+## MRC Global Payでカードを使って暗号通貨を購入する方法
 
 プロセスは開始から終了まで60秒以内です：
 
 ### ステップ1：暗号通貨を選択
 
-[購入セクション](/#exchange)にアクセスし、希望するトークンを選びます。MRC GlobalPayは500以上のアセットをサポート：Bitcoin、Ethereum、Solana、USDT、USDC、XRPなど。
+[購入セクション](/#exchange)にアクセスし、希望するトークンを選びます。MRC Global Payは500以上のアセットをサポート：Bitcoin、Ethereum、Solana、USDT、USDC、XRPなど。
 
 ### ステップ2：金額を入力
 
@@ -455,7 +455,7 @@ Visa、Mastercard、またはバーチャルデビットカードをお持ちな
 
 ### ステップ5：暗号通貨を受け取る
 
-カード決済が処理されると（通常数秒以内）、MRC GlobalPayがトークンを直接ウォレットに送信します。
+カード決済が処理されると（通常数秒以内）、MRC Global Payがトークンを直接ウォレットに送信します。
 
 ## 基本情報
 
@@ -474,9 +474,9 @@ Visa、Mastercard、またはバーチャルデビットカードをお持ちな
   hi: {
     slug: CARD_SLUG,
     title: "क्रेडिट या डेबिट कार्ड से तुरंत क्रिप्टो कैसे खरीदें (2026 गाइड)",
-    metaTitle: "क्रेडिट कार्ड या डेबिट कार्ड से तुरंत क्रिप्टो खरीदें | MRC GlobalPay",
+    metaTitle: "क्रेडिट कार्ड या डेबिट कार्ड से तुरंत क्रिप्टो खरीदें | MRC Global Pay",
     metaDescription: "अपने Visa या Mastercard से Bitcoin, Ethereum और 500+ टोकन खरीदें। कोई खाता नहीं, 60 सेकंड से कम में डिलीवरी। सबसे सरल कार्ड-टू-क्रिप्टो ऑन-रैंप।",
-    excerpt: "क्रेडिट और डेबिट कार्ड दुनिया भर में क्रिप्टो खरीदने का सबसे तेज़ तरीका बने हुए हैं। यह गाइड बताती है कि MRC GlobalPay पर Visa या Mastercard से Bitcoin, Ethereum और 500+ टोकन कैसे खरीदें।",
+    excerpt: "क्रेडिट और डेबिट कार्ड दुनिया भर में क्रिप्टो खरीदने का सबसे तेज़ तरीका बने हुए हैं। यह गाइड बताती है कि MRC Global Pay पर Visa या Mastercard से Bitcoin, Ethereum और 500+ टोकन कैसे खरीदें।",
     author: seedAuthors.sophiaRamirez,
     publishedAt: "2026-04-11",
     updatedAt: "2026-04-11",
@@ -485,7 +485,7 @@ Visa、Mastercard、またはバーチャルデビットカードをお持ちな
     tags: ["कार्ड भुगतान", "Visa", "Mastercard", "क्रिप्टो खरीदें", "ऑन-रैंप"],
     content: `क्रिप्टो खरीदना किसी भी ऑनलाइन खरीदारी जितना आसान होना चाहिए। आप अपने कार्ड की जानकारी दर्ज करते हैं, राशि की पुष्टि करते हैं और अपने वॉलेट में टोकन प्राप्त करते हैं। 2026 में कार्ड-टू-क्रिप्टो ऑन-रैंप बिल्कुल यही करते हैं।
 
-चाहे आपके पास Visa हो, Mastercard हो या वर्चुअल डेबिट कार्ड, आप [MRC GlobalPay](/) पर 60 सेकंड से कम में फिएट से क्रिप्टो में जा सकते हैं। कोई एक्सचेंज खाता नहीं। कोई पहचान सत्यापन नहीं। कोई प्रतीक्षा नहीं।
+चाहे आपके पास Visa हो, Mastercard हो या वर्चुअल डेबिट कार्ड, आप [MRC Global Pay](/) पर 60 सेकंड से कम में फिएट से क्रिप्टो में जा सकते हैं। कोई एक्सचेंज खाता नहीं। कोई पहचान सत्यापन नहीं। कोई प्रतीक्षा नहीं।
 
 ## कार्ड भुगतान सबसे लोकप्रिय क्रिप्टो ऑन-रैंप क्यों हैं
 
@@ -495,7 +495,7 @@ Visa、Mastercard、またはバーチャルデビットカードをお持ちな
 2. पहुंच। दुनिया भर में 4 अरब से अधिक Visa और Mastercard धारक हैं।
 3. सुविधा। हर कोई जानता है कि ऑनलाइन कार्ड से कैसे भुगतान करें।
 
-## MRC GlobalPay पर कार्ड से क्रिप्टो कैसे खरीदें
+## MRC Global Pay पर कार्ड से क्रिप्टो कैसे खरीदें
 
 प्रक्रिया शुरू से अंत तक 60 सेकंड से कम लेती है:
 
@@ -517,7 +517,7 @@ Visa、Mastercard、またはバーチャルデビットカードをお持ちな
 
 ### चरण 5: अपना क्रिप्टो प्राप्त करें
 
-कार्ड भुगतान प्रोसेस होने के बाद, MRC GlobalPay टोकन सीधे आपके वॉलेट में भेजता है।
+कार्ड भुगतान प्रोसेस होने के बाद, MRC Global Pay टोकन सीधे आपके वॉलेट में भेजता है।
 
 ## मुख्य तथ्य
 
@@ -535,9 +535,9 @@ Visa、Mastercard、またはバーチャルデビットカードをお持ちな
   tr: {
     slug: CARD_SLUG,
     title: "Kredi veya Banka Karti ile Aninda Kripto Nasil Alinir (2026 Rehberi)",
-    metaTitle: "Kredi Karti veya Banka Karti ile Aninda Kripto Alin | MRC GlobalPay",
+    metaTitle: "Kredi Karti veya Banka Karti ile Aninda Kripto Alin | MRC Global Pay",
     metaDescription: "Visa veya Mastercard ile Bitcoin, Ethereum ve 500'den fazla token alin. Hesap gerektirmez, 60 saniyenin altinda teslimat.",
-    excerpt: "Kredi ve banka kartlari dunyada kripto almanin en hizli yolu olmaya devam ediyor. Bu rehber, MRC GlobalPay'de Visa veya Mastercard ile Bitcoin, Ethereum ve 500'den fazla tokeni bir dakikanin altinda nasil alacaginizi gosteriyor.",
+    excerpt: "Kredi ve banka kartlari dunyada kripto almanin en hizli yolu olmaya devam ediyor. Bu rehber, MRC Global Pay'de Visa veya Mastercard ile Bitcoin, Ethereum ve 500'den fazla tokeni bir dakikanin altinda nasil alacaginizi gosteriyor.",
     author: seedAuthors.sophiaRamirez,
     publishedAt: "2026-04-11",
     updatedAt: "2026-04-11",
@@ -546,7 +546,7 @@ Visa、Mastercard、またはバーチャルデビットカードをお持ちな
     tags: ["Kart Odemesi", "Visa", "Mastercard", "Kripto Al", "On-Ramp"],
     content: `Kripto almak herhangi bir online alisveris kadar basit olmalidir. Kart bilgilerinizi girersiniz, tutari onaylarsiniz ve cuzdaninizda tokenleri alirsiniz. 2026'da karttan kriptoya on-ramp'lar tam olarak bunu sunuyor.
 
-Visa, Mastercard veya sanal banka kartiniz olsun, [MRC GlobalPay](/) uzerinde 60 saniyenin altinda fiat'tan kriptoya gecebilirsiniz. Borsa hesabi yok. Kimlik dogrulamasi yok. Bekleme yok.
+Visa, Mastercard veya sanal banka kartiniz olsun, [MRC Global Pay](/) uzerinde 60 saniyenin altinda fiat'tan kriptoya gecebilirsiniz. Borsa hesabi yok. Kimlik dogrulamasi yok. Bekleme yok.
 
 ## Kart odemeleri neden en populer kripto on-ramp
 
@@ -556,7 +556,7 @@ Uc neden kart odemelerinin kuresel kripto alimlarinda one cikmasi:
 2. Erisim. Dunya genelinde 4 milyardan fazla Visa ve Mastercard sahibi var.
 3. Kolaylik. Herkes online kartla odeme yapmayi bilir.
 
-## MRC GlobalPay'de kart ile kripto nasil alinir
+## MRC Global Pay'de kart ile kripto nasil alinir
 
 Islem basindan sonuna 60 saniyenin altinda tamamlanir:
 
@@ -573,7 +573,7 @@ Kriptonuzu almak istediginiz hedef cuzdan adresini girin.
 Odeme yontemi olarak karti secin. Visa veya Mastercard bilgilerinizi girin.
 
 ### Adim 5: Kriptonuzu alin
-Kart odemeniz islendikten sonra, MRC GlobalPay tokenleri dogrudan cuzdaniniza gonderir.
+Kart odemeniz islendikten sonra, MRC Global Pay tokenleri dogrudan cuzdaniniza gonderir.
 
 ## Hizli bilgiler
 
@@ -591,9 +591,9 @@ Kart odemeniz islendikten sonra, MRC GlobalPay tokenleri dogrudan cuzdaniniza go
   vi: {
     slug: CARD_SLUG,
     title: "Cach Mua Crypto Ngay Lap Tuc Bang The Tin Dung hoac The Ghi No (Huong Dan 2026)",
-    metaTitle: "Mua Crypto Bang The Tin Dung hoac The Ghi No Ngay Lap Tuc | MRC GlobalPay",
+    metaTitle: "Mua Crypto Bang The Tin Dung hoac The Ghi No Ngay Lap Tuc | MRC Global Pay",
     metaDescription: "Mua Bitcoin, Ethereum va hon 500 token bang Visa hoac Mastercard. Khong can tai khoan, giao hang trong 60 giay. On-ramp the-sang-crypto don gian nhat 2026.",
-    excerpt: "The tin dung va the ghi no van la cach nhanh nhat de mua crypto tren toan the gioi. Huong dan nay chi cho ban cach mua Bitcoin, Ethereum va hon 500 token bang Visa hoac Mastercard tren MRC GlobalPay trong vong mot phut.",
+    excerpt: "The tin dung va the ghi no van la cach nhanh nhat de mua crypto tren toan the gioi. Huong dan nay chi cho ban cach mua Bitcoin, Ethereum va hon 500 token bang Visa hoac Mastercard tren MRC Global Pay trong vong mot phut.",
     author: seedAuthors.sophiaRamirez,
     publishedAt: "2026-04-11",
     updatedAt: "2026-04-11",
@@ -602,7 +602,7 @@ Kart odemeniz islendikten sonra, MRC GlobalPay tokenleri dogrudan cuzdaniniza go
     tags: ["Thanh Toan The", "Visa", "Mastercard", "Mua Crypto", "On-Ramp"],
     content: `Mua crypto nen don gian nhu bat ky giao dich truc tuyen nao. Ban nhap thong tin the, xac nhan so tien va nhan token trong vi cua ban. Day chinh la nhung gi cac on-ramp the-sang-crypto mang lai trong nam 2026.
 
-Du ban co Visa, Mastercard hay the ghi no ao, ban co the chuyen tu tien phap dinh sang crypto trong vong 60 giay tren [MRC GlobalPay](/). Khong can tai khoan san giao dich. Khong can xac minh danh tinh. Khong can cho doi.
+Du ban co Visa, Mastercard hay the ghi no ao, ban co the chuyen tu tien phap dinh sang crypto trong vong 60 giay tren [MRC Global Pay](/). Khong can tai khoan san giao dich. Khong can xac minh danh tinh. Khong can cho doi.
 
 ## Tai sao thanh toan bang the la on-ramp crypto pho bien nhat
 
@@ -610,7 +610,7 @@ Du ban co Visa, Mastercard hay the ghi no ao, ban co the chuyen tu tien phap din
 2. Pham vi. Co hon 4 ty nguoi so huu Visa va Mastercard tren toan the gioi.
 3. Tien loi. Ai cung biet cach thanh toan bang the truc tuyen.
 
-## Cach mua crypto bang the tren MRC GlobalPay
+## Cach mua crypto bang the tren MRC Global Pay
 
 ### Buoc 1: Chon crypto cua ban
 Truy cap [muc Mua](/#exchange) va chon token ban muon.
@@ -625,7 +625,7 @@ Nhap dia chi vi noi ban muon nhan crypto.
 Chon the lam phuong thuc thanh toan va nhap thong tin Visa hoac Mastercard.
 
 ### Buoc 5: Nhan crypto cua ban
-Sau khi thanh toan duoc xu ly, MRC GlobalPay gui token truc tiep vao vi cua ban.
+Sau khi thanh toan duoc xu ly, MRC Global Pay gui token truc tiep vao vi cua ban.
 
 ## Thong tin nhanh
 
@@ -643,9 +643,9 @@ Sau khi thanh toan duoc xu ly, MRC GlobalPay gui token truc tiep vao vi cua ban.
   af: {
     slug: CARD_SLUG,
     title: "Hoe om Crypto Onmiddellik te Koop met 'n Krediet- of Debietkaart (2026 Gids)",
-    metaTitle: "Koop Crypto met Krediet- of Debietkaart Onmiddellik | MRC GlobalPay",
+    metaTitle: "Koop Crypto met Krediet- of Debietkaart Onmiddellik | MRC Global Pay",
     metaDescription: "Koop Bitcoin, Ethereum en 6,000+ tokens met jou Visa of Mastercard. Geen rekening nodig nie, aflewering in minder as 60 sekondes.",
-    excerpt: "Krediet- en debietkaarte bly die vinnigste manier om crypto wereldwyd te koop. Hierdie gids wys hoe om Bitcoin, Ethereum en 6,000+ tokens met Visa of Mastercard op MRC GlobalPay in minder as 'n minuut te koop.",
+    excerpt: "Krediet- en debietkaarte bly die vinnigste manier om crypto wereldwyd te koop. Hierdie gids wys hoe om Bitcoin, Ethereum en 6,000+ tokens met Visa of Mastercard op MRC Global Pay in minder as 'n minuut te koop.",
     author: seedAuthors.sophiaRamirez,
     publishedAt: "2026-04-11",
     updatedAt: "2026-04-11",
@@ -654,7 +654,7 @@ Sau khi thanh toan duoc xu ly, MRC GlobalPay gui token truc tiep vao vi cua ban.
     tags: ["Kaartbetaling", "Visa", "Mastercard", "Koop Crypto", "On-Ramp"],
     content: `Crypto koop behoort so eenvoudig te wees soos enige aanlyn aankoop. Jy voer jou kaartbesonderhede in, bevestig die bedrag en ontvang tokens in jou beursie. Dit is presies wat kaart-na-crypto on-ramps in 2026 bied.
 
-Of jy nou 'n Visa, Mastercard of virtuele debietkaart het, jy kan in minder as 60 sekondes van fiat na crypto gaan op [MRC GlobalPay](/). Geen beurs-rekening nie. Geen identiteitsverifikasie nie. Geen wag nie.
+Of jy nou 'n Visa, Mastercard of virtuele debietkaart het, jy kan in minder as 60 sekondes van fiat na crypto gaan op [MRC Global Pay](/). Geen beurs-rekening nie. Geen identiteitsverifikasie nie. Geen wag nie.
 
 ## Hoekom kaartbetalings die gewildste crypto on-ramp is
 
@@ -662,7 +662,7 @@ Of jy nou 'n Visa, Mastercard of virtuele debietkaart het, jy kan in minder as 6
 2. Bereik. Daar is meer as 4 miljard Visa- en Mastercard-houers wereldwyd.
 3. Gerief. Almal weet hoe om aanlyn met 'n kaart te betaal.
 
-## Hoe om crypto met 'n kaart op MRC GlobalPay te koop
+## Hoe om crypto met 'n kaart op MRC Global Pay te koop
 
 ### Stap 1: Kies jou crypto
 Gaan na die [Koop-afdeling](/#exchange) en kies die token wat jy wil he.
@@ -677,7 +677,7 @@ Voer die bestemmingsbeursie-adres in waar jy jou crypto wil ontvang.
 Kies kaart as jou betaalmetode en voer jou Visa of Mastercard besonderhede in.
 
 ### Stap 5: Ontvang jou crypto
-Sodra jou kaartbetaling verwerk is, stuur MRC GlobalPay die tokens direk na jou beursie.
+Sodra jou kaartbetaling verwerk is, stuur MRC Global Pay die tokens direk na jou beursie.
 
 ## Vinnige feite
 
@@ -695,7 +695,7 @@ Sodra jou kaartbetaling verwerk is, stuur MRC GlobalPay die tokens direk na jou 
   fa: {
     slug: CARD_SLUG,
     title: "چگونه با کارت اعتباری یا دبیت فوری کریپتو بخریم (راهنمای 2026)",
-    metaTitle: "خرید فوری کریپتو با کارت اعتباری یا دبیت | MRC GlobalPay",
+    metaTitle: "خرید فوری کریپتو با کارت اعتباری یا دبیت | MRC Global Pay",
     metaDescription: "بیت‌کوین، اتریوم و بیش از 500 توکن را با ویزا یا مسترکارت بخرید. بدون حساب، تحویل در کمتر از 60 ثانیه. ساده‌ترین آن-رمپ کارت به کریپتو 2026.",
     excerpt: "کارت‌های اعتباری و دبیت همچنان سریع‌ترین راه برای خرید کریپتو در سراسر جهان هستند.",
     author: seedAuthors.sophiaRamirez,
@@ -706,7 +706,7 @@ Sodra jou kaartbetaling verwerk is, stuur MRC GlobalPay die tokens direk na jou 
     tags: ["پرداخت کارتی", "Visa", "Mastercard", "خرید کریپتو", "آن-رمپ"],
     content: `خرید کریپتو باید به سادگی هر خرید آنلاین دیگری باشد. اطلاعات کارت خود را وارد کنید، مبلغ را تایید کنید و توکن‌ها را در کیف پول خود دریافت کنید.
 
-چه ویزا داشته باشید، چه مسترکارت یا کارت دبیت مجازی، می‌توانید در کمتر از 60 ثانیه در [MRC GlobalPay](/) از فیات به کریپتو بروید. بدون حساب صرافی. بدون احراز هویت. بدون انتظار.
+چه ویزا داشته باشید، چه مسترکارت یا کارت دبیت مجازی، می‌توانید در کمتر از 60 ثانیه در [MRC Global Pay](/) از فیات به کریپتو بروید. بدون حساب صرافی. بدون احراز هویت. بدون انتظار.
 
 ## چرا پرداخت کارتی محبوب‌ترین آن-رمپ کریپتو است
 
@@ -730,7 +730,7 @@ Sodra jou kaartbetaling verwerk is, stuur MRC GlobalPay die tokens direk na jou 
   he: {
     slug: CARD_SLUG,
     title: "איך לקנות קריפטו מיידית עם כרטיס אשראי או דביט (מדריך 2026)",
-    metaTitle: "קנה קריפטו עם כרטיס אשראי או דביט מיידית | MRC GlobalPay",
+    metaTitle: "קנה קריפטו עם כרטיס אשראי או דביט מיידית | MRC Global Pay",
     metaDescription: "קנה ביטקוין, את'ריום ו-500+ טוקנים עם ויזה או מאסטרקארד. ללא חשבון, משלוח תוך פחות מ-60 שניות. האון-ראמפ הפשוט ביותר מכרטיס לקריפטו ב-2026. ישירות לארנק שלך.",
     excerpt: "כרטיסי אשראי ודביט נשארים הדרך המהירה ביותר לקנות קריפטו בעולם.",
     author: seedAuthors.sophiaRamirez,
@@ -741,7 +741,7 @@ Sodra jou kaartbetaling verwerk is, stuur MRC GlobalPay die tokens direk na jou 
     tags: ["תשלום בכרטיס", "Visa", "Mastercard", "קנה קריפטו", "און-ראמפ"],
     content: `קניית קריפטו צריכה להיות פשוטה כמו כל רכישה אונליין. אתה מזין את פרטי הכרטיס, מאשר את הסכום ומקבל טוקנים בארנק שלך.
 
-בין אם יש לך Visa, Mastercard או כרטיס דביט וירטואלי, אתה יכול לעבור מפיאט לקריפטו תוך פחות מ-60 שניות ב-[MRC GlobalPay](/). ללא חשבון בורסה. ללא אימות זהות. ללא המתנה.
+בין אם יש לך Visa, Mastercard או כרטיס דביט וירטואלי, אתה יכול לעבור מפיאט לקריפטו תוך פחות מ-60 שניות ב-[MRC Global Pay](/). ללא חשבון בורסה. ללא אימות זהות. ללא המתנה.
 
 ## למה תשלומי כרטיס הם און-ראמפ הקריפטו הפופולרי ביותר
 
@@ -765,7 +765,7 @@ Sodra jou kaartbetaling verwerk is, stuur MRC GlobalPay die tokens direk na jou 
   ur: {
     slug: CARD_SLUG,
     title: "کریڈٹ یا ڈیبٹ کارڈ سے فوری کرپٹو کیسے خریدیں (2026 گائیڈ)",
-    metaTitle: "کریڈٹ کارڈ یا ڈیبٹ کارڈ سے فوری کرپٹو خریدیں | MRC GlobalPay",
+    metaTitle: "کریڈٹ کارڈ یا ڈیبٹ کارڈ سے فوری کرپٹو خریدیں | MRC Global Pay",
     metaDescription: "اپنے ویزا یا ماسٹرکارڈ سے بٹ کوائن، ایتھیریم اور 500+ ٹوکن خریدیں۔ کوئی اکاؤنٹ نہیں، 60 سیکنڈ سے کم میں ڈیلیوری۔ آسان ترین کارڈ آن-ریمپ۔",
     excerpt: "کریڈٹ اور ڈیبٹ کارڈ دنیا بھر میں کرپٹو خریدنے کا سب سے تیز طریقہ ہیں۔",
     author: seedAuthors.sophiaRamirez,
@@ -776,7 +776,7 @@ Sodra jou kaartbetaling verwerk is, stuur MRC GlobalPay die tokens direk na jou 
     tags: ["کارڈ ادائیگی", "Visa", "Mastercard", "کرپٹو خریدیں", "آن-ریمپ"],
     content: `کرپٹو خریدنا کسی بھی آن لائن خریداری جتنا آسان ہونا چاہیے۔ آپ اپنے کارڈ کی تفصیلات درج کریں، رقم کی تصدیق کریں اور اپنے والٹ میں ٹوکن وصول کریں۔
 
-چاہے آپ کے پاس Visa ہو، Mastercard ہو یا ورچوئل ڈیبٹ کارڈ، آپ [MRC GlobalPay](/) پر 60 سیکنڈ سے کم میں فیاٹ سے کرپٹو میں جا سکتے ہیں۔ کوئی ایکسچینج اکاؤنٹ نہیں۔ کوئی شناخت کی تصدیق نہیں۔ کوئی انتظار نہیں۔
+چاہے آپ کے پاس Visa ہو، Mastercard ہو یا ورچوئل ڈیبٹ کارڈ، آپ [MRC Global Pay](/) پر 60 سیکنڈ سے کم میں فیاٹ سے کرپٹو میں جا سکتے ہیں۔ کوئی ایکسچینج اکاؤنٹ نہیں۔ کوئی شناخت کی تصدیق نہیں۔ کوئی انتظار نہیں۔
 
 ## فوری حقائق
 
@@ -794,7 +794,7 @@ Sodra jou kaartbetaling verwerk is, stuur MRC GlobalPay die tokens direk na jou 
   uk: {
     slug: CARD_SLUG,
     title: "Як купити криптовалюту миттево за допомогою кредитної або дебетової картки (Посiбник 2026)",
-    metaTitle: "Купити криптовалюту кредитною або дебетовою карткою миттево | MRC GlobalPay",
+    metaTitle: "Купити криптовалюту кредитною або дебетовою карткою миттево | MRC Global Pay",
     metaDescription: "Купуйте Bitcoin, Ethereum та понад 500 токенiв за допомогою Visa або Mastercard. Без облiкового запису, доставка менше нiж за 60 секунд.",
     excerpt: "Кредитнi та дебетовi картки залишаються найшвидшим способом купити криптовалюту у всьому свiтi.",
     author: seedAuthors.sophiaRamirez,
@@ -805,7 +805,7 @@ Sodra jou kaartbetaling verwerk is, stuur MRC GlobalPay die tokens direk na jou 
     tags: ["Оплата карткою", "Visa", "Mastercard", "Купити крипто", "Он-ремп"],
     content: `Купiвля криптовалюти має бути такою ж простою, як будь-яка онлайн-покупка. Ви вводите данi картки, пiдтверджуєте суму i отримуєте токени у свiй гаманець.
 
-Незалежно вiд того, чи маєте ви Visa, Mastercard або вiртуальну дебетову картку, ви можете перейти вiд фiату до криптовалюти менше нiж за 60 секунд на [MRC GlobalPay](/). Без облiкового запису бiржi. Без верифiкацii особи. Без очiкування.
+Незалежно вiд того, чи маєте ви Visa, Mastercard або вiртуальну дебетову картку, ви можете перейти вiд фiату до криптовалюти менше нiж за 60 секунд на [MRC Global Pay](/). Без облiкового запису бiржi. Без верифiкацii особи. Без очiкування.
 
 ## Чому карткові платежі є найпопулярнiшим крипто он-ремпом
 

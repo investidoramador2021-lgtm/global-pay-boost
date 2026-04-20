@@ -93,7 +93,7 @@ This creates a feedback loop for future routing decisions.
 
 ### Step 1: Configure pair and amount
 
-Open [MRC GlobalPay’s instant swap interface](/#exchange), set BTC as source and ETH as destination, then input your size. Start with your *true* intended size, not a random number—route behavior can change materially across tiers.
+Open [MRC Global Pay’s instant swap interface](/#exchange), set BTC as source and ETH as destination, then input your size. Start with your *true* intended size, not a random number—route behavior can change materially across tiers.
 
 ### Step 2: Validate destination details
 
@@ -993,9 +993,9 @@ If your mining operation is leaving money on the table through inefficient payou
     tags: ["Ethereum", "Solana", "Bridge", "Registration-Free", "USDC", "Cross-Chain"],
     content: `The bridge between Ethereum and Solana is one of the busiest routes in Web3. Whether you are chasing the latest meme coin, minting an NFT on [Magic Eden](https://magiceden.io/), or simply moving into the high-speed Solana ecosystem, you need a reliable way to swap your assets without the bottleneck of centralized exchange (CEX) waiting periods.
 
-**TL;DR — Bridge ETH to Solana in under 60 seconds on [MRC GlobalPay](/#exchange). No registration, no account required, no hidden spreads. We aggregate rates across multiple DEX and instant-swap providers to find the best quote automatically.**
+**TL;DR — Bridge ETH to Solana in under 60 seconds on [MRC Global Pay](/#exchange). No registration, no account required, no hidden spreads. We aggregate rates across multiple DEX and instant-swap providers to find the best quote automatically.**
 
-At MRC GlobalPay, we have optimized the **ETH to SOL bridge** to be as fast as a native transaction — no account creation, no registration, and no hidden spreads. As a [crypto meta aggregator](/blog/understanding-crypto-liquidity-aggregation), our engine scans dozens of liquidity sources in real time so you always get the tightest spread available.
+At MRC Global Pay, we have optimized the **ETH to SOL bridge** to be as fast as a native transaction — no account creation, no registration, and no hidden spreads. As a [crypto meta aggregator](/blog/understanding-crypto-liquidity-aggregation), our engine scans dozens of liquidity sources in real time so you always get the tightest spread available.
 
 ---
 
@@ -1048,14 +1048,14 @@ Transfer the Ethereum to the one-time deposit address provided. Once the network
 
 Most users searching for the **best place to buy Solana** are met with intrusive identity checks. Centralized exchanges require selfies, government IDs, and proof-of-address documents before you can even place your first trade.
 
-If you already hold Ethereum, USDT, or any other major cryptocurrency, **bridging is the most private way to acquire Solana** without lengthy onboarding. By using a non-custodial exchange like MRC GlobalPay, you maintain complete privacy:
+If you already hold Ethereum, USDT, or any other major cryptocurrency, **bridging is the most private way to acquire Solana** without lengthy onboarding. By using a non-custodial exchange like MRC Global Pay, you maintain complete privacy:
 
 - **No name or email required**
 - **No ID verification**
 - **No account creation**
 - **Wallet-to-wallet settlement only**
 
-This makes MRC GlobalPay the go-to platform for anyone who wants to [buy Solana registration-free](/buy/solana-no-kyc). Your keys, your coins — we never take custody of your funds at any point during the swap.
+This makes MRC Global Pay the go-to platform for anyone who wants to [buy Solana registration-free](/buy/solana-no-kyc). Your keys, your coins — we never take custody of your funds at any point during the swap.
 
 For more on privacy-first crypto acquisition, see our guide on [buying Bitcoin without verification](/buy/bitcoin-no-verification).
 
@@ -1083,7 +1083,7 @@ For our international users, we support various local pairs. Indonesian traders,
 
 Traditional bridges like Wormhole or Allbridge require you to lock tokens on one chain and mint wrapped versions on another. This introduces smart contract risk, liquidity fragmentation, and often multi-step UX flows that confuse newcomers.
 
-Our approach is different. MRC GlobalPay uses a **meta-aggregation model** that routes your swap through the deepest available liquidity — whether that is a DEX aggregator, an instant-swap provider, or a combination of both. The result:
+Our approach is different. MRC Global Pay uses a **meta-aggregation model** that routes your swap through the deepest available liquidity — whether that is a DEX aggregator, an instant-swap provider, or a combination of both. The result:
 
 - **No wrapped tokens** — you receive native SOL or native USDC
 - **No multi-step approvals** — one deposit, one payout
@@ -1110,7 +1110,7 @@ For a comprehensive security checklist, read our [crypto security best practices
 
 ### How long does it take to bridge ETH to Solana?
 
-On MRC GlobalPay, most ETH-to-SOL swaps settle in **under 60 seconds**. The exact time depends on Ethereum network confirmation speed (typically 1–2 blocks).
+On MRC Global Pay, most ETH-to-SOL swaps settle in **under 60 seconds**. The exact time depends on Ethereum network confirmation speed (typically 1–2 blocks).
 
 ### Is there a minimum amount to bridge?
 
@@ -1118,7 +1118,7 @@ Our minimum starts at just **$0.30**, making us one of the few platforms that su
 
 ### Do I need to create an account?
 
-No. MRC GlobalPay is fully non-custodial. No registration, no email, no account required. Just select your pair, provide a receiving address, and send.
+No. MRC Global Pay is fully non-custodial. No registration, no email, no account required. Just select your pair, provide a receiving address, and send.
 
 ### Can I bridge USDT (ERC-20) to SOL?
 
@@ -1132,7 +1132,7 @@ Any Solana wallet works: Phantom, Solflare, Backpack, Tangem, Ledger (with Solan
 
 ## Conclusion
 
-Stop waiting for CEX withdrawals and stop overpaying for gas. Whether you are moving $5 or $5,000, our bridge is engineered for speed and privacy. As a meta aggregator, MRC GlobalPay compares quotes from multiple providers simultaneously, ensuring you always receive the best available rate with zero registration overhead.
+Stop waiting for CEX withdrawals and stop overpaying for gas. Whether you are moving $5 or $5,000, our bridge is engineered for speed and privacy. As a meta aggregator, MRC Global Pay compares quotes from multiple providers simultaneously, ensuring you always receive the best available rate with zero registration overhead.
 
 [**Start Your ETH to SOL Swap Now →**](/#exchange)
 
@@ -1154,7 +1154,7 @@ Stop waiting for CEX withdrawals and stop overpaying for gas. Whether you are mo
     title: "How to Swap Crypto Dust for Stablecoins in 2026: A Guide to Cleaning Your Wallet",
     metaTitle: "Swap Crypto Dust for USDT/USDC in 2026 – $0.30 Minimum",
     metaDescription:
-      "Learn how to consolidate small, un-tradeable crypto balances (dust) into USDT or USDC using MRC GlobalPay's registration-free service. Starting at just $0.30.",
+      "Learn how to consolidate small, un-tradeable crypto balances (dust) into USDT or USDC using MRC Global Pay's registration-free service. Starting at just $0.30.",
     excerpt:
       "Got tiny leftover balances scattered across chains? This guide shows you how to sweep crypto dust into stablecoins like USDT or USDC — starting from just $0.30, with no account required.",
     author: seedAuthors.elenaVolkova,
@@ -1186,7 +1186,7 @@ In emerging markets like Brazil, Pakistan, and Vietnam, where users often transa
 
 Three things changed this year that make dust consolidation practical:
 
-1. **Aggregator minimums dropped.** Services like [MRC GlobalPay](/) now support swaps starting at just **$0.30** — far below the $5–$10 floors of traditional exchanges.
+1. **Aggregator minimums dropped.** Services like [MRC Global Pay](/) now support swaps starting at just **$0.30** — far below the $5–$10 floors of traditional exchanges.
 2. **Multi-chain routing improved.** Modern aggregators pull liquidity from 700+ trading pairs across chains, so even obscure tokens can find a route to USDT or USDC.
 3. **Gas costs normalized.** After years of volatile fees, most L1 and L2 networks now offer predictable, low-cost transactions.
 
@@ -1207,7 +1207,7 @@ Both work. Pick the one that fits your next move.
 
 ### Step 3: Use a low-minimum aggregator
 
-Go to [MRC GlobalPay's exchange widget](/#exchange). The minimum swap is **$0.30** — meaning even your smallest dust balances qualify.
+Go to [MRC Global Pay's exchange widget](/#exchange). The minimum swap is **$0.30** — meaning even your smallest dust balances qualify.
 
 1. Select your dust token (e.g., MATIC, BNB, SOL, AVAX)
 2. Set the destination to USDT or USDC on your preferred chain
@@ -1222,7 +1222,7 @@ Work through each wallet systematically. Most swaps complete in 2–15 minutes d
 
 ## Which dust tokens can you swap?
 
-MRC GlobalPay supports 6,000+ coins across major networks. Common dust tokens that users consolidate include:
+MRC Global Pay supports 6,000+ coins across major networks. Common dust tokens that users consolidate include:
 
 | Token | Typical Dust Amount | Network |
 |-------|-------------------|---------|
@@ -1251,7 +1251,7 @@ That is $46 that was doing absolutely nothing, recovered in half an hour. Scale 
 
 For dust-sized amounts, fees matter more than usual because they represent a larger percentage of the trade.
 
-MRC GlobalPay uses an aggregation engine that compares rates across multiple liquidity sources to minimize slippage. For dust swaps:
+MRC Global Pay uses an aggregation engine that compares rates across multiple liquidity sources to minimize slippage. For dust swaps:
 
 - **Network fees** are typically $0.01–$0.50 depending on the chain
 - **Spread** is usually 0.5–1.5% for small amounts
@@ -1263,7 +1263,7 @@ For low-fee swaps, check our [features section](/#features) to understand how th
 
 Yes, provided you use a **non-custodial** service. Here is what that means:
 
-- Your funds are **never held** by MRC GlobalPay
+- Your funds are **never held** by MRC Global Pay
 - Swaps execute through **atomic transactions** — they either complete fully or revert
 - You maintain **full control** of your private keys throughout
 - The service is operated by a **registered Canadian MSB** (Money Services Business)
@@ -1289,7 +1289,7 @@ In these markets, even $5 of recovered dust can be meaningful. The $0.30 minimum
 
 ## The bottom line?
 
-Crypto dust is not worthless — it is just inconvenient. In 2026, tools like MRC GlobalPay have removed the friction. With a $0.30 minimum, registration-free access, and support for 6,000+ tokens, there is no reason to leave value sitting idle in forgotten wallets.
+Crypto dust is not worthless — it is just inconvenient. In 2026, tools like MRC Global Pay have removed the friction. With a $0.30 minimum, registration-free access, and support for 6,000+ tokens, there is no reason to leave value sitting idle in forgotten wallets.
 
 Start with your largest dust balances and work down. In an hour, you will have a cleaner portfolio and a few extra dollars in stablecoins.
 
@@ -1318,7 +1318,7 @@ Start with your largest dust balances and work down. In an hour, you will have a
     tags: ["RWA", "Tokenized Stocks", "Solana", "NVDA", "MSFT", "SPY", "Equities"],
     content: `The financial landscape of 2026 has reached a tipping point. Real-World Assets (RWAs) are no longer a "pilot program" tucked into a research report — they are a billion-dollar market segment with deep liquidity, regulated custody, and growing institutional flow.
 
-For the modern investor, the ability to move seamlessly between Bitcoin and the S&P 500 without leaving the blockchain is the ultimate competitive advantage. At [MRC GlobalPay](/) we have integrated routing into deep RWA liquidity so users can swap directly into tokenized equities like **aNVDA**, **aMSFT**, and **aSPY** in a single click.
+For the modern investor, the ability to move seamlessly between Bitcoin and the S&P 500 without leaving the blockchain is the ultimate competitive advantage. At [MRC Global Pay](/) we have integrated routing into deep RWA liquidity so users can swap directly into tokenized equities like **aNVDA**, **aMSFT**, and **aSPY** in a single click.
 
 But how does this actually work, and why should you care?
 
@@ -1357,7 +1357,7 @@ Want exposure to NVIDIA but do not want to commit to a full share? Tokenization 
 
 For retail investors building diversified exposure on a budget, this is structural. For larger investors managing hundreds of positions, it removes the operational headache of round-lot constraints.
 
-## How the swap actually works on MRC GlobalPay
+## How the swap actually works on MRC Global Pay
 
 You do not need an account, KYC for small sizes, or a bank wire to access on-chain equities. The flow is identical to any other swap:
 
@@ -1391,7 +1391,7 @@ Each link opens the widget with the tokens pre-selected so the user only has to 
 
 ## Security and compliance
 
-As a Registered Canadian Money Services Business (MSB) under FINTRAC, MRC GlobalPay prioritizes institutional-grade security. While the assets themselves are decentralized, our gateway operates under strict Canadian financial regulations.
+As a Registered Canadian Money Services Business (MSB) under FINTRAC, MRC Global Pay prioritizes institutional-grade security. While the assets themselves are decentralized, our gateway operates under strict Canadian financial regulations.
 
 We only route to RWA issuers that meet the following bar:
 
@@ -1433,7 +1433,7 @@ Some issuers allow institutional redemption directly into shares. Most retail fl
 
 ### What chains are supported?
 
-Most RWA tokens are issued on Ethereum or Solana. MRC GlobalPay routes natively across both, plus the major L2s, so you can land your asset on the chain that fits your downstream plan.
+Most RWA tokens are issued on Ethereum or Solana. MRC Global Pay routes natively across both, plus the major L2s, so you can land your asset on the chain that fits your downstream plan.
 
 ### Do I pay capital gains tax on tokenized stock swaps?
 
@@ -1473,7 +1473,7 @@ Open the [BTC → aNVDA swap](/?from=btc&to=nvdaonerc20#exchange) and place your
 
 When that much paper wealth turns into spendable inventory at once, the order books take the hit. Sell pressure compounds, market makers widen spreads, and retail liquidity evaporates exactly when it is needed most.
 
-This is a guide to what is coming, why it matters, and how to use a multi-provider routing engine like [MRC GlobalPay](/) to position defensively without overpaying for execution.
+This is a guide to what is coming, why it matters, and how to use a multi-provider routing engine like [MRC Global Pay](/) to position defensively without overpaying for execution.
 
 ## What is a cliff unlock and why does it matter?
 
@@ -1519,7 +1519,7 @@ Here is the part most retail traders miss: during a supply shock, **liquidity be
 
 A single-venue execution at this moment is the most expensive possible decision. You take the worst price visible without ever knowing a better one existed two clicks away.
 
-MRC GlobalPay's dual-API liquidity engine solves this directly: every quote pulls from **multiple providers simultaneously** and routes to the deepest pool with the lowest realized slippage. During the March 2026 STRK unlock, our router saved active users an average of **0.7%** versus single-venue execution on identical sizes — a non-trivial number when you are exiting a position you have held for 18 months.
+MRC Global Pay's dual-API liquidity engine solves this directly: every quote pulls from **multiple providers simultaneously** and routes to the deepest pool with the lowest realized slippage. During the March 2026 STRK unlock, our router saved active users an average of **0.7%** versus single-venue execution on identical sizes — a non-trivial number when you are exiting a position you have held for 18 months.
 
 For the technical breakdown of how this works, read [How Crypto Liquidity Aggregation Really Works in 2026](/blog/understanding-crypto-liquidity-aggregation).
 
@@ -1660,7 +1660,7 @@ You can also rotate from BTC, ETH, or SOL with one click:
 - [SOL → PRL](/?from=sol&to=prl#exchange)
 - [USDT → PRL](/?from=usdttrc20&to=prl#exchange)
 
-The MRC GlobalPay liquidity router scans multiple providers in parallel before routing — important for an asset like PRL where DEX bot activity can produce up to 2% slippage on direct on-chain swaps if executed naively.
+The MRC Global Pay liquidity router scans multiple providers in parallel before routing — important for an asset like PRL where DEX bot activity can produce up to 2% slippage on direct on-chain swaps if executed naively.
 
 ### Risk considerations for PRL
 
@@ -1700,7 +1700,7 @@ Other common entry routes:
 - **Regulatory complexity** — multi-jurisdiction live events create cross-border compliance overhead.
 - **Liquidity profile** — thinner book than PRL. Size positions accordingly.
 
-## Why route AI tokens through MRC GlobalPay specifically?
+## Why route AI tokens through MRC Global Pay specifically?
 
 These "AI gems" often suffer from two structural execution problems on raw DEX flows:
 
@@ -1739,7 +1739,7 @@ PRL trades on KuCoin and is on the Coinbase Roadmap as of mid-2026. RAVE has pri
 
 ### What is the minimum trade size?
 
-The MRC GlobalPay platform minimum is **$0.30** equivalent. Practical clean-fill minimums for PRL/RAVE are typically $25–$50 to avoid disproportionate spread impact.
+The MRC Global Pay platform minimum is **$0.30** equivalent. Practical clean-fill minimums for PRL/RAVE are typically $25–$50 to avoid disproportionate spread impact.
 
 ### Can I stake PRL or RAVE?
 

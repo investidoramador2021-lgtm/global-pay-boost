@@ -49,7 +49,7 @@ const NEW_ASSETS = [
     value: "High-performance trading liquidity",
     audience: "Active traders",
     detail:
-      "High-performance trading liquidity now available for direct exchange on MRC GlobalPay.",
+      "High-performance trading liquidity now available for direct exchange on MRC Global Pay.",
   },
   {
     name: "PancakeSwap (CAKE)",
@@ -94,51 +94,51 @@ const LiquidityWhitepaper = () => {
   return (
     <div className="min-h-screen bg-background">
       <Helmet>
-        <title>Q2 2026 Liquidity Expansion — MRC GlobalPay Whitepaper</title>
+        <title>Q2 2026 Liquidity Expansion — MRC Global Pay Whitepaper</title>
         <meta
           name="description"
-          content="MRC GlobalPay liquidity whitepaper: ZkSync USDC, USDS, EDGE and Aptos CAKE powering non-custodial cross-chain settlement for 900+ assets, $0.30 minimums."
+          content="MRC Global Pay liquidity whitepaper: ZkSync USDC, USDS, EDGE and Aptos CAKE powering non-custodial cross-chain settlement for 900+ assets, $0.30 minimums."
         />
         <link rel="canonical" href={canonicalUrl} />
         <meta name="robots" content="index, follow, max-image-preview:large" />
-        <meta property="og:title" content="Q2 2026 Liquidity Expansion — MRC GlobalPay Whitepaper" />
-        <meta property="og:description" content="MRC GlobalPay liquidity whitepaper: ZkSync USDC, USDS, EDGE and Aptos CAKE powering non-custodial cross-chain settlement for 900+ assets, $0.30 minimums." />
+        <meta property="og:title" content="Q2 2026 Liquidity Expansion — MRC Global Pay Whitepaper" />
+        <meta property="og:description" content="MRC Global Pay liquidity whitepaper: ZkSync USDC, USDS, EDGE and Aptos CAKE powering non-custodial cross-chain settlement for 900+ assets, $0.30 minimums." />
         <meta property="og:type" content="article" />
         <meta property="og:url" content={canonicalUrl} />
-        <meta property="og:site_name" content="MRC GlobalPay" />
+        <meta property="og:site_name" content="MRC Global Pay" />
         <meta property="og:image" content={`https://mrcglobalpay.com${heroAsset}`} />
         <meta property="og:image:width" content="1200" />
         <meta property="og:image:height" content="630" />
         <meta name="twitter:card" content="summary_large_image" />
-        <meta name="twitter:title" content="Q2 2026 Liquidity Expansion — MRC GlobalPay" />
+        <meta name="twitter:title" content="Q2 2026 Liquidity Expansion — MRC Global Pay" />
         <meta name="twitter:description" content="ZkSync USDC, USDS, EDGE and Aptos CAKE powering non-custodial cross-chain settlement." />
         <meta name="twitter:image" content={`https://mrcglobalpay.com${heroAsset}`} />
         <script type="application/ld+json">
           {JSON.stringify({
             "@context": "https://schema.org",
             "@type": "TechArticle",
-            name: "Q2 2026 Liquidity Expansion — MRC GlobalPay",
+            name: "Q2 2026 Liquidity Expansion — MRC Global Pay",
             headline:
               "A New Frontier for Non-Custodial Cross-Chain Settlement",
             description:
-              "MRC GlobalPay integrates Layer-2 powerhouses and next-generation stablecoins to reduce transaction friction globally.",
+              "MRC Global Pay integrates Layer-2 powerhouses and next-generation stablecoins to reduce transaction friction globally.",
             url: canonicalUrl,
             image: `https://mrcglobalpay.com${heroAsset}`,
             datePublished: "2026-04-12",
             author: {
               "@type": "Organization",
-              name: "MRC GlobalPay",
+              name: "MRC Global Pay",
             },
             publisher: {
               "@type": "FinancialService",
-              name: "MRC GlobalPay",
+              name: "MRC Global Pay",
               url: "https://mrcglobalpay.com",
             },
           })}
         </script>
       </Helmet>
 
-      <StickyShareRail url={canonicalUrl} title="Q2 2026 Liquidity Expansion — MRC GlobalPay Whitepaper" />
+      <StickyShareRail url={canonicalUrl} title="Q2 2026 Liquidity Expansion — MRC Global Pay Whitepaper" />
 
       <SiteHeader />
 
@@ -199,7 +199,7 @@ const LiquidityWhitepaper = () => {
           >
             <h2 className="text-2xl font-semibold text-foreground">Introduction</h2>
             <p className="text-muted-foreground leading-relaxed">
-              MRC GlobalPay continues its mission to provide the world's most
+              MRC Global Pay continues its mission to provide the world's most
               accessible non-custodial exchange. By integrating Layer-2
               powerhouses and next-generation stablecoins, we are reducing
               transaction friction for users globally. Every new asset
@@ -404,7 +404,7 @@ const LiquidityWhitepaper = () => {
             </h3>
             <p className="text-muted-foreground">
               Swapping any of these new assets requires zero personal data and
-              remains fully non-custodial. MRC GlobalPay is a{" "}
+              remains fully non-custodial. MRC Global Pay is a{" "}
               <span className="font-semibold text-primary">
                 Registered Canadian MSB (C100000015)
               </span>
@@ -445,7 +445,7 @@ const LiquidityWhitepaper = () => {
       <section className="container mx-auto max-w-3xl px-4 pb-16">
         <SocialShare
           url={canonicalUrl}
-          title="Q2 2026 Liquidity Expansion — MRC GlobalPay Whitepaper"
+          title="Q2 2026 Liquidity Expansion — MRC Global Pay Whitepaper"
           description="ZkSync USDC, USDS, EDGE and Aptos CAKE powering non-custodial cross-chain settlement for 900+ assets."
         />
       </section>

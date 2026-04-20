@@ -79,7 +79,7 @@ Deno.serve(async (req) => {
     const from = p.from_ticker.toUpperCase();
     const to = p.to_ticker.toUpperCase();
     const slug = `${p.from_ticker}-to-${p.to_ticker}`;
-    const title = p.seo_title || `Convert ${from} to ${to} | MRC GlobalPay`;
+    const title = p.seo_title || `Convert ${from} to ${to} | MRC Global Pay`;
     const desc = p.seo_description || `Swap ${from} for ${to} instantly. No KYC, no account.`;
     const updated = new Date(p.updated_at).toISOString();
     const path = `/exchange/${slug}`;
@@ -103,7 +103,7 @@ ${hreflangLinks(path)}
     <id>${escapeXml(id)}</id>
     <updated>${updated}</updated>
     <category term="LiveSwap" />
-    <summary>Non-custodial swap of ${s.amount} ${s.from_currency.toUpperCase()} to ${s.to_currency.toUpperCase()} settled via MRC GlobalPay.</summary>
+    <summary>Non-custodial swap of ${s.amount} ${s.from_currency.toUpperCase()} to ${s.to_currency.toUpperCase()} settled via MRC Global Pay.</summary>
     <link href="${SITE}/#exchange" rel="alternate" />
   </entry>`;
   });
@@ -115,7 +115,7 @@ ${hreflangLinks(path)}
     <id>${SITE}/tokens/${t.ticker.toLowerCase()}</id>
     <updated>${updated}</updated>
     <category term="NewToken" />
-    <summary>${escapeXml(t.name)} (${t.ticker}) is now available for instant non-custodial swaps on MRC GlobalPay. Category: ${t.category}. Minimum: $0.30.</summary>
+    <summary>${escapeXml(t.name)} (${t.ticker}) is now available for instant non-custodial swaps on MRC Global Pay. Category: ${t.category}. Minimum: $0.30.</summary>
     <link href="${SITE}/?from=${t.ticker.toLowerCase()}&amp;to=usdt#exchange" rel="alternate" />
   </entry>`;
   });
@@ -128,7 +128,7 @@ ${hreflangLinks(path)}
       const from = p.from_ticker.toUpperCase();
       const to = p.to_ticker.toUpperCase();
       const slug = `${p.from_ticker}-to-${p.to_ticker}`;
-      const title = p.seo_title || `Convert ${from} to ${to} | MRC GlobalPay`;
+      const title = p.seo_title || `Convert ${from} to ${to} | MRC Global Pay`;
       const desc = p.seo_description || `Swap ${from} for ${to} instantly. No KYC, no account.`;
       const pubDate = new Date(p.updated_at).toUTCString();
       return `    <item>
@@ -165,7 +165,7 @@ ${hreflangLinks(path)}
     const rss = `<?xml version="1.0" encoding="UTF-8"?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:xhtml="http://www.w3.org/1999/xhtml">
   <channel>
-    <title>MRC GlobalPay — Live Swap Events, New Pairs &amp; Tokens</title>
+    <title>MRC Global Pay — Live Swap Events, New Pairs &amp; Tokens</title>
     <link>${SITE}</link>
     <description>Real-time non-custodial crypto swap activity, newly generated exchange pairs, and supported tokens. FINTRAC MSB C100000015.</description>
     <language>en-us</language>
@@ -183,7 +183,7 @@ ${[...rssItems, ...tokenItems, ...swapItems].join("\n")}
   // Default: Atom feed
   const atom = `<?xml version="1.0" encoding="UTF-8"?>
 <feed xmlns="http://www.w3.org/2005/Atom" xmlns:xhtml="http://www.w3.org/1999/xhtml">
-  <title>MRC GlobalPay — Live Swap Events, New Pairs &amp; Tokens</title>
+  <title>MRC Global Pay — Live Swap Events, New Pairs &amp; Tokens</title>
   <subtitle>Real-time non-custodial crypto swap activity, newly generated exchange pairs, and supported tokens. FINTRAC MSB C100000015.</subtitle>
   <link href="${SITE}" rel="alternate" />
   <link href="${SITE}/feed.xml" rel="self" type="application/atom+xml" />

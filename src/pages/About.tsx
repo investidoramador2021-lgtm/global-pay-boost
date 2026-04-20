@@ -6,11 +6,11 @@ import { Shield, Globe, Building2, Scale, AlertTriangle } from "lucide-react";
 const About = () => (
   <>
     <Helmet>
-      <title>About — MSB Compliance & Business Information | MRC GlobalPay</title>
-      <meta name="description" content="MRC GlobalPay is a registered Canadian Money Services Business (MSB) under FINTRAC (C100000015). Non-custodial cryptocurrency exchange serving global markets." />
+      <title>About — MSB Compliance & Business Information | MRC Global Pay</title>
+      <meta name="description" content="MRC Global Pay is a registered Canadian Money Services Business (MSB) under FINTRAC (C100000015). Non-custodial cryptocurrency exchange serving global markets." />
       <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1" />
       <link rel="canonical" href="https://mrcglobalpay.com/about" />
-      <meta property="og:title" content="About — MSB Compliance & Business | MRC GlobalPay" />
+      <meta property="og:title" content="About — MSB Compliance & Business | MRC Global Pay" />
       <meta property="og:description" content="Registered Canadian MSB (FINTRAC C100000015). Non-custodial crypto exchange serving global markets." />
       <meta property="og:url" content="https://mrcglobalpay.com/about" />
       <meta property="og:type" content="website" />
@@ -18,7 +18,7 @@ const About = () => (
       <script type="application/ld+json">{JSON.stringify({
         "@context": "https://schema.org",
         "@type": "Organization",
-        name: "MRC GlobalPay",
+        name: "MRC Global Pay",
         url: "https://mrcglobalpay.com",
         description: "Registered Canadian Money Services Business providing non-custodial cryptocurrency exchange services.",
         address: { "@type": "PostalAddress", streetAddress: "116 Albert Street, Suite 300", addressLocality: "Ottawa", addressRegion: "ON", postalCode: "K1P 5G3", addressCountry: "CA" },
@@ -51,10 +51,10 @@ const About = () => (
       <section className="container mx-auto px-4 py-16 sm:py-24">
         <div className="mx-auto max-w-3xl">
           <h1 className="font-display text-4xl font-bold tracking-tight text-foreground sm:text-5xl">
-            About <span className="text-primary">MRC GlobalPay</span>
+            About <span className="text-primary">MRC Global Pay</span>
           </h1>
           <p className="mt-6 font-body text-lg leading-relaxed text-muted-foreground">
-            MRC GlobalPay is a <strong>registered Canadian Money Services Business (MSB)</strong> providing non-custodial cryptocurrency exchange services to global markets. We are committed to regulatory compliance, user privacy, and institutional-grade security.
+            MRC Global Pay is a <strong>registered Canadian Money Services Business (MSB)</strong> providing non-custodial cryptocurrency exchange services to global markets. We are committed to regulatory compliance, user privacy, and institutional-grade security.
           </p>
 
           {/* MSB Registration */}
@@ -66,7 +66,7 @@ const About = () => (
                 <div className="mt-4 space-y-3 font-body text-sm text-muted-foreground">
                   <div className="flex justify-between border-b border-border pb-2">
                     <span className="font-semibold text-foreground">Entity Name</span>
-                    <span>MRC GlobalPay</span>
+                    <span>MRC Global Pay</span>
                   </div>
                   <div className="flex justify-between border-b border-border pb-2">
                     <span className="font-semibold text-foreground">Registration Type</span>
@@ -106,7 +106,7 @@ const About = () => (
               <Building2 className="h-6 w-6 text-primary" /> Business Model
             </h2>
             <div className="mt-4 space-y-3 font-body text-sm leading-relaxed text-muted-foreground">
-              <p><strong>Architecture:</strong> Non-custodial. MRC GlobalPay never holds, stores, or has access to user funds. All swaps settle wallet-to-wallet through institutional-grade liquidity infrastructure (ChangeNOW / Fireblocks).</p>
+              <p><strong>Architecture:</strong> Non-custodial. MRC Global Pay never holds, stores, or has access to user funds. All swaps settle wallet-to-wallet through institutional-grade liquidity infrastructure (ChangeNOW / Fireblocks).</p>
               <p><strong>Minimum Swap:</strong> $0.30 USD equivalent — the lowest in the industry, designed for micro-balance ("crypto dust") conversion.</p>
               <p><strong>Supported Assets:</strong> 6,000+ cryptocurrencies and Tokenized Stocks across 50+ blockchain networks, with curated coverage of Trending AI tokens and stablecoins.</p>
               <p><strong>Settlement Speed:</strong> Average 2–15 minutes depending on network confirmation times.</p>
@@ -119,13 +119,13 @@ const About = () => (
               <Globe className="h-6 w-6 text-primary" /> Accepted Countries Policy
             </h2>
             <div className="mt-4 font-body text-sm leading-relaxed text-muted-foreground space-y-3">
-              <p>MRC GlobalPay serves <strong>global markets</strong>. Our non-custodial exchange service is available to users worldwide, with the following exclusions mandated by international compliance obligations:</p>
+              <p>MRC Global Pay serves <strong>global markets</strong>. Our non-custodial exchange service is available to users worldwide, with the following exclusions mandated by international compliance obligations:</p>
               <div className="rounded-lg border border-destructive/20 bg-destructive/5 p-4">
                 <h3 className="flex items-center gap-2 font-semibold text-foreground">
                   <AlertTriangle className="h-4 w-4 text-destructive" /> Restricted Jurisdictions
                 </h3>
                 <p className="mt-2 text-xs">
-                  In accordance with OFAC (Office of Foreign Assets Control) sanctions and Canadian AML regulations, MRC GlobalPay does <strong>not</strong> provide services to users in the following regions:
+                  In accordance with OFAC (Office of Foreign Assets Control) sanctions and Canadian AML regulations, MRC Global Pay does <strong>not</strong> provide services to users in the following regions:
                 </p>
                 <ul className="mt-2 grid grid-cols-2 gap-1 text-xs sm:grid-cols-3">
                   {["North Korea (DPRK)", "Iran", "Syria", "Cuba", "Crimea Region", "Donetsk / Luhansk", "Russia", "Myanmar", "South Sudan"].map((c) => (

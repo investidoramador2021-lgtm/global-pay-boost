@@ -79,7 +79,7 @@ export default function WidgetLabSection({ referralCode, partnerId }: Props) {
     return `https://mrcglobalpay.com/embed/widget?${params.toString()}`;
   }, [referralCode, pair, lang, theme]);
 
-  const iframeCode = `<iframe src="${iframeSrc}" width="${size.w}" height="${size.h}" style="border:none;border-radius:16px;overflow:hidden;" allow="clipboard-write" loading="lazy" title="MRC GlobalPay Crypto Swap Widget"></iframe>`;
+  const iframeCode = `<iframe src="${iframeSrc}" width="${size.w}" height="${size.h}" style="border:none;border-radius:16px;overflow:hidden;" allow="clipboard-write" loading="lazy" title="MRC Global Pay Crypto Swap Widget"></iframe>`;
 
   const reactCode = `import React from "react";
 
@@ -91,7 +91,7 @@ const MRCSwapWidget = () => (
     style={{ border: "none", borderRadius: 16, overflow: "hidden" }}
     allow="clipboard-write"
     loading="lazy"
-    title="MRC GlobalPay Crypto Swap Widget"
+    title="MRC Global Pay Crypto Swap Widget"
   />
 );
 

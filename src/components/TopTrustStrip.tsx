@@ -16,7 +16,7 @@ const TopTrustStrip = () => (
       <Link
         to="/transparency-security"
         className="inline-flex flex-wrap items-center justify-center gap-x-2 gap-y-1 font-body text-[11px] font-semibold leading-tight tracking-wide text-foreground/90 hover:text-primary transition-colors sm:text-xs"
-        title="View MRC GlobalPay's Canadian MSB registration, FINTRAC compliance, and Bank of Canada PSP authorization"
+        title="View MRC Global Pay's Canadian MSB registration, FINTRAC compliance, and Bank of Canada PSP authorization"
       >
         <span className="text-base leading-none" aria-hidden="true">🇨🇦</span>
         <ShieldCheck className="h-3.5 w-3.5 text-primary" aria-hidden="true" />

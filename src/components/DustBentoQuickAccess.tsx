@@ -53,7 +53,7 @@ const DustBentoQuickAccess = ({ langPath }: Props) => (
           Institutional Recovery & Settlement Tools
         </h2>
         <p className="mt-3 font-body text-sm text-muted-foreground sm:text-base">
-          Direct access to every consolidation pathway, bridge, and settlement rail in the MRC GlobalPay infrastructure.
+          Direct access to every consolidation pathway, bridge, and settlement rail in the MRC Global Pay infrastructure.
         </p>
       </div>
 

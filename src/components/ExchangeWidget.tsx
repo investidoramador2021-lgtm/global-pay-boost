@@ -3122,7 +3122,7 @@ const ExchangeWidget = ({ onTabChange, defaultFrom, defaultTo }: ExchangeWidgetP
                   <p className="font-body text-[10px] leading-tight text-muted-foreground sm:text-[11px]">
                     {t(
                       "widget.msbRateNote",
-                      "As a Registered Canadian MSB, MRC GlobalPay provides transparent, non-custodial rate locking for high-value transactions."
+                      "As a Registered Canadian MSB, MRC Global Pay provides transparent, non-custodial rate locking for high-value transactions."
                     )}
                   </p>
                 </div>
@@ -4121,8 +4121,8 @@ const ExchangeWidget = ({ onTabChange, defaultFrom, defaultTo }: ExchangeWidgetP
                       onClick={async () => {
                         try {
                           await navigator.share({
-                            title: "Crypto Swap Complete — MRC GlobalPay",
-                            text: `I just swapped ${txStatus.fromCurrency?.toUpperCase()} → ${txStatus.toCurrency?.toUpperCase()}${txStatus.amountReceive ? ` and received ${txStatus.amountReceive} ${txStatus.toCurrency?.toUpperCase()}` : ""} on MRC GlobalPay — fast, registration-free, non-custodial!`,
+                            title: "Crypto Swap Complete — MRC Global Pay",
+                            text: `I just swapped ${txStatus.fromCurrency?.toUpperCase()} → ${txStatus.toCurrency?.toUpperCase()}${txStatus.amountReceive ? ` and received ${txStatus.amountReceive} ${txStatus.toCurrency?.toUpperCase()}` : ""} on MRC Global Pay — fast, registration-free, non-custodial!`,
                             url: "https://mrcglobalpay.com",
                           });
                         } catch (e) {

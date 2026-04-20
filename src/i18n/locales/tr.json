@@ -1,15 +1,15 @@
 {
   "meta": {
-    "title": "MRC GlobalPay | Anında Kripto Takası $0.30'dan — Kayıt Gerektirmez",
-    "description": "Kayıt gerektirmeden 6.000'den fazla kripto para birimine ve tokenize hisse senedine anında erişin. MRC GlobalPay, minimum takas olmadan, 60 saniyenin altında ödenen non-custodial bir kripto borsasıdır. Kayıtlı Kanadalı MSB.",
-    "ogTitle": "MRC GlobalPay | Anında Kripto Takası $0.30'dan"
+    "title": "MRC Global Pay | Anında Kripto Takası $0.30'dan — Kayıt Gerektirmez",
+    "description": "Kayıt gerektirmeden 6.000'den fazla kripto para birimine ve tokenize hisse senedine anında erişin. MRC Global Pay, minimum takas olmadan, 60 saniyenin altında ödenen non-custodial bir kripto borsasıdır. Kayıtlı Kanadalı MSB.",
+    "ogTitle": "MRC Global Pay | Anında Kripto Takası $0.30'dan"
   },
   "footer": {
     "legal": "Yasal",
     "privacy": "Gizlilik Politikası",
     "terms": "Hizmet Şartları",
     "aml": "AML Politikası",
-    "disclaimer": "MRC GlobalPay kayıtlı bir Kanada MSB'sidir. Çoğu kullanıcı için kayıt gerektirmeyen bir hizmet sunuyoruz. Güvenliği ve küresel AML standartlarına uyumu sürdürmek için otomatik risk önleme sistemimiz, yüksek riskli olarak işaretlenen işlemler için zaman zaman standart doğrulama talep edebilir."
+    "disclaimer": "MRC Global Pay kayıtlı bir Kanada MSB'sidir. Çoğu kullanıcı için kayıt gerektirmeyen bir hizmet sunuyoruz. Güvenliği ve küresel AML standartlarına uyumu sürdürmek için otomatik risk önleme sistemimiz, yüksek riskli olarak işaretlenen işlemler için zaman zaman standart doğrulama talep edebilir."
   },
   "nav": {
     "howItWorks": "Nasıl Çalışır",
@@ -29,7 +29,7 @@
     "trustNonCustodial": "Emanetsiz",
     "trustSettlement": "Doğrudan Ödeme",
     "dustTitle": "🧹 Cüzdanınızı Temizleyin",
-    "dustDescription": "Çoğu platformda yüksek minimumlar vardır. MRC GlobalPay, $0.30'dan başlayan mikro takasları destekler. 6.000'den fazla token'dan kalan tozu anında dönüştürün. Kayıt gerekmez."
+    "dustDescription": "Çoğu platformda yüksek minimumlar vardır. MRC Global Pay, $0.30'dan başlayan mikro takasları destekler. 6.000'den fazla token'dan kalan tozu anında dönüştürün. Kayıt gerekmez."
   },
   "howItWorks": {
     "heading": "Nasıl Çalışır",
@@ -308,7 +308,7 @@
     "pdfDestWallet": "Hedef Cüzdan",
     "pdfBridgeId": "Bridge ID",
     "pdfExtraId": "Extra ID / Memo",
-    "pdfFooter": "Gizlilik Önceliğimiz: MRC GlobalPay saklama hizmeti sunmaz. Bu bilgiler sunucularımızda saklanmaz."
+    "pdfFooter": "Gizlilik Önceliğimiz: MRC Global Pay saklama hizmeti sunmaz. Bu bilgiler sunucularımızda saklanmaz."
   },
   "explainer": {
     "buysell": {
@@ -432,7 +432,7 @@
     }
   },
   "whitepaper": {
-    "metaTitle": "Kalıcı Köprü Mimarisi — Kurumsal Teknik Rapor | MRC GlobalPay",
+    "metaTitle": "Kalıcı Köprü Mimarisi — Kurumsal Teknik Rapor | MRC Global Pay",
     "metaDesc": "Durumsuz adres kalıcılığı otomatik kurumsal tasfiyeyi nasıl mümkün kılar?",
     "badge": "Durumsuz ve Gözetimsiz",
     "heroTitle": "Küresel Kurumsal Likidite için Altyapı Kalıcılığı ve Otomatik Tasfiye Rayları",
@@ -446,7 +446,7 @@
     "s1Body": "Mevcut dijital varlık ortamında, işlemsel olay modeli kurumsal hazineler ve endüstriyel madencilik operasyonları için sistemik operasyonel kırılganlık yaratır.",
     "s2Tag": "Bölüm 02 — Çözüm",
     "s2Title": "Olay Tabanlıdan Kalıcı Tasfiyeye Geçiş",
-    "s2Body": "MRC GlobalPay, parçalanmış likiditeyi kalıcı bir finansal araca dönüştürmek için Kalıcı Köprüyü tasarlamıştır.",
+    "s2Body": "MRC Global Pay, parçalanmış likiditeyi kalıcı bir finansal araca dönüştürmek için Kalıcı Köprüyü tasarlamıştır.",
     "vp1Title": "Operasyonel Hazırlık",
     "vp1Desc": "Her işlem için arayüzle etkileşim ihtiyacını ortadan kaldırın.",
     "vp2Title": "İdari Verimlilik",
@@ -476,7 +476,7 @@
     "cta": "Kurumsal Köprünüzü Kurun"
   },
   "shieldedWp": {
-    "metaTitle": "Korumalı Tasfiye Mimarisi — Kurumsal Teknik Rapor | MRC GlobalPay",
+    "metaTitle": "Korumalı Tasfiye Mimarisi — Kurumsal Teknik Rapor | MRC Global Pay",
     "metaDesc": "Likidite ağı ayrıştırma kurumsal gizliliği nasıl korur?",
     "badge": "Durumsuz ve Özel",
     "heroTitle": "Zincir Üstü Kimlik Ayrıştırma: Kurumsal Gizlilik Egemenliği için Korumalı Tasfiye Mimarisi",
@@ -490,7 +490,7 @@
     "s1Body": "Her zincir üstü işlem kalıcı bir kayıt oluşturur. Kurumsal hazineler için bu şeffaflık sistemik bir sorumluluktur.",
     "s2Tag": "Bölüm 02 — Ayrıştırma Mekanikleri",
     "s2Title": "Likidite Ağı Ayrıştırma: Ölçekte İzlenebilirlik Kesintisi",
-    "s2Body": "MRC GlobalPay'in Korumalı Tasfiye Mimarisi üç aşamalı ayrıştırma protokolü uygular.",
+    "s2Body": "MRC Global Pay'in Korumalı Tasfiye Mimarisi üç aşamalı ayrıştırma protokolü uygular.",
     "ph1Title": "Faz I: Giriş Maskeleme",
     "ph1Desc": "Fonlar gözetimsiz yönlendirme ile MRC Likidite Katmanına girer.",
     "ph2Title": "Faz II: Yol Rastgeleleştirme",
@@ -554,7 +554,7 @@
     "serviceFeeLabel": "Hizmet Ücreti ({{percent}}%)",
     "serviceFeeNote": "Son ödemeden düşülür",
     "receiverGetsLabel": "Alıcı Alır",
-    "taxDisclaimer": "MRC GlobalPay vergi kesintisi yapmaz. Yerel vergi yükümlülükleri müşterinin sorumluluğundadır.",
+    "taxDisclaimer": "MRC Global Pay vergi kesintisi yapmaz. Yerel vergi yükümlülükleri müşterinin sorumluluğundadır.",
     "payPageTitle": "Fatura Öde",
     "payPageBilledTo": "Fatura Edilen",
     "payPageRequestedAmount": "Talep Edilen Tutar",
@@ -601,11 +601,11 @@
     "networkUnknown": "bu ağ"
   },
   "sovereignWp": {
-    "metaTitle": "The Sovereign Settlement — Institutional Whitepaper | MRC GlobalPay",
-    "metaDesc": "How does stateless invoicing bypass correspondent banking? MRC GlobalPay's Sovereign Settlement protocol provides 168-hour exchange rate certainty for global commerce.",
+    "metaTitle": "The Sovereign Settlement — Institutional Whitepaper | MRC Global Pay",
+    "metaDesc": "How does stateless invoicing bypass correspondent banking? MRC Global Pay's Sovereign Settlement protocol provides 168-hour exchange rate certainty for global commerce.",
     "badge": "Egemen ve Saklama-Dışı",
     "heroTitle": "The Sovereign Settlement: Küresel Ticaretin Sürtünmesini Silmek",
-    "heroSub": "The legacy financial system is no longer a facilitator of trade; it is a tax on it. MRC GlobalPay introduces Stateless Invoicing — a protocol designed to bypass correspondent banking and provide 168-hour exchange rate certainty.",
+    "heroSub": "The legacy financial system is no longer a facilitator of trade; it is a tax on it. MRC Global Pay introduces Stateless Invoicing — a protocol designed to bypass correspondent banking and provide 168-hour exchange rate certainty.",
     "tech1Label": "Rate Lock Engine",
     "tech2Label": "Cross-Chain Bridge",
     "tech3Label": "Inclusive Fee Layer",
@@ -615,7 +615,7 @@
     "s1Body": "Traditional banking relies on a fragile web of Vostro and Nostro accounts. This 'Ghost in the Machine' creates an illusion of liquidity while hiding systemic delays and predatory intermediary fees. Whether you are using an LTC Transaction Tracker to monitor movement or waiting on a standard wire, the friction remains the same. We replace human trust with mathematical certainty. By utilizing an ETH to SOL bridge architecture for high-speed cross-chain movement, we ensure that capital is never 'stuck' in the pipes of a legacy bank.",
     "s2Tag": "Section II — The 168-Hour Immutable Rate Lock",
     "s2Title": "A 7-Day Volatility Shield for Global Settlement",
-    "s2Body": "Volatility is the primary deterrent for corporate digital asset adoption. In the time it takes to settle a gold or iron ore contract, market fluctuations can erase profit margins. MRC GlobalPay eliminates this risk with a 7-Day Volatility Shield.",
+    "s2Body": "Volatility is the primary deterrent for corporate digital asset adoption. In the time it takes to settle a gold or iron ore contract, market fluctuations can erase profit margins. MRC Global Pay eliminates this risk with a 7-Day Volatility Shield.",
     "lockTitle": "The Lock",
     "lockDesc": "Once an invoice is generated, the exchange rate is frozen for 168 hours. This provides the stability of a Letter of Credit without the bank fee.",
     "guaranteeTitle": "The Guarantee",
@@ -648,8 +648,8 @@
     "cta": "Egemen Fatura Oluştur"
   },
   "lend": {
-    "metaTitle": "Kripto Borç Verme & Kazanç | BTC/ETH/SOL Karşılığında USDT Ödünç Al | MRC GlobalPay",
-    "metaDesc": "Kriptolarınızla stablecoin ödünç alın veya BTC, ETH ve USDT'de getiri kazanın. KYC yok. MRC GlobalPay — Kayıtlı Kanada MSB'si.",
+    "metaTitle": "Kripto Borç Verme & Kazanç | BTC/ETH/SOL Karşılığında USDT Ödünç Al | MRC Global Pay",
+    "metaDesc": "Kriptolarınızla stablecoin ödünç alın veya BTC, ETH ve USDT'de getiri kazanın. KYC yok. MRC Global Pay — Kayıtlı Kanada MSB'si.",
     "heroBadge": "MSB Düzenlemeli · Saklama Dışı",
     "heroTitle": "Kripto",
     "heroLending": "Borç Verme",
@@ -699,7 +699,7 @@
     "stepActive": "Aktif",
     "stepActiveDesc": "Pozisyonunuz aktif",
     "complianceTitle": "Uyumluluk Bildirimi:",
-    "complianceText": "Kayıtlı bir Kanada Para Hizmetleri İşletmesi (MSB — Kayıt No. C100000015) olarak, MRC GlobalPay aracılığıyla yürütülen tüm borç verme işlemleri federal Kara Para Aklama (AML) ve Terörün Finansmanı ile Mücadele (ATF) yönergelerine uygundur. Kripto para borç verme risk içerir. Fiyatlar tasfiye eşiğinin altına düşerse teminat tasfiye edilebilir. Bu bir finansal tavsiye değildir.",
+    "complianceText": "Kayıtlı bir Kanada Para Hizmetleri İşletmesi (MSB — Kayıt No. C100000015) olarak, MRC Global Pay aracılığıyla yürütülen tüm borç verme işlemleri federal Kara Para Aklama (AML) ve Terörün Finansmanı ile Mücadele (ATF) yönergelerine uygundur. Kripto para borç verme risk içerir. Fiyatlar tasfiye eşiğinin altına düşerse teminat tasfiye edilebilir. Bu bir finansal tavsiye değildir.",
     "collateralLabel": "Teminat Varlığı",
     "collateralValueUsd": "Teminat Değeri (USD)",
     "maxLtv": "Maksimum LTV",
@@ -717,7 +717,7 @@
       "phoneLabel": "Telefon Numarası",
       "phonePlaceholder": "123 456 7890",
       "invalidPhone": "Lütfen geçerli bir numara girin",
-      "compliance": "MRC GlobalPay · MSB Kayıt C100000015 · Verileriniz şifrelenir ve yalnızca uyarılar için kullanılır.",
+      "compliance": "MRC Global Pay · MSB Kayıt C100000015 · Verileriniz şifrelenir ve yalnızca uyarılar için kullanılır.",
       "cancel": "İptal",
       "confirm": "Onayla ve Devam Et",
       "proTipTitle": "Pro İpucu: Otomatik Güvenlik Uyarıları",
@@ -782,7 +782,7 @@
     },
     "earnFaq": {
       "q1": "Kilitleme süresi var mı?",
-      "a1": "Hayır. MRC GlobalPay Earn tamamen esnektir. 7/24 cezasız çekim yapın.",
+      "a1": "Hayır. MRC Global Pay Earn tamamen esnektir. 7/24 cezasız çekim yapın.",
       "q2": "Faiz ne sıklıkla ödenir?",
       "a2": "Faiz günlük tahakkuk eder ve otomatik bileşik uygulanır.",
       "q3": "Minimum yatırım nedir?",
@@ -840,7 +840,7 @@
     "loginRequired": "{{action}} için giriş gerekli",
     "comingSoon": "Yakında — destek ile iletişime geçin",
     "authenticated": "Başarıyla giriş yapıldı",
-    "disclaimer": "Veriler teknoloji ortağımızın API'sinden alınır ve günde bir kez veya yönetim işlemi (Geri Öde, Yükle, Çek) gerçekleştirdiğinizde güncellenir. MRC GlobalPay · MSB Kaydı C100000015.",
+    "disclaimer": "Veriler teknoloji ortağımızın API'sinden alınır ve günde bir kez veya yönetim işlemi (Geri Öde, Yükle, Çek) gerçekleştirdiğinizde güncellenir. MRC Global Pay · MSB Kaydı C100000015.",
     "auth": {
       "createTitle": "Yönetim Hesabınızı Oluşturun",
       "loginTitle": "Panele Giriş Yapın",
@@ -919,7 +919,7 @@
     "apiSettings": "API Settings",
     "logout": "Logout",
     "sessionExpired": "Session expired due to inactivity",
-    "metaTitle": "Kurumsal Ortak Portalı | MRC GlobalPay",
+    "metaTitle": "Kurumsal Ortak Portalı | MRC Global Pay",
     "metaDesc": "Secure partner dashboard with 2FA, API key management, and real-time transaction monitoring.",
     "docs": "API Belgeleri",
     "docsAmountDesc": "Amount of from_currency to swap. Minimum $0.30 equivalent.",
@@ -969,7 +969,7 @@
     "heroInstantly": "Anında",
     "snippetIntro": "{{from}}'ı {{to}}'a dönüştürmek için:",
     "snippetBody": "Tutarınızı girin, {{to}} cüzdan adresinizi yapıştırın ve {{from}}'ı yatırma adresine gönderin. {{to}}'nız {{settlement}} içinde ulaşır.",
-    "aggregatorNote": "MRC GlobalPay 700+ likidite kaynağından en iyi {{from}}/{{to}} döviz kurunu bulur. Kanada MSB (C100000015).",
+    "aggregatorNote": "MRC Global Pay 700+ likidite kaynağından en iyi {{from}}/{{to}} döviz kurunu bulur. Kanada MSB (C100000015).",
     "factSettlement": "Ödeme",
     "factMinimum": "Minimum",
     "factKyc": "KYC gerekli",
@@ -995,7 +995,7 @@
     "whyFromBtc": "Bitcoin'in ötesinde {{toName}} ekosistemine çeşitlendirme yapmanızı sağlar.",
     "whyToBtc": "varlıklarınızı Bitcoin'de birleştirmenizi sağlar.",
     "whyGeneric": "portföyünüzü iki farklı blockchain ekosistemi arasında yeniden dengelemenizi sağlar.",
-    "whySwapOutro": "MRC GlobalPay'de bu takas {{settlement}} içinde kayma olmadan gerçekleşir.",
+    "whySwapOutro": "MRC Global Pay'de bu takas {{settlement}} içinde kayma olmadan gerçekleşir.",
     "networkTitle": "Ağ ve güvenlik detayları",
     "networkSubtitle": "{{from}}/{{to}} takas çifti teknik özellikleri.",
     "networkLabel": "Ağ:",
@@ -1004,7 +1004,7 @@
     "memoWarning": "{{name}} Memo/Hedef Etiketi gerektirir.",
     "settlementInfra": "Ödeme altyapısı:",
     "settlementInfraDesc": "Bu takas 700+ sağlayıcıyla kurumsal düzey likidite kanalları aracılığıyla gerçekleşir.",
-    "trustTitle": "Neden MRC GlobalPay'de {{from}}/{{to}} işlem yapmalısınız?",
+    "trustTitle": "Neden MRC Global Pay'de {{from}}/{{to}} işlem yapmalısınız?",
     "trustNoAccount": "Hesap gerekli değil",
     "trustNoAccountDesc": "Saniyeler içinde takasa başlayın.",
     "trustNonCustodial": "Saklama dışı ve güvenli",
@@ -1023,11 +1023,11 @@
     "faqMemoYes": "Evet. {{toName}} ek tanımlayıcı gerektirir.",
     "faqMemoNo": "Hayır. {{toName}} Memo veya Tag gerektirmez.",
     "faqKycQ": "{{from}}'ı {{to}}'a dönüştürmek için hesap oluşturmam gerekir mi?",
-    "faqKycA": "Hayır. MRC GlobalPay standart takaslar için hesap veya kimlik doğrulaması gerektirmez. Kanada MSB (C100000015).",
-    "faqFeesQ": "MRC GlobalPay {{from}} - {{to}} için ne kadar ücret alır?",
+    "faqKycA": "Hayır. MRC Global Pay standart takaslar için hesap veya kimlik doğrulaması gerektirmez. Kanada MSB (C100000015).",
+    "faqFeesQ": "MRC Global Pay {{from}} - {{to}} için ne kadar ücret alır?",
     "faqFeesA": "Gizli ücret yok. Gösterilen kur hizmet ve ağ ücretlerini içerir.",
-    "faqSafeQ": "MRC GlobalPay'de {{from}}'ı {{to}}'a dönüştürmek güvenli mi?",
-    "faqSafeA": "Evet. MRC GlobalPay tamamen saklama dışı hizmet sunar.",
+    "faqSafeQ": "MRC Global Pay'de {{from}}'ı {{to}}'a dönüştürmek güvenli mi?",
+    "faqSafeA": "Evet. MRC Global Pay tamamen saklama dışı hizmet sunar.",
     "faqNetworkQ": "{{from}} göndermek için hangi blockchain ağını kullanmalıyım?",
     "faqNetworkA": "{{fromName}} {{network}} ağını kullanır.",
     "faqNetworkContract": "Doğrulanmış sözleşme adresi: {{contract}}",
@@ -1044,9 +1044,9 @@
   },
   "affiliates": {
     "meta": {
-      "title": "Ortaklık Programı — Ömür Boyu Kripto Komisyonu Kazanın | MRC GlobalPay",
-      "description": "MRC GlobalPay ortaklık widget'ınızı saniyeler içinde oluşturun. E-posta ve BTC cüzdanınızı girin, Açık veya Koyu mod seçin ve %0,1–%0,4 ömür boyu komisyonu otomatik olarak alın. Kanada Tescilli MSB #C100000015.",
-      "ogTitle": "Ortaklık Programı — Ömür Boyu Kripto Komisyonu Kazanın | MRC GlobalPay",
+      "title": "Ortaklık Programı — Ömür Boyu Kripto Komisyonu Kazanın | MRC Global Pay",
+      "description": "MRC Global Pay ortaklık widget'ınızı saniyeler içinde oluşturun. E-posta ve BTC cüzdanınızı girin, Açık veya Koyu mod seçin ve %0,1–%0,4 ömür boyu komisyonu otomatik olarak alın. Kanada Tescilli MSB #C100000015.",
+      "ogTitle": "Ortaklık Programı — Ömür Boyu Kripto Komisyonu Kazanın | MRC Global Pay",
       "ogDescription": "Widget'ınızı saniyeler içinde oluşturun. Her takasta %0,1–%0,4 kazanın, BTC cüzdanınıza otomatik ödeme."
     },
     "hero": {
@@ -1054,7 +1054,7 @@
       "earn": "Kazanın",
       "rate": "%0,1 – %0,4",
       "lifetime": "Ömür Boyu Komisyon",
-      "subtitle": "MRC GlobalPay'i anlık takas widget'ımız veya ortaklık bağlantımızla tanıtın ve",
+      "subtitle": "MRC Global Pay'i anlık takas widget'ımız veya ortaklık bağlantımızla tanıtın ve",
       "subtitleBold": "otomatik olarak BTC cüzdanınıza ödeme alın",
       "chipNoReg": "Kayıt gerekmez",
       "chipPaidBtc": "BTC olarak otomatik ödeme",
@@ -1137,7 +1137,7 @@
       "learnMore": "Daha fazla bilgi"
     },
     "why": {
-      "title": "Neden MRC GlobalPay",
+      "title": "Neden MRC Global Pay",
       "lifetime": "Ömür boyu komisyon",
       "assets": "6.000+ kripto para ve token edilmiş hisse",
       "micro": "Sadece $0,30'dan başlayan mikro-takaslar",
@@ -1203,7 +1203,7 @@
       "dashCtaNote": "Ücretsiz yükseltme · KYC yok · widget ve ödemeleriniz aynı kalır.",
       "regBadge": "Düzenleyici avantaj",
       "regTitle": "Düzenleyicilerin zaten güvendiği bir platformu tanıtın",
-      "regBody1": "MRC GlobalPay,",
+      "regBody1": "MRC Global Pay,",
       "regBody2": "MRC Pay International Corp",
       "regBody3": " tarafından işletilir; bir Kanadalı fintech",
       "regBody4": "FINTRAC Para Hizmetleri İşletmesi (#C100000015)",
@@ -1217,7 +1217,7 @@
       "trackingBody": "Yönlendirmeleri güvenli bir referansla özel olarak izliyoruz. Komisyonlar belirttiğiniz BTC cüzdanına otomatik ödenir — pano gerekmez, manuel talep gerekmez.",
       "finalBadge": "İlk linkinize 60 saniye",
       "finalTitle": "BTC cüzdanınız çok daha yoğun olmak üzere",
-      "finalSubtitle": "MRC GlobalPay ile ömür boyu BTC kazanan binlerce içerik üreticisine, cüzdan ekibine ve kripto topluluğuna katılın. Kayıt yok, minimum yok, risk yok — sadece yapıştır, kopyala ve kazan.",
+      "finalSubtitle": "MRC Global Pay ile ömür boyu BTC kazanan binlerce içerik üreticisine, cüzdan ekibine ve kripto topluluğuna katılın. Kayıt yok, minimum yok, risk yok — sadece yapıştır, kopyala ve kazan.",
       "finalCtaGenerate": "Widget'ımı şimdi oluştur",
       "finalCtaDashboard": "Ortak Panosunu aç",
       "finalRegNote": "Güvenle tanıtın — Kanada'da tamamen düzenlenmiş (FINTRAC MSB #C100000015 · Bank of Canada PSP)."
@@ -1275,29 +1275,29 @@
       "x1Label": "X Gönderisi 1 — Kanca",
       "x1Text": "Yıllardır kullandığım en temiz non-custodial kripto takasını yeni buldum.\n\n→ 6.000+ çift\n→ 60 saniyenin altında takas\n→ Sadece $0,30'dan\n→ Hesap gerekmez\n\nGörmeye değer 👇\n\n[YOUR-AFFILIATE-LINK]\n\n#Bitcoin #Kripto #DeFi",
       "x2Label": "X Gönderisi 2 — Değer",
-      "x2Text": "Çoğu \"KYC-yok\" takası şüpheli.\n\nMRC GlobalPay farklı:\n✅ Non-custodial (anahtarlar sizde kalır)\n✅ 6.000+ işlem çifti\n✅ Takaslar 60 saniyenin altında tamamlanır\n✅ $0,30'dan mikro takaslar\n\nDene → [YOUR-AFFILIATE-LINK]\n\n#Kripto #BTC #SelfCustody",
+      "x2Text": "Çoğu \"KYC-yok\" takası şüpheli.\n\nMRC Global Pay farklı:\n✅ Non-custodial (anahtarlar sizde kalır)\n✅ 6.000+ işlem çifti\n✅ Takaslar 60 saniyenin altında tamamlanır\n✅ $0,30'dan mikro takaslar\n\nDene → [YOUR-AFFILIATE-LINK]\n\n#Kripto #BTC #SelfCustody",
       "tg1Label": "Telegram Gönderisi 1 — Kanal",
-      "tg1Text": "🚀 Yeni favori takas aracı: MRC GlobalPay\n\n• Non-custodial — anahtarlarınız, paralarınız\n• 6.000+ işlem çifti\n• Takaslar 60 saniyenin altında tamamlanır\n• $0,30'dan mikro takaslar (toz temizlemek için mükemmel)\n• Hesap gerekmez\n\nBir şans verin 👇\n\n🔗 [YOUR-AFFILIATE-LINK]",
+      "tg1Text": "🚀 Yeni favori takas aracı: MRC Global Pay\n\n• Non-custodial — anahtarlarınız, paralarınız\n• 6.000+ işlem çifti\n• Takaslar 60 saniyenin altında tamamlanır\n• $0,30'dan mikro takaslar (toz temizlemek için mükemmel)\n• Hesap gerekmez\n\nBir şans verin 👇\n\n🔗 [YOUR-AFFILIATE-LINK]",
       "tg2Label": "Telegram Gönderisi 2 — Hızlı İpucu",
-      "tg2Text": "💡 Birden çok zincirde kalan toz olan herkes için ipucu:\n\nMRC GlobalPay $0,30'dan takas yapmanıza izin verir — çoğu borsa bu kadar küçük miktarlara dokunmanıza bile izin vermez.\n\nNon-custodial. Hesap yok. ~60 saniye.\n\nDene: [YOUR-AFFILIATE-LINK]",
+      "tg2Text": "💡 Birden çok zincirde kalan toz olan herkes için ipucu:\n\nMRC Global Pay $0,30'dan takas yapmanıza izin verir — çoğu borsa bu kadar küçük miktarlara dokunmanıza bile izin vermez.\n\nNon-custodial. Hesap yok. ~60 saniye.\n\nDene: [YOUR-AFFILIATE-LINK]",
       "liLabel": "LinkedIn Gönderisi — Profesyonel",
-      "liText": "Kripto takaslarında yol alan herkes için kısa bir not:\n\nMüşterilere ve bağlantılara MRC GlobalPay'i öneriyorum çünkü çoğu borsanın çözmediği üç sorunu çözüyor:\n\n1. Non-custodial mimari — varlıklar asla platformda durmaz\n2. Gerçek bir kurumsal varlığa sahip güvenilir operatör\n3. Pratik UX — 6.000+ çift, 60 saniyenin altında takaslar, $0,30'dan mikro takaslar\n\nDüzenli olarak kripto takas eden bir ağınız varsa, bir göz atın:\n👉 [YOUR-AFFILIATE-LINK]\n\n#Fintech #Kripto #Bitcoin",
+      "liText": "Kripto takaslarında yol alan herkes için kısa bir not:\n\nMüşterilere ve bağlantılara MRC Global Pay'i öneriyorum çünkü çoğu borsanın çözmediği üç sorunu çözüyor:\n\n1. Non-custodial mimari — varlıklar asla platformda durmaz\n2. Gerçek bir kurumsal varlığa sahip güvenilir operatör\n3. Pratik UX — 6.000+ çift, 60 saniyenin altında takaslar, $0,30'dan mikro takaslar\n\nDüzenli olarak kripto takas eden bir ağınız varsa, bir göz atın:\n👉 [YOUR-AFFILIATE-LINK]\n\n#Fintech #Kripto #Bitcoin",
       "igLabel": "Instagram / Threads Gönderisi",
       "igText": "Gerçekten güvendiğim kripto takas aracı ⚡️\n\n🔐 Non-custodial (kontrol sizde)\n💸 Sadece $0,30'dan takas\n⏱️ 60 saniyenin altında biter\n🪙 6.000+ çift\n✅ Hesap gerekmez\n\nBio'da link → [YOUR-AFFILIATE-LINK]\n\n#kripto #bitcoin #web3 #defi"
     },
     "emails": {
       "e1Label": "E-posta 1 — Kısa (bülten)",
-      "e1Text": "Konu: Paylaşmam gereken bir kripto takas aracı\n\nKısaca — son birkaç haftadır MRC GlobalPay kullanıyorum ve sessizce varsayılanım oldu.\n\n• Non-custodial (anahtarlar sizde kalır)\n• 6.000+ işlem çifti\n• Takas başına 60 saniyenin altında\n• $0,30'dan — evet, toz bile\n• Takaslar için hesap gerekmez\n\nKripto takas yapıyorsanız, bir şans verin: [YOUR-AFFILIATE-LINK]\n\nSelamlar,\n[YOUR-NAME]",
+      "e1Text": "Konu: Paylaşmam gereken bir kripto takas aracı\n\nKısaca — son birkaç haftadır MRC Global Pay kullanıyorum ve sessizce varsayılanım oldu.\n\n• Non-custodial (anahtarlar sizde kalır)\n• 6.000+ işlem çifti\n• Takas başına 60 saniyenin altında\n• $0,30'dan — evet, toz bile\n• Takaslar için hesap gerekmez\n\nKripto takas yapıyorsanız, bir şans verin: [YOUR-AFFILIATE-LINK]\n\nSelamlar,\n[YOUR-NAME]",
       "e2Label": "E-posta 2 — Orta (inceleme tarzı)",
-      "e2Text": "Konu: Daha önce keşke bulsaydım dediğim non-custodial takas\n\nMerhaba [FIRST-NAME],\n\nHızlı kripto takasları için hangi borsayı kullandığım sürekli sorulur. Bir süre cevabım \"zincire bağlı\" idi. Artık değil.\n\nMRC GlobalPay vazgeçilmezim oldu, işte nedeni:\n\n🔐 Non-custodial — fonlar asla platformda durmaz\n⚡ 6.000+ çift, 60 saniyenin altında takaslar tamamlanır\n💸 $0,30'dan mikro takaslar (Solana, BSC, TRON vb. üzerindeki tozları temizlemek için mükemmel)\n🎯 Takaslar için hesap gerekmez\n\nBuradan deneyin:\n👉 [YOUR-AFFILIATE-LINK]\n\nSorularınız varsa, cevap verin yeter.\n\n— [YOUR-NAME]",
+      "e2Text": "Konu: Daha önce keşke bulsaydım dediğim non-custodial takas\n\nMerhaba [FIRST-NAME],\n\nHızlı kripto takasları için hangi borsayı kullandığım sürekli sorulur. Bir süre cevabım \"zincire bağlı\" idi. Artık değil.\n\nMRC Global Pay vazgeçilmezim oldu, işte nedeni:\n\n🔐 Non-custodial — fonlar asla platformda durmaz\n⚡ 6.000+ çift, 60 saniyenin altında takaslar tamamlanır\n💸 $0,30'dan mikro takaslar (Solana, BSC, TRON vb. üzerindeki tozları temizlemek için mükemmel)\n🎯 Takaslar için hesap gerekmez\n\nBuradan deneyin:\n👉 [YOUR-AFFILIATE-LINK]\n\nSorularınız varsa, cevap verin yeter.\n\n— [YOUR-NAME]",
       "e3Label": "E-posta 3 — Uzun (tam sunum)",
-      "e3Text": "Konu: Sonunda her kutuyu işaretleyen bir kripto takas buldum\n\nMerhaba [FIRST-NAME],\n\nKriptoda beş dakikadan fazla geçirdiyseniz, deseni bilirsiniz:\n\n→ Merkezi borsalar hızlı ama custodial (ve giderek her şey için KYC)\n→ DEX toplayıcıları non-custodial ama yavaş, pahalı ve zincir-sınırlı\n→ \"KYC-yok\" takas siteleri şüpheli ve neredeyse hiç güvenilir değil\n\nAylarca ortada bir şey aradım. Buldum.\n\nAdı MRC GlobalPay ve kullandığım en temiz non-custodial takas:\n\n✅ Non-custodial — her seferinde anahtarlarınız sizde kalır\n✅ Tüm büyük zincirlerde 6.000+ işlem çifti\n✅ Takaslar 60 saniyenin altında tamamlanır\n✅ Sadece $0,30'dan mikro takaslar (toz temizlemek için harika)\n✅ Ottawa, Kanada'dan MRC Pay International Corp tarafından işletilir\n✅ Takaslar için hesap gerekmez\n\nO son nokta önemli. Çoğu \"anonim\" takas platformu, bir şey yanlış giderse başvuru hakkı olmayan yargı bölgelerinde bulunur. MRC tam tersi — gerçek bir kurumsal varlık, kayıtlarda, ama yine de non-custodial ve takaslar için hesap gerekmez.\n\nBir kez deneyin ve kendiniz görün:\n👉 [YOUR-AFFILIATE-LINK]\n\nRehber isterseniz cevap verin — yardımcı olmaktan memnuniyet duyarım.\n\nYakında konuşuruz,\n[YOUR-NAME]\n\nNot: Şüpheci olsanız bile, sadece $0,30'lık bir takas deneyin. Neredeyse hiçbir şeye mal olmaz ve akışın tam olarak nasıl çalıştığını göreceksiniz."
+      "e3Text": "Konu: Sonunda her kutuyu işaretleyen bir kripto takas buldum\n\nMerhaba [FIRST-NAME],\n\nKriptoda beş dakikadan fazla geçirdiyseniz, deseni bilirsiniz:\n\n→ Merkezi borsalar hızlı ama custodial (ve giderek her şey için KYC)\n→ DEX toplayıcıları non-custodial ama yavaş, pahalı ve zincir-sınırlı\n→ \"KYC-yok\" takas siteleri şüpheli ve neredeyse hiç güvenilir değil\n\nAylarca ortada bir şey aradım. Buldum.\n\nAdı MRC Global Pay ve kullandığım en temiz non-custodial takas:\n\n✅ Non-custodial — her seferinde anahtarlarınız sizde kalır\n✅ Tüm büyük zincirlerde 6.000+ işlem çifti\n✅ Takaslar 60 saniyenin altında tamamlanır\n✅ Sadece $0,30'dan mikro takaslar (toz temizlemek için harika)\n✅ Ottawa, Kanada'dan MRC Pay International Corp tarafından işletilir\n✅ Takaslar için hesap gerekmez\n\nO son nokta önemli. Çoğu \"anonim\" takas platformu, bir şey yanlış giderse başvuru hakkı olmayan yargı bölgelerinde bulunur. MRC tam tersi — gerçek bir kurumsal varlık, kayıtlarda, ama yine de non-custodial ve takaslar için hesap gerekmez.\n\nBir kez deneyin ve kendiniz görün:\n👉 [YOUR-AFFILIATE-LINK]\n\nRehber isterseniz cevap verin — yardımcı olmaktan memnuniyet duyarım.\n\nYakında konuşuruz,\n[YOUR-NAME]\n\nNot: Şüpheci olsanız bile, sadece $0,30'lık bir takas deneyin. Neredeyse hiçbir şeye mal olmaz ve akışın tam olarak nasıl çalıştığını göreceksiniz."
     },
     "video": {
-      "script": "🎬 60 SANİYELİK VİDEO SENARYOSU — \"2026'nın En İyi Non-Custodial Kripto Takası\"\n─────────────────────────────────────────────\n\n[0:00 – 0:05] KANCA (kamera önünde veya metin kaplaması)\n\"Kripto takas yapıyorsanız ve hala merkezi borsalar kullanıyorsanız — durun. Size 60 saniyede daha iyi bir şey göstereceğim.\"\n\n[0:05 – 0:15] PROBLEM\n\"Merkezi borsalar fonlarınızı tutar, her şey için KYC ister ve hesapları rastgele dondurur. DEX'ler yavaş, pahalı ve zincir-sınırlıdır. Çoğu 'KYC-yok' takası? Şüpheli ve riskli.\"\n\n[0:15 – 0:35] ÇÖZÜM — MRC GlobalPay\n\"Bu MRC GlobalPay. Non-custodial — anahtarlarınızı asla teslim etmezsiniz. Her büyük zincirde 6.000+ işlem çiftini destekler. Takaslar 60 saniyenin altında tamamlanır. Ve sadece $0,30'dan takas yapabilirsiniz — toz temizlemek için mükemmel. Hesap yok, e-posta gerekmez.\"\n\n[0:35 – 0:50] KANIT / DEMO\n\"İşte az önce yaptığım takas — BTC'den USDT'ye, 47 saniye, hesap yok, e-posta yok. Fonlar doğrudan cüzdanıma gitti.\"\n\n[0:50 – 1:00] CTA\n\"Açıklamada link — küçük bir takas deneyin ve kendiniz görün. Bir sonraki videoda görüşürüz.\"\n\n─────────────────────────────────────────────\n📝 VİDEO AÇIKLAMA ŞABLONU\n─────────────────────────────────────────────\n\n2026'da kullandığım en hızlı, en temiz non-custodial kripto takası.\n\n🔗 MRC GlobalPay'i deneyin (affiliate linkim): [YOUR-AFFILIATE-LINK]\n\nNeden farklı:\n✅ Non-custodial — anahtarlarınız sizde kalır\n✅ Tüm büyük zincirlerde 6.000+ çift\n✅ Takaslar 60 saniyenin altında tamamlanır\n✅ $0,30'dan mikro takaslar\n✅ Takaslar için hesap gerekmez\n\n💰 Affiliate açıklaması: Yukarıdaki link benim referans linkim. Onun üzerinden takas yaparsanız, küçük bir komisyon kazanabilirim — size ekstra maliyet yok.\n\n⏱️ ZAMAN DAMGALARI\n0:00 Giriş\n0:05 Merkezi borsalar neden kötü\n0:15 MRC GlobalPay aslında nedir\n0:35 Canlı takas demosu\n0:50 Nasıl denenir\n\n#Kripto #Bitcoin #NonCustodial #KriptoTakas #DeFi #BTC"
+      "script": "🎬 60 SANİYELİK VİDEO SENARYOSU — \"2026'nın En İyi Non-Custodial Kripto Takası\"\n─────────────────────────────────────────────\n\n[0:00 – 0:05] KANCA (kamera önünde veya metin kaplaması)\n\"Kripto takas yapıyorsanız ve hala merkezi borsalar kullanıyorsanız — durun. Size 60 saniyede daha iyi bir şey göstereceğim.\"\n\n[0:05 – 0:15] PROBLEM\n\"Merkezi borsalar fonlarınızı tutar, her şey için KYC ister ve hesapları rastgele dondurur. DEX'ler yavaş, pahalı ve zincir-sınırlıdır. Çoğu 'KYC-yok' takası? Şüpheli ve riskli.\"\n\n[0:15 – 0:35] ÇÖZÜM — MRC Global Pay\n\"Bu MRC Global Pay. Non-custodial — anahtarlarınızı asla teslim etmezsiniz. Her büyük zincirde 6.000+ işlem çiftini destekler. Takaslar 60 saniyenin altında tamamlanır. Ve sadece $0,30'dan takas yapabilirsiniz — toz temizlemek için mükemmel. Hesap yok, e-posta gerekmez.\"\n\n[0:35 – 0:50] KANIT / DEMO\n\"İşte az önce yaptığım takas — BTC'den USDT'ye, 47 saniye, hesap yok, e-posta yok. Fonlar doğrudan cüzdanıma gitti.\"\n\n[0:50 – 1:00] CTA\n\"Açıklamada link — küçük bir takas deneyin ve kendiniz görün. Bir sonraki videoda görüşürüz.\"\n\n─────────────────────────────────────────────\n📝 VİDEO AÇIKLAMA ŞABLONU\n─────────────────────────────────────────────\n\n2026'da kullandığım en hızlı, en temiz non-custodial kripto takası.\n\n🔗 MRC Global Pay'i deneyin (affiliate linkim): [YOUR-AFFILIATE-LINK]\n\nNeden farklı:\n✅ Non-custodial — anahtarlarınız sizde kalır\n✅ Tüm büyük zincirlerde 6.000+ çift\n✅ Takaslar 60 saniyenin altında tamamlanır\n✅ $0,30'dan mikro takaslar\n✅ Takaslar için hesap gerekmez\n\n💰 Affiliate açıklaması: Yukarıdaki link benim referans linkim. Onun üzerinden takas yaparsanız, küçük bir komisyon kazanabilirim — size ekstra maliyet yok.\n\n⏱️ ZAMAN DAMGALARI\n0:00 Giriş\n0:05 Merkezi borsalar neden kötü\n0:15 MRC Global Pay aslında nedir\n0:35 Canlı takas demosu\n0:50 Nasıl denenir\n\n#Kripto #Bitcoin #NonCustodial #KriptoTakas #DeFi #BTC"
     },
     "blog": {
-      "post": "# 2026'nın En İyi Non-Custodial Kripto Takas Platformu\n\nSon zamanlarda kriptoda zaman geçirdiyseniz, baskıyı hissetmişsinizdir: merkezi borsalar KYC'yi sıkılaştırmaya devam ediyor, \"KYC-yok\" platformlar giderek daha şüpheli görünüyor ve merkezi olmayan toplayıcılar günlük kullanım için hala çok yavaş ve zincir-sınırlı.\n\nSonunda daha iyi bir seçenek var — ve birkaç ay test ettikten sonra, 2026'da mevcut en dengeli non-custodial takas platformu olduğuna ikna oldum.\n\n## MRC GlobalPay ile Tanışın\n\nMRC GlobalPay, Kanada'nın Ottawa şehrinde merkezi bir fintech olan MRC Pay International Corp tarafından işletilen non-custodial bir kripto takas platformudur. FINTRAC ile Para Hizmetleri İşletmesi olarak kayıtlıdır (#C100000015).\n\nSunduğu:\n\n- **Non-custodial mimari** — fonlarınız asla platformda durmaz\n- **6.000+ işlem çifti** tüm büyük zincirlerde\n- **60 saniyenin altında takaslar**\n- **$0,30'dan mikro takaslar** — toz temizlemek için mükemmel\n- **Takaslar için hesap gerekmez**\n\n## Neden önemli\n\nÇoğu kripto takas çözümü iki kamptan birine giriyor: custodial ve düzenlenmiş ama müdahaleci, ya da non-custodial ama şüpheli itibarlı. MRC GlobalPay her ikisini birden çözüyor — tam düzenleyici denetim altında gerçek bir Kanada kurumsal varlığı, ancak uçtan uca non-custodial kalan bir kullanıcı akışıyla.\n\n## Kendiniz deneyin\n\nÖnerim: küçük bir takasla başlayın — kelimenin tam anlamıyla $0,30 yeterli. Akışı anlayacaksınız, hızı deneyimleyeceksiniz ve kendiniz karar vereceksiniz.\n\n👉 [MRC GlobalPay'i deneyin](https://mrcglobalpay.com/?ref=YOUR-CODE)\n\n*Açıklama: Bu makaledeki linkler affiliate linklerdir. Onlar üzerinden takas yaparsanız, küçük bir komisyon kazanabilirim — size ekstra maliyet yok. Sadece gerçekten kullandığım ve güvendiğim platformları öneririm.*"
+      "post": "# 2026'nın En İyi Non-Custodial Kripto Takas Platformu\n\nSon zamanlarda kriptoda zaman geçirdiyseniz, baskıyı hissetmişsinizdir: merkezi borsalar KYC'yi sıkılaştırmaya devam ediyor, \"KYC-yok\" platformlar giderek daha şüpheli görünüyor ve merkezi olmayan toplayıcılar günlük kullanım için hala çok yavaş ve zincir-sınırlı.\n\nSonunda daha iyi bir seçenek var — ve birkaç ay test ettikten sonra, 2026'da mevcut en dengeli non-custodial takas platformu olduğuna ikna oldum.\n\n## MRC Global Pay ile Tanışın\n\nMRC Global Pay, Kanada'nın Ottawa şehrinde merkezi bir fintech olan MRC Pay International Corp tarafından işletilen non-custodial bir kripto takas platformudur. FINTRAC ile Para Hizmetleri İşletmesi olarak kayıtlıdır (#C100000015).\n\nSunduğu:\n\n- **Non-custodial mimari** — fonlarınız asla platformda durmaz\n- **6.000+ işlem çifti** tüm büyük zincirlerde\n- **60 saniyenin altında takaslar**\n- **$0,30'dan mikro takaslar** — toz temizlemek için mükemmel\n- **Takaslar için hesap gerekmez**\n\n## Neden önemli\n\nÇoğu kripto takas çözümü iki kamptan birine giriyor: custodial ve düzenlenmiş ama müdahaleci, ya da non-custodial ama şüpheli itibarlı. MRC Global Pay her ikisini birden çözüyor — tam düzenleyici denetim altında gerçek bir Kanada kurumsal varlığı, ancak uçtan uca non-custodial kalan bir kullanıcı akışıyla.\n\n## Kendiniz deneyin\n\nÖnerim: küçük bir takasla başlayın — kelimenin tam anlamıyla $0,30 yeterli. Akışı anlayacaksınız, hızı deneyimleyeceksiniz ve kendiniz karar vereceksiniz.\n\n👉 [MRC Global Pay'i deneyin](https://mrcglobalpay.com/?ref=YOUR-CODE)\n\n*Açıklama: Bu makaledeki linkler affiliate linklerdir. Onlar üzerinden takas yaparsanız, küçük bir komisyon kazanabilirim — size ekstra maliyet yok. Sadece gerçekten kullandığım ve güvendiğim platformları öneririm.*"
     }
   }
 }

@@ -144,7 +144,7 @@ const PermanentBridgeTab = () => {
     // Header
     doc.setFontSize(20);
     doc.setFont("helvetica", "bold");
-    doc.text("MRC GlobalPay", pageW / 2, 25, { align: "center" });
+    doc.text("MRC Global Pay", pageW / 2, 25, { align: "center" });
     doc.setFontSize(13);
     doc.setFont("helvetica", "normal");
     doc.text(t("bridge.receiptTitle"), pageW / 2, 33, { align: "center" });

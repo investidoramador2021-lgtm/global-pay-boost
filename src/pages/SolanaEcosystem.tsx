@@ -44,7 +44,7 @@ const jsonLd = {
   serviceType: "Cross-chain Bridge/Swap",
   provider: {
     "@type": "Organization",
-    name: "MRC GlobalPay",
+    name: "MRC Global Pay",
     url: "https://mrcglobalpay.com",
     logo: "https://mrcglobalpay.com/placeholder.svg",
     knowsAbout: ["Solana", "AI Agents", "DePIN", "Micro-transactions", "Blockchain Interoperability"],

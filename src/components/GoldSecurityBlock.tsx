@@ -25,7 +25,7 @@ export default function GoldSecurityBlock({ fromTicker, toTicker, fromName, toNa
   const counterTicker = toIsGold ? fromUp : toUp;
 
   const headline = toIsGold
-    ? `Secure your wealth in physical gold. Swap ${counterTicker} for ${goldTicker} with MRC GlobalPay's institutional-grade liquidity.`
+    ? `Secure your wealth in physical gold. Swap ${counterTicker} for ${goldTicker} with MRC Global Pay's institutional-grade liquidity.`
     : `Convert your gold-backed ${goldTicker} to ${counterTicker} on demand — institutional-grade liquidity, FINTRAC-regulated execution.`;
 
   return (

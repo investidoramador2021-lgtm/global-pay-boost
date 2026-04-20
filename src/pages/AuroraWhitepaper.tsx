@@ -12,9 +12,9 @@ const AuroraWhitepaper = () => {
   const lang = getLangFromPath(pathname);
   const swapHref = langPath(lang, "/");
 
-  const title = "MRC GlobalPay Joins the Aurora Ecosystem: Swap AURORA Tokens Instantly, No Registration Required";
+  const title = "MRC Global Pay Joins the Aurora Ecosystem: Swap AURORA Tokens Instantly, No Registration Required";
   const metaDescription =
-    "MRC GlobalPay is now a verified swap partner in the Aurora ecosystem. Swap AURORA native and ERC-20 tokens instantly — no registration, no KYC, 500+ pairs, sub-60-second settlement.";
+    "MRC Global Pay is now a verified swap partner in the Aurora ecosystem. Swap AURORA native and ERC-20 tokens instantly — no registration, no KYC, 500+ pairs, sub-60-second settlement.";
 
   const jsonLd = {
     "@context": "https://schema.org",
@@ -23,15 +23,15 @@ const AuroraWhitepaper = () => {
     description: metaDescription,
     datePublished: "2026-04-20",
     dateModified: "2026-04-20",
-    author: { "@type": "Organization", name: "MRC GlobalPay" },
+    author: { "@type": "Organization", name: "MRC Global Pay" },
     publisher: {
       "@type": "Organization",
-      name: "MRC GlobalPay",
+      name: "MRC Global Pay",
       logo: { "@type": "ImageObject", url: "https://mrcglobalpay.com/icon-512.png" },
     },
     mainEntityOfPage: canonicalUrl,
     keywords:
-      "AURORA token, Aurora network, NEAR Intents, AURORA ERC-20, swap AURORA, NEAR Protocol, cross-chain swap, non-custodial AURORA exchange, Aurora ecosystem partner, MRC GlobalPay Aurora",
+      "AURORA token, Aurora network, NEAR Intents, AURORA ERC-20, swap AURORA, NEAR Protocol, cross-chain swap, non-custodial AURORA exchange, Aurora ecosystem partner, MRC Global Pay Aurora",
   };
 
   const faqLd = {
@@ -48,10 +48,10 @@ const AuroraWhitepaper = () => {
       },
       {
         "@type": "Question",
-        name: "Can I swap AURORA on MRC GlobalPay without KYC?",
+        name: "Can I swap AURORA on MRC Global Pay without KYC?",
         acceptedAnswer: {
           "@type": "Answer",
-          text: "Yes. MRC GlobalPay is a non-custodial platform and does not require registration or identity verification for standard swap volumes. As a Canadian MSB, the platform is AML/ATF compliant — but this compliance does not translate into mandatory KYC for users conducting regular swaps.",
+          text: "Yes. MRC Global Pay is a non-custodial platform and does not require registration or identity verification for standard swap volumes. As a Canadian MSB, the platform is AML/ATF compliant — but this compliance does not translate into mandatory KYC for users conducting regular swaps.",
         },
       },
       {
@@ -59,15 +59,15 @@ const AuroraWhitepaper = () => {
         name: "What is the difference between AURORA native and AURORA ERC-20?",
         acceptedAnswer: {
           "@type": "Answer",
-          text: "AURORA native refers to the token on Aurora's own network — the EVM-compatible environment built on NEAR Protocol. AURORA ERC-20 is the same token represented on the Ethereum mainnet. MRC GlobalPay supports swaps for both versions, including cross-standard swaps between the two without requiring a manual bridge.",
+          text: "AURORA native refers to the token on Aurora's own network — the EVM-compatible environment built on NEAR Protocol. AURORA ERC-20 is the same token represented on the Ethereum mainnet. MRC Global Pay supports swaps for both versions, including cross-standard swaps between the two without requiring a manual bridge.",
         },
       },
       {
         "@type": "Question",
-        name: "What assets can I swap AURORA into on MRC GlobalPay?",
+        name: "What assets can I swap AURORA into on MRC Global Pay?",
         acceptedAnswer: {
           "@type": "Answer",
-          text: "MRC GlobalPay supports 500+ assets as swap destinations from AURORA — including BTC, ETH, USDT, USDC, SOL, BNB, XRP, XMR, and hundreds of altcoins and tokens across multiple networks. Swap rates are sourced from 20+ liquidity providers for best-execution pricing.",
+          text: "MRC Global Pay supports 500+ assets as swap destinations from AURORA — including BTC, ETH, USDT, USDC, SOL, BNB, XRP, XMR, and hundreds of altcoins and tokens across multiple networks. Swap rates are sourced from 20+ liquidity providers for best-execution pricing.",
         },
       },
       {
@@ -84,7 +84,7 @@ const AuroraWhitepaper = () => {
   return (
     <div className="min-h-screen bg-background">
       <Helmet>
-        <title>{title} | MRC GlobalPay</title>
+        <title>{title} | MRC Global Pay</title>
         <meta name="description" content={metaDescription} />
         <link rel="canonical" href={canonicalUrl} />
         <meta property="og:title" content={title} />
@@ -115,13 +115,13 @@ const AuroraWhitepaper = () => {
             <span className="inline-flex items-center gap-1.5">
               <Clock className="h-4 w-4" /> 6 min read
             </span>
-            <span>MRC GlobalPay</span>
+            <span>MRC Global Pay</span>
           </div>
         </header>
 
         {/* Intro */}
         <p className="mb-10 font-body text-lg leading-8 text-muted-foreground">
-          MRC GlobalPay is now part of the Aurora ecosystem — bringing our non-custodial, registration-free swap
+          MRC Global Pay is now part of the Aurora ecosystem — bringing our non-custodial, registration-free swap
           infrastructure to one of the most technically advanced cross-chain environments in Web3. Here's what this
           means for AURORA holders, NEAR Intents users, and anyone moving assets across chains without wanting to hand
           over their identity to do it.
@@ -139,10 +139,10 @@ const AuroraWhitepaper = () => {
             </div>
           </div>
           <p className="text-center font-display text-lg font-semibold text-foreground">
-            MRC GlobalPay × Aurora Ecosystem
+            MRC Global Pay × Aurora Ecosystem
           </p>
           <p className="mt-3 text-center font-body text-sm leading-relaxed text-muted-foreground">
-            MRC GlobalPay is now listed on the official Aurora ecosystem page as a verified swap and exchange partner —
+            MRC Global Pay is now listed on the official Aurora ecosystem page as a verified swap and exchange partner —
             supporting AURORA token swaps across its native network and ERC-20 standard, with no registration required.
           </p>
 
@@ -201,13 +201,13 @@ const AuroraWhitepaper = () => {
             funding flows without building custom routing logic.
           </p>
           <p>
-            MRC GlobalPay joining this ecosystem means our swap infrastructure is now part of this network — listed as a
+            MRC Global Pay joining this ecosystem means our swap infrastructure is now part of this network — listed as a
             verified partner on the Aurora ecosystem page alongside other exchanges, DeFi protocols, and Web3
             infrastructure providers building on the same cross-chain foundation.
           </p>
 
           <h2 className="mt-12 font-display text-2xl font-bold text-foreground sm:text-3xl">
-            What MRC GlobalPay now supports for Aurora users
+            What MRC Global Pay now supports for Aurora users
           </h2>
           <div className="grid gap-4 sm:grid-cols-2">
             {[
@@ -225,7 +225,7 @@ const AuroraWhitepaper = () => {
               },
               {
                 title: "No registration, no KYC",
-                desc: "MRC GlobalPay is a non-custodial platform. We never hold your assets, never require account creation, and process swaps from any wallet you control.",
+                desc: "MRC Global Pay is a non-custodial platform. We never hold your assets, never require account creation, and process swaps from any wallet you control.",
               },
             ].map((item) => (
               <div key={item.title} className="rounded-xl border border-border bg-card p-5">
@@ -236,7 +236,7 @@ const AuroraWhitepaper = () => {
           </div>
 
           <h2 className="mt-12 font-display text-2xl font-bold text-foreground sm:text-3xl">
-            How to swap AURORA on MRC GlobalPay
+            How to swap AURORA on MRC Global Pay
           </h2>
           <ol className="space-y-5">
             {[
@@ -258,7 +258,7 @@ const AuroraWhitepaper = () => {
               {
                 step: "4",
                 title: "Receive your funds",
-                desc: "The converted asset arrives directly in your wallet — typically within 60 seconds. MRC GlobalPay never holds your funds; this is a non-custodial flow from start to finish.",
+                desc: "The converted asset arrives directly in your wallet — typically within 60 seconds. MRC Global Pay never holds your funds; this is a non-custodial flow from start to finish.",
               },
             ].map((s) => (
               <li key={s.step} className="flex gap-4 rounded-xl border border-border bg-card p-5">
@@ -282,14 +282,14 @@ const AuroraWhitepaper = () => {
             custody introduce friction, counterparty risk, and unnecessary data exposure at every stage.
           </p>
           <p>
-            MRC GlobalPay's non-custodial model aligns with this philosophy directly. When you swap AURORA through MRC
+            MRC Global Pay's non-custodial model aligns with this philosophy directly. When you swap AURORA through MRC
             GlobalPay, you remain in control of your assets throughout the process — there is no custodial wallet, no
             frozen withdrawal queue, no exchange holding your tokens between steps. The swap executes
             peer-to-protocol, with funds moving from your wallet to the destination wallet without passing through an
             MRC-controlled intermediate.
           </p>
           <p>
-            As a Canadian MSB (Money Services Business) registered with FINTRAC, MRC GlobalPay operates under AML/ATF
+            As a Canadian MSB (Money Services Business) registered with FINTRAC, MRC Global Pay operates under AML/ATF
             compliance obligations — but without the KYC-for-everything approach taken by most centralized exchanges.
             Compliance and privacy are not mutually exclusive when the platform is built correctly.
           </p>
@@ -312,7 +312,7 @@ const AuroraWhitepaper = () => {
               </ul>
             </div>
             <div className="rounded-xl border border-border bg-card p-5">
-              <h3 className="mb-3 font-display text-base font-semibold text-foreground">What MRC GlobalPay adds</h3>
+              <h3 className="mb-3 font-display text-base font-semibold text-foreground">What MRC Global Pay adds</h3>
               <ul className="space-y-2 font-body text-sm leading-relaxed text-muted-foreground">
                 <li>• Non-custodial AURORA swaps — native and ERC-20</li>
                 <li>• Zero registration — accessible from any wallet globally</li>
@@ -324,27 +324,27 @@ const AuroraWhitepaper = () => {
             </div>
           </div>
           <p>
-            The addition of MRC GlobalPay to the Aurora ecosystem reflects a broader trend in 2026: the best cross-chain
+            The addition of MRC Global Pay to the Aurora ecosystem reflects a broader trend in 2026: the best cross-chain
             infrastructure becomes significantly more valuable when paired with accessible, compliant on-ramps and
             off-ramps. Aurora's technical architecture solves the execution problem — moving assets across chains
-            without friction. MRC GlobalPay solves the access problem — converting those assets into anything else a
+            without friction. MRC Global Pay solves the access problem — converting those assets into anything else a
             user needs, without requiring them to open a CEX account or pass identity verification to do it.
           </p>
 
           <blockquote className="my-10 rounded-xl border-s-4 border-primary bg-muted/40 p-6">
             <p className="mb-3 font-display text-3xl text-primary">"</p>
             <p className="font-body text-base leading-relaxed text-foreground">
-              Joining the Aurora ecosystem is a natural extension of what MRC GlobalPay is built to do. Aurora's
+              Joining the Aurora ecosystem is a natural extension of what MRC Global Pay is built to do. Aurora's
               cross-chain infrastructure and NEAR Intents represent exactly the kind of permissionless, execution-first
               architecture that aligns with our non-custodial model. AURORA holders can now access our full swap
               liquidity without any of the registration overhead typical of centralized venues.
             </p>
-            <footer className="mt-3 font-body text-sm font-medium text-muted-foreground">— MRC GlobalPay Team</footer>
+            <footer className="mt-3 font-body text-sm font-medium text-muted-foreground">— MRC Global Pay Team</footer>
           </blockquote>
 
           <h2 className="mt-12 font-display text-2xl font-bold text-foreground sm:text-3xl">Swap AURORA now</h2>
           <p>
-            AURORA is available to swap immediately on MRC GlobalPay — both the native network token and the ERC-20
+            AURORA is available to swap immediately on MRC Global Pay — both the native network token and the ERC-20
             version on Ethereum. Whether you're rotating profits from an Aurora DeFi position, converting event-based
             AURORA rewards, or simply moving into a different asset class, the swap is available now with no account
             required.
@@ -373,16 +373,16 @@ const AuroraWhitepaper = () => {
                 a: "Aurora is a product studio and infrastructure provider within the NEAR Intents ecosystem. It builds cross-chain execution tools that allow any application to accept users, assets, and actions from any chain — without requiring bridging or network switching. NEAR Intents, Aurora's core execution layer, processes approximately $2.5 billion in monthly volume in 2026.",
               },
               {
-                q: "Can I swap AURORA on MRC GlobalPay without KYC?",
-                a: "Yes. MRC GlobalPay is a non-custodial platform and does not require registration or identity verification for standard swap volumes. As a Canadian MSB, the platform is AML/ATF compliant — but this compliance does not translate into mandatory KYC for users conducting regular swaps.",
+                q: "Can I swap AURORA on MRC Global Pay without KYC?",
+                a: "Yes. MRC Global Pay is a non-custodial platform and does not require registration or identity verification for standard swap volumes. As a Canadian MSB, the platform is AML/ATF compliant — but this compliance does not translate into mandatory KYC for users conducting regular swaps.",
               },
               {
                 q: "What is the difference between AURORA native and AURORA ERC-20?",
-                a: "AURORA native refers to the token on Aurora's own network — the EVM-compatible environment built on NEAR Protocol. AURORA ERC-20 is the same token represented on the Ethereum mainnet. MRC GlobalPay supports swaps for both versions, including cross-standard swaps between the two without requiring a manual bridge.",
+                a: "AURORA native refers to the token on Aurora's own network — the EVM-compatible environment built on NEAR Protocol. AURORA ERC-20 is the same token represented on the Ethereum mainnet. MRC Global Pay supports swaps for both versions, including cross-standard swaps between the two without requiring a manual bridge.",
               },
               {
-                q: "What assets can I swap AURORA into on MRC GlobalPay?",
-                a: "MRC GlobalPay supports 500+ assets as swap destinations from AURORA — including BTC, ETH, USDT, USDC, SOL, BNB, XRP, XMR, and hundreds of altcoins and tokens across multiple networks. Swap rates are sourced from 20+ liquidity providers for best-execution pricing.",
+                q: "What assets can I swap AURORA into on MRC Global Pay?",
+                a: "MRC Global Pay supports 500+ assets as swap destinations from AURORA — including BTC, ETH, USDT, USDC, SOL, BNB, XRP, XMR, and hundreds of altcoins and tokens across multiple networks. Swap rates are sourced from 20+ liquidity providers for best-execution pricing.",
               },
               {
                 q: "What is NEAR Intents and how does it relate to Aurora?",

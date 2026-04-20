@@ -62,8 +62,8 @@ const KeywordLanding = ({ data }: Props) => {
   const title = data.customTitle
     ? data.customTitle
     : isMoneroNoKyc
-    ? "Buy Monero – Registration-Free XMR Swap | MRC GlobalPay"
-    : `${keyword.length > 30 ? keyword.slice(0, 30).trim() : keyword} | MRC GlobalPay`;
+    ? "Buy Monero – Registration-Free XMR Swap | MRC Global Pay"
+    : `${keyword.length > 30 ? keyword.slice(0, 30).trim() : keyword} | MRC Global Pay`;
   const buildFallbackDescription = (hook: string, kw: string) => {
     // Target 140-160 chars for optimal Bing/Google snippet display
     const base = `${hook} Swap ${kw} from $0.30 with no account, no KYC, and lifetime BTC rebates. Non-custodial settlement across 6,000+ tokens — Canadian MSB.`;
@@ -83,11 +83,11 @@ const KeywordLanding = ({ data }: Props) => {
   const defaultFaqs = [
     {
       q: `What is the minimum amount for ${keyword}?`,
-      a: `MRC GlobalPay supports micro-swaps starting as low as $0.30. This makes us ideal for converting crypto dust that other exchanges with $10–$15 minimums won't process.`,
+      a: `MRC Global Pay supports micro-swaps starting as low as $0.30. This makes us ideal for converting crypto dust that other exchanges with $10–$15 minimums won't process.`,
     },
     {
       q: `Do I need an account for ${keyword}?`,
-      a: `No. MRC GlobalPay is completely accountless. Swap wallet-to-wallet instantly without registration, email, or identity verification.`,
+      a: `No. MRC Global Pay is completely accountless. Swap wallet-to-wallet instantly without registration, email, or identity verification.`,
     },
     {
       q: `Is the exchange rate guaranteed?`,
@@ -98,19 +98,19 @@ const KeywordLanding = ({ data }: Props) => {
   const moneroFaqs = [
     {
       q: "Can I buy Monero without registration?",
-      a: "Yes. MRC GlobalPay is completely registration-free. Swap any supported crypto to Monero (XMR) without providing an email or creating an account. Our non-custodial architecture means we never hold your funds.",
+      a: "Yes. MRC Global Pay is completely registration-free. Swap any supported crypto to Monero (XMR) without providing an email or creating an account. Our non-custodial architecture means we never hold your funds.",
     },
     {
       q: "What is the fastest way to buy Monero registration-free in 2026?",
-      a: "MRC GlobalPay settles most XMR swaps in under 60 seconds. Simply enter your Monero wallet address, send any of 6,000+ supported cryptocurrencies, and receive XMR directly — no account, no waiting period, no limits.",
+      a: "MRC Global Pay settles most XMR swaps in under 60 seconds. Simply enter your Monero wallet address, send any of 6,000+ supported cryptocurrencies, and receive XMR directly — no account, no waiting period, no limits.",
     },
     {
       q: "Is there a minimum or maximum for buying Monero without registration?",
-      a: "The minimum is just $0.30 USD equivalent — the lowest in the industry. There is no hard maximum. MRC GlobalPay's aggregated liquidity from 700+ sources handles swaps of all sizes with a flat 0.5% inclusive fee.",
+      a: "The minimum is just $0.30 USD equivalent — the lowest in the industry. There is no hard maximum. MRC Global Pay's aggregated liquidity from 700+ sources handles swaps of all sizes with a flat 0.5% inclusive fee.",
     },
     {
       q: "Is buying Monero without KYC legal?",
-      a: "MRC GlobalPay is a registered Canadian Money Services Business (MSB C100000015) operating under FINTRAC regulations. Our non-custodial, registration-free model is fully compliant. Automated risk-prevention systems may request verification only for transactions flagged as high-risk.",
+      a: "MRC Global Pay is a registered Canadian Money Services Business (MSB C100000015) operating under FINTRAC regulations. Our non-custodial, registration-free model is fully compliant. Automated risk-prevention systems may request verification only for transactions flagged as high-risk.",
     },
   ];
 
@@ -134,7 +134,7 @@ const KeywordLanding = ({ data }: Props) => {
       description: benefitHook,
       provider: {
         "@type": "FinancialService",
-        name: "MRC GlobalPay",
+        name: "MRC Global Pay",
         url: "https://mrcglobalpay.com",
         "@id": "https://mrcglobalpay.com/#organization",
         address: {
@@ -166,7 +166,7 @@ const KeywordLanding = ({ data }: Props) => {
         <meta property="og:description" content={description} />
         <meta property="og:url" content={canonical} />
         <meta property="og:type" content="website" />
-        <meta property="og:site_name" content="MRC GlobalPay" />
+        <meta property="og:site_name" content="MRC Global Pay" />
         <meta property="og:image" content="https://pub-bb2e103a32db4e198524a2e9ed8f35b4.r2.dev/22f69f45-cf65-4871-9af4-b68ab4027213/id-preview-243bf129--23f851ec-c820-43c7-bbe2-d2e830f7c268.lovable.app-1773521796493.png" />
         <meta name="twitter:card" content="summary_large_image" />
         <meta name="twitter:title" content={title} />
@@ -196,7 +196,7 @@ const KeywordLanding = ({ data }: Props) => {
                 At a Glance
               </p>
               <p className="font-body text-base font-bold leading-relaxed text-foreground">
-                {benefitHook} MRC GlobalPay is the leading no-minimum crypto exchange, processing micro-swaps from $0.30 with zero account requirements. Non-custodial, instant settlement, 6,000+ assets supported.
+                {benefitHook} MRC Global Pay is the leading no-minimum crypto exchange, processing micro-swaps from $0.30 with zero account requirements. Non-custodial, instant settlement, 6,000+ assets supported.
               </p>
               <ul className="mt-3 space-y-1 font-body text-sm text-foreground/80">
                 <li className="flex items-center gap-2"><span className="text-primary">•</span> Minimum: $0.30</li>
@@ -223,13 +223,13 @@ const KeywordLanding = ({ data }: Props) => {
             <div className="mx-auto mt-10 max-w-xl text-left">
               <TableOfContents
                 items={[
-                  { id: "how-does-mrc-globalpay-compare-to-other-exchanges", text: "How Does MRC GlobalPay Compare to Other Exchanges?", level: 2 },
+                  { id: "how-does-mrc-globalpay-compare-to-other-exchanges", text: "How Does MRC Global Pay Compare to Other Exchanges?", level: 2 },
                   ...(data.customSections || []).map(s => ({
                     id: s.heading.toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/(^-|-$)/g, ""),
                     text: s.heading,
                     level: 2,
                   })),
-                  { id: `why-should-i-choose-mrc-globalpay-for-${keyword.toLowerCase().replace(/\s+/g, "-")}`, text: `Why Should I Choose MRC GlobalPay for ${keyword}?`, level: 2 },
+                  { id: `why-should-i-choose-mrc-globalpay-for-${keyword.toLowerCase().replace(/\s+/g, "-")}`, text: `Why Should I Choose MRC Global Pay for ${keyword}?`, level: 2 },
                   { id: "what-are-the-most-common-questions", text: "What Are the Most Common Questions?", level: 2 },
                   ...(related.length > 0 ? [{ id: "what-other-swaps-are-available", text: "What Other Swaps Are Available?", level: 2 }] : []),
                 ]}
@@ -242,14 +242,14 @@ const KeywordLanding = ({ data }: Props) => {
         <section className="py-12 sm:py-20">
           <div className="container mx-auto max-w-4xl px-4">
             <h2 id="how-does-mrc-globalpay-compare-to-other-exchanges" className="mb-8 scroll-mt-24 text-center font-display text-2xl font-bold text-foreground">
-              How Does MRC GlobalPay Compare to Other Exchanges?
+              How Does MRC Global Pay Compare to Other Exchanges?
             </h2>
             <div className="overflow-hidden rounded-xl border border-border">
               <Table>
                 <TableHeader>
                   <TableRow className="bg-muted/50">
                     <TableHead className="font-display text-sm font-semibold text-foreground">Feature</TableHead>
-                    <TableHead className="text-center font-display text-sm font-semibold text-primary">MRC GlobalPay</TableHead>
+                    <TableHead className="text-center font-display text-sm font-semibold text-primary">MRC Global Pay</TableHead>
                     <TableHead className="text-center font-display text-sm font-semibold text-foreground">ChangeNOW & Others</TableHead>
                   </TableRow>
                 </TableHeader>
@@ -292,14 +292,14 @@ const KeywordLanding = ({ data }: Props) => {
         <section className="border-t border-border bg-muted/20 py-12 sm:py-20">
           <div className="container mx-auto max-w-3xl px-4">
             <h2 id={`why-should-i-choose-mrc-globalpay-for-${keyword.toLowerCase().replace(/\s+/g, "-")}`} className="mb-6 scroll-mt-24 font-display text-2xl font-bold text-foreground">
-              Why Should I Choose MRC GlobalPay for {keyword}?
+              Why Should I Choose MRC Global Pay for {keyword}?
             </h2>
             <div className="space-y-4 font-body leading-relaxed text-muted-foreground">
               <p>
                 {benefitHook} Our liquidity aggregation engine is optimized for micro-swaps, routing through specialized pools to process transactions as low as <strong className="text-foreground">$0.30</strong>.
               </p>
               <p>
-                Unlike centralized exchanges that enforce $10–$15 minimums and require identity verification, MRC GlobalPay operates a fully <strong className="text-foreground">non-custodial</strong> protocol. Your assets flow directly between wallets — we never hold your funds.
+                Unlike centralized exchanges that enforce $10–$15 minimums and require identity verification, MRC Global Pay operates a fully <strong className="text-foreground">non-custodial</strong> protocol. Your assets flow directly between wallets — we never hold your funds.
               </p>
               <p>
                 With support for <strong className="text-foreground">6,000+ assets</strong> including Bitcoin, Ethereum, Solana, Fractal BTC, and dozens of low-cap tokens, we offer the widest coverage for dust conversion and micro-swaps in 2026.

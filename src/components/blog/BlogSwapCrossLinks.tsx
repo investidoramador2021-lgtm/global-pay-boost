@@ -109,7 +109,7 @@ const BlogSwapCrossLinks = ({ slug }: BlogSwapCrossLinksProps) => {
             Ready to act on this guide?
           </p>
           <h3 className="mt-1 font-display text-lg font-bold text-foreground sm:text-xl">
-            {links.primary.label} on MRC GlobalPay
+            {links.primary.label} on MRC Global Pay
           </h3>
           <p className="mt-1.5 font-body text-sm text-muted-foreground">
             {links.primary.description}

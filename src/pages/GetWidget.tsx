@@ -14,7 +14,7 @@ const SIZES = [
 const jsonLd = {
   "@context": "https://schema.org",
   "@type": "SoftwareApplication",
-  name: "MRC GlobalPay Crypto Swap Widget",
+  name: "MRC Global Pay Crypto Swap Widget",
   applicationCategory: "FinanceApplication",
   operatingSystem: "Web",
   offers: {
@@ -27,7 +27,7 @@ const jsonLd = {
   url: "https://mrcglobalpay.com/get-widget",
   provider: {
     "@type": "Organization",
-    name: "MRC GlobalPay",
+    name: "MRC Global Pay",
     url: "https://mrcglobalpay.com",
   },
 };
@@ -38,7 +38,7 @@ const faqJsonLd = {
   mainEntity: [
     {
       "@type": "Question",
-      name: "How do I add the MRC GlobalPay swap widget to my website?",
+      name: "How do I add the MRC Global Pay swap widget to my website?",
       acceptedAnswer: {
         "@type": "Answer",
         text: "Copy the one-line iframe code from the Get Widget page and paste it into your HTML. No API keys, no sign-up, and no backend required.",
@@ -49,7 +49,7 @@ const faqJsonLd = {
       name: "Is the crypto swap widget free to use?",
       acceptedAnswer: {
         "@type": "Answer",
-        text: "Yes, the widget is completely free. It includes a small 'Powered by MRC GlobalPay' link at the bottom.",
+        text: "Yes, the widget is completely free. It includes a small 'Powered by MRC Global Pay' link at the bottom.",
       },
     },
     {
@@ -68,7 +68,7 @@ const GetWidget = () => {
   const [copied, setCopied] = useState(false);
   const { w, h } = SIZES[size];
 
-  const embedCode = `<iframe src="https://mrcglobalpay.com/embed/widget" width="${w}" height="${h}" style="border:none;border-radius:16px;overflow:hidden;" allow="clipboard-write" loading="lazy" title="MRC GlobalPay Crypto Swap Widget"></iframe>`;
+  const embedCode = `<iframe src="https://mrcglobalpay.com/embed/widget" width="${w}" height="${h}" style="border:none;border-radius:16px;overflow:hidden;" allow="clipboard-write" loading="lazy" title="MRC Global Pay Crypto Swap Widget"></iframe>`;
 
   const handleCopy = () => {
     navigator.clipboard.writeText(embedCode);
@@ -79,7 +79,7 @@ const GetWidget = () => {
   return (
     <>
       <Helmet>
-        <title>Free Crypto Swap Widget | Embed on Your Site | MRC GlobalPay</title>
+        <title>Free Crypto Swap Widget | Embed on Your Site | MRC Global Pay</title>
         <meta
           name="description"
           content="Add a free crypto swap widget to your website. One-line embed code, glassmorphism dark UI, supports 6,000+ tokens. Dust-friendly swaps from $0.30."
@@ -93,9 +93,9 @@ const GetWidget = () => {
         <meta property="og:url" content="https://mrcglobalpay.com/get-widget" />
         <meta property="og:type" content="website" />
         <meta property="og:locale" content="en_US" />
-        <meta property="og:site_name" content="MRC GlobalPay" />
+        <meta property="og:site_name" content="MRC Global Pay" />
         <meta name="twitter:card" content="summary" />
-        <meta name="twitter:title" content="Free Crypto Swap Widget | MRC GlobalPay" />
+        <meta name="twitter:title" content="Free Crypto Swap Widget | MRC Global Pay" />
         <meta
           name="twitter:description"
           content="Embed a free crypto swap widget on your site. 6,000+ tokens, live pricing, one line of code."
@@ -126,7 +126,7 @@ const GetWidget = () => {
         {/* Features */}
         <section className="container mx-auto px-4 py-12">
           <h2 className="mb-8 text-center text-2xl font-bold text-foreground">
-            Why Embed the MRC GlobalPay Swap Widget?
+            Why Embed the MRC Global Pay Swap Widget?
           </h2>
           <div className="mx-auto grid max-w-4xl gap-6 sm:grid-cols-3">
             {[
@@ -143,7 +143,7 @@ const GetWidget = () => {
               {
                 icon: Link2,
                 title: "Backlink Included",
-                desc: "A subtle 'Powered by MRC GlobalPay' link boosts your SEO authority.",
+                desc: "A subtle 'Powered by MRC Global Pay' link boosts your SEO authority.",
               },
             ].map(({ icon: Icon, title, desc }) => (
               <div key={title} className="rounded-xl border border-border bg-card p-6 text-center">
@@ -193,7 +193,7 @@ const GetWidget = () => {
                       maxWidth: "100%",
                     }}
                     allow="clipboard-write"
-                    title="MRC GlobalPay Crypto Swap Widget Preview"
+                    title="MRC Global Pay Crypto Swap Widget Preview"
                   />
                 </div>
               </div>
@@ -254,7 +254,7 @@ const GetWidget = () => {
         <section className="container mx-auto px-4 py-12">
           <div className="mx-auto max-w-3xl">
             <h2 className="mb-6 text-center text-2xl font-bold text-foreground">
-              Explore More MRC GlobalPay Tools
+              Explore More MRC Global Pay Tools
             </h2>
             <div className="grid gap-4 sm:grid-cols-2">
               {[

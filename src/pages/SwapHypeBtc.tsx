@@ -11,7 +11,7 @@ const SwapHypeBtc = () => (
     isFeatured
     headline={<>Swap HYPE to BTC Instantly – <span className="text-gradient-neon">Bank Perp DEX Gains in Hard Money</span></>}
     subHeadline="Convert Hyperliquid (HYPE) directly into native Bitcoin without leaving your self-custody flow. Sub-second HyperEVM finality plus fast Bitcoin routing means your capital is in BTC in minutes."
-    whyText="HYPE holders looking to bank perp DEX gains into long-term Bitcoin positions usually pay 1–3% in unnecessary intermediary fees through CEX hops. MRC GlobalPay swaps HYPE → native BTC in a single quote, locked rate, no exchange account. The HyperEVM's near-instant finality means you only wait for Bitcoin confirmations on the receive side."
+    whyText="HYPE holders looking to bank perp DEX gains into long-term Bitcoin positions usually pay 1–3% in unnecessary intermediary fees through CEX hops. MRC Global Pay swaps HYPE → native BTC in a single quote, locked rate, no exchange account. The HyperEVM's near-instant finality means you only wait for Bitcoin confirmations on the receive side."
     extraFaqs={[
       {
         q: "Where does my HYPE need to be held?",
@@ -22,7 +22,7 @@ const SwapHypeBtc = () => (
         a: "Approximately 3–8 minutes: near-instant HyperEVM finality, ~30 seconds for cross-chain routing, then 1–3 Bitcoin confirmations.",
       },
       {
-        q: "Why use MRC GlobalPay instead of bridging through USDT?",
+        q: "Why use MRC Global Pay instead of bridging through USDT?",
         a: "Two-leg conversions (HYPE → USDT → BTC) typically cost 0.6–1.2% in cumulative spread. A direct HYPE → BTC route through our aggregator quotes a single locked rate, eliminating the second leg's slippage entirely.",
       },
     ]}

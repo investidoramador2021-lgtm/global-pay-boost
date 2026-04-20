@@ -30,10 +30,10 @@ async function sendOtpEmail(email: string, otp: string, lang: string) {
     body: {
       to: email,
       from: "no-reply@mrc-pay.com",
-      subject: `MRC GlobalPay – ${lang === "en" ? "Your Security Code" : "Code de sécurité"}`,
+      subject: `MRC Global Pay – ${lang === "en" ? "Your Security Code" : "Code de sécurité"}`,
       html: `
         <div style="font-family:Arial,sans-serif;max-width:480px;margin:0 auto;padding:24px">
-          <h2 style="color:#D4AF37;margin-bottom:8px">🔐 MRC GlobalPay</h2>
+          <h2 style="color:#D4AF37;margin-bottom:8px">🔐 MRC Global Pay</h2>
           <p style="color:#333;font-size:14px;margin-bottom:16px">
             ${lang === "en" ? "Your two-factor authentication code is:" : "Votre code d'authentification à deux facteurs est :"}
           </p>
@@ -44,7 +44,7 @@ async function sendOtpEmail(email: string, otp: string, lang: string) {
             ${lang === "en" ? "This code expires in 10 minutes. Do not share it with anyone." : "Ce code expire dans 10 minutes. Ne le partagez avec personne."}
           </p>
           <hr style="border:none;border-top:1px solid #eee;margin:16px 0"/>
-          <p style="color:#999;font-size:11px">MRC GlobalPay · Registered Canadian MSB · C100000015</p>
+          <p style="color:#999;font-size:11px">MRC Global Pay · Registered Canadian MSB · C100000015</p>
         </div>
       `,
     },

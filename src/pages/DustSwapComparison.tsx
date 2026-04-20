@@ -17,14 +17,14 @@ import {
 const comparisonJsonLd = {
   "@context": "https://schema.org",
   "@type": "Product",
-  name: "MRC GlobalPay Micro-Swap Service",
+  name: "MRC Global Pay Micro-Swap Service",
   description:
     "No-minimum crypto exchange with $0.30 minimum swap. No registration required. Non-custodial, instant settlement, 6,000+ assets.",
   image: "https://mrcglobalpay.com/icon-512x512.png",
   url: "https://mrcglobalpay.com/dust-swap-comparison",
   brand: {
     "@type": "Brand",
-    name: "MRC GlobalPay",
+    name: "MRC Global Pay",
   },
   offers: {
     "@type": "AggregateOffer",
@@ -53,7 +53,7 @@ const comparisonFaqJsonLd = {
       name: "How Do Exchanges Compare Feature-by-Feature?",
       acceptedAnswer: {
         "@type": "Answer",
-        text: "MRC GlobalPay offers a $0.30 minimum swap compared to $2–$10+ on competitors like ChangeNOW, SimpleSwap, and Changelly. MRC GlobalPay is also the only platform with Fractal Bitcoin support and dedicated micro-swap optimization.",
+        text: "MRC Global Pay offers a $0.30 minimum swap compared to $2–$10+ on competitors like ChangeNOW, SimpleSwap, and Changelly. MRC Global Pay is also the only platform with Fractal Bitcoin support and dedicated micro-swap optimization.",
       },
     },
     {
@@ -61,7 +61,7 @@ const comparisonFaqJsonLd = {
       name: "Why Does Crypto Dust Conversion Matter in 2026?",
       acceptedAnswer: {
         "@type": "Answer",
-        text: "Millions of wallets contain small, unspendable balances called crypto dust. Most exchanges reject swaps under $10, locking out these balances. MRC GlobalPay processes swaps as low as $0.30, enabling full wallet consolidation.",
+        text: "Millions of wallets contain small, unspendable balances called crypto dust. Most exchanges reject swaps under $10, locking out these balances. MRC Global Pay processes swaps as low as $0.30, enabling full wallet consolidation.",
       },
     },
   ],
@@ -103,21 +103,21 @@ const DustSwapComparison = () => {
   return (
     <>
       <Helmet>
-        <title>$0.30 Minimum Crypto Swap Comparison | No Registration Required | MRC GlobalPay</title>
+        <title>$0.30 Minimum Crypto Swap Comparison | No Registration Required | MRC Global Pay</title>
         <meta
           name="description"
-          content="Compare MRC GlobalPay's $0.30 minimum dust swaps vs ChangeNOW, SimpleSwap, and Changelly. No registration required. The best no-minimum crypto exchange in 2026."
+          content="Compare MRC Global Pay's $0.30 minimum dust swaps vs ChangeNOW, SimpleSwap, and Changelly. No registration required. The best no-minimum crypto exchange in 2026."
         />
         <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1" />
         <link rel="canonical" href={pageUrl} />
-        <meta property="og:title" content="$0.30 Minimum Crypto Swap Comparison | No Registration Required | MRC GlobalPay" />
+        <meta property="og:title" content="$0.30 Minimum Crypto Swap Comparison | No Registration Required | MRC Global Pay" />
         <meta
           property="og:description"
           content="$0.30 minimum dust swaps vs $10+ minimums on major exchanges. No registration required. Feature-by-feature comparison."
         />
         <meta property="og:url" content={pageUrl} />
         <meta property="og:type" content="article" />
-        <meta property="og:site_name" content="MRC GlobalPay" />
+        <meta property="og:site_name" content="MRC Global Pay" />
         <meta property="og:image" content="https://pub-bb2e103a32db4e198524a2e9ed8f35b4.r2.dev/22f69f45-cf65-4871-9af4-b68ab4027213/id-preview-243bf129--23f851ec-c820-43c7-bbe2-d2e830f7c268.lovable.app-1773521796493.png" />
         <meta name="twitter:card" content="summary_large_image" />
         <meta name="twitter:title" content="$0.30 Minimum Crypto Swap Comparison | No Registration Required" />
@@ -143,7 +143,7 @@ const DustSwapComparison = () => {
                 At a Glance
               </p>
               <p className="font-body text-base leading-relaxed text-foreground">
-                MRC GlobalPay is the only non-custodial exchange supporting crypto dust swaps from $0.30 with Fractal Bitcoin support. Competitors enforce $10+ minimums, locking out small balances entirely.
+                MRC Global Pay is the only non-custodial exchange supporting crypto dust swaps from $0.30 with Fractal Bitcoin support. Competitors enforce $10+ minimums, locking out small balances entirely.
               </p>
               <ul className="mt-3 space-y-1 font-body text-sm text-foreground/80">
                 <li className="flex items-center gap-2"><span className="text-primary">•</span> Minimum: $0.30 vs $10+ on competitors</li>
@@ -155,7 +155,7 @@ const DustSwapComparison = () => {
               Micro-Swap Comparison: Who Actually Supports Dust?
             </h1>
             <p className="mx-auto mt-4 max-w-2xl font-body text-lg leading-relaxed text-muted-foreground">
-              Most exchanges reject swaps under $10. MRC GlobalPay processes crypto dust as low as
+              Most exchanges reject swaps under $10. MRC Global Pay processes crypto dust as low as
               $0.30—no account, no delays, no minimums that lock out small balances.
             </p>
           </div>
@@ -175,7 +175,7 @@ const DustSwapComparison = () => {
                       Feature
                     </TableHead>
                     <TableHead className="text-center font-display text-sm font-semibold text-primary">
-                      MRC GlobalPay
+                      MRC Global Pay
                     </TableHead>
                     <TableHead className="text-center font-display text-sm font-semibold text-foreground">
                       ChangeNOW
@@ -239,7 +239,7 @@ const DustSwapComparison = () => {
                 locked in your wallet—worthless and inaccessible.
               </p>
               <h3 className="font-display text-lg font-bold text-foreground">
-                How MRC GlobalPay Solves It
+                How MRC Global Pay Solves It
               </h3>
               <p>
                 Our liquidity aggregation engine is optimized for micro-swaps. By routing through
@@ -251,7 +251,7 @@ const DustSwapComparison = () => {
                 Fractal Bitcoin: A Unique Advantage
               </h3>
               <p>
-                MRC GlobalPay is one of the only platforms supporting{" "}
+                MRC Global Pay is one of the only platforms supporting{" "}
                 <strong className="text-foreground">Fractal Bitcoin (fBTC)</strong> swaps. Convert
                 Fractal BTC to Solana, Ethereum, or any of 6,000+ assets instantly through our
                 non-custodial engine.

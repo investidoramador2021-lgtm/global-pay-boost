@@ -9,7 +9,7 @@ const PartnerProtocolCTA = () => (
         Become a Partner
       </h2>
       <p className="text-lg text-muted-foreground max-w-lg mx-auto">
-        Secure BTC rewards by referring settlements to the MRC GlobalPay network.
+        Secure BTC rewards by referring settlements to the MRC Global Pay network.
       </p>
       <Button asChild size="lg" className="px-10 py-6 text-base font-semibold rounded-xl gap-2">
         <Link to="/partners">
