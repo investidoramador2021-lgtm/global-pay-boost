@@ -83,21 +83,44 @@ ${altLocales}
 ${ld}`;
 }
 
+const NOSCRIPT_NAV_LABEL: Record<Lang, string> = {
+  en: "More: ", es: "Más: ", pt: "Mais: ", fr: "Plus : ", ja: "詳細: ",
+  fa: "بیشتر: ", ur: "مزید: ", he: "עוד: ", af: "Meer: ", hi: "अधिक: ",
+  vi: "Thêm: ", tr: "Daha fazla: ", uk: "Більше: ",
+};
+const NOSCRIPT_OPEN_LABEL: Record<Lang, string> = {
+  en: "Open the full interactive page",
+  es: "Abrir la página interactiva completa",
+  pt: "Abrir a página interativa completa",
+  fr: "Ouvrir la page interactive complète",
+  ja: "インタラクティブな完全ページを開く",
+  fa: "باز کردن صفحه تعاملی کامل",
+  ur: "مکمل انٹرایکٹو صفحہ کھولیں",
+  he: "פתח את העמוד האינטראקטיבי המלא",
+  af: "Open die volledige interaktiewe bladsy",
+  hi: "पूर्ण इंटरैक्टिव पेज खोलें",
+  vi: "Mở trang tương tác đầy đủ",
+  tr: "Tam interaktif sayfayı aç",
+  uk: "Відкрити повну інтерактивну сторінку",
+};
+
 function buildNoscript(opts: {
+  lang: Lang;
   h1: string;
   description: string;
   body: string;
   canonical: string;
 }): string {
-  const { h1, description, body, canonical } = opts;
+  const { lang, h1, description, body, canonical } = opts;
+  const dir = ["fa", "ur", "he"].includes(lang) ? 'dir="rtl"' : "";
   return `    <noscript>
-      <div style="max-width:1100px;margin:0 auto;padding:32px 20px;font-family:system-ui,sans-serif;color:#0f172a;background:#fff;line-height:1.7">
+      <div ${dir} style="max-width:1100px;margin:0 auto;padding:32px 20px;font-family:system-ui,sans-serif;color:#0f172a;background:#fff;line-height:1.7">
         <h1 style="font-size:32px;margin:0 0 12px">${escapeHtml(h1)}</h1>
         <p style="font-size:18px;color:#334155">${escapeHtml(description)}</p>
         ${body}
-        <p style="margin-top:24px"><a href="${escapeHtml(canonical)}" style="color:#0ea5e9">Open the full interactive page</a></p>
+        <p style="margin-top:24px"><a href="${escapeHtml(canonical)}" style="color:#0ea5e9">${escapeHtml(NOSCRIPT_OPEN_LABEL[lang])}</a></p>
         <nav style="margin-top:24px;font-size:14px;color:#64748b">
-          <a href="/">Home</a> · <a href="/affiliates">Affiliates</a> · <a href="/partners">Partners</a> · <a href="/referral">Referral</a> · <a href="/lend">Lend &amp; Earn</a> · <a href="/private-transfer">Private Transfer</a> · <a href="/permanent-bridge">Permanent Bridge</a> · <a href="/about">About</a> · <a href="/compliance">Compliance</a> · <a href="/blog">Blog</a>
+          ${escapeHtml(NOSCRIPT_NAV_LABEL[lang])}<a href="/">Home</a> · <a href="/affiliates">Affiliates</a> · <a href="/partners">Partners</a> · <a href="/referral">Referral</a> · <a href="/lend">Lend &amp; Earn</a> · <a href="/private-transfer">Private Transfer</a> · <a href="/permanent-bridge">Permanent Bridge</a> · <a href="/about">About</a> · <a href="/compliance">Compliance</a> · <a href="/blog">Blog</a>
         </nav>
       </div>
     </noscript>`;
@@ -138,6 +161,7 @@ export function prerenderStaticRoutes(outDir = "dist"): Plugin {
             jsonLd: seoForLang.jsonLd,
           });
           const noscript = buildNoscript({
+            lang,
             h1: seoForLang.h1,
             description: seoForLang.description,
             body: seoForLang.bodyHtml,

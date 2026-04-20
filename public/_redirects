@@ -42,19 +42,8 @@
 /rss.xml https://tjikwxkmsfmyjkssvyoh.supabase.co/functions/v1/dynamic-feed?format=rss 200
 /blog/feed.xml https://tjikwxkmsfmyjkssvyoh.supabase.co/functions/v1/dynamic-feed?format=rss 200
 
-# Server-rendered SEO shell for /exchange/[pair] routes (all 13 languages).
-# Crawlers and IndexNow get full <title>, meta, canonical, hreflang, OG, JSON-LD
-# and a <noscript> body. React then hydrates over the same DOM client-side.
-/exchange/*    https://tjikwxkmsfmyjkssvyoh.supabase.co/functions/v1/seo-shell?path=/exchange/:splat    200
-/es/exchange/* https://tjikwxkmsfmyjkssvyoh.supabase.co/functions/v1/seo-shell?path=/es/exchange/:splat 200
-/pt/exchange/* https://tjikwxkmsfmyjkssvyoh.supabase.co/functions/v1/seo-shell?path=/pt/exchange/:splat 200
-/fr/exchange/* https://tjikwxkmsfmyjkssvyoh.supabase.co/functions/v1/seo-shell?path=/fr/exchange/:splat 200
-/ja/exchange/* https://tjikwxkmsfmyjkssvyoh.supabase.co/functions/v1/seo-shell?path=/ja/exchange/:splat 200
-/fa/exchange/* https://tjikwxkmsfmyjkssvyoh.supabase.co/functions/v1/seo-shell?path=/fa/exchange/:splat 200
-/ur/exchange/* https://tjikwxkmsfmyjkssvyoh.supabase.co/functions/v1/seo-shell?path=/ur/exchange/:splat 200
-/he/exchange/* https://tjikwxkmsfmyjkssvyoh.supabase.co/functions/v1/seo-shell?path=/he/exchange/:splat 200
-/af/exchange/* https://tjikwxkmsfmyjkssvyoh.supabase.co/functions/v1/seo-shell?path=/af/exchange/:splat 200
-/hi/exchange/* https://tjikwxkmsfmyjkssvyoh.supabase.co/functions/v1/seo-shell?path=/hi/exchange/:splat 200
-/vi/exchange/* https://tjikwxkmsfmyjkssvyoh.supabase.co/functions/v1/seo-shell?path=/vi/exchange/:splat 200
-/tr/exchange/* https://tjikwxkmsfmyjkssvyoh.supabase.co/functions/v1/seo-shell?path=/tr/exchange/:splat 200
-/uk/exchange/* https://tjikwxkmsfmyjkssvyoh.supabase.co/functions/v1/seo-shell?path=/uk/exchange/:splat 200
+# NOTE: Lovable hosting ignores _redirects. The seo-shell-based proxy
+# previously listed here was a no-op. Top 2,000 pairs are now prerendered
+# at build time by vite-plugins/prerender-pair-routes.ts. The remaining
+# pairs continue to use SPA fallback with React Helmet for client-side SEO.
+
