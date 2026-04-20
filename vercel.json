@@ -36,6 +36,20 @@
     { "source": "/hi/exchange/:slug",         "destination": "https://tjikwxkmsfmyjkssvyoh.supabase.co/functions/v1/seo-shell?path=/hi/exchange/:slug" },
     { "source": "/vi/exchange/:slug",         "destination": "https://tjikwxkmsfmyjkssvyoh.supabase.co/functions/v1/seo-shell?path=/vi/exchange/:slug" },
     { "source": "/tr/exchange/:slug",         "destination": "https://tjikwxkmsfmyjkssvyoh.supabase.co/functions/v1/seo-shell?path=/tr/exchange/:slug" },
-    { "source": "/uk/exchange/:slug",         "destination": "https://tjikwxkmsfmyjkssvyoh.supabase.co/functions/v1/seo-shell?path=/uk/exchange/:slug" }
+    { "source": "/uk/exchange/:slug",         "destination": "https://tjikwxkmsfmyjkssvyoh.supabase.co/functions/v1/seo-shell?path=/uk/exchange/:slug" },
+
+    { "source": "/swap/:slug",                "destination": "https://tjikwxkmsfmyjkssvyoh.supabase.co/functions/v1/seo-shell?path=/swap/:slug" },
+    { "source": "/es/swap/:slug",             "destination": "https://tjikwxkmsfmyjkssvyoh.supabase.co/functions/v1/seo-shell?path=/es/swap/:slug" },
+    { "source": "/pt/swap/:slug",             "destination": "https://tjikwxkmsfmyjkssvyoh.supabase.co/functions/v1/seo-shell?path=/pt/swap/:slug" },
+    { "source": "/fr/swap/:slug",             "destination": "https://tjikwxkmsfmyjkssvyoh.supabase.co/functions/v1/seo-shell?path=/fr/swap/:slug" },
+    { "source": "/ja/swap/:slug",             "destination": "https://tjikwxkmsfmyjkssvyoh.supabase.co/functions/v1/seo-shell?path=/ja/swap/:slug" },
+    { "source": "/fa/swap/:slug",             "destination": "https://tjikwxkmsfmyjkssvyoh.supabase.co/functions/v1/seo-shell?path=/fa/swap/:slug" },
+    { "source": "/ur/swap/:slug",             "destination": "https://tjikwxkmsfmyjkssvyoh.supabase.co/functions/v1/seo-shell?path=/ur/swap/:slug" },
+    { "source": "/he/swap/:slug",             "destination": "https://tjikwxkmsfmyjkssvyoh.supabase.co/functions/v1/seo-shell?path=/he/swap/:slug" },
+    { "source": "/af/swap/:slug",             "destination": "https://tjikwxkmsfmyjkssvyoh.supabase.co/functions/v1/seo-shell?path=/af/swap/:slug" },
+    { "source": "/hi/swap/:slug",             "destination": "https://tjikwxkmsfmyjkssvyoh.supabase.co/functions/v1/seo-shell?path=/hi/swap/:slug" },
+    { "source": "/vi/swap/:slug",             "destination": "https://tjikwxkmsfmyjkssvyoh.supabase.co/functions/v1/seo-shell?path=/vi/swap/:slug" },
+    { "source": "/tr/swap/:slug",             "destination": "https://tjikwxkmsfmyjkssvyoh.supabase.co/functions/v1/seo-shell?path=/tr/swap/:slug" },
+    { "source": "/uk/swap/:slug",             "destination": "https://tjikwxkmsfmyjkssvyoh.supabase.co/functions/v1/seo-shell?path=/uk/swap/:slug" }
   ]
 }

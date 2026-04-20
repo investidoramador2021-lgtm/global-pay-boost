@@ -26,8 +26,9 @@ function escapeAttr(s: string): string {
   return escapeHtml(s);
 }
 
-// Parse "/es/exchange/btc-to-eth" -> { lang, pair }
-function parsePath(path: string): { lang: string; from: string; to: string } | null {
+// Parse "/es/exchange/btc-to-eth" or "/pt/swap/btc-usdc" -> { lang, kind, from, to }
+type RouteKind = "exchange" | "swap";
+function parsePath(path: string): { lang: string; kind: RouteKind; from: string; to: string } | null {
   // Normalize, strip trailing slash, ignore query/hash
   const clean = path.split(/[?#]/)[0].replace(/\/+$/, "") || "/";
   const parts = clean.split("/").filter(Boolean);
@@ -38,10 +39,23 @@ function parsePath(path: string): { lang: string; from: string; to: string } | n
     lang = parts[0];
     rest = parts.slice(1);
   }
-  if (rest.length !== 2 || rest[0] !== "exchange") return null;
-  const m = rest[1].match(/^([a-z0-9]+)-to-([a-z0-9]+)$/i);
+  if (rest.length !== 2) return null;
+  const kind = rest[0];
+  if (kind !== "exchange" && kind !== "swap") return null;
+  // /exchange/ uses "btc-to-eth" (with "-to-" separator)
+  // /swap/    uses "btc-usdc"   (single hyphen between two tickers)
+  if (kind === "exchange") {
+    const m = rest[1].match(/^([a-z0-9]+)-to-([a-z0-9]+)$/i);
+    if (!m) return null;
+    return { lang, kind, from: m[1].toLowerCase(), to: m[2].toLowerCase() };
+  }
+  const m = rest[1].match(/^([a-z0-9]+)-([a-z0-9]+)$/i);
   if (!m) return null;
-  return { lang, from: m[1].toLowerCase(), to: m[2].toLowerCase() };
+  return { lang, kind, from: m[1].toLowerCase(), to: m[2].toLowerCase() };
+}
+
+function pairUrlPath(kind: RouteKind, from: string, to: string): string {
+  return kind === "exchange" ? `/exchange/${from}-to-${to}` : `/swap/${from}-${to}`;
 }
 
 interface PairContent {
@@ -52,6 +66,7 @@ interface PairContent {
 
 function buildSeoHead(opts: {
   lang: string;
+  kind: RouteKind;
   from: string;
   to: string;
   fromName: string;
@@ -60,14 +75,14 @@ function buildSeoHead(opts: {
   description: string;
   canonical: string;
 }): string {
-  const { lang, from, to, fromName, toName, title, description, canonical } = opts;
+  const { lang, kind, from, to, fromName, toName, title, description, canonical } = opts;
   const fromUp = from.toUpperCase();
   const toUp = to.toUpperCase();
 
   // hreflang block — one entry per language + x-default
   const hreflangLinks = LANGS.map((l) => {
     const prefix = l === "en" ? "" : `/${l}`;
-    return `<link rel="alternate" hreflang="${l}" href="${SITE}${prefix}/exchange/${from}-to-${to}" />`;
+    return `<link rel="alternate" hreflang="${l}" href="${SITE}${prefix}${pairUrlPath(kind, from, to)}" />`;
   }).join("\n    ");
 
   const ogImage = `${SITE}/og-image.png`;
@@ -79,7 +94,7 @@ function buildSeoHead(opts: {
         "@type": "BreadcrumbList",
         itemListElement: [
           { "@type": "ListItem", position: 1, name: "Home", item: SITE },
-          { "@type": "ListItem", position: 2, name: "Exchange", item: `${SITE}/directory` },
+          { "@type": "ListItem", position: 2, name: kind === "exchange" ? "Exchange" : "Swap", item: `${SITE}/${kind === "exchange" ? "directory" : "swap"}` },
           { "@type": "ListItem", position: 3, name: `Swap ${fromUp} to ${toUp}`, item: canonical },
         ],
       },
@@ -109,7 +124,7 @@ function buildSeoHead(opts: {
     <meta name="robots" content="index,follow,max-image-preview:large,max-snippet:-1,max-video-preview:-1" />
     <link rel="canonical" href="${escapeAttr(canonical)}" />
     ${hreflangLinks}
-    <link rel="alternate" hreflang="x-default" href="${SITE}/exchange/${from}-to-${to}" />
+    <link rel="alternate" hreflang="x-default" href="${SITE}${pairUrlPath(kind, from, to)}" />
     <meta property="og:type" content="website" />
     <meta property="og:title" content="${escapeAttr(title)}" />
     <meta property="og:description" content="${escapeAttr(description)}" />
@@ -202,15 +217,19 @@ Deno.serve(async (req) => {
 
   const parsed = parsePath(targetPath);
   if (!parsed) {
-    // Not an exchange pair URL → just return the SPA shell unmodified
+    // Not a recognized pair URL (e.g. /swap/eth-to-usdt-instantly handled by
+    // KeywordPage). Return the SPA shell so React can route normally.
     const shell = await fetchShell();
     return new Response(shell || "<!doctype html><html><body>Not found</body></html>", {
-      status: 404,
-      headers: { "Content-Type": "text/html; charset=utf-8", "Cache-Control": "no-store" },
+      status: 200,
+      headers: {
+        "Content-Type": "text/html; charset=utf-8",
+        "Cache-Control": "public, max-age=60, s-maxage=300",
+      },
     });
   }
 
-  const { lang, from, to } = parsed;
+  const { lang, kind, from, to } = parsed;
 
   // Look up pre-generated SEO from the pairs table
   const supabase = createClient(
@@ -259,13 +278,12 @@ Deno.serve(async (req) => {
   const description = langContent?.description || pair?.seo_description || fallbackDesc;
   const h1 = langContent?.h1 || pair?.seo_h1 || fallbackH1;
 
-  // Self-referencing canonical per language (must match what DynamicExchange.tsx
-  // emits via Helmet, otherwise Google reports "Duplicate, Google chose different
-  // canonical than user"). x-default already points to the English URL in the
-  // hreflang block above.
-  const canonical = lang === "en"
-    ? `${SITE}/exchange/${from}-to-${to}`
-    : `${SITE}/${lang}/exchange/${from}-to-${to}`;
+  // Self-referencing canonical per language (must match what the React page
+  // emits via Helmet, otherwise Google reports "Duplicate, Google chose
+  // different canonical than user"). x-default already points to the English
+  // URL in the hreflang block above.
+  const path = pairUrlPath(kind, from, to);
+  const canonical = lang === "en" ? `${SITE}${path}` : `${SITE}/${lang}${path}`;
 
   const shell = await fetchShell();
   if (!shell) {
@@ -275,7 +293,7 @@ Deno.serve(async (req) => {
     });
   }
 
-  const seoHead = buildSeoHead({ lang, from, to, fromName, toName, title, description, canonical });
+  const seoHead = buildSeoHead({ lang, kind, from, to, fromName, toName, title, description, canonical });
   const noscriptBody = buildNoscriptBody({ from, to, fromName, toName, h1, description, canonical });
 
   // Inject SEO into <head> (right before </head>) and noscript content right after <body>
