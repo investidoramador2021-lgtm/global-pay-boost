@@ -47,7 +47,9 @@ import { useToast } from "@/hooks/use-toast";
 import { usePushNotifications } from "@/hooks/use-push-notifications";
 
 
-const POPULAR_TICKERS = ["btc", "eth", "usdt", "usdttrc20", "sol", "xrp", "doge", "bnb", "ltc", "usdc", "trx"];
+// Most popular pinned to top of selector. USDT (TRON) is included explicitly per
+// user demand even though it's a network-suffixed ticker.
+const POPULAR_TICKERS = ["btc", "eth", "usdttrc20", "usdt", "usdc", "sol", "bnb", "xrp", "doge", "ltc", "trx", "usdterc20", "usdcerc20", "usdcsol"];
 
 // Fiat currency → country code for flag images
 const FIAT_TO_COUNTRY: Record<string, string> = {
