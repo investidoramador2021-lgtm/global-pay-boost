@@ -240,6 +240,40 @@ export async function getGuardarianEstimate(params: {
   payment_method?: string;
   side?: "buy" | "sell";
 }): Promise<GuardarianEstimate> {
+  try {
+    const result = await callGuardarian({ action: 'estimate', ...params });
+    const v = Number(result?.value || 0);
+    if (v > 0) return result;
+    // Fall through to SimpleSwap fallback below.
+  } catch (err) {
+    // Swallow and try fallback.
+    console.warn('[Guardarian] estimate failed, trying SimpleSwap fallback:', err);
+  }
+
+  // Fallback: SimpleSwap fiat estimate. Buy-only (side === "buy" or undefined).
+  if (params.side === "sell") {
+    // Sell flow stays Guardarian-only — return original error path
+    return callGuardarian({ action: 'estimate', ...params });
+  }
+  try {
+    const { ssFiatEstimate } = await import('./simpleswap');
+    const amount = params.from_amount || params.to_amount || '0';
+    const ss = await ssFiatEstimate(params.from_currency, params.to_currency, String(amount));
+    if (ss?.estimatedAmount && ss.estimatedAmount > 0) {
+      return {
+        from_currency: params.from_currency,
+        to_currency: params.to_currency,
+        from_network: params.from_network || null,
+        to_network: params.to_network || null,
+        value: String(ss.estimatedAmount),
+        estimated_exchange_rate: '0',
+        fallback: true,
+      } as GuardarianEstimate;
+    }
+  } catch (err) {
+    console.warn('[SimpleSwap fiat] estimate fallback failed:', err);
+  }
+  // Final: re-call Guardarian to surface its native error response to the UI
   return callGuardarian({ action: 'estimate', ...params });
 }
 
@@ -267,7 +301,45 @@ export async function createGuardarianTransaction(params: {
   side?: "buy" | "sell";
   trade_direction?: "buy" | "sell";
 }) {
-  return callGuardarian({ action: 'create-transaction', ...params });
+  try {
+    const result = await callGuardarian({ action: 'create-transaction', ...params });
+    if (result?.id && (result?.redirect_url || result?.checkout_url)) return result;
+    // No redirect → treat as failure & try fallback
+    if (params.side !== "sell") throw new Error('Guardarian returned no redirect');
+    return result;
+  } catch (err) {
+    if (params.side === "sell") throw err; // Sell stays Guardarian-only
+    console.warn('[Guardarian] create-tx failed, trying SimpleSwap fallback:', err);
+    try {
+      const { ssFiatCreateTransaction } = await import('./simpleswap');
+      const ss = await ssFiatCreateTransaction({
+        from: params.from_currency,
+        to: params.to_currency,
+        amount: params.from_amount,
+        address: params.payout_address || params.deposit_address || '',
+        email: params.email,
+      });
+      if (ss?.id && ss.redirectUrl) {
+        // Shape response to match Guardarian's GuardarianTransaction interface
+        return {
+          id: ss.id,
+          status: ss.status,
+          checkout_url: ss.redirectUrl,
+          redirect_url: ss.redirectUrl,
+          from_currency: ss.fromCurrency,
+          to_currency: ss.toCurrency,
+          expected_from_amount: ss.fromAmount,
+          expected_to_amount: ss.toAmount || '0',
+          from_amount: ss.fromAmount,
+          to_amount: ss.toAmount,
+          fallback: true,
+        } as GuardarianTransaction & { fallback: boolean };
+      }
+    } catch (ssErr) {
+      console.warn('[SimpleSwap fiat] create-tx fallback failed:', ssErr);
+    }
+    throw err;
+  }
 }
 
 /** @deprecated Use createGuardarianTransaction for both buy and sell */
