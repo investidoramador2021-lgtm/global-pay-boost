@@ -86,7 +86,7 @@ export function generateSitemaps(outDir = "dist"): Plugin {
         const allUrls: string[] = [];
         let sourceIdx = 0;
         let consecutiveEmpty = 0;
-        while (consecutiveEmpty < 2 && sourceIdx < 100) {
+        while (consecutiveEmpty < 2 && sourceIdx < 100 && allUrls.length < MAX_PAIR_URLS) {
           const xml = await fetchSourceBatch(sourceIdx);
           if (!xml) {
             consecutiveEmpty++;
@@ -110,7 +110,15 @@ export function generateSitemaps(outDir = "dist"): Plugin {
           return;
         }
 
-        log(`Total pair URLs: ${allUrls.length.toLocaleString()}`);
+        // Hard cap to keep total submitted URLs under ~15k (SEO trim).
+        if (allUrls.length > MAX_PAIR_URLS) {
+          log(
+            `Trimming pair URLs from ${allUrls.length.toLocaleString()} → ${MAX_PAIR_URLS.toLocaleString()} (top-priority slice).`,
+          );
+          allUrls.length = MAX_PAIR_URLS;
+        }
+
+        log(`Total pair URLs (after cap): ${allUrls.length.toLocaleString()}`);
 
         // --- 2. Write static + blog sitemaps ------------------------------
         const childPaths: string[] = [];
