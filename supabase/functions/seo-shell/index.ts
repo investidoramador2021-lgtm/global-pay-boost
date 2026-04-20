@@ -26,8 +26,9 @@ function escapeAttr(s: string): string {
   return escapeHtml(s);
 }
 
-// Parse "/es/exchange/btc-to-eth" -> { lang, pair }
-function parsePath(path: string): { lang: string; from: string; to: string } | null {
+// Parse "/es/exchange/btc-to-eth" or "/pt/swap/btc-usdc" -> { lang, kind, from, to }
+type RouteKind = "exchange" | "swap";
+function parsePath(path: string): { lang: string; kind: RouteKind; from: string; to: string } | null {
   // Normalize, strip trailing slash, ignore query/hash
   const clean = path.split(/[?#]/)[0].replace(/\/+$/, "") || "/";
   const parts = clean.split("/").filter(Boolean);
@@ -38,10 +39,23 @@ function parsePath(path: string): { lang: string; from: string; to: string } | n
     lang = parts[0];
     rest = parts.slice(1);
   }
-  if (rest.length !== 2 || rest[0] !== "exchange") return null;
-  const m = rest[1].match(/^([a-z0-9]+)-to-([a-z0-9]+)$/i);
+  if (rest.length !== 2) return null;
+  const kind = rest[0];
+  if (kind !== "exchange" && kind !== "swap") return null;
+  // /exchange/ uses "btc-to-eth" (with "-to-" separator)
+  // /swap/    uses "btc-usdc"   (single hyphen between two tickers)
+  if (kind === "exchange") {
+    const m = rest[1].match(/^([a-z0-9]+)-to-([a-z0-9]+)$/i);
+    if (!m) return null;
+    return { lang, kind, from: m[1].toLowerCase(), to: m[2].toLowerCase() };
+  }
+  const m = rest[1].match(/^([a-z0-9]+)-([a-z0-9]+)$/i);
   if (!m) return null;
-  return { lang, from: m[1].toLowerCase(), to: m[2].toLowerCase() };
+  return { lang, kind, from: m[1].toLowerCase(), to: m[2].toLowerCase() };
+}
+
+function pairUrlPath(kind: RouteKind, from: string, to: string): string {
+  return kind === "exchange" ? `/exchange/${from}-to-${to}` : `/swap/${from}-${to}`;
 }
 
 interface PairContent {
