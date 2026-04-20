@@ -409,6 +409,34 @@ Deno.serve(async (req: Request) => {
       }
 
       const inner = unwrapResponse(responseBody)
+
+      // Fire-and-forget Telegram alert (never blocks the user response)
+      try {
+        const earnId = (inner as any)?.id ?? (inner as any)?.earn_id ?? 'unknown'
+        const amount = body.amount
+        const currency = currencyCode + (currencyNetwork ? ` (${currencyNetwork})` : '')
+        const contact = p.email || p.phone || 'no contact'
+        const text =
+          `🟢 <b>New Earn Deposit</b>\n` +
+          `• Earn ID: <code>${earnId}</code>\n` +
+          `• Amount: <b>${amount} ${currency}</b>\n` +
+          `• Contact: ${contact}`
+        const supabaseUrl = Deno.env.get('SUPABASE_URL')
+        const serviceKey = Deno.env.get('SUPABASE_SERVICE_ROLE_KEY')
+        if (supabaseUrl && serviceKey) {
+          fetch(`${supabaseUrl}/functions/v1/telegram-notify`, {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json',
+              Authorization: `Bearer ${serviceKey}`,
+            },
+            body: JSON.stringify({ type: 'alert', message: text }),
+          }).catch((e) => console.error('[create-earn] telegram notify failed:', e))
+        }
+      } catch (e) {
+        console.error('[create-earn] telegram block error:', e)
+      }
+
       return json({ result: true, ...inner }, 200)
     }
 
