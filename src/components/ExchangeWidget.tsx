@@ -1097,7 +1097,8 @@ const ExchangeWidget = ({ onTabChange, defaultFrom, defaultTo }: ExchangeWidgetP
         ref_code: refCode,
         provider,
         mrc_tx_id: mrcTxId,
-      });
+        kind: "swap",
+      } as any);
       if (error) {
         console.error("[MRC] DB save error:", error);
         toast({ title: "Note", description: "Transaction created but tracking save failed. Save your Transaction ID: " + tx.id, variant: "destructive" });
