@@ -1671,5 +1671,15 @@
     "partners": "Parceiros",
     "referral": "Indicação",
     "earn": "Ganhe Conosco"
+  },
+  "noLimits": {
+    "heading": "Troca Sem Limites",
+    "description": "Comece com menos de $2 e troque quanta cripto quiser — não há limite superior. Nossa agregação de liquidez em mais de 700 fontes lida com qualquer volume perfeitamente.",
+    "min": "mín",
+    "max": "máx",
+    "noLimit": "Sem limite",
+    "liquiditySources": "Fontes de Liquidez",
+    "hiddenFees": "Taxas Ocultas",
+    "cta": "Começar a Trocar"
   }
 }

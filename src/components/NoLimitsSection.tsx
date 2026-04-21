@@ -79,7 +79,7 @@ const NoLimitsSection = () => {
                 }`}
               >
                 <span className="font-display text-sm font-bold text-foreground">$2</span>
-                <span className="ml-1 font-body text-xs text-muted-foreground">min</span>
+                <span className="ml-1 font-body text-xs text-muted-foreground">{t("noLimits.min")}</span>
               </div>
               <div
                 className={`absolute -right-4 bottom-4 rounded-lg border border-border bg-card px-3 py-2 shadow-elevated transition-all duration-500 delay-300 sm:-right-8 ${
@@ -87,7 +87,7 @@ const NoLimitsSection = () => {
                 }`}
               >
                 <Infinity className="inline h-4 w-4 text-primary" />
-                <span className="ml-1 font-body text-xs text-muted-foreground">max</span>
+                <span className="ml-1 font-body text-xs text-muted-foreground">{t("noLimits.max")}</span>
               </div>
             </div>
           </div>
@@ -130,7 +130,7 @@ const NoLimitsSection = () => {
                 }`}
               >
                 <p className="font-display text-2xl font-bold text-primary">{count700}+</p>
-                <p className="mt-1 font-body text-xs text-muted-foreground">Liquidity Sources</p>
+                <p className="mt-1 font-body text-xs text-muted-foreground">{t("noLimits.liquiditySources")}</p>
               </div>
               <div
                 className={`rounded-xl border border-border bg-card p-4 transition-all duration-500 delay-150 ${
@@ -138,7 +138,7 @@ const NoLimitsSection = () => {
                 }`}
               >
                 <p className="font-display text-2xl font-bold text-primary">0%</p>
-                <p className="mt-1 font-body text-xs text-muted-foreground">Hidden Fees</p>
+                <p className="mt-1 font-body text-xs text-muted-foreground">{t("noLimits.hiddenFees")}</p>
               </div>
             </div>
 
@@ -148,7 +148,7 @@ const NoLimitsSection = () => {
               asChild
             >
               <a href="#exchange-widget">
-                Start Swapping <ArrowRight className="ml-2 h-4 w-4 transition-transform duration-200 group-hover:translate-x-1" />
+                {t("noLimits.cta")} <ArrowRight className="ml-2 h-4 w-4 transition-transform duration-200 group-hover:translate-x-1" />
               </a>
             </Button>
           </div>
