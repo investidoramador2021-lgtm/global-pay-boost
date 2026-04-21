@@ -64,6 +64,12 @@ const buildSnippet = (email: string, btc: string, mode: "light" | "dark", lang: 
 </iframe>`;
 };
 
+const buildEmbedUrl = (email: string, btc: string, mode: "light" | "dark", lang: string) => {
+  const token = email || btc ? buildRefToken(email, btc) : "your-ref";
+  const langParam = lang && lang !== "en" ? `&lang=${lang}` : "";
+  return `https://mrcglobalpay.com/embed/widget?mode=${mode}&ref=${token}${langParam}`;
+};
+
 /* ─── Copy Button ─── */
 const CopyButton = ({ text, label }: { text: string; label: string }) => {
   const { t } = useTranslation();
@@ -126,12 +132,11 @@ const WidgetGenerator = ({ lang }: { lang: string }) => {
   const activeBtc = btcValid ? btc.trim() : "";
 
   const link = useMemo(() => buildLink(activeEmail, activeBtc, lang), [activeEmail, activeBtc, lang]);
-  const snippet = useMemo(() => buildSnippet(activeEmail, activeBtc, mode, lang, t("affiliates.generator.previewLabel")), [activeEmail, activeBtc, mode, lang, t]);
-  const previewUrl = useMemo(() => {
-    const token = activeEmail || activeBtc ? buildRefToken(activeEmail, activeBtc) : "your-ref";
-    const langParam = lang && lang !== "en" ? `&lang=${lang}` : "";
-    return `https://mrcglobalpay.com/embed/widget?mode=${mode}&ref=${token}${langParam}`;
-  }, [activeEmail, activeBtc, mode, lang]);
+  const [embedTab, setEmbedTab] = useState<"light" | "dark">("dark");
+  const snippetLight = useMemo(() => buildSnippet(activeEmail, activeBtc, "light", lang, t("affiliates.generator.previewLabel")), [activeEmail, activeBtc, lang, t]);
+  const snippetDark = useMemo(() => buildSnippet(activeEmail, activeBtc, "dark", lang, t("affiliates.generator.previewLabel")), [activeEmail, activeBtc, lang, t]);
+  const activeSnippet = embedTab === "light" ? snippetLight : snippetDark;
+  const previewUrl = useMemo(() => buildEmbedUrl(activeEmail, activeBtc, mode, lang), [activeEmail, activeBtc, mode, lang]);
 
   return (
     <div className="rounded-2xl border border-border bg-card p-4 sm:p-6 lg:p-8 shadow-lg">
@@ -287,15 +292,39 @@ const WidgetGenerator = ({ lang }: { lang: string }) => {
         </div>
 
         <div className="rounded-xl border-2 border-primary/40 bg-background/40 p-4 sm:p-5 shadow-[0_0_24px_-8px_hsl(var(--primary)/0.4)] min-w-0">
-          <div className="flex items-center gap-2 mb-3">
-            <Code2 className="h-4 w-4 text-primary shrink-0" />
-            <span className="font-display text-sm font-semibold text-foreground">{t("affiliates.generator.embedTitle")}</span>
+          <div className="flex items-center justify-between gap-2 mb-3 flex-wrap">
+            <div className="flex items-center gap-2">
+              <Code2 className="h-4 w-4 text-primary shrink-0" />
+              <span className="font-display text-sm font-semibold text-foreground">{t("affiliates.generator.embedTitle")}</span>
+            </div>
+            <div role="tablist" aria-label="Embed theme" className="inline-flex rounded-lg border border-border bg-background p-0.5">
+              <button
+                role="tab"
+                aria-selected={embedTab === "light"}
+                onClick={() => setEmbedTab("light")}
+                className={`inline-flex items-center gap-1.5 rounded-md px-3 py-1.5 font-display text-[11px] font-semibold transition-colors ${
+                  embedTab === "light" ? "bg-primary text-primary-foreground" : "text-muted-foreground hover:text-foreground"
+                }`}
+              >
+                <Sun className="h-3 w-3" /> {t("affiliates.generator.lightMode")}
+              </button>
+              <button
+                role="tab"
+                aria-selected={embedTab === "dark"}
+                onClick={() => setEmbedTab("dark")}
+                className={`inline-flex items-center gap-1.5 rounded-md px-3 py-1.5 font-display text-[11px] font-semibold transition-colors ${
+                  embedTab === "dark" ? "bg-primary text-primary-foreground" : "text-muted-foreground hover:text-foreground"
+                }`}
+              >
+                <Moon className="h-3 w-3" /> {t("affiliates.generator.darkMode")}
+              </button>
+            </div>
           </div>
-          <pre className="rounded-lg border border-border/60 bg-[hsl(230_15%_6%)] p-3 overflow-x-auto font-mono text-[10px] sm:text-[11px] leading-relaxed text-foreground/90 max-h-64 whitespace-pre-wrap break-all">
-            <code>{snippet}</code>
+          <pre className="rounded-lg border border-border/60 bg-[hsl(230_15%_6%)] p-4 overflow-x-auto font-mono text-[11px] sm:text-[12px] leading-relaxed text-foreground/90 max-h-72 whitespace-pre-wrap break-all">
+            <code>{activeSnippet}</code>
           </pre>
           <div className="mt-4 grid gap-2 sm:grid-cols-[1fr_auto]">
-            <CopyButton text={snippet} label={t("affiliates.generator.copyCode")} />
+            <CopyButton text={activeSnippet} label={t("affiliates.generator.copyCode")} />
             <a
               href={previewUrl}
               target="_blank"
@@ -617,6 +646,114 @@ const Affiliates = () => {
           </div>
         </section>
 
+        {/* WIDGET GENERATOR — moved up for prominence */}
+        <section id="generate" className="relative border-b border-border bg-muted/30 py-16 sm:py-24">
+          <div className="container mx-auto max-w-6xl px-4">
+            <div className="text-center max-w-3xl mx-auto">
+              <div className="inline-flex items-center gap-2 rounded-full border border-primary/30 bg-primary/10 px-3 py-1 text-[11px] font-display font-semibold text-primary">
+                <Sparkles className="h-3 w-3" /> {t("affiliates.generator.badge")}
+              </div>
+              <h2 className="mt-4 font-display text-3xl sm:text-4xl lg:text-5xl font-extrabold text-foreground tracking-tight leading-tight">
+                {t("affiliates.generator.titleStrong")}
+              </h2>
+              <p className="mt-4 font-body text-muted-foreground sm:text-lg leading-relaxed">
+                {t("affiliates.generator.subtitleStrong")}
+              </p>
+              <p className="mt-3 inline-block rounded-full border border-primary/30 bg-primary/10 px-4 py-1.5 font-body text-xs sm:text-sm text-foreground/90">
+                {t("affiliates.extra.generatorPerfectFor")} <span className="font-semibold text-primary">{t("affiliates.extra.generatorPerfectForBold")}</span> {t("affiliates.extra.generatorPerfectForEnd")}
+              </p>
+            </div>
+
+            <div className="mt-10 relative">
+              <div className="absolute inset-0 rounded-3xl bg-gradient-to-r from-primary/40 via-[hsl(var(--neon))]/30 to-primary/40 opacity-60 blur-md pointer-events-none" aria-hidden />
+              <div className="relative">
+                <WidgetGenerator lang={lang} />
+              </div>
+            </div>
+
+            {/* WHY OUR WIDGET CONVERTS BETTER */}
+            <div className="mt-16">
+              <div className="text-center max-w-2xl mx-auto">
+                <h3 className="font-display text-2xl sm:text-3xl font-extrabold text-foreground tracking-tight">
+                  {t("affiliates.widgetWhy.title")}
+                </h3>
+                <p className="mt-3 font-body text-sm sm:text-base text-muted-foreground">
+                  {t("affiliates.widgetWhy.subtitle")}
+                </p>
+              </div>
+              <div className="mt-8 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+                {[
+                  { icon: Zap, title: t("affiliates.widgetWhy.f1Title"), body: t("affiliates.widgetWhy.f1Body") },
+                  { icon: Sparkles, title: t("affiliates.widgetWhy.f2Title"), body: t("affiliates.widgetWhy.f2Body") },
+                  { icon: Coins, title: t("affiliates.widgetWhy.f3Title"), body: t("affiliates.widgetWhy.f3Body") },
+                  { icon: Smartphone, title: t("affiliates.widgetWhy.f4Title"), body: t("affiliates.widgetWhy.f4Body") },
+                  { icon: Link2, title: t("affiliates.widgetWhy.f5Title"), body: t("affiliates.widgetWhy.f5Body") },
+                  { icon: Shield, title: t("affiliates.widgetWhy.f6Title"), body: t("affiliates.widgetWhy.f6Body") },
+                ].map((item) => (
+                  <div
+                    key={item.title}
+                    className="rounded-xl border border-border bg-card/60 p-4 transition-all hover:border-primary/40 hover:bg-card"
+                  >
+                    <div className="flex items-start gap-3">
+                      <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-lg bg-primary/10">
+                        <item.icon className="h-4 w-4 text-primary" aria-hidden />
+                      </div>
+                      <div className="min-w-0">
+                        <p className="font-display text-sm font-bold text-foreground">{item.title}</p>
+                        <p className="mt-1 font-body text-xs text-muted-foreground leading-relaxed">{item.body}</p>
+                      </div>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </div>
+
+            {/* USAGE EXAMPLES — mock browser frames with live widget */}
+            <div className="mt-16">
+              <div className="text-center max-w-2xl mx-auto">
+                <h3 className="font-display text-2xl sm:text-3xl font-extrabold text-foreground tracking-tight">
+                  {t("affiliates.widgetExamples.title")}
+                </h3>
+                <p className="mt-3 font-body text-sm sm:text-base text-muted-foreground">
+                  {t("affiliates.widgetExamples.subtitle")}
+                </p>
+              </div>
+              <div className="mt-8 grid gap-6 lg:grid-cols-3">
+                {[
+                  { name: t("affiliates.widgetExamples.ex1Name"), url: "yourcryptoblog.com/swap", body: t("affiliates.widgetExamples.ex1Body") },
+                  { name: t("affiliates.widgetExamples.ex2Name"), url: "exchange-review.com/embed", body: t("affiliates.widgetExamples.ex2Body") },
+                  { name: t("affiliates.widgetExamples.ex3Name"), url: "portfolio.io/tools", body: t("affiliates.widgetExamples.ex3Body") },
+                ].map((ex) => (
+                  <div key={ex.name} className="rounded-2xl border border-border bg-card overflow-hidden shadow-sm">
+                    {/* Mock browser chrome */}
+                    <div className="flex items-center gap-1.5 border-b border-border/60 bg-muted/40 px-3 py-2">
+                      <span className="h-2.5 w-2.5 rounded-full bg-[hsl(0_70%_60%)]/70" />
+                      <span className="h-2.5 w-2.5 rounded-full bg-[hsl(45_90%_55%)]/70" />
+                      <span className="h-2.5 w-2.5 rounded-full bg-primary/70" />
+                      <span className="ms-2 font-mono text-[10px] truncate text-muted-foreground">{ex.url}</span>
+                    </div>
+                    {/* Live embedded widget */}
+                    <div className="bg-background">
+                      <iframe
+                        src={`https://mrcglobalpay.com/embed/widget?mode=dark${lang !== "en" ? `&lang=${lang}` : ""}`}
+                        title={ex.name}
+                        loading="lazy"
+                        referrerPolicy="strict-origin-when-cross-origin"
+                        className="block w-full border-0"
+                        style={{ height: 440 }}
+                      />
+                    </div>
+                    <div className="border-t border-border/60 bg-muted/30 px-4 py-3">
+                      <p className="font-display text-sm font-bold text-foreground">{ex.name}</p>
+                      <p className="mt-1 font-body text-xs text-muted-foreground leading-relaxed">{ex.body}</p>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </div>
+          </div>
+        </section>
+
         {/* EARNINGS EXAMPLES & SOCIAL PROOF */}
         <section className="border-b border-border bg-muted/30 py-16 sm:py-20">
           <div className="container mx-auto max-w-6xl px-4">
@@ -701,34 +838,6 @@ const Affiliates = () => {
 
         <MsbTrustBar />
 
-        {/* WIDGET GENERATOR */}
-        <section id="generate" className="relative border-b border-border bg-muted/30 py-16 sm:py-24">
-          <div className="container mx-auto max-w-6xl px-4">
-            <div className="text-center max-w-2xl mx-auto">
-              <div className="inline-flex items-center gap-2 rounded-full border border-primary/30 bg-primary/10 px-3 py-1 text-[11px] font-display font-semibold text-primary">
-                <Sparkles className="h-3 w-3" /> {t("affiliates.generator.badge")}
-              </div>
-              <h2 className="mt-4 font-display text-2xl sm:text-4xl lg:text-5xl font-extrabold text-foreground tracking-tight">
-                {t("affiliates.generator.title1")} <span className="text-primary">{t("affiliates.generator.title2")}</span> {t("affiliates.generator.title3")}
-              </h2>
-              <p className="mt-4 font-body text-muted-foreground sm:text-lg">
-                {t("affiliates.generator.subtitle")}{" "}
-                <span className="text-foreground font-semibold">{t("affiliates.generator.live")}</span>{" "}
-                {t("affiliates.generator.asYouType")}
-              </p>
-              <p className="mt-3 inline-block rounded-full border border-primary/30 bg-primary/10 px-4 py-1.5 font-body text-xs sm:text-sm text-foreground/90">
-                {t("affiliates.extra.generatorPerfectFor")} <span className="font-semibold text-primary">{t("affiliates.extra.generatorPerfectForBold")}</span> {t("affiliates.extra.generatorPerfectForEnd")}
-              </p>
-            </div>
-
-            <div className="mt-10 relative">
-              <div className="absolute inset-0 rounded-3xl bg-gradient-to-r from-primary/40 via-[hsl(var(--neon))]/30 to-primary/40 opacity-60 blur-md pointer-events-none" aria-hidden />
-              <div className="relative">
-                <WidgetGenerator lang={lang} />
-              </div>
-            </div>
-          </div>
-        </section>
 
         {/* HOW IT WORKS */}
         <section className="border-b border-border py-16 sm:py-20">

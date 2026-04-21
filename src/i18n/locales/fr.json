@@ -1118,7 +1118,9 @@
       "upgradeBody1": "Inscrivez-vous gratuitement avec",
       "upgradeBody2": "ce même e-mail",
       "upgradeBody3": "et ce widget — plus tous les swaps qu'il génère — seront automatiquement liés à votre tableau de bord.",
-      "upgradeCta": "Créer un Compte Partenaire"
+      "upgradeCta": "Créer un Compte Partenaire",
+      "titleStrong": "Générez Votre Widget de Swap Personnalisé en Quelques Secondes",
+      "subtitleStrong": "Intégrez un widget de swap crypto non-custodial et entièrement personnalisé à n'importe quel site. Suit vos parrainages automatiquement — sans scripts, sans SDK, sans maintenance."
     },
     "howItWorks": {
       "title": "Comment Ça Marche",
@@ -1351,6 +1353,32 @@
       "testi3Quote": "Le widget convertit parce qu'il fonctionne vraiment — non-custodial, minimum 0,30 $, plus de 6 000 paires. Mes utilisateurs ont un vrai produit, je reçois de vrais BTC.",
       "testi3Name": "Affilié marketing",
       "testi3Role": "Blog de bons plans crypto"
+    },
+    "widgetWhy": {
+      "title": "Pourquoi Notre Widget Convertit Mieux",
+      "subtitle": "Conçu pour paraître natif sur votre site, se charger instantanément et transformer les visiteurs en utilisateurs.",
+      "f1Title": "Se charge en moins de 1 seconde",
+      "f1Body": "iframe léger, chargement différé, pas de SDK lourd. N'alourdit pas votre page ni vos Core Web Vitals.",
+      "f2Title": "Thèmes clair et sombre",
+      "f2Body": "Deux thèmes prêts à l'emploi qui s'intègrent à votre marque — changez avec un paramètre.",
+      "f3Title": "Plus de 6 000 paires incluses",
+      "f3Body": "Même liquidité, même moteur à taux fixe que le site principal. Les visiteurs ne quittent pas le vôtre.",
+      "f4Title": "Mobile-first, entièrement responsive",
+      "f4Body": "Rendu propre de 320px à ultrawide. Tactile, scroll et clavier testés.",
+      "f5Title": "Suit les parrainages automatiquement",
+      "f5Body": "Votre code ref est intégré à l'URL de l'iframe. Pas de cookies, pas de JS.",
+      "f6Title": "Source réglementée de confiance",
+      "f6Body": "Soutenu par un MSB canadien (FINTRAC #C100000015). Votre audience échange sur une plateforme régulée."
+    },
+    "widgetExamples": {
+      "title": "Voyez-le en Direct sur de Vrais Sites",
+      "subtitle": "Trois placements réels — le même widget que vous intégreriez aujourd'hui, dans un navigateur simulé.",
+      "ex1Name": "Barre latérale de blog crypto",
+      "ex1Body": "Un lecteur termine votre article sur Solana, ouvre la barre latérale et échange SOL → USDT en 60 secondes.",
+      "ex2Name": "Article de revue d'exchanges",
+      "ex2Body": "Les visiteurs arrivent sur votre article 'Les 5 meilleurs swaps non-custodial' et en testent un sans partir.",
+      "ex3Name": "Outil de portefeuille",
+      "ex3Body": "Ajoutez un onglet 'Swap Rapide' à votre app de portefeuille — les utilisateurs rééquilibrent sans retirer."
     }
   },
   "nicehashWp": {
