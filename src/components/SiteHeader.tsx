@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { Menu, X, Zap, Sun, Moon, UserPlus, LogIn, ChevronDown, Sparkles, Users, Share2 } from "lucide-react";
+import { Menu, X, Zap, Sun, Moon, UserPlus, LogIn, ChevronDown, Sparkles, Users, Share2, MoreHorizontal } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { useTheme } from "@/hooks/use-theme";
 import { useTranslation } from "react-i18next";
@@ -34,14 +34,19 @@ const SiteHeader = () => {
     };
   }, []);
 
-  const navLinks = [
+  // Primary nav: always visible on lg+ (kept short to fit longest translations)
+  const primaryNavLinks = [
     { label: t("nav.howItWorks"), href: lp("/") + "#how-it-works" },
-    { label: "Exchange", href: lp("/exchange/btc-to-eth") },
-    { label: "Borrow", href: lp("/lend") },
-    { label: "Earn", href: lp("/lend") + "?tab=earn" },
+    { label: t("nav.exchange"), href: lp("/exchange/btc-to-eth") },
+    { label: t("nav.borrow"), href: lp("/lend") },
+    { label: t("nav.earn"), href: lp("/lend") + "?tab=earn" },
+  ];
+
+  // Secondary nav: shown inline at xl+, collapsed into "More" dropdown on lg
+  const secondaryNavLinks = [
     { label: t("nav.blog"), href: lp("/blog") },
     { label: t("nav.faq"), href: lp("/") + "#faq" },
-    { label: "Developer", href: lp("/developer") },
+    { label: t("nav.developer"), href: lp("/developer") },
   ];
 
   // Mobile-only extras (kept out of desktop bar to avoid crowding)
@@ -50,9 +55,9 @@ const SiteHeader = () => {
   ];
 
   const programLinks = [
-    { label: t("programsNav.affiliates"), href: lp("/affiliates"), icon: Sparkles, desc: "0.1% – 0.4% lifetime BTC" },
-    { label: t("programsNav.partners"), href: lp("/partners"), icon: Users, desc: "High-volume · dedicated dashboard" },
-    { label: t("programsNav.referral"), href: lp("/referral"), icon: Share2, desc: "Share your link · earn per swap" },
+    { label: t("programsNav.affiliates"), href: lp("/affiliates"), icon: Sparkles, desc: t("programsNav.affiliatesDesc") },
+    { label: t("programsNav.partners"), href: lp("/partners"), icon: Users, desc: t("programsNav.partnersDesc") },
+    { label: t("programsNav.referral"), href: lp("/referral"), icon: Share2, desc: t("programsNav.referralDesc") },
   ];
 
   return (
