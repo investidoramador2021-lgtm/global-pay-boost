@@ -115,6 +115,23 @@ const PermanentBridgeTab = () => {
       });
       setResult(res);
       setStep("result");
+      // ── Persist to swap_transactions for admin dashboard visibility ──
+      try {
+        const { supabase } = await import("@/integrations/supabase/client");
+        const refCode = sessionStorage.getItem("mrc_partner_ref") || null;
+        await supabase.from("swap_transactions").insert({
+          transaction_id: res.id,
+          recipient_address: destAddress.trim().toLowerCase(),
+          payin_address: (res.payinAddress || "").trim().toLowerCase(),
+          from_currency: res.fromCurrency || fromCurrency.ticker,
+          to_currency: res.toCurrency || toCurrency.ticker,
+          amount: 0,
+          ref_code: refCode,
+          kind: "bridge",
+        } as any);
+      } catch (e) {
+        console.error("[Bridge] DB persist failed:", e);
+      }
     } catch (err: unknown) {
       toast({
         title: t("bridge.errorTitle"),
