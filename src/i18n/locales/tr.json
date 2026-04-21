@@ -1435,5 +1435,29 @@
     "ctaDesc": "Bir sonraki NiceHash ödemenizi stratejinize gerçekten uyan varlığa dönüştürün — sektördeki en düşük ücretle, hesap olmadan, KYC olmadan ve sürpriz spread olmadan.",
     "ctaPrimary": "Ödememi Şimdi Değiştir",
     "ctaSecondary": "Stablecoin'lerimde Kazanç"
+  },
+  "affiliateHomeCta": {
+    "badge": "Ortaklık Programı",
+    "badgeFloat": "Ömür boyu · Otomatik ödeme",
+    "headlineLead": "60 saniyenin altında 6.000+ kripto takas edin —",
+    "headlineAccent": "Ömür boyu BTC komisyonu kazanın.",
+    "subheadline": "Kanada'da tam olarak düzenlenmiş, saklamasız bir takas platformunu tanıtın ve %0,1 – %0,4 ömür boyu komisyonu otomatik olarak BTC ile kazanın. Minimum yok, son kullanma yok.",
+    "benefits": {
+      "lifetime": "Ömür boyu komisyon",
+      "widget": "Kolay widget yerleştirme",
+      "payouts": "Otomatik BTC ödemeleri",
+      "regulated": "FINTRAC MSB C100000015 + Kanada Merkez Bankası PSP destekli"
+    },
+    "ctaPrimary": "Ortaklık Widget'ımı Şimdi Oluştur",
+    "ctaSecondary": "Partner Ol",
+    "referralPrefix": "Ayrıca",
+    "referralLink": "Tavsiye Programımıza göz atın",
+    "widget": {
+      "youSend": "Gönderiyorsun",
+      "youGet": "Alıyorsun",
+      "swapNow": "Şimdi Takas Et",
+      "poweredBy": "MRC GlobalPay tarafından sağlanır",
+      "tagline": "Ziyaretçileriniz widget'ınız üzerinden takas yaptığında BTC kazanın."
+    }
   }
 }

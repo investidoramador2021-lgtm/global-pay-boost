@@ -1435,5 +1435,29 @@
     "ctaDesc": "Skakel jou volgende NiceHash-uitbetaling om in die bate wat werklik by jou strategie pas — teen die laagste fooi in die bedryf, sonder rekening, sonder KYC, en sonder verrassingsspreidings.",
     "ctaPrimary": "Ruil My Uitbetaling Nou",
     "ctaSecondary": "Verdien Op My Stablecoins"
+  },
+  "affiliateHomeCta": {
+    "badge": "Affiliate-program",
+    "badgeFloat": "Lewenslank · Outo-betaal",
+    "headlineLead": "Ruil 6 000+ kriptos in minder as 60 sekondes —",
+    "headlineAccent": "Verdien lewenslange BTC-kommissies.",
+    "subheadline": "Bevorder 'n volledig gereguleerde Kanadese nie-bewaarende ruilplatform en verdien 0,1% – 0,4% lewenslange kommissies wat outomaties in BTC betaal word. Geen minimums, geen vervaldatum nie.",
+    "benefits": {
+      "lifetime": "Lewenslange kommissies",
+      "widget": "Maklike widget-inbedding",
+      "payouts": "Outomatiese BTC-betalings",
+      "regulated": "Gerugsteun deur FINTRAC MSB C100000015 + Bank van Kanada PSP"
+    },
+    "ctaPrimary": "Skep nou my affiliate-widget",
+    "ctaSecondary": "Word 'n vennoot",
+    "referralPrefix": "Verken ook ons",
+    "referralLink": "Verwysingsprogram",
+    "widget": {
+      "youSend": "Jy stuur",
+      "youGet": "Jy kry",
+      "swapNow": "Ruil nou",
+      "poweredBy": "Aangedryf deur MRC GlobalPay",
+      "tagline": "Verdien BTC elke keer wanneer 'n besoeker via jou widget ruil."
+    }
   }
 }

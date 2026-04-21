@@ -1449,5 +1449,29 @@
     "ctaDesc": "Convert your next NiceHash payout into the asset that actually matches your strategy — at the lowest fee in the industry, with no account, no KYC, and no surprise spreads.",
     "ctaPrimary": "Swap My Payout Now",
     "ctaSecondary": "Earn on My Stablecoins"
+  },
+  "affiliateHomeCta": {
+    "badge": "Affiliate Program",
+    "badgeFloat": "Lifetime · Auto-Paid",
+    "headlineLead": "Swap 6,000+ Cryptos in Under 60 Seconds —",
+    "headlineAccent": "Earn Lifetime BTC Commissions.",
+    "subheadline": "Promote a fully regulated Canadian non-custodial swap platform and earn 0.1% – 0.4% lifetime commissions paid automatically in BTC. No minimums, no expiry.",
+    "benefits": {
+      "lifetime": "Lifetime commissions",
+      "widget": "Easy widget embed",
+      "payouts": "Automatic BTC payouts",
+      "regulated": "Backed by FINTRAC MSB C100000015 + Bank of Canada PSP"
+    },
+    "ctaPrimary": "Generate My Affiliate Widget Now",
+    "ctaSecondary": "Become a Partner",
+    "referralPrefix": "Also explore our",
+    "referralLink": "Referral Program",
+    "widget": {
+      "youSend": "You send",
+      "youGet": "You get",
+      "swapNow": "Swap Now",
+      "poweredBy": "Powered by MRC GlobalPay",
+      "tagline": "Earn BTC every time a visitor swaps through your widget."
+    }
   }
 }

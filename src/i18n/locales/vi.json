@@ -1435,5 +1435,29 @@
     "ctaDesc": "Chuyển đổi thanh toán NiceHash tiếp theo của bạn thành tài sản thực sự phù hợp với chiến lược của bạn — với mức phí thấp nhất trong ngành, không tài khoản, không KYC và không spread bất ngờ.",
     "ctaPrimary": "Hoán Đổi Thanh Toán Của Tôi Ngay",
     "ctaSecondary": "Kiếm Tiền Trên Stablecoin Của Tôi"
+  },
+  "affiliateHomeCta": {
+    "badge": "Chương trình Đối tác",
+    "badgeFloat": "Trọn đời · Tự động chi trả",
+    "headlineLead": "Hoán đổi 6.000+ tiền mã hóa trong dưới 60 giây —",
+    "headlineAccent": "Nhận hoa hồng BTC trọn đời.",
+    "subheadline": "Quảng bá nền tảng hoán đổi phi giám sát được quản lý đầy đủ tại Canada và nhận 0,1% – 0,4% hoa hồng trọn đời được trả tự động bằng BTC. Không giới hạn tối thiểu, không hết hạn.",
+    "benefits": {
+      "lifetime": "Hoa hồng trọn đời",
+      "widget": "Nhúng widget dễ dàng",
+      "payouts": "Thanh toán BTC tự động",
+      "regulated": "Được hỗ trợ bởi FINTRAC MSB C100000015 + PSP Ngân hàng Canada"
+    },
+    "ctaPrimary": "Tạo Widget Đối tác ngay",
+    "ctaSecondary": "Trở thành Đối tác",
+    "referralPrefix": "Cũng khám phá",
+    "referralLink": "Chương trình Giới thiệu",
+    "widget": {
+      "youSend": "Bạn gửi",
+      "youGet": "Bạn nhận",
+      "swapNow": "Hoán đổi ngay",
+      "poweredBy": "Cung cấp bởi MRC GlobalPay",
+      "tagline": "Nhận BTC mỗi khi khách truy cập hoán đổi qua widget của bạn."
+    }
   }
 }

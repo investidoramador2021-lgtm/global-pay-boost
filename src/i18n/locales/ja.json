@@ -1435,5 +1435,29 @@
     "ctaDesc": "次のNiceHash報酬を、戦略に本当に一致する資産に変換 — 業界最低の手数料で、アカウントなし、KYCなし、サプライズスプレッドなし。",
     "ctaPrimary": "今すぐ報酬をスワップ",
     "ctaSecondary": "ステーブルコインで稼ぐ"
+  },
+  "affiliateHomeCta": {
+    "badge": "アフィリエイトプログラム",
+    "badgeFloat": "永久 · 自動支払い",
+    "headlineLead": "60秒以内に6,000種類以上の暗号資産をスワップ —",
+    "headlineAccent": "生涯BTCコミッションを獲得。",
+    "subheadline": "完全に規制されたカナダの非カストディアル型スワッププラットフォームを宣伝し、0.1%〜0.4%の生涯コミッションをBTCで自動受け取り。最低額・有効期限なし。",
+    "benefits": {
+      "lifetime": "生涯コミッション",
+      "widget": "簡単なウィジェット埋め込み",
+      "payouts": "BTC自動支払い",
+      "regulated": "FINTRAC MSB C100000015 + カナダ銀行PSPの裏付け"
+    },
+    "ctaPrimary": "今すぐアフィリエイトウィジェットを生成",
+    "ctaSecondary": "パートナーになる",
+    "referralPrefix": "リファラルプログラムも",
+    "referralLink": "ご覧ください",
+    "widget": {
+      "youSend": "送る",
+      "youGet": "受け取る",
+      "swapNow": "今すぐスワップ",
+      "poweredBy": "Powered by MRC GlobalPay",
+      "tagline": "訪問者がウィジェットでスワップするたびにBTCを獲得。"
+    }
   }
 }
