@@ -1459,5 +1459,205 @@
       "poweredBy": "Powered by MRC GlobalPay",
       "tagline": "訪問者がウィジェットでスワップするたびにBTCを獲得。"
     }
+  },
+  "partners": {
+    "meta": {
+      "title": "パートナープログラム | MRC Global Pay",
+      "description": "MRC Global Payパートナープログラムに参加。リファラルネットワークから生涯BTCコミッションを獲得。FINTRAC MSB登録、毎週支払い。"
+    },
+    "hero": {
+      "badge": "パートナープログラム",
+      "headlineLead": "リファラル決済で",
+      "headlineAccent": "BTCを獲得 — 専用ダッシュボード付き",
+      "subPart1": "MRC Global Payパートナープログラムは、ネットワークが生成する決済ごとに",
+      "subRate": "0.1%〜0.2%のBTC",
+      "subPart2": "を支払います — プライベートダッシュボードでライブ追跡、自動支払い、ハイボリュームプロモーター向けに設計。"
+    },
+    "programs": {
+      "title": "プログラム一覧",
+      "subtitle": "オーディエンスに合うプログラムを選択。",
+      "affiliateTitle": "アフィリエイトプログラム",
+      "affiliateDesc": "登録不要ウィジェット · 生涯0.1%〜0.4% BTC",
+      "referralTitle": "リファラルプログラム",
+      "referralDesc": "リンクを共有 · スワップごとに獲得"
+    },
+    "features": {
+      "rewards": {
+        "title": "The Rewards",
+        "desc": "Earn between 0.1% and 0.2% in Bitcoin on all successfully completed transaction volume."
+      },
+      "settlement": {
+        "title": "Real-Time Settlement",
+        "desc": "All rewards are tracked in real-time and settled in BTC directly to your registered wallet."
+      },
+      "dashboard": {
+        "title": "Private Dashboard",
+        "desc": "Access a secure dashboard to monitor your referral link performance, volume, and earnings."
+      },
+      "support": {
+        "title": "Dedicated Support",
+        "desc": "Wallet updates are handled manually via our secure support channel for maximum security."
+      }
+    },
+    "why": {
+      "badge": "なぜパートナーになるのか",
+      "title": "ウィジェット以上を求める本格的プロモーター向け",
+      "subtitle": "パートナープログラムは、上位ティア、リアルタイム分析、専用サポートを開放します。",
+      "serious": {
+        "title": "Best for high-volume referrers",
+        "desc": "If you regularly drive paid traffic, run a creator channel, or operate a business that handles crypto, the Partner tier maximizes your earnings."
+      },
+      "dashboard": {
+        "title": "Private real-time dashboard",
+        "desc": "Granular analytics by referral source, country, asset, and time. API keys, webhooks, and live attribution included."
+      },
+      "support": {
+        "title": "Dedicated partner support",
+        "desc": "Wallet changes, payout escalations, and integration help handled by a real human via a secure support channel."
+      },
+      "regulated": {
+        "title": "Backed by Canadian regulation",
+        "desc": "Operated by a FINTRAC-registered MSB (#C100000015) and a Bank of Canada Payment Service Provider — a trust signal your audience can verify."
+      },
+      "lifetime": {
+        "title": "Lifetime commissions, no expiry",
+        "desc": "Every referral you bring stays attributed to you forever. No claw-backs, no cookie windows, no monthly minimums."
+      },
+      "automation": {
+        "title": "Automatic BTC payouts",
+        "desc": "Earnings settle in Bitcoin to a wallet you control. Real-time tracking, weekly payouts, full transparency."
+      }
+    },
+    "tiers": {
+      "badge": "Commission Structure",
+      "title": "Earn 0.1% – 0.2% in BTC on Every Settlement",
+      "subtitle": "Partners earn a percentage of every successfully completed swap volume from their referral network — paid in BTC, for life. Tiers scale with monthly settled volume.",
+      "activate": "Activate",
+      "activateRange": "First $100k / mo",
+      "scale": "Scale",
+      "scaleRange": "$100k – $500k / mo",
+      "volume": "Volume",
+      "volumeRange": "$500k – $2M / mo",
+      "strategic": "Strategic",
+      "strategicRange": "$2M+ / mo · negotiated",
+      "footnote": "Tiers re-evaluate monthly. Lifetime attribution is permanent — your referrals stay yours. Strategic-tier partners get custom rates, dedicated account management, and bespoke integrations."
+    },
+    "earnings": {
+      "badge": "収益例",
+      "title": "パートナーが通常獲得する金額",
+      "subtitle": "ネットワークの決済額に基づく現実的な月次収益範囲。BTCで自動支払い。",
+      "colVolume": "月間取引高",
+      "colRate": "レート",
+      "colEarn": "月間BTC収益",
+      "row1": {
+        "volume": "$10k – $100k",
+        "rate": "0.10%",
+        "earn": "$10 – $100"
+      },
+      "row2": {
+        "volume": "$100k – $500k",
+        "rate": "0.13%",
+        "earn": "$130 – $650"
+      },
+      "row3": {
+        "volume": "$500k – $2M",
+        "rate": "0.16%",
+        "earn": "$800 – $3,200"
+      },
+      "row4": {
+        "volume": "$2M+",
+        "rate": "0.20%+",
+        "earn": "$4,000+ · negotiated"
+      },
+      "disclaimer": "参考値。実際の収益は決済額、資産構成、ソースにより異なります。"
+    },
+    "dashboard": {
+      "badge": "Inside the Partner Dashboard",
+      "title": "Real-Time Volume, Earnings & Referral Stats",
+      "subtitle": "Once your account is verified you get a private dashboard with API keys, webhooks, live attribution, and BTC payout history.",
+      "lifetimeEarnings": "Lifetime Earnings",
+      "lifetimeUsd": "≈ $46,820 USD · live, 30s refresh",
+      "tierProgress": "66% to next tier (Volume · 0.16%)",
+      "volume30d": "30-Day Settled Volume",
+      "volumeMeta": "1,284 swaps · 312 unique referrals",
+      "topSources": "Top Referral Sources",
+      "drilldown": "Drill-down by ref code, country, asset.",
+      "perkApi": "API keys + webhooks",
+      "perkWebhook": "Real-time settlement events",
+      "perkAnalytics": "Conversion analytics by ref code"
+    },
+    "whoFor": {
+      "badge": "Built for High-Volume Referrers",
+      "title": "Who the Partner Program Is For",
+      "subtitle": "If you have an audience, a wallet, an exchange, or a community that swaps crypto regularly, the Partner Program is the right tier for you.",
+      "wallets": {
+        "title": "Wallet & DeFi Apps",
+        "desc": "Embed swaps natively, track per-user volume, settle in BTC."
+      },
+      "media": {
+        "title": "Crypto Media & Creators",
+        "desc": "Monetize tutorials, comparison content, and price alerts."
+      },
+      "exchanges": {
+        "title": "Exchanges & OTC Desks",
+        "desc": "Route 6,000+ asset pairs you don't list — earn on the spread."
+      },
+      "communities": {
+        "title": "Communities & DAOs",
+        "desc": "Treasury-grade settlement with transparent on-chain payouts."
+      },
+      "lowerVolumePrefix": "Lower volume? Start with the",
+      "affiliateLink": "Affiliate Program",
+      "lowerVolumeSuffix": "(no signup, instant widget) and upgrade anytime — your traffic auto-migrates to your dashboard."
+    },
+    "regulatory": {
+      "badge": "Regulatory Edge",
+      "title": "A Partner Program Backed by Real Canadian Regulation",
+      "body": "MRC Global Pay is operated by MRC Pay International Corp, a Canadian fintech registered as a FINTRAC Money Services Business (#C100000015) and an officially registered Bank of Canada Payment Service Provider (PSP). Every settlement you refer flows through a fully supervised, AML-compliant, non-custodial pipeline — giving your audience (and your accountant) something most swap aggregators simply can't offer.",
+      "verifyFintrac": "Verify FINTRAC MSB",
+      "verifyPsp": "Verify Bank of Canada PSP"
+    },
+    "finalCta": {
+      "badge": "2 minutes to activate",
+      "title": "パートナーアカウントを有効化してBTCで稼ぎ始める",
+      "body": "No KYC for the program itself. Just verify your email, paste a BTC wallet you control, and your dashboard goes live with API keys, webhooks, and live attribution.",
+      "scrollToTop": "Activate Now",
+      "tryAffiliate": "Try Affiliate Program",
+      "referralLink": "Referral Program"
+    },
+    "form": {
+      "welcomeBack": "Welcome Back, Partner",
+      "activateTitle": "Activate Your Partner Account",
+      "activateSubtitle": "Free · ~2 minutes · BTC payouts to a wallet you control.",
+      "firstName": "First Name",
+      "lastName": "Last Name",
+      "btcWallet": "BTC Wallet Address",
+      "btcOk": "Valid Bitcoin address",
+      "btcFail": "Enter a valid mainnet BTC address",
+      "email": "Email",
+      "emailOk": "Valid email",
+      "emailFail": "Enter a valid email address",
+      "password": "Password",
+      "passwordMin": "Minimum 8 characters",
+      "confirmPassword": "Confirm Password",
+      "passwordsMatch": "Passwords match",
+      "passwordsNoMatch": "Passwords do not match",
+      "processing": "Processing…",
+      "signInBtn": "→ Sign In to Dashboard",
+      "createBtn": "→ Create Partner Account",
+      "noAccount": "Don't have a partner account yet?",
+      "haveAccount": "Already registered as a partner?",
+      "toggleRegister": "Register as a New Partner",
+      "toggleLogin": "Sign In to Your Dashboard"
+    },
+    "toast": {
+      "notVerifiedTitle": "Email not verified",
+      "notVerifiedDesc": "Please check your inbox and verify your email before logging in.",
+      "claimedTitle": "{{count}} affiliate widget(s) linked",
+      "claimedDesc": "Your existing widget/link traffic will now be tracked on your dashboard.",
+      "checkInboxTitle": "Check your inbox",
+      "checkInboxDesc": "A verification email has been sent. You must confirm within 48 hours or your account will be deleted.",
+      "errorTitle": "Error"
+    }
   }
 }
