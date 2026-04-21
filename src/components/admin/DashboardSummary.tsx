@@ -94,15 +94,6 @@ const TILE_DEFS: Array<{
   { key: "loan",    label: "Loans",     icon: Landmark,       accent: "text-orange-400",     description: "Collateralized borrowing" },
   { key: "earn",    label: "Earn",      icon: PiggyBank,      accent: "text-pink-400",       description: "Yield-bearing deposits" },
 ];
-  { key: "swap",    label: "Exchange",  icon: ArrowRightLeft, accent: "text-primary",        description: "Crypto-to-crypto swaps" },
-  { key: "buy",     label: "Buy",       icon: ShoppingCart,   accent: "text-emerald-400",    description: "Fiat on-ramp purchases" },
-  { key: "sell",    label: "Sell",      icon: Banknote,       accent: "text-amber-400",      description: "Crypto-to-fiat off-ramp" },
-  { key: "private", label: "Private",   icon: ShieldCheck,    accent: "text-violet-400",     description: "Shielded private transfers" },
-  { key: "bridge",  label: "Bridge",    icon: Link2,          accent: "text-cyan-400",       description: "Permanent fixed-rate addresses" },
-  { key: "invoice", label: "Invoices",  icon: FileText,       accent: "text-blue-400",       description: "Invoice payment requests" },
-  { key: "loan",    label: "Loans",     icon: Landmark,       accent: "text-orange-400",     description: "Collateralized borrowing" },
-  { key: "earn",    label: "Earn",      icon: PiggyBank,      accent: "text-pink-400",       description: "Yield-bearing deposits" },
-];
 
 const DashboardSummary = () => {
   const [loading, setLoading] = useState(true);
