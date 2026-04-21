@@ -144,10 +144,15 @@ const VerifyUpdate = () => {
     <>
       <Helmet>
         <title>Secure Account Update | MRC Global Pay</title>
-        <meta name="robots" content="index, follow" />
+        <meta
+          name="description"
+          content="Securely update your MRC Global Pay partner password or BTC payout wallet using a one-time, time-limited verification link."
+        />
+        <meta name="robots" content="noindex, nofollow" />
       </Helmet>
 
       <div className="min-h-screen bg-background flex items-center justify-center px-4">
+        <h1 className="sr-only">Secure Partner Account Update — MRC Global Pay</h1>
         <div className="pointer-events-none absolute inset-0">
           <div className="absolute -top-40 -left-40 w-[500px] h-[500px] rounded-full bg-primary/8 blur-[120px]" />
           <div className="absolute bottom-0 right-0 w-[400px] h-[400px] rounded-full bg-primary/5 blur-[100px]" />
