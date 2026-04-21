@@ -292,15 +292,39 @@ const WidgetGenerator = ({ lang }: { lang: string }) => {
         </div>
 
         <div className="rounded-xl border-2 border-primary/40 bg-background/40 p-4 sm:p-5 shadow-[0_0_24px_-8px_hsl(var(--primary)/0.4)] min-w-0">
-          <div className="flex items-center gap-2 mb-3">
-            <Code2 className="h-4 w-4 text-primary shrink-0" />
-            <span className="font-display text-sm font-semibold text-foreground">{t("affiliates.generator.embedTitle")}</span>
+          <div className="flex items-center justify-between gap-2 mb-3 flex-wrap">
+            <div className="flex items-center gap-2">
+              <Code2 className="h-4 w-4 text-primary shrink-0" />
+              <span className="font-display text-sm font-semibold text-foreground">{t("affiliates.generator.embedTitle")}</span>
+            </div>
+            <div role="tablist" aria-label="Embed theme" className="inline-flex rounded-lg border border-border bg-background p-0.5">
+              <button
+                role="tab"
+                aria-selected={embedTab === "light"}
+                onClick={() => setEmbedTab("light")}
+                className={`inline-flex items-center gap-1.5 rounded-md px-3 py-1.5 font-display text-[11px] font-semibold transition-colors ${
+                  embedTab === "light" ? "bg-primary text-primary-foreground" : "text-muted-foreground hover:text-foreground"
+                }`}
+              >
+                <Sun className="h-3 w-3" /> {t("affiliates.generator.lightMode")}
+              </button>
+              <button
+                role="tab"
+                aria-selected={embedTab === "dark"}
+                onClick={() => setEmbedTab("dark")}
+                className={`inline-flex items-center gap-1.5 rounded-md px-3 py-1.5 font-display text-[11px] font-semibold transition-colors ${
+                  embedTab === "dark" ? "bg-primary text-primary-foreground" : "text-muted-foreground hover:text-foreground"
+                }`}
+              >
+                <Moon className="h-3 w-3" /> {t("affiliates.generator.darkMode")}
+              </button>
+            </div>
           </div>
-          <pre className="rounded-lg border border-border/60 bg-[hsl(230_15%_6%)] p-3 overflow-x-auto font-mono text-[10px] sm:text-[11px] leading-relaxed text-foreground/90 max-h-64 whitespace-pre-wrap break-all">
-            <code>{snippet}</code>
+          <pre className="rounded-lg border border-border/60 bg-[hsl(230_15%_6%)] p-4 overflow-x-auto font-mono text-[11px] sm:text-[12px] leading-relaxed text-foreground/90 max-h-72 whitespace-pre-wrap break-all">
+            <code>{activeSnippet}</code>
           </pre>
           <div className="mt-4 grid gap-2 sm:grid-cols-[1fr_auto]">
-            <CopyButton text={snippet} label={t("affiliates.generator.copyCode")} />
+            <CopyButton text={activeSnippet} label={t("affiliates.generator.copyCode")} />
             <a
               href={previewUrl}
               target="_blank"
