@@ -1323,6 +1323,7 @@ export type Database = {
           created_at: string
           from_currency: string
           id: string
+          kind: string
           mrc_tx_id: string | null
           payin_address: string
           provider: string
@@ -1336,6 +1337,7 @@ export type Database = {
           created_at?: string
           from_currency: string
           id?: string
+          kind?: string
           mrc_tx_id?: string | null
           payin_address?: string
           provider?: string
@@ -1349,6 +1351,7 @@ export type Database = {
           created_at?: string
           from_currency?: string
           id?: string
+          kind?: string
           mrc_tx_id?: string | null
           payin_address?: string
           provider?: string
