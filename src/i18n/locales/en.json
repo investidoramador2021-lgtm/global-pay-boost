@@ -1703,5 +1703,12 @@
     "liquiditySources": "Liquidity Sources",
     "hiddenFees": "Hidden Fees",
     "cta": "Start Swapping"
+  },
+  "trustpilotInvite": {
+    "eyebrow": "Trustpilot",
+    "heading": "We're new — and reviews mean a lot",
+    "body": "Honest feedback (good or bad) helps fellow crypto users decide where to swap safely and helps us improve. Be the first.",
+    "cta": "Be the first to review us",
+    "footerCta": "Be the first to review us on Trustpilot"
   }
 }

@@ -1689,5 +1689,12 @@
     "liquiditySources": "Likiditeitsbronne",
     "hiddenFees": "Versteekte Fooie",
     "cta": "Begin Ruil"
+  },
+  "trustpilotInvite": {
+    "eyebrow": "Trustpilot",
+    "heading": "Ons is nuut — en resensies beteken baie",
+    "body": "Eerlike terugvoer (goed of sleg) help mede-krypto-gebruikers om veilig te besluit waar om te ruil en help ons om te verbeter. Wees die eerste.",
+    "cta": "Wees die eerste om 'n resensie te los",
+    "footerCta": "Wees die eerste om ons op Trustpilot te beoordeel"
   }
 }
