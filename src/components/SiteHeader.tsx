@@ -75,6 +75,45 @@ const SiteHeader = () => {
               {link.label}
             </a>
           ))}
+
+          {/* Programs dropdown */}
+          <div className="relative group">
+            <button
+              type="button"
+              className="inline-flex items-center gap-1 font-body text-sm font-medium text-muted-foreground transition-colors hover:text-foreground"
+              aria-haspopup="menu"
+              aria-label={t("programsNav.menu")}
+            >
+              {t("programsNav.menu")}
+              <ChevronDown className="h-3.5 w-3.5 transition-transform group-hover:rotate-180" />
+            </button>
+            <div
+              role="menu"
+              className="absolute right-0 top-full pt-2 w-72 opacity-0 invisible translate-y-1 group-hover:opacity-100 group-hover:visible group-hover:translate-y-0 transition-all duration-150 z-50"
+            >
+              <div className="rounded-2xl border border-border/60 bg-popover/95 backdrop-blur-xl shadow-xl p-1.5">
+                {programLinks.map((p) => {
+                  const Icon = p.icon;
+                  return (
+                    <a
+                      key={p.href}
+                      href={p.href}
+                      role="menuitem"
+                      className="flex items-start gap-3 rounded-xl px-3 py-2.5 transition-colors hover:bg-accent"
+                    >
+                      <span className="flex h-8 w-8 shrink-0 items-center justify-center rounded-lg bg-primary/10 text-primary">
+                        <Icon className="h-4 w-4" />
+                      </span>
+                      <span className="min-w-0">
+                        <span className="block font-body text-sm font-semibold text-foreground">{p.label}</span>
+                        <span className="block text-xs text-muted-foreground truncate">{p.desc}</span>
+                      </span>
+                    </a>
+                  );
+                })}
+              </div>
+            </div>
+          </div>
         </nav>
 
         <div className="flex items-center gap-2">
@@ -135,6 +174,29 @@ const SiteHeader = () => {
               {link.label}
             </a>
           ))}
+
+          {/* Programs section (mobile) */}
+          <div className="mt-1 border-t border-border/50 pt-2">
+            <div className="px-1 py-2 text-xs font-semibold uppercase tracking-wider text-primary">
+              {t("programsNav.menu")}
+            </div>
+            {programLinks.map((p) => {
+              const Icon = p.icon;
+              return (
+                <a
+                  key={p.href}
+                  href={p.href}
+                  onClick={() => setMobileOpen(false)}
+                  className="flex items-center gap-3 rounded-xl px-2 py-2.5 text-sm font-medium text-muted-foreground active:bg-accent active:text-foreground"
+                >
+                  <span className="flex h-7 w-7 shrink-0 items-center justify-center rounded-lg bg-primary/10 text-primary">
+                    <Icon className="h-3.5 w-3.5" />
+                  </span>
+                  {p.label}
+                </a>
+              );
+            })}
+          </div>
 
           {/* Partner actions */}
           <div className="flex items-center gap-2 py-3 border-t border-border/50 mt-1">
