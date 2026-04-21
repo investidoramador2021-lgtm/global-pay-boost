@@ -132,12 +132,11 @@ const WidgetGenerator = ({ lang }: { lang: string }) => {
   const activeBtc = btcValid ? btc.trim() : "";
 
   const link = useMemo(() => buildLink(activeEmail, activeBtc, lang), [activeEmail, activeBtc, lang]);
-  const snippet = useMemo(() => buildSnippet(activeEmail, activeBtc, mode, lang, t("affiliates.generator.previewLabel")), [activeEmail, activeBtc, mode, lang, t]);
-  const previewUrl = useMemo(() => {
-    const token = activeEmail || activeBtc ? buildRefToken(activeEmail, activeBtc) : "your-ref";
-    const langParam = lang && lang !== "en" ? `&lang=${lang}` : "";
-    return `https://mrcglobalpay.com/embed/widget?mode=${mode}&ref=${token}${langParam}`;
-  }, [activeEmail, activeBtc, mode, lang]);
+  const [embedTab, setEmbedTab] = useState<"light" | "dark">("dark");
+  const snippetLight = useMemo(() => buildSnippet(activeEmail, activeBtc, "light", lang, t("affiliates.generator.previewLabel")), [activeEmail, activeBtc, lang, t]);
+  const snippetDark = useMemo(() => buildSnippet(activeEmail, activeBtc, "dark", lang, t("affiliates.generator.previewLabel")), [activeEmail, activeBtc, lang, t]);
+  const activeSnippet = embedTab === "light" ? snippetLight : snippetDark;
+  const previewUrl = useMemo(() => buildEmbedUrl(activeEmail, activeBtc, mode, lang), [activeEmail, activeBtc, mode, lang]);
 
   return (
     <div className="rounded-2xl border border-border bg-card p-4 sm:p-6 lg:p-8 shadow-lg">
