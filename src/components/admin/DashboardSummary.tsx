@@ -61,6 +61,7 @@ interface SwapRow {
   amount: number | null;
   from_currency: string | null;
   to_currency: string | null;
+  provider: string | null;
   created_at: string;
 }
 
