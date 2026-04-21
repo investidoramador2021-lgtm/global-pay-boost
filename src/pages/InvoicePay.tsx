@@ -58,7 +58,15 @@ const InvoicePay = () => {
     <>
       <Helmet>
         <title>{t("invoice.payPageTitle")} — MRC Global Pay</title>
-        <meta name="robots" content="index, follow" />
+        <meta
+          name="description"
+          content={
+            invoice
+              ? `Pay invoice #${invoice.invoice_id} for ${invoice.fiat_amount} ${invoice.fiat_currency} (${invoice.crypto_amount} ${ticker}) securely with MRC Global Pay.`
+              : "Securely pay a crypto invoice issued through MRC Global Pay. Rate-locked, non-custodial settlement with FINTRAC-registered MSB compliance."
+          }
+        />
+        <meta name="robots" content="noindex, nofollow" />
       </Helmet>
       <SiteHeader />
       <main className="min-h-screen bg-background pt-20 pb-16 px-4">
