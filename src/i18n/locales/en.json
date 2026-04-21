@@ -31,7 +31,12 @@
     "trustNonCustodial": "Non-Custodial",
     "trustSettlement": "Instant Settlement",
     "dustTitle": "🧹 No Minimum Swap — Clean Your Wallet",
-    "dustDescription": "Most platforms have high minimums. MRC Global Pay supports micro-swaps starting at $0.30. Convert leftover dust across 6,000+ Cryptocurrencies & Tokenized Stocks instantly. Zero onboarding required."
+    "dustDescription": "Most platforms have high minimums. MRC Global Pay supports micro-swaps starting at $0.30. Convert leftover dust across 6,000+ Cryptocurrencies & Tokenized Stocks instantly. Zero onboarding required.",
+    "h1Lead": "Non-Custodial",
+    "h1Accent": "Crypto Swap",
+    "subheadline": "Swap 6,000+ cryptocurrencies & tokenized stocks instantly from $0.30. No registration. Direct wallet-to-wallet. Fully transparent rates.",
+    "startSwapCta": "Start Swap",
+    "liveRatesLabel": "Live rates · No account · Settles in under 60s"
   },
   "howItWorks": {
     "heading": "How It Works",

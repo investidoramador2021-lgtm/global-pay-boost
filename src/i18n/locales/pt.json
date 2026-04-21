@@ -29,7 +29,12 @@
     "trustNonCustodial": "Não Custodial",
     "trustSettlement": "Liquidação Direta",
     "dustTitle": "🧹 Limpe Sua Carteira",
-    "dustDescription": "A maioria das plataformas tem mínimos altos. MRC Global Pay suporta micro-trocas a partir de $0.30. Converta o pó restante de mais de 6.000 tokens instantaneamente. Sem cadastro."
+    "dustDescription": "A maioria das plataformas tem mínimos altos. MRC Global Pay suporta micro-trocas a partir de $0.30. Converta o pó restante de mais de 6.000 tokens instantaneamente. Sem cadastro.",
+    "h1Lead": "Troca Cripto",
+    "h1Accent": "Não Custodial",
+    "subheadline": "Troque mais de 6.000 criptomoedas e ações tokenizadas instantaneamente a partir de $0,30. Sem cadastro. Direto de carteira para carteira. Taxas totalmente transparentes.",
+    "startSwapCta": "Iniciar Troca",
+    "liveRatesLabel": "Cotações ao vivo · Sem conta · Liquida em menos de 60s"
   },
   "howItWorks": {
     "heading": "Como Funciona",

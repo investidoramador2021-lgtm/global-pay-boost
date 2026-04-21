@@ -29,7 +29,12 @@
     "trustNonCustodial": "Emanetsiz",
     "trustSettlement": "Doğrudan Ödeme",
     "dustTitle": "🧹 Cüzdanınızı Temizleyin",
-    "dustDescription": "Çoğu platformda yüksek minimumlar vardır. MRC Global Pay, $0.30'dan başlayan mikro takasları destekler. 6.000'den fazla token'dan kalan tozu anında dönüştürün. Kayıt gerekmez."
+    "dustDescription": "Çoğu platformda yüksek minimumlar vardır. MRC Global Pay, $0.30'dan başlayan mikro takasları destekler. 6.000'den fazla token'dan kalan tozu anında dönüştürün. Kayıt gerekmez.",
+    "h1Lead": "Saklamasız",
+    "h1Accent": "Kripto Takası",
+    "subheadline": "6.000'den fazla kripto para ve tokenleştirilmiş hisseyi $0,30'dan anında takas edin. Kayıt yok. Doğrudan cüzdandan cüzdana. Tamamen şeffaf oranlar.",
+    "startSwapCta": "Takasa Başla",
+    "liveRatesLabel": "Canlı kurlar · Hesap yok · 60 sn altında uzlaşma"
   },
   "howItWorks": {
     "heading": "Nasıl Çalışır",
