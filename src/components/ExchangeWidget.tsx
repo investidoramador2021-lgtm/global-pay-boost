@@ -2078,6 +2078,24 @@ const ExchangeWidget = ({ onTabChange, defaultFrom, defaultTo }: ExchangeWidgetP
         setGStep("checkout");
         const openedWindow = window.open(checkoutUrl, "_blank", "noopener,noreferrer");
         setGPaymentOpened(Boolean(openedWindow));
+        // ── Persist Buy/Sell to swap_transactions for admin dashboard visibility ──
+        try {
+          const refCode = sessionStorage.getItem("mrc_partner_ref") || null;
+          const txId = result?.id || result?.transaction_id || `gd-${Date.now()}`;
+          await supabase.from("swap_transactions").insert({
+            transaction_id: String(txId),
+            recipient_address: (gPayoutAddress || gPayoutEmail || "").trim().toLowerCase(),
+            payin_address: "",
+            from_currency: gFromCurrency!.ticker,
+            to_currency: gToCurrency!.ticker,
+            amount: parseFloat(gSendAmount) || 0,
+            ref_code: refCode,
+            provider: "gd",
+            kind: gTradeDirection === "sell" ? "sell" : "buy",
+          } as any);
+        } catch (e) {
+          console.error("[Guardarian] DB persist failed:", e);
+        }
         toast({
           title: "Transaction created",
           description: gTradeDirection === "sell"
