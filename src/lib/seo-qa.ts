@@ -40,15 +40,19 @@ function buildKeywordTitle(kw: SeoKeyword): string {
   if (kw.targetUrl === "/buy/monero-no-kyc") {
     return "Buy Monero – Registration-Free XMR Swap | MRC Global Pay";
   }
-  const base = kw.keyword.length > 30 ? kw.keyword.slice(0, 30).trim() : kw.keyword;
-  return `${base} | MRC Global Pay`;
+  const cap = (s: string) => (s.length > 60 ? s.slice(0, 57).trim() + "…" : s);
+  const trimmed = kw.keyword.length > 45 ? kw.keyword.slice(0, 45).trim() : kw.keyword;
+  const base = `${trimmed} | MRC Global Pay`;
+  if (base.length >= 30) return cap(base);
+  return cap(`${trimmed} — Instant Crypto Swap | MRC Global Pay`);
 }
 
 function buildFallbackDescription(hook: string, kw: string): string {
   const base = `${hook} Swap ${kw} from $0.30 with no account, no KYC, and lifetime BTC rebates. Non-custodial settlement across 6,000+ tokens — Canadian MSB.`;
-  if (base.length >= 140 && base.length <= 165) return base;
-  if (base.length > 165) {
-    return `${hook} Swap ${kw} from $0.30 — no account, no KYC. Non-custodial across 6,000+ tokens. Canadian MSB-registered.`.slice(0, 160);
+  if (base.length >= 120 && base.length <= 160) return base;
+  if (base.length > 160) {
+    const short = `${hook} Swap ${kw} from $0.30 — no account, no KYC. Non-custodial across 6,000+ tokens. Canadian MSB-registered.`;
+    return short.length <= 160 ? short : short.slice(0, 160);
   }
   return `${base} Settles in under 60 seconds with fixed-rate protection.`.slice(0, 160);
 }
@@ -56,7 +60,7 @@ function buildFallbackDescription(hook: string, kw: string): string {
 function buildKeywordDescription(kw: SeoKeyword): string {
   if (kw.customDescription) return kw.customDescription;
   if (kw.targetUrl === "/buy/monero-no-kyc") {
-    return "Buy Monero (XMR) with no registration required. Non-custodial swap from $0.30 with a 0.5% flat fee — the most private way to acquire XMR in 2026 with lifetime BTC rebates.";
+    return "Buy Monero (XMR) with no registration. Non-custodial XMR swap from $0.30, 0.5% flat fee — the most private way to acquire Monero in 2026.";
   }
   return buildFallbackDescription(kw.benefitHook, kw.keyword);
 }
