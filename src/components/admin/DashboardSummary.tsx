@@ -235,8 +235,7 @@ const DashboardSummary = () => {
       private: emptyBucket(), bridge: emptyBucket(),
       invoice: emptyBucket(), loan: emptyBucket(), earn: emptyBucket(),
     };
-    const add = (key: string, usd: number, iso: string) => {
-      const fee = usd * (REVENUE_RATE[key] || 0);
+    const addFee = (key: string, fee: number, iso: string) => {
       if (!fee) return;
       r[key].all += fee;
       if (within(iso, 30)) r[key].d30 += fee;
@@ -246,20 +245,20 @@ const DashboardSummary = () => {
     for (const row of swaps) {
       const k = (row.kind || "swap").toLowerCase();
       if (!r[k]) continue;
-      // For fiat on/off-ramp the `amount` is already in fiat units
       const usd = (k === "buy" || k === "sell")
         ? Number(row.amount) || 0
         : usdOf(row.from_currency, Number(row.amount) || 0);
-      add(k, usd, row.created_at);
+      addFee(k, usd * rateFor(k, row.provider), row.created_at);
     }
     for (const row of invoices) {
-      add("invoice", Number(row.fiat_amount) || 0, row.created_at);
+      addFee("invoice", (Number(row.fiat_amount) || 0) * rateFor("invoice"), row.created_at);
     }
     for (const row of lend) {
       const isLoan = row.tx_type === "loan";
       const notional = Number(isLoan ? row.loan_amount : row.amount) || 0;
-      const usd = usdOf(row.currency, notional) || notional; // assume USD if unknown stable
-      add(isLoan ? "loan" : "earn", usd, row.created_at);
+      const usd = usdOf(row.currency, notional) || notional;
+      const k = isLoan ? "loan" : "earn";
+      addFee(k, usd * rateFor(k), row.created_at);
     }
     return r;
   }, [swaps, invoices, lend, prices]);
