@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import { Helmet } from "react-helmet-async";
 import { Link, useLocation } from "react-router-dom";
-import { Calendar, Clock, ArrowRight, FileText, Shield, Landmark, Zap, ScrollText, DollarSign, TrendingUp, Coins, Sparkles, Network, Server } from "lucide-react";
+import { Calendar, Clock, ArrowRight, FileText, Shield, Landmark, Zap, ScrollText, DollarSign, TrendingUp, Coins, Sparkles, Network, Server, Pickaxe } from "lucide-react";
 import SiteHeader from "@/components/SiteHeader";
 import SiteFooter from "@/components/SiteFooter";
 import { fetchAllPosts, type BlogPost } from "@/lib/blog-data";
@@ -104,6 +104,16 @@ const WHITEPAPERS = [
     accent: "160 100% 45%",
     category: "Institutional Whitepaper",
     tags: ["Earn Yield", "P2I Lending", "Compound Interest", "Source-Back"],
+  },
+  {
+    title: "From Hashrate to Wealth: The Smart Off-Ramp for NiceHash Miners",
+    subtitle: "Mining Payout Strategy · 2026",
+    excerpt: "Every coin NiceHash mines — BTC, LTC, KAS, ETC, XMR, ERG, RVN, ZEC and more — and the cheapest, safest way to convert hashpower into stablecoins, ETH, gold or yield-bearing positions with no account required.",
+    path: "/whitepapers/nicehash-mining-payout-strategy",
+    icon: Pickaxe,
+    accent: "142 76% 36%",
+    category: "Institutional Whitepaper",
+    tags: ["NiceHash", "Mining Payouts", "Off-Ramp", "Stablecoins", "Yield"],
   },
   {
     title: "PAXG vs. XAUt in 2026: Which Gold-Backed Token Belongs in Your Portfolio?",
