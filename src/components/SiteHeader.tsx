@@ -74,20 +74,20 @@ const SiteHeader = () => {
           MRC<span className="text-primary">GlobalPay</span>
         </a>
 
-        <nav className="hidden items-center gap-3 xl:gap-5 lg:flex">
+        <nav className="hidden items-center gap-2.5 2xl:gap-5 lg:flex">
           {/* Primary links — always visible on lg+ */}
           {primaryNavLinks.map((link) => (
             <a
               key={link.href}
               href={link.href}
-              className="whitespace-nowrap font-body text-[13px] xl:text-sm font-medium text-muted-foreground transition-colors hover:text-foreground"
+              className="whitespace-nowrap font-body text-[13px] 2xl:text-sm font-medium text-muted-foreground transition-colors hover:text-foreground"
             >
               {link.label}
             </a>
           ))}
 
-          {/* Secondary links — inline only at xl+ to prevent crowding in long-label languages */}
-          <div className="hidden xl:flex xl:items-center xl:gap-5">
+          {/* Secondary links — inline only at 2xl+ to prevent crowding in long-label languages */}
+          <div className="hidden 2xl:flex 2xl:items-center 2xl:gap-5">
             {secondaryNavLinks.map((link) => (
               <a
                 key={link.href}
@@ -99,8 +99,8 @@ const SiteHeader = () => {
             ))}
           </div>
 
-          {/* "More" dropdown — visible only on lg (hidden at xl since secondary links go inline) */}
-          <div className="relative group xl:hidden">
+          {/* "More" dropdown — visible until 2xl (where secondary links go inline) */}
+          <div className="relative group 2xl:hidden">
             <button
               type="button"
               className="inline-flex items-center gap-1 whitespace-nowrap font-body text-[13px] font-medium text-muted-foreground transition-colors hover:text-foreground"
