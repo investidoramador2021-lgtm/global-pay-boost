@@ -7,26 +7,45 @@ import {
 } from "lucide-react";
 
 /**
- * Estimated revenue per product line (as a % of notional volume).
- * These mirror the public fee schedule + partner commission deals:
- *   - Swap / Private / Bridge: 0.5% spread captured in the quote
- *   - Buy (fiat on-ramp):      1.0% margin from Guardarian/SimpleSwap
- *   - Sell (off-ramp):         1.0% margin
- *   - Invoice:                 0.5% receiver fee (already explicit)
- *   - Loan origination:        1.5% partner commission on principal
- *   - Earn deposits:           0.75% annualized partner share
+ * Estimated revenue per product line, **provider-aware**.
+ * Swap-style products earn the upstream provider's affiliate %:
+ *   - cn  (ChangeNOW)    → 0.5%
+ *   - ss  (SimpleSwap)   → 0.5%
+ *   - se  (StealthEx)    → 0.4%
+ *   - le  (LetsExchange) → 0.2%
+ *   - gd  (Guardarian fiat on/off-ramp) → 1.0% margin
+ * Non-swap products use a fixed rate:
+ *   - Invoice:        0.5% receiver fee (explicit in product)
+ *   - Loan (CoinRabbit): 2.0% origination share on principal
+ *   - Earn (CoinRabbit): 0.5% annualized partner share on deposits
  * Tunable in one place if the deals change.
  */
-const REVENUE_RATE: Record<string, number> = {
-  swap: 0.005,
-  buy: 0.010,
-  sell: 0.010,
-  private: 0.005,
-  bridge: 0.005,
-  invoice: 0.005,
-  loan: 0.015,
-  earn: 0.0075,
+const PROVIDER_RATE: Record<string, number> = {
+  cn: 0.005, // ChangeNOW
+  ss: 0.005, // SimpleSwap
+  se: 0.004, // StealthEx
+  le: 0.002, // LetsExchange
+  gd: 0.010, // Guardarian (fiat ramps)
 };
+const DEFAULT_SWAP_RATE = 0.005; // unknown swap provider → assume 0.5%
+const DEFAULT_RAMP_RATE = 0.010; // unknown buy/sell provider → assume 1.0%
+const FIXED_RATE: Record<string, number> = {
+  invoice: 0.005,
+  loan: 0.020,
+  earn: 0.005,
+};
+// Display rate for the per-product table (provider-blended → use mid value)
+const DISPLAY_RATE: Record<string, number> = {
+  swap: 0.004, buy: 0.010, sell: 0.010, private: 0.004, bridge: 0.004,
+  invoice: 0.005, loan: 0.020, earn: 0.005,
+};
+function rateFor(kind: string, provider?: string | null): number {
+  const p = (provider || "").toLowerCase();
+  if (kind === "invoice" || kind === "loan" || kind === "earn") return FIXED_RATE[kind] ?? 0;
+  if (kind === "buy" || kind === "sell") return PROVIDER_RATE[p] ?? DEFAULT_RAMP_RATE;
+  // swap / private / bridge
+  return PROVIDER_RATE[p] ?? DEFAULT_SWAP_RATE;
+}
 
 /**
  * Aggregated KPI summary across every widget tab:
@@ -42,6 +61,7 @@ interface SwapRow {
   amount: number | null;
   from_currency: string | null;
   to_currency: string | null;
+  provider: string | null;
   created_at: string;
 }
 
@@ -108,7 +128,7 @@ const DashboardSummary = () => {
       const [swapRes, invRes, leRes, pxRes] = await Promise.all([
         supabase
           .from("swap_transactions")
-          .select("kind, amount, from_currency, to_currency, created_at")
+          .select("kind, amount, from_currency, to_currency, provider, created_at")
           .order("created_at", { ascending: false })
           .limit(5000),
         supabase
@@ -215,8 +235,7 @@ const DashboardSummary = () => {
       private: emptyBucket(), bridge: emptyBucket(),
       invoice: emptyBucket(), loan: emptyBucket(), earn: emptyBucket(),
     };
-    const add = (key: string, usd: number, iso: string) => {
-      const fee = usd * (REVENUE_RATE[key] || 0);
+    const addFee = (key: string, fee: number, iso: string) => {
       if (!fee) return;
       r[key].all += fee;
       if (within(iso, 30)) r[key].d30 += fee;
@@ -226,20 +245,20 @@ const DashboardSummary = () => {
     for (const row of swaps) {
       const k = (row.kind || "swap").toLowerCase();
       if (!r[k]) continue;
-      // For fiat on/off-ramp the `amount` is already in fiat units
       const usd = (k === "buy" || k === "sell")
         ? Number(row.amount) || 0
         : usdOf(row.from_currency, Number(row.amount) || 0);
-      add(k, usd, row.created_at);
+      addFee(k, usd * rateFor(k, row.provider), row.created_at);
     }
     for (const row of invoices) {
-      add("invoice", Number(row.fiat_amount) || 0, row.created_at);
+      addFee("invoice", (Number(row.fiat_amount) || 0) * rateFor("invoice"), row.created_at);
     }
     for (const row of lend) {
       const isLoan = row.tx_type === "loan";
       const notional = Number(isLoan ? row.loan_amount : row.amount) || 0;
-      const usd = usdOf(row.currency, notional) || notional; // assume USD if unknown stable
-      add(isLoan ? "loan" : "earn", usd, row.created_at);
+      const usd = usdOf(row.currency, notional) || notional;
+      const k = isLoan ? "loan" : "earn";
+      addFee(k, usd * rateFor(k), row.created_at);
     }
     return r;
   }, [swaps, invoices, lend, prices]);
@@ -357,7 +376,7 @@ const DashboardSummary = () => {
                           <Icon className={`w-4 h-4 ${def.accent}`} />
                           <span className="font-medium text-foreground">{def.label}</span>
                           <span className="text-[10px] text-muted-foreground">
-                            ({(REVENUE_RATE[def.key] * 100).toFixed(2)}%)
+                            ({((DISPLAY_RATE[def.key] || 0) * 100).toFixed(2)}%)
                           </span>
                         </div>
                       </td>
