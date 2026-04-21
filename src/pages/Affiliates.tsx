@@ -16,8 +16,10 @@ import MsbTrustBar from "@/components/MsbTrustBar";
 import MarketingMaterials from "@/components/affiliates/MarketingMaterials";
 import EmbedWidget from "@/pages/EmbedWidget";
 import { supabase } from "@/integrations/supabase/client";
-import { getLangFromPath, langPath } from "@/i18n";
+import { getLangFromPath, langPath, supportedLanguages } from "@/i18n";
 import { useLocation } from "react-router-dom";
+
+const SITE_ORIGIN = "https://mrcglobalpay.com";
 
 /* ─── Helpers ─── */
 const isValidEmail = (email: string) =>
@@ -428,6 +430,16 @@ const Affiliates = () => {
         <meta property="og:url" content={canonicalUrl} />
         <meta property="og:type" content="website" />
         <html lang={lang} />
+        {/* Page-specific hreflang alternates for /affiliates (in addition to global LangLayout tags) */}
+        {supportedLanguages.map((l) => (
+          <link
+            key={`affiliates-hreflang-${l}`}
+            rel="alternate"
+            hrefLang={l}
+            href={`${SITE_ORIGIN}${langPath(l, "/affiliates")}`}
+          />
+        ))}
+        <link rel="alternate" hrefLang="x-default" href={`${SITE_ORIGIN}/affiliates`} />
         <script type="application/ld+json">{JSON.stringify(jsonLd)}</script>
         <script type="application/ld+json">{JSON.stringify(faqJsonLd)}</script>
       </Helmet>
