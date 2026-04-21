@@ -80,16 +80,18 @@ const LanguageSwitcher = () => {
     <div ref={containerRef} className="relative">
       <button
         onClick={() => setOpen((v) => !v)}
-        className="flex h-9 items-center gap-2 rounded-lg border border-border px-2.5 text-muted-foreground transition-colors hover:bg-accent hover:text-foreground"
+        className="flex h-9 items-center gap-1.5 rounded-lg border border-border px-2 text-muted-foreground transition-colors hover:bg-accent hover:text-foreground"
         aria-label="Switch language"
-        title="Switch language"
+        title={currentMeta.native}
       >
         <img src={flagUrl(currentLang)} alt="" className="h-5 w-5 rounded-full object-cover" />
-        <span className="hidden text-xs font-medium sm:inline">{currentMeta.native}</span>
+        <span className="hidden sm:inline text-[11px] font-semibold uppercase tracking-wide">
+          {currentLang}
+        </span>
       </button>
 
       {open && (
-        <div className="absolute right-0 top-full z-50 mt-2 w-64 overflow-hidden rounded-xl border border-border bg-card shadow-elevated">
+        <div className="absolute end-0 top-full z-50 mt-2 w-64 max-w-[calc(100vw-2rem)] overflow-hidden rounded-xl border border-border bg-card shadow-elevated">
           {/* Search input */}
           <div className="border-b border-border p-2">
             <div className="flex items-center gap-2 rounded-lg bg-muted/50 px-2.5 py-1.5">
