@@ -299,7 +299,85 @@ const DashboardSummary = () => {
         </Card>
       </div>
 
-      {/* Per-widget breakdown */}
+      {/* Estimated Revenue */}
+      <Card className="border-border/40 bg-card/40 backdrop-blur-sm">
+        <CardHeader className="pb-3">
+          <CardTitle className="text-lg flex items-center gap-2">
+            <DollarSign className="w-5 h-5 text-emerald-400" /> Estimated Revenue
+            <span className="ml-2 text-[10px] uppercase tracking-wider text-muted-foreground font-normal">
+              fees + spread · live BTC ${btcUsd ? formatNum(btcUsd, 0) : "—"}
+            </span>
+          </CardTitle>
+        </CardHeader>
+        <CardContent className="space-y-4">
+          {/* Headline buckets */}
+          <div className="grid grid-cols-2 lg:grid-cols-4 gap-3">
+            {([
+              { label: "Today",     value: revenueTotals.today, icon: TrendingUp },
+              { label: "Last 7d",   value: revenueTotals.d7,    icon: Activity },
+              { label: "Last 30d",  value: revenueTotals.d30,   icon: DollarSign },
+              { label: "All-time",  value: revenueTotals.all,   icon: Coins },
+            ] as const).map(({ label, value, icon: Icon }) => (
+              <div key={label} className="rounded-lg border border-border/40 bg-background/40 p-4">
+                <div className="flex items-center gap-2 mb-1">
+                  <Icon className="w-4 h-4 text-emerald-400" />
+                  <span className="text-xs uppercase tracking-wider text-muted-foreground">{label}</span>
+                </div>
+                <p className="text-2xl font-bold text-foreground tabular-nums">
+                  {loading ? "…" : fmtUsd(value)}
+                </p>
+                <p className="text-[11px] text-muted-foreground mt-1 tabular-nums">
+                  ≈ {loading ? "…" : fmtBtc(value)}
+                </p>
+              </div>
+            ))}
+          </div>
+
+          {/* Per-product revenue table */}
+          <div className="overflow-x-auto rounded-lg border border-border/40">
+            <table className="w-full text-sm">
+              <thead className="bg-background/40">
+                <tr className="text-left text-[11px] uppercase tracking-wider text-muted-foreground">
+                  <th className="py-2 px-3">Product</th>
+                  <th className="py-2 px-3 text-right">Today</th>
+                  <th className="py-2 px-3 text-right">7d</th>
+                  <th className="py-2 px-3 text-right">30d</th>
+                  <th className="py-2 px-3 text-right">All-time</th>
+                  <th className="py-2 px-3 text-right">All (BTC)</th>
+                </tr>
+              </thead>
+              <tbody>
+                {TILE_DEFS.map((def) => {
+                  const r = revenue[def.key] || emptyBucket();
+                  const Icon = def.icon;
+                  return (
+                    <tr key={def.key} className="border-t border-border/30 hover:bg-background/30">
+                      <td className="py-2 px-3">
+                        <div className="flex items-center gap-2">
+                          <Icon className={`w-4 h-4 ${def.accent}`} />
+                          <span className="font-medium text-foreground">{def.label}</span>
+                          <span className="text-[10px] text-muted-foreground">
+                            ({(REVENUE_RATE[def.key] * 100).toFixed(2)}%)
+                          </span>
+                        </div>
+                      </td>
+                      <td className="py-2 px-3 text-right tabular-nums text-foreground">{loading ? "…" : fmtUsd(r.today)}</td>
+                      <td className="py-2 px-3 text-right tabular-nums text-foreground">{loading ? "…" : fmtUsd(r.d7)}</td>
+                      <td className="py-2 px-3 text-right tabular-nums text-foreground">{loading ? "…" : fmtUsd(r.d30)}</td>
+                      <td className="py-2 px-3 text-right tabular-nums font-semibold text-foreground">{loading ? "…" : fmtUsd(r.all)}</td>
+                      <td className="py-2 px-3 text-right tabular-nums text-muted-foreground">{loading ? "…" : fmtBtc(r.all)}</td>
+                    </tr>
+                  );
+                })}
+              </tbody>
+            </table>
+          </div>
+          <p className="text-[11px] text-muted-foreground/70">
+            Estimated using public fee schedule × notional volume × live spot prices. Actual settlements may vary.
+          </p>
+        </CardContent>
+      </Card>
+
       <Card className="border-border/40 bg-card/40 backdrop-blur-sm">
         <CardHeader>
           <CardTitle className="text-lg flex items-center gap-2">
