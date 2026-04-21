@@ -97,8 +97,9 @@ const Unsubscribe = () => {
             <p className="text-muted-foreground">Please try again later or contact support.</p>
           </>
         )}
+        </div>
       </div>
-    </div>
+    </>
   );
 };
 
