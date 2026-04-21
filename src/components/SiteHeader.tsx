@@ -133,7 +133,7 @@ const SiteHeader = () => {
           <div className="relative group">
             <button
               type="button"
-              className="inline-flex items-center gap-1 whitespace-nowrap font-body text-[13px] xl:text-sm font-medium text-muted-foreground transition-colors hover:text-foreground"
+              className="inline-flex items-center gap-1 whitespace-nowrap font-body text-[13px] 2xl:text-sm font-medium text-muted-foreground transition-colors hover:text-foreground"
               aria-haspopup="menu"
               aria-label={t("programsNav.menu")}
             >
