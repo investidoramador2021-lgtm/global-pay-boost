@@ -739,9 +739,6 @@ const Affiliates = () => {
                     </figure>
                   ))}
                 </div>
-                <p className="mt-6 text-center text-[11px] text-muted-foreground">
-                  Testimonials are illustrative placeholders. Verified affiliate quotes will be added as the program grows.
-                </p>
               </div>
             </div>
           </section>
