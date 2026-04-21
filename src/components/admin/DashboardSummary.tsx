@@ -67,10 +67,16 @@ interface KindStats {
 
 const ZERO: KindStats = { count: 0, volume: 0, last7d: 0 };
 
-function within7d(iso: string): boolean {
+function within(iso: string, days: number): boolean {
   const t = new Date(iso).getTime();
-  return Date.now() - t < 7 * 24 * 60 * 60 * 1000;
+  return Date.now() - t < days * 24 * 60 * 60 * 1000;
 }
+function withinToday(iso: string): boolean {
+  const d = new Date(iso);
+  const n = new Date();
+  return d.getFullYear() === n.getFullYear() && d.getMonth() === n.getMonth() && d.getDate() === n.getDate();
+}
+const within7d = (iso: string) => within(iso, 7);
 
 const TILE_DEFS: Array<{
   key: "swap" | "buy" | "sell" | "private" | "bridge" | "invoice" | "loan" | "earn";
@@ -79,6 +85,15 @@ const TILE_DEFS: Array<{
   accent: string;
   description: string;
 }> = [
+  { key: "swap",    label: "Exchange",  icon: ArrowRightLeft, accent: "text-primary",        description: "Crypto-to-crypto swaps" },
+  { key: "buy",     label: "Buy",       icon: ShoppingCart,   accent: "text-emerald-400",    description: "Fiat on-ramp purchases" },
+  { key: "sell",    label: "Sell",      icon: Banknote,       accent: "text-amber-400",      description: "Crypto-to-fiat off-ramp" },
+  { key: "private", label: "Private",   icon: ShieldCheck,    accent: "text-violet-400",     description: "Shielded private transfers" },
+  { key: "bridge",  label: "Bridge",    icon: Link2,          accent: "text-cyan-400",       description: "Permanent fixed-rate addresses" },
+  { key: "invoice", label: "Invoices",  icon: FileText,       accent: "text-blue-400",       description: "Invoice payment requests" },
+  { key: "loan",    label: "Loans",     icon: Landmark,       accent: "text-orange-400",     description: "Collateralized borrowing" },
+  { key: "earn",    label: "Earn",      icon: PiggyBank,      accent: "text-pink-400",       description: "Yield-bearing deposits" },
+];
   { key: "swap",    label: "Exchange",  icon: ArrowRightLeft, accent: "text-primary",        description: "Crypto-to-crypto swaps" },
   { key: "buy",     label: "Buy",       icon: ShoppingCart,   accent: "text-emerald-400",    description: "Fiat on-ramp purchases" },
   { key: "sell",    label: "Sell",      icon: Banknote,       accent: "text-amber-400",      description: "Crypto-to-fiat off-ramp" },
