@@ -376,7 +376,7 @@ const DashboardSummary = () => {
                           <Icon className={`w-4 h-4 ${def.accent}`} />
                           <span className="font-medium text-foreground">{def.label}</span>
                           <span className="text-[10px] text-muted-foreground">
-                            ({(REVENUE_RATE[def.key] * 100).toFixed(2)}%)
+                            ({((DISPLAY_RATE[def.key] || 0) * 100).toFixed(2)}%)
                           </span>
                         </div>
                       </td>
