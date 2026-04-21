@@ -1659,5 +1659,12 @@
       "checkInboxDesc": "Email de verificação enviado. Confirme em 48 horas ou sua conta será excluída.",
       "errorTitle": "Erro"
     }
+  },
+  "programsNav": {
+    "menu": "Programas",
+    "affiliates": "Afiliados",
+    "partners": "Parceiros",
+    "referral": "Indicação",
+    "earn": "Ganhe Conosco"
   }
 }
