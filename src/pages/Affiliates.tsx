@@ -730,34 +730,6 @@ const Affiliates = () => {
 
         <MsbTrustBar />
 
-        {/* WIDGET GENERATOR */}
-        <section id="generate" className="relative border-b border-border bg-muted/30 py-16 sm:py-24">
-          <div className="container mx-auto max-w-6xl px-4">
-            <div className="text-center max-w-2xl mx-auto">
-              <div className="inline-flex items-center gap-2 rounded-full border border-primary/30 bg-primary/10 px-3 py-1 text-[11px] font-display font-semibold text-primary">
-                <Sparkles className="h-3 w-3" /> {t("affiliates.generator.badge")}
-              </div>
-              <h2 className="mt-4 font-display text-2xl sm:text-4xl lg:text-5xl font-extrabold text-foreground tracking-tight">
-                {t("affiliates.generator.title1")} <span className="text-primary">{t("affiliates.generator.title2")}</span> {t("affiliates.generator.title3")}
-              </h2>
-              <p className="mt-4 font-body text-muted-foreground sm:text-lg">
-                {t("affiliates.generator.subtitle")}{" "}
-                <span className="text-foreground font-semibold">{t("affiliates.generator.live")}</span>{" "}
-                {t("affiliates.generator.asYouType")}
-              </p>
-              <p className="mt-3 inline-block rounded-full border border-primary/30 bg-primary/10 px-4 py-1.5 font-body text-xs sm:text-sm text-foreground/90">
-                {t("affiliates.extra.generatorPerfectFor")} <span className="font-semibold text-primary">{t("affiliates.extra.generatorPerfectForBold")}</span> {t("affiliates.extra.generatorPerfectForEnd")}
-              </p>
-            </div>
-
-            <div className="mt-10 relative">
-              <div className="absolute inset-0 rounded-3xl bg-gradient-to-r from-primary/40 via-[hsl(var(--neon))]/30 to-primary/40 opacity-60 blur-md pointer-events-none" aria-hidden />
-              <div className="relative">
-                <WidgetGenerator lang={lang} />
-              </div>
-            </div>
-          </div>
-        </section>
 
         {/* HOW IT WORKS */}
         <section className="border-b border-border py-16 sm:py-20">
