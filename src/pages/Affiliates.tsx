@@ -6,7 +6,7 @@ import {
   Image as ImageIcon, Code2, Lock, Copy, Check, ExternalLink,
   Mail, Sparkles, ArrowDownUp, Clock, Wallet, Sun, Moon, Smartphone,
   Download, FileText, Youtube, Megaphone, BarChart3, TrendingUp, Coins,
-  Percent, LineChart, Users,
+  Percent, LineChart, Users, Maple, Globe, Layers, Award, Quote, DollarSign,
 } from "lucide-react";
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
 import SiteHeader from "@/components/SiteHeader";
