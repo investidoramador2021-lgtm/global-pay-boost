@@ -1118,7 +1118,9 @@
       "upgradeBody1": "Đăng ký Tài Khoản Đối Tác miễn phí với",
       "upgradeBody2": "cùng email này",
       "upgradeBody3": "và widget này — cùng tất cả giao dịch nó tạo — sẽ tự động liên kết vào bảng điều khiển của bạn.",
-      "upgradeCta": "Tạo Tài Khoản Đối Tác"
+      "upgradeCta": "Tạo Tài Khoản Đối Tác",
+      "titleStrong": "Tạo Widget Swap Tùy Chỉnh Trong Vài Giây",
+      "subtitleStrong": "Cắm widget swap crypto không lưu ký, hoàn toàn thương hiệu vào bất kỳ trang nào. Tự động theo dõi giới thiệu — không script, không SDK, không bảo trì."
     },
     "howItWorks": {
       "title": "Cách Hoạt Động",
@@ -1351,6 +1353,32 @@
       "testi3Quote": "Widget chuyển đổi vì nó thực sự hoạt động — non-custodial, tối thiểu $0.30, hơn 6.000 cặp. Người dùng có sản phẩm thật, tôi nhận BTC thật.",
       "testi3Name": "Marketer affiliate",
       "testi3Role": "Blog ưu đãi crypto"
+    },
+    "widgetWhy": {
+      "title": "Tại Sao Widget Của Chúng Tôi Chuyển Đổi Tốt Hơn",
+      "subtitle": "Thiết kế để cảm giác native trên trang của bạn, tải tức thì và biến khách thành người dùng.",
+      "f1Title": "Tải dưới 1 giây",
+      "f1Body": "iframe nhẹ, lazy-load, không SDK nặng. Không làm chậm trang hay ảnh hưởng Core Web Vitals.",
+      "f2Title": "Theme sáng & tối",
+      "f2Body": "Hai theme sẵn hòa hợp với thương hiệu — đổi bằng một tham số.",
+      "f3Title": "Bao gồm 6.000+ cặp",
+      "f3Body": "Cùng thanh khoản, cùng engine tỷ giá cố định như trang chính. Khách không có cảm giác rời trang.",
+      "f4Title": "Mobile-first, đáp ứng hoàn toàn",
+      "f4Body": "Render sạch từ 320px đến ultrawide. Cảm ứng, cuộn, bàn phím đều đã kiểm tra.",
+      "f5Title": "Tự động theo dõi giới thiệu",
+      "f5Body": "Mã ref của bạn đã nằm trong URL iframe. Không cookie, không JS.",
+      "f6Title": "Nguồn tin cậy được quản lý",
+      "f6Body": "Hậu thuẫn bởi MSB Canada (FINTRAC #C100000015). Khán giả của bạn swap trên nơi được quản lý."
+    },
+    "widgetExamples": {
+      "title": "Xem Trực Tiếp Trên Trang Thật",
+      "subtitle": "Ba vị trí thực tế — cùng widget bạn nhúng hôm nay, trong trình duyệt giả lập.",
+      "ex1Name": "Sidebar blog crypto",
+      "ex1Body": "Độc giả đọc xong bài Solana của bạn, mở sidebar và swap SOL → USDT trong 60 giây.",
+      "ex2Name": "Bài đánh giá sàn",
+      "ex2Body": "Khách vào bài '5 swap không lưu ký tốt nhất' và thử ngay mà không rời trang.",
+      "ex3Name": "Công cụ portfolio",
+      "ex3Body": "Thêm tab 'Swap Nhanh' vào app portfolio — người dùng cân bằng mà không rút tiền."
     }
   },
   "nicehashWp": {

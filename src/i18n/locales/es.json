@@ -1118,7 +1118,9 @@
       "upgradeBody1": "Registra una Cuenta de Socio gratuita con",
       "upgradeBody2": "este mismo correo",
       "upgradeBody3": "y este widget — más todos los intercambios que genere — se vincularán automáticamente a tu panel.",
-      "upgradeCta": "Crear Cuenta de Socio"
+      "upgradeCta": "Crear Cuenta de Socio",
+      "titleStrong": "Genera Tu Widget de Swap Personalizado en Segundos",
+      "subtitleStrong": "Conecta un widget de swap cripto sin custodia y totalmente brandeado a cualquier sitio. Registra tus referidos automáticamente — sin scripts, sin SDKs, sin mantenimiento."
     },
     "howItWorks": {
       "title": "Cómo Funciona",
@@ -1351,6 +1353,32 @@
       "testi3Quote": "El widget convierte porque realmente funciona — no custodial, mínimo $0,30, más de 6.000 pares. Mis usuarios obtienen un producto real, yo obtengo BTC real.",
       "testi3Name": "Marketer afiliado",
       "testi3Role": "Blog de ofertas cripto"
+    },
+    "widgetWhy": {
+      "title": "Por Qué Nuestro Widget Convierte Mejor",
+      "subtitle": "Diseñado para sentirse nativo en tu sitio, cargar al instante y convertir visitantes en usuarios.",
+      "f1Title": "Carga en menos de 1 segundo",
+      "f1Body": "iframe ligero, carga diferida, sin SDK pesado. No ralentiza tu página ni afecta Core Web Vitals.",
+      "f2Title": "Temas claro y oscuro",
+      "f2Body": "Dos temas listos que combinan con tu marca — cámbialos con un parámetro.",
+      "f3Title": "Incluye 6,000+ pares",
+      "f3Body": "La misma liquidez y motor de tasa fija que el sitio principal. Los visitantes nunca sienten que se fueron del tuyo.",
+      "f4Title": "Mobile-first, totalmente responsive",
+      "f4Body": "Se ve limpio desde 320px hasta ultrawide. Toques, scroll y teclado probados.",
+      "f5Title": "Rastrea referidos automáticamente",
+      "f5Body": "Tu código ref está incrustado en la URL del iframe. Sin cookies, sin JS.",
+      "f6Title": "Fuente regulada y confiable",
+      "f6Body": "Respaldado por un MSB canadiense (FINTRAC #C100000015). Tu audiencia opera en un lugar regulado."
+    },
+    "widgetExamples": {
+      "title": "Míralo en Vivo en Sitios Reales",
+      "subtitle": "Tres ubicaciones del mundo real — el mismo widget que incrustarías hoy, dentro de un navegador simulado.",
+      "ex1Name": "Barra lateral de blog cripto",
+      "ex1Body": "Un lector termina tu artículo sobre Solana, abre la barra lateral y cambia SOL → USDT en 60 segundos.",
+      "ex2Name": "Artículo de reseñas de exchanges",
+      "ex2Body": "Los visitantes llegan a tu post de 'Los 5 mejores swaps sin custodia' y prueban uno sin salir.",
+      "ex3Name": "Herramienta de portafolio",
+      "ex3Body": "Añade una pestaña 'Swap Rápido' a tu app de portafolio — los usuarios rebalancean sin retirar fondos."
     }
   },
   "nicehashWp": {

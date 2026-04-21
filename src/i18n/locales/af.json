@@ -1118,7 +1118,9 @@
       "upgradeBody1": "Registreer 'n gratis Vennoot-rekening met",
       "upgradeBody2": "dieselfde e-pos",
       "upgradeBody3": "en hierdie widget — plus alle ruile wat dit genereer — sal outomaties aan jou paneel gekoppel word.",
-      "upgradeCta": "Skep Vennoot-rekening"
+      "upgradeCta": "Skep Vennoot-rekening",
+      "titleStrong": "Genereer Jou Pasgemaakte Ruil-Widget in Sekondes",
+      "subtitleStrong": "Plak 'n volledig handelsmerk-, nie-kustodiale krypto-ruil-widget op enige werf. Dop jou verwysings outomaties — geen skripte, SDKs of onderhoud nie."
     },
     "howItWorks": {
       "title": "Hoe Dit Werk",
@@ -1351,6 +1353,32 @@
       "testi3Quote": "Die widget skakel om want dit werk regtig — nie-bewarend, $0,30 minimum, 6 000+ pare. My gebruikers kry 'n werklike produk, ek kry werklike BTC.",
       "testi3Name": "Geaffilieerde bemarker",
       "testi3Role": "Kripto-aanbiedinge-blog"
+    },
+    "widgetWhy": {
+      "title": "Hoekom Ons Widget Beter Omskakel",
+      "subtitle": "Ontwerp om inheems op jou werf te voel, dadelik te laai en besoekers in gebruikers te verander.",
+      "f1Title": "Laai in minder as 1 sekonde",
+      "f1Body": "Liggewig iframe, lazy-load, geen swaar SDK. Maak nie jou bladsy stadig of skaad Core Web Vitals nie.",
+      "f2Title": "Lig- en donker temas",
+      "f2Body": "Twee gereed-gemaakte temas wat naatloos by jou handelsmerk pas — verander met een parameter.",
+      "f3Title": "6,000+ pare ingesluit",
+      "f3Body": "Selfde likiditeit, selfde vaste-koers enjin as die hoofwerf. Besoekers voel nooit hulle het verlaat nie.",
+      "f4Title": "Mobile-first, ten volle responsief",
+      "f4Body": "Skoon weergegee van 320px tot ultrawide. Raak, blaai en sleutelbord getoets.",
+      "f5Title": "Dop verwysings outomaties",
+      "f5Body": "Jou ref-kode is in die iframe-URL ingebak. Geen koekies, geen JS nie.",
+      "f6Title": "Gereguleerde bron van waarheid",
+      "f6Body": "Gerugsteun deur 'n Kanadese MSB (FINTRAC #C100000015). Jou gehoor ruil op 'n gereguleerde plek."
+    },
+    "widgetExamples": {
+      "title": "Sien Dit Lewendig op Werklike Werwe",
+      "subtitle": "Drie werklike plasings — dieselfde widget wat jy vandag sou inbed, in 'n nageboots blaaier.",
+      "ex1Name": "Krypto-blog sykolom",
+      "ex1Body": "'n Leser klaar jou Solana-artikel, maak die sykolom oop en ruil SOL → USDT in 60 sekondes.",
+      "ex2Name": "Beurs-resensie artikel",
+      "ex2Body": "Besoekers land op jou 'Top 5 nie-kustodiale ruils' pos en probeer een sonder om te vertrek.",
+      "ex3Name": "Portefeulje-instrument",
+      "ex3Body": "Voeg 'n 'Vinnige Ruil' oortjie by jou portefeulje-app — gebruikers herbalanseer sonder onttrekking."
     }
   },
   "nicehashWp": {

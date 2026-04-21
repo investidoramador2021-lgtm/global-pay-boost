@@ -1118,7 +1118,9 @@
       "upgradeBody1": "Ücretsiz Ortak Hesabını şununla kaydedin",
       "upgradeBody2": "aynı e-posta",
       "upgradeBody3": "ve bu widget — ürettiği tüm takaslarla birlikte — otomatik olarak panelinize bağlanacak.",
-      "upgradeCta": "Ortak Hesabı Oluştur"
+      "upgradeCta": "Ortak Hesabı Oluştur",
+      "titleStrong": "Özel Swap Widget'ınızı Saniyeler İçinde Oluşturun",
+      "subtitleStrong": "Tamamen markalı, saklamasız bir kripto swap widget'ını her siteye yerleştirin. Yönlendirmelerinizi otomatik takip eder — script, SDK veya bakım yok."
     },
     "howItWorks": {
       "title": "Nasıl Çalışır",
@@ -1351,6 +1353,32 @@
       "testi3Quote": "Widget dönüşüyor çünkü gerçekten çalışıyor — non-custodial, $0,30 minimum, 6.000+ çift. Kullanıcılarım gerçek bir ürün, ben gerçek BTC alıyorum.",
       "testi3Name": "Affiliate pazarlamacı",
       "testi3Role": "Kripto fırsatları blogu"
+    },
+    "widgetWhy": {
+      "title": "Widget'ımız Neden Daha İyi Dönüştürür",
+      "subtitle": "Sitenizde yerli hissettirmek, anında yüklenmek ve ziyaretçileri kullanıcıya çevirmek için tasarlandı.",
+      "f1Title": "1 saniyeden kısa sürede yüklenir",
+      "f1Body": "Hafif iframe, gecikmeli yükleme, ağır SDK yok. Sayfanızı yavaşlatmaz, Core Web Vitals'ı etkilemez.",
+      "f2Title": "Açık ve koyu tema",
+      "f2Body": "Markanıza sorunsuz uyan iki hazır tema — tek parametreyle değiştirin.",
+      "f3Title": "6.000+ çift dahil",
+      "f3Body": "Ana siteyle aynı likidite ve sabit kur motoru. Ziyaretçiler sitenizden ayrıldığını hissetmez.",
+      "f4Title": "Mobile-first, tamamen duyarlı",
+      "f4Body": "320px'den ultrawide'a kadar temiz. Dokunma, kaydırma ve klavye test edildi.",
+      "f5Title": "Yönlendirmeleri otomatik izler",
+      "f5Body": "Ref kodunuz iframe URL'sine işlenmiş. Cookie veya JS yok.",
+      "f6Title": "Düzenlenmiş güven kaynağı",
+      "f6Body": "Bir Kanada MSB'si (FINTRAC #C100000015) tarafından destekleniyor. İzleyiciniz düzenlenmiş bir yerde takas yapar."
+    },
+    "widgetExamples": {
+      "title": "Gerçek Sitelerde Canlı Görün",
+      "subtitle": "Üç gerçek yerleşim — bugün gömeceğiniz aynı widget, simüle bir tarayıcıda.",
+      "ex1Name": "Kripto blog kenar çubuğu",
+      "ex1Body": "Bir okuyucu Solana makalenizi bitirir, kenar çubuğunu açar ve 60 saniyede SOL → USDT takas eder.",
+      "ex2Name": "Borsa inceleme yazısı",
+      "ex2Body": "Ziyaretçiler 'En iyi 5 saklamasız swap' yazınıza iner ve sayfadan ayrılmadan birini dener.",
+      "ex3Name": "Portföy aracı",
+      "ex3Body": "Portföy uygulamanıza 'Hızlı Takas' sekmesi ekleyin — kullanıcılar fon çekmeden dengeler."
     }
   },
   "nicehashWp": {

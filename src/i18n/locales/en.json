@@ -1132,7 +1132,9 @@
       "upgradeBody1": "Register a free Partner Account using",
       "upgradeBody2": "this same email",
       "upgradeBody3": "and this widget — plus all swaps it generates — will be automatically linked to your dashboard.",
-      "upgradeCta": "Create Partner Account"
+      "upgradeCta": "Create Partner Account",
+      "titleStrong": "Generate Your Custom Swap Widget in Seconds",
+      "subtitleStrong": "Plug a fully-branded, non-custodial crypto swap widget into any site. Tracks your referrals automatically — no scripts, no SDKs, no maintenance."
     },
     "howItWorks": {
       "title": "How It Works",
@@ -1365,6 +1367,32 @@
       "testi3Quote": "The widget converts because it actually works — non-custodial, $0.30 minimum, 6,000+ pairs. My users get a real product, I get real BTC.",
       "testi3Name": "Affiliate marketer",
       "testi3Role": "Crypto deals blog"
+    },
+    "widgetWhy": {
+      "title": "Why Our Widget Converts Better",
+      "subtitle": "Engineered to feel native on your site, load instantly, and turn visitors into swappers.",
+      "f1Title": "Loads in under 1 second",
+      "f1Body": "Lightweight iframe, lazy-loaded, no heavy SDK. Doesn't slow your page or hurt Core Web Vitals.",
+      "f2Title": "Light & dark themes",
+      "f2Body": "Two ready-made themes that blend seamlessly with your brand — switch with one parameter.",
+      "f3Title": "All 6,000+ pairs included",
+      "f3Body": "Same liquidity, same fixed-rate engine as the main site. Visitors never feel they left yours.",
+      "f4Title": "Mobile-first, fully responsive",
+      "f4Body": "Renders cleanly from 320px to ultrawide. Touch targets, scroll, and keyboard all tested.",
+      "f5Title": "Tracks referrals automatically",
+      "f5Body": "Your ref code is baked into the iframe URL. No cookies to manage, no JS to wire up.",
+      "f6Title": "Regulated source of truth",
+      "f6Body": "Backed by a Canadian MSB (FINTRAC #C100000015). Your audience swaps on a regulated venue."
+    },
+    "widgetExamples": {
+      "title": "See It Live On Real Sites",
+      "subtitle": "Three real-world placements — the same widget you'd embed today, rendered inside a mock browser.",
+      "ex1Name": "Crypto blog sidebar",
+      "ex1Body": "A reader finishes your article on Solana, opens the sidebar, swaps SOL → USDT in 60 seconds.",
+      "ex2Name": "Exchange review article",
+      "ex2Body": "Visitors land on your '5 best non-custodial swaps' post and try one without leaving the page.",
+      "ex3Name": "Portfolio tool / dashboard",
+      "ex3Body": "Add a 'Quick Swap' tab to your portfolio app — users rebalance without exporting funds."
     }
   },
   "nicehashWp": {
