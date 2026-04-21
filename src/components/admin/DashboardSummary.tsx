@@ -100,11 +100,12 @@ const DashboardSummary = () => {
   const [swaps, setSwaps] = useState<SwapRow[]>([]);
   const [invoices, setInvoices] = useState<InvoiceRow[]>([]);
   const [lend, setLend] = useState<LendRow[]>([]);
+  const [prices, setPrices] = useState<Record<string, number>>({});
 
   useEffect(() => {
     let active = true;
     (async () => {
-      const [swapRes, invRes, leRes] = await Promise.all([
+      const [swapRes, invRes, leRes, pxRes] = await Promise.all([
         supabase
           .from("swap_transactions")
           .select("kind, amount, from_currency, to_currency, created_at")
@@ -120,15 +121,35 @@ const DashboardSummary = () => {
           .select("tx_type, amount, loan_amount, currency, created_at")
           .order("created_at", { ascending: false })
           .limit(2000),
+        supabase.functions.invoke("coingecko-prices", {
+          body: { tickers: ["btc","eth","sol","usdt","usdc","xrp","doge","bnb","trx","ada","ltc","matic","dot","avax","link"] },
+        }).catch(() => ({ data: null })),
       ]);
       if (!active) return;
       setSwaps((swapRes.data || []) as SwapRow[]);
       setInvoices((invRes.data || []) as InvoiceRow[]);
       setLend((leRes.data || []) as unknown as LendRow[]);
+      const px = (pxRes as any)?.data?.prices || (pxRes as any)?.data || {};
+      const norm: Record<string, number> = {};
+      for (const k of Object.keys(px || {})) norm[k.toUpperCase()] = Number(px[k]) || 0;
+      // sane fallbacks for stables
+      norm.USDT = norm.USDT || 1; norm.USDC = norm.USDC || 1; norm.DAI = norm.DAI || 1; norm.PYUSD = norm.PYUSD || 1;
+      setPrices(norm);
       setLoading(false);
     })();
     return () => { active = false; };
   }, []);
+
+  const btcUsd = prices.BTC || 0;
+  const usdOf = (ticker: string | null | undefined, amount: number): number => {
+    if (!amount) return 0;
+    const t = (ticker || "").toUpperCase();
+    if (!t) return 0;
+    const px = prices[t];
+    if (px && Number.isFinite(px)) return amount * px;
+    // unknown asset → ignore (avoids garbage inflation)
+    return 0;
+  };
 
   const stats = useMemo<Record<string, KindStats>>(() => {
     const map: Record<string, KindStats> = {
