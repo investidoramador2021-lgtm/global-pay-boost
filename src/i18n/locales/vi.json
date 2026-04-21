@@ -19,7 +19,12 @@
     "faq": "Câu hỏi thường gặp",
     "startSwap": "Bắt đầu giao dịch",
     "track": "Theo dõi",
-    "help": "Trợ giúp"
+    "help": "Trợ giúp",
+    "exchange": "Exchange",
+    "borrow": "Vay",
+    "earn": "Kiếm",
+    "developer": "Developer",
+    "more": "Thêm"
   },
   "hero": {
     "heading": "Truy cập hơn 6.000 Tiền điện tử & Cổ phiếu Token hóa.",
@@ -1670,7 +1675,10 @@
     "affiliates": "Liên kết",
     "partners": "Đối tác",
     "referral": "Giới thiệu",
-    "earn": "Kiếm Cùng Chúng Tôi"
+    "earn": "Kiếm Cùng Chúng Tôi",
+    "affiliatesDesc": "0,1% – 0,4% BTC trọn đời",
+    "partnersDesc": "Khối lượng lớn · bảng điều khiển riêng",
+    "referralDesc": "Chia sẻ liên kết · nhận theo swap"
   },
   "noLimits": {
     "heading": "Hoán Đổi Không Giới Hạn",

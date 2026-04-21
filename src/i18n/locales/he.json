@@ -19,7 +19,12 @@
     "faq": "שאלות נפוצות",
     "startSwap": "התחל המרה",
     "track": "מעקב",
-    "help": "עזרה"
+    "help": "עזרה",
+    "exchange": "Exchange",
+    "borrow": "הלוואה",
+    "earn": "הרווח",
+    "developer": "Developer",
+    "more": "עוד"
   },
   "hero": {
     "heading": "גישה ל-6,000+ מטבעות דיגיטליים ומניות מתוקננות.",
@@ -1670,7 +1675,10 @@
     "affiliates": "שותפים",
     "partners": "פרטנרים",
     "referral": "הפניות",
-    "earn": "הרוויחו איתנו"
+    "earn": "הרוויחו איתנו",
+    "affiliatesDesc": "0.1% – 0.4% BTC לכל החיים",
+    "partnersDesc": "נפח גבוה · לוח בקרה ייעודי",
+    "referralDesc": "שתף את הקישור שלך · הרווח לכל החלפה"
   },
   "noLimits": {
     "heading": "החלפה ללא הגבלה",

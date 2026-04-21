@@ -19,7 +19,12 @@
     "faq": "Perguntas Frequentes",
     "startSwap": "Iniciar Troca",
     "track": "Rastrear",
-    "help": "Ajuda"
+    "help": "Ajuda",
+    "exchange": "Exchange",
+    "borrow": "Empréstimo",
+    "earn": "Ganhar",
+    "developer": "Developer",
+    "more": "Mais"
   },
   "hero": {
     "heading": "Acesse mais de 6.000 Criptomoedas e Ações Tokenizadas.",
@@ -1670,7 +1675,10 @@
     "affiliates": "Afiliados",
     "partners": "Parceiros",
     "referral": "Indicação",
-    "earn": "Ganhe Conosco"
+    "earn": "Ganhe Conosco",
+    "affiliatesDesc": "0,1% – 0,4% BTC vitalício",
+    "partnersDesc": "Alto volume · painel dedicado",
+    "referralDesc": "Compartilhe seu link · ganhe por troca"
   },
   "noLimits": {
     "heading": "Troca Sem Limites",

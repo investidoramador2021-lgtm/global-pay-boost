@@ -19,7 +19,12 @@
     "faq": "よくある質問",
     "startSwap": "交換を開始",
     "track": "追跡",
-    "help": "ヘルプ"
+    "help": "ヘルプ",
+    "exchange": "Exchange",
+    "borrow": "借入",
+    "earn": "運用",
+    "developer": "Developer",
+    "more": "その他"
   },
   "hero": {
     "heading": "6,000以上の暗号資産とトークン化株式にアクセス。",
@@ -1670,7 +1675,10 @@
     "affiliates": "アフィリエイト",
     "partners": "パートナー",
     "referral": "リファラル",
-    "earn": "一緒に稼ぐ"
+    "earn": "一緒に稼ぐ",
+    "affiliatesDesc": "生涯BTC 0.1%〜0.4%",
+    "partnersDesc": "大口取引 · 専用ダッシュボード",
+    "referralDesc": "リンクを共有 · スワップごとに獲得"
   },
   "noLimits": {
     "heading": "無制限の交換",

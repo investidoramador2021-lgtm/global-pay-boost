@@ -19,7 +19,12 @@
     "faq": "Gereelde Vrae",
     "startSwap": "Begin Ruil",
     "track": "Volg",
-    "help": "Hulp"
+    "help": "Hulp",
+    "exchange": "Exchange",
+    "borrow": "Leen",
+    "earn": "Verdien",
+    "developer": "Developer",
+    "more": "Meer"
   },
   "hero": {
     "heading": "Toegang tot 6,000+ Kriptogeldeenhede & Getokeniseerde Aandele.",
@@ -1670,7 +1675,10 @@
     "affiliates": "Affiliasies",
     "partners": "Vennote",
     "referral": "Verwysing",
-    "earn": "Verdien Saam met Ons"
+    "earn": "Verdien Saam met Ons",
+    "affiliatesDesc": "0,1% – 0,4% lewenslange BTC",
+    "partnersDesc": "Hoë volume · toegewyde paneelbord",
+    "referralDesc": "Deel jou skakel · verdien per ruil"
   },
   "noLimits": {
     "heading": "Onbeperkte Ruil",
