@@ -191,6 +191,30 @@ const SiteFooter = () => {
           <FooterLinkList langPrefix={lp} title="Crypto Guides" links={resourceLinks} />
           <FooterLinkList langPrefix={lp} title="Security & Legal" links={securityLegalLinks} />
 
+          {/* Programs column — Affiliates / Partners / Referral */}
+          <div>
+            <h3 className="font-display text-xs font-semibold uppercase tracking-wider text-foreground/80 sm:text-sm">
+              {t("programsNav.menu")}
+            </h3>
+            <ul className="mt-3 space-y-2 sm:mt-4 sm:space-y-3">
+              <li>
+                <a href={lp("/affiliates")} title={t("programsNav.affiliates")} className="font-body text-sm text-muted-foreground transition-colors hover:text-foreground">
+                  {t("programsNav.affiliates")}
+                </a>
+              </li>
+              <li>
+                <a href={lp("/partners")} title={t("programsNav.partners")} className="font-body text-sm text-muted-foreground transition-colors hover:text-foreground">
+                  {t("programsNav.partners")}
+                </a>
+              </li>
+              <li>
+                <a href={lp("/referral")} title={t("programsNav.referral")} className="font-body text-sm text-muted-foreground transition-colors hover:text-foreground">
+                  {t("programsNav.referral")}
+                </a>
+              </li>
+            </ul>
+          </div>
+
           <div>
             <h3 className="font-display text-xs font-semibold uppercase tracking-wider text-foreground/80 sm:text-sm">
               {t("footer.legal")}
