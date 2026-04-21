@@ -74,8 +74,9 @@ const SiteHeader = () => {
           MRC<span className="text-primary">GlobalPay</span>
         </a>
 
-        <nav className="hidden items-center gap-4 xl:gap-5 lg:flex">
-          {navLinks.map((link) => (
+        <nav className="hidden items-center gap-3 xl:gap-5 lg:flex">
+          {/* Primary links — always visible on lg+ */}
+          {primaryNavLinks.map((link) => (
             <a
               key={link.href}
               href={link.href}
@@ -84,6 +85,49 @@ const SiteHeader = () => {
               {link.label}
             </a>
           ))}
+
+          {/* Secondary links — inline only at xl+ to prevent crowding in long-label languages */}
+          <div className="hidden xl:flex xl:items-center xl:gap-5">
+            {secondaryNavLinks.map((link) => (
+              <a
+                key={link.href}
+                href={link.href}
+                className="whitespace-nowrap font-body text-sm font-medium text-muted-foreground transition-colors hover:text-foreground"
+              >
+                {link.label}
+              </a>
+            ))}
+          </div>
+
+          {/* "More" dropdown — visible only on lg (hidden at xl since secondary links go inline) */}
+          <div className="relative group xl:hidden">
+            <button
+              type="button"
+              className="inline-flex items-center gap-1 whitespace-nowrap font-body text-[13px] font-medium text-muted-foreground transition-colors hover:text-foreground"
+              aria-haspopup="menu"
+              aria-label={t("nav.more")}
+            >
+              {t("nav.more")}
+              <ChevronDown className="h-3.5 w-3.5 transition-transform group-hover:rotate-180" />
+            </button>
+            <div
+              role="menu"
+              className="absolute right-0 top-full pt-2 w-56 opacity-0 invisible translate-y-1 group-hover:opacity-100 group-hover:visible group-hover:translate-y-0 transition-all duration-150 z-50"
+            >
+              <div className="rounded-2xl border border-border/60 bg-popover/95 backdrop-blur-xl shadow-xl p-1.5">
+                {secondaryNavLinks.map((link) => (
+                  <a
+                    key={link.href}
+                    href={link.href}
+                    role="menuitem"
+                    className="block rounded-xl px-3 py-2.5 font-body text-sm font-medium text-foreground transition-colors hover:bg-accent"
+                  >
+                    {link.label}
+                  </a>
+                ))}
+              </div>
+            </div>
+          </div>
 
           {/* Programs dropdown */}
           <div className="relative group">
@@ -173,7 +217,7 @@ const SiteHeader = () => {
 
       {mobileOpen && (
         <div className="border-t border-border bg-background px-4 pb-4 lg:hidden">
-          {[...navLinks, ...mobileExtraLinks].map((link) => (
+          {[...primaryNavLinks, ...secondaryNavLinks, ...mobileExtraLinks].map((link) => (
             <a
               key={link.href}
               href={link.href}
