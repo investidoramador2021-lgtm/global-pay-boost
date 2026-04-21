@@ -1,8 +1,11 @@
 import { useState, useEffect, useRef } from "react";
 import { Infinity, ArrowRight, DollarSign } from "lucide-react";
+import { useTranslation } from "react-i18next";
 import { Button } from "@/components/ui/button";
 
+
 const NoLimitsSection = () => {
+  const { t } = useTranslation();
   const [barWidth, setBarWidth] = useState(0);
   const [statsVisible, setStatsVisible] = useState(false);
   const [count700, setCount700] = useState(0);
@@ -76,7 +79,7 @@ const NoLimitsSection = () => {
                 }`}
               >
                 <span className="font-display text-sm font-bold text-foreground">$2</span>
-                <span className="ml-1 font-body text-xs text-muted-foreground">min</span>
+                <span className="ml-1 font-body text-xs text-muted-foreground">{t("noLimits.min")}</span>
               </div>
               <div
                 className={`absolute -right-4 bottom-4 rounded-lg border border-border bg-card px-3 py-2 shadow-elevated transition-all duration-500 delay-300 sm:-right-8 ${
@@ -84,7 +87,7 @@ const NoLimitsSection = () => {
                 }`}
               >
                 <Infinity className="inline h-4 w-4 text-primary" />
-                <span className="ml-1 font-body text-xs text-muted-foreground">max</span>
+                <span className="ml-1 font-body text-xs text-muted-foreground">{t("noLimits.max")}</span>
               </div>
             </div>
           </div>
@@ -92,11 +95,10 @@ const NoLimitsSection = () => {
           {/* Copy */}
           <div>
             <h2 className="font-display text-2xl font-bold tracking-tight text-foreground sm:text-3xl lg:text-4xl">
-              Limitless Exchange
+              {t("noLimits.heading")}
             </h2>
             <p className="mt-4 font-body text-base leading-relaxed text-muted-foreground sm:text-lg">
-              Start from less than $2 and swap as much crypto as you want — there is no upper limit.
-              Our liquidity aggregation across 700+ sources handles any volume seamlessly.
+              {t("noLimits.description")}
             </p>
 
             {/* Animated range bar */}
@@ -116,7 +118,7 @@ const NoLimitsSection = () => {
                     barWidth >= 100 ? "opacity-100" : "opacity-30"
                   }`}
                 >
-                  <Infinity className="h-3.5 w-3.5 text-primary" /> No limit
+                  <Infinity className="h-3.5 w-3.5 text-primary" /> {t("noLimits.noLimit")}
                 </span>
               </div>
             </div>
@@ -128,7 +130,7 @@ const NoLimitsSection = () => {
                 }`}
               >
                 <p className="font-display text-2xl font-bold text-primary">{count700}+</p>
-                <p className="mt-1 font-body text-xs text-muted-foreground">Liquidity Sources</p>
+                <p className="mt-1 font-body text-xs text-muted-foreground">{t("noLimits.liquiditySources")}</p>
               </div>
               <div
                 className={`rounded-xl border border-border bg-card p-4 transition-all duration-500 delay-150 ${
@@ -136,7 +138,7 @@ const NoLimitsSection = () => {
                 }`}
               >
                 <p className="font-display text-2xl font-bold text-primary">0%</p>
-                <p className="mt-1 font-body text-xs text-muted-foreground">Hidden Fees</p>
+                <p className="mt-1 font-body text-xs text-muted-foreground">{t("noLimits.hiddenFees")}</p>
               </div>
             </div>
 
@@ -146,7 +148,7 @@ const NoLimitsSection = () => {
               asChild
             >
               <a href="#exchange-widget">
-                Start Swapping <ArrowRight className="ml-2 h-4 w-4 transition-transform duration-200 group-hover:translate-x-1" />
+                {t("noLimits.cta")} <ArrowRight className="ml-2 h-4 w-4 transition-transform duration-200 group-hover:translate-x-1" />
               </a>
             </Button>
           </div>

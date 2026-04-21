@@ -1685,5 +1685,15 @@
     "partners": "Partners",
     "referral": "Referral",
     "earn": "Earn With Us"
+  },
+  "noLimits": {
+    "heading": "Limitless Exchange",
+    "description": "Start from less than $2 and swap as much crypto as you want — there is no upper limit. Our liquidity aggregation across 700+ sources handles any volume seamlessly.",
+    "min": "min",
+    "max": "max",
+    "noLimit": "No limit",
+    "liquiditySources": "Liquidity Sources",
+    "hiddenFees": "Hidden Fees",
+    "cta": "Start Swapping"
   }
 }

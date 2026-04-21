@@ -1671,5 +1671,15 @@
     "partners": "Partnerler",
     "referral": "Tavsiye",
     "earn": "Bizimle Kazanın"
+  },
+  "noLimits": {
+    "heading": "Sınırsız Takas",
+    "description": "$2'dan az ile başlayın ve istediğiniz kadar kripto takas edin — üst limit yok. 700'den fazla kaynaktan likidite toplama, her hacmi sorunsuz şekilde yönetir.",
+    "min": "min",
+    "max": "maks",
+    "noLimit": "Limit yok",
+    "liquiditySources": "Likidite Kaynakları",
+    "hiddenFees": "Gizli Ücretler",
+    "cta": "Takasa Başla"
   }
 }

@@ -1671,5 +1671,15 @@
     "partners": "Partenaires",
     "referral": "Parrainage",
     "earn": "Gagnez avec Nous"
+  },
+  "noLimits": {
+    "heading": "Échange Sans Limites",
+    "description": "Commencez à partir de moins de 2 $ et échangez autant de crypto que vous voulez — il n'y a pas de limite supérieure. Notre agrégation de liquidité sur plus de 700 sources gère n'importe quel volume sans effort.",
+    "min": "min",
+    "max": "max",
+    "noLimit": "Pas de limite",
+    "liquiditySources": "Sources de Liquidité",
+    "hiddenFees": "Frais Cachés",
+    "cta": "Commencer l'Échange"
   }
 }
