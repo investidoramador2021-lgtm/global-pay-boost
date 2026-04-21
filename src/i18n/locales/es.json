@@ -29,7 +29,12 @@
     "trustNonCustodial": "No Custodial",
     "trustSettlement": "Liquidación Directa",
     "dustTitle": "🧹 Limpia Tu Billetera",
-    "dustDescription": "La mayoría de las plataformas tienen mínimos altos. MRC Global Pay admite micro-swaps desde $0.30. Convierte el polvo sobrante de más de 6.000 tokens al instante. Sin registro."
+    "dustDescription": "La mayoría de las plataformas tienen mínimos altos. MRC Global Pay admite micro-swaps desde $0.30. Convierte el polvo sobrante de más de 6.000 tokens al instante. Sin registro.",
+    "h1Lead": "Intercambio Cripto",
+    "h1Accent": "No Custodial",
+    "subheadline": "Intercambia más de 6,000 criptomonedas y acciones tokenizadas al instante desde $0.30. Sin registro. Directo de wallet a wallet. Tarifas totalmente transparentes.",
+    "startSwapCta": "Iniciar Intercambio",
+    "liveRatesLabel": "Tasas en vivo · Sin cuenta · Liquidación en menos de 60s"
   },
   "howItWorks": {
     "heading": "Cómo Funciona",

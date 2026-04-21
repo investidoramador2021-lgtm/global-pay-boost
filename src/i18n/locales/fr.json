@@ -29,7 +29,12 @@
     "trustNonCustodial": "Non-Custodial",
     "trustSettlement": "Règlement Direct",
     "dustTitle": "🧹 Nettoyez Votre Portefeuille",
-    "dustDescription": "La plupart des plateformes ont des minimums élevés. MRC Global Pay prend en charge les micro-swaps dès $0.30. Convertissez la poussière restante de plus de 6 000 tokens instantanément. Sans inscription."
+    "dustDescription": "La plupart des plateformes ont des minimums élevés. MRC Global Pay prend en charge les micro-swaps dès $0.30. Convertissez la poussière restante de plus de 6 000 tokens instantanément. Sans inscription.",
+    "h1Lead": "Échange Crypto",
+    "h1Accent": "Non Custodial",
+    "subheadline": "Échangez plus de 6 000 cryptomonnaies et actions tokenisées instantanément à partir de 0,30 $. Sans inscription. Wallet à wallet direct. Tarifs entièrement transparents.",
+    "startSwapCta": "Commencer l'échange",
+    "liveRatesLabel": "Taux en direct · Sans compte · Règlement en moins de 60s"
   },
   "howItWorks": {
     "heading": "Comment ça marche",

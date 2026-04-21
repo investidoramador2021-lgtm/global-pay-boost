@@ -29,7 +29,12 @@
     "trustNonCustodial": "Phi lưu ký",
     "trustSettlement": "Thanh toán trực tiếp",
     "dustTitle": "🧹 Dọn sạch ví của bạn",
-    "dustDescription": "Hầu hết các nền tảng có mức tối thiểu cao. MRC Global Pay hỗ trợ micro-swap từ $0.30. Chuyển đổi bụi còn lại từ hơn 6.000 token ngay lập tức. Không cần đăng ký."
+    "dustDescription": "Hầu hết các nền tảng có mức tối thiểu cao. MRC Global Pay hỗ trợ micro-swap từ $0.30. Chuyển đổi bụi còn lại từ hơn 6.000 token ngay lập tức. Không cần đăng ký.",
+    "h1Lead": "Hoán Đổi Crypto",
+    "h1Accent": "Phi Lưu Ký",
+    "subheadline": "Hoán đổi hơn 6.000 tiền điện tử & cổ phiếu được token hóa ngay lập tức từ $0,30. Không đăng ký. Trực tiếp ví-đến-ví. Phí hoàn toàn minh bạch.",
+    "startSwapCta": "Bắt Đầu Hoán Đổi",
+    "liveRatesLabel": "Tỷ giá trực tiếp · Không tài khoản · Hoàn tất dưới 60s"
   },
   "howItWorks": {
     "heading": "Cách thức hoạt động",

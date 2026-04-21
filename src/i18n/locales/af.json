@@ -29,7 +29,12 @@
     "trustNonCustodial": "Nie-Bewarend",
     "trustSettlement": "Direkte Verrekening",
     "dustTitle": "🧹 Maak Jou Beursie Skoon",
-    "dustDescription": "Die meeste platforms het hoë minimums. MRC Global Pay ondersteun mikro-ruilings vanaf $0.30. Verander oorblywende stof van 6,000+ tokens onmiddellik. Geen registrasie."
+    "dustDescription": "Die meeste platforms het hoë minimums. MRC Global Pay ondersteun mikro-ruilings vanaf $0.30. Verander oorblywende stof van 6,000+ tokens onmiddellik. Geen registrasie.",
+    "h1Lead": "Nie-bewaring",
+    "h1Accent": "Krypto-ruil",
+    "subheadline": "Ruil 6,000+ kripto's en getokeniseerde aandele onmiddellik vanaf $0.30. Geen registrasie. Direk beursie-tot-beursie. Heeltemal deursigtige tariewe.",
+    "startSwapCta": "Begin Ruil",
+    "liveRatesLabel": "Lewendige tariewe · Geen rekening · Vereffen binne 60s"
   },
   "howItWorks": {
     "heading": "Hoe Dit Werk",
