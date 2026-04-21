@@ -1435,5 +1435,29 @@
     "ctaDesc": "Convierte tu próximo pago NiceHash en el activo que realmente coincide con tu estrategia — a la comisión más baja de la industria, sin cuenta, sin KYC y sin spreads sorpresa.",
     "ctaPrimary": "Intercambiar Mi Pago Ahora",
     "ctaSecondary": "Ganar Sobre Mis Stablecoins"
+  },
+  "affiliateHomeCta": {
+    "badge": "Programa de Afiliados",
+    "badgeFloat": "De por vida · Pago automático",
+    "headlineLead": "Intercambia 6.000+ criptos en menos de 60 segundos —",
+    "headlineAccent": "Gana comisiones en BTC de por vida.",
+    "subheadline": "Promociona una plataforma de intercambio no custodial totalmente regulada en Canadá y gana 0,1 % – 0,4 % de comisiones de por vida pagadas automáticamente en BTC. Sin mínimos, sin caducidad.",
+    "benefits": {
+      "lifetime": "Comisiones de por vida",
+      "widget": "Widget fácil de integrar",
+      "payouts": "Pagos automáticos en BTC",
+      "regulated": "Respaldado por FINTRAC MSB C100000015 + PSP del Banco de Canadá"
+    },
+    "ctaPrimary": "Generar mi widget de afiliado ahora",
+    "ctaSecondary": "Conviértete en socio",
+    "referralPrefix": "También explora nuestro",
+    "referralLink": "Programa de Referidos",
+    "widget": {
+      "youSend": "Tú envías",
+      "youGet": "Tú recibes",
+      "swapNow": "Intercambiar ahora",
+      "poweredBy": "Impulsado por MRC GlobalPay",
+      "tagline": "Gana BTC cada vez que un visitante intercambia con tu widget."
+    }
   }
 }
