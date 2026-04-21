@@ -7,26 +7,45 @@ import {
 } from "lucide-react";
 
 /**
- * Estimated revenue per product line (as a % of notional volume).
- * These mirror the public fee schedule + partner commission deals:
- *   - Swap / Private / Bridge: 0.5% spread captured in the quote
- *   - Buy (fiat on-ramp):      1.0% margin from Guardarian/SimpleSwap
- *   - Sell (off-ramp):         1.0% margin
- *   - Invoice:                 0.5% receiver fee (already explicit)
- *   - Loan origination:        1.5% partner commission on principal
- *   - Earn deposits:           0.75% annualized partner share
+ * Estimated revenue per product line, **provider-aware**.
+ * Swap-style products earn the upstream provider's affiliate %:
+ *   - cn  (ChangeNOW)    → 0.5%
+ *   - ss  (SimpleSwap)   → 0.5%
+ *   - se  (StealthEx)    → 0.4%
+ *   - le  (LetsExchange) → 0.2%
+ *   - gd  (Guardarian fiat on/off-ramp) → 1.0% margin
+ * Non-swap products use a fixed rate:
+ *   - Invoice:        0.5% receiver fee (explicit in product)
+ *   - Loan (CoinRabbit): 2.0% origination share on principal
+ *   - Earn (CoinRabbit): 0.5% annualized partner share on deposits
  * Tunable in one place if the deals change.
  */
-const REVENUE_RATE: Record<string, number> = {
-  swap: 0.005,
-  buy: 0.010,
-  sell: 0.010,
-  private: 0.005,
-  bridge: 0.005,
-  invoice: 0.005,
-  loan: 0.015,
-  earn: 0.0075,
+const PROVIDER_RATE: Record<string, number> = {
+  cn: 0.005, // ChangeNOW
+  ss: 0.005, // SimpleSwap
+  se: 0.004, // StealthEx
+  le: 0.002, // LetsExchange
+  gd: 0.010, // Guardarian (fiat ramps)
 };
+const DEFAULT_SWAP_RATE = 0.005; // unknown swap provider → assume 0.5%
+const DEFAULT_RAMP_RATE = 0.010; // unknown buy/sell provider → assume 1.0%
+const FIXED_RATE: Record<string, number> = {
+  invoice: 0.005,
+  loan: 0.020,
+  earn: 0.005,
+};
+// Display rate for the per-product table (provider-blended → use mid value)
+const DISPLAY_RATE: Record<string, number> = {
+  swap: 0.004, buy: 0.010, sell: 0.010, private: 0.004, bridge: 0.004,
+  invoice: 0.005, loan: 0.020, earn: 0.005,
+};
+function rateFor(kind: string, provider?: string | null): number {
+  const p = (provider || "").toLowerCase();
+  if (kind === "invoice" || kind === "loan" || kind === "earn") return FIXED_RATE[kind] ?? 0;
+  if (kind === "buy" || kind === "sell") return PROVIDER_RATE[p] ?? DEFAULT_RAMP_RATE;
+  // swap / private / bridge
+  return PROVIDER_RATE[p] ?? DEFAULT_SWAP_RATE;
+}
 
 /**
  * Aggregated KPI summary across every widget tab:
