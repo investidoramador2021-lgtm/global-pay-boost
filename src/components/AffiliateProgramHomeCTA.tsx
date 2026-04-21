@@ -92,7 +92,7 @@ const AffiliateProgramHomeCTA = () => {
                 <div className="flex items-center justify-between mb-4">
                   <div className="flex items-center gap-2">
                     <div className="h-2.5 w-2.5 rounded-full bg-destructive/70" />
-                    <div className="h-2.5 w-2.5 rounded-full bg-yellow-500/70" />
+                    <div className="h-2.5 w-2.5 rounded-full bg-muted-foreground/50" />
                     <div className="h-2.5 w-2.5 rounded-full bg-primary/70" />
                   </div>
                   <span className="text-[10px] font-mono uppercase tracking-wider text-muted-foreground">
