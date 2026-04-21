@@ -377,6 +377,16 @@ const SiteFooter = () => {
             >
               <a href="https://www.trustpilot.com/review/mrcglobalpay.com" target="_blank" rel="noopener" title="MRC Global Pay reviews on Trustpilot">Trustpilot</a>
             </div>
+            <p className="mt-2 text-center font-body text-xs text-muted-foreground">
+              <a
+                href="https://www.trustpilot.com/evaluate/mrcglobalpay.com"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex items-center gap-1 text-[#00b67a] hover:underline"
+              >
+                ★ {t("trustpilotInvite.footerCta")}
+              </a>
+            </p>
           </div>
           {/* Author / Expertise Attribution */}
           <div className="mb-4 rounded-lg border border-border bg-muted/30 px-4 py-3">

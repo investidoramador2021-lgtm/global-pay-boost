@@ -25,6 +25,7 @@ import WhyChooseSection from "@/components/WhyChooseSection";
 import LiveNetworkBadge from "@/components/LiveNetworkBadge";
 import PartnerProtocolCTA from "@/components/PartnerProtocolCTA";
 import AffiliateProgramHomeCTA from "@/components/AffiliateProgramHomeCTA";
+import TrustpilotInvite from "@/components/TrustpilotInvite";
 import AffiliatePartnerCTA from "@/components/AffiliatePartnerCTA";
 import { Helmet } from "react-helmet-async";
 
@@ -186,6 +187,7 @@ const Index = () => {
           </div>
           <AffiliateProgramHomeCTA />
           <AffiliatePartnerCTA />
+          <TrustpilotInvite />
           <div className="cv-auto">
             <SwapPairsQA />
           </div>
