@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { useSearchParams } from "react-router-dom";
+import { Helmet } from "react-helmet-async";
 import { supabase } from "@/integrations/supabase/client";
 import { Loader2, CheckCircle2, XCircle, MailX } from "lucide-react";
 import { Button } from "@/components/ui/button";
@@ -39,8 +40,17 @@ const Unsubscribe = () => {
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-background p-4">
-      <div className="max-w-md w-full rounded-2xl border border-border bg-card p-8 text-center shadow-lg">
+    <>
+      <Helmet>
+        <title>Unsubscribe from MRC Global Pay emails</title>
+        <meta
+          name="description"
+          content="Confirm that you no longer want to receive transactional or marketing emails from MRC Global Pay. You can resubscribe at any time."
+        />
+        <meta name="robots" content="noindex, nofollow" />
+      </Helmet>
+      <div className="min-h-screen flex items-center justify-center bg-background p-4">
+        <div className="max-w-md w-full rounded-2xl border border-border bg-card p-8 text-center shadow-lg">
         {status === "loading" && (
           <>
             <Loader2 className="mx-auto h-10 w-10 animate-spin text-primary mb-4" />
