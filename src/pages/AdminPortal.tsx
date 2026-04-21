@@ -21,6 +21,7 @@ import SiteHeader from "@/components/SiteHeader";
 import SiteFooter from "@/components/SiteFooter";
 import ExchangeTracker from "@/components/ExchangeTracker";
 import InvoiceManager from "@/components/InvoiceManager";
+import DashboardSummary from "@/components/admin/DashboardSummary";
 
 interface Partner {
   id: string;
@@ -142,7 +143,7 @@ const AdminPortal = () => {
   const [apiKeys, setApiKeys] = useState<ApiKeyRow[]>([]);
   const [transactions, setTransactions] = useState<Tx[]>([]);
   const [tab, setTab] = useState("current");
-  const [adminTab, setAdminTab] = useState<"partners" | "exchanges" | "invoices" | "support" | "lending" | "proxy" | "payouts" | "compliance" | "affiliates">("exchanges");
+  const [adminTab, setAdminTab] = useState<"summary" | "partners" | "exchanges" | "invoices" | "support" | "lending" | "proxy" | "payouts" | "compliance" | "affiliates">("summary");
   const [complianceHolds, setComplianceHolds] = useState<ComplianceHold[]>([]);
   const [affiliateLeads, setAffiliateLeads] = useState<Array<{ id: string; email: string; btc_wallet: string; ref_token: string; theme: string; source: string; created_at: string; partner_id?: string | null }>>([]);
   const [commissions, setCommissions] = useState<Array<{ id: string; partner_id: string; ref_code: string; source: string; provider: string; from_currency: string; to_currency: string; swap_amount: number; volume_usd: number; commission_rate: number; commission_btc: number; created_at: string; status?: string; approved_at?: string | null; rejected_at?: string | null; rejection_reason?: string | null }>>([]);
@@ -648,6 +649,7 @@ const AdminPortal = () => {
 
           <Tabs value={adminTab} onValueChange={(v) => setAdminTab(v as any)}>
             <TabsList className="bg-card/60 backdrop-blur-sm border border-border/40 flex-wrap">
+              <TabsTrigger value="summary" className="gap-2 data-[state=active]:bg-primary/10"><Activity className="w-4 h-4" /> Summary</TabsTrigger>
               <TabsTrigger value="exchanges" className="gap-2 data-[state=active]:bg-primary/10"><TrendingUp className="w-4 h-4" /> Exchanges</TabsTrigger>
               <TabsTrigger value="invoices" className="gap-2 data-[state=active]:bg-primary/10"><FileText className="w-4 h-4" /> Invoices</TabsTrigger>
               <TabsTrigger value="partners" className="gap-2 data-[state=active]:bg-primary/10"><Users className="w-4 h-4" /> Partners</TabsTrigger>
@@ -658,6 +660,9 @@ const AdminPortal = () => {
               <TabsTrigger value="compliance" className="gap-2" style={{ color: adminTab === "compliance" ? COMPLIANCE_BLUE : undefined }} data-state={adminTab === "compliance" ? "active" : "inactive"}><ShieldAlert className="w-4 h-4" style={{ color: COMPLIANCE_BLUE }} /> Compliance ({complianceHolds.filter(h => h.status === "action_required").length})</TabsTrigger>
               <TabsTrigger value="affiliates" className="gap-2 data-[state=active]:bg-primary/10"><Wallet className="w-4 h-4" /> Affiliates ({affiliateLeads.length})</TabsTrigger>
             </TabsList>
+
+            {/* ═══ SUMMARY ═══ */}
+            <TabsContent value="summary" className="mt-6"><DashboardSummary /></TabsContent>
 
             {/* ═══ EXCHANGES ═══ */}
             <TabsContent value="exchanges" className="mt-6"><ExchangeTracker /></TabsContent>
