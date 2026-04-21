@@ -534,215 +534,170 @@ const Affiliates = () => {
           </div>
         </section>
 
-        {/* OTHER PROGRAMS — English-only premium cross-link box */}
-        {lang === "en" && (
-          <section className="border-b border-border bg-background py-10 sm:py-12">
-            <div className="container mx-auto max-w-5xl px-4">
-              <div className="rounded-2xl border border-primary/20 bg-gradient-to-br from-card via-card to-primary/[0.04] p-5 sm:p-7 shadow-md">
-                <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
-                  <div className="flex items-start gap-3">
-                    <div className="flex h-11 w-11 shrink-0 items-center justify-center rounded-xl bg-primary/10">
-                      <Layers className="h-5 w-5 text-primary" aria-hidden />
-                    </div>
-                    <div>
-                      <p className="font-display text-[11px] font-semibold uppercase tracking-wider text-primary">
-                        Our Other Programs
-                      </p>
-                      <h2 className="mt-0.5 font-display text-lg sm:text-xl font-bold text-foreground">
-                        Three ways to earn with MRC GlobalPay
-                      </h2>
-                      <p className="mt-1 text-sm text-muted-foreground">
-                        Affiliates embed widgets · Partners get full API + dashboard · Referrers share a single link.
-                      </p>
-                    </div>
+        {/* OTHER PROGRAMS — premium cross-link box */}
+        <section className="border-b border-border bg-background py-10 sm:py-12">
+          <div className="container mx-auto max-w-5xl px-4">
+            <div className="rounded-2xl border border-primary/20 bg-gradient-to-br from-card via-card to-primary/[0.04] p-5 sm:p-7 shadow-md">
+              <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
+                <div className="flex items-start gap-3">
+                  <div className="flex h-11 w-11 shrink-0 items-center justify-center rounded-xl bg-primary/10">
+                    <Layers className="h-5 w-5 text-primary" aria-hidden />
                   </div>
-                  <div className="flex flex-wrap items-center gap-2 sm:flex-nowrap">
-                    <a
-                      href={langPath(lang, "/partners")}
-                      className="inline-flex items-center justify-center gap-1.5 rounded-xl border-2 border-primary bg-background px-4 py-2.5 font-display text-sm font-bold text-primary transition-all hover:bg-primary/10 hover:-translate-y-0.5 whitespace-nowrap"
-                    >
-                      Partner Program <ArrowRight className="h-3.5 w-3.5" />
-                    </a>
-                    <a
-                      href={langPath(lang, "/referral")}
-                      className="inline-flex items-center justify-center gap-1.5 rounded-xl border border-border bg-card px-4 py-2.5 font-display text-sm font-semibold text-foreground transition-colors hover:border-primary/40 hover:text-primary whitespace-nowrap"
-                    >
-                      Referral Program <ArrowRight className="h-3.5 w-3.5" />
-                    </a>
+                  <div>
+                    <p className="font-display text-[11px] font-semibold uppercase tracking-wider text-primary">
+                      {t("affiliates.promo.otherEyebrow")}
+                    </p>
+                    <h2 className="mt-0.5 font-display text-lg sm:text-xl font-bold text-foreground">
+                      {t("affiliates.promo.otherTitle")}
+                    </h2>
+                    <p className="mt-1 text-sm text-muted-foreground">
+                      {t("affiliates.promo.otherSubtitle")}
+                    </p>
                   </div>
+                </div>
+                <div className="flex flex-wrap items-center gap-2 sm:flex-nowrap">
+                  <a
+                    href={langPath(lang, "/partners")}
+                    className="inline-flex items-center justify-center gap-1.5 rounded-xl border-2 border-primary bg-background px-4 py-2.5 font-display text-sm font-bold text-primary transition-all hover:bg-primary/10 hover:-translate-y-0.5 whitespace-nowrap"
+                  >
+                    {t("affiliates.promo.otherCtaPartner")} <ArrowRight className="h-3.5 w-3.5" />
+                  </a>
+                  <a
+                    href={langPath(lang, "/referral")}
+                    className="inline-flex items-center justify-center gap-1.5 rounded-xl border border-border bg-card px-4 py-2.5 font-display text-sm font-semibold text-foreground transition-colors hover:border-primary/40 hover:text-primary whitespace-nowrap"
+                  >
+                    {t("affiliates.promo.otherCtaReferral")} <ArrowRight className="h-3.5 w-3.5" />
+                  </a>
                 </div>
               </div>
             </div>
-          </section>
-        )}
+          </div>
+        </section>
 
-        {/* WHY PROMOTE — English-only conversion-focused section */}
-        {lang === "en" && (
-          <section className="border-b border-border bg-[hsl(230_15%_6%)] py-16 sm:py-20">
-            <div className="container mx-auto max-w-6xl px-4">
-              <div className="text-center max-w-3xl mx-auto">
-                <div className="inline-flex items-center gap-2 rounded-full border border-primary/30 bg-primary/10 px-3 py-1 text-[11px] font-display font-semibold text-primary">
-                  <Award className="h-3 w-3" /> Why Promote MRC GlobalPay
-                </div>
-                <h2 className="mt-4 font-display text-3xl sm:text-4xl lg:text-5xl font-extrabold tracking-tight text-foreground">
-                  The only Canadian-regulated, non-custodial swap your audience can actually trust
-                </h2>
-                <p className="mt-4 font-body text-base sm:text-lg text-muted-foreground leading-relaxed">
-                  We built MRC GlobalPay so promoters never have to apologize for the platform they recommend.
-                  Real regulation, real privacy, real lifetime payouts — paid in BTC, on autopilot.
-                </p>
+        {/* WHY PROMOTE — conversion-focused section */}
+        <section className="border-b border-border bg-[hsl(230_15%_6%)] py-16 sm:py-20">
+          <div className="container mx-auto max-w-6xl px-4">
+            <div className="text-center max-w-3xl mx-auto">
+              <div className="inline-flex items-center gap-2 rounded-full border border-primary/30 bg-primary/10 px-3 py-1 text-[11px] font-display font-semibold text-primary">
+                <Award className="h-3 w-3" /> {t("affiliates.promo.whyBadge")}
               </div>
-
-              <div className="mt-12 grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
-                {[
-                  {
-                    icon: Shield,
-                    title: "Fully regulated in Canada",
-                    body: "Registered with FINTRAC as MSB C100000015 and listed in the Bank of Canada PSP Registry. Promote a platform your audience can verify on official government registries — a trust signal almost no other swap can match.",
-                  },
-                  {
-                    icon: Lock,
-                    title: "Truly non-custodial & privacy-first",
-                    body: "We never hold user funds. Swaps settle wallet-to-wallet, no account, no email, no KYC for standard volumes. Your audience keeps full control of their keys at every step.",
-                  },
-                  {
-                    icon: Sparkles,
-                    title: "6,000+ pairs · swaps from $0.30",
-                    body: "Industry-leading micro-swap support. Your dust-collecting community, NFT traders, and small-cap holders all have a real reason to use your link — every time.",
-                  },
-                  {
-                    icon: InfinityIcon,
-                    title: "Lifetime commissions, no expiry",
-                    body: "0.1% – 0.4% of every swap your referrals ever make — for life. No cookie windows, no minimum payouts, no monthly reset. The volume you build keeps paying you.",
-                  },
-                  {
-                    icon: Code2,
-                    title: "One-line widget, automatic BTC payouts",
-                    body: "Drop a single iframe on any site, blog, or landing page. Commissions are credited in real time and paid directly to your BTC wallet — no invoices, no manual claims, no waiting.",
-                  },
-                  {
-                    icon: Globe,
-                    title: "13 languages, global conversion",
-                    body: "Your widget auto-localizes for visitors in EN, ES, PT, FR, JA, HI, VI, TR, UK, FA, UR, HE, AF — turning international traffic that competitors waste into BTC in your wallet.",
-                  },
-                ].map((item) => (
-                  <div
-                    key={item.title}
-                    className="group rounded-2xl border border-border bg-card p-6 transition-all hover:-translate-y-1 hover:border-primary/40 hover:shadow-[0_0_36px_-8px_hsl(var(--primary)/0.45)]"
-                  >
-                    <div className="flex h-11 w-11 items-center justify-center rounded-xl bg-primary/10 transition-colors group-hover:bg-primary/20">
-                      <item.icon className="h-5 w-5 text-primary" aria-hidden />
-                    </div>
-                    <h3 className="mt-4 font-display text-lg font-bold text-foreground leading-snug">
-                      {item.title}
-                    </h3>
-                    <p className="mt-2 font-body text-sm text-muted-foreground leading-relaxed">
-                      {item.body}
-                    </p>
-                  </div>
-                ))}
-              </div>
-            </div>
-          </section>
-        )}
-
-        {/* EARNINGS EXAMPLES & SOCIAL PROOF — English-only */}
-        {lang === "en" && (
-          <section className="border-b border-border bg-muted/30 py-16 sm:py-20">
-            <div className="container mx-auto max-w-6xl px-4">
-              <div className="text-center max-w-3xl mx-auto">
-                <div className="inline-flex items-center gap-2 rounded-full border border-primary/30 bg-primary/10 px-3 py-1 text-[11px] font-display font-semibold text-primary">
-                  <DollarSign className="h-3 w-3" /> Real Earnings Examples
-                </div>
-                <h2 className="mt-4 font-display text-3xl sm:text-4xl lg:text-5xl font-extrabold tracking-tight text-foreground">
-                  What affiliates actually earn
-                </h2>
-                <p className="mt-4 font-body text-base sm:text-lg text-muted-foreground leading-relaxed">
-                  Indicative monthly BTC earnings based on referred swap volume.
-                  Lifetime — every swap your audience ever makes pays you again.
-                </p>
-              </div>
-
-              <div className="mt-12 grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
-                {[
-                  { volume: "$10,000", earnings: "$10 – $40", tier: "Starter · 0.1%", desc: "A small newsletter or niche Telegram group" },
-                  { volume: "$50,000", earnings: "$150 – $600", tier: "Growth · 0.2%", desc: "An active YouTube channel or crypto blog" },
-                  { volume: "$250,000", earnings: "$750 – $1,500", tier: "Pro · 0.3%", desc: "A mid-size community or wallet integration", highlight: true },
-                  { volume: "$1,000,000+", earnings: "$3,000 – $4,000+", tier: "Elite · 0.4%", desc: "Wallet, exchange, or large media partner" },
-                ].map((row) => (
-                  <div
-                    key={row.volume}
-                    className={`rounded-2xl border p-6 transition-all hover:-translate-y-1 hover:shadow-lg ${
-                      row.highlight
-                        ? "border-primary/50 bg-gradient-to-b from-primary/[0.08] to-card shadow-[0_0_36px_-12px_hsl(var(--primary)/0.55)]"
-                        : "border-border bg-card hover:border-primary/40"
-                    }`}
-                  >
-                    <p className="font-display text-[11px] font-semibold uppercase tracking-wider text-muted-foreground">
-                      Monthly volume
-                    </p>
-                    <p className="mt-1 font-mono text-2xl font-extrabold text-foreground">{row.volume}</p>
-                    <div className="mt-4 rounded-xl border border-primary/20 bg-primary/5 p-3">
-                      <p className="font-display text-[10px] font-semibold uppercase tracking-wider text-primary">
-                        Your BTC earnings
-                      </p>
-                      <p className="mt-1 font-mono text-xl font-extrabold text-foreground">
-                        {row.earnings}
-                      </p>
-                      <p className="mt-1 font-display text-[11px] font-semibold text-primary">{row.tier}</p>
-                    </div>
-                    <p className="mt-3 text-xs text-muted-foreground leading-relaxed">{row.desc}</p>
-                  </div>
-                ))}
-              </div>
-
-              <p className="mt-6 text-center text-xs text-muted-foreground max-w-2xl mx-auto">
-                Indicative figures based on average swap economics across our network. Actual earnings vary with
-                pair, volume, and market conditions. Commissions are paid in BTC at live rates.
+              <h2 className="mt-4 font-display text-3xl sm:text-4xl lg:text-5xl font-extrabold tracking-tight text-foreground">
+                {t("affiliates.promo.whyTitle")}
+              </h2>
+              <p className="mt-4 font-body text-base sm:text-lg text-muted-foreground leading-relaxed">
+                {t("affiliates.promo.whySubtitle")}
               </p>
+            </div>
 
-              {/* Social proof / testimonial placeholders */}
-              <div className="mt-14">
-                <h3 className="text-center font-display text-xl sm:text-2xl font-bold text-foreground">
-                  Trusted by promoters who care about <span className="text-primary">trust</span>
-                </h3>
-                <div className="mt-8 grid gap-5 lg:grid-cols-3">
-                  {[
-                    {
-                      quote: "Finally a swap I can recommend without disclaimers. The Canadian MSB registration closes 90% of the trust objections my audience used to raise.",
-                      name: "Crypto educator",
-                      role: "YouTube · 120k subscribers",
-                    },
-                    {
-                      quote: "Lifetime commissions paid in BTC, automatically, with no minimum payout. I set up the widget once and it's been earning every week since.",
-                      name: "Wallet developer",
-                      role: "Open-source project",
-                    },
-                    {
-                      quote: "The widget converts because it actually works — non-custodial, $0.30 minimum, 6,000+ pairs. My users get a real product, I get real BTC.",
-                      name: "Affiliate marketer",
-                      role: "Crypto deals blog",
-                    },
-                  ].map((t, i) => (
-                    <figure
-                      key={i}
-                      className="rounded-2xl border border-border bg-card p-6 shadow-sm transition-all hover:-translate-y-1 hover:border-primary/40 hover:shadow-lg"
-                    >
-                      <Quote className="h-6 w-6 text-primary/60" aria-hidden />
-                      <blockquote className="mt-3 font-body text-sm text-foreground leading-relaxed">
-                        “{t.quote}”
-                      </blockquote>
-                      <figcaption className="mt-4 border-t border-border/60 pt-3">
-                        <p className="font-display text-sm font-bold text-foreground">{t.name}</p>
-                        <p className="text-xs text-muted-foreground">{t.role}</p>
-                      </figcaption>
-                    </figure>
-                  ))}
+            <div className="mt-12 grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
+              {[
+                { icon: Shield, title: t("affiliates.promo.whyCard1Title"), body: t("affiliates.promo.whyCard1Body") },
+                { icon: Lock, title: t("affiliates.promo.whyCard2Title"), body: t("affiliates.promo.whyCard2Body") },
+                { icon: Sparkles, title: t("affiliates.promo.whyCard3Title"), body: t("affiliates.promo.whyCard3Body") },
+                { icon: InfinityIcon, title: t("affiliates.promo.whyCard4Title"), body: t("affiliates.promo.whyCard4Body") },
+                { icon: Code2, title: t("affiliates.promo.whyCard5Title"), body: t("affiliates.promo.whyCard5Body") },
+                { icon: Globe, title: t("affiliates.promo.whyCard6Title"), body: t("affiliates.promo.whyCard6Body") },
+              ].map((item) => (
+                <div
+                  key={item.title}
+                  className="group rounded-2xl border border-border bg-card p-6 transition-all hover:-translate-y-1 hover:border-primary/40 hover:shadow-[0_0_36px_-8px_hsl(var(--primary)/0.45)]"
+                >
+                  <div className="flex h-11 w-11 items-center justify-center rounded-xl bg-primary/10 transition-colors group-hover:bg-primary/20">
+                    <item.icon className="h-5 w-5 text-primary" aria-hidden />
+                  </div>
+                  <h3 className="mt-4 font-display text-lg font-bold text-foreground leading-snug">
+                    {item.title}
+                  </h3>
+                  <p className="mt-2 font-body text-sm text-muted-foreground leading-relaxed">
+                    {item.body}
+                  </p>
                 </div>
+              ))}
+            </div>
+          </div>
+        </section>
+
+        {/* EARNINGS EXAMPLES & SOCIAL PROOF */}
+        <section className="border-b border-border bg-muted/30 py-16 sm:py-20">
+          <div className="container mx-auto max-w-6xl px-4">
+            <div className="text-center max-w-3xl mx-auto">
+              <div className="inline-flex items-center gap-2 rounded-full border border-primary/30 bg-primary/10 px-3 py-1 text-[11px] font-display font-semibold text-primary">
+                <DollarSign className="h-3 w-3" /> {t("affiliates.promo.earnBadge")}
+              </div>
+              <h2 className="mt-4 font-display text-3xl sm:text-4xl lg:text-5xl font-extrabold tracking-tight text-foreground">
+                {t("affiliates.promo.earnTitle")}
+              </h2>
+              <p className="mt-4 font-body text-base sm:text-lg text-muted-foreground leading-relaxed">
+                {t("affiliates.promo.earnSubtitle")}
+              </p>
+            </div>
+
+            <div className="mt-12 grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
+              {[
+                { volume: "$10,000", earnings: "$10 – $40", tier: `${t("affiliates.extra.tierStarter")} · 0.1%`, desc: t("affiliates.promo.earnRow1Desc") },
+                { volume: "$50,000", earnings: "$150 – $600", tier: `${t("affiliates.extra.tierGrowth")} · 0.2%`, desc: t("affiliates.promo.earnRow2Desc") },
+                { volume: "$250,000", earnings: "$750 – $1,500", tier: `${t("affiliates.extra.tierPro")} · 0.3%`, desc: t("affiliates.promo.earnRow3Desc"), highlight: true },
+                { volume: "$1,000,000+", earnings: "$3,000 – $4,000+", tier: `${t("affiliates.extra.tierElite")} · 0.4%`, desc: t("affiliates.promo.earnRow4Desc") },
+              ].map((row) => (
+                <div
+                  key={row.volume}
+                  className={`rounded-2xl border p-6 transition-all hover:-translate-y-1 hover:shadow-lg ${
+                    row.highlight
+                      ? "border-primary/50 bg-gradient-to-b from-primary/[0.08] to-card shadow-[0_0_36px_-12px_hsl(var(--primary)/0.55)]"
+                      : "border-border bg-card hover:border-primary/40"
+                  }`}
+                >
+                  <p className="font-display text-[11px] font-semibold uppercase tracking-wider text-muted-foreground">
+                    {t("affiliates.promo.earnVolumeLabel")}
+                  </p>
+                  <p className="mt-1 font-mono text-2xl font-extrabold text-foreground">{row.volume}</p>
+                  <div className="mt-4 rounded-xl border border-primary/20 bg-primary/5 p-3">
+                    <p className="font-display text-[10px] font-semibold uppercase tracking-wider text-primary">
+                      {t("affiliates.promo.earnEarningsLabel")}
+                    </p>
+                    <p className="mt-1 font-mono text-xl font-extrabold text-foreground">
+                      {row.earnings}
+                    </p>
+                    <p className="mt-1 font-display text-[11px] font-semibold text-primary">{row.tier}</p>
+                  </div>
+                  <p className="mt-3 text-xs text-muted-foreground leading-relaxed">{row.desc}</p>
+                </div>
+              ))}
+            </div>
+
+            <p className="mt-6 text-center text-xs text-muted-foreground max-w-2xl mx-auto">
+              {t("affiliates.promo.earnDisclaimer")}
+            </p>
+
+            {/* Social proof / testimonials */}
+            <div className="mt-14">
+              <h3 className="text-center font-display text-xl sm:text-2xl font-bold text-foreground">
+                {t("affiliates.promo.testimonialsTitlePre")} <span className="text-primary">{t("affiliates.promo.testimonialsTitleAccent")}</span>
+              </h3>
+              <div className="mt-8 grid gap-5 lg:grid-cols-3">
+                {[
+                  { quote: t("affiliates.promo.testi1Quote"), name: t("affiliates.promo.testi1Name"), role: t("affiliates.promo.testi1Role") },
+                  { quote: t("affiliates.promo.testi2Quote"), name: t("affiliates.promo.testi2Name"), role: t("affiliates.promo.testi2Role") },
+                  { quote: t("affiliates.promo.testi3Quote"), name: t("affiliates.promo.testi3Name"), role: t("affiliates.promo.testi3Role") },
+                ].map((tm, i) => (
+                  <figure
+                    key={i}
+                    className="rounded-2xl border border-border bg-card p-6 shadow-sm transition-all hover:-translate-y-1 hover:border-primary/40 hover:shadow-lg"
+                  >
+                    <Quote className="h-6 w-6 text-primary/60" aria-hidden />
+                    <blockquote className="mt-3 font-body text-sm text-foreground leading-relaxed">
+                      “{tm.quote}”
+                    </blockquote>
+                    <figcaption className="mt-4 border-t border-border/60 pt-3">
+                      <p className="font-display text-sm font-bold text-foreground">{tm.name}</p>
+                      <p className="text-xs text-muted-foreground">{tm.role}</p>
+                    </figcaption>
+                  </figure>
+                ))}
               </div>
             </div>
-          </section>
-        )}
+          </div>
+        </section>
 
         <MsbTrustBar />
 
