@@ -67,15 +67,15 @@ const HeroSection = ({ onTabChange }: HeroSectionProps) => {
                 variants={fadeUp}
                 className="font-display text-3xl font-extrabold leading-[1.1] tracking-tight text-foreground sm:text-4xl lg:text-5xl xl:text-6xl"
               >
-                Non-Custodial{" "}
-                <span className="text-gradient-neon">Crypto Swap</span>
+                {t("hero.h1Lead")}{" "}
+                <span className="text-gradient-neon">{t("hero.h1Accent")}</span>
               </motion.h1>
 
               <motion.p
                 variants={fadeUp}
                 className="mt-5 max-w-xl font-body text-base leading-relaxed text-muted-foreground sm:mt-6 sm:text-lg"
               >
-                Swap <span className="font-semibold text-foreground">6,000+ cryptocurrencies &amp; tokenized stocks</span> instantly from <span className="font-semibold text-primary">$0.30</span>. No registration. Direct wallet-to-wallet. Fully transparent rates.
+                {t("hero.subheadline")}
               </motion.p>
 
               {/* Primary CTA — large, prominent */}
@@ -87,13 +87,13 @@ const HeroSection = ({ onTabChange }: HeroSectionProps) => {
                     document.getElementById("exchange")?.scrollIntoView({ behavior: "smooth", block: "start" });
                   }}
                   className="btn-shimmer group inline-flex items-center justify-center gap-2 rounded-2xl bg-gradient-to-b from-primary to-[hsl(var(--neon))] px-8 py-4 font-display text-base font-extrabold uppercase tracking-wide text-primary-foreground shadow-[0_0_32px_-4px_hsl(var(--primary)/0.7)] ring-1 ring-primary/40 transition-all duration-150 hover:-translate-y-0.5 hover:brightness-110 hover:shadow-[0_0_44px_-2px_hsl(var(--primary)/0.9)] active:translate-y-0 sm:text-lg min-h-[56px]"
-                  aria-label="Start a crypto swap"
+                  aria-label={t("hero.startSwapCta")}
                 >
-                  Start Swap
+                  {t("hero.startSwapCta")}
                   <ArrowRight className="h-5 w-5 transition-transform group-hover:translate-x-1" aria-hidden="true" />
                 </a>
                 <span className="font-body text-xs text-muted-foreground sm:text-sm">
-                  Live rates · No account · Settles in under 60s
+                  {t("hero.liveRatesLabel")}
                 </span>
               </motion.div>
 
