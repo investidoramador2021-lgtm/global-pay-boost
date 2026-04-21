@@ -257,7 +257,8 @@ const PrivateTransferTab = () => {
         to_currency: tx.toCurrency,
         amount: tx.amount,
         ref_code: refCode,
-      });
+        kind: "private",
+      } as any);
     } catch {}
   };
 
