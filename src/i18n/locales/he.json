@@ -1659,5 +1659,12 @@
       "checkInboxDesc": "A verification email has been sent. You must confirm within 48 hours or your account will be deleted.",
       "errorTitle": "Error"
     }
+  },
+  "programsNav": {
+    "menu": "תוכניות",
+    "affiliates": "שותפים",
+    "partners": "פרטנרים",
+    "referral": "הפניות",
+    "earn": "הרוויחו איתנו"
   }
 }

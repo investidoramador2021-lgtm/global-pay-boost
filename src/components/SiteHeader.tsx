@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { Menu, X, Zap, Sun, Moon, UserPlus, LogIn } from "lucide-react";
+import { Menu, X, Zap, Sun, Moon, UserPlus, LogIn, ChevronDown, Sparkles, Users, Share2 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { useTheme } from "@/hooks/use-theme";
 import { useTranslation } from "react-i18next";
@@ -40,10 +40,15 @@ const SiteHeader = () => {
     { label: "Exchange", href: lp("/exchange/btc-to-eth") },
     { label: "Borrow", href: lp("/lend") },
     { label: "Earn", href: lp("/lend") + "?tab=earn" },
-    { label: "Affiliates", href: lp("/affiliates") },
     { label: t("nav.blog"), href: lp("/blog") },
     { label: t("nav.faq"), href: lp("/") + "#faq" },
     { label: "Developer", href: lp("/developer") },
+  ];
+
+  const programLinks = [
+    { label: t("programsNav.affiliates"), href: lp("/affiliates"), icon: Sparkles, desc: "0.1% – 0.4% lifetime BTC" },
+    { label: t("programsNav.partners"), href: lp("/partners"), icon: Users, desc: "High-volume · dedicated dashboard" },
+    { label: t("programsNav.referral"), href: lp("/referral"), icon: Share2, desc: "Share your link · earn per swap" },
   ];
 
   return (

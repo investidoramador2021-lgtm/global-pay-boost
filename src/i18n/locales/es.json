@@ -1659,5 +1659,12 @@
       "checkInboxDesc": "Se ha enviado un email de verificación. Confirma en 48 horas o tu cuenta será eliminada.",
       "errorTitle": "Error"
     }
+  },
+  "programsNav": {
+    "menu": "Programas",
+    "affiliates": "Afiliados",
+    "partners": "Socios",
+    "referral": "Referidos",
+    "earn": "Gana con Nosotros"
   }
 }
