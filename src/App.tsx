@@ -74,6 +74,7 @@ const WhitepaperYield = lazy(() => import("./pages/WhitepaperYield.tsx"));
 const SovereignWhitepaper = lazy(() => import("./pages/SovereignWhitepaper.tsx"));
 const AuroraWhitepaper = lazy(() => import("./pages/AuroraWhitepaper.tsx"));
 const MoneroNodeWhitepaper = lazy(() => import("./pages/MoneroNodeWhitepaper.tsx"));
+const NicehashMiningWhitepaper = lazy(() => import("./pages/NicehashMiningWhitepaper.tsx"));
 const Partners = lazy(() => import("./pages/Partners.tsx"));
 const PartnerDashboard = lazy(() => import("./pages/PartnerDashboard.tsx"));
 const AdminPortal = lazy(() => import("./pages/AdminPortal.tsx"));
@@ -200,6 +201,7 @@ const AppRoutes = () => (
     <Route path="sovereign-settlement" element={<SovereignWhitepaper />} />
     <Route path="blog/aurora-ecosystem-mrc-globalpay-swap-aurora" element={<AuroraWhitepaper />} />
     <Route path="blog/enhanced-xmr-swap-reliability-dedicated-monero-node" element={<MoneroNodeWhitepaper />} />
+    <Route path="whitepapers/nicehash-mining-payout-strategy" element={<NicehashMiningWhitepaper />} />
     <Route path="unsubscribe" element={<Unsubscribe />} />
     <Route path="partners" element={<Partners />} />
     <Route path="dashboard" element={<PartnerDashboard />} />
