@@ -61,7 +61,15 @@ const InvoiceStatus = () => {
     <>
       <Helmet>
         <title>{t("invoice.statusPageTitle")} — MRC Global Pay</title>
-        <meta name="robots" content="index, follow" />
+        <meta
+          name="description"
+          content={
+            invoice
+              ? `Track the live status of MRC Global Pay invoice #${invoice.invoice_id} — settlement, expiry and payment confirmation in real time.`
+              : "Track the real-time status of your MRC Global Pay crypto invoice — settlement, expiry and payment confirmation."
+          }
+        />
+        <meta name="robots" content="noindex, nofollow" />
       </Helmet>
       <SiteHeader />
       <main className="min-h-screen bg-background pt-20 pb-16 px-4">

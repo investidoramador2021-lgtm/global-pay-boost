@@ -1,5 +1,6 @@
 import { useEffect, useMemo, useState } from "react";
 import { useSearchParams, useLocation } from "react-router-dom";
+import { Helmet } from "react-helmet-async";
 import { useTranslation } from "react-i18next";
 import { ChevronDown, Loader2, X, Copy, Check, ArrowLeft } from "lucide-react";
 import {
@@ -363,6 +364,17 @@ const EmbedWidget = ({ modeOverride, langOverride }: EmbedWidgetProps = {}) => {
         fontFamily: "'Inter', system-ui, sans-serif",
       }}
     >
+      {isStandalone && (
+        <Helmet>
+          <title>Crypto Swap Widget — Embed Instant Crypto Exchange | MRC Global Pay</title>
+          <meta
+            name="description"
+            content="Embeddable crypto swap widget by MRC Global Pay. Let visitors swap 6,000+ crypto pairs from $0.30 instantly, with no registration or KYC, directly inside your site."
+          />
+          <meta name="robots" content="index, follow" />
+        </Helmet>
+      )}
+      <h1 className="sr-only">MRC Global Pay Crypto Swap Widget — Instant Non-Custodial Exchange</h1>
       <div
         className={`relative w-full max-w-[360px] overflow-hidden rounded-2xl border p-5 ${
           isLight ? "border-slate-200" : "border-white/[0.12]"

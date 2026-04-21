@@ -1629,7 +1629,11 @@ const PartnerDashboard = () => {
     <>
       <Helmet>
         <title>Partner Dashboard | MRC Global Pay</title>
-        <meta name="robots" content="index, follow" />
+        <meta
+          name="description"
+          content="MRC Global Pay partner dashboard — manage API keys, monitor transactions, track BTC commissions and access widget tools for affiliates and developers."
+        />
+        <meta name="robots" content="noindex, nofollow" />
       </Helmet>
       {phase === "loading" && <div className="min-h-screen flex items-center justify-center" style={{ background: OBS.bg }}><Loader2 className="w-8 h-8 animate-spin" style={{ color: OBS.muted }} /></div>}
       {phase === "totp" && <TOTPGate onPass={() => setPhase("dashboard")} />}

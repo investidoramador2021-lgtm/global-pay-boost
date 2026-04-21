@@ -50,12 +50,17 @@ const VerifyEmail = () => {
     <>
       <Helmet>
         <title>Verify Email | MRC Global Pay</title>
-        <meta name="robots" content="index, follow" />
+        <meta
+          name="description"
+          content="Confirm your MRC Global Pay partner email address to activate your account and access the partner dashboard."
+        />
+        <meta name="robots" content="noindex, nofollow" />
       </Helmet>
       <SiteHeader />
       <div className="min-h-screen bg-background flex items-center justify-center px-4 pt-20 pb-20">
         <Card className="max-w-md w-full border-border/40 bg-card/40 backdrop-blur-sm">
           <CardContent className="p-8 text-center space-y-6">
+            <h1 className="sr-only">Email Verification — MRC Global Pay Partner Program</h1>
             {status === "loading" && (
               <>
                 <Loader2 className="w-12 h-12 text-primary mx-auto animate-spin" />

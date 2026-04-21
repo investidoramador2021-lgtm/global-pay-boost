@@ -272,7 +272,7 @@ const AuditInspector = () => {
   if (stage === "login") {
     return (
       <div className="min-h-screen flex items-center justify-center bg-background p-4">
-        <Helmet><title>Admin Inspector | MRC Global Pay</title><meta name="robots" content="index, follow" /></Helmet>
+        <Helmet><title>Admin Inspector | MRC Global Pay</title><meta name="description" content="Restricted internal tool for authorized administrators to review flagged transactions and compliance records." /><meta name="robots" content="noindex, nofollow" /></Helmet>
         <Card className="w-full max-w-md border-primary/20">
           <CardHeader className="text-center">
             <Shield className="mx-auto h-10 w-10 text-primary mb-2" />
@@ -331,7 +331,7 @@ const AuditInspector = () => {
   // ── Inspector Dashboard ──
   return (
     <>
-      <Helmet><title>Transaction Inspector | MRC Global Pay</title><meta name="robots" content="index, follow" /></Helmet>
+      <Helmet><title>Transaction Inspector | MRC Global Pay</title><meta name="description" content="Internal transaction inspector for MRC Global Pay administrators. Review, annotate and generate inspection links for flagged orders." /><meta name="robots" content="noindex, nofollow" /></Helmet>
       <SiteHeader />
       <main className="min-h-screen bg-background pt-20 pb-12 px-4">
         <div className="max-w-7xl mx-auto">
