@@ -471,20 +471,43 @@ const DeveloperHub = () => {
             </div>
             <div className="mt-10 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
               {[
-                { icon: GitBranch, title: "GitHub Examples", desc: "Reference implementations in Next.js, Vue, and vanilla JS.", href: "https://github.com" },
-                { icon: Webhook, title: "Webhook Cookbook", desc: "Pattern library for handling status events safely.", href: "/learn" },
-                { icon: BookOpen, title: "Whitepapers", desc: "Architecture deep-dives on liquidity routing and shielded settlement.", href: "/whitepaper" },
-              ].map(({ icon: Icon, title, desc, href }) => (
+                {
+                  icon: GitBranch,
+                  title: "GitHub Examples",
+                  desc: "Reference implementations and sample code for integrating our swap widget in Next.js, React, Vue, and vanilla JavaScript. More examples coming soon.",
+                  href: "https://github.com/mrcglobal",
+                  cta: "Explore on GitHub",
+                  external: true,
+                },
+                {
+                  icon: Webhook,
+                  title: "Webhook Cookbook",
+                  desc: "Practical guides and code examples for handling swap status events, confirmations, and error handling safely. Expanding regularly.",
+                  href: "https://github.com/mrcglobal",
+                  cta: "View Cookbook",
+                  external: true,
+                },
+                {
+                  icon: BookOpen,
+                  title: "Technical Documentation & Whitepapers",
+                  desc: "Deep dives into our stateless routing architecture, institutional compliance rails, zero-knowledge settlement, and multi-chain liquidity mesh.",
+                  href: "https://github.com/mrcglobal",
+                  cta: "Read Documentation",
+                  external: true,
+                },
+              ].map(({ icon: Icon, title, desc, href, cta, external }) => (
                 <a
                   key={title}
                   href={href}
+                  target={external ? "_blank" : undefined}
+                  rel={external ? "noopener noreferrer" : undefined}
                   className="group flex flex-col gap-3 rounded-2xl border border-border bg-card p-5 transition-all hover:-translate-y-1 hover:border-primary/40 hover:shadow-elevated"
                 >
                   <Icon className="h-6 w-6 text-primary" aria-hidden />
                   <h3 className="font-display text-base font-bold text-foreground">{title}</h3>
                   <p className="font-body text-sm leading-relaxed text-muted-foreground">{desc}</p>
                   <span className="mt-auto inline-flex items-center gap-1 pt-2 font-display text-xs font-bold uppercase tracking-wider text-primary">
-                    Explore <ArrowRight className="h-3 w-3" />
+                    {cta} <ArrowRight className="h-3 w-3" />
                   </span>
                 </a>
               ))}
