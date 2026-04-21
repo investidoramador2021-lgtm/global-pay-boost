@@ -19,7 +19,12 @@
     "faq": "FAQ",
     "startSwap": "Start Swap",
     "track": "Track",
-    "help": "Help"
+    "help": "Help",
+    "exchange": "Exchange",
+    "borrow": "Borrow",
+    "earn": "Earn",
+    "developer": "Developer",
+    "more": "More"
   },
   "hero": {
     "heading": "Access 6,000+ Cryptocurrencies & Tokenized Stocks.",
@@ -1684,7 +1689,10 @@
     "affiliates": "Affiliates",
     "partners": "Partners",
     "referral": "Referral",
-    "earn": "Earn With Us"
+    "earn": "Earn With Us",
+    "affiliatesDesc": "0.1% – 0.4% lifetime BTC",
+    "partnersDesc": "High-volume · dedicated dashboard",
+    "referralDesc": "Share your link · earn per swap"
   },
   "noLimits": {
     "heading": "Limitless Exchange",

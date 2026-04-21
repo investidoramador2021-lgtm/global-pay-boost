@@ -19,7 +19,12 @@
     "faq": "عام سوالات",
     "startSwap": "ایکسچینج شروع کریں",
     "track": "ٹریک",
-    "help": "مدد"
+    "help": "مدد",
+    "exchange": "Exchange",
+    "borrow": "قرض",
+    "earn": "کمائیں",
+    "developer": "Developer",
+    "more": "مزید"
   },
   "hero": {
     "heading": "6,000+ کرپٹو کرنسیوں اور ٹوکنائزڈ اسٹاکس تک رسائی۔",
@@ -1670,7 +1675,10 @@
     "affiliates": "ایفیلی ایٹس",
     "partners": "پارٹنرز",
     "referral": "ریفرل",
-    "earn": "ہمارے ساتھ کمائیں"
+    "earn": "ہمارے ساتھ کمائیں",
+    "affiliatesDesc": "0.1% – 0.4% تاحیات BTC",
+    "partnersDesc": "ہائی والیوم · وقف ڈیش بورڈ",
+    "referralDesc": "اپنا لنک شیئر کریں · فی سویپ کمائیں"
   },
   "noLimits": {
     "heading": "لامحدود تبادلہ",

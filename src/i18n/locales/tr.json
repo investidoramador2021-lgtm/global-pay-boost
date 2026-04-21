@@ -19,7 +19,12 @@
     "faq": "SSS",
     "startSwap": "Takasa Başla",
     "track": "Takip",
-    "help": "Yardım"
+    "help": "Yardım",
+    "exchange": "Exchange",
+    "borrow": "Borç",
+    "earn": "Kazan",
+    "developer": "Developer",
+    "more": "Daha"
   },
   "hero": {
     "heading": "6.000'den Fazla Kripto Para ve Tokenize Hisse Senedine Erişin.",
@@ -1670,7 +1675,10 @@
     "affiliates": "Ortaklar",
     "partners": "Partnerler",
     "referral": "Tavsiye",
-    "earn": "Bizimle Kazanın"
+    "earn": "Bizimle Kazanın",
+    "affiliatesDesc": "Ömür boyu %0,1–%0,4 BTC",
+    "partnersDesc": "Yüksek hacim · özel panel",
+    "referralDesc": "Linkini paylaş · takas başına kazan"
   },
   "noLimits": {
     "heading": "Sınırsız Takas",

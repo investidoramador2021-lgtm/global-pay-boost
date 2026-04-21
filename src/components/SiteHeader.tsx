@@ -183,7 +183,7 @@ const SiteHeader = () => {
           <div className="hidden lg:flex items-center gap-1.5">
             <a
               href={lp("/partners") + "?mode=login"}
-              className="flex h-9 w-9 items-center justify-center rounded-lg border border-border text-muted-foreground transition-colors hover:bg-accent hover:text-foreground"
+              className="hidden xl:flex h-9 w-9 items-center justify-center rounded-lg border border-border text-muted-foreground transition-colors hover:bg-accent hover:text-foreground"
               aria-label="Partner Login"
               title="Partner Login"
             >
@@ -191,7 +191,7 @@ const SiteHeader = () => {
             </a>
             <a
               href={lp("/partners")}
-              className="flex h-9 w-9 items-center justify-center rounded-lg border border-border text-muted-foreground transition-colors hover:bg-accent hover:text-foreground"
+              className="hidden xl:flex h-9 w-9 items-center justify-center rounded-lg border border-border text-muted-foreground transition-colors hover:bg-accent hover:text-foreground"
               aria-label="Join Partner Program"
               title="Join Partner Program"
             >
