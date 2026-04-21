@@ -1,8 +1,11 @@
 import { useState, useEffect, useRef } from "react";
 import { Infinity, ArrowRight, DollarSign } from "lucide-react";
+import { useTranslation } from "react-i18next";
 import { Button } from "@/components/ui/button";
 
+
 const NoLimitsSection = () => {
+  const { t } = useTranslation();
   const [barWidth, setBarWidth] = useState(0);
   const [statsVisible, setStatsVisible] = useState(false);
   const [count700, setCount700] = useState(0);
@@ -92,11 +95,10 @@ const NoLimitsSection = () => {
           {/* Copy */}
           <div>
             <h2 className="font-display text-2xl font-bold tracking-tight text-foreground sm:text-3xl lg:text-4xl">
-              Limitless Exchange
+              {t("noLimits.heading")}
             </h2>
             <p className="mt-4 font-body text-base leading-relaxed text-muted-foreground sm:text-lg">
-              Start from less than $2 and swap as much crypto as you want — there is no upper limit.
-              Our liquidity aggregation across 700+ sources handles any volume seamlessly.
+              {t("noLimits.description")}
             </p>
 
             {/* Animated range bar */}
@@ -116,7 +118,7 @@ const NoLimitsSection = () => {
                     barWidth >= 100 ? "opacity-100" : "opacity-30"
                   }`}
                 >
-                  <Infinity className="h-3.5 w-3.5 text-primary" /> No limit
+                  <Infinity className="h-3.5 w-3.5 text-primary" /> {t("noLimits.noLimit")}
                 </span>
               </div>
             </div>
