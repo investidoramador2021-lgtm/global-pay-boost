@@ -203,8 +203,59 @@ const DashboardSummary = () => {
     [stats],
   );
 
+  // ============== REVENUE TRACKING ==============
+  // Convert each transaction's notional volume into USD using live prices,
+  // then apply the per-product fee rate. Bucket into today / 7d / 30d / all-time.
+  type RevenueBucket = { today: number; d7: number; d30: number; all: number };
+  const emptyBucket = (): RevenueBucket => ({ today: 0, d7: 0, d30: 0, all: 0 });
+
+  const revenue = useMemo(() => {
+    const r: Record<string, RevenueBucket> = {
+      swap: emptyBucket(), buy: emptyBucket(), sell: emptyBucket(),
+      private: emptyBucket(), bridge: emptyBucket(),
+      invoice: emptyBucket(), loan: emptyBucket(), earn: emptyBucket(),
+    };
+    const add = (key: string, usd: number, iso: string) => {
+      const fee = usd * (REVENUE_RATE[key] || 0);
+      if (!fee) return;
+      r[key].all += fee;
+      if (within(iso, 30)) r[key].d30 += fee;
+      if (within(iso, 7))  r[key].d7  += fee;
+      if (withinToday(iso)) r[key].today += fee;
+    };
+    for (const row of swaps) {
+      const k = (row.kind || "swap").toLowerCase();
+      if (!r[k]) continue;
+      // For fiat on/off-ramp the `amount` is already in fiat units
+      const usd = (k === "buy" || k === "sell")
+        ? Number(row.amount) || 0
+        : usdOf(row.from_currency, Number(row.amount) || 0);
+      add(k, usd, row.created_at);
+    }
+    for (const row of invoices) {
+      add("invoice", Number(row.fiat_amount) || 0, row.created_at);
+    }
+    for (const row of lend) {
+      const isLoan = row.tx_type === "loan";
+      const notional = Number(isLoan ? row.loan_amount : row.amount) || 0;
+      const usd = usdOf(row.currency, notional) || notional; // assume USD if unknown stable
+      add(isLoan ? "loan" : "earn", usd, row.created_at);
+    }
+    return r;
+  }, [swaps, invoices, lend, prices]);
+
+  const revenueTotals = useMemo<RevenueBucket>(() => {
+    const totals = emptyBucket();
+    for (const v of Object.values(revenue)) {
+      totals.today += v.today; totals.d7 += v.d7; totals.d30 += v.d30; totals.all += v.all;
+    }
+    return totals;
+  }, [revenue]);
+
   const formatNum = (n: number, max = 2) =>
     n.toLocaleString("en-US", { maximumFractionDigits: max, minimumFractionDigits: max === 0 ? 0 : 0 });
+  const fmtUsd = (n: number) => `$${formatNum(n, 2)}`;
+  const fmtBtc = (n: number) => btcUsd > 0 ? `${formatNum(n / btcUsd, 6)} BTC` : "— BTC";
 
   return (
     <div className="space-y-6">
