@@ -36,13 +36,17 @@ const SiteHeader = () => {
 
   const navLinks = [
     { label: t("nav.howItWorks"), href: lp("/") + "#how-it-works" },
-    { label: t("nav.features"), href: lp("/") + "#features" },
     { label: "Exchange", href: lp("/exchange/btc-to-eth") },
     { label: "Borrow", href: lp("/lend") },
     { label: "Earn", href: lp("/lend") + "?tab=earn" },
     { label: t("nav.blog"), href: lp("/blog") },
     { label: t("nav.faq"), href: lp("/") + "#faq" },
     { label: "Developer", href: lp("/developer") },
+  ];
+
+  // Mobile-only extras (kept out of desktop bar to avoid crowding)
+  const mobileExtraLinks = [
+    { label: t("nav.features"), href: lp("/") + "#features" },
   ];
 
   const programLinks = [
@@ -65,12 +69,12 @@ const SiteHeader = () => {
           MRC<span className="text-primary">GlobalPay</span>
         </a>
 
-        <nav className="hidden items-center gap-6 lg:flex">
+        <nav className="hidden items-center gap-4 xl:gap-5 lg:flex">
           {navLinks.map((link) => (
             <a
               key={link.href}
               href={link.href}
-              className="font-body text-sm font-medium text-muted-foreground transition-colors hover:text-foreground"
+              className="whitespace-nowrap font-body text-[13px] xl:text-sm font-medium text-muted-foreground transition-colors hover:text-foreground"
             >
               {link.label}
             </a>
@@ -80,7 +84,7 @@ const SiteHeader = () => {
           <div className="relative group">
             <button
               type="button"
-              className="inline-flex items-center gap-1 font-body text-sm font-medium text-muted-foreground transition-colors hover:text-foreground"
+              className="inline-flex items-center gap-1 whitespace-nowrap font-body text-[13px] xl:text-sm font-medium text-muted-foreground transition-colors hover:text-foreground"
               aria-haspopup="menu"
               aria-label={t("programsNav.menu")}
             >
@@ -164,7 +168,7 @@ const SiteHeader = () => {
 
       {mobileOpen && (
         <div className="border-t border-border bg-background px-4 pb-4 lg:hidden">
-          {navLinks.map((link) => (
+          {[...navLinks, ...mobileExtraLinks].map((link) => (
             <a
               key={link.href}
               href={link.href}
