@@ -1689,5 +1689,12 @@
     "liquiditySources": "Fontes de Liquidez",
     "hiddenFees": "Taxas Ocultas",
     "cta": "Começar a Trocar"
+  },
+  "trustpilotInvite": {
+    "eyebrow": "Trustpilot",
+    "heading": "Somos novos — e as avaliações importam muito",
+    "body": "Feedback honesto (bom ou ruim) ajuda outros usuários cripto a decidir onde trocar com segurança e nos ajuda a melhorar. Seja o primeiro.",
+    "cta": "Seja o primeiro a avaliar",
+    "footerCta": "Seja o primeiro a nos avaliar no Trustpilot"
   }
 }

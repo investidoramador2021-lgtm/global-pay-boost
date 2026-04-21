@@ -1689,5 +1689,12 @@
     "liquiditySources": "Likidite Kaynakları",
     "hiddenFees": "Gizli Ücretler",
     "cta": "Takasa Başla"
+  },
+  "trustpilotInvite": {
+    "eyebrow": "Trustpilot",
+    "heading": "Yeniyiz — yorumlar bizim için çok değerli",
+    "body": "Dürüst geri bildirimler (iyi ya da kötü) diğer kripto kullanıcılarının güvenle takas yapacakları yeri seçmesine ve bizim gelişmemize yardımcı olur. İlk siz olun.",
+    "cta": "İlk yorumu siz bırakın",
+    "footerCta": "Trustpilot'ta bizi ilk değerlendiren olun"
   }
 }

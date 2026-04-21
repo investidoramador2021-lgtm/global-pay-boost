@@ -1689,5 +1689,12 @@
     "liquiditySources": "Sources de Liquidité",
     "hiddenFees": "Frais Cachés",
     "cta": "Commencer l'Échange"
+  },
+  "trustpilotInvite": {
+    "eyebrow": "Trustpilot",
+    "heading": "Nous sommes nouveaux — et les avis comptent vraiment",
+    "body": "Des avis honnêtes (positifs ou négatifs) aident les autres utilisateurs crypto à choisir un endroit sûr pour échanger et nous aident à nous améliorer. Soyez le premier.",
+    "cta": "Soyez le premier à laisser un avis",
+    "footerCta": "Soyez le premier à nous évaluer sur Trustpilot"
   }
 }
