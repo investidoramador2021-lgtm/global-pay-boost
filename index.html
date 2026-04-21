@@ -20,6 +20,111 @@
     <meta name="fintrac-msb-status" content="C100000015" />
     <link rel="preconnect" href="https://tjikwxkmsfmyjkssvyoh.supabase.co" crossorigin />
     <link rel="alternate" type="application/rss+xml" title="MRC Global Pay Feed" href="/feed.xml" />
+
+    <!-- Default (English) meta — overridden synchronously below for translated /affiliates routes and other localized pages -->
+    <title>MRC Global Pay — Instant Crypto Swaps, Registration-Free</title>
+    <meta name="description" content="Swap 6,000+ cryptocurrencies and tokenized stocks from $0.30 in under 60 seconds. Non-custodial, registration-free. Operated by MRC Pay International Corp — Canadian MSB FINTRAC #C100000015." />
+    <meta property="og:title" content="MRC Global Pay — Instant Crypto Swaps, Registration-Free" />
+    <meta property="og:description" content="Swap 6,000+ cryptocurrencies from $0.30 in under 60 seconds. Non-custodial, no KYC for standard swaps." />
+    <meta property="og:type" content="website" />
+
+    <!--
+      Synchronous per-language meta injection for /affiliates (and /{lang}/affiliates).
+      Runs in <head> BEFORE React hydrates, so crawlers (Googlebot, Bingbot, etc.) that
+      parse/execute initial-document JS see the correct localized <title>, description,
+      og:* and <html lang>/<html dir> in the rendered DOM. React Helmet takes over for
+      SPA navigations after hydration.
+    -->
+    <script>
+      (function () {
+        try {
+          var ORIGIN = "https://mrcglobalpay.com";
+          var SUPPORTED = ["en","es","pt","fr","ja","fa","ur","he","af","hi","vi","tr","uk"];
+          var RTL = { fa: 1, ur: 1, he: 1 };
+
+          // Translated meta for /affiliates — kept in sync with src/i18n/locales/*.json -> affiliates.meta
+          var AFF = {
+            en: { t: "Affiliate Program — Earn Lifetime Crypto Commissions | MRC Global Pay", d: "Generate your MRC Global Pay affiliate widget in seconds. Enter your email and BTC wallet, choose Light or Dark mode, and earn 0.1%–0.4% lifetime commissions paid automatically to your wallet. Registered Canadian MSB #C100000015.", ot: "Affiliate Program — Earn Lifetime Crypto Commissions | MRC Global Pay", od: "Generate your MRC Global Pay affiliate widget in seconds. Earn 0.1%–0.4% lifetime BTC commissions on every swap, paid automatically — no minimum payout." },
+            es: { t: "Programa de Afiliados — Gana Comisiones Cripto de Por Vida | MRC Global Pay", d: "Genera tu widget de afiliado MRC Global Pay en segundos. Ingresa tu correo y billetera BTC, elige modo Claro u Oscuro, y gana comisiones de por vida del 0,1%–0,4% pagadas automáticamente a tu billetera. MSB Canadiense Registrado #C100000015.", ot: "Programa de Afiliados — Gana Comisiones Cripto de Por Vida | MRC Global Pay", od: "Genera tu widget en segundos. Gana 0,1%–0,4% en cada intercambio, pagado automáticamente a tu billetera BTC." },
+            pt: { t: "Programa de Afiliados — Ganhe Comissões Cripto Vitalícias | MRC Global Pay", d: "Gere seu widget de afiliado MRC Global Pay em segundos. Insira seu e-mail e carteira BTC, escolha modo Claro ou Escuro, e ganhe comissões vitalícias de 0,1%–0,4% pagas automaticamente. MSB Canadense Registrado #C100000015.", ot: "Programa de Afiliados — Ganhe Comissões Cripto Vitalícias | MRC Global Pay", od: "Gere seu widget em segundos. Ganhe 0,1%–0,4% em cada swap, pago automaticamente para sua carteira BTC." },
+            fr: { t: "Programme d'Affiliation — Gagnez des Commissions Crypto à Vie | MRC Global Pay", d: "Générez votre widget d'affiliation MRC Global Pay en quelques secondes. Entrez votre e-mail et portefeuille BTC, choisissez le mode Clair ou Sombre, et gagnez 0,1%–0,4% de commissions à vie payées automatiquement. MSB Canadien Enregistré #C100000015.", ot: "Programme d'Affiliation — Gagnez des Commissions Crypto à Vie | MRC Global Pay", od: "Générez votre widget en secondes. Gagnez 0,1%–0,4% sur chaque swap, payé automatiquement." },
+            ja: { t: "アフィリエイトプログラム — 生涯クリプト報酬を獲得 | MRC Global Pay", d: "MRC Global Pay アフィリエイトウィジェットを数秒で生成。メールとBTCウォレットを入力し、ライト/ダークモードを選択、0.1%–0.4%の生涯報酬を自動でウォレットに受け取り。カナダ登録MSB #C100000015。", ot: "アフィリエイトプログラム — 生涯クリプト報酬を獲得 | MRC Global Pay", od: "ウィジェットを数秒で生成。各スワップで0.1%–0.4%、BTCウォレットへ自動送金。" },
+            fa: { t: "برنامه همکاری در فروش — کسب درآمد مادام‌العمر کریپتو | MRC Global Pay", d: "ویجت همکاری در فروش MRC Global Pay را در چند ثانیه ایجاد کنید. ایمیل و کیف پول BTC خود را وارد کنید، حالت روشن یا تیره را انتخاب کنید و 0.1%–0.4% کمیسیون مادام‌العمر دریافت کنید. MSB ثبت‌شده کانادا #C100000015.", ot: "برنامه همکاری در فروش — کسب درآمد مادام‌العمر کریپتو | MRC Global Pay", od: "ویجت خود را در چند ثانیه ایجاد کنید. در هر سواپ 0.1%–0.4% به‌طور خودکار به کیف پول BTC." },
+            ur: { t: "ایفیلیئٹ پروگرام — تاحیات کرپٹو کمیشن کمائیں | MRC Global Pay", d: "MRC Global Pay ایفیلیئٹ ویجٹ سیکنڈز میں بنائیں۔ ای میل اور BTC والیٹ درج کریں، لائٹ یا ڈارک موڈ منتخب کریں، اور 0.1%–0.4% تاحیات کمیشن خودکار طور پر حاصل کریں۔ کینیڈین رجسٹرڈ MSB #C100000015۔", ot: "ایفیلیئٹ پروگرام — تاحیات کرپٹو کمیشن کمائیں | MRC Global Pay", od: "اپنا ویجٹ سیکنڈز میں بنائیں۔ ہر سویپ پر 0.1%–0.4%، خودکار BTC والیٹ ادائیگی۔" },
+            he: { t: "תוכנית שותפים — הרוויחו עמלות קריפטו לכל החיים | MRC Global Pay", d: "צרו את הוויג'ט שלכם לתוכנית השותפים של MRC Global Pay בשניות. הזינו אימייל וארנק BTC, בחרו מצב בהיר או כהה, וקבלו עמלות 0.1%–0.4% לכל החיים אוטומטית. MSB קנדי רשום #C100000015.", ot: "תוכנית שותפים — הרוויחו עמלות קריפטו לכל החיים | MRC Global Pay", od: "צרו ויג'ט בשניות. הרוויחו 0.1%–0.4% מכל החלפה, אוטומטית לארנק BTC." },
+            af: { t: "Affiliate Program — Verdien Lewenslange Krypto Kommissies | MRC Global Pay", d: "Genereer jou MRC Global Pay affiliate-widget in sekondes. Voer jou e-pos en BTC-beursie in, kies Lig of Donker modus, en verdien 0.1%–0.4% lewenslange kommissies outomaties betaal. Geregistreerde Kanadese MSB #C100000015.", ot: "Affiliate Program — Verdien Lewenslange Krypto Kommissies | MRC Global Pay", od: "Genereer jou widget in sekondes. Verdien 0.1%–0.4% per ruil, outomaties na jou BTC-beursie." },
+            hi: { t: "एफिलिएट प्रोग्राम — आजीवन क्रिप्टो कमीशन कमाएं | MRC Global Pay", d: "MRC Global Pay एफिलिएट विजेट सेकंडों में बनाएं। ईमेल और BTC वॉलेट दर्ज करें, लाइट या डार्क मोड चुनें, और 0.1%–0.4% आजीवन कमीशन स्वचालित रूप से प्राप्त करें। पंजीकृत कनाडाई MSB #C100000015।", ot: "एफिलिएट प्रोग्राम — आजीवन क्रिप्टो कमीशन कमाएं | MRC Global Pay", od: "अपना विजेट सेकंडों में बनाएं। प्रत्येक स्वैप पर 0.1%–0.4%, स्वचालित BTC वॉलेट भुगतान।" },
+            vi: { t: "Chương Trình Đối Tác — Kiếm Hoa Hồng Crypto Trọn Đời | MRC Global Pay", d: "Tạo widget đối tác MRC Global Pay trong vài giây. Nhập email và ví BTC, chọn chế độ Sáng hoặc Tối, kiếm hoa hồng trọn đời 0.1%–0.4% tự động. MSB Canada đã đăng ký #C100000015.", ot: "Chương Trình Đối Tác — Kiếm Hoa Hồng Crypto Trọn Đời | MRC Global Pay", od: "Tạo widget trong vài giây. Kiếm 0.1%–0.4% mỗi giao dịch, tự động vào ví BTC." },
+            tr: { t: "Ortaklık Programı — Ömür Boyu Kripto Komisyonu Kazanın | MRC Global Pay", d: "MRC Global Pay ortaklık widget'ınızı saniyeler içinde oluşturun. E-posta ve BTC cüzdanınızı girin, Açık veya Koyu mod seçin ve %0,1–%0,4 ömür boyu komisyonu otomatik olarak alın. Kanada Tescilli MSB #C100000015.", ot: "Ortaklık Programı — Ömür Boyu Kripto Komisyonu Kazanın | MRC Global Pay", od: "Widget'ınızı saniyeler içinde oluşturun. Her takasta %0,1–%0,4 kazanın, BTC cüzdanınıza otomatik ödeme." },
+            uk: { t: "Партнерська Програма — Заробляйте Довічні Крипто Комісії | MRC Global Pay", d: "Створіть свій партнерський віджет MRC Global Pay за секунди. Введіть email і BTC-гаманець, виберіть Світлий або Темний режим, і отримуйте 0,1%–0,4% довічних комісій автоматично. Зареєстрований канадський MSB #C100000015.", ot: "Партнерська Програма — Заробляйте Довічні Крипто Комісії | MRC Global Pay", od: "Створіть віджет за секунди. Заробляйте 0,1%–0,4% з кожного обміну, автоматично на BTC-гаманець." }
+          };
+
+          var path = (location.pathname || "/").replace(/\/+$/, "") || "/";
+          var seg = path.split("/")[1] || "";
+          var lang = "en";
+          var bare = path;
+          if (SUPPORTED.indexOf(seg) !== -1 && seg !== "en") {
+            lang = seg;
+            bare = "/" + path.split("/").slice(2).join("/");
+            if (bare === "/") bare = "/";
+          }
+
+          // Apply <html lang> and dir for every page (mirrors LangLayout, but synchronous)
+          document.documentElement.lang = lang;
+          document.documentElement.dir = RTL[lang] ? "rtl" : "ltr";
+
+          // Per-page meta overrides (extend this map for additional localized routes)
+          var meta = null;
+          var canonicalPath = null;
+          if (bare === "/affiliates") {
+            meta = AFF[lang] || AFF.en;
+            canonicalPath = (lang === "en" ? "" : "/" + lang) + "/affiliates";
+          }
+
+          if (meta) {
+            document.title = meta.t;
+
+            function setMeta(selector, attr, value) {
+              var el = document.head.querySelector(selector);
+              if (!el) {
+                el = document.createElement("meta");
+                var parts = selector.replace(/^meta\[|\]$/g, "").split("=");
+                el.setAttribute(parts[0], parts[1].replace(/['"]/g, ""));
+                document.head.appendChild(el);
+              }
+              el.setAttribute(attr, value);
+            }
+            function setLink(rel, href, hreflang) {
+              var sel = "link[rel='" + rel + "']" + (hreflang ? "[hreflang='" + hreflang + "']" : "");
+              var el = document.head.querySelector(sel);
+              if (!el) {
+                el = document.createElement("link");
+                el.setAttribute("rel", rel);
+                if (hreflang) el.setAttribute("hreflang", hreflang);
+                document.head.appendChild(el);
+              }
+              el.setAttribute("href", href);
+            }
+
+            setMeta("meta[name='description']", "content", meta.d);
+            setMeta("meta[property='og:title']", "content", meta.ot);
+            setMeta("meta[property='og:description']", "content", meta.od);
+            setMeta("meta[property='og:url']", "content", ORIGIN + canonicalPath);
+            setMeta("meta[property='og:type']", "content", "website");
+
+            setLink("canonical", ORIGIN + canonicalPath);
+
+            // Hreflang alternates (self + all 12 others + x-default)
+            for (var i = 0; i < SUPPORTED.length; i++) {
+              var l = SUPPORTED[i];
+              var href = ORIGIN + (l === "en" ? "" : "/" + l) + "/affiliates";
+              setLink("alternate", href, l);
+            }
+            setLink("alternate", ORIGIN + "/affiliates", "x-default");
+          }
+        } catch (e) { /* fail silently — Helmet will set values after hydration */ }
+      })();
+    </script>
   </head>
 
   <body>
