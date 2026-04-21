@@ -64,6 +64,12 @@ const buildSnippet = (email: string, btc: string, mode: "light" | "dark", lang: 
 </iframe>`;
 };
 
+const buildEmbedUrl = (email: string, btc: string, mode: "light" | "dark", lang: string) => {
+  const token = email || btc ? buildRefToken(email, btc) : "your-ref";
+  const langParam = lang && lang !== "en" ? `&lang=${lang}` : "";
+  return `https://mrcglobalpay.com/embed/widget?mode=${mode}&ref=${token}${langParam}`;
+};
+
 /* ─── Copy Button ─── */
 const CopyButton = ({ text, label }: { text: string; label: string }) => {
   const { t } = useTranslation();
