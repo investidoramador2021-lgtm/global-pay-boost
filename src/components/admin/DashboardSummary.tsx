@@ -3,8 +3,30 @@ import { supabase } from "@/integrations/supabase/client";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import {
   ArrowRightLeft, ShoppingCart, Banknote, ShieldCheck, Link2,
-  FileText, Landmark, PiggyBank, TrendingUp, Activity,
+  FileText, Landmark, PiggyBank, TrendingUp, Activity, DollarSign, Coins,
 } from "lucide-react";
+
+/**
+ * Estimated revenue per product line (as a % of notional volume).
+ * These mirror the public fee schedule + partner commission deals:
+ *   - Swap / Private / Bridge: 0.5% spread captured in the quote
+ *   - Buy (fiat on-ramp):      1.0% margin from Guardarian/SimpleSwap
+ *   - Sell (off-ramp):         1.0% margin
+ *   - Invoice:                 0.5% receiver fee (already explicit)
+ *   - Loan origination:        1.5% partner commission on principal
+ *   - Earn deposits:           0.75% annualized partner share
+ * Tunable in one place if the deals change.
+ */
+const REVENUE_RATE: Record<string, number> = {
+  swap: 0.005,
+  buy: 0.010,
+  sell: 0.010,
+  private: 0.005,
+  bridge: 0.005,
+  invoice: 0.005,
+  loan: 0.015,
+  earn: 0.0075,
+};
 
 /**
  * Aggregated KPI summary across every widget tab:
