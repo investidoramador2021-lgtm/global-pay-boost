@@ -20,10 +20,10 @@
     "startSwap": "स्वैप शुरू करें",
     "track": "ट्रैक",
     "help": "सहायता",
-    "exchange": "Exchange",
+    "exchange": "एक्सचेंज",
     "borrow": "उधार",
     "earn": "कमाएँ",
-    "developer": "Developer",
+    "developer": "डेवलपर",
     "more": "और"
   },
   "hero": {
@@ -1671,7 +1671,7 @@
     }
   },
   "programsNav": {
-    "menu": "प्रोग्राम",
+    "menu": "कार्यक्रम",
     "affiliates": "एफिलिएट्स",
     "partners": "पार्टनर्स",
     "referral": "रेफरल",
