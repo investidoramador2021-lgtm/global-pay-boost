@@ -1459,5 +1459,205 @@
       "poweredBy": "Desenvolvido por MRC GlobalPay",
       "tagline": "Ganhe BTC sempre que um visitante trocar pelo seu widget."
     }
+  },
+  "partners": {
+    "meta": {
+      "title": "Programa de Parceiros | MRC Global Pay",
+      "description": "Junte-se ao Programa de Parceiros do MRC Global Pay. Ganhe comissões BTC vitalícias em cada swap cripto da sua rede. Registrado FINTRAC MSB, pagamentos semanais."
+    },
+    "hero": {
+      "badge": "Programa de Parceiros",
+      "headlineLead": "Ganhe BTC em liquidações referidas com um",
+      "headlineAccent": "Painel Dedicado",
+      "subPart1": "O Programa de Parceiros do MRC Global Pay paga",
+      "subRate": "0,1% – 0,2% em BTC",
+      "subPart2": "em cada liquidação que sua rede gerar — rastreado ao vivo em painel privado, pago automaticamente e feito para promotores de alto volume."
+    },
+    "programs": {
+      "title": "Nossos Programas",
+      "subtitle": "Escolha o programa que se adapta ao seu público.",
+      "affiliateTitle": "Programa de Afiliados",
+      "affiliateDesc": "Widget sem cadastro · 0,1% – 0,4% BTC vitalício",
+      "referralTitle": "Programa de Indicação",
+      "referralDesc": "Compartilhe seu link · ganhe em cada swap"
+    },
+    "features": {
+      "rewards": {
+        "title": "As Recompensas",
+        "desc": "Ganhe entre 0,1% e 0,2% em Bitcoin sobre todo o volume de transações concluídas."
+      },
+      "settlement": {
+        "title": "Liquidação em Tempo Real",
+        "desc": "Todas as recompensas são rastreadas ao vivo e liquidadas em BTC diretamente na sua carteira registrada."
+      },
+      "dashboard": {
+        "title": "Painel Privado",
+        "desc": "Acesse um painel seguro para monitorar desempenho do link, volume e ganhos."
+      },
+      "support": {
+        "title": "Suporte Dedicado",
+        "desc": "Atualizações de carteira são tratadas manualmente via nosso canal seguro."
+      }
+    },
+    "why": {
+      "badge": "Por Que Ser Parceiro",
+      "title": "Feito para promotores sérios que querem mais que um widget",
+      "subtitle": "O Programa de Parceiros desbloqueia níveis superiores, analytics em tempo real e suporte dedicado — para promotores de alto volume, criadores profissionais e empresas.",
+      "serious": {
+        "title": "Ideal para promotores de alto volume",
+        "desc": "Se você gera tráfego pago, mantém um canal ou opera um negócio que lida com cripto, o nível Parceiro maximiza seus ganhos."
+      },
+      "dashboard": {
+        "title": "Painel privado em tempo real",
+        "desc": "Analytics granular por fonte, país, ativo e tempo. APIs, webhooks e atribuição ao vivo inclusos."
+      },
+      "support": {
+        "title": "Suporte dedicado para parceiros",
+        "desc": "Trocas de carteira, escalonamentos de pagamento e ajuda com integração feitos por humanos via canal seguro."
+      },
+      "regulated": {
+        "title": "Respaldado por regulação canadense",
+        "desc": "Operado por um MSB registrado FINTRAC (#C100000015) e um PSP do Banco do Canadá — sinal de confiança verificável."
+      },
+      "lifetime": {
+        "title": "Comissões vitalícias, sem expiração",
+        "desc": "Cada indicação fica atribuída a você para sempre. Sem estornos, sem cookies, sem mínimos mensais."
+      },
+      "automation": {
+        "title": "Pagamentos automáticos em BTC",
+        "desc": "Ganhos liquidados em Bitcoin para uma carteira que você controla. Rastreamento em tempo real, pagamentos semanais."
+      }
+    },
+    "tiers": {
+      "badge": "Estrutura de Comissão",
+      "title": "Ganhe 0,1% – 0,2% em BTC em Cada Liquidação",
+      "subtitle": "Parceiros ganham uma porcentagem de cada volume de swap concluído pela sua rede — pago em BTC, vitalício. Níveis escalam com volume mensal liquidado.",
+      "activate": "Ativar",
+      "activateRange": "Primeiros $100k / mês",
+      "scale": "Escalar",
+      "scaleRange": "$100k – $500k / mês",
+      "volume": "Volume",
+      "volumeRange": "$500k – $2M / mês",
+      "strategic": "Estratégico",
+      "strategicRange": "$2M+ / mês · negociado",
+      "footnote": "Níveis reavaliados mensalmente. A atribuição é permanente. Parceiros estratégicos recebem taxas personalizadas, gerente dedicado e integrações sob medida."
+    },
+    "earnings": {
+      "badge": "Exemplos de Ganhos",
+      "title": "Quanto parceiros normalmente ganham",
+      "subtitle": "Faixas realistas de ganhos mensais com base no volume liquidado da sua rede. Pago automaticamente em BTC.",
+      "colVolume": "Volume Mensal",
+      "colRate": "Taxa",
+      "colEarn": "Ganhos Mensais BTC",
+      "row1": {
+        "volume": "$10k – $100k",
+        "rate": "0,10%",
+        "earn": "$10 – $100"
+      },
+      "row2": {
+        "volume": "$100k – $500k",
+        "rate": "0,13%",
+        "earn": "$130 – $650"
+      },
+      "row3": {
+        "volume": "$500k – $2M",
+        "rate": "0,16%",
+        "earn": "$800 – $3.200"
+      },
+      "row4": {
+        "volume": "$2M+",
+        "rate": "0,20%+",
+        "earn": "$4.000+ · negociado"
+      },
+      "disclaimer": "Valores indicativos. Ganhos reais dependem do volume, mix de ativos e fonte. Atribuição vitalícia."
+    },
+    "dashboard": {
+      "badge": "Dentro do Painel de Parceiro",
+      "title": "Volume, Ganhos e Estatísticas em Tempo Real",
+      "subtitle": "Após verificada sua conta, você acessa um painel privado com chaves API, webhooks, atribuição ao vivo e histórico de pagamentos BTC.",
+      "lifetimeEarnings": "Ganhos Vitalícios",
+      "lifetimeUsd": "≈ $46.820 USD · ao vivo, 30s",
+      "tierProgress": "66% para próximo nível (Volume · 0,16%)",
+      "volume30d": "Volume Liquidado 30 Dias",
+      "volumeMeta": "1.284 swaps · 312 indicações únicas",
+      "topSources": "Principais Fontes de Indicação",
+      "drilldown": "Detalhe por código ref, país, ativo.",
+      "perkApi": "Chaves API + webhooks",
+      "perkWebhook": "Eventos de liquidação em tempo real",
+      "perkAnalytics": "Analytics de conversão por código ref"
+    },
+    "whoFor": {
+      "badge": "Feito para Promotores de Alto Volume",
+      "title": "Para Quem é o Programa de Parceiros",
+      "subtitle": "Se você tem uma audiência, uma carteira, uma exchange ou uma comunidade que troca cripto regularmente, o Programa de Parceiros é para você.",
+      "wallets": {
+        "title": "Apps de Carteira e DeFi",
+        "desc": "Integre swaps nativamente, rastreie volume por usuário, liquide em BTC."
+      },
+      "media": {
+        "title": "Mídia e Criadores Cripto",
+        "desc": "Monetize tutoriais, conteúdo comparativo e alertas de preço."
+      },
+      "exchanges": {
+        "title": "Exchanges e Mesas OTC",
+        "desc": "Roteie 6.000+ pares que você não lista — ganhe no spread."
+      },
+      "communities": {
+        "title": "Comunidades e DAOs",
+        "desc": "Liquidação tesouro com pagamentos transparentes on-chain."
+      },
+      "lowerVolumePrefix": "Volume menor? Comece com o",
+      "affiliateLink": "Programa de Afiliados",
+      "lowerVolumeSuffix": "(sem cadastro, widget instantâneo) e atualize quando quiser — seu tráfego migra automaticamente."
+    },
+    "regulatory": {
+      "badge": "Vantagem Regulatória",
+      "title": "Um Programa Respaldado por Regulação Canadense Real",
+      "body": "MRC Global Pay é operado pela MRC Pay International Corp, uma fintech canadense registrada como Money Services Business da FINTRAC (#C100000015) e como Provedor de Serviços de Pagamento (PSP) do Banco do Canadá. Cada liquidação flui por canal supervisionado, AML-conforme, não-custodial.",
+      "verifyFintrac": "Verificar FINTRAC MSB",
+      "verifyPsp": "Verificar PSP Banco do Canadá"
+    },
+    "finalCta": {
+      "badge": "2 minutos para ativar",
+      "title": "Ative Sua Conta de Parceiro e Comece a Ganhar em BTC",
+      "body": "Sem KYC para o programa. Apenas verifique seu email, cole uma carteira BTC que você controla e seu painel é ativado com chaves API, webhooks e atribuição ao vivo.",
+      "scrollToTop": "Ativar Agora",
+      "tryAffiliate": "Testar Programa de Afiliados",
+      "referralLink": "Programa de Indicação"
+    },
+    "form": {
+      "welcomeBack": "Bem-vindo de Volta, Parceiro",
+      "activateTitle": "Ative Sua Conta de Parceiro",
+      "activateSubtitle": "Grátis · ~2 minutos · Pagamentos BTC para sua carteira.",
+      "firstName": "Nome",
+      "lastName": "Sobrenome",
+      "btcWallet": "Endereço Carteira BTC",
+      "btcOk": "Endereço Bitcoin válido",
+      "btcFail": "Insira um endereço BTC mainnet válido",
+      "email": "Email",
+      "emailOk": "Email válido",
+      "emailFail": "Insira um email válido",
+      "password": "Senha",
+      "passwordMin": "Mínimo 8 caracteres",
+      "confirmPassword": "Confirmar Senha",
+      "passwordsMatch": "Senhas conferem",
+      "passwordsNoMatch": "Senhas não conferem",
+      "processing": "Processando…",
+      "signInBtn": "→ Entrar no Painel",
+      "createBtn": "→ Criar Conta de Parceiro",
+      "noAccount": "Ainda não tem conta de parceiro?",
+      "haveAccount": "Já é registrado como parceiro?",
+      "toggleRegister": "Cadastrar como Novo Parceiro",
+      "toggleLogin": "Entrar no Seu Painel"
+    },
+    "toast": {
+      "notVerifiedTitle": "Email não verificado",
+      "notVerifiedDesc": "Verifique sua caixa de entrada antes de entrar.",
+      "claimedTitle": "{{count}} widget(s) afiliado vinculado(s)",
+      "claimedDesc": "Seu tráfego prévio agora será rastreado no seu painel.",
+      "checkInboxTitle": "Verifique sua caixa de entrada",
+      "checkInboxDesc": "Email de verificação enviado. Confirme em 48 horas ou sua conta será excluída.",
+      "errorTitle": "Erro"
+    }
   }
 }
