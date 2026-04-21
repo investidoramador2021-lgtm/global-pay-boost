@@ -59,26 +59,36 @@ const KeywordLanding = ({ data }: Props) => {
 
   const isMoneroNoKyc = targetUrl === "/buy/monero-no-kyc";
 
+  const buildFallbackTitle = (kw: string) => {
+    // Title target: 30–60 chars
+    const cap = (s: string) => (s.length > 60 ? s.slice(0, 57).trim() + "…" : s);
+    const trimmed = kw.length > 45 ? kw.slice(0, 45).trim() : kw;
+    const base = `${trimmed} | MRC Global Pay`;
+    if (base.length >= 30) return cap(base);
+    // Pad short keywords (e.g. "bnb swap") so the title hits the 30-char minimum
+    return cap(`${trimmed} — Instant Crypto Swap | MRC Global Pay`);
+  };
   const title = data.customTitle
     ? data.customTitle
     : isMoneroNoKyc
     ? "Buy Monero – Registration-Free XMR Swap | MRC Global Pay"
-    : `${keyword.length > 30 ? keyword.slice(0, 30).trim() : keyword} | MRC Global Pay`;
+    : buildFallbackTitle(keyword);
   const buildFallbackDescription = (hook: string, kw: string) => {
-    // Target 140-160 chars for optimal Bing/Google snippet display
+    // Bing/Google snippet target: 120–160 chars (hard cap 160)
     const base = `${hook} Swap ${kw} from $0.30 with no account, no KYC, and lifetime BTC rebates. Non-custodial settlement across 6,000+ tokens — Canadian MSB.`;
-    if (base.length >= 140 && base.length <= 165) return base;
-    if (base.length > 165) {
-      return `${hook} Swap ${kw} from $0.30 — no account, no KYC. Non-custodial across 6,000+ tokens. Canadian MSB-registered.`.slice(0, 160);
+    if (base.length >= 120 && base.length <= 160) return base;
+    if (base.length > 160) {
+      const short = `${hook} Swap ${kw} from $0.30 — no account, no KYC. Non-custodial across 6,000+ tokens. Canadian MSB-registered.`;
+      return short.length <= 160 ? short : short.slice(0, 160);
     }
-    // Pad if still short
     return `${base} Settles in under 60 seconds with fixed-rate protection.`.slice(0, 160);
   };
   const description = data.customDescription
     ? data.customDescription
     : isMoneroNoKyc
-    ? "Buy Monero (XMR) with no registration required. Non-custodial swap from $0.30 with a 0.5% flat fee — the most private way to acquire XMR in 2026 with lifetime BTC rebates."
+    ? "Buy Monero (XMR) with no registration. Non-custodial XMR swap from $0.30, 0.5% flat fee — the most private way to acquire Monero in 2026."
     : buildFallbackDescription(benefitHook, keyword);
+
 
   const defaultFaqs = [
     {
