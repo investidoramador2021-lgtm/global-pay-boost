@@ -128,7 +128,7 @@ const DashboardSummary = () => {
       const [swapRes, invRes, leRes, pxRes] = await Promise.all([
         supabase
           .from("swap_transactions")
-          .select("kind, amount, from_currency, to_currency, created_at")
+          .select("kind, amount, from_currency, to_currency, provider, created_at")
           .order("created_at", { ascending: false })
           .limit(5000),
         supabase
