@@ -91,6 +91,7 @@ const PartnerPortal = lazy(() => import("./pages/PartnerPortal.tsx"));
 const DynamicExchange = lazy(() => import("./pages/DynamicExchange.tsx"));
 const ExchangeDirectory = lazy(() => import("./pages/ExchangeDirectory.tsx"));
 const Affiliates = lazy(() => import("./pages/Affiliates.tsx"));
+const SeoQaDashboard = lazy(() => import("./pages/SeoQaDashboard.tsx"));
 const NotFound = lazy(() => import("./pages/NotFound.tsx"));
 
 const queryClient = new QueryClient();
@@ -252,6 +253,8 @@ const App = () => (
                   <Route path="/status/:token" element={<InvoiceStatus />} />
                   {/* Admin Inspector — MFA-protected, hidden */}
                   <Route path="/admin/audit-inspector" element={<AuditInspector />} />
+                  {/* Internal SEO QA dashboard — noindex, no auth wrapper */}
+                  <Route path="/admin/seo-qa" element={<SeoQaDashboard />} />
                   {/* Regulatory Report — read-only printable page */}
                   <Route path="/regulatory-report/:token" element={<RegulatoryReport />} />
                   <Route path="/functions/v1/live-feed" element={<EdgeFunctionAliasRedirect />} />
