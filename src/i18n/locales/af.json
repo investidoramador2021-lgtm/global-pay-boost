@@ -1751,5 +1751,25 @@
     "body": "Eerlike terugvoer (goed of sleg) help mede-krypto-gebruikers om veilig te besluit waar om te ruil en help ons om te verbeter. Wees die eerste.",
     "cta": "Wees die eerste om 'n resensie te los",
     "footerCta": "Wees die eerste om ons op Trustpilot te beoordeel"
+  },
+  "compare": {
+    "breadcrumbHome": "Tuis",
+    "breadcrumbCompare": "Vergelyk",
+    "updatedTag": "2026 Opgedateer",
+    "tableTitle": "MRC GlobalPay vs {{rival}} — Sy aan Sy",
+    "colFeature": "Kenmerk",
+    "colWinner": "Wenner",
+    "winnerMrc": "MRC GlobalPay",
+    "winnerTie": "Gelykop",
+    "tableFootnote": "Data geverifieer in April 2026. {{rival}} se voorwaardes kan per paar verskil.",
+    "prosConsTitle": "Voor- en Nadele — 'n Gebalanseerde Kyk",
+    "prosLabel": "Voordele",
+    "consLabel": "Nadele",
+    "whyMrcTitle": "Hoekom Kies MRC GlobalPay",
+    "verdictTitle": "Oordeel & Aanbeveling",
+    "ctaSwap": "Ruil nou vanaf $0,30",
+    "ctaAffiliate": "Word 'n Affiliasie",
+    "compareOthers": "Vergelyk Met Ander",
+    "minLabel": "Min"
   }
 }

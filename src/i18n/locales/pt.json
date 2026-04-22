@@ -1751,5 +1751,25 @@
     "body": "Feedback honesto (bom ou ruim) ajuda outros usuários cripto a decidir onde trocar com segurança e nos ajuda a melhorar. Seja o primeiro.",
     "cta": "Seja o primeiro a avaliar",
     "footerCta": "Seja o primeiro a nos avaliar no Trustpilot"
+  },
+  "compare": {
+    "breadcrumbHome": "Início",
+    "breadcrumbCompare": "Comparar",
+    "updatedTag": "Atualizado em 2026",
+    "tableTitle": "MRC GlobalPay vs {{rival}} — Lado a Lado",
+    "colFeature": "Característica",
+    "colWinner": "Vencedor",
+    "winnerMrc": "MRC GlobalPay",
+    "winnerTie": "Empate",
+    "tableFootnote": "Dados verificados em abril de 2026. Os termos da {{rival}} podem variar por par de ativos.",
+    "prosConsTitle": "Prós & Contras — Uma Análise Equilibrada",
+    "prosLabel": "Prós",
+    "consLabel": "Contras",
+    "whyMrcTitle": "Por Que Escolher a MRC GlobalPay",
+    "verdictTitle": "Veredito & Recomendação",
+    "ctaSwap": "Trocar Agora a partir de US$ 0,30",
+    "ctaAffiliate": "Torne-se Afiliado",
+    "compareOthers": "Comparar com Outras",
+    "minLabel": "Mín"
   }
 }

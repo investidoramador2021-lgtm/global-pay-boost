@@ -1751,5 +1751,25 @@
     "body": "Phản hồi trung thực (tốt hay xấu) giúp những người dùng crypto khác quyết định nơi swap an toàn và giúp chúng tôi cải thiện. Hãy là người đầu tiên.",
     "cta": "Hãy là người đầu tiên đánh giá",
     "footerCta": "Hãy là người đầu tiên đánh giá chúng tôi trên Trustpilot"
+  },
+  "compare": {
+    "breadcrumbHome": "Trang chủ",
+    "breadcrumbCompare": "So sánh",
+    "updatedTag": "Cập nhật 2026",
+    "tableTitle": "MRC GlobalPay vs {{rival}} — So sánh Trực tiếp",
+    "colFeature": "Tính năng",
+    "colWinner": "Người chiến thắng",
+    "winnerMrc": "MRC GlobalPay",
+    "winnerTie": "Hòa",
+    "tableFootnote": "Dữ liệu xác minh tháng 4/2026. Điều khoản của {{rival}} có thể khác nhau theo cặp.",
+    "prosConsTitle": "Ưu & Nhược điểm — Cái nhìn Cân bằng",
+    "prosLabel": "Ưu điểm",
+    "consLabel": "Nhược điểm",
+    "whyMrcTitle": "Tại sao Chọn MRC GlobalPay",
+    "verdictTitle": "Phán quyết & Khuyến nghị",
+    "ctaSwap": "Swap Ngay từ $0,30",
+    "ctaAffiliate": "Trở thành Affiliate",
+    "compareOthers": "So sánh với Khác",
+    "minLabel": "Tối thiểu"
   }
 }

@@ -1751,5 +1751,25 @@
     "body": "正直なフィードバック(良いも悪いも)は、他の暗号ユーザーが安全にスワップする場所を選ぶのに役立ち、私たちの改善にもつながります。最初のレビュアーになってください。",
     "cta": "最初にレビューを書く",
     "footerCta": "Trustpilotで最初のレビュアーになる"
+  },
+  "compare": {
+    "breadcrumbHome": "ホーム",
+    "breadcrumbCompare": "比較",
+    "updatedTag": "2026年更新",
+    "tableTitle": "MRC GlobalPay vs {{rival}} — 並列比較",
+    "colFeature": "機能",
+    "colWinner": "勝者",
+    "winnerMrc": "MRC GlobalPay",
+    "winnerTie": "引き分け",
+    "tableFootnote": "データは2026年4月確認済み。{{rival}}の条件はペアにより変動する場合があります。",
+    "prosConsTitle": "メリット・デメリット — 公平な視点",
+    "prosLabel": "メリット",
+    "consLabel": "デメリット",
+    "whyMrcTitle": "MRC GlobalPayを選ぶ理由",
+    "verdictTitle": "結論と推奨",
+    "ctaSwap": "$0.30から今すぐスワップ",
+    "ctaAffiliate": "アフィリエイトになる",
+    "compareOthers": "他社と比較",
+    "minLabel": "最小"
   }
 }

@@ -1751,5 +1751,25 @@
     "body": "ईमानदार प्रतिक्रिया (अच्छी या बुरी) अन्य क्रिप्टो उपयोगकर्ताओं को सुरक्षित स्वैप का स्थान चुनने में मदद करती है और हमें बेहतर बनाने में मदद करती है। पहले बनें।",
     "cta": "पहली समीक्षा देने वाले बनें",
     "footerCta": "Trustpilot पर हमारी पहली समीक्षा देने वाले बनें"
+  },
+  "compare": {
+    "breadcrumbHome": "होम",
+    "breadcrumbCompare": "तुलना",
+    "updatedTag": "2026 अपडेट",
+    "tableTitle": "MRC GlobalPay vs {{rival}} — आमने-सामने",
+    "colFeature": "विशेषता",
+    "colWinner": "विजेता",
+    "winnerMrc": "MRC GlobalPay",
+    "winnerTie": "बराबरी",
+    "tableFootnote": "अप्रैल 2026 में सत्यापित डेटा। {{rival}} की शर्तें जोड़ी के अनुसार भिन्न हो सकती हैं।",
+    "prosConsTitle": "फायदे और नुकसान — संतुलित नज़र",
+    "prosLabel": "फायदे",
+    "consLabel": "नुकसान",
+    "whyMrcTitle": "MRC GlobalPay क्यों चुनें",
+    "verdictTitle": "निर्णय और अनुशंसा",
+    "ctaSwap": "$0.30 से अभी स्वैप करें",
+    "ctaAffiliate": "एफिलिएट बनें",
+    "compareOthers": "अन्य से तुलना करें",
+    "minLabel": "न्यूनतम"
   }
 }

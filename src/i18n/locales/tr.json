@@ -1751,5 +1751,25 @@
     "body": "Dürüst geri bildirimler (iyi ya da kötü) diğer kripto kullanıcılarının güvenle takas yapacakları yeri seçmesine ve bizim gelişmemize yardımcı olur. İlk siz olun.",
     "cta": "İlk yorumu siz bırakın",
     "footerCta": "Trustpilot'ta bizi ilk değerlendiren olun"
+  },
+  "compare": {
+    "breadcrumbHome": "Ana Sayfa",
+    "breadcrumbCompare": "Karşılaştır",
+    "updatedTag": "2026 Güncellemesi",
+    "tableTitle": "MRC GlobalPay vs {{rival}} — Yan Yana",
+    "colFeature": "Özellik",
+    "colWinner": "Kazanan",
+    "winnerMrc": "MRC GlobalPay",
+    "winnerTie": "Berabere",
+    "tableFootnote": "Veriler Nisan 2026'da doğrulandı. {{rival}} koşulları çiftlere göre değişebilir.",
+    "prosConsTitle": "Artılar & Eksiler — Dengeli Bir Bakış",
+    "prosLabel": "Artılar",
+    "consLabel": "Eksiler",
+    "whyMrcTitle": "Neden MRC GlobalPay'i Seçmelisiniz",
+    "verdictTitle": "Karar & Öneri",
+    "ctaSwap": "0,30 $'dan İtibaren Hemen Takas Yap",
+    "ctaAffiliate": "Affiliate Ol",
+    "compareOthers": "Diğerleriyle Karşılaştır",
+    "minLabel": "Min"
   }
 }
