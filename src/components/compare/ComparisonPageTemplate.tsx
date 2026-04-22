@@ -176,6 +176,7 @@ const ComparisonPageTemplate = ({ profile }: Props) => {
 
   return (
     <>
+      <HreflangTags />
       <Helmet>
         <title>{title}</title>
         <meta name="description" content={intro.slice(0, 158)} />
