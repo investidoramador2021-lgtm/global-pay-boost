@@ -39,11 +39,47 @@ const WinnerBadge = ({ winner, mrcLabel, rivalLabel, tieLabel }: { winner: "mrc"
 };
 
 const ComparisonPageTemplate = ({ profile }: Props) => {
-  const { t } = useTranslation();
+  const { t, i18n } = useTranslation();
   const { pathname } = useLocation();
   const lang = getLangFromPath(pathname);
   const pageUrl = usePageUrl(`/compare/mrc-vs-${profile.slug}`);
   const others = getRandomCompetitors(profile.slug, 4);
+
+  // Translation helper with fallback to canonical English profile data.
+  const base = `compare.profiles.${profile.slug}`;
+  const tr = (suffix: string, fallback: string): string => {
+    const key = `${base}.${suffix}`;
+    const exists = i18n.exists(key);
+    if (!exists) return fallback;
+    const v = t(key);
+    return typeof v === "string" && v.length > 0 ? v : fallback;
+  };
+
+  const title = tr("title", profile.title);
+  const intro = tr("intro", profile.intro);
+  const conclusion = tr("conclusion", profile.conclusion);
+  const localizedRows = profile.rows.map((r, idx) => {
+    // Stable row IDs (must match ROW_IDS in the inject script).
+    const ids = ["regulation", "min", "kyc", "speed", "nonCustodial", "assets", "fees", "support", "affiliate"] as const;
+    const id = ids[idx] ?? String(idx);
+    return {
+      ...r,
+      feature: tr(`rows.${id}.feature`, r.feature),
+      mrc: tr(`rows.${id}.mrc`, r.mrc),
+      rival: tr(`rows.${id}.rival`, r.rival),
+    };
+  });
+  const trList = (suffix: "mrcPros" | "mrcCons" | "rivalPros" | "rivalCons" | "whyMrc", fallback: string[]): string[] => {
+    const key = `${base}.${suffix}`;
+    if (!i18n.exists(key)) return fallback;
+    const v = t(key, { returnObjects: true });
+    return Array.isArray(v) && v.length > 0 ? (v as string[]) : fallback;
+  };
+  const mrcPros = trList("mrcPros", profile.mrcPros);
+  const mrcCons = trList("mrcCons", profile.mrcCons);
+  const rivalPros = trList("rivalPros", profile.rivalPros);
+  const rivalCons = trList("rivalCons", profile.rivalCons);
+  const whyMrc = trList("whyMrc", profile.whyMrc);
 
   const jsonLd = [
     {
@@ -60,11 +96,11 @@ const ComparisonPageTemplate = ({ profile }: Props) => {
   return (
     <>
       <Helmet>
-        <title>{profile.title}</title>
-        <meta name="description" content={profile.intro.slice(0, 158)} />
+        <title>{title}</title>
+        <meta name="description" content={intro.slice(0, 158)} />
         <link rel="canonical" href={pageUrl} />
-        <meta property="og:title" content={profile.title} />
-        <meta property="og:description" content={profile.intro.slice(0, 158)} />
+        <meta property="og:title" content={title} />
+        <meta property="og:description" content={intro.slice(0, 158)} />
         <meta property="og:url" content={pageUrl} />
         <meta property="og:type" content="article" />
         {jsonLd.map((ld, i) => (
@@ -95,10 +131,10 @@ const ComparisonPageTemplate = ({ profile }: Props) => {
               {t("compare.updatedTag")}
             </span>
             <h1 className="font-display text-3xl font-bold tracking-tight text-foreground sm:text-5xl">
-              {profile.title}
+              {title}
             </h1>
             <p className="mx-auto mt-4 max-w-2xl font-body text-base sm:text-lg leading-relaxed text-muted-foreground">
-              {profile.intro}
+              {intro}
             </p>
           </div>
         </section>
@@ -120,7 +156,7 @@ const ComparisonPageTemplate = ({ profile }: Props) => {
                   </TableRow>
                 </TableHeader>
                 <TableBody>
-                  {profile.rows.map((r) => (
+                  {localizedRows.map((r) => (
                     <TableRow key={r.feature}>
                       <TableCell className="font-body text-sm font-semibold text-foreground align-top">{r.feature}</TableCell>
                       <TableCell className="font-body text-sm text-foreground/90 align-top">{r.mrc}</TableCell>
@@ -156,7 +192,7 @@ const ComparisonPageTemplate = ({ profile }: Props) => {
                 <h3 className="font-display text-lg font-bold text-primary">MRC GlobalPay</h3>
                 <h4 className="mt-4 font-display text-sm font-semibold text-foreground">{t("compare.prosLabel")}</h4>
                 <ul className="mt-2 space-y-2">
-                  {profile.mrcPros.map((p) => (
+                  {mrcPros.map((p) => (
                     <li key={p} className="flex gap-2 font-body text-sm text-foreground/90">
                       <CheckCircle2 className="mt-0.5 h-4 w-4 shrink-0 text-primary" />
                       <span>{p}</span>
@@ -165,7 +201,7 @@ const ComparisonPageTemplate = ({ profile }: Props) => {
                 </ul>
                 <h4 className="mt-5 font-display text-sm font-semibold text-foreground">{t("compare.consLabel")}</h4>
                 <ul className="mt-2 space-y-2">
-                  {profile.mrcCons.map((p) => (
+                  {mrcCons.map((p) => (
                     <li key={p} className="flex gap-2 font-body text-sm text-muted-foreground">
                       <XCircle className="mt-0.5 h-4 w-4 shrink-0 text-muted-foreground/70" />
                       <span>{p}</span>
@@ -179,7 +215,7 @@ const ComparisonPageTemplate = ({ profile }: Props) => {
                 <h3 className="font-display text-lg font-bold text-foreground">{profile.rivalName}</h3>
                 <h4 className="mt-4 font-display text-sm font-semibold text-foreground">{t("compare.prosLabel")}</h4>
                 <ul className="mt-2 space-y-2">
-                  {profile.rivalPros.map((p) => (
+                  {rivalPros.map((p) => (
                     <li key={p} className="flex gap-2 font-body text-sm text-foreground/90">
                       <CheckCircle2 className="mt-0.5 h-4 w-4 shrink-0 text-primary" />
                       <span>{p}</span>
@@ -188,7 +224,7 @@ const ComparisonPageTemplate = ({ profile }: Props) => {
                 </ul>
                 <h4 className="mt-5 font-display text-sm font-semibold text-foreground">{t("compare.consLabel")}</h4>
                 <ul className="mt-2 space-y-2">
-                  {profile.rivalCons.map((p) => (
+                  {rivalCons.map((p) => (
                     <li key={p} className="flex gap-2 font-body text-sm text-muted-foreground">
                       <XCircle className="mt-0.5 h-4 w-4 shrink-0 text-muted-foreground/70" />
                       <span>{p}</span>
@@ -207,7 +243,7 @@ const ComparisonPageTemplate = ({ profile }: Props) => {
               {t("compare.whyMrcTitle")}
             </h2>
             <ul className="space-y-3">
-              {profile.whyMrc.map((p, i) => (
+              {whyMrc.map((p, i) => (
                 <li key={p} className="flex gap-3 rounded-xl border border-border bg-card p-4">
                   <span className="flex h-7 w-7 shrink-0 items-center justify-center rounded-full bg-primary/15 font-display text-xs font-bold text-primary">
                     {i + 1}
@@ -226,7 +262,7 @@ const ComparisonPageTemplate = ({ profile }: Props) => {
               {t("compare.verdictTitle")}
             </h2>
             <p className="font-body text-base leading-relaxed text-foreground/90">
-              {profile.conclusion}
+              {conclusion}
             </p>
             <div className="mt-8 flex flex-wrap gap-3">
               <Link

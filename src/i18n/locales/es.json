@@ -1770,6 +1770,329 @@
     "ctaSwap": "Intercambiar Ahora desde $0.30",
     "ctaAffiliate": "Conviértete en Afiliado",
     "compareOthers": "Comparar con Otros",
-    "minLabel": "Mín"
+    "minLabel": "Mín",
+    "profiles": {
+      "changenow": {
+        "rivalName": "ChangeNOW",
+        "title": "MRC GlobalPay vs ChangeNOW (2026) — ¿Cuál es mejor?",
+        "intro": "Ambas son plataformas de swap instantáneo no custodiales sin KYC obligatorio para swaps minoristas. Las diferencias reales están en la regulación, el soporte para micro-swaps y cómo se pagan las comisiones de afiliado.",
+        "rows": {
+          "regulation": {
+            "feature": "Regulación",
+            "mrc": "MSB canadiense · FINTRAC #C100000015 · alineado con Bank of Canada PSP",
+            "rival": "MSB registrado en Estonia (FIU-Estonia)"
+          },
+          "min": {
+            "feature": "Swap mínimo",
+            "mrc": "$0.30",
+            "rival": "$2 – $10 por par (varía)"
+          },
+          "kyc": {
+            "feature": "KYC / registro",
+            "mrc": "No requerido para swaps",
+            "rival": "No requerido para la mayoría; revisión basada en riesgo posible"
+          },
+          "speed": {
+            "feature": "Velocidad media",
+            "mrc": "< 60 segundos (tasa fija)",
+            "rival": "< 5 minutos para tasa fija, más para flotante"
+          },
+          "nonCustodial": {
+            "feature": "No custodial",
+            "mrc": "Sí — wallet a wallet, sin retención de saldos",
+            "rival": "Sí"
+          },
+          "assets": {
+            "feature": "Monedas / pares soportados",
+            "mrc": "6.000+ activos en 80+ redes (agregado)",
+            "rival": "1.200+ activos"
+          },
+          "fees": {
+            "feature": "Comisiones / tasas",
+            "mrc": "Comisión fija transparente, mejor tasa agregada",
+            "rival": "Spread del 0,5% – 4% según el par"
+          },
+          "support": {
+            "feature": "Atención al cliente",
+            "mrc": "Chat 24/7 + email, multilingüe",
+            "rival": "Tickets + chat 24/7"
+          },
+          "affiliate": {
+            "feature": "Programa de afiliados",
+            "mrc": "0,1% – 0,4% vitalicio en BTC, sin expiración, sin mínimo de pago",
+            "rival": "0,4% estándar, pagos mensuales, mínimo $50+"
+          }
+        },
+        "mrcPros": [
+          "Regulación MSB canadiense de FINTRAC (#C100000015) — alineada con el marco PSP del Bank of Canada",
+          "Mínimo de $0,30: permite consolidar polvo cripto que ningún otro agregador maneja",
+          "Comisiones de afiliado vitalicias pagadas automáticamente en BTC, sin mínimo de retiro",
+          "Interfaz en 13 idiomas con soporte RTL completo (hebreo, urdu, persa)",
+          "Agrega liquidez de ChangeNOW + LetsExchange en segundo plano — siempre obtienes lo mejor de ambos"
+        ],
+        "mrcCons": [
+          "Marca más nueva — menos reconocimiento que ChangeNOW",
+          "Aún sin app nativa en las tiendas (instalación PWA en su lugar)"
+        ],
+        "rivalPros": [
+          "Marca establecida desde 2017 con fuerte reconocimiento",
+          "API madura y ecosistema de socios de exchange",
+          "Amplio alcance de marketing y comunidad de afiliados"
+        ],
+        "rivalCons": [
+          "Con sede en la UE — fuera del perímetro regulatorio canadiense/norteamericano que muchos prefieren",
+          "Mínimos más altos ($2 – $10) hacen imposible swappear saldos pequeños o polvo",
+          "El programa de afiliados requiere $50+ para retirar y paga mensualmente, no por swap"
+        ],
+        "whyMrc": [
+          "Registro completo de MSB canadiense — FINTRAC #C100000015, con sede en Ottawa",
+          "Micro-swaps desde $0,30 — diseñado para limpiar polvo cripto",
+          "Reparto vitalicio de ingresos para afiliados, pagos automáticos en BTC en cada swap confirmado",
+          "Privacidad primero: sin email ni cuenta para hacer swap",
+          "Agregación multi-proveedor: enruta por ChangeNOW + LetsExchange para encontrar la mejor tasa por cotización"
+        ],
+        "conclusion": "Si necesitas una marca reconocida y haces swaps de $50+ a la vez, ChangeNOW es una opción totalmente segura. Si quieres un proveedor regulado en Canadá, soporte de micro-swaps desde $0,30 y comisiones vitalicias en BTC pagadas automáticamente, MRC GlobalPay encaja mejor — y entre bastidores sigues beneficiándote de la liquidez de ChangeNOW a través de nuestro agregador."
+      },
+      "simpleswap": {
+        "rivalName": "SimpleSwap",
+        "title": "MRC GlobalPay vs SimpleSwap (2026) — ¿Cuál es mejor?",
+        "intro": "Ambas plataformas apuntan a usuarios que quieren hacer swaps sin registrar una cuenta. Los diferenciadores son la situación regulatoria, el tamaño mínimo del swap, la transparencia de comisiones y la economía de afiliados.",
+        "rows": {
+          "regulation": {
+            "feature": "Regulación",
+            "mrc": "MSB canadiense · FINTRAC #C100000015 · alineado con Bank of Canada PSP",
+            "rival": "Opera sin un registro público equivalente a MSB"
+          },
+          "min": {
+            "feature": "Swap mínimo",
+            "mrc": "$0.30",
+            "rival": "$15 mínimo típico, varía por par"
+          },
+          "kyc": {
+            "feature": "KYC / registro",
+            "mrc": "No requerido para swaps",
+            "rival": "No requerido para la mayoría de swaps"
+          },
+          "speed": {
+            "feature": "Velocidad media",
+            "mrc": "< 60 segundos (tasa fija)",
+            "rival": "5 – 15 minutos típico"
+          },
+          "nonCustodial": {
+            "feature": "No custodial",
+            "mrc": "Sí — wallet a wallet, sin retención de saldos",
+            "rival": "Sí"
+          },
+          "assets": {
+            "feature": "Monedas / pares soportados",
+            "mrc": "6.000+ activos en 80+ redes (agregado)",
+            "rival": "1.500+ activos"
+          },
+          "fees": {
+            "feature": "Comisiones / tasas",
+            "mrc": "Comisión fija transparente, mejor tasa agregada",
+            "rival": "Basado en spread, a menudo 0,5% – 5% efectivo"
+          },
+          "support": {
+            "feature": "Atención al cliente",
+            "mrc": "Chat 24/7 + email, multilingüe",
+            "rival": "Email + chat"
+          },
+          "affiliate": {
+            "feature": "Programa de afiliados",
+            "mrc": "0,1% – 0,4% vitalicio en BTC, sin expiración, sin mínimo de pago",
+            "rival": "Hasta 0,4% de revenue share, pago mínimo $50+"
+          }
+        },
+        "mrcPros": [
+          "MSB canadiense registrado — verificable en el registro público de FINTRAC",
+          "Swaps desde $0,30 vs el piso típico de $15+ de SimpleSwap",
+          "Comisión fija transparente en lugar de spread oculto",
+          "Comisiones vitalicias en BTC sin pago mínimo para afiliados",
+          "13 idiomas totalmente traducidos incluyendo RTL"
+        ],
+        "mrcCons": [
+          "Menor cantidad de activos en la UI directa (foco en los 6.000+ pares líquidos vs el long-tail de SimpleSwap)",
+          "Más nuevos en el mercado"
+        ],
+        "rivalPros": [
+          "Cobertura long-tail incluyendo algunas altcoins poco líquidas",
+          "Establecido en 2018",
+          "Opción de tasa flotante para usuarios que quieren aprovechar la volatilidad"
+        ],
+        "rivalCons": [
+          "Sin registro MSB verificable en una jurisdicción importante",
+          "Mínimo de $15+ hace imposibles la mayoría de swaps de polvo",
+          "Pricing por spread puede ser caro en pares de baja liquidez"
+        ],
+        "whyMrc": [
+          "MSB canadiense regulado (FINTRAC #C100000015) — tus swaps pasan por un proveedor con infraestructura AML/KYC verificable",
+          "Mínimo de $0,30 — barre el polvo cripto que SimpleSwap rechazaría",
+          "Modelo de comisión fija, sin spreads sorpresa en la tasa",
+          "Los afiliados ganan BTC vitalicio, pagado automáticamente por cada swap"
+        ],
+        "conclusion": "SimpleSwap es una opción razonable para hacer swaps de altcoins de mediana capitalización sin cuenta. Para usuarios que valoran la claridad regulatoria, quieren limpiar saldos pequeños o quieren ingresos de afiliado vitalicios en BTC, MRC GlobalPay es la plataforma mejor alineada."
+      },
+      "stealthex": {
+        "rivalName": "StealthEX",
+        "title": "MRC GlobalPay vs StealthEX (2026) — ¿Cuál es mejor?",
+        "intro": "StealthEX es un agregador de swaps no custodial centrado en la privacidad. MRC GlobalPay comparte el diseño no custodial pero añade regulación MSB canadiense completa, mínimos más bajos y un programa de afiliados más rico.",
+        "rows": {
+          "regulation": {
+            "feature": "Regulación",
+            "mrc": "MSB canadiense · FINTRAC #C100000015 · alineado con Bank of Canada PSP",
+            "rival": "Opera fuera de los principales marcos MSB"
+          },
+          "min": {
+            "feature": "Swap mínimo",
+            "mrc": "$0.30",
+            "rival": "$15 mínimo típico, a menudo más para monedas de privacidad"
+          },
+          "kyc": {
+            "feature": "KYC / registro",
+            "mrc": "No requerido para swaps",
+            "rival": "No requerido"
+          },
+          "speed": {
+            "feature": "Velocidad media",
+            "mrc": "< 60 segundos (tasa fija)",
+            "rival": "5 – 30 minutos típico"
+          },
+          "nonCustodial": {
+            "feature": "No custodial",
+            "mrc": "Sí — wallet a wallet, sin retención de saldos",
+            "rival": "Sí"
+          },
+          "assets": {
+            "feature": "Monedas / pares soportados",
+            "mrc": "6.000+ activos en 80+ redes (agregado)",
+            "rival": "1.300+ activos"
+          },
+          "fees": {
+            "feature": "Comisiones / tasas",
+            "mrc": "Comisión fija transparente, mejor tasa agregada",
+            "rival": "Spread variable, 0,4% – 3%"
+          },
+          "support": {
+            "feature": "Atención al cliente",
+            "mrc": "Chat 24/7 + email, multilingüe",
+            "rival": "Email + ticket"
+          },
+          "affiliate": {
+            "feature": "Programa de afiliados",
+            "mrc": "0,1% – 0,4% vitalicio en BTC, sin expiración, sin mínimo de pago",
+            "rival": "0,4% revenue share, aplican umbrales de pago"
+          }
+        },
+        "mrcPros": [
+          "MSB canadiense de FINTRAC (#C100000015) — el mismo diseño no custodial con respaldo regulatorio",
+          "Mínimo de $0,30 vs el piso de $15+ de StealthEX",
+          "Agrega múltiples proveedores de liquidez por cotización (gana el mejor precio)",
+          "Pagos vitalicios en BTC sin mínimo",
+          "UI en 13 idiomas con soporte RTL completo"
+        ],
+        "mrcCons": [
+          "No nos especializamos en enrutamiento exclusivo de monedas de privacidad",
+          "Comunidad menor que StealthEX en el nicho de monedas de privacidad"
+        ],
+        "rivalPros": [
+          "Fuerte reputación en la comunidad de monedas de privacidad",
+          "Amplio rango de soporte para altcoins poco conocidas",
+          "Mensaje de marketing centrado en el anonimato"
+        ],
+        "rivalCons": [
+          "Sin registro MSB en una jurisdicción importante para mostrar a los usuarios",
+          "Mínimos más altos excluyen a usuarios con saldos pequeños",
+          "El precio puede ser opaco en pares de baja liquidez"
+        ],
+        "whyMrc": [
+          "El mismo modelo no custodial wallet-a-wallet que StealthEX, más una licencia MSB canadiense verificable",
+          "Swaps de menos de un dólar — convierte el polvo olvidado en activos usables",
+          "El enrutamiento multi-proveedor encuentra mejor tasa que cualquier proveedor único en muchas cotizaciones",
+          "Ingresos de afiliado pagados en BTC, vitalicio, automático, umbral $0"
+        ],
+        "conclusion": "Si tu única prioridad es el enrutamiento de monedas de privacidad, StealthEX ha construido una fuerte confianza comunitaria allí. Para todos los demás — y especialmente quienes quieren infraestructura regulada más la capacidad de hacer swaps de saldos pequeños — MRC GlobalPay es la mejor opción de uso general."
+      },
+      "letsexchange": {
+        "rivalName": "LetsExchange",
+        "title": "MRC GlobalPay vs LetsExchange (2026) — ¿Cuál es mejor?",
+        "intro": "MRC GlobalPay enruta parte de su liquidez a través de LetsExchange. Por eso esto no es tanto un cara a cara como una elección: ¿quieres acceso directo a LetsExchange, o LetsExchange + ChangeNOW + más proveedores en un front-end regulado?",
+        "rows": {
+          "regulation": {
+            "feature": "Regulación",
+            "mrc": "MSB canadiense · FINTRAC #C100000015 · alineado con Bank of Canada PSP",
+            "rival": "Opera como agregador no custodial sin licencia MSB pública mayor"
+          },
+          "min": {
+            "feature": "Swap mínimo",
+            "mrc": "$0.30",
+            "rival": "$15 mínimo típico, varía por par"
+          },
+          "kyc": {
+            "feature": "KYC / registro",
+            "mrc": "No requerido para swaps",
+            "rival": "No requerido"
+          },
+          "speed": {
+            "feature": "Velocidad media",
+            "mrc": "< 60 segundos (tasa fija)",
+            "rival": "5 – 15 minutos típico"
+          },
+          "nonCustodial": {
+            "feature": "No custodial",
+            "mrc": "Sí — wallet a wallet, sin retención de saldos",
+            "rival": "Sí"
+          },
+          "assets": {
+            "feature": "Monedas / pares soportados",
+            "mrc": "6.000+ activos en 80+ redes (agregado)",
+            "rival": "3.000+ activos"
+          },
+          "fees": {
+            "feature": "Comisiones / tasas",
+            "mrc": "Comisión fija transparente, mejor tasa agregada",
+            "rival": "Variable, a menudo 0,5% – 3%"
+          },
+          "support": {
+            "feature": "Atención al cliente",
+            "mrc": "Chat 24/7 + email, multilingüe",
+            "rival": "Por tickets, más lento que los venues de primer nivel"
+          },
+          "affiliate": {
+            "feature": "Programa de afiliados",
+            "mrc": "0,1% – 0,4% vitalicio en BTC, sin expiración, sin mínimo de pago",
+            "rival": "Revenue share estándar"
+          }
+        },
+        "mrcPros": [
+          "Agrega liquidez de LetsExchange más ChangeNOW y otros — mejores cotizaciones por swap en promedio",
+          "Envoltorio regulado MSB canadiense (#C100000015) sobre la misma liquidez que obtendrías directo",
+          "Mínimo de $0,30 vs $15+ directo en LetsExchange",
+          "Soporte por chat 24/7 (vs cola de tickets de LetsExchange)",
+          "Programa de afiliados vitalicio en BTC con $0 de pago mínimo"
+        ],
+        "mrcCons": [
+          "Si tienes un par específico que solo LetsExchange lista en su long-tail, ir directo puede tener ventajas puntuales"
+        ],
+        "rivalPros": [
+          "Acceso directo a su catálogo completo incluyendo algunas listas long-tail",
+          "Marca no custodial establecida",
+          "Opción de tasa flotante para traders"
+        ],
+        "rivalCons": [
+          "Sin registro MSB verificable en una jurisdicción importante",
+          "Mínimo de $15+ excluye efectivamente el polvo",
+          "Tiempos de respuesta de soporte más lentos"
+        ],
+        "whyMrc": [
+          "Igual obtienes liquidez de LetsExchange — a través de un front-end regulado, con menor mínimo y mejor soporte",
+          "El enrutamiento multi-proveedor significa que casi nunca obtienes una tasa peor que ir directo",
+          "Envoltorio regulatorio MSB canadiense (FINTRAC #C100000015) — verificable en el registro público",
+          "Pagos de afiliado vitalicios en BTC, automáticos, sin mínimo",
+          "UI en 13 idiomas con soporte RTL completo"
+        ],
+        "conclusion": "Casi no hay escenario en el que ir directo a LetsExchange supere usar MRC GlobalPay: misma liquidez (y más), menores mínimos, venue regulado, soporte más rápido y un programa de afiliados más fuerte. Ve directo solo si necesitas un par del long-tail de LetsExchange que no esté en nuestro catálogo agregado."
+      }
+    }
   }
 }
