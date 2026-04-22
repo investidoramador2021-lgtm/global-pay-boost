@@ -12,6 +12,8 @@ import LiveSwapTicker from "@/components/LiveSwapTicker";
 import TokenIcon from "@/components/TokenIcon";
 import GoldSecurityBlock, { isGoldPair } from "@/components/GoldSecurityBlock";
 import AEOAssetBlock from "@/components/AEOAssetBlock";
+import PairEnrichmentBlock from "@/components/PairEnrichmentBlock";
+import { getPairEnrichment } from "@/lib/pair-enrichment";
 import {
   Accordion,
   AccordionContent,
@@ -491,6 +493,19 @@ export default function DynamicExchange() {
             </div>
           </div>
         </section>
+
+        {/* ─── Curated per-pair enrichment (top 200–500 high-priority pairs) ─── */}
+        {(() => {
+          const enrichment = getPairEnrichment(fromLower, toLower);
+          return enrichment ? (
+            <PairEnrichmentBlock
+              enrichment={enrichment}
+              fromUp={fromUp}
+              toUp={toUp}
+              lang={lang}
+            />
+          ) : null;
+        })()}
 
         {/* ─── Step-by-Step How It Works (HowTo Schema alignment) ─── */}
         <section className="py-12 border-t border-[#1E2028]">
