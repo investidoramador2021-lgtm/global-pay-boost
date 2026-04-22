@@ -664,10 +664,70 @@ const Affiliates = () => {
               </p>
             </div>
 
+            {/* HOW TO USE — 3 simple steps */}
+            <div className="mt-12">
+              <div className="text-center max-w-2xl mx-auto">
+                <h3 className="font-display text-2xl sm:text-3xl font-extrabold text-foreground tracking-tight">
+                  {t("affiliates.howToUse.title")}
+                </h3>
+                <p className="mt-3 font-body text-sm sm:text-base text-muted-foreground">
+                  {t("affiliates.howToUse.subtitle")}
+                </p>
+              </div>
+              <div className="mt-8 grid gap-4 sm:grid-cols-3">
+                {[
+                  { icon: Sparkles, title: t("affiliates.howToUse.step1Title"), body: t("affiliates.howToUse.step1Body") },
+                  { icon: Copy, title: t("affiliates.howToUse.step2Title"), body: t("affiliates.howToUse.step2Body") },
+                  { icon: Zap, title: t("affiliates.howToUse.step3Title"), body: t("affiliates.howToUse.step3Body") },
+                ].map((step) => (
+                  <div
+                    key={step.title}
+                    className="rounded-2xl border border-border bg-card/60 p-5 transition-all hover:-translate-y-1 hover:border-primary/40 hover:bg-card hover:shadow-elevated"
+                  >
+                    <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-primary/10">
+                      <step.icon className="h-5 w-5 text-primary" aria-hidden />
+                    </div>
+                    <p className="mt-3 font-display text-base font-bold text-foreground">{step.title}</p>
+                    <p className="mt-2 font-body text-sm text-muted-foreground leading-relaxed">{step.body}</p>
+                  </div>
+                ))}
+              </div>
+            </div>
+
             <div className="mt-10 relative">
               <div className="absolute inset-0 rounded-3xl bg-gradient-to-r from-primary/40 via-[hsl(var(--neon))]/30 to-primary/40 opacity-60 blur-md pointer-events-none" aria-hidden />
               <div className="relative">
                 <WidgetGenerator lang={lang} />
+              </div>
+            </div>
+
+            {/* PROMOTE WITH OUR WIDGET — benefits box */}
+            <div className="mt-12 rounded-3xl border border-primary/30 bg-gradient-to-br from-primary/10 via-card to-card p-6 sm:p-8 shadow-elevated">
+              <div className="max-w-2xl">
+                <h3 className="font-display text-2xl sm:text-3xl font-extrabold text-foreground tracking-tight">
+                  {t("affiliates.promoteBox.title")}
+                </h3>
+                <p className="mt-2 font-body text-sm sm:text-base text-muted-foreground">
+                  {t("affiliates.promoteBox.subtitle")}
+                </p>
+              </div>
+              <div className="mt-6 grid gap-3 sm:grid-cols-2 lg:grid-cols-4">
+                {[
+                  { icon: Smartphone, label: t("affiliates.promoteBox.f1") },
+                  { icon: Layers, label: t("affiliates.promoteBox.f2") },
+                  { icon: BarChart3, label: t("affiliates.promoteBox.f3") },
+                  { icon: Code2, label: t("affiliates.promoteBox.f4") },
+                ].map((item) => (
+                  <div
+                    key={item.label}
+                    className="flex items-start gap-3 rounded-xl border border-border bg-background/60 p-3"
+                  >
+                    <div className="flex h-8 w-8 shrink-0 items-center justify-center rounded-lg bg-primary/15">
+                      <item.icon className="h-4 w-4 text-primary" aria-hidden />
+                    </div>
+                    <span className="font-body text-sm leading-snug text-foreground/90">{item.label}</span>
+                  </div>
+                ))}
               </div>
             </div>
 

@@ -1379,6 +1379,24 @@
       "ex2Body": "Visitantes chegam ao seu post 'Os 5 melhores swaps sem custódia' e testam um sem sair.",
       "ex3Name": "Ferramenta de portfólio",
       "ex3Body": "Adicione uma aba 'Swap Rápido' ao seu app de portfólio — usuários rebalanceiam sem retirar fundos."
+    },
+    "howToUse": {
+      "title": "Comece a Ganhar em 3 Passos Simples",
+      "subtitle": "De zero a widget no ar em menos de 2 minutos — sem precisar programar.",
+      "step1Title": "1. Gere seu widget",
+      "step1Body": "Insira seu e-mail e carteira BTC, escolha Claro ou Escuro, e seu widget personalizado fica pronto na hora.",
+      "step2Title": "2. Copie o código de incorporação",
+      "step2Body": "Um clique copia um iframe limpo. Funciona em WordPress, Webflow, Ghost, Notion, HTML puro — em qualquer lugar.",
+      "step3Title": "3. Cole e comece a ganhar",
+      "step3Body": "Coloque no seu site ou blog. Cada swap que seus visitantes completam te paga BTC, automaticamente e para sempre."
+    },
+    "promoteBox": {
+      "title": "Promova com Nosso Widget",
+      "subtitle": "Tudo que afiliados precisam para converter tráfego em comissões em BTC.",
+      "f1": "Totalmente responsivo e com sua marca",
+      "f2": "Suporta todos os 6.000+ pares de swap",
+      "f3": "Rastreia suas indicações automaticamente",
+      "f4": "Sem necessidade de programação para o embed básico"
     }
   },
   "nicehashWp": {
@@ -1496,6 +1514,15 @@
       "swapNow": "Trocar agora",
       "poweredBy": "Desenvolvido por MRC GlobalPay",
       "tagline": "Ganhe BTC sempre que um visitante trocar pelo seu widget."
+    },
+    "tryWidget": {
+      "tryButton": "Experimente o Widget →",
+      "boxTitle": "Promova com Nosso Widget",
+      "boxSubtitle": "Feito para converter seu tráfego em BTC vitalício.",
+      "f1": "Totalmente responsivo e com sua marca",
+      "f2": "Mais de 6.000 pares suportados",
+      "f3": "Indicações rastreadas automaticamente",
+      "f4": "Sem código para o embed básico"
     }
   },
   "partners": {

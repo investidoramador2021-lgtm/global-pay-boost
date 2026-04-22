@@ -1379,6 +1379,24 @@
       "ex2Body": "Besoekers land op jou 'Top 5 nie-kustodiale ruils' pos en probeer een sonder om te vertrek.",
       "ex3Name": "Portefeulje-instrument",
       "ex3Body": "Voeg 'n 'Vinnige Ruil' oortjie by jou portefeulje-app — gebruikers herbalanseer sonder onttrekking."
+    },
+    "howToUse": {
+      "title": "Begin Verdien in 3 Eenvoudige Stappe",
+      "subtitle": "Van nul tot 'n lewendige widget in minder as 2 minute — geen kodering nodig nie.",
+      "step1Title": "1. Genereer jou widget",
+      "step1Body": "Voer jou e-pos en BTC-beursie in, kies Lig of Donker, en jou persoonlike widget is dadelik gereed.",
+      "step2Title": "2. Kopieer die inbed-kode",
+      "step2Body": "Een klik kopieer 'n skoon iframe-snippet. Werk op WordPress, Webflow, Ghost, Notion, gewone HTML — oral.",
+      "step3Title": "3. Plak en begin verdien",
+      "step3Body": "Plaas dit op jou werf of blog. Elke ruil wat jou besoekers voltooi, betaal jou BTC, outomaties en lewenslank."
+    },
+    "promoteBox": {
+      "title": "Bevorder Met Ons Widget",
+      "subtitle": "Alles wat affiliasies nodig het om verkeer in BTC-kommissies om te skakel.",
+      "f1": "Ten volle responsief en met jou handelsmerk",
+      "f2": "Ondersteun al 6 000+ ruilpare",
+      "f3": "Volg jou verwysings outomaties",
+      "f4": "Geen koderingvaardighede nodig vir die basiese inbed nie"
     }
   },
   "nicehashWp": {
@@ -1496,6 +1514,15 @@
       "swapNow": "Ruil nou",
       "poweredBy": "Aangedryf deur MRC GlobalPay",
       "tagline": "Verdien BTC elke keer wanneer 'n besoeker via jou widget ruil."
+    },
+    "tryWidget": {
+      "tryButton": "Probeer die Widget →",
+      "boxTitle": "Bevorder Met Ons Widget",
+      "boxSubtitle": "Gebou om jou verkeer in lewenslange BTC om te skakel.",
+      "f1": "Ten volle responsief en met jou handelsmerk",
+      "f2": "Meer as 6 000 pare ondersteun",
+      "f3": "Verwysings outomaties gevolg",
+      "f4": "Geen kode nodig vir basiese inbed nie"
     }
   },
   "partners": {

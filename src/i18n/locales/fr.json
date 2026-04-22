@@ -1379,6 +1379,24 @@
       "ex2Body": "Les visiteurs arrivent sur votre article 'Les 5 meilleurs swaps non-custodial' et en testent un sans partir.",
       "ex3Name": "Outil de portefeuille",
       "ex3Body": "Ajoutez un onglet 'Swap Rapide' à votre app de portefeuille — les utilisateurs rééquilibrent sans retirer."
+    },
+    "howToUse": {
+      "title": "Commencez à Gagner en 3 Étapes Simples",
+      "subtitle": "De zéro à widget en ligne en moins de 2 minutes — sans coder.",
+      "step1Title": "1. Générez votre widget",
+      "step1Body": "Entrez votre e-mail et votre wallet BTC, choisissez Clair ou Sombre, et votre widget personnalisé est prêt instantanément.",
+      "step2Title": "2. Copiez le code d'intégration",
+      "step2Body": "Un clic copie un iframe propre. Fonctionne sur WordPress, Webflow, Ghost, Notion, HTML brut — partout.",
+      "step3Title": "3. Collez et gagnez",
+      "step3Body": "Déposez-le sur votre site ou blog. Chaque swap effectué par vos visiteurs vous rapporte du BTC, automatiquement et à vie."
+    },
+    "promoteBox": {
+      "title": "Faites la Promotion Avec Notre Widget",
+      "subtitle": "Tout ce dont les affiliés ont besoin pour convertir le trafic en commissions BTC.",
+      "f1": "Entièrement responsive et à votre marque",
+      "f2": "Prend en charge les 6 000+ paires de swap",
+      "f3": "Suit vos parrainages automatiquement",
+      "f4": "Aucune compétence en code requise pour l'intégration de base"
     }
   },
   "nicehashWp": {
@@ -1496,6 +1514,15 @@
       "swapNow": "Échanger",
       "poweredBy": "Propulsé par MRC GlobalPay",
       "tagline": "Gagnez du BTC chaque fois qu'un visiteur échange via votre widget."
+    },
+    "tryWidget": {
+      "tryButton": "Essayer le Widget →",
+      "boxTitle": "Faites la Promotion Avec Notre Widget",
+      "boxSubtitle": "Conçu pour convertir votre trafic en BTC à vie.",
+      "f1": "Entièrement responsive et à votre marque",
+      "f2": "Plus de 6 000 paires prises en charge",
+      "f3": "Parrainages suivis automatiquement",
+      "f4": "Aucun code requis pour l'intégration de base"
     }
   },
   "partners": {

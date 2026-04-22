@@ -1379,6 +1379,24 @@
       "ex2Body": "Ziyaretçiler 'En iyi 5 saklamasız swap' yazınıza iner ve sayfadan ayrılmadan birini dener.",
       "ex3Name": "Portföy aracı",
       "ex3Body": "Portföy uygulamanıza 'Hızlı Takas' sekmesi ekleyin — kullanıcılar fon çekmeden dengeler."
+    },
+    "howToUse": {
+      "title": "3 Basit Adımda Kazanmaya Başla",
+      "subtitle": "Sıfırdan canlı widget'a 2 dakikadan kısa sürede — kod yazmadan.",
+      "step1Title": "1. Widget'ını oluştur",
+      "step1Body": "E-postanı ve BTC cüzdanını gir, Açık veya Koyu seç, kişisel widget'ın anında hazır.",
+      "step2Title": "2. Yerleştirme kodunu kopyala",
+      "step2Body": "Tek tıkla temiz bir iframe parçası kopyalanır. WordPress, Webflow, Ghost, Notion, düz HTML — her yerde çalışır.",
+      "step3Title": "3. Yapıştır ve kazanmaya başla",
+      "step3Body": "Sitene veya blog'una yerleştir. Ziyaretçilerinin yaptığı her swap sana otomatik ve ömür boyu BTC kazandırır."
+    },
+    "promoteBox": {
+      "title": "Widget'imizle Tanıt",
+      "subtitle": "Affiliate'lerin trafiği BTC komisyonlarına dönüştürmek için ihtiyaç duyduğu her şey.",
+      "f1": "Tamamen duyarlı ve markanıza uygun",
+      "f2": "6.000+ swap çiftinin tümünü destekler",
+      "f3": "Yönlendirmelerinizi otomatik takip eder",
+      "f4": "Temel yerleştirme için kod bilgisi gerekmez"
     }
   },
   "nicehashWp": {
@@ -1496,6 +1514,15 @@
       "swapNow": "Şimdi Takas Et",
       "poweredBy": "MRC GlobalPay tarafından sağlanır",
       "tagline": "Ziyaretçileriniz widget'ınız üzerinden takas yaptığında BTC kazanın."
+    },
+    "tryWidget": {
+      "tryButton": "Widget'ı Dene →",
+      "boxTitle": "Widget'imizle Tanıt",
+      "boxSubtitle": "Trafiğinizi ömür boyu BTC'ye dönüştürmek için tasarlandı.",
+      "f1": "Tamamen duyarlı ve markanıza uygun",
+      "f2": "6.000+ çift desteklenir",
+      "f3": "Yönlendirmeler otomatik takip edilir",
+      "f4": "Temel yerleştirme için kod gerekmez"
     }
   },
   "partners": {

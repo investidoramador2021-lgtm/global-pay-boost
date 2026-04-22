@@ -1393,6 +1393,24 @@
       "ex2Body": "Visitors land on your '5 best non-custodial swaps' post and try one without leaving the page.",
       "ex3Name": "Portfolio tool / dashboard",
       "ex3Body": "Add a 'Quick Swap' tab to your portfolio app — users rebalance without exporting funds."
+    },
+    "howToUse": {
+      "title": "Start Earning in 3 Simple Steps",
+      "subtitle": "From zero to live widget in under 2 minutes — no coding required.",
+      "step1Title": "1. Generate your widget",
+      "step1Body": "Enter your email and BTC wallet, choose Light or Dark, and your personalized widget is ready instantly.",
+      "step2Title": "2. Copy the embed code",
+      "step2Body": "One click copies a clean iframe snippet. Works on WordPress, Webflow, Ghost, Notion, plain HTML — anywhere.",
+      "step3Title": "3. Paste & start earning",
+      "step3Body": "Drop it on your site or blog. Every swap your visitors complete pays you BTC, automatically and for life."
+    },
+    "promoteBox": {
+      "title": "Promote With Our Widget",
+      "subtitle": "Everything affiliates need to convert traffic into BTC commissions.",
+      "f1": "Fully responsive and on-brand",
+      "f2": "Supports all 6,000+ swap pairs",
+      "f3": "Tracks your referrals automatically",
+      "f4": "No coding skills needed for the basic embed"
     }
   },
   "nicehashWp": {
@@ -1510,6 +1528,15 @@
       "swapNow": "Swap Now",
       "poweredBy": "Powered by MRC GlobalPay",
       "tagline": "Earn BTC every time a visitor swaps through your widget."
+    },
+    "tryWidget": {
+      "tryButton": "Try the Widget →",
+      "boxTitle": "Promote With Our Widget",
+      "boxSubtitle": "Built to convert your traffic into lifetime BTC.",
+      "f1": "Fully responsive and on-brand",
+      "f2": "All 6,000+ pairs supported",
+      "f3": "Referrals tracked automatically",
+      "f4": "No coding required for basic embed"
     }
   },
   "partners": {
