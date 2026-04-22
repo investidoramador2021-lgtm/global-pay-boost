@@ -44,6 +44,7 @@ const CompareDirectory = () => {
 
   return (
     <>
+      <HreflangTags />
       <Helmet>
         <title>MRC Global Pay vs 50+ Exchanges | 2026 Comparison</title>
         <meta name="description" content="Compare MRC Global Pay against 50+ crypto exchanges. Side-by-side feature comparisons covering fees, minimums, verification policies, speed, and more." />
