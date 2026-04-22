@@ -353,7 +353,10 @@ ${items}
     for (const slug of LEARN_SLUGS) push(urlEntry(`/learn/${slug}`, today, "monthly", "0.7", false), `/learn/${slug}`);
     for (const slug of COMPARE_SLUGS) {
       const p = `/compare/mrc-vs-${slug}`;
-      for (const e of localizedEntries(p, today, "weekly", "0.8")) push(e, p);
+      for (const e of localizedEntries(p, today, "weekly", "0.8")) {
+        const m = e.match(/<loc>([^<]+)<\/loc>/);
+        push(e, m ? m[1] : e);
+      }
     }
     for (const slug of SOLUTION_SLUGS) {
       const p = `/solutions/how-to-swap-${slug}`;
