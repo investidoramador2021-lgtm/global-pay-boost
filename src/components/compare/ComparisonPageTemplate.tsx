@@ -131,10 +131,10 @@ const ComparisonPageTemplate = ({ profile }: Props) => {
               {t("compare.updatedTag")}
             </span>
             <h1 className="font-display text-3xl font-bold tracking-tight text-foreground sm:text-5xl">
-              {profile.title}
+              {title}
             </h1>
             <p className="mx-auto mt-4 max-w-2xl font-body text-base sm:text-lg leading-relaxed text-muted-foreground">
-              {profile.intro}
+              {intro}
             </p>
           </div>
         </section>
