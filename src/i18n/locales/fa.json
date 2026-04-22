@@ -1751,5 +1751,25 @@
     "body": "بازخورد صادقانه (خوب یا بد) به سایر کاربران کریپتو کمک می‌کند مکانی امن برای تبادل انتخاب کنند و به ما کمک می‌کند بهتر شویم. اولین نفر باشید.",
     "cta": "اولین نفری باشید که نظر می‌دهد",
     "footerCta": "اولین نفری باشید که در Trustpilot به ما امتیاز می‌دهد"
+  },
+  "compare": {
+    "breadcrumbHome": "خانه",
+    "breadcrumbCompare": "مقایسه",
+    "updatedTag": "به‌روز ۲۰۲۶",
+    "tableTitle": "MRC GlobalPay در برابر {{rival}} — رو در رو",
+    "colFeature": "ویژگی",
+    "colWinner": "برنده",
+    "winnerMrc": "MRC GlobalPay",
+    "winnerTie": "مساوی",
+    "tableFootnote": "داده‌ها در آوریل ۲۰۲۶ تأیید شد. شرایط {{rival}} ممکن است بسته به جفت متفاوت باشد.",
+    "prosConsTitle": "مزایا و معایب — نگاهی متعادل",
+    "prosLabel": "مزایا",
+    "consLabel": "معایب",
+    "whyMrcTitle": "چرا MRC GlobalPay را انتخاب کنید",
+    "verdictTitle": "حکم و توصیه",
+    "ctaSwap": "از ۰٫۳۰ دلار همین حالا سوآپ کنید",
+    "ctaAffiliate": "افیلیت شوید",
+    "compareOthers": "با دیگران مقایسه کنید",
+    "minLabel": "حداقل"
   }
 }

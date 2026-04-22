@@ -1751,5 +1751,25 @@
     "body": "ایماندار رائے (اچھی یا بری) دیگر کرپٹو صارفین کو محفوظ سویپ کی جگہ منتخب کرنے میں مدد کرتی ہے اور ہمیں بہتر بنانے میں مدد دیتی ہے۔ پہلے بنیں۔",
     "cta": "پہلا جائزہ دینے والے بنیں",
     "footerCta": "Trustpilot پر ہمیں پہلا جائزہ دینے والے بنیں"
+  },
+  "compare": {
+    "breadcrumbHome": "ہوم",
+    "breadcrumbCompare": "موازنہ",
+    "updatedTag": "2026 اپ ڈیٹ",
+    "tableTitle": "MRC GlobalPay بمقابلہ {{rival}} — برابر برابر",
+    "colFeature": "خصوصیت",
+    "colWinner": "فاتح",
+    "winnerMrc": "MRC GlobalPay",
+    "winnerTie": "برابر",
+    "tableFootnote": "ڈیٹا اپریل 2026 میں تصدیق شدہ۔ {{rival}} کی شرائط جوڑی کے مطابق مختلف ہو سکتی ہیں۔",
+    "prosConsTitle": "فوائد اور نقصانات — متوازن نظر",
+    "prosLabel": "فوائد",
+    "consLabel": "نقصانات",
+    "whyMrcTitle": "MRC GlobalPay کیوں منتخب کریں",
+    "verdictTitle": "فیصلہ اور سفارش",
+    "ctaSwap": "$0.30 سے ابھی سویپ کریں",
+    "ctaAffiliate": "ایفیلیٹ بنیں",
+    "compareOthers": "دوسروں سے موازنہ",
+    "minLabel": "کم از کم"
   }
 }

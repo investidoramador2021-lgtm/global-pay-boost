@@ -1751,5 +1751,25 @@
     "body": "Чесні відгуки (позитивні чи негативні) допомагають іншим крипто-користувачам обрати безпечне місце для обміну та допомагають нам покращуватися. Будьте першим.",
     "cta": "Залиште перший відгук",
     "footerCta": "Будьте першим, хто залишить нам відгук на Trustpilot"
+  },
+  "compare": {
+    "breadcrumbHome": "Головна",
+    "breadcrumbCompare": "Порівняння",
+    "updatedTag": "Оновлено 2026",
+    "tableTitle": "MRC GlobalPay vs {{rival}} — Пліч-о-пліч",
+    "colFeature": "Функція",
+    "colWinner": "Переможець",
+    "winnerMrc": "MRC GlobalPay",
+    "winnerTie": "Нічия",
+    "tableFootnote": "Дані перевірені у квітні 2026 року. Умови {{rival}} можуть відрізнятися за парами.",
+    "prosConsTitle": "Плюси та Мінуси — Збалансований Погляд",
+    "prosLabel": "Плюси",
+    "consLabel": "Мінуси",
+    "whyMrcTitle": "Чому Обрати MRC GlobalPay",
+    "verdictTitle": "Вердикт і Рекомендація",
+    "ctaSwap": "Свопнути від $0,30",
+    "ctaAffiliate": "Стати Афіліатом",
+    "compareOthers": "Порівняти з іншими",
+    "minLabel": "Мін"
   }
 }

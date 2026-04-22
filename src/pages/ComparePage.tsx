@@ -5,6 +5,8 @@ import SiteHeader from "@/components/SiteHeader";
 import SiteFooter from "@/components/SiteFooter";
 import MsbTrustBar from "@/components/MsbTrustBar";
 import { getCompetitorBySlug, getRandomCompetitors, type Competitor } from "@/lib/competitor-data";
+import { getDeepProfile } from "@/lib/competitor-deep";
+import ComparisonPageTemplate from "@/components/compare/ComparisonPageTemplate";
 import { usePageUrl } from "@/hooks/use-page-url";
 import {
   Table, TableHeader, TableBody, TableHead, TableRow, TableCell,
@@ -50,6 +52,10 @@ const ComparePage = () => {
   const rivalSlug = slug?.replace("mrc-vs-", "") ?? "";
   const competitor = getCompetitorBySlug(rivalSlug);
   const pageUrl = usePageUrl(`/compare/${slug}`);
+
+  // Rich, hand-curated comparison for priority competitors
+  const deep = getDeepProfile(rivalSlug);
+  if (deep) return <ComparisonPageTemplate profile={deep} />;
 
   if (!competitor) {
     return (

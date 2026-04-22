@@ -1751,5 +1751,25 @@
     "body": "משוב כן (חיובי או שלילי) עוזר למשתמשי קריפטו אחרים לבחור איפה להחליף בבטחה ועוזר לנו להשתפר. היו הראשונים.",
     "cta": "היו הראשונים להשאיר ביקורת",
     "footerCta": "היו הראשונים לדרג אותנו ב-Trustpilot"
+  },
+  "compare": {
+    "breadcrumbHome": "בית",
+    "breadcrumbCompare": "השוואה",
+    "updatedTag": "מעודכן 2026",
+    "tableTitle": "MRC GlobalPay מול {{rival}} — זה לצד זה",
+    "colFeature": "תכונה",
+    "colWinner": "מנצח",
+    "winnerMrc": "MRC GlobalPay",
+    "winnerTie": "תיקו",
+    "tableFootnote": "נתונים אומתו באפריל 2026. תנאי {{rival}} עשויים להשתנות לפי זוג.",
+    "prosConsTitle": "יתרונות וחסרונות — מבט מאוזן",
+    "prosLabel": "יתרונות",
+    "consLabel": "חסרונות",
+    "whyMrcTitle": "למה לבחור ב-MRC GlobalPay",
+    "verdictTitle": "פסק דין והמלצה",
+    "ctaSwap": "החלף עכשיו מ-$0.30",
+    "ctaAffiliate": "הצטרף כשותף",
+    "compareOthers": "השווה לאחרים",
+    "minLabel": "מינ׳"
   }
 }
