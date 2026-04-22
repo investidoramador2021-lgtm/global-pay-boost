@@ -2123,5 +2123,14 @@
         }
       ]
     }
+  },
+  "pairEnrichment": {
+    "whyTitle": "Por que trocar {{from}} por {{to}}?",
+    "stepsTitle": "Passo a passo: {{from}} → {{to}}",
+    "notesTitle": "Taxas, velocidade e mínimo para {{from}} → {{to}}",
+    "peopleAlsoTitle": "Outros também trocam",
+    "feesLabel": "Taxas",
+    "speedLabel": "Velocidade",
+    "minimumLabel": "Mínimo"
   }
 }

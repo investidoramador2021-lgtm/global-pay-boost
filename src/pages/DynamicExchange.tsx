@@ -496,7 +496,7 @@ export default function DynamicExchange() {
 
         {/* ─── Curated per-pair enrichment (top 200–500 high-priority pairs) ─── */}
         {(() => {
-          const enrichment = getPairEnrichment(fromLower, toLower);
+          const enrichment = getPairEnrichment(fromLower, toLower, lang);
           return enrichment ? (
             <PairEnrichmentBlock
               enrichment={enrichment}

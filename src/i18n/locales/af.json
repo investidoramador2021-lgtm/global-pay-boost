@@ -2123,5 +2123,14 @@
         }
       ]
     }
+  },
+  "pairEnrichment": {
+    "whyTitle": "Hoekom {{from}} na {{to}} omruil?",
+    "stepsTitle": "Stap-vir-stap: {{from}} → {{to}}",
+    "notesTitle": "Fooie, spoed en minimum vir {{from}} → {{to}}",
+    "peopleAlsoTitle": "Ander ruil ook om",
+    "feesLabel": "Fooie",
+    "speedLabel": "Spoed",
+    "minimumLabel": "Minimum"
   }
 }
