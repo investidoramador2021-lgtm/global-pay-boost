@@ -39,11 +39,47 @@ const WinnerBadge = ({ winner, mrcLabel, rivalLabel, tieLabel }: { winner: "mrc"
 };
 
 const ComparisonPageTemplate = ({ profile }: Props) => {
-  const { t } = useTranslation();
+  const { t, i18n } = useTranslation();
   const { pathname } = useLocation();
   const lang = getLangFromPath(pathname);
   const pageUrl = usePageUrl(`/compare/mrc-vs-${profile.slug}`);
   const others = getRandomCompetitors(profile.slug, 4);
+
+  // Translation helper with fallback to canonical English profile data.
+  const base = `compare.profiles.${profile.slug}`;
+  const tr = (suffix: string, fallback: string): string => {
+    const key = `${base}.${suffix}`;
+    const exists = i18n.exists(key);
+    if (!exists) return fallback;
+    const v = t(key);
+    return typeof v === "string" && v.length > 0 ? v : fallback;
+  };
+
+  const title = tr("title", profile.title);
+  const intro = tr("intro", profile.intro);
+  const conclusion = tr("conclusion", profile.conclusion);
+  const localizedRows = profile.rows.map((r, idx) => {
+    // Stable row IDs (must match ROW_IDS in the inject script).
+    const ids = ["regulation", "min", "kyc", "speed", "nonCustodial", "assets", "fees", "support", "affiliate"] as const;
+    const id = ids[idx] ?? String(idx);
+    return {
+      ...r,
+      feature: tr(`rows.${id}.feature`, r.feature),
+      mrc: tr(`rows.${id}.mrc`, r.mrc),
+      rival: tr(`rows.${id}.rival`, r.rival),
+    };
+  });
+  const trList = (suffix: "mrcPros" | "mrcCons" | "rivalPros" | "rivalCons" | "whyMrc", fallback: string[]): string[] => {
+    const key = `${base}.${suffix}`;
+    if (!i18n.exists(key)) return fallback;
+    const v = t(key, { returnObjects: true });
+    return Array.isArray(v) && v.length > 0 ? (v as string[]) : fallback;
+  };
+  const mrcPros = trList("mrcPros", profile.mrcPros);
+  const mrcCons = trList("mrcCons", profile.mrcCons);
+  const rivalPros = trList("rivalPros", profile.rivalPros);
+  const rivalCons = trList("rivalCons", profile.rivalCons);
+  const whyMrc = trList("whyMrc", profile.whyMrc);
 
   const jsonLd = [
     {
@@ -60,11 +96,11 @@ const ComparisonPageTemplate = ({ profile }: Props) => {
   return (
     <>
       <Helmet>
-        <title>{profile.title}</title>
-        <meta name="description" content={profile.intro.slice(0, 158)} />
+        <title>{title}</title>
+        <meta name="description" content={intro.slice(0, 158)} />
         <link rel="canonical" href={pageUrl} />
-        <meta property="og:title" content={profile.title} />
-        <meta property="og:description" content={profile.intro.slice(0, 158)} />
+        <meta property="og:title" content={title} />
+        <meta property="og:description" content={intro.slice(0, 158)} />
         <meta property="og:url" content={pageUrl} />
         <meta property="og:type" content="article" />
         {jsonLd.map((ld, i) => (
