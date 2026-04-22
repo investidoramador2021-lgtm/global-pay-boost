@@ -1298,6 +1298,19 @@ const ExchangeWidget = ({ onTabChange, defaultFrom, defaultTo }: ExchangeWidgetP
         // Wrapped/multi-chain assets that often arrive bare in deep links
         weth: "wetherc20",
         wbtc: "wbtc",
+        // L1 native tokens whose bare ticker returns null on ChangeNOW
+        // (must resolve to the canonical network-suffixed variant — verified live).
+        bnb: "bnbbsc",
+        // Memecoins — only quote on their canonical home chain
+        bonk: "bonksol",
+        pepe: "pepeerc20",
+        shib: "shiberc20",
+        shiba: "shiberc20",
+        // PayPal USD — Ethereum has deepest PYUSD liquidity
+        pyusd: "pyusderc20",
+        // Niche assets — only one network supported by the aggregator
+        siren: "sirenbsc",
+        vinu: "vinubsc",
       };
 
       // Tokens pending liquidity — default to USDC (Solana) with warning
