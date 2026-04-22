@@ -81,6 +81,14 @@ const ComparisonPageTemplate = ({ profile }: Props) => {
   const rivalCons = trList("rivalCons", profile.rivalCons);
   const whyMrc = trList("whyMrc", profile.whyMrc);
 
+  // FAQ — translated questions/answers with {rival} interpolation.
+  const faqTitle = t("compare.faq.title", { defaultValue: "Frequently Asked Questions" });
+  const rawFaq = t("compare.faq.items", { returnObjects: true, defaultValue: [] }) as Array<{ q: string; a: string }>;
+  const faqItems = (Array.isArray(rawFaq) ? rawFaq : []).map((item) => ({
+    q: (item.q || "").replace(/\{\{rival\}\}/g, profile.rivalName),
+    a: (item.a || "").replace(/\{\{rival\}\}/g, profile.rivalName),
+  }));
+
   const jsonLd = [
     {
       "@context": "https://schema.org",
@@ -91,6 +99,17 @@ const ComparisonPageTemplate = ({ profile }: Props) => {
         { "@type": "ListItem", position: 3, name: `MRC vs ${profile.rivalName}`, item: pageUrl },
       ],
     },
+    ...(faqItems.length > 0
+      ? [{
+          "@context": "https://schema.org",
+          "@type": "FAQPage",
+          mainEntity: faqItems.map((f) => ({
+            "@type": "Question",
+            name: f.q,
+            acceptedAnswer: { "@type": "Answer", text: f.a },
+          })),
+        }]
+      : []),
   ];
 
   return (
