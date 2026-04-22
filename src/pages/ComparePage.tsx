@@ -53,6 +53,10 @@ const ComparePage = () => {
   const competitor = getCompetitorBySlug(rivalSlug);
   const pageUrl = usePageUrl(`/compare/${slug}`);
 
+  // Rich, hand-curated comparison for priority competitors
+  const deep = getDeepProfile(rivalSlug);
+  if (deep) return <ComparisonPageTemplate profile={deep} />;
+
   if (!competitor) {
     return (
       <>
