@@ -148,6 +148,36 @@ const AffiliateProgramHomeCTA = () => {
             </div>
           </div>
         </div>
+
+        {/* PROMOTE WITH OUR WIDGET — benefit box */}
+        <div className="mt-6 rounded-3xl border border-primary/30 bg-gradient-to-br from-primary/10 via-card to-card p-6 sm:p-8 shadow-[0_10px_40px_-15px_hsl(var(--primary)/0.3)]">
+          <div className="max-w-2xl">
+            <h3 className="font-display text-xl sm:text-2xl font-extrabold text-foreground tracking-tight">
+              {t("affiliateHomeCta.tryWidget.boxTitle")}
+            </h3>
+            <p className="mt-2 font-body text-sm sm:text-base text-muted-foreground">
+              {t("affiliateHomeCta.tryWidget.boxSubtitle")}
+            </p>
+          </div>
+          <div className="mt-5 grid gap-3 sm:grid-cols-2 lg:grid-cols-4">
+            {[
+              { icon: Smartphone, label: t("affiliateHomeCta.tryWidget.f1") },
+              { icon: Layers, label: t("affiliateHomeCta.tryWidget.f2") },
+              { icon: BarChart3, label: t("affiliateHomeCta.tryWidget.f3") },
+              { icon: Code2, label: t("affiliateHomeCta.tryWidget.f4") },
+            ].map((item) => (
+              <div
+                key={item.label}
+                className="flex items-start gap-3 rounded-xl border border-border bg-background/60 p-3"
+              >
+                <div className="flex h-8 w-8 shrink-0 items-center justify-center rounded-lg bg-primary/15">
+                  <item.icon className="w-4 h-4 text-primary" />
+                </div>
+                <span className="text-sm leading-snug text-foreground/90">{item.label}</span>
+              </div>
+            ))}
+          </div>
+        </div>
       </div>
     </section>
   );
