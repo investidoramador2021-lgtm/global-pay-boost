@@ -1353,11 +1353,65 @@ const ExchangeWidget = ({ onTabChange, defaultFrom, defaultTo }: ExchangeWidgetP
         spyon: "spyonerc20", tslaon: "tslaonerc20",
         // Niche / single-variant
         bifi: "bifierc20", euri: "eurierc20",
+        // ─── Auto-generated 2026-04 deep audit (148 verified across CN/LE/SE/SS) ───
+        // arb family
+        magic: "magicarb", xai: "xaiarb",
+        // arc20 family
+        png: "pngarc20",
+        // base family
+        awe: "awebase", check: "checkbase", flock: "flockbase", kaito: "kaitobase",
+        sapien: "sapienbase",
+        // bsc family
+        "4": "4bsc", ace: "acebsc", ai: "aibsc", ain: "ainbsc",
+        alu: "alubsc", arty: "artybsc", at: "atbsc", b: "bbsc",
+        bank: "bankbsc", bas: "basbsc", br: "brbsc", broccolif3b: "broccolif3bbsc",
+        cookie: "cookiebsc", cross: "crossbsc", diam: "diambsc", eps: "epsbsc",
+        fhe: "fhebsc", form: "formbsc", gtai: "gtaibsc", haedal: "haedalbsc",
+        holo: "holobsc", home: "homebsc", idol: "idolbsc", in: "inbsc",
+        iota: "iotabsc", iotx: "iotxbsc", kilo: "kilobsc", lista: "listabsc",
+        mubarak: "mubarakbsc", myx: "myxbsc", nfp: "nfpbsc", night: "nightbsc",
+        ont: "ontbsc", opn: "opnbsc", parti: "partibsc", pbx: "pbxbsc",
+        phb: "phbbsc", pirate: "piratebsc", q: "qbsc", sfund: "sfundbsc",
+        skyai: "skyaibsc", solv: "solvbsc", soph: "sophbsc", stbl: "stblbsc",
+        sto: "stobsc", the: "thebsc", tria: "triabsc", tst: "tstbsc",
+        turtle: "turtlebsc", wai: "waibsc", wod: "wodbsc", xny: "xnybsc",
+        xter: "xterbsc", zkwasm: "zkwasmbsc",
+        // erc20 family
+        allo: "alloerc20", apex: "apexerc20", ava2: "ava2erc20", band: "banderc20",
+        chz: "chzerc20", core: "coreerc20", cow: "cowerc20", cyber: "cybererc20",
+        dusk: "duskerc20", edge: "edgeerc20", ela: "elaerc20", era: "eraerc20",
+        es: "eserc20", eurq: "eurqerc20", eurr: "eurrerc20", fet: "feterc20",
+        flux: "fluxerc20", gomining: "gominingerc20", hei: "heierc20", hyper: "hypererc20",
+        kernel: "kernelerc20", la: "laerc20", morpho: "morphoerc20", newt: "newterc20",
+        order: "ordererc20", pol: "polerc20", pyr: "pyrerc20", red: "rederc20",
+        rlusd: "rlusderc20", safe: "safeerc20", sd: "sderc20", soso: "sosoerc20",
+        spec: "specerc20", ssv: "ssverc20", syn: "synerc20", taiko: "taikoerc20",
+        tree: "treeerc20", uds: "udserc20", usat: "usaterc20", usdf: "usdferc20",
+        usdq: "usdqerc20", usdr: "usdrerc20", usds: "usdserc20", vista: "vistaerc20",
+        wlfi: "wlfierc20", wmtx: "wmtxerc20", yb: "yberc20", zeta: "zetaerc20",
+        zkc: "zkcerc20", zkp: "zkperc20",
+        // op family
+        velodrome: "velodromeop",
+        // eth family (wrapped variants)
+        hype: "hypereth",
+        // sol family
+        "2z": "2zsol", act: "actsol", alch: "alchsol", aura: "aurasol",
+        ban: "bansol", cudis: "cudissol", daddy: "daddysol", drift: "driftsol",
+        fartcoin: "fartcoinsol", griffain: "griffainsol", huma: "humasol", jellyjelly: "jellyjellysol",
+        kmno: "kmnosol", layer: "layersol", me: "mesol", met: "metsol",
+        mplx: "mplxsol", neon: "neonsol", pippin: "pippinsol", popcat: "popcatsol",
+        prcl: "prclsol", roam: "roamsol", skr: "skrsol", swarms: "swarmssol",
+        tai: "taisol", tnsr: "tnsrsol", ufd: "ufdsol", vine: "vinesol",
+        wct: "wctsol", yzy: "yzysol", zerebro: "zerebrosol",
+        // ton family
+        cati: "catiton", major: "majorton",
+        // trc20 family
+        usdd: "usddtrc20",
       };
 
       // Tokens pending liquidity — default to USDC (Solana) with warning.
-      // virtual was removed (now live as virtualbase, see TICKER_MAP above).
-      const PENDING_TOKENS = new Set(["eliza", "elizasol", "zerebro", "zerebrosol", "pippin", "pippinsol", "ai16z", "ai16zsol"]);
+      // pippin and zerebro were removed (now live as pippinsol/zerebrosol, see TICKER_MAP above).
+      const PENDING_TOKENS = new Set(["eliza", "elizasol", "ai16z", "ai16zsol"]);
 
       let paramTo = rawTo ? (TICKER_MAP[rawTo] || rawTo) : undefined;
       const paramFromMapped = paramFrom ? (TICKER_MAP[paramFrom] || paramFrom) : undefined;
