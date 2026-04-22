@@ -2093,6 +2093,35 @@
         ],
         "conclusion": "Casi no hay escenario en el que ir directo a LetsExchange supere usar MRC GlobalPay: misma liquidez (y más), menores mínimos, venue regulado, soporte más rápido y un programa de afiliados más fuerte. Ve directo solo si necesitas un par del long-tail de LetsExchange que no esté en nuestro catálogo agregado."
       }
+    },
+    "faq": {
+      "title": "Preguntas Frecuentes",
+      "items": [
+        {
+          "q": "¿Es MRC GlobalPay más seguro que {{rival}}?",
+          "a": "MRC GlobalPay es una Empresa de Servicios Monetarios registrada en Canadá (FINTRAC #C100000015) y Proveedor de Servicios de Pago Autorizado por el Banco de Canadá. La mayoría de los agregadores no custodiales como {{rival}} operan sin un regulador nacional claro. Nunca custodiamos fondos — cada swap es de billetera a billetera — pero la capa regulatoria añade un estándar adicional de responsabilidad."
+        },
+        {
+          "q": "¿Cuál es el mínimo de intercambio en MRC GlobalPay frente a {{rival}}?",
+          "a": "MRC GlobalPay admite micro-swaps desde solo $0.30, ideal para limpiar polvo cripto y probar pares. Los mínimos de {{rival}} suelen ser mucho más altos y varían por activo."
+        },
+        {
+          "q": "¿Necesito registrarme o completar KYC para intercambiar?",
+          "a": "No se requiere cuenta, correo ni KYC para los swaps estándar en MRC GlobalPay. Como MSB regulada, solo solicitamos verificación en transacciones marcadas como de alto riesgo. {{rival}} sigue un modelo similar."
+        },
+        {
+          "q": "¿Qué tan rápidos son los swaps frente a {{rival}}?",
+          "a": "La mayoría de los swaps en MRC GlobalPay se liquidan en menos de 60 segundos. La velocidad en {{rival}} es comparable en pares principales pero puede variar en activos menores."
+        },
+        {
+          "q": "¿Las tasas son mejores en MRC GlobalPay o en {{rival}}?",
+          "a": "MRC GlobalPay agrega liquidez de múltiples proveedores y enruta cada swap a la mejor tasa disponible, con todas las comisiones incluidas. Para la mayoría de pares principales, MRC iguala o supera a {{rival}}, especialmente en micro-órdenes."
+        },
+        {
+          "q": "¿MRC GlobalPay ofrece un programa de afiliados como {{rival}}?",
+          "a": "Sí. MRC GlobalPay ofrece comisiones de por vida en cada swap de tus referidos, pagadas en BTC directamente a tu billetera. La mayoría de afiliados de {{rival}} solo ganan una participación única o limitada."
+        }
+      ]
     }
   }
 }

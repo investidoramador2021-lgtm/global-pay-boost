@@ -2093,6 +2093,35 @@
         ],
         "conclusion": "Daar is amper geen scenario waarin direkte LetsExchange MRC GlobalPay klop nie: dieselfde likiditeit (en meer), laer minima, gereguleerde venue, vinniger ondersteuning en 'n sterker geaffilieerde program."
       }
+    },
+    "faq": {
+      "title": "Gereelde Vrae",
+      "items": [
+        {
+          "q": "Is MRC GlobalPay veiliger as {{rival}}?",
+          "a": "MRC GlobalPay is 'n Kanadese geregistreerde Geldienste-onderneming (FINTRAC #C100000015) en 'n Bank van Kanada gemagtigde Betalingsdiensverskaffer. Die meeste nie-bewarende aggregators soos {{rival}} werk sonder 'n duidelike plaaslike reguleerder. Ons hou nooit kliëntfondse nie, maar die regulatoriese laag voeg ekstra aanspreeklikheid by."
+        },
+        {
+          "q": "Wat is die minimum ruil op MRC GlobalPay vs {{rival}}?",
+          "a": "MRC GlobalPay ondersteun mikro-ruilings vanaf slegs $0.30, ideaal om kripto-stof skoon te maak. {{rival}} se minimums is gewoonlik baie hoër."
+        },
+        {
+          "q": "Moet ek registreer of KYC voltooi om te ruil?",
+          "a": "Geen rekening, e-pos of KYC nodig vir standaard ruilings op MRC GlobalPay. As 'n gereguleerde MSB versoek ons slegs verifikasie vir hoë-risiko transaksies. {{rival}} volg 'n soortgelyke model."
+        },
+        {
+          "q": "Hoe vinnig is ruilings vergeleke met {{rival}}?",
+          "a": "Die meeste ruilings op MRC GlobalPay word in minder as 60 sekondes vereffen. Spoed op {{rival}} is vergelykbaar vir hoof-pare."
+        },
+        {
+          "q": "Is wisselkoerse beter op MRC GlobalPay of {{rival}}?",
+          "a": "MRC GlobalPay versamel likiditeit van veelvuldige verskaffers en stuur elke ruil na die beste koers — alle fooie ingesluit. Vir die meeste hoof-pare ewenaar of klop MRC vir {{rival}}."
+        },
+        {
+          "q": "Bied MRC GlobalPay 'n affiliate-program soos {{rival}}?",
+          "a": "Ja. MRC GlobalPay bied lewenslange kommissies op elke ruil van jou verwysings, betaal in BTC direk na jou beursie."
+        }
+      ]
     }
   }
 }

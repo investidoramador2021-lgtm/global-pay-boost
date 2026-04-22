@@ -2093,6 +2093,35 @@
         ],
         "conclusion": "Doğrudan LetsExchange'e gitmenin MRC GlobalPay'i geçtiği neredeyse hiçbir senaryo yoktur: aynı likidite (ve daha fazlası), daha düşük minimumlar, düzenlenmiş venue, daha hızlı destek ve daha güçlü ortaklık programı."
       }
+    },
+    "faq": {
+      "title": "Sıkça Sorulan Sorular",
+      "items": [
+        {
+          "q": "MRC GlobalPay {{rival}}'dan daha mı güvenli?",
+          "a": "MRC GlobalPay, Kanada'da kayıtlı bir Para Hizmetleri İşletmesidir (FINTRAC #C100000015) ve Kanada Merkez Bankası Yetkili Ödeme Hizmet Sağlayıcısıdır. {{rival}} dahil çoğu non-custodial agregatör, net bir yerel düzenleyici olmadan çalışır. Müşteri fonlarını asla tutmuyoruz, ancak düzenleyici katman ekstra hesap verebilirlik sağlar."
+        },
+        {
+          "q": "MRC GlobalPay ile {{rival}}'da minimum takas nedir?",
+          "a": "MRC GlobalPay yalnızca $0.30'dan başlayan mikro takasları destekler ve kripto tozu temizlemek için idealdir. {{rival}}'ın minimumları genellikle çok daha yüksektir ve varlığa göre değişir."
+        },
+        {
+          "q": "Takas için kayıt veya KYC gerekli mi?",
+          "a": "MRC GlobalPay'deki standart takaslar için hesap, e-posta veya KYC gerekmez. Düzenlenmiş bir MSB olarak yalnızca yüksek riskli işaretlenen işlemlerde doğrulama isteriz. {{rival}} benzer bir modeli izler."
+        },
+        {
+          "q": "Takas hızı {{rival}} ile karşılaştırıldığında nasıl?",
+          "a": "MRC GlobalPay'deki çoğu takas 60 saniyenin altında tamamlanır. {{rival}}'daki hız büyük çiftler için karşılaştırılabilir ancak küçük varlıklarda değişebilir."
+        },
+        {
+          "q": "Kurlar MRC GlobalPay'de mi yoksa {{rival}}'da mı daha iyi?",
+          "a": "MRC GlobalPay birden çok sağlayıcıdan likidite toplar ve her takası en iyi orana yönlendirir; tüm ücretler kotaya dahildir. Çoğu büyük çiftte MRC, özellikle mikro emirlerde {{rival}} ile eşit veya daha iyidir."
+        },
+        {
+          "q": "MRC GlobalPay'in {{rival}} gibi bir ortaklık programı var mı?",
+          "a": "Evet. MRC GlobalPay, yönlendirdiklerinizin her takasında ömür boyu komisyon sunar ve doğrudan cüzdanınıza BTC olarak ödeme yapılır. {{rival}} ortaklarının çoğu yalnızca tek seferlik veya sınırlı bir pay kazanır."
+        }
+      ]
     }
   }
 }
