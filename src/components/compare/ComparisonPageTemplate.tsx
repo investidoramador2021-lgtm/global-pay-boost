@@ -376,10 +376,10 @@ const ComparisonPageTemplate = ({ profile }: Props) => {
             <p className="font-body text-base leading-relaxed text-foreground/90">
               {conclusion}
             </p>
-            <div className="mt-8 flex flex-wrap gap-3">
+            <div className="mt-8 flex flex-col gap-3 sm:flex-row sm:flex-wrap">
               <Link
                 to={langPath(lang, "/")}
-                className="inline-flex items-center gap-2 rounded-lg bg-primary px-6 py-3 font-display text-sm font-bold text-primary-foreground transition-colors hover:bg-primary/90"
+                className="inline-flex min-h-[48px] w-full items-center justify-center gap-2 rounded-lg bg-primary px-6 py-3 font-display text-sm font-bold text-primary-foreground transition-colors hover:bg-primary/90 sm:w-auto"
               >
                 <Zap className="h-4 w-4" />
                 {t("compare.ctaSwap")}
@@ -387,7 +387,7 @@ const ComparisonPageTemplate = ({ profile }: Props) => {
               </Link>
               <Link
                 to={langPath(lang, "/affiliates")}
-                className="inline-flex items-center gap-2 rounded-lg border border-primary/40 bg-primary/10 px-6 py-3 font-display text-sm font-bold text-primary transition-colors hover:bg-primary/20"
+                className="inline-flex min-h-[48px] w-full items-center justify-center gap-2 rounded-lg border border-primary/40 bg-primary/10 px-6 py-3 font-display text-sm font-bold text-primary transition-colors hover:bg-primary/20 sm:w-auto"
               >
                 <ShieldCheck className="h-4 w-4" />
                 {t("compare.ctaAffiliate")}
