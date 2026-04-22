@@ -5,6 +5,8 @@ import SiteHeader from "@/components/SiteHeader";
 import SiteFooter from "@/components/SiteFooter";
 import MsbTrustBar from "@/components/MsbTrustBar";
 import { getCompetitorBySlug, getRandomCompetitors, type Competitor } from "@/lib/competitor-data";
+import { getDeepProfile } from "@/lib/competitor-deep";
+import ComparisonPageTemplate from "@/components/compare/ComparisonPageTemplate";
 import { usePageUrl } from "@/hooks/use-page-url";
 import {
   Table, TableHeader, TableBody, TableHead, TableRow, TableCell,
