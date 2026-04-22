@@ -89,6 +89,7 @@ const ResearchPaxgVsXaut = lazy(() => import("./pages/ResearchPaxgVsXaut.tsx"));
 const ResearchRavedao = lazy(() => import("./pages/ResearchRavedao.tsx"));
 const PartnerPortal = lazy(() => import("./pages/PartnerPortal.tsx"));
 const DynamicExchange = lazy(() => import("./pages/DynamicExchange.tsx"));
+const AssetHub = lazy(() => import("./pages/AssetHub.tsx"));
 const ExchangeDirectory = lazy(() => import("./pages/ExchangeDirectory.tsx"));
 const Affiliates = lazy(() => import("./pages/Affiliates.tsx"));
 const SeoQaDashboard = lazy(() => import("./pages/SeoQaDashboard.tsx"));
@@ -216,6 +217,8 @@ const AppRoutes = () => (
     <Route path="research/ravedao-rave-token-analysis-2026" element={<ResearchRavedao />} />
     {/* Dynamic programmatic SEO exchange pairs */}
     <Route path="exchange/:pair" element={<DynamicExchange />} />
+    {/* Per-asset SEO landing hubs (e.g. /asset/pi, /asset/icp, /asset/cc) */}
+    <Route path="asset/:ticker" element={<AssetHub />} />
     {/* Crawler hub — lists every supported asset and pair */}
     <Route path="directory" element={<ExchangeDirectory />} />
     <Route path="affiliates" element={<Affiliates />} />
