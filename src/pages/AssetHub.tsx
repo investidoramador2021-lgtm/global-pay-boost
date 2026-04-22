@@ -218,7 +218,7 @@ export default function AssetHub() {
           </nav>
 
           <div className="flex flex-col items-start gap-5 sm:flex-row sm:items-center">
-            <TokenIcon ticker={tickerLower} size={72} />
+            <TokenIcon ticker={tickerLower} src={asset.image_url || undefined} className="h-16 w-16" />
             <div className="flex-1">
               <h1 className="font-display text-3xl font-bold text-foreground sm:text-4xl lg:text-5xl">
                 Buy & Swap {asset.name} ({tickerUp})
