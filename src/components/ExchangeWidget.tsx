@@ -1287,6 +1287,17 @@ const ExchangeWidget = ({ onTabChange, defaultFrom, defaultTo }: ExchangeWidgetP
         // RWA / commodities
         paxg: "paxg",
         xaut: "xaut",
+        // Multi-chain stables — bare ticker MUST default to a network variant or
+        // every provider returns "Rate unavailable" (USDT/USDC are not valid bare
+        // tickers for ChangeNOW / SimpleSwap / StealthEX / LetsExchange).
+        usdt: "usdttrc20",   // TRON is the deepest USDT liquidity by 2026 volume
+        tether: "usdttrc20",
+        usdc: "usdcerc20",   // Ethereum is the canonical USDC contract
+        usd_coin: "usdcerc20",
+        dai: "daierc20",
+        // Wrapped/multi-chain assets that often arrive bare in deep links
+        weth: "wetherc20",
+        wbtc: "wbtc",
       };
 
       // Tokens pending liquidity — default to USDC (Solana) with warning
