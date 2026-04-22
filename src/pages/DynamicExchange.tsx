@@ -494,6 +494,19 @@ export default function DynamicExchange() {
           </div>
         </section>
 
+        {/* ─── Curated per-pair enrichment (top 200–500 high-priority pairs) ─── */}
+        {(() => {
+          const enrichment = getPairEnrichment(fromLower, toLower);
+          return enrichment ? (
+            <PairEnrichmentBlock
+              enrichment={enrichment}
+              fromUp={fromUp}
+              toUp={toUp}
+              lang={lang}
+            />
+          ) : null;
+        })()}
+
         {/* ─── Step-by-Step How It Works (HowTo Schema alignment) ─── */}
         <section className="py-12 border-t border-[#1E2028]">
           <div className="container mx-auto px-4">
