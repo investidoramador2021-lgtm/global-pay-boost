@@ -1284,8 +1284,7 @@ const ExchangeWidget = ({ onTabChange, defaultFrom, defaultTo }: ExchangeWidgetP
         // High-utility L1s / payments
         xec: "xec",
         ecash: "xec",
-        // RWA / commodities
-        paxg: "paxg",
+        // RWA / commodities — paxg is in the auto-generated audit block below
         xaut: "xaut",
         // Multi-chain stables — bare ticker MUST default to a network variant or
         // every provider returns "Rate unavailable" (USDT/USDC are not valid bare
