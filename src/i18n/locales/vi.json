@@ -1379,6 +1379,24 @@
       "ex2Body": "Khách vào bài '5 swap không lưu ký tốt nhất' và thử ngay mà không rời trang.",
       "ex3Name": "Công cụ portfolio",
       "ex3Body": "Thêm tab 'Swap Nhanh' vào app portfolio — người dùng cân bằng mà không rút tiền."
+    },
+    "howToUse": {
+      "title": "Bắt Đầu Kiếm Tiền Trong 3 Bước Đơn Giản",
+      "subtitle": "Từ con số 0 đến widget hoạt động trong dưới 2 phút — không cần lập trình.",
+      "step1Title": "1. Tạo widget của bạn",
+      "step1Body": "Nhập email và ví BTC, chọn Sáng hoặc Tối, widget cá nhân hoá sẵn sàng ngay lập tức.",
+      "step2Title": "2. Sao chép mã nhúng",
+      "step2Body": "Một cú nhấp sao chép đoạn iframe gọn gàng. Hoạt động trên WordPress, Webflow, Ghost, Notion, HTML thuần — bất cứ đâu.",
+      "step3Title": "3. Dán và bắt đầu kiếm tiền",
+      "step3Body": "Đặt vào trang web hoặc blog của bạn. Mỗi giao dịch swap khách hoàn tất sẽ trả BTC cho bạn, tự động và trọn đời."
+    },
+    "promoteBox": {
+      "title": "Quảng Bá Với Widget Của Chúng Tôi",
+      "subtitle": "Mọi thứ affiliate cần để biến lưu lượng truy cập thành hoa hồng BTC.",
+      "f1": "Hoàn toàn responsive và đúng thương hiệu",
+      "f2": "Hỗ trợ tất cả 6.000+ cặp swap",
+      "f3": "Tự động theo dõi giới thiệu của bạn",
+      "f4": "Không cần kỹ năng lập trình cho nhúng cơ bản"
     }
   },
   "nicehashWp": {
@@ -1496,6 +1514,15 @@
       "swapNow": "Hoán đổi ngay",
       "poweredBy": "Cung cấp bởi MRC GlobalPay",
       "tagline": "Nhận BTC mỗi khi khách truy cập hoán đổi qua widget của bạn."
+    },
+    "tryWidget": {
+      "tryButton": "Dùng Thử Widget →",
+      "boxTitle": "Quảng Bá Với Widget Của Chúng Tôi",
+      "boxSubtitle": "Được xây dựng để biến lưu lượng của bạn thành BTC trọn đời.",
+      "f1": "Hoàn toàn responsive và đúng thương hiệu",
+      "f2": "Hơn 6.000 cặp được hỗ trợ",
+      "f3": "Giới thiệu được theo dõi tự động",
+      "f4": "Không cần code cho nhúng cơ bản"
     }
   },
   "partners": {

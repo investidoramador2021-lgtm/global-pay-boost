@@ -1379,6 +1379,24 @@
       "ex2Body": "Los visitantes llegan a tu post de 'Los 5 mejores swaps sin custodia' y prueban uno sin salir.",
       "ex3Name": "Herramienta de portafolio",
       "ex3Body": "Añade una pestaña 'Swap Rápido' a tu app de portafolio — los usuarios rebalancean sin retirar fondos."
+    },
+    "howToUse": {
+      "title": "Empieza a Ganar en 3 Pasos Simples",
+      "subtitle": "De cero a widget activo en menos de 2 minutos — sin necesidad de programar.",
+      "step1Title": "1. Genera tu widget",
+      "step1Body": "Introduce tu correo y wallet BTC, elige Claro u Oscuro, y tu widget personalizado estará listo al instante.",
+      "step2Title": "2. Copia el código de inserción",
+      "step2Body": "Un clic copia un iframe limpio. Funciona en WordPress, Webflow, Ghost, Notion, HTML plano — en cualquier sitio.",
+      "step3Title": "3. Pega y empieza a ganar",
+      "step3Body": "Colócalo en tu sitio o blog. Cada swap que completen tus visitantes te paga BTC, automáticamente y de por vida."
+    },
+    "promoteBox": {
+      "title": "Promociona Con Nuestro Widget",
+      "subtitle": "Todo lo que los afiliados necesitan para convertir tráfico en comisiones BTC.",
+      "f1": "Totalmente responsive y con tu marca",
+      "f2": "Compatible con los 6.000+ pares de swap",
+      "f3": "Rastrea tus referidos automáticamente",
+      "f4": "Sin conocimientos de código para la inserción básica"
     }
   },
   "nicehashWp": {
@@ -1496,6 +1514,15 @@
       "swapNow": "Intercambiar ahora",
       "poweredBy": "Impulsado por MRC GlobalPay",
       "tagline": "Gana BTC cada vez que un visitante intercambia con tu widget."
+    },
+    "tryWidget": {
+      "tryButton": "Prueba el Widget →",
+      "boxTitle": "Promociona Con Nuestro Widget",
+      "boxSubtitle": "Construido para convertir tu tráfico en BTC de por vida.",
+      "f1": "Totalmente responsive y con tu marca",
+      "f2": "Más de 6.000 pares soportados",
+      "f3": "Referidos rastreados automáticamente",
+      "f4": "Sin código para la inserción básica"
     }
   },
   "partners": {
