@@ -117,9 +117,27 @@ export function generateSitemaps(outDir = "dist"): Plugin {
 
         log(`Total pair URLs: ${allUrls.length.toLocaleString()}`);
 
-        // --- 2. Write static + blog sitemaps ------------------------------
+        // --- 2. Write static + blog + assets sitemaps ---------------------
+        // sitemap-assets.xml ships per-token hub URLs (/asset/:ticker × 13 langs)
+        // with bidirectional hreflang. Source = dynamic-sitemap/assets.xml on
+        // the edge function (different host than dynamic-feed).
         const childPaths: string[] = [];
         const pairChildPaths: string[] = [];
+
+        // Pull assets sitemap from dynamic-sitemap (separate function).
+        try {
+          const assetsRes = await fetch(
+            `${SUPABASE_URL}/functions/v1/dynamic-sitemap/assets.xml`,
+          );
+          if (assetsRes.ok) {
+            writeXmlAndAlias(outDir, "sitemap-assets.xml", await assetsRes.text());
+            childPaths.push("sitemap-assets.xml");
+            log("  wrote sitemap-assets.xml");
+          }
+        } catch (e) {
+          log(`  ⚠ failed to fetch sitemap-assets.xml: ${(e as Error).message}`);
+        }
+
         for (const name of ["sitemap-static.xml", "sitemap-blog.xml"]) {
           try {
             const res = await fetch(`${FEED_BASE}/${name}`);

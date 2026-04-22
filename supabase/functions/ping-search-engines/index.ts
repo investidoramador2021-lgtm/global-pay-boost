@@ -132,7 +132,27 @@ serve(async (req) => {
     }
   }
   console.log(`[ping] pair URL count = ${pairUrls.length}`);
-  const ALL_URLS = [...STATIC_URLS, ...blogUrls, ...pairUrls];
+
+  // Asset hub URLs (/asset/:ticker × 13 languages) — de-duplicated by lowercase ticker.
+  const assetUrls: string[] = [];
+  const { data: assets, error: assetsErr } = await supabase
+    .from("exchange_assets")
+    .select("ticker")
+    .eq("is_active", true);
+  if (assetsErr) console.error("[ping] assets error:", assetsErr.message);
+  const seenTicker = new Set<string>();
+  for (const a of (assets || []) as Array<{ ticker: string }>) {
+    const t = (a.ticker || "").toLowerCase();
+    if (!t || seenTicker.has(t)) continue;
+    seenTicker.add(t);
+    for (const lang of LANGS) {
+      const prefix = lang ? `/${lang}` : "";
+      assetUrls.push(`${SITE}${prefix}/asset/${t}`);
+    }
+  }
+  console.log(`[ping] asset hub URL count = ${assetUrls.length}`);
+
+  const ALL_URLS = [...STATIC_URLS, ...blogUrls, ...pairUrls, ...assetUrls];
 
   // IndexNow accepts max 10,000 URLs per request — chunk if needed.
   const CHUNK_SIZE = 10000;
