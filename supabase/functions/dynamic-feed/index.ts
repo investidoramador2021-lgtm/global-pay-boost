@@ -45,7 +45,7 @@ const STATIC_ROUTES: RouteSpec[] = [
 
   // Directories (each has child slug pages)
   { loc: "/directory", changefreq: "weekly", priority: "0.7" },
-  { loc: "/compare", changefreq: "weekly", priority: "0.8" },
+  { loc: "/compare", changefreq: "weekly", priority: "0.9", localized: true },
   { loc: "/solutions", changefreq: "weekly", priority: "0.8" },
   { loc: "/learn", changefreq: "weekly", priority: "0.8" },
 
