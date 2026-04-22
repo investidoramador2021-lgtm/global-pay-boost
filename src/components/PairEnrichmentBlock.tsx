@@ -1,15 +1,14 @@
 /**
- * Renders the curated, pair-specific enrichment block (intro paragraph,
- * step-by-step guide, fees/speed/minimum notes, "People also swap" links).
+ * Renders the curated, pair-specific enrichment block in the active language
+ * (intro paragraph, step-by-step guide, fees/speed/minimum notes, and
+ * "People also swap" links). Section headings are translated via i18n
+ * (`pairEnrichment.*` namespace); body copy comes from the per-pair data.
  *
- * Only renders when a curated entry exists for the pair — keeps thin
- * pages untouched and avoids over-promising on long-tail routes.
- *
- * Visual language matches DynamicExchange (dark surface #0B0D10,
- * #00E676 accent, #2A2D35 borders, font-display headings).
+ * Only renders when a curated entry exists for the pair.
  */
 
 import { Link } from "react-router-dom";
+import { useTranslation } from "react-i18next";
 import {
   Coins,
   ListChecks,
@@ -29,7 +28,10 @@ interface Props {
 }
 
 export default function PairEnrichmentBlock({ enrichment, fromUp, toUp, lang }: Props) {
+  const { t } = useTranslation();
   const lp = (p: string) => langPath(lang, p);
+  const pe = (k: string, vars?: Record<string, string | number>) =>
+    t(`pairEnrichment.${k}`, vars);
 
   return (
     <section
@@ -45,7 +47,7 @@ export default function PairEnrichmentBlock({ enrichment, fromUp, toUp, lang }: 
               className="font-display text-xl font-bold text-white sm:text-2xl mb-3 flex items-center gap-2"
             >
               <Coins className="h-5 w-5 text-[#00E676]" />
-              Why swap {fromUp} to {toUp}?
+              {pe("whyTitle", { from: fromUp, to: toUp })}
             </h2>
             <p className="text-sm text-[#C4C8D0] leading-relaxed sm:text-base">
               {enrichment.intro}
@@ -56,7 +58,7 @@ export default function PairEnrichmentBlock({ enrichment, fromUp, toUp, lang }: 
           <article>
             <h2 className="font-display text-xl font-bold text-white sm:text-2xl mb-3 flex items-center gap-2">
               <ListChecks className="h-5 w-5 text-[#00E676]" />
-              Step-by-step: {fromUp} → {toUp}
+              {pe("stepsTitle", { from: fromUp, to: toUp })}
             </h2>
             <ol className="space-y-4">
               {enrichment.steps.map((s, i) => (
@@ -77,24 +79,24 @@ export default function PairEnrichmentBlock({ enrichment, fromUp, toUp, lang }: 
           <article>
             <h2 className="font-display text-xl font-bold text-white sm:text-2xl mb-3 flex items-center gap-2">
               <Receipt className="h-5 w-5 text-[#00E676]" />
-              Fees, speed, and minimum for {fromUp} → {toUp}
+              {pe("notesTitle", { from: fromUp, to: toUp })}
             </h2>
             <dl className="grid gap-3 sm:grid-cols-3">
               <div className="rounded-xl border border-[#2A2D35] bg-[#12141A] p-4">
                 <dt className="flex items-center gap-2 text-xs font-semibold uppercase tracking-wide text-[#00E676]">
-                  <Receipt className="h-4 w-4" /> Fees
+                  <Receipt className="h-4 w-4" /> {pe("feesLabel")}
                 </dt>
                 <dd className="mt-2 text-sm text-[#C4C8D0] leading-relaxed">{enrichment.notes.fees}</dd>
               </div>
               <div className="rounded-xl border border-[#2A2D35] bg-[#12141A] p-4">
                 <dt className="flex items-center gap-2 text-xs font-semibold uppercase tracking-wide text-[#00E676]">
-                  <Timer className="h-4 w-4" /> Speed
+                  <Timer className="h-4 w-4" /> {pe("speedLabel")}
                 </dt>
                 <dd className="mt-2 text-sm text-[#C4C8D0] leading-relaxed">{enrichment.notes.speed}</dd>
               </div>
               <div className="rounded-xl border border-[#2A2D35] bg-[#12141A] p-4">
                 <dt className="flex items-center gap-2 text-xs font-semibold uppercase tracking-wide text-[#00E676]">
-                  <CheckCircle2 className="h-4 w-4" /> Minimum
+                  <CheckCircle2 className="h-4 w-4" /> {pe("minimumLabel")}
                 </dt>
                 <dd className="mt-2 text-sm text-[#C4C8D0] leading-relaxed">{enrichment.notes.minimum}</dd>
               </div>
@@ -106,7 +108,7 @@ export default function PairEnrichmentBlock({ enrichment, fromUp, toUp, lang }: 
             <article>
               <h2 className="font-display text-xl font-bold text-white sm:text-2xl mb-3 flex items-center gap-2">
                 <ArrowRightLeft className="h-5 w-5 text-[#00E676]" />
-                People also swap
+                {pe("peopleAlsoTitle")}
               </h2>
               <ul className="grid gap-2 sm:grid-cols-2">
                 {enrichment.peopleAlso.map((l) => (
