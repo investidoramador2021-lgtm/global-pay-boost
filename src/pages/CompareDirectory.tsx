@@ -12,6 +12,8 @@ import { getLangFromPath, langPath } from "@/i18n";
 
 const CompareDirectory = () => {
   const [query, setQuery] = useState("");
+  const { pathname } = useLocation();
+  const lang = getLangFromPath(pathname);
   const pageUrl = usePageUrl("/compare");
 
   const filtered = useMemo(() => {
