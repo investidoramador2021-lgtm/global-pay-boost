@@ -1,11 +1,14 @@
 import { useState, useMemo } from "react";
 import { Helmet } from "react-helmet-async";
 import { Search } from "lucide-react";
+import { Link, useLocation } from "react-router-dom";
 import SiteHeader from "@/components/SiteHeader";
 import SiteFooter from "@/components/SiteFooter";
 import MsbTrustBar from "@/components/MsbTrustBar";
+import HreflangTags from "@/components/HreflangTags";
 import { COMPETITORS } from "@/lib/competitor-data";
 import { usePageUrl } from "@/hooks/use-page-url";
+import { getLangFromPath, langPath } from "@/i18n";
 
 const CompareDirectory = () => {
   const [query, setQuery] = useState("");
