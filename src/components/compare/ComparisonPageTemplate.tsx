@@ -193,41 +193,43 @@ const ComparisonPageTemplate = ({ profile }: Props) => {
       <SiteHeader />
 
       <main className="min-h-screen bg-background">
-        {/* Breadcrumb */}
+        {/* Breadcrumb — wraps on mobile so long competitor names don't overflow */}
         <nav className="border-b border-border bg-muted/20 py-3" aria-label="Breadcrumb">
           <div className="container mx-auto max-w-5xl px-4">
-            <ol className="flex items-center gap-2 font-body text-xs text-muted-foreground">
+            <ol className="flex flex-wrap items-center gap-x-2 gap-y-1 font-body text-xs text-muted-foreground">
               <li><Link to={langPath(lang, "/")} className="hover:text-foreground">{t("compare.breadcrumbHome")}</Link></li>
-              <li>/</li>
+              <li aria-hidden>/</li>
               <li><Link to={langPath(lang, "/compare")} className="hover:text-foreground">{t("compare.breadcrumbCompare")}</Link></li>
-              <li>/</li>
-              <li className="text-foreground font-medium">MRC vs {profile.rivalName}</li>
+              <li aria-hidden>/</li>
+              <li className="text-foreground font-medium break-words">MRC vs {profile.rivalName}</li>
             </ol>
           </div>
         </nav>
 
-        {/* Hero */}
-        <section className="border-b border-border bg-muted/30 py-16 sm:py-20">
+        {/* Hero — tighter vertical rhythm on mobile, fluid heading */}
+        <section className="border-b border-border bg-muted/30 py-10 sm:py-20">
           <div className="container mx-auto max-w-4xl px-4 text-center">
-            <span className="mb-4 inline-block rounded-full border border-primary/20 bg-primary/5 px-4 py-1.5 text-xs font-medium text-primary">
+            <span className="mb-4 inline-block rounded-full border border-primary/20 bg-primary/5 px-3 py-1 text-[11px] font-medium text-primary sm:px-4 sm:py-1.5 sm:text-xs">
               {t("compare.updatedTag")}
             </span>
-            <h1 className="font-display text-3xl font-bold tracking-tight text-foreground sm:text-5xl">
+            <h1 className="font-display text-[26px] font-bold leading-tight tracking-tight text-foreground sm:text-5xl">
               {title}
             </h1>
-            <p className="mx-auto mt-4 max-w-2xl font-body text-base sm:text-lg leading-relaxed text-muted-foreground">
+            <p className="mx-auto mt-4 max-w-2xl font-body text-sm sm:text-lg leading-relaxed text-muted-foreground">
               {intro}
             </p>
           </div>
         </section>
 
-        {/* Comparison Table */}
-        <section className="py-12 sm:py-16">
+        {/* Comparison Table — table on ≥md, stacked cards on mobile (no horizontal scroll) */}
+        <section className="py-10 sm:py-16">
           <div className="container mx-auto max-w-5xl px-4">
-            <h2 className="mb-6 text-center font-display text-2xl sm:text-3xl font-bold text-foreground">
+            <h2 className="mb-6 text-center font-display text-xl sm:text-3xl font-bold text-foreground">
               {t("compare.tableTitle", { rival: profile.rivalName })}
             </h2>
-            <div className="overflow-x-auto rounded-xl border border-border">
+
+            {/* Desktop / tablet table */}
+            <div className="hidden md:block overflow-x-auto rounded-xl border border-border">
               <Table>
                 <TableHeader>
                   <TableRow className="bg-muted/50">
@@ -256,6 +258,34 @@ const ComparisonPageTemplate = ({ profile }: Props) => {
                 </TableBody>
               </Table>
             </div>
+
+            {/* Mobile stacked cards — same data, scannable on a 360px screen */}
+            <ul className="md:hidden space-y-3" aria-label={t("compare.tableTitle", { rival: profile.rivalName })}>
+              {localizedRows.map((r) => (
+                <li key={r.feature} className="rounded-xl border border-border bg-card p-4">
+                  <div className="flex items-start justify-between gap-3">
+                    <h3 className="font-display text-sm font-bold text-foreground">{r.feature}</h3>
+                    <WinnerBadge
+                      winner={r.winner}
+                      mrcLabel={t("compare.winnerMrc")}
+                      rivalLabel={profile.rivalName}
+                      tieLabel={t("compare.winnerTie")}
+                    />
+                  </div>
+                  <dl className="mt-3 grid grid-cols-1 gap-2 text-sm">
+                    <div className="rounded-lg bg-primary/5 px-3 py-2">
+                      <dt className="font-display text-[11px] font-semibold uppercase tracking-wide text-primary">MRC GlobalPay</dt>
+                      <dd className="mt-0.5 font-body text-foreground/90">{r.mrc}</dd>
+                    </div>
+                    <div className="rounded-lg bg-muted/40 px-3 py-2">
+                      <dt className="font-display text-[11px] font-semibold uppercase tracking-wide text-muted-foreground">{profile.rivalName}</dt>
+                      <dd className="mt-0.5 font-body text-muted-foreground">{r.rival}</dd>
+                    </div>
+                  </dl>
+                </li>
+              ))}
+            </ul>
+
             <p className="mt-4 text-center font-body text-xs text-muted-foreground">
               {t("compare.tableFootnote", { rival: profile.rivalName })}
             </p>
