@@ -349,7 +349,10 @@ ${items}
     }
     for (const k of KEYWORD_URLS) push(urlEntry(k, today, "weekly", "0.7", false), k);
     for (const slug of LEARN_SLUGS) push(urlEntry(`/learn/${slug}`, today, "monthly", "0.7", false), `/learn/${slug}`);
-    for (const slug of COMPARE_SLUGS) push(urlEntry(`/compare/${slug}`, today, "weekly", "0.7", false), `/compare/${slug}`);
+    for (const slug of COMPARE_SLUGS) {
+      const p = `/compare/mrc-vs-${slug}`;
+      for (const e of localizedEntries(p, today, "weekly", "0.8")) push(e, p);
+    }
     for (const slug of SOLUTION_SLUGS) {
       const p = `/solutions/how-to-swap-${slug}`;
       push(urlEntry(p, today, "weekly", "0.7", false), p);
