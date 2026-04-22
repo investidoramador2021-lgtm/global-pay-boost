@@ -56,11 +56,22 @@ const AffiliateProgramHomeCTA = () => {
                 ))}
               </ul>
 
-              <div className="flex flex-col sm:flex-row gap-3 pt-2">
+              <div className="flex flex-col sm:flex-row flex-wrap gap-3 pt-2">
                 <Button asChild size="lg" className="px-6 py-6 text-base font-semibold rounded-xl gap-2">
                   <Link to={langPath(lang, "/affiliates")}>
                     {t("affiliateHomeCta.ctaPrimary")}
                     <ArrowRight className="w-4 h-4" />
+                  </Link>
+                </Button>
+                <Button
+                  asChild
+                  size="lg"
+                  variant="secondary"
+                  className="px-6 py-6 text-base font-semibold rounded-xl gap-2 bg-primary/15 text-primary hover:bg-primary/25 border border-primary/30"
+                >
+                  <Link to={langPath(lang, "/affiliates#generate")}>
+                    <Rocket className="w-4 h-4" />
+                    {t("affiliateHomeCta.tryWidget.tryButton")}
                   </Link>
                 </Button>
                 <Button
