@@ -1298,23 +1298,67 @@ const ExchangeWidget = ({ onTabChange, defaultFrom, defaultTo }: ExchangeWidgetP
         // Wrapped/multi-chain assets that often arrive bare in deep links
         weth: "wetherc20",
         wbtc: "wbtc",
-        // L1 native tokens whose bare ticker returns null on ChangeNOW
-        // (must resolve to the canonical network-suffixed variant — verified live).
+        // L1/L2 native tokens whose bare ticker returns null on ChangeNOW
         bnb: "bnbbsc",
+        dot: "dotbsc",
         // Memecoins — only quote on their canonical home chain
         bonk: "bonksol",
         pepe: "pepeerc20",
         shib: "shiberc20",
         shiba: "shiberc20",
+        trump: "trumpsol",
         // PayPal USD — Ethereum has deepest PYUSD liquidity
         pyusd: "pyusderc20",
-        // Niche assets — only one network supported by the aggregator
+        // Niche / single-network assets
         siren: "sirenbsc",
         vinu: "vinubsc",
+        // ─── Auto-generated 2026-04 audit (122 broken bare tickers verified live) ───
+        // DeFi blue-chips (ETH dominance)
+        aave: "aaveerc20", comp: "comperc20", uni: "unierc20", snx: "snxerc20",
+        mask: "maskerc20", ldo: "ldoerc20", pendle: "pendleerc20", ethfi: "ethfierc20",
+        ens: "enserc20", auction: "auctionerc20", axs: "axserc20", bnt: "bnterc20",
+        bard: "barderc20", enso: "ensoerc20", farm: "farmerc20", gno: "gnoerc20",
+        kcs: "kcserc20", metis: "metiserc20", nmr: "nmrerc20", okb: "okberc20",
+        qnt: "qnterc20", torn: "tornerc20", trb: "trberc20", now: "nowerc20",
+        ilv: "ilverc20", prom: "promerc20", alcx: "alcxerc20", dexe: "dexeerc20",
+        dpi: "dpierc20", geth: "getherc20", gt: "gterc20", wnxm: "wnxmerc20",
+        weeth: "weetherc20", waxe: "waxeerc20",
+        // BSC ecosystem natives
+        cake: "cakebsc", twt: "twtbsc", busd: "busdbsc", btcb: "btcbbsc",
+        wbeth: "wbethbsc", xvs: "xvsbsc", yfi: "yfibsc", "0g": "0gbsc",
+        aster: "asterbsc", b2: "b2bsc", coai: "coaibsc", cosa: "cosabsc",
+        cys: "cysbsc", esports: "esportsbsc", giggle: "gigglebsc", koge: "kogebsc",
+        lab: "labbsc", lazio: "laziobsc", lee: "leebsc", nxpc: "nxpcbsc",
+        pieverse: "pieversebsc", porto: "portobsc", river: "riverbsc",
+        santos: "santosbsc", sfp: "sfpbsc", trxold: "trxoldbsc", u: "ubsc",
+        cmc20: "cmc20bsc", alpine: "alpinebsc",
+        // Stablecoin variants
+        fdusd: "fdusderc20", usd1: "usd1erc20", usde: "usdeerc20",
+        // Solana ecosystem natives
+        bnsol: "bnsolsol", jitosol: "jtosolsol", msol: "msolsol",
+        orca: "orcasol", ray: "raysol", coinx: "coinxsol", mcdx: "mcdxsol",
+        mstrx: "mstrxsol", spyx: "spyxsol", tslax: "tslaxsol", googlx: "googlxsol",
+        amznx: "amznxsol", aaplx: "aaplxsol", crclx: "crclxsol", hoodx: "hoodxsol",
+        nvdax: "nvdaxsol", qqqx: "qqqxsol", metax: "metaxsol",
+        // L2-native (Arbitrum / Base / Optimism / Polygon)
+        gmx: "gmxarb", gns: "gnsarb", zro: "zroarb",
+        aero: "aerobase", clanker: "clankerbase", virtual: "virtualbase",
+        vvv: "vvvbase", zen: "zenbase",
+        opusdce: "opusdceop", arbusdce: "arbusdcearb", maticusdce: "maticusdcematic",
+        // Wrapped / staked variants
+        cbbtc: "cbbtcerc20", steth: "stetherc20", paxg: "paxgerc20",
+        // Tokenized stocks (Ondo Finance — Ethereum)
+        nvdaon: "nvdaonerc20", aaplon: "aaplonerc20", amznon: "amznonerc20",
+        crclon: "crclonerc20", iauon: "iauonerc20", metaon: "metaonerc20",
+        msfton: "msftonerc20", qqqon: "qqqonerc20", slvon: "slvonerc20",
+        spyon: "spyonerc20", tslaon: "tslaonerc20",
+        // Niche / single-variant
+        bifi: "bifierc20", euri: "eurierc20",
       };
 
-      // Tokens pending liquidity — default to USDC (Solana) with warning
-      const PENDING_TOKENS = new Set(["eliza", "elizasol", "virtual", "virtualsol", "zerebro", "zerebrosol", "pippin", "pippinsol", "ai16z", "ai16zsol"]);
+      // Tokens pending liquidity — default to USDC (Solana) with warning.
+      // virtual was removed (now live as virtualbase, see TICKER_MAP above).
+      const PENDING_TOKENS = new Set(["eliza", "elizasol", "zerebro", "zerebrosol", "pippin", "pippinsol", "ai16z", "ai16zsol"]);
 
       let paramTo = rawTo ? (TICKER_MAP[rawTo] || rawTo) : undefined;
       const paramFromMapped = paramFrom ? (TICKER_MAP[paramFrom] || paramFrom) : undefined;
