@@ -12,6 +12,8 @@ import LiveSwapTicker from "@/components/LiveSwapTicker";
 import TokenIcon from "@/components/TokenIcon";
 import GoldSecurityBlock, { isGoldPair } from "@/components/GoldSecurityBlock";
 import AEOAssetBlock from "@/components/AEOAssetBlock";
+import PairEnrichmentBlock from "@/components/PairEnrichmentBlock";
+import { getPairEnrichment } from "@/lib/pair-enrichment";
 import {
   Accordion,
   AccordionContent,
