@@ -45,7 +45,7 @@ const STATIC_ROUTES: RouteSpec[] = [
 
   // Directories (each has child slug pages)
   { loc: "/directory", changefreq: "weekly", priority: "0.7" },
-  { loc: "/compare", changefreq: "weekly", priority: "0.8" },
+  { loc: "/compare", changefreq: "weekly", priority: "0.9", localized: true },
   { loc: "/solutions", changefreq: "weekly", priority: "0.8" },
   { loc: "/learn", changefreq: "weekly", priority: "0.8" },
 
@@ -138,15 +138,17 @@ const LEARN_SLUGS = [
   "swap-without-registration", "tracking-your-micro-swap",
 ];
 
+// Source of truth: src/lib/competitor-data.ts (COMPETITORS array).
+// Every slug here MUST resolve to /compare/mrc-vs-{slug} via ComparePage.
 const COMPARE_SLUGS = [
-  "changenow", "changelly", "simpleswap", "stealthex", "exolix", "fixedfloat",
-  "houdiniswap", "godex", "letsexchange", "swapuz", "swapzone", "majesticbank",
-  "kraken", "coinbase", "binance", "kucoin", "okx", "bybit", "bitfinex", "gemini",
-  "crypto-com", "uniswap", "1inch", "thorswap", "rango", "rubic", "jumper",
-  "bungee", "li-fi", "across-protocol", "stargate", "hop-protocol", "synapse",
-  "celer", "wormhole", "axelar", "layerzero", "debridge", "chainflip", "atomic-wallet",
-  "trust-wallet", "metamask-swap", "phantom-swap", "exodus", "guarda", "edge-wallet",
-  "bestchange", "exchanger24", "switchere", "moonpay", "transak", "ramp",
+  "1inch", "across", "binance", "bitbuy", "bitget", "bybit", "changelly", "changenow",
+  "changenow-pro", "coinbase", "coinsquare", "elude", "exolix", "fixedfloat", "gate-io",
+  "gemini", "godex", "houdiniswap", "htx", "jupiter", "kraken", "kucoin", "layerswap",
+  "letsexchange", "majesticbank", "mexc", "ndax", "netcoins", "newton", "okx",
+  "orangefren", "orbiter", "pancakeswap", "paytrie", "phemex", "rocketexchange",
+  "shakepay", "sideshift", "simpleswap", "stargate", "stealthex", "swapsystems",
+  "thorchain", "tradeogre", "trocador", "uniswap", "uphold", "virgocx", "wealthsimple",
+  "xchange-me",
 ];
 
 const SOLUTION_SLUGS = [
@@ -349,7 +351,10 @@ ${items}
     }
     for (const k of KEYWORD_URLS) push(urlEntry(k, today, "weekly", "0.7", false), k);
     for (const slug of LEARN_SLUGS) push(urlEntry(`/learn/${slug}`, today, "monthly", "0.7", false), `/learn/${slug}`);
-    for (const slug of COMPARE_SLUGS) push(urlEntry(`/compare/${slug}`, today, "weekly", "0.7", false), `/compare/${slug}`);
+    for (const slug of COMPARE_SLUGS) {
+      const p = `/compare/mrc-vs-${slug}`;
+      for (const e of localizedEntries(p, today, "weekly", "0.8")) push(e, p);
+    }
     for (const slug of SOLUTION_SLUGS) {
       const p = `/solutions/how-to-swap-${slug}`;
       push(urlEntry(p, today, "weekly", "0.7", false), p);
