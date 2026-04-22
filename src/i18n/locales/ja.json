@@ -1770,6 +1770,329 @@
     "ctaSwap": "$0.30から今すぐスワップ",
     "ctaAffiliate": "アフィリエイトになる",
     "compareOthers": "他社と比較",
-    "minLabel": "最小"
+    "minLabel": "最小",
+    "profiles": {
+      "changenow": {
+        "rivalName": "ChangeNOW",
+        "title": "MRC GlobalPay vs ChangeNOW (2026) — どちらが優れているか?",
+        "intro": "どちらもKYC不要のノンカストディアル即時スワップです。本当の違いは規制、マイクロスワップ対応、アフィリエイト報酬の支払い方法です。",
+        "rows": {
+          "regulation": {
+            "feature": "規制",
+            "mrc": "Canadian MSB · FINTRAC #C100000015 · Bank of Canada PSP-aligned",
+            "rival": "Registered MSB in Estonia (FIU-Estonia)"
+          },
+          "min": {
+            "feature": "最小スワップ",
+            "mrc": "$0.30",
+            "rival": "$2 – $10 per pair (varies)"
+          },
+          "kyc": {
+            "feature": "KYC / 登録",
+            "mrc": "Not required for swaps",
+            "rival": "Not required for most swaps; risk-based review possible"
+          },
+          "speed": {
+            "feature": "平均速度",
+            "mrc": "< 60 seconds (fixed-rate)",
+            "rival": "< 5 minutes for fixed-rate, longer for floating"
+          },
+          "nonCustodial": {
+            "feature": "ノンカストディアル",
+            "mrc": "Yes — wallet-to-wallet, no balances held",
+            "rival": "Yes"
+          },
+          "assets": {
+            "feature": "対応コイン / ペア",
+            "mrc": "6,000+ assets across 80+ networks (aggregated)",
+            "rival": "1,200+ assets"
+          },
+          "fees": {
+            "feature": "手数料 / レート",
+            "mrc": "Transparent flat fee, aggregated best-of-N rate",
+            "rival": "0.5% – 4% spread depending on pair"
+          },
+          "support": {
+            "feature": "カスタマーサポート",
+            "mrc": "24/7 in-app chat + email, multilingual",
+            "rival": "24/7 ticket + chat"
+          },
+          "affiliate": {
+            "feature": "アフィリエイトプログラム",
+            "mrc": "Lifetime 0.1% – 0.4% paid in BTC, no expiry, $0 minimum payout",
+            "rival": "Standard 0.4% revenue-share, monthly payouts, $50+ minimum"
+          }
+        },
+        "mrcPros": [
+          "Canadian FINTRAC MSB regulation (#C100000015) — full Bank of Canada PSP framework alignment",
+          "$0.30 minimum unlocks crypto-dust consolidation no other major aggregator handles",
+          "Lifetime affiliate commissions paid automatically in BTC, no minimum payout",
+          "13-language interface with full RTL support (Hebrew, Urdu, Persian)",
+          "Aggregates ChangeNOW + LetsExchange liquidity behind the scenes — you always get the best of both"
+        ],
+        "mrcCons": [
+          "Younger brand — less name recognition than ChangeNOW",
+          "No native mobile app store listing yet (PWA install instead)"
+        ],
+        "rivalPros": [
+          "Established brand since 2017 with strong recognition",
+          "Mature API and exchange-partner ecosystem",
+          "Wide marketing reach and affiliate community"
+        ],
+        "rivalCons": [
+          "EU-based — outside the Canadian/North-American regulatory perimeter many users prefer",
+          "Higher minimums ($2 – $10) make small balances and dust impossible to swap",
+          "Affiliate program requires $50+ to withdraw and pays monthly, not on every swap"
+        ],
+        "whyMrc": [
+          "Full Canadian MSB registration — FINTRAC #C100000015, headquartered in Ottawa",
+          "Micro-swaps from $0.30 — purpose-built for crypto-dust cleanup",
+          "Lifetime affiliate revenue share, automatic BTC payouts on every confirmed swap",
+          "Privacy-first: no email or account required to swap",
+          "Multi-provider liquidity aggregation: routes through ChangeNOW + LetsExchange to find the best rate per quote"
+        ],
+        "conclusion": "認知ブランドが必要で1回$50以上のスワップなら、ChangeNOWは安全な選択です。カナダ規制、$0.30からのマイクロスワップ、自動BTCアフィリエイト報酬を求めるならMRC GlobalPayがよく合います。"
+      },
+      "simpleswap": {
+        "rivalName": "SimpleSwap",
+        "title": "MRC GlobalPay vs SimpleSwap (2026) — どちらが優れているか?",
+        "intro": "両プラットフォームともアカウント登録なしでスワップしたいユーザー向けです。差別化要因は規制ステータス、最小スワップ額、手数料の透明性、アフィリエイト経済性です。",
+        "rows": {
+          "regulation": {
+            "feature": "規制",
+            "mrc": "Canadian MSB · FINTRAC #C100000015 · Bank of Canada PSP-aligned",
+            "rival": "Operates without a public MSB-equivalent registration"
+          },
+          "min": {
+            "feature": "最小スワップ",
+            "mrc": "$0.30",
+            "rival": "$15 typical minimum, varies by pair"
+          },
+          "kyc": {
+            "feature": "KYC / 登録",
+            "mrc": "Not required for swaps",
+            "rival": "Not required for most swaps"
+          },
+          "speed": {
+            "feature": "平均速度",
+            "mrc": "< 60 seconds (fixed-rate)",
+            "rival": "5 – 15 minutes typical"
+          },
+          "nonCustodial": {
+            "feature": "ノンカストディアル",
+            "mrc": "Yes — wallet-to-wallet, no balances held",
+            "rival": "Yes"
+          },
+          "assets": {
+            "feature": "対応コイン / ペア",
+            "mrc": "6,000+ assets across 80+ networks (aggregated)",
+            "rival": "1,500+ assets"
+          },
+          "fees": {
+            "feature": "手数料 / レート",
+            "mrc": "Transparent flat fee, aggregated best-of-N rate",
+            "rival": "Spread-based, often 0.5% – 5% effective"
+          },
+          "support": {
+            "feature": "カスタマーサポート",
+            "mrc": "24/7 in-app chat + email, multilingual",
+            "rival": "Email + chat"
+          },
+          "affiliate": {
+            "feature": "アフィリエイトプログラム",
+            "mrc": "Lifetime 0.1% – 0.4% paid in BTC, no expiry, $0 minimum payout",
+            "rival": "Up to 0.4% revenue share, $50+ minimum payout"
+          }
+        },
+        "mrcPros": [
+          "Registered Canadian MSB — verifiable on the FINTRAC public registry",
+          "Swaps from $0.30 vs SimpleSwap's typical $15+ floor",
+          "Transparent flat fee instead of hidden spread",
+          "Lifetime BTC commissions with no minimum payout for affiliates",
+          "13 fully-translated languages including RTL"
+        ],
+        "mrcCons": [
+          "Smaller asset count on direct UI (focus on top 6,000+ liquid pairs vs SimpleSwap's long-tail listings)",
+          "Newer to the market"
+        ],
+        "rivalPros": [
+          "Long-tail asset coverage including some illiquid altcoins",
+          "Established 2018",
+          "Floating-rate option for users who want to ride volatility"
+        ],
+        "rivalCons": [
+          "No verifiable major-jurisdiction MSB registration",
+          "$15+ minimum makes most dust swaps impossible",
+          "Spread-based pricing can be expensive on low-liquidity pairs"
+        ],
+        "whyMrc": [
+          "Regulated Canadian MSB (FINTRAC #C100000015) — your swaps run through a venue with verifiable AML/KYC compliance infrastructure",
+          "$0.30 minimum — sweep crypto dust SimpleSwap will reject",
+          "Flat fee model means no surprise spreads on the rate",
+          "Affiliates earn lifetime BTC, paid automatically per swap"
+        ],
+        "conclusion": "SimpleSwapは中型altcoinをアカウントなしでスワップする場合に妥当です。規制の明確さ、小額残高の整理、生涯BTCアフィリエイト収入を望むならMRC GlobalPayの方が適しています。"
+      },
+      "stealthex": {
+        "rivalName": "StealthEX",
+        "title": "MRC GlobalPay vs StealthEX (2026) — どちらが優れているか?",
+        "intro": "StealthEXはプライバシー重視のノンカストディアル・スワップアグリゲーターです。MRC GlobalPayは同じノンカストディアル設計に加え、カナダMSB規制を備えています。",
+        "rows": {
+          "regulation": {
+            "feature": "規制",
+            "mrc": "Canadian MSB · FINTRAC #C100000015 · Bank of Canada PSP-aligned",
+            "rival": "Operates outside major MSB frameworks"
+          },
+          "min": {
+            "feature": "最小スワップ",
+            "mrc": "$0.30",
+            "rival": "$15 typical minimum, often higher for privacy coins"
+          },
+          "kyc": {
+            "feature": "KYC / 登録",
+            "mrc": "Not required for swaps",
+            "rival": "Not required"
+          },
+          "speed": {
+            "feature": "平均速度",
+            "mrc": "< 60 seconds (fixed-rate)",
+            "rival": "5 – 30 minutes typical"
+          },
+          "nonCustodial": {
+            "feature": "ノンカストディアル",
+            "mrc": "Yes — wallet-to-wallet, no balances held",
+            "rival": "Yes"
+          },
+          "assets": {
+            "feature": "対応コイン / ペア",
+            "mrc": "6,000+ assets across 80+ networks (aggregated)",
+            "rival": "1,300+ assets"
+          },
+          "fees": {
+            "feature": "手数料 / レート",
+            "mrc": "Transparent flat fee, aggregated best-of-N rate",
+            "rival": "Variable spread, 0.4% – 3%"
+          },
+          "support": {
+            "feature": "カスタマーサポート",
+            "mrc": "24/7 in-app chat + email, multilingual",
+            "rival": "Email + ticket"
+          },
+          "affiliate": {
+            "feature": "アフィリエイトプログラム",
+            "mrc": "Lifetime 0.1% – 0.4% paid in BTC, no expiry, $0 minimum payout",
+            "rival": "0.4% revenue share, payout thresholds apply"
+          }
+        },
+        "mrcPros": [
+          "Canadian FINTRAC MSB (#C100000015) — same non-custodial design with regulatory backing",
+          "$0.30 minimum vs StealthEX's $15+ floor",
+          "Aggregates multiple liquidity providers per quote (best price wins)",
+          "Lifetime BTC affiliate payouts with no minimum",
+          "13-language UI with full RTL support"
+        ],
+        "mrcCons": [
+          "We do not specialize in privacy-coin-only routing",
+          "Smaller community than StealthEX in the privacy-coin niche"
+        ],
+        "rivalPros": [
+          "Strong reputation in the privacy-coin community",
+          "Wide range of obscure altcoin support",
+          "Anonymity-first marketing message"
+        ],
+        "rivalCons": [
+          "No major-jurisdiction MSB registration to point users at",
+          "Higher minimums lock out small-balance users",
+          "Pricing can be opaque on low-liquidity pairs"
+        ],
+        "whyMrc": [
+          "Same non-custodial wallet-to-wallet model as StealthEX, plus a verifiable Canadian MSB license",
+          "Sub-dollar swaps — turn forgotten dust into usable assets",
+          "Multi-provider routing finds a better rate than any single provider in many quotes",
+          "Affiliate revenue paid in BTC, lifetime, automatic, $0 threshold"
+        ],
+        "conclusion": "プライバシーコインのルーティングだけが優先ならStealthEXは強いコミュニティ信頼を持っています。それ以外、特に規制されたインフラと小額残高スワップを望む方にはMRC GlobalPayが汎用的に強い選択です。"
+      },
+      "letsexchange": {
+        "rivalName": "LetsExchange",
+        "title": "MRC GlobalPay vs LetsExchange (2026) — どちらが優れているか?",
+        "intro": "MRC GlobalPayは流動性の一部をLetsExchange経由でルーティングしています。直接LetsExchange、またはLetsExchange + ChangeNOWを規制されたフロントエンドで使うか、という選択です。",
+        "rows": {
+          "regulation": {
+            "feature": "規制",
+            "mrc": "Canadian MSB · FINTRAC #C100000015 · Bank of Canada PSP-aligned",
+            "rival": "Operates as a non-custodial aggregator without a public major-MSB license"
+          },
+          "min": {
+            "feature": "最小スワップ",
+            "mrc": "$0.30",
+            "rival": "$15 typical minimum, varies by pair"
+          },
+          "kyc": {
+            "feature": "KYC / 登録",
+            "mrc": "Not required for swaps",
+            "rival": "Not required"
+          },
+          "speed": {
+            "feature": "平均速度",
+            "mrc": "< 60 seconds (fixed-rate)",
+            "rival": "5 – 15 minutes typical"
+          },
+          "nonCustodial": {
+            "feature": "ノンカストディアル",
+            "mrc": "Yes — wallet-to-wallet, no balances held",
+            "rival": "Yes"
+          },
+          "assets": {
+            "feature": "対応コイン / ペア",
+            "mrc": "6,000+ assets across 80+ networks (aggregated)",
+            "rival": "3,000+ assets"
+          },
+          "fees": {
+            "feature": "手数料 / レート",
+            "mrc": "Transparent flat fee, aggregated best-of-N rate",
+            "rival": "Variable, often 0.5% – 3%"
+          },
+          "support": {
+            "feature": "カスタマーサポート",
+            "mrc": "24/7 in-app chat + email, multilingual",
+            "rival": "Ticket-based, slower than tier-1 venues"
+          },
+          "affiliate": {
+            "feature": "アフィリエイトプログラム",
+            "mrc": "Lifetime 0.1% – 0.4% paid in BTC, no expiry, $0 minimum payout",
+            "rival": "Standard revenue share"
+          }
+        },
+        "mrcPros": [
+          "Aggregates LetsExchange liquidity plus ChangeNOW and other providers — better quotes per swap on average",
+          "Canadian FINTRAC MSB regulated wrapper (#C100000015) on top of the same liquidity you'd get direct",
+          "$0.30 minimum vs $15+ direct on LetsExchange",
+          "24/7 in-app chat support (vs LetsExchange ticket queue)",
+          "Lifetime BTC affiliate program with $0 minimum payout"
+        ],
+        "mrcCons": [
+          "If you have a specific pair only LetsExchange lists in their long-tail, going direct may have one-off advantages"
+        ],
+        "rivalPros": [
+          "Direct access to their full asset catalogue including some long-tail listings",
+          "Established non-custodial brand",
+          "Floating-rate option for traders"
+        ],
+        "rivalCons": [
+          "No verifiable major-jurisdiction MSB registration",
+          "$15+ minimum effectively excludes dust",
+          "Slower customer support response times"
+        ],
+        "whyMrc": [
+          "You get LetsExchange liquidity anyway — through a regulated, lower-minimum, better-supported front end",
+          "Multi-provider routing means you almost never get a worse rate than going direct",
+          "Canadian MSB regulatory wrapper (FINTRAC #C100000015) — verifiable on the public registry",
+          "Lifetime BTC affiliate payouts, automatic, no minimum",
+          "13-language UI with full RTL support"
+        ],
+        "conclusion": "LetsExchangeに直接行く方がMRC GlobalPayより優れるシナリオはほぼありません: 同等以上の流動性、低い最小額、規制された場、迅速なサポート、強力なアフィリエイトプログラム。"
+      }
+    }
   }
 }

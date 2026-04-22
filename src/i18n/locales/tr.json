@@ -1770,6 +1770,329 @@
     "ctaSwap": "0,30 $'dan İtibaren Hemen Takas Yap",
     "ctaAffiliate": "Affiliate Ol",
     "compareOthers": "Diğerleriyle Karşılaştır",
-    "minLabel": "Min"
+    "minLabel": "Min",
+    "profiles": {
+      "changenow": {
+        "rivalName": "ChangeNOW",
+        "title": "MRC GlobalPay vs ChangeNOW (2026) — Hangisi daha iyi?",
+        "intro": "Her ikisi de zorunlu KYC olmadan saklamasız anlık takas platformlarıdır. Gerçek farklar düzenleme, mikro-takas desteği ve ortaklık komisyonlarının nasıl ödendiğindedir.",
+        "rows": {
+          "regulation": {
+            "feature": "Düzenleme",
+            "mrc": "Canadian MSB · FINTRAC #C100000015 · Bank of Canada PSP-aligned",
+            "rival": "Registered MSB in Estonia (FIU-Estonia)"
+          },
+          "min": {
+            "feature": "Minimum takas",
+            "mrc": "$0.30",
+            "rival": "$2 – $10 per pair (varies)"
+          },
+          "kyc": {
+            "feature": "KYC / kayıt",
+            "mrc": "Not required for swaps",
+            "rival": "Not required for most swaps; risk-based review possible"
+          },
+          "speed": {
+            "feature": "Ortalama hız",
+            "mrc": "< 60 seconds (fixed-rate)",
+            "rival": "< 5 minutes for fixed-rate, longer for floating"
+          },
+          "nonCustodial": {
+            "feature": "Saklamasız",
+            "mrc": "Yes — wallet-to-wallet, no balances held",
+            "rival": "Yes"
+          },
+          "assets": {
+            "feature": "Desteklenen coinler / çiftler",
+            "mrc": "6,000+ assets across 80+ networks (aggregated)",
+            "rival": "1,200+ assets"
+          },
+          "fees": {
+            "feature": "Ücretler / oranlar",
+            "mrc": "Transparent flat fee, aggregated best-of-N rate",
+            "rival": "0.5% – 4% spread depending on pair"
+          },
+          "support": {
+            "feature": "Müşteri desteği",
+            "mrc": "24/7 in-app chat + email, multilingual",
+            "rival": "24/7 ticket + chat"
+          },
+          "affiliate": {
+            "feature": "Ortaklık programı",
+            "mrc": "Lifetime 0.1% – 0.4% paid in BTC, no expiry, $0 minimum payout",
+            "rival": "Standard 0.4% revenue-share, monthly payouts, $50+ minimum"
+          }
+        },
+        "mrcPros": [
+          "Canadian FINTRAC MSB regulation (#C100000015) — full Bank of Canada PSP framework alignment",
+          "$0.30 minimum unlocks crypto-dust consolidation no other major aggregator handles",
+          "Lifetime affiliate commissions paid automatically in BTC, no minimum payout",
+          "13-language interface with full RTL support (Hebrew, Urdu, Persian)",
+          "Aggregates ChangeNOW + LetsExchange liquidity behind the scenes — you always get the best of both"
+        ],
+        "mrcCons": [
+          "Younger brand — less name recognition than ChangeNOW",
+          "No native mobile app store listing yet (PWA install instead)"
+        ],
+        "rivalPros": [
+          "Established brand since 2017 with strong recognition",
+          "Mature API and exchange-partner ecosystem",
+          "Wide marketing reach and affiliate community"
+        ],
+        "rivalCons": [
+          "EU-based — outside the Canadian/North-American regulatory perimeter many users prefer",
+          "Higher minimums ($2 – $10) make small balances and dust impossible to swap",
+          "Affiliate program requires $50+ to withdraw and pays monthly, not on every swap"
+        ],
+        "whyMrc": [
+          "Full Canadian MSB registration — FINTRAC #C100000015, headquartered in Ottawa",
+          "Micro-swaps from $0.30 — purpose-built for crypto-dust cleanup",
+          "Lifetime affiliate revenue share, automatic BTC payouts on every confirmed swap",
+          "Privacy-first: no email or account required to swap",
+          "Multi-provider liquidity aggregation: routes through ChangeNOW + LetsExchange to find the best rate per quote"
+        ],
+        "conclusion": "Tanınmış bir marka istiyor ve seferinde $50+ takas yapıyorsanız, ChangeNOW tamamen güvenlidir. Kanada düzenlemeli altyapı, $0,30'dan mikro-takas ve otomatik ömür boyu BTC ortaklık komisyonları istiyorsanız, MRC GlobalPay daha iyi uyar."
+      },
+      "simpleswap": {
+        "rivalName": "SimpleSwap",
+        "title": "MRC GlobalPay vs SimpleSwap (2026) — Hangisi daha iyi?",
+        "intro": "Her iki platform da hesap açmadan takas yapmak isteyen kullanıcıları hedefler. Farklar düzenleyici konum, minimum takas, ücret şeffaflığı ve ortaklık ekonomisidir.",
+        "rows": {
+          "regulation": {
+            "feature": "Düzenleme",
+            "mrc": "Canadian MSB · FINTRAC #C100000015 · Bank of Canada PSP-aligned",
+            "rival": "Operates without a public MSB-equivalent registration"
+          },
+          "min": {
+            "feature": "Minimum takas",
+            "mrc": "$0.30",
+            "rival": "$15 typical minimum, varies by pair"
+          },
+          "kyc": {
+            "feature": "KYC / kayıt",
+            "mrc": "Not required for swaps",
+            "rival": "Not required for most swaps"
+          },
+          "speed": {
+            "feature": "Ortalama hız",
+            "mrc": "< 60 seconds (fixed-rate)",
+            "rival": "5 – 15 minutes typical"
+          },
+          "nonCustodial": {
+            "feature": "Saklamasız",
+            "mrc": "Yes — wallet-to-wallet, no balances held",
+            "rival": "Yes"
+          },
+          "assets": {
+            "feature": "Desteklenen coinler / çiftler",
+            "mrc": "6,000+ assets across 80+ networks (aggregated)",
+            "rival": "1,500+ assets"
+          },
+          "fees": {
+            "feature": "Ücretler / oranlar",
+            "mrc": "Transparent flat fee, aggregated best-of-N rate",
+            "rival": "Spread-based, often 0.5% – 5% effective"
+          },
+          "support": {
+            "feature": "Müşteri desteği",
+            "mrc": "24/7 in-app chat + email, multilingual",
+            "rival": "Email + chat"
+          },
+          "affiliate": {
+            "feature": "Ortaklık programı",
+            "mrc": "Lifetime 0.1% – 0.4% paid in BTC, no expiry, $0 minimum payout",
+            "rival": "Up to 0.4% revenue share, $50+ minimum payout"
+          }
+        },
+        "mrcPros": [
+          "Registered Canadian MSB — verifiable on the FINTRAC public registry",
+          "Swaps from $0.30 vs SimpleSwap's typical $15+ floor",
+          "Transparent flat fee instead of hidden spread",
+          "Lifetime BTC commissions with no minimum payout for affiliates",
+          "13 fully-translated languages including RTL"
+        ],
+        "mrcCons": [
+          "Smaller asset count on direct UI (focus on top 6,000+ liquid pairs vs SimpleSwap's long-tail listings)",
+          "Newer to the market"
+        ],
+        "rivalPros": [
+          "Long-tail asset coverage including some illiquid altcoins",
+          "Established 2018",
+          "Floating-rate option for users who want to ride volatility"
+        ],
+        "rivalCons": [
+          "No verifiable major-jurisdiction MSB registration",
+          "$15+ minimum makes most dust swaps impossible",
+          "Spread-based pricing can be expensive on low-liquidity pairs"
+        ],
+        "whyMrc": [
+          "Regulated Canadian MSB (FINTRAC #C100000015) — your swaps run through a venue with verifiable AML/KYC compliance infrastructure",
+          "$0.30 minimum — sweep crypto dust SimpleSwap will reject",
+          "Flat fee model means no surprise spreads on the rate",
+          "Affiliates earn lifetime BTC, paid automatically per swap"
+        ],
+        "conclusion": "SimpleSwap hesapsız orta-cap altcoin takasları için makuldür. Düzenleyici netlik, küçük bakiye temizliği veya ömür boyu BTC ortaklık geliri isteyenler için MRC GlobalPay daha hizalıdır."
+      },
+      "stealthex": {
+        "rivalName": "StealthEX",
+        "title": "MRC GlobalPay vs StealthEX (2026) — Hangisi daha iyi?",
+        "intro": "StealthEX gizlilik odaklı saklamasız bir takas toplayıcısıdır. MRC GlobalPay aynı saklamasız tasarımı paylaşır ancak tam Kanada MSB düzenlemesi ekler.",
+        "rows": {
+          "regulation": {
+            "feature": "Düzenleme",
+            "mrc": "Canadian MSB · FINTRAC #C100000015 · Bank of Canada PSP-aligned",
+            "rival": "Operates outside major MSB frameworks"
+          },
+          "min": {
+            "feature": "Minimum takas",
+            "mrc": "$0.30",
+            "rival": "$15 typical minimum, often higher for privacy coins"
+          },
+          "kyc": {
+            "feature": "KYC / kayıt",
+            "mrc": "Not required for swaps",
+            "rival": "Not required"
+          },
+          "speed": {
+            "feature": "Ortalama hız",
+            "mrc": "< 60 seconds (fixed-rate)",
+            "rival": "5 – 30 minutes typical"
+          },
+          "nonCustodial": {
+            "feature": "Saklamasız",
+            "mrc": "Yes — wallet-to-wallet, no balances held",
+            "rival": "Yes"
+          },
+          "assets": {
+            "feature": "Desteklenen coinler / çiftler",
+            "mrc": "6,000+ assets across 80+ networks (aggregated)",
+            "rival": "1,300+ assets"
+          },
+          "fees": {
+            "feature": "Ücretler / oranlar",
+            "mrc": "Transparent flat fee, aggregated best-of-N rate",
+            "rival": "Variable spread, 0.4% – 3%"
+          },
+          "support": {
+            "feature": "Müşteri desteği",
+            "mrc": "24/7 in-app chat + email, multilingual",
+            "rival": "Email + ticket"
+          },
+          "affiliate": {
+            "feature": "Ortaklık programı",
+            "mrc": "Lifetime 0.1% – 0.4% paid in BTC, no expiry, $0 minimum payout",
+            "rival": "0.4% revenue share, payout thresholds apply"
+          }
+        },
+        "mrcPros": [
+          "Canadian FINTRAC MSB (#C100000015) — same non-custodial design with regulatory backing",
+          "$0.30 minimum vs StealthEX's $15+ floor",
+          "Aggregates multiple liquidity providers per quote (best price wins)",
+          "Lifetime BTC affiliate payouts with no minimum",
+          "13-language UI with full RTL support"
+        ],
+        "mrcCons": [
+          "We do not specialize in privacy-coin-only routing",
+          "Smaller community than StealthEX in the privacy-coin niche"
+        ],
+        "rivalPros": [
+          "Strong reputation in the privacy-coin community",
+          "Wide range of obscure altcoin support",
+          "Anonymity-first marketing message"
+        ],
+        "rivalCons": [
+          "No major-jurisdiction MSB registration to point users at",
+          "Higher minimums lock out small-balance users",
+          "Pricing can be opaque on low-liquidity pairs"
+        ],
+        "whyMrc": [
+          "Same non-custodial wallet-to-wallet model as StealthEX, plus a verifiable Canadian MSB license",
+          "Sub-dollar swaps — turn forgotten dust into usable assets",
+          "Multi-provider routing finds a better rate than any single provider in many quotes",
+          "Affiliate revenue paid in BTC, lifetime, automatic, $0 threshold"
+        ],
+        "conclusion": "Tek önceliğiniz gizlilik coini yönlendirme ise StealthEX o nişte güçlü topluluk güvenine sahiptir. Diğer herkes için — özellikle düzenlenmiş altyapı ve küçük bakiye takası isteyenler için — MRC GlobalPay daha güçlü genel amaçlı seçimdir."
+      },
+      "letsexchange": {
+        "rivalName": "LetsExchange",
+        "title": "MRC GlobalPay vs LetsExchange (2026) — Hangisi daha iyi?",
+        "intro": "MRC GlobalPay likiditesinin bir kısmını LetsExchange üzerinden yönlendirir. Yani bu bir karşılaşmadan çok bir seçimdir: doğrudan LetsExchange mi, yoksa düzenlenmiş bir ön yüzde LetsExchange + ChangeNOW mu?",
+        "rows": {
+          "regulation": {
+            "feature": "Düzenleme",
+            "mrc": "Canadian MSB · FINTRAC #C100000015 · Bank of Canada PSP-aligned",
+            "rival": "Operates as a non-custodial aggregator without a public major-MSB license"
+          },
+          "min": {
+            "feature": "Minimum takas",
+            "mrc": "$0.30",
+            "rival": "$15 typical minimum, varies by pair"
+          },
+          "kyc": {
+            "feature": "KYC / kayıt",
+            "mrc": "Not required for swaps",
+            "rival": "Not required"
+          },
+          "speed": {
+            "feature": "Ortalama hız",
+            "mrc": "< 60 seconds (fixed-rate)",
+            "rival": "5 – 15 minutes typical"
+          },
+          "nonCustodial": {
+            "feature": "Saklamasız",
+            "mrc": "Yes — wallet-to-wallet, no balances held",
+            "rival": "Yes"
+          },
+          "assets": {
+            "feature": "Desteklenen coinler / çiftler",
+            "mrc": "6,000+ assets across 80+ networks (aggregated)",
+            "rival": "3,000+ assets"
+          },
+          "fees": {
+            "feature": "Ücretler / oranlar",
+            "mrc": "Transparent flat fee, aggregated best-of-N rate",
+            "rival": "Variable, often 0.5% – 3%"
+          },
+          "support": {
+            "feature": "Müşteri desteği",
+            "mrc": "24/7 in-app chat + email, multilingual",
+            "rival": "Ticket-based, slower than tier-1 venues"
+          },
+          "affiliate": {
+            "feature": "Ortaklık programı",
+            "mrc": "Lifetime 0.1% – 0.4% paid in BTC, no expiry, $0 minimum payout",
+            "rival": "Standard revenue share"
+          }
+        },
+        "mrcPros": [
+          "Aggregates LetsExchange liquidity plus ChangeNOW and other providers — better quotes per swap on average",
+          "Canadian FINTRAC MSB regulated wrapper (#C100000015) on top of the same liquidity you'd get direct",
+          "$0.30 minimum vs $15+ direct on LetsExchange",
+          "24/7 in-app chat support (vs LetsExchange ticket queue)",
+          "Lifetime BTC affiliate program with $0 minimum payout"
+        ],
+        "mrcCons": [
+          "If you have a specific pair only LetsExchange lists in their long-tail, going direct may have one-off advantages"
+        ],
+        "rivalPros": [
+          "Direct access to their full asset catalogue including some long-tail listings",
+          "Established non-custodial brand",
+          "Floating-rate option for traders"
+        ],
+        "rivalCons": [
+          "No verifiable major-jurisdiction MSB registration",
+          "$15+ minimum effectively excludes dust",
+          "Slower customer support response times"
+        ],
+        "whyMrc": [
+          "You get LetsExchange liquidity anyway — through a regulated, lower-minimum, better-supported front end",
+          "Multi-provider routing means you almost never get a worse rate than going direct",
+          "Canadian MSB regulatory wrapper (FINTRAC #C100000015) — verifiable on the public registry",
+          "Lifetime BTC affiliate payouts, automatic, no minimum",
+          "13-language UI with full RTL support"
+        ],
+        "conclusion": "Doğrudan LetsExchange'e gitmenin MRC GlobalPay'i geçtiği neredeyse hiçbir senaryo yoktur: aynı likidite (ve daha fazlası), daha düşük minimumlar, düzenlenmiş venue, daha hızlı destek ve daha güçlü ortaklık programı."
+      }
+    }
   }
 }
