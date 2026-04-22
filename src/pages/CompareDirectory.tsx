@@ -94,10 +94,10 @@ const CompareDirectory = () => {
             </h2>
             <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
               {filtered.map((c) => (
-                <a
+                <Link
                   key={c.slug}
-                  href={`/compare/mrc-vs-${c.slug}`}
-                  title={`Compare MRC Global Pay vs ${c.name} — fees, minimums, speed`}
+                  to={langPath(lang, `/compare/mrc-vs-${c.slug}`)}
+                  title={`Compare MRC GlobalPay vs ${c.name} — fees, minimums, speed`}
                   className="group rounded-xl border border-border bg-card p-5 transition-all hover:border-primary/40 hover:shadow-md"
                 >
                   <h3 className="font-display text-sm font-bold text-foreground group-hover:text-primary">
@@ -109,7 +109,7 @@ const CompareDirectory = () => {
                   <p className="mt-2 font-body text-xs text-primary">
                     {c.mrc_advantage}
                   </p>
-                </a>
+                </Link>
               ))}
             </div>
             {filtered.length === 0 && (
