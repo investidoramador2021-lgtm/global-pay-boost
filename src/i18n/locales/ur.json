@@ -2123,5 +2123,14 @@
         }
       ]
     }
+  },
+  "pairEnrichment": {
+    "whyTitle": "{{from}} کو {{to}} میں تبدیل کیوں کریں؟",
+    "stepsTitle": "مرحلہ بہ مرحلہ: {{from}} ← {{to}}",
+    "notesTitle": "{{from}} ← {{to}} کے لیے فیس، رفتار اور کم سے کم",
+    "peopleAlsoTitle": "متعلقہ تبادلے",
+    "feesLabel": "فیس",
+    "speedLabel": "رفتار",
+    "minimumLabel": "کم سے کم"
   }
 }

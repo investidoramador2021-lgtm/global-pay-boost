@@ -2123,5 +2123,14 @@
         }
       ]
     }
+  },
+  "pairEnrichment": {
+    "whyTitle": "Навіщо обмінювати {{from}} на {{to}}?",
+    "stepsTitle": "Крок за кроком: {{from}} → {{to}}",
+    "notesTitle": "Комісії, швидкість і мінімум для {{from}} → {{to}}",
+    "peopleAlsoTitle": "Інші також обмінюють",
+    "feesLabel": "Комісії",
+    "speedLabel": "Швидкість",
+    "minimumLabel": "Мінімум"
   }
 }

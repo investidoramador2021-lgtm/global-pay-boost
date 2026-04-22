@@ -2123,5 +2123,14 @@
         }
       ]
     }
+  },
+  "pairEnrichment": {
+    "whyTitle": "{{from}}を{{to}}に交換する理由",
+    "stepsTitle": "ステップバイステップ：{{from}} → {{to}}",
+    "notesTitle": "{{from}} → {{to}}の手数料、速度、最低額",
+    "peopleAlsoTitle": "他のユーザーが交換しているペア",
+    "feesLabel": "手数料",
+    "speedLabel": "速度",
+    "minimumLabel": "最低額"
   }
 }

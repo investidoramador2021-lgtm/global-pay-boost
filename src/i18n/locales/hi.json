@@ -2123,5 +2123,14 @@
         }
       ]
     }
+  },
+  "pairEnrichment": {
+    "whyTitle": "{{from}} को {{to}} में क्यों बदलें?",
+    "stepsTitle": "चरण-दर-चरण: {{from}} → {{to}}",
+    "notesTitle": "{{from}} → {{to}} के लिए शुल्क, गति और न्यूनतम",
+    "peopleAlsoTitle": "लोग ये भी स्वैप करते हैं",
+    "feesLabel": "शुल्क",
+    "speedLabel": "गति",
+    "minimumLabel": "न्यूनतम"
   }
 }

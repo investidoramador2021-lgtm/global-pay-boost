@@ -2123,5 +2123,14 @@
         }
       ]
     }
+  },
+  "pairEnrichment": {
+    "whyTitle": "Neden {{from}} ile {{to}} takas edilir?",
+    "stepsTitle": "Adım adım: {{from}} → {{to}}",
+    "notesTitle": "{{from}} → {{to}} için ücretler, hız ve minimum",
+    "peopleAlsoTitle": "Diğerleri de takas ediyor",
+    "feesLabel": "Ücretler",
+    "speedLabel": "Hız",
+    "minimumLabel": "Minimum"
   }
 }

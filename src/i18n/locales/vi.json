@@ -2123,5 +2123,14 @@
         }
       ]
     }
+  },
+  "pairEnrichment": {
+    "whyTitle": "Tại sao đổi {{from}} sang {{to}}?",
+    "stepsTitle": "Từng bước: {{from}} → {{to}}",
+    "notesTitle": "Phí, tốc độ và mức tối thiểu cho {{from}} → {{to}}",
+    "peopleAlsoTitle": "Mọi người cũng đổi",
+    "feesLabel": "Phí",
+    "speedLabel": "Tốc độ",
+    "minimumLabel": "Tối thiểu"
   }
 }

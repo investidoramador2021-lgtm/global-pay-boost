@@ -2123,5 +2123,14 @@
         }
       ]
     }
+  },
+  "pairEnrichment": {
+    "whyTitle": "چرا {{from}} را به {{to}} تبدیل کنیم؟",
+    "stepsTitle": "گام به گام: {{from}} ← {{to}}",
+    "notesTitle": "کارمزد، سرعت و حداقل برای {{from}} ← {{to}}",
+    "peopleAlsoTitle": "تبادل‌های مرتبط",
+    "feesLabel": "کارمزد",
+    "speedLabel": "سرعت",
+    "minimumLabel": "حداقل"
   }
 }

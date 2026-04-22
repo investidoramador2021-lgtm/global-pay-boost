@@ -2123,5 +2123,14 @@
         }
       ]
     }
+  },
+  "pairEnrichment": {
+    "whyTitle": "למה להמיר {{from}} ל-{{to}}?",
+    "stepsTitle": "שלב אחר שלב: {{from}} ← {{to}}",
+    "notesTitle": "עמלות, מהירות ומינימום עבור {{from}} ← {{to}}",
+    "peopleAlsoTitle": "המרות קשורות",
+    "feesLabel": "עמלות",
+    "speedLabel": "מהירות",
+    "minimumLabel": "מינימום"
   }
 }

@@ -2137,5 +2137,14 @@
         }
       ]
     }
+  },
+  "pairEnrichment": {
+    "whyTitle": "Why swap {{from}} to {{to}}?",
+    "stepsTitle": "Step-by-step: {{from}} → {{to}}",
+    "notesTitle": "Fees, speed, and minimum for {{from}} → {{to}}",
+    "peopleAlsoTitle": "People also swap",
+    "feesLabel": "Fees",
+    "speedLabel": "Speed",
+    "minimumLabel": "Minimum"
   }
 }
