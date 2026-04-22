@@ -19,13 +19,13 @@ import {
   CheckCircle2,
 } from "lucide-react";
 import type { PairEnrichment } from "@/lib/pair-enrichment";
-import { langPath } from "@/i18n";
+import { langPath, type SupportedLanguage } from "@/i18n";
 
 interface Props {
   enrichment: PairEnrichment;
   fromUp: string;
   toUp: string;
-  lang: string;
+  lang: SupportedLanguage;
 }
 
 export default function PairEnrichmentBlock({ enrichment, fromUp, toUp, lang }: Props) {
