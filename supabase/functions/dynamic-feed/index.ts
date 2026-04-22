@@ -138,15 +138,17 @@ const LEARN_SLUGS = [
   "swap-without-registration", "tracking-your-micro-swap",
 ];
 
+// Source of truth: src/lib/competitor-data.ts (COMPETITORS array).
+// Every slug here MUST resolve to /compare/mrc-vs-{slug} via ComparePage.
 const COMPARE_SLUGS = [
-  "changenow", "changelly", "simpleswap", "stealthex", "exolix", "fixedfloat",
-  "houdiniswap", "godex", "letsexchange", "swapuz", "swapzone", "majesticbank",
-  "kraken", "coinbase", "binance", "kucoin", "okx", "bybit", "bitfinex", "gemini",
-  "crypto-com", "uniswap", "1inch", "thorswap", "rango", "rubic", "jumper",
-  "bungee", "li-fi", "across-protocol", "stargate", "hop-protocol", "synapse",
-  "celer", "wormhole", "axelar", "layerzero", "debridge", "chainflip", "atomic-wallet",
-  "trust-wallet", "metamask-swap", "phantom-swap", "exodus", "guarda", "edge-wallet",
-  "bestchange", "exchanger24", "switchere", "moonpay", "transak", "ramp",
+  "1inch", "across", "binance", "bitbuy", "bitget", "bybit", "changelly", "changenow",
+  "changenow-pro", "coinbase", "coinsquare", "elude", "exolix", "fixedfloat", "gate-io",
+  "gemini", "godex", "houdiniswap", "htx", "jupiter", "kraken", "kucoin", "layerswap",
+  "letsexchange", "majesticbank", "mexc", "ndax", "netcoins", "newton", "okx",
+  "orangefren", "orbiter", "pancakeswap", "paytrie", "phemex", "rocketexchange",
+  "shakepay", "sideshift", "simpleswap", "stargate", "stealthex", "swapsystems",
+  "thorchain", "tradeogre", "trocador", "uniswap", "uphold", "virgocx", "wealthsimple",
+  "xchange-me",
 ];
 
 const SOLUTION_SLUGS = [
