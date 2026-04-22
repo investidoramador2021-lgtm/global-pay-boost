@@ -110,6 +110,12 @@ Deno.serve(async (req) => {
     <loc>${BASE_URL}/functions/v1/dynamic-sitemap/static.xml</loc>
     <lastmod>${today}</lastmod>
   </sitemap>`;
+    // Per-asset hub sitemap (one URL per active ticker × language)
+    xml += `
+  <sitemap>
+    <loc>${BASE_URL}/functions/v1/dynamic-sitemap/assets.xml</loc>
+    <lastmod>${today}</lastmod>
+  </sitemap>`;
     for (let i = 0; i < batchCount; i++) {
       xml += `
   <sitemap>
@@ -118,6 +124,62 @@ Deno.serve(async (req) => {
   </sitemap>`;
     }
     xml += `\n</sitemapindex>`;
+    return new Response(xml, {
+      headers: { "Content-Type": "application/xml", "Cache-Control": "public, max-age=3600" },
+    });
+  }
+
+  // Per-asset sitemap — one <url> per (active ticker × language) with full
+  // bidirectional hreflang alternates. Powers /asset/:ticker landing pages.
+  if (path === "/assets.xml") {
+    const today = new Date().toISOString().split("T")[0];
+    const { data, error } = await svc
+      .from("exchange_assets")
+      .select("ticker, updated_at")
+      .eq("is_active", true)
+      .order("tier", { ascending: true })
+      .limit(5000);
+    if (error) console.error("[assets.xml] error:", error.message);
+
+    // De-duplicate by lowercased ticker (multiple network-variants share a hub)
+    const seen = new Set<string>();
+    const tickers: Array<{ ticker: string; lastmod: string }> = [];
+    for (const row of (data || []) as Array<{ ticker: string; updated_at: string }>) {
+      const t = (row.ticker || "").toLowerCase();
+      if (!t || seen.has(t)) continue;
+      seen.add(t);
+      tickers.push({ ticker: t, lastmod: (row.updated_at || new Date().toISOString()).split("T")[0] });
+    }
+
+    let xml = `<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
+        xmlns:xhtml="http://www.w3.org/1999/xhtml">`;
+
+    for (const { ticker, lastmod } of tickers) {
+      for (const lang of LANGS) {
+        const prefix = lang ? `/${lang}` : "";
+        const loc = `${BASE_URL}${prefix}/asset/${ticker}`;
+        const priority = lang ? "0.6" : "0.8";
+        let alts = "";
+        for (const l of LANGS) {
+          const hl = l || "en";
+          const p = l ? `/${l}` : "";
+          alts += `
+    <xhtml:link rel="alternate" hreflang="${hl}" href="${BASE_URL}${p}/asset/${ticker}" />`;
+        }
+        alts += `
+    <xhtml:link rel="alternate" hreflang="x-default" href="${BASE_URL}/asset/${ticker}" />`;
+        xml += `
+  <url>
+    <loc>${loc}</loc>
+    <lastmod>${lastmod}</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>${priority}</priority>${alts}
+  </url>`;
+      }
+    }
+    xml += `\n</urlset>`;
+    console.log(`[assets.xml] tickers=${tickers.length} urls=${tickers.length * LANGS.length}`);
     return new Response(xml, {
       headers: { "Content-Type": "application/xml", "Cache-Control": "public, max-age=3600" },
     });
