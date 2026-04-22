@@ -6,6 +6,7 @@ import SiteFooter from "@/components/SiteFooter";
 import MsbTrustBar from "@/components/MsbTrustBar";
 import { getCompetitorBySlug, getRandomCompetitors, type Competitor } from "@/lib/competitor-data";
 import { getDeepProfile } from "@/lib/competitor-deep";
+import { buildAutoProfile } from "@/lib/competitor-deep-auto";
 import ComparisonPageTemplate from "@/components/compare/ComparisonPageTemplate";
 import { usePageUrl } from "@/hooks/use-page-url";
 import {
@@ -53,25 +54,28 @@ const ComparePage = () => {
   const competitor = getCompetitorBySlug(rivalSlug);
   const pageUrl = usePageUrl(`/compare/${slug}`);
 
-  // Rich, hand-curated comparison for priority competitors
+  // Hand-curated rich profile for priority competitors.
   const deep = getDeepProfile(rivalSlug);
   if (deep) return <ComparisonPageTemplate profile={deep} />;
 
-  if (!competitor) {
-    return (
-      <>
-        <SiteHeader />
-        <main className="flex min-h-screen items-center justify-center bg-background">
-          <div className="text-center">
-            <h1 className="font-display text-2xl font-bold text-foreground">Comparison Not Found</h1>
-            <p className="mt-2 font-body text-muted-foreground">This exchange is not in our database.</p>
-            <Link to="/compare" className="mt-4 inline-block text-primary hover:underline">Browse all comparisons →</Link>
-          </div>
-        </main>
-        <SiteFooter />
-      </>
-    );
-  }
+  // Auto-generated rich profile for every other listed competitor —
+  // ensures all /compare/mrc-vs-* pages use the same balanced structure
+  // (Winner table, pros/cons, Why-MRC, verdict) and benefit from i18n labels.
+  if (competitor) return <ComparisonPageTemplate profile={buildAutoProfile(competitor)} />;
+
+  return (
+    <>
+      <SiteHeader />
+      <main className="flex min-h-screen items-center justify-center bg-background">
+        <div className="text-center">
+          <h1 className="font-display text-2xl font-bold text-foreground">Comparison Not Found</h1>
+          <p className="mt-2 font-body text-muted-foreground">This exchange is not in our database.</p>
+          <Link to="/compare" className="mt-4 inline-block text-primary hover:underline">Browse all comparisons →</Link>
+        </div>
+      </main>
+      <SiteFooter />
+    </>
+  );
 
   const rows = buildRows(competitor);
   const others = getRandomCompetitors(rivalSlug, 4);
