@@ -2093,6 +2093,35 @@
         ],
         "conclusion": "Hầu như không có kịch bản nào mà đi trực tiếp LetsExchange tốt hơn dùng MRC GlobalPay: cùng thanh khoản (và hơn), tối thiểu thấp hơn, venue được quản lý, hỗ trợ nhanh hơn và chương trình tiếp thị mạnh hơn."
       }
+    },
+    "faq": {
+      "title": "Câu Hỏi Thường Gặp",
+      "items": [
+        {
+          "q": "MRC GlobalPay có an toàn hơn {{rival}} không?",
+          "a": "MRC GlobalPay là Doanh nghiệp Dịch vụ Tiền tệ đăng ký tại Canada (FINTRAC #C100000015) và là Nhà cung cấp Dịch vụ Thanh toán được Ngân hàng Canada cấp phép. Hầu hết các nền tảng tổng hợp không lưu ký như {{rival}} hoạt động không có cơ quan quản lý nội địa rõ ràng. Chúng tôi không bao giờ giữ tiền của khách hàng, nhưng lớp pháp lý mang lại tiêu chuẩn trách nhiệm bổ sung."
+        },
+        {
+          "q": "Mức swap tối thiểu trên MRC GlobalPay so với {{rival}} là bao nhiêu?",
+          "a": "MRC GlobalPay hỗ trợ micro-swap chỉ từ $0.30, lý tưởng để dọn dẹp bụi crypto. Mức tối thiểu của {{rival}} thường cao hơn nhiều và thay đổi theo tài sản."
+        },
+        {
+          "q": "Tôi có cần đăng ký hoặc KYC để swap không?",
+          "a": "Không cần tài khoản, email hay KYC cho swap tiêu chuẩn trên MRC GlobalPay. Là một MSB được quản lý, chúng tôi chỉ yêu cầu xác minh cho giao dịch bị đánh dấu rủi ro cao. {{rival}} áp dụng mô hình tương tự."
+        },
+        {
+          "q": "Tốc độ swap so với {{rival}} thế nào?",
+          "a": "Hầu hết swap trên MRC GlobalPay hoàn tất dưới 60 giây. Tốc độ trên {{rival}} tương đương với các cặp chính nhưng có thể thay đổi với tài sản nhỏ."
+        },
+        {
+          "q": "Tỷ giá tốt hơn ở MRC GlobalPay hay {{rival}}?",
+          "a": "MRC GlobalPay tổng hợp thanh khoản từ nhiều nhà cung cấp và định tuyến đến tỷ giá tốt nhất, mọi phí đã bao gồm trong báo giá. Với hầu hết cặp chính, MRC ngang bằng hoặc tốt hơn {{rival}}, đặc biệt với lệnh nhỏ."
+        },
+        {
+          "q": "MRC GlobalPay có chương trình liên kết như {{rival}} không?",
+          "a": "Có. MRC GlobalPay cung cấp hoa hồng trọn đời cho mỗi swap của người được giới thiệu, trả bằng BTC trực tiếp vào ví của bạn. Hầu hết đối tác của {{rival}} chỉ nhận hoa hồng một lần hoặc bị giới hạn."
+        }
+      ]
     }
   }
 }
