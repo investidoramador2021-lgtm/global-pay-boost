@@ -5,6 +5,7 @@ import { Link } from "react-router-dom";
 import SiteHeader from "@/components/SiteHeader";
 import SiteFooter from "@/components/SiteFooter";
 import MsbTrustBar from "@/components/MsbTrustBar";
+import HreflangTags from "@/components/HreflangTags";
 import {
   Table, TableHeader, TableBody, TableHead, TableRow, TableCell,
 } from "@/components/ui/table";
@@ -175,6 +176,7 @@ const ComparisonPageTemplate = ({ profile }: Props) => {
 
   return (
     <>
+      <HreflangTags />
       <Helmet>
         <title>{title}</title>
         <meta name="description" content={intro.slice(0, 158)} />

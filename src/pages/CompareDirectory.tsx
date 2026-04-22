@@ -1,14 +1,19 @@
 import { useState, useMemo } from "react";
 import { Helmet } from "react-helmet-async";
 import { Search } from "lucide-react";
+import { Link, useLocation } from "react-router-dom";
 import SiteHeader from "@/components/SiteHeader";
 import SiteFooter from "@/components/SiteFooter";
 import MsbTrustBar from "@/components/MsbTrustBar";
+import HreflangTags from "@/components/HreflangTags";
 import { COMPETITORS } from "@/lib/competitor-data";
 import { usePageUrl } from "@/hooks/use-page-url";
+import { getLangFromPath, langPath } from "@/i18n";
 
 const CompareDirectory = () => {
   const [query, setQuery] = useState("");
+  const { pathname } = useLocation();
+  const lang = getLangFromPath(pathname);
   const pageUrl = usePageUrl("/compare");
 
   const filtered = useMemo(() => {
@@ -39,6 +44,7 @@ const CompareDirectory = () => {
 
   return (
     <>
+      <HreflangTags />
       <Helmet>
         <title>MRC Global Pay vs 50+ Exchanges | 2026 Comparison</title>
         <meta name="description" content="Compare MRC Global Pay against 50+ crypto exchanges. Side-by-side feature comparisons covering fees, minimums, verification policies, speed, and more." />
@@ -88,10 +94,10 @@ const CompareDirectory = () => {
             </h2>
             <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
               {filtered.map((c) => (
-                <a
+                <Link
                   key={c.slug}
-                  href={`/compare/mrc-vs-${c.slug}`}
-                  title={`Compare MRC Global Pay vs ${c.name} — fees, minimums, speed`}
+                  to={langPath(lang, `/compare/mrc-vs-${c.slug}`)}
+                  title={`Compare MRC GlobalPay vs ${c.name} — fees, minimums, speed`}
                   className="group rounded-xl border border-border bg-card p-5 transition-all hover:border-primary/40 hover:shadow-md"
                 >
                   <h3 className="font-display text-sm font-bold text-foreground group-hover:text-primary">
@@ -103,7 +109,7 @@ const CompareDirectory = () => {
                   <p className="mt-2 font-body text-xs text-primary">
                     {c.mrc_advantage}
                   </p>
-                </a>
+                </Link>
               ))}
             </div>
             {filtered.length === 0 && (
