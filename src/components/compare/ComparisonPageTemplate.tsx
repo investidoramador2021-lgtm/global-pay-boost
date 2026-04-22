@@ -156,7 +156,7 @@ const ComparisonPageTemplate = ({ profile }: Props) => {
                   </TableRow>
                 </TableHeader>
                 <TableBody>
-                  {profile.rows.map((r) => (
+                  {localizedRows.map((r) => (
                     <TableRow key={r.feature}>
                       <TableCell className="font-body text-sm font-semibold text-foreground align-top">{r.feature}</TableCell>
                       <TableCell className="font-body text-sm text-foreground/90 align-top">{r.mrc}</TableCell>
@@ -192,7 +192,7 @@ const ComparisonPageTemplate = ({ profile }: Props) => {
                 <h3 className="font-display text-lg font-bold text-primary">MRC GlobalPay</h3>
                 <h4 className="mt-4 font-display text-sm font-semibold text-foreground">{t("compare.prosLabel")}</h4>
                 <ul className="mt-2 space-y-2">
-                  {profile.mrcPros.map((p) => (
+                  {mrcPros.map((p) => (
                     <li key={p} className="flex gap-2 font-body text-sm text-foreground/90">
                       <CheckCircle2 className="mt-0.5 h-4 w-4 shrink-0 text-primary" />
                       <span>{p}</span>
@@ -201,7 +201,7 @@ const ComparisonPageTemplate = ({ profile }: Props) => {
                 </ul>
                 <h4 className="mt-5 font-display text-sm font-semibold text-foreground">{t("compare.consLabel")}</h4>
                 <ul className="mt-2 space-y-2">
-                  {profile.mrcCons.map((p) => (
+                  {mrcCons.map((p) => (
                     <li key={p} className="flex gap-2 font-body text-sm text-muted-foreground">
                       <XCircle className="mt-0.5 h-4 w-4 shrink-0 text-muted-foreground/70" />
                       <span>{p}</span>
@@ -215,7 +215,7 @@ const ComparisonPageTemplate = ({ profile }: Props) => {
                 <h3 className="font-display text-lg font-bold text-foreground">{profile.rivalName}</h3>
                 <h4 className="mt-4 font-display text-sm font-semibold text-foreground">{t("compare.prosLabel")}</h4>
                 <ul className="mt-2 space-y-2">
-                  {profile.rivalPros.map((p) => (
+                  {rivalPros.map((p) => (
                     <li key={p} className="flex gap-2 font-body text-sm text-foreground/90">
                       <CheckCircle2 className="mt-0.5 h-4 w-4 shrink-0 text-primary" />
                       <span>{p}</span>
@@ -224,7 +224,7 @@ const ComparisonPageTemplate = ({ profile }: Props) => {
                 </ul>
                 <h4 className="mt-5 font-display text-sm font-semibold text-foreground">{t("compare.consLabel")}</h4>
                 <ul className="mt-2 space-y-2">
-                  {profile.rivalCons.map((p) => (
+                  {rivalCons.map((p) => (
                     <li key={p} className="flex gap-2 font-body text-sm text-muted-foreground">
                       <XCircle className="mt-0.5 h-4 w-4 shrink-0 text-muted-foreground/70" />
                       <span>{p}</span>
@@ -243,7 +243,7 @@ const ComparisonPageTemplate = ({ profile }: Props) => {
               {t("compare.whyMrcTitle")}
             </h2>
             <ul className="space-y-3">
-              {profile.whyMrc.map((p, i) => (
+              {whyMrc.map((p, i) => (
                 <li key={p} className="flex gap-3 rounded-xl border border-border bg-card p-4">
                   <span className="flex h-7 w-7 shrink-0 items-center justify-center rounded-full bg-primary/15 font-display text-xs font-bold text-primary">
                     {i + 1}
@@ -262,7 +262,7 @@ const ComparisonPageTemplate = ({ profile }: Props) => {
               {t("compare.verdictTitle")}
             </h2>
             <p className="font-body text-base leading-relaxed text-foreground/90">
-              {profile.conclusion}
+              {conclusion}
             </p>
             <div className="mt-8 flex flex-wrap gap-3">
               <Link
