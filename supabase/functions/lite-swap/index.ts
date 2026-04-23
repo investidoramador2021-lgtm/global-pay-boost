@@ -21,6 +21,7 @@
  */
 import "jsr:@supabase/functions-js/edge-runtime.d.ts";
 import { createClient } from "https://esm.sh/@supabase/supabase-js@2.49.1";
+import { LITE_API_OPENAPI } from "./openapi.ts";
 
 const corsHeaders = {
   "Access-Control-Allow-Origin": "*",
@@ -247,6 +248,17 @@ Deno.serve(async (req) => {
 
   try {
     switch (action) {
+      // ─── 0. OpenAPI contract (public, cacheable) ────────────────────────
+      case "openapi":
+        return new Response(JSON.stringify(LITE_API_OPENAPI, null, 2), {
+          status: 200,
+          headers: {
+            ...corsHeaders,
+            "Content-Type": "application/json",
+            "Cache-Control": "public, max-age=3600",
+          },
+        });
+
       // ─── 1. Public rates passthrough ────────────────────────────────────
       case "rates": {
         const from = (url.searchParams.get("from") || "").toLowerCase();
@@ -588,7 +600,7 @@ Deno.serve(async (req) => {
 
       default:
         return bad(
-          'Unknown action. Use "rates", "estimate", "create", or "status".',
+          'Unknown action. Use "rates", "estimate", "create", "status", or "openapi".',
         );
     }
   } catch (err) {
