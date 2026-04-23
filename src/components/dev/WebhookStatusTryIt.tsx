@@ -160,11 +160,7 @@ export default function WebhookStatusTryIt() {
       )}
 
       {state.kind === "network_error" && (
-        <ErrorBanner
-          title="Network error"
-          body={state.message}
-          hint="The browser could not reach the URL. Check the host or CORS."
-        />
+        <CorsTroubleshooter url={url} message={state.message} />
       )}
 
       {state.kind === "http_error" && (
