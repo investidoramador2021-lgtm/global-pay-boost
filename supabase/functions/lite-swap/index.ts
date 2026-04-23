@@ -58,6 +58,80 @@ const BLOCKED_COUNTRIES = new Set([
 const TICKER_RE = /^[a-z0-9]{1,20}$/i;
 const ADDRESS_RE = /^[a-zA-Z0-9_:.-]{8,128}$/;
 const ORDER_ID_RE = /^[a-zA-Z0-9_-]{1,64}$/;
+const WEBHOOK_URL_RE = /^https:\/\/[a-zA-Z0-9.\-_/:?=&%]{6,512}$/;
+const WEBHOOK_SECRET_RE = /^[a-zA-Z0-9._\-]{8,128}$/;
+
+// ─── Webhook helpers ───────────────────────────────────────────────────────
+async function hmacSign(payload: string, secret: string): Promise<string> {
+  const enc = new TextEncoder();
+  const key = await crypto.subtle.importKey(
+    "raw",
+    enc.encode(secret),
+    { name: "HMAC", hash: "SHA-256" },
+    false,
+    ["sign"],
+  );
+  const sig = await crypto.subtle.sign("HMAC", enc.encode(payload), key);
+  return Array.from(new Uint8Array(sig))
+    .map((b) => b.toString(16).padStart(2, "0"))
+    .join("");
+}
+
+/**
+ * Map an upstream provider state to one of our public webhook event names.
+ * Returns null if the state should not trigger a webhook (e.g. duplicate).
+ */
+function eventNameForState(state: string): string | null {
+  const s = (state || "").toLowerCase();
+  switch (s) {
+    case "waiting": return "swap.created";
+    case "confirming": return "swap.deposit_detected";
+    case "exchanging":
+    case "sending": return "swap.processing";
+    case "finished": return "swap.finished";
+    case "failed": return "swap.failed";
+    case "refunded": return "swap.refunded";
+    case "expired": return "swap.expired";
+    case "verifying": return "swap.verifying";
+    default: return null;
+  }
+}
+
+async function dispatchWebhook(
+  url: string,
+  secret: string,
+  event: string,
+  payload: Record<string, unknown>,
+): Promise<{ ok: boolean; status: number; error?: string }> {
+  try {
+    const body = JSON.stringify({
+      event,
+      timestamp: new Date().toISOString(),
+      data: payload,
+    });
+    const signature = await hmacSign(body, secret);
+    const resp = await fetch(url, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        "X-MRC-Event": event,
+        "X-MRC-Signature": signature,
+        "User-Agent": "MRC-LiteAPI-Webhook/1.0",
+      },
+      body,
+      signal: AbortSignal.timeout(8_000),
+    });
+    await resp.text();
+    return { ok: resp.ok, status: resp.status };
+  } catch (err) {
+    return {
+      ok: false,
+      status: 0,
+      error: err instanceof Error ? err.message : "delivery failed",
+    };
+  }
+}
+
 
 // ─── Helpers ───────────────────────────────────────────────────────────────
 async function sha256Hex(input: string): Promise<string> {
