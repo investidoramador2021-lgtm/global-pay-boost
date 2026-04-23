@@ -499,29 +499,78 @@ Deno.serve(async (req) => {
         });
       }
 
-      // ─── 4. Status passthrough ──────────────────────────────────────────
+      // ─── 4. Status passthrough (with webhook fan-out on state change) ──
       case "status": {
         const id = url.searchParams.get("id") || "";
         if (!ORDER_ID_RE.test(id)) return bad("Invalid order id.");
 
-        // Resolve MRC id → provider id
         const svc = createClient(
           Deno.env.get("SUPABASE_URL")!,
           Deno.env.get("SUPABASE_SERVICE_ROLE_KEY")!,
         );
+
+        // Resolve MRC id → provider id and pull webhook config (single round-trip)
         let providerId = id;
+        let webhookUrl: string | null = null;
+        let webhookSecret: string | null = null;
+        let lastWebhookState: string | null = null;
         if (id.startsWith("MRC-")) {
           const { data: row } = await svc
             .from("lite_api_swaps")
-            .select("provider_tx_id")
+            .select("provider_tx_id, webhook_url, webhook_secret, last_webhook_state")
             .eq("mrc_tx_id", id)
             .maybeSingle();
-          if (row?.provider_tx_id) providerId = row.provider_tx_id;
-          else return bad("Order not found.", 404);
+          if (!row?.provider_tx_id) return bad("Order not found.", 404);
+          providerId = row.provider_tx_id as string;
+          webhookUrl = (row.webhook_url as string) ?? null;
+          webhookSecret = (row.webhook_secret as string) ?? null;
+          lastWebhookState = (row.last_webhook_state as string) ?? null;
         }
+
         const r = await cnFetch(`/exchange/by-id?id=${encodeURIComponent(providerId)}`);
         if (!r.ok) return json({ status: "error", error: "Order not found." }, 404);
         const d = (r.data || {}) as Record<string, unknown>;
+        const currentState = String(d.status ?? "unknown").toLowerCase();
+
+        // Webhook fan-out: only fire on state change
+        let webhookFired: Record<string, unknown> | undefined;
+        if (
+          webhookUrl && webhookSecret && id.startsWith("MRC-") &&
+          currentState !== "unknown" && currentState !== lastWebhookState
+        ) {
+          const eventName = eventNameForState(currentState);
+          if (eventName) {
+            const result = await dispatchWebhook(
+              webhookUrl,
+              webhookSecret,
+              eventName,
+              {
+                order_id: id,
+                provider_order_id: providerId,
+                state: currentState,
+                from: d.fromCurrency,
+                to: d.toCurrency,
+                amount_in: d.expectedAmountFrom ?? d.fromAmount,
+                amount_out: d.amountTo ?? d.toAmount,
+                deposit_address: d.payinAddress,
+                payout_address: d.payoutAddress,
+                payout_hash: d.payoutHash ?? null,
+                updated_at: d.updatedAt ?? null,
+              },
+            );
+            // Persist new state regardless of delivery success (avoid retry storms)
+            await svc.from("lite_api_swaps")
+              .update({ last_webhook_state: currentState })
+              .eq("mrc_tx_id", id);
+            webhookFired = {
+              event: eventName,
+              delivered: result.ok,
+              response_status: result.status,
+              ...(result.error ? { error: result.error } : {}),
+            };
+          }
+        }
+
         return json({
           status: "success",
           order_id: id,
@@ -533,6 +582,7 @@ Deno.serve(async (req) => {
           payout_address: d.payoutAddress,
           payout_hash: d.payoutHash ?? null,
           updated_at: d.updatedAt ?? null,
+          ...(webhookFired ? { webhook: webhookFired } : {}),
         });
       }
 
