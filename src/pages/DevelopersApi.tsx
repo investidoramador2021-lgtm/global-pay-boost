@@ -354,6 +354,140 @@ const DevelopersApi = () => {
               <strong className="text-foreground">Method 3</strong> when you want a fully hosted UI inside your
               own dashboard.
             </div>
+
+            {/* ── Dedicated Embed Quick Start Card ── */}
+            <Card id="embed-quickstart" className="mt-8 border-primary/40 bg-card/70 scroll-mt-24">
+              <CardContent className="pt-6">
+                <div className="flex flex-wrap items-center gap-2 mb-3">
+                  <Badge variant="outline" className="border-primary/40 text-primary">
+                    <Globe className="mr-1 h-3 w-3" /> Embed Quick Start
+                  </Badge>
+                  <Badge variant="secondary" className="text-[10px]">Copy &amp; paste</Badge>
+                </div>
+                <h3 className="text-xl font-bold text-foreground mb-1">
+                  Embed the Full Widget
+                </h3>
+                <p className="text-sm text-muted-foreground mb-5 max-w-3xl">
+                  Drop the responsive swap widget into any page in under 30 seconds. Below are the exact URL,
+                  iframe markup, and the most-used configuration parameters — every block has a copy button.
+                </p>
+
+                <div className="grid gap-5 lg:grid-cols-2">
+                  {/* Full URL */}
+                  <div>
+                    <div className="text-xs font-semibold text-foreground mb-2 flex items-center gap-1.5">
+                      <Link2 className="h-3.5 w-3.5 text-primary" />
+                      Full Widget URL
+                    </div>
+                    <CodeBlock code={`https://mrcglobalpay.com/embed/widget`} />
+                    <p className="text-[11px] text-muted-foreground mt-2">
+                      Open in any browser to preview before embedding. CORS &amp; X-Frame friendly.
+                    </p>
+                  </div>
+
+                  {/* Pre-filled URL */}
+                  <div>
+                    <div className="text-xs font-semibold text-foreground mb-2 flex items-center gap-1.5">
+                      <Rocket className="h-3.5 w-3.5 text-primary" />
+                      Pre-filled URL (most common)
+                    </div>
+                    <CodeBlock code={`https://mrcglobalpay.com/embed/widget?from=btc&to=sol&amount=0.01`} />
+                    <p className="text-[11px] text-muted-foreground mt-2">
+                      Locks the source/destination tokens and amount on load.
+                    </p>
+                  </div>
+                </div>
+
+                {/* Sample iframe */}
+                <div className="mt-6">
+                  <div className="text-xs font-semibold text-foreground mb-2 flex items-center gap-1.5">
+                    <Code2 className="h-3.5 w-3.5 text-primary" />
+                    Sample &lt;iframe&gt; (responsive, recommended defaults)
+                  </div>
+                  <CodeBlock
+                    lang="html"
+                    code={`<iframe
+  src="https://mrcglobalpay.com/embed/widget?from=btc&to=sol&amount=0.01"
+  title="MRC GlobalPay — Instant Crypto Swap"
+  width="100%"
+  height="640"
+  style="border:0;border-radius:16px;max-width:480px;"
+  loading="lazy"
+  allow="clipboard-write"
+  referrerpolicy="no-referrer-when-downgrade">
+</iframe>`}
+                  />
+                  <p className="text-[11px] text-muted-foreground mt-2">
+                    Renders at 480×640 on desktop, full-width on mobile. <code>loading="lazy"</code> keeps your
+                    page&apos;s LCP score intact.
+                  </p>
+                </div>
+
+                {/* Most-used config parameters */}
+                <div className="mt-7">
+                  <div className="text-xs font-semibold text-foreground mb-3 flex items-center gap-1.5">
+                    <Gauge className="h-3.5 w-3.5 text-primary" />
+                    Most-used configuration parameters — click to copy
+                  </div>
+                  <div className="grid gap-3 md:grid-cols-2">
+                    {[
+                      {
+                        label: "Pre-fill source token",
+                        snippet: "?from=btc",
+                        hint: "Any supported ticker (sol, eth, usdt, …)",
+                      },
+                      {
+                        label: "Pre-fill destination token",
+                        snippet: "?to=sol",
+                        hint: "Auto-corrects Solana-specific tickers",
+                      },
+                      {
+                        label: "Pre-fill amount",
+                        snippet: "?amount=0.01",
+                        hint: "Must be ≥ pair minimum ($0.30 USD eq.)",
+                      },
+                      {
+                        label: "Lock recipient address",
+                        snippet: "?address=YourWalletHere",
+                        hint: "Field becomes read-only when set",
+                      },
+                      {
+                        label: "Combine multiple params",
+                        snippet: "?from=usdc&to=jup&amount=50",
+                        hint: "Standard query-string format",
+                      },
+                      {
+                        label: "Affiliate ref tag",
+                        snippet: "?ref=YOUR_CODE",
+                        hint: "Earn commissions on every swap",
+                      },
+                    ].map((p) => (
+                      <div
+                        key={p.label}
+                        className="rounded-lg border border-border bg-muted/30 p-3"
+                      >
+                        <div className="text-[11px] font-medium text-foreground mb-1.5">{p.label}</div>
+                        <CodeBlock code={p.snippet} />
+                        <div className="text-[10px] text-muted-foreground mt-1.5">{p.hint}</div>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+
+                <div className="mt-6 flex flex-wrap gap-3">
+                  <Link to="/embed/widget">
+                    <Button size="sm" variant="default" className="gap-1.5">
+                      <Globe className="h-3.5 w-3.5" /> Open Live Widget
+                    </Button>
+                  </Link>
+                  <a href="#url-params">
+                    <Button size="sm" variant="outline" className="gap-1.5">
+                      <BookOpen className="h-3.5 w-3.5" /> Full Parameter Reference
+                    </Button>
+                  </a>
+                </div>
+              </CardContent>
+            </Card>
           </section>
 
           {/* ── Section 1: Endpoint Documentation ── */}
