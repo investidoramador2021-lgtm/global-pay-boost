@@ -1,21 +1,12 @@
 /**
  * Curated, fully-translated enrichment for the highest-potential pair pages.
  *
- * Source data lives in `pair-enrichment-data.json` — each pair has copy in all
- * 13 supported languages (en, es, pt, fr, ja, fa, ur, he, af, hi, vi, tr, uk).
- * Translations were generated via Lovable AI Gateway (gemini-2.5-flash) with a
- * crypto-aware prompt that preserves tickers, brand names, and numeric facts.
- *
- * Render path:
- *   DynamicExchange.tsx → if getPairEnrichment(from, to, lang) returns an
- *   entry, <PairEnrichmentBlock /> renders the localized block between the
- *   widget and the existing "How it works" section.
- *
- * To add more pairs: append the EN entry, run scripts/translate-pairs.mjs,
- * commit the regenerated JSON.
+ * Source data lives in `pair-enrichment-data.json` (~12 MB across 13 langs and
+ * 470+ pairs). Importing it statically bloats the DynamicExchange chunk to
+ * 11+ MB and freezes the preview, so we lazy-load it on demand and cache the
+ * parsed object in memory for the rest of the session.
  */
 
-import data from "./pair-enrichment-data.json";
 import type { SupportedLanguage } from "@/i18n";
 
 export interface PairStep {
@@ -43,24 +34,52 @@ export interface PairEnrichment {
 }
 
 type LangMap = Partial<Record<SupportedLanguage, PairEnrichment>> & { en: PairEnrichment };
+type PairDataMap = Record<string, LangMap>;
 
-const PAIR_DATA = data as Record<string, LangMap>;
+let cache: PairDataMap | null = null;
+let inflight: Promise<PairDataMap> | null = null;
+
+async function loadPairData(): Promise<PairDataMap> {
+  if (cache) return cache;
+  if (inflight) return inflight;
+  inflight = import("./pair-enrichment-data.json").then((mod) => {
+    cache = (mod.default ?? mod) as PairDataMap;
+    inflight = null;
+    return cache;
+  });
+  return inflight;
+}
 
 /**
- * Returns the enrichment block for the given pair in the requested language.
- * Falls back to English if the language slot is missing (defensive — every
- * pair in the JSON ships with all 13 languages today).
+ * Async lookup — returns the localized enrichment for the given pair, or null.
+ * Falls back to English when the requested language slot is missing.
  */
-export function getPairEnrichment(
+export async function getPairEnrichment(
   from: string,
   to: string,
   lang: SupportedLanguage,
-): PairEnrichment | null {
+): Promise<PairEnrichment | null> {
+  const data = await loadPairData();
   const key = `${from.toLowerCase()}-${to.toLowerCase()}`;
-  const entry = PAIR_DATA[key];
+  const entry = data[key];
   if (!entry) return null;
   return entry[lang] || entry.en;
 }
 
-export const ENRICHED_PAIR_COUNT = Object.keys(PAIR_DATA).length;
-export const ENRICHED_PAIR_SLUGS = Object.keys(PAIR_DATA);
+/** Synchronous lookup — only returns a value once the data has been loaded. */
+export function getPairEnrichmentSync(
+  from: string,
+  to: string,
+  lang: SupportedLanguage,
+): PairEnrichment | null {
+  if (!cache) return null;
+  const key = `${from.toLowerCase()}-${to.toLowerCase()}`;
+  const entry = cache[key];
+  if (!entry) return null;
+  return entry[lang] || entry.en;
+}
+
+/** Kicks off the lazy load (fire-and-forget). */
+export function preloadPairEnrichment(): void {
+  void loadPairData();
+}
