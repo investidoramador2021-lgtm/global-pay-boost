@@ -684,6 +684,25 @@ if not redis.set(f"mrc:wh:{key}", "1", nx=True, ex=7 * 24 * 3600):
     return {"ok": True, "duplicate": True}`}
             </pre>
 
+            <h4 className="text-base font-semibold text-foreground mt-6 mb-2">Computing &amp; verifying <code className="font-mono text-sm">X-MRC-Signature</code></h4>
+            <p className="text-muted-foreground mb-3">
+              Every webhook is signed with <strong className="text-foreground">HMAC-SHA256</strong> using your{" "}
+              <code className="font-mono text-xs">webhook_secret</code> as the key and the{" "}
+              <strong className="text-foreground">exact raw request body bytes</strong> as the message. The result is hex-encoded (lowercase) and sent in the <code className="font-mono text-xs">X-MRC-Signature</code> header. Pseudocode:
+            </p>
+            <pre className="bg-muted p-4 rounded-lg overflow-x-auto text-xs font-mono mb-4">
+{`signature = HMAC_SHA256(
+  key     = webhook_secret,        // the string you sent at create-time
+  message = raw_request_body_bytes // BEFORE any JSON parsing or re-serialization
+).hex()                            // lowercase hex, 64 chars`}
+            </pre>
+            <ol className="list-decimal pl-5 text-muted-foreground space-y-1.5 mb-4 text-sm">
+              <li>Read the request body as <strong className="text-foreground">raw bytes</strong>. Do not <code className="font-mono text-xs">JSON.parse</code> and re-stringify — even one whitespace difference will break the signature.</li>
+              <li>Compute <code className="font-mono text-xs">HMAC-SHA256(webhook_secret, raw_body).hex()</code>.</li>
+              <li>Compare to <code className="font-mono text-xs">X-MRC-Signature</code> with a <strong className="text-foreground">constant-time</strong> comparison (<code className="font-mono text-xs">crypto.timingSafeEqual</code> / <code className="font-mono text-xs">hmac.compare_digest</code>) to prevent timing attacks.</li>
+              <li>If it doesn't match, respond <code className="font-mono text-xs">401</code> and drop the event. If it matches, parse the JSON and process.</li>
+            </ol>
+
             <h4 className="text-base font-semibold text-foreground mt-6 mb-2">Verifying the signature (Node.js)</h4>
             <pre className="bg-muted p-4 rounded-lg overflow-x-auto text-xs font-mono mb-4">
 {`import crypto from "node:crypto";
