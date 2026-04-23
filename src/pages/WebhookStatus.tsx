@@ -162,11 +162,6 @@ export default function WebhookStatus() {
             </a>{" "}
             — wire it into your own monitor (Datadog, Grafana, UptimeRobot, etc.).
           </p>
-          {error && (
-            <p className="text-destructive">
-              <strong>Fetch error:</strong> {error}
-            </p>
-          )}
         </div>
       </main>
 
