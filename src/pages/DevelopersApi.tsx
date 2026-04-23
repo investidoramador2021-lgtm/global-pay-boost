@@ -670,6 +670,139 @@ User-Agent:             MRC-LiteAPI-Webhook/1.0`}
               </p>
             </div>
 
+            <h4 className="text-base font-semibold text-foreground mt-6 mb-2">
+              Public JSON feed: <code className="font-mono text-sm">/webhook-status.json</code>
+            </h4>
+            <p className="text-muted-foreground mb-3">
+              The same aggregates are available as a CORS-enabled JSON feed for embedding in your own dashboards or
+              monitoring tools. No auth required, cached for 60 seconds at the edge. Also available at{" "}
+              <code className="font-mono text-xs">/api/v1/webhook-status</code>.
+            </p>
+            <pre className="bg-muted p-4 rounded-lg overflow-x-auto text-xs font-mono mb-4">
+{`curl https://mrcglobalpay.com/webhook-status.json`}
+            </pre>
+            <p className="text-sm text-muted-foreground mb-2">Example response:</p>
+            <pre className="bg-muted p-4 rounded-lg overflow-x-auto text-xs font-mono mb-4">
+{`{
+  "status": "success",
+  "generated_at": "2026-04-23T16:30:00.000Z",
+  "window": {
+    "hours_24": "2026-04-22T16:30:00.000Z",
+    "days_7":   "2026-04-16T16:30:00.000Z"
+  },
+  "last_successful_delivery_at": "2026-04-23T16:29:48.114Z",
+  "counts_24h": {
+    "swap.created":          1284,
+    "swap.deposit_detected": 1102,
+    "swap.finished":          987,
+    "swap.expired":            41,
+    "total_with_webhook":    1284,
+    "success_rate_percent":  99.6
+  },
+  "counts_7d": {
+    "swap.created":          8421,
+    "swap.deposit_detected": 7330,
+    "swap.finished":         6918,
+    "swap.expired":           284
+  },
+  "provider": "MRC Global Pay Lite API",
+  "documentation": "https://mrcglobalpay.com/developers#lite-api"
+}`}
+            </pre>
+            <p className="text-sm text-muted-foreground mb-2">Field reference:</p>
+            <div className="overflow-x-auto mb-4">
+              <table className="w-full text-xs border border-border rounded-lg">
+                <thead className="bg-muted/50">
+                  <tr className="text-left">
+                    <th className="px-3 py-2 font-semibold text-foreground">Field</th>
+                    <th className="px-3 py-2 font-semibold text-foreground">Type</th>
+                    <th className="px-3 py-2 font-semibold text-foreground">Description</th>
+                  </tr>
+                </thead>
+                <tbody className="divide-y divide-border">
+                  <tr>
+                    <td className="px-3 py-2 font-mono">status</td>
+                    <td className="px-3 py-2 text-muted-foreground">string</td>
+                    <td className="px-3 py-2 text-muted-foreground">Always <code className="font-mono">"success"</code> on a healthy response.</td>
+                  </tr>
+                  <tr>
+                    <td className="px-3 py-2 font-mono">generated_at</td>
+                    <td className="px-3 py-2 text-muted-foreground">ISO 8601</td>
+                    <td className="px-3 py-2 text-muted-foreground">UTC timestamp the snapshot was computed.</td>
+                  </tr>
+                  <tr>
+                    <td className="px-3 py-2 font-mono">window.hours_24</td>
+                    <td className="px-3 py-2 text-muted-foreground">ISO 8601</td>
+                    <td className="px-3 py-2 text-muted-foreground">Lower bound of the 24-hour aggregation window.</td>
+                  </tr>
+                  <tr>
+                    <td className="px-3 py-2 font-mono">window.days_7</td>
+                    <td className="px-3 py-2 text-muted-foreground">ISO 8601</td>
+                    <td className="px-3 py-2 text-muted-foreground">Lower bound of the 7-day aggregation window.</td>
+                  </tr>
+                  <tr>
+                    <td className="px-3 py-2 font-mono">last_successful_delivery_at</td>
+                    <td className="px-3 py-2 text-muted-foreground">ISO 8601 | null</td>
+                    <td className="px-3 py-2 text-muted-foreground">Most recent webhook delivery the platform recorded. <code className="font-mono">null</code> if none observed.</td>
+                  </tr>
+                  <tr>
+                    <td className="px-3 py-2 font-mono">counts_24h["swap.created"]</td>
+                    <td className="px-3 py-2 text-muted-foreground">integer</td>
+                    <td className="px-3 py-2 text-muted-foreground">Count of <code className="font-mono">swap.created</code> events in the last 24h.</td>
+                  </tr>
+                  <tr>
+                    <td className="px-3 py-2 font-mono">counts_24h["swap.deposit_detected"]</td>
+                    <td className="px-3 py-2 text-muted-foreground">integer</td>
+                    <td className="px-3 py-2 text-muted-foreground">Count of deposit-detected (confirming) events in the last 24h.</td>
+                  </tr>
+                  <tr>
+                    <td className="px-3 py-2 font-mono">counts_24h["swap.finished"]</td>
+                    <td className="px-3 py-2 text-muted-foreground">integer</td>
+                    <td className="px-3 py-2 text-muted-foreground">Count of completed swaps in the last 24h.</td>
+                  </tr>
+                  <tr>
+                    <td className="px-3 py-2 font-mono">counts_24h["swap.expired"]</td>
+                    <td className="px-3 py-2 text-muted-foreground">integer</td>
+                    <td className="px-3 py-2 text-muted-foreground">Count of expired or failed swaps in the last 24h.</td>
+                  </tr>
+                  <tr>
+                    <td className="px-3 py-2 font-mono">counts_24h.total_with_webhook</td>
+                    <td className="px-3 py-2 text-muted-foreground">integer</td>
+                    <td className="px-3 py-2 text-muted-foreground">Swaps in the window that had a <code className="font-mono">webhook_url</code> registered (denominator for success rate).</td>
+                  </tr>
+                  <tr>
+                    <td className="px-3 py-2 font-mono">counts_24h.success_rate_percent</td>
+                    <td className="px-3 py-2 text-muted-foreground">number | null</td>
+                    <td className="px-3 py-2 text-muted-foreground">Percentage of webhook-enabled swaps that reached a tracked terminal state. <code className="font-mono">null</code> when no swaps had webhooks.</td>
+                  </tr>
+                  <tr>
+                    <td className="px-3 py-2 font-mono">counts_7d.*</td>
+                    <td className="px-3 py-2 text-muted-foreground">integer</td>
+                    <td className="px-3 py-2 text-muted-foreground">Same per-event counts over the last 7 days.</td>
+                  </tr>
+                  <tr>
+                    <td className="px-3 py-2 font-mono">provider</td>
+                    <td className="px-3 py-2 text-muted-foreground">string</td>
+                    <td className="px-3 py-2 text-muted-foreground">Static identifier for the feed source.</td>
+                  </tr>
+                  <tr>
+                    <td className="px-3 py-2 font-mono">documentation</td>
+                    <td className="px-3 py-2 text-muted-foreground">URL</td>
+                    <td className="px-3 py-2 text-muted-foreground">Canonical link back to these developer docs.</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+            <p className="text-sm text-muted-foreground mb-2">Embed example (vanilla JS):</p>
+            <pre className="bg-muted p-4 rounded-lg overflow-x-auto text-xs font-mono mb-6">
+{`const r = await fetch("https://mrcglobalpay.com/webhook-status.json");
+const s = await r.json();
+document.getElementById("mrc-rate").textContent =
+  s.counts_24h.success_rate_percent + "%";
+document.getElementById("mrc-last").textContent =
+  new Date(s.last_successful_delivery_at).toLocaleString();`}
+            </pre>
+
             <h4 className="text-base font-semibold text-foreground mt-6 mb-2">Idempotency &amp; de-duplication</h4>
             <p className="text-muted-foreground mb-3">
               Every delivery carries a stable <code className="font-mono text-xs">idempotency_key</code> formatted as{" "}
