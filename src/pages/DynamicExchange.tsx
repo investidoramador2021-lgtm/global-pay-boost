@@ -127,6 +127,22 @@ export default function DynamicExchange() {
   const fromLower = fromTicker.toLowerCase();
   const toLower = toTicker.toLowerCase();
 
+  // Lazy-loaded enrichment (12 MB JSON kept out of the main chunk).
+  const [enrichment, setEnrichment] = useState<PairEnrichment | null>(null);
+  useEffect(() => {
+    let active = true;
+    if (!fromLower || !toLower) {
+      setEnrichment(null);
+      return;
+    }
+    getPairEnrichment(fromLower, toLower, lang).then((e) => {
+      if (active) setEnrichment(e);
+    });
+    return () => {
+      active = false;
+    };
+  }, [fromLower, toLower, lang]);
+
   // Case-insensitive normalization: 301-style redirect any non-lowercase URL to its lowercase canonical
   const needsLowercaseRedirect = !!pair && pair !== pair.toLowerCase() && !!match;
 
@@ -496,17 +512,14 @@ export default function DynamicExchange() {
         </section>
 
         {/* ─── Curated per-pair enrichment (top 200–500 high-priority pairs) ─── */}
-        {(() => {
-          const enrichment = getPairEnrichment(fromLower, toLower, lang);
-          return enrichment ? (
-            <PairEnrichmentBlock
-              enrichment={enrichment}
-              fromUp={fromUp}
-              toUp={toUp}
-              lang={lang}
-            />
-          ) : null;
-        })()}
+        {enrichment ? (
+          <PairEnrichmentBlock
+            enrichment={enrichment}
+            fromUp={fromUp}
+            toUp={toUp}
+            lang={lang}
+          />
+        ) : null}
 
         {/* ─── Step-by-Step How It Works (HowTo Schema alignment) ─── */}
         <section className="py-12 border-t border-[#1E2028]">
