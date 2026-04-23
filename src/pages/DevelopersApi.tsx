@@ -995,8 +995,6 @@ try {
 }`}
             </pre>
 
-            </pre>
-
             <h4 className="text-base font-semibold text-foreground mt-6 mb-2">Idempotency &amp; de-duplication</h4>
             <p className="text-muted-foreground mb-3">
               Every delivery carries a stable <code className="font-mono text-xs">idempotency_key</code> formatted as{" "}
