@@ -43,9 +43,14 @@ async function loadSpec(): Promise<Spec> {
   return spec;
 }
 
+// deno-lint-ignore no-explicit-any
+const validatorCache = new Map<string, any>();
 function validator(name: string, schema: Record<string, unknown>) {
-  // Inline $ref by injecting all sibling schemas into the validator
-  return ajv.compile({ ...schema, $id: name });
+  const cached = validatorCache.get(name);
+  if (cached) return cached;
+  const v = ajv.compile({ ...schema, $id: name });
+  validatorCache.set(name, v);
+  return v;
 }
 
 async function call(
