@@ -223,6 +223,7 @@ export const LITE_API_OPENAPI = {
             properties: {
               url: { type: "string" },
               initial_event: { type: "string" },
+              idempotency_key: { type: "string" },
               delivered: { type: "boolean" },
               response_status: { type: ["integer", "null"] },
               error: { type: "string" },
@@ -251,6 +252,7 @@ export const LITE_API_OPENAPI = {
             type: "object",
             properties: {
               event: { type: "string" },
+              idempotency_key: { type: "string" },
               delivered: { type: "boolean" },
               response_status: { type: ["integer", "null"] },
               error: { type: "string" },
