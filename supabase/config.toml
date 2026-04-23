@@ -80,3 +80,6 @@ verify_jwt = false
 
 [functions.lite-swap]
 verify_jwt = false
+
+[functions.lite-webhook-status]
+verify_jwt = false
