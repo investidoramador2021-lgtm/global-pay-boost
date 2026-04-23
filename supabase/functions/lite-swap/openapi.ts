@@ -46,7 +46,7 @@ export const LITE_API_OPENAPI = {
         ],
         responses: {
           "200": {
-            description: "Success envelope",
+            description: "Success envelope (rates or status)",
             content: {
               "application/json": {
                 schema: {
@@ -54,6 +54,45 @@ export const LITE_API_OPENAPI = {
                     { $ref: "#/components/schemas/RatesResponse" },
                     { $ref: "#/components/schemas/StatusResponse" },
                   ],
+                },
+                examples: {
+                  rates: {
+                    summary: "GET ?action=rates&from=btc&to=usdterc20&amount=0.01",
+                    value: {
+                      status: "success",
+                      from: "btc",
+                      to: "usdterc20",
+                      amount: 0.01,
+                      estimated_amount: 638.42,
+                      rate: 63842.0,
+                      warning: null,
+                      provider: "MRC Global Pay Lite API",
+                      documentation: "https://mrcglobalpay.com/developers#lite-api",
+                    },
+                  },
+                  status: {
+                    summary: "GET ?action=status&id=MRC-1A2B3C4D-XY9Z",
+                    value: {
+                      status: "success",
+                      order_id: "MRC-1A2B3C4D-XY9Z",
+                      state: "confirming",
+                      from: "btc",
+                      to: "usdterc20",
+                      amount_in: "0.005",
+                      amount_out: "319.42",
+                      deposit_address: "bc1qxy2kgdygjrsqtzq2n0yrf2493p83kkfjhx0wlh",
+                      payout_address: "0x742d35Cc6634C0532925a3b844Bc454e4438f44e",
+                      payout_hash: null,
+                      updated_at: "2026-04-23T15:42:09Z",
+                      webhook: {
+                        event: "swap.deposit_detected",
+                        idempotency_key:
+                          "MRC-1A2B3C4D-XY9Z:swap.deposit_detected:confirming",
+                        delivered: true,
+                        response_status: 200,
+                      },
+                    },
+                  },
                 },
               },
             },
@@ -75,12 +114,36 @@ export const LITE_API_OPENAPI = {
                   { $ref: "#/components/schemas/CreateRequest" },
                 ],
               },
+              examples: {
+                estimate: {
+                  summary: "Quote a 0.001 BTC → USDT (ERC-20) swap",
+                  value: {
+                    action: "estimate",
+                    from: "btc",
+                    to: "usdterc20",
+                    amount: 0.001,
+                  },
+                },
+                create: {
+                  summary: "Create a swap with optional webhook",
+                  value: {
+                    action: "create",
+                    from: "btc",
+                    to: "usdterc20",
+                    amount: 0.001,
+                    address: "0x742d35Cc6634C0532925a3b844Bc454e4438f44e",
+                    refundAddress: "bc1qxy2kgdygjrsqtzq2n0yrf2493p83kkfjhx0wlh",
+                    webhook_url: "https://example.com/mrc-webhook",
+                    webhook_secret: "s3cret_at_least_32_chars_long_xxxx",
+                  },
+                },
+              },
             },
           },
         },
         responses: {
           "200": {
-            description: "Success envelope",
+            description: "Success envelope (estimate or create)",
             content: {
               "application/json": {
                 schema: {
@@ -88,6 +151,69 @@ export const LITE_API_OPENAPI = {
                     { $ref: "#/components/schemas/EstimateResponse" },
                     { $ref: "#/components/schemas/CreateResponse" },
                   ],
+                },
+                examples: {
+                  estimate: {
+                    summary: "Estimate response",
+                    value: {
+                      status: "success",
+                      from: "btc",
+                      to: "usdterc20",
+                      amount: 0.001,
+                      estimated_amount: 63.84,
+                      estimated_usd: 63.84,
+                      warning: null,
+                    },
+                  },
+                  create: {
+                    summary: "Create response",
+                    value: {
+                      status: "success",
+                      order_id: "MRC-1A2B3C4D-XY9Z",
+                      provider_order_id: "abc123def456",
+                      deposit_address: "bc1qxy2kgdygjrsqtzq2n0yrf2493p83kkfjhx0wlh",
+                      deposit_extra_id: null,
+                      payout_address: "0x742d35Cc6634C0532925a3b844Bc454e4438f44e",
+                      payout_extra_id: null,
+                      from: "btc",
+                      to: "usdterc20",
+                      from_amount: "0.001",
+                      estimated_to_amount: "63.84",
+                      estimated_usd: 63.84,
+                      expires_at: "2026-04-23T16:02:00.000Z",
+                      status_url:
+                        "https://tjikwxkmsfmyjkssvyoh.supabase.co/functions/v1/lite-swap?action=status&id=MRC-1A2B3C4D-XY9Z",
+                      custody: "non-custodial",
+                      webhook: {
+                        url: "https://example.com/mrc-webhook",
+                        initial_event: "swap.created",
+                        idempotency_key:
+                          "MRC-1A2B3C4D-XY9Z:swap.created:waiting",
+                        delivered: true,
+                        response_status: 200,
+                      },
+                      documentation:
+                        "https://mrcglobalpay.com/developers#lite-api",
+                    },
+                  },
+                  capExceeded: {
+                    summary: "413 — over $1,000 USD cap",
+                    value: {
+                      status: "error",
+                      error:
+                        "Estimated $6342.10 exceeds Lite API maximum of $1000. Use the Partner API for larger swaps.",
+                      max_usd: 1000,
+                      estimated_usd: 6342.1,
+                    },
+                  },
+                  rateLimited: {
+                    summary: "429 — IP rate limit",
+                    value: {
+                      status: "error",
+                      error: "Rate limit: max 10 swaps per IP per hour.",
+                      retry_after_seconds: 3600,
+                    },
+                  },
                 },
               },
             },
