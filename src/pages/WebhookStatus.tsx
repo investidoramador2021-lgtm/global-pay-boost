@@ -91,38 +91,12 @@ app.post("/mrc-webhook", express.raw({ type: "application/json" }), (req, res) =
 -->`;
 
 export default function WebhookStatus() {
-  const [data, setData] = useState<StatusPayload | null>(null);
-  const [error, setError] = useState<string | null>(null);
   const [now, setNow] = useState(Date.now());
-
   useEffect(() => {
-    let cancelled = false;
-    async function load() {
-      try {
-        const r = await fetch(STATUS_ENDPOINT, { cache: "no-store" });
-        const j = (await r.json()) as StatusPayload;
-        if (!cancelled) {
-          setData(j);
-          setError(null);
-        }
-      } catch (e) {
-        if (!cancelled) setError(e instanceof Error ? e.message : "fetch failed");
-      }
-    }
-    load();
-    const id = setInterval(load, 30_000);
     const tick = setInterval(() => setNow(Date.now()), 1000);
-    return () => {
-      cancelled = true;
-      clearInterval(id);
-      clearInterval(tick);
-    };
+    return () => clearInterval(tick);
   }, []);
 
-  const c24 = data?.counts_24h;
-  const c7 = data?.counts_7d;
-  const successRate = c24?.success_rate_percent;
-  const healthy = successRate === null || successRate >= 95;
 
   return (
     <div className="min-h-screen bg-background">
