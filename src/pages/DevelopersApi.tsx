@@ -1286,6 +1286,102 @@ curl -i -X POST https://your-app.example.com/mrc-webhook \\
             </p>
           </section>
 
+          {/* ── Best Practices for Bots ── */}
+          <section id="best-practices" className="mb-16 scroll-mt-24">
+            <Badge variant="outline" className="mb-3 border-primary/40 text-primary">
+              <Gauge className="mr-1 h-3 w-3" /> Production Hardening
+            </Badge>
+            <h2 className="text-2xl font-bold text-foreground mb-2 flex items-center gap-2">
+              <Gauge className="h-6 w-6 text-primary" />
+              Best Practices for Bots
+            </h2>
+            <p className="text-muted-foreground mb-6 max-w-3xl">
+              Patterns we&rsquo;ve seen survive 24/7 production traffic from arbitrage desks, Telegram bots, and AI agents.
+              Adopt all five and the Lite API will sit quietly in the background of your stack.
+            </p>
+
+            <div className="grid gap-4 md:grid-cols-2">
+              {/* Rate limiting */}
+              <Card className="border-border bg-card/60">
+                <CardContent className="pt-5">
+                  <div className="flex items-center gap-2 mb-2">
+                    <Gauge className="h-5 w-5 text-primary" />
+                    <h3 className="font-semibold text-foreground">1. Respect rate limits</h3>
+                  </div>
+                  <ul className="text-xs text-muted-foreground space-y-1.5 list-disc pl-4">
+                    <li>10 swaps/hour per IP and per destination wallet; 30/24h velocity per wallet.</li>
+                    <li>Cap concurrent <code className="font-mono">create</code> calls at <strong className="text-foreground">2/sec</strong> from a single host.</li>
+                    <li>On <code className="font-mono">429</code>, sleep for the returned <code className="font-mono">retry_after_seconds</code> — never tighter than 1s of jitter.</li>
+                    <li>Quotes (<code className="font-mono">action=rates</code>) are unmetered — cache 3-5s in memory instead of re-quoting per tick.</li>
+                  </ul>
+                </CardContent>
+              </Card>
+
+              {/* Polling status */}
+              <Card className="border-border bg-card/60">
+                <CardContent className="pt-5">
+                  <div className="flex items-center gap-2 mb-2">
+                    <Clock className="h-5 w-5 text-primary" />
+                    <h3 className="font-semibold text-foreground">2. Poll status with backoff</h3>
+                  </div>
+                  <ul className="text-xs text-muted-foreground space-y-1.5 list-disc pl-4">
+                    <li>Poll <code className="font-mono">action=status</code> every <strong className="text-foreground">15s</strong> while <code className="font-mono">waiting</code>/<code className="font-mono">confirming</code>.</li>
+                    <li>Slow to <strong className="text-foreground">30s</strong> once the deposit is detected — most providers settle &lt; 60s.</li>
+                    <li>Stop polling on terminal states: <code className="font-mono">finished</code>, <code className="font-mono">failed</code>, <code className="font-mono">refunded</code>, <code className="font-mono">expired</code>.</li>
+                    <li>If you wired a <code className="font-mono">webhook_url</code>, drop polling entirely and react to <code className="font-mono">swap.finished</code>.</li>
+                  </ul>
+                </CardContent>
+              </Card>
+
+              {/* Error handling */}
+              <Card className="border-border bg-card/60">
+                <CardContent className="pt-5">
+                  <div className="flex items-center gap-2 mb-2">
+                    <AlertTriangle className="h-5 w-5 text-primary" />
+                    <h3 className="font-semibold text-foreground">3. Handle errors deterministically</h3>
+                  </div>
+                  <ul className="text-xs text-muted-foreground space-y-1.5 list-disc pl-4">
+                    <li><code className="font-mono">400</code> &mdash; bad input. <strong className="text-foreground">Do not retry</strong>; fix the request.</li>
+                    <li><code className="font-mono">413</code> &mdash; over the $1k cap. Split the swap or upgrade to Partner API.</li>
+                    <li><code className="font-mono">429</code>/<code className="font-mono">502</code> &mdash; retry with exponential backoff (1s → 30s, max 5 tries).</li>
+                    <li><code className="font-mono">451</code> &mdash; geo-blocked at the edge. Stop, no retry will help.</li>
+                    <li>Always check <code className="font-mono">response.status === &quot;success&quot;</code> before trusting fields.</li>
+                  </ul>
+                </CardContent>
+              </Card>
+
+              {/* Webhooks */}
+              <Card className="border-border bg-card/60">
+                <CardContent className="pt-5">
+                  <div className="flex items-center gap-2 mb-2">
+                    <Webhook className="h-5 w-5 text-primary" />
+                    <h3 className="font-semibold text-foreground">4. Prefer webhooks over polling</h3>
+                  </div>
+                  <ul className="text-xs text-muted-foreground space-y-1.5 list-disc pl-4">
+                    <li>Pass <code className="font-mono">webhook_url</code> + <code className="font-mono">webhook_secret</code> at <code className="font-mono">create</code> time — saves your rate-limit budget.</li>
+                    <li>Always verify <code className="font-mono">X-MRC-Signature</code> with constant-time HMAC-SHA256 over the raw body.</li>
+                    <li>De-duplicate by <code className="font-mono">X-MRC-Idempotency-Key</code>; respond <code className="font-mono">2xx</code> within <strong className="text-foreground">8&nbsp;seconds</strong>.</li>
+                    <li>Watch <Link to="/webhook-status" className="text-primary hover:underline">/webhook-status</Link> for live delivery health and your endpoint&rsquo;s success rate.</li>
+                  </ul>
+                </CardContent>
+              </Card>
+            </div>
+
+            {/* Bonus: production checklist */}
+            <div className="mt-6 rounded-xl border border-primary/20 bg-primary/5 p-5">
+              <h3 className="text-sm font-semibold uppercase tracking-wider text-primary mb-3 flex items-center gap-2">
+                <Shield className="h-4 w-4" /> 5. Pre-flight production checklist
+              </h3>
+              <ul className="grid gap-2 text-sm text-foreground sm:grid-cols-2">
+                <li>✅ Validate destination address against the target network <em className="text-muted-foreground">before</em> calling <code className="font-mono text-xs">create</code>.</li>
+                <li>✅ Persist the <code className="font-mono text-xs">order_id</code> + <code className="font-mono text-xs">deposit_address</code> immediately on success.</li>
+                <li>✅ Refresh quotes every &lt; 30s — rates drift on volatile pairs (BTC, SOL, memecoins).</li>
+                <li>✅ Use a dedicated, monitored wallet as <code className="font-mono text-xs">address</code>; never reuse hot-wallet keys.</li>
+                <li>✅ Log <code className="font-mono text-xs">order_id</code>, <code className="font-mono text-xs">provider_order_id</code>, and webhook idempotency keys for audits.</li>
+                <li>✅ Alert on <code className="font-mono text-xs">expired</code> &gt; 2% over 1h — usually a deposit-flow regression.</li>
+              </ul>
+            </div>
+          </section>
 
           {/* ── Section 4: Response DOM Identifiers ── */}
           <section id="dom-ids" className="mb-16 scroll-mt-24">
