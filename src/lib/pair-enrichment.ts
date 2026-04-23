@@ -43,7 +43,7 @@ async function loadPairData(): Promise<PairDataMap> {
   if (cache) return cache;
   if (inflight) return inflight;
   inflight = import("./pair-enrichment-data.json").then((mod) => {
-    cache = (mod.default ?? mod) as PairDataMap;
+    cache = ((mod as { default?: unknown }).default ?? mod) as unknown as PairDataMap;
     inflight = null;
     return cache;
   });
