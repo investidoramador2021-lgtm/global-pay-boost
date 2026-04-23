@@ -1,0 +1,198 @@
+{
+  "info": {
+    "_postman_id": "5c39c47e-b075-468d-804c-7333a4214cb8",
+    "name": "MRC GlobalPay — Public Lite Swap API",
+    "description": "Auto-generated from OpenAPI 3.1 spec at https://mrcglobalpay.com/openapi.json. Public, non-custodial swap API. No API key required (hard cap $1,000 USD/swap).",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "item": [
+    {
+      "name": "GET — rates",
+      "request": {
+        "method": "GET",
+        "header": [
+          {
+            "key": "Accept",
+            "value": "application/json"
+          }
+        ],
+        "url": {
+          "raw": "{{baseUrl}}/lite-swap?action=rates&from=btc&to=usdterc20&amount=0.01",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "lite-swap"
+          ],
+          "query": [
+            {
+              "key": "action",
+              "value": "rates"
+            },
+            {
+              "key": "from",
+              "value": "btc"
+            },
+            {
+              "key": "to",
+              "value": "usdterc20"
+            },
+            {
+              "key": "amount",
+              "value": "0.01"
+            }
+          ]
+        }
+      },
+      "response": [
+        {
+          "name": "rates example",
+          "status": "OK",
+          "code": 200,
+          "body": "{\n  \"status\": \"success\",\n  \"from\": \"btc\",\n  \"to\": \"usdterc20\",\n  \"amount\": 0.01,\n  \"estimated_amount\": 638.42,\n  \"rate\": 63842,\n  \"warning\": null,\n  \"provider\": \"MRC Global Pay Lite API\",\n  \"documentation\": \"https://mrcglobalpay.com/developers#lite-api\"\n}"
+        }
+      ]
+    },
+    {
+      "name": "GET — status",
+      "request": {
+        "method": "GET",
+        "header": [
+          {
+            "key": "Accept",
+            "value": "application/json"
+          }
+        ],
+        "url": {
+          "raw": "{{baseUrl}}/lite-swap?action=status&id=MRC-1A2B3C4D-XY9Z",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "lite-swap"
+          ],
+          "query": [
+            {
+              "key": "action",
+              "value": "status"
+            },
+            {
+              "key": "id",
+              "value": "MRC-1A2B3C4D-XY9Z"
+            }
+          ]
+        }
+      },
+      "response": [
+        {
+          "name": "status example",
+          "status": "OK",
+          "code": 200,
+          "body": "{\n  \"status\": \"success\",\n  \"order_id\": \"MRC-1A2B3C4D-XY9Z\",\n  \"state\": \"confirming\",\n  \"from\": \"btc\",\n  \"to\": \"usdterc20\",\n  \"amount_in\": \"0.005\",\n  \"amount_out\": \"319.42\",\n  \"deposit_address\": \"bc1qxy2kgdygjrsqtzq2n0yrf2493p83kkfjhx0wlh\",\n  \"payout_address\": \"0x742d35Cc6634C0532925a3b844Bc454e4438f44e\",\n  \"payout_hash\": null,\n  \"updated_at\": \"2026-04-23T15:42:09Z\",\n  \"webhook\": {\n    \"event\": \"swap.deposit_detected\",\n    \"idempotency_key\": \"MRC-1A2B3C4D-XY9Z:swap.deposit_detected:confirming\",\n    \"delivered\": true,\n    \"response_status\": 200\n  }\n}"
+        }
+      ]
+    },
+    {
+      "name": "GET — openapi (self-describe)",
+      "request": {
+        "method": "GET",
+        "header": [
+          {
+            "key": "Accept",
+            "value": "application/json"
+          }
+        ],
+        "url": {
+          "raw": "{{baseUrl}}/lite-swap?action=openapi",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "lite-swap"
+          ],
+          "query": [
+            {
+              "key": "action",
+              "value": "openapi"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "name": "POST — estimate",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          },
+          {
+            "key": "Accept",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"action\": \"estimate\",\n  \"from\": \"btc\",\n  \"to\": \"usdterc20\",\n  \"amount\": 0.001\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "{{baseUrl}}/lite-swap",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "lite-swap"
+          ]
+        }
+      }
+    },
+    {
+      "name": "POST — create",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          },
+          {
+            "key": "Accept",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"action\": \"create\",\n  \"from\": \"btc\",\n  \"to\": \"usdterc20\",\n  \"amount\": 0.001,\n  \"address\": \"0x742d35Cc6634C0532925a3b844Bc454e4438f44e\",\n  \"refundAddress\": \"bc1qxy2kgdygjrsqtzq2n0yrf2493p83kkfjhx0wlh\",\n  \"webhook_url\": \"https://example.com/mrc-webhook\",\n  \"webhook_secret\": \"s3cret_at_least_32_chars_long_xxxx\"\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "{{baseUrl}}/lite-swap",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "lite-swap"
+          ]
+        }
+      }
+    }
+  ],
+  "variable": [
+    {
+      "key": "baseUrl",
+      "value": "https://tjikwxkmsfmyjkssvyoh.supabase.co/functions/v1",
+      "type": "string"
+    }
+  ]
+}

@@ -321,6 +321,8 @@ const DevelopersApi = () => {
               <li><a href="#autocorrect" className="text-foreground hover:text-primary">Solana Ticker Auto-Correct</a></li>
               <li><a href="#token-registry" className="text-foreground hover:text-primary">Solana Token Registry (50+)</a></li>
               <li><a href="#lite-api" className="text-foreground hover:text-primary">Public Lite API (No Approval)</a></li>
+              <li><a href="#headers-hmac" className="text-foreground hover:text-primary">Headers, HMAC &amp; curl Reference</a></li>
+              <li><a href="#sdk-generation" className="text-foreground hover:text-primary">Generate a Typed SDK (OpenAPI)</a></li>
               <li><a href="#best-practices" className="text-foreground hover:text-primary">Best Practices for Bots</a></li>
               <li><a href="#dom-ids" className="text-foreground hover:text-primary">DOM Identifiers for Bots</a></li>
               <li><a href="#faq" className="text-foreground hover:text-primary">Technical FAQ</a></li>
@@ -867,30 +869,287 @@ const DevelopersApi = () => {
               </p>
             </div>
 
-            {/* OpenAPI / Swagger callout */}
-            <div className="rounded-xl border border-primary/30 bg-card/60 p-5 mb-6 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3">
-              <div className="flex items-start gap-3">
-                <BookOpen className="h-5 w-5 text-primary shrink-0 mt-0.5" />
-                <div>
-                  <div className="text-sm font-semibold text-foreground">OpenAPI 3.1 spec available</div>
-                  <p className="text-xs text-muted-foreground mt-0.5 max-w-xl">
-                    Generate typed SDKs (Python, TS, Go, Rust…), import into Postman/Insomnia, or browse interactively. Spec lives at <code>/openapi.json</code>.
-                  </p>
+            {/* OpenAPI / Swagger / Postman / SDK callout */}
+            <div className="rounded-xl border border-primary/30 bg-card/60 p-5 mb-6">
+              <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3">
+                <div className="flex items-start gap-3">
+                  <BookOpen className="h-5 w-5 text-primary shrink-0 mt-0.5" />
+                  <div>
+                    <div className="text-sm font-semibold text-foreground">Machine-readable contract — OpenAPI 3.1</div>
+                    <p className="text-xs text-muted-foreground mt-0.5 max-w-xl">
+                      Generate typed SDKs (Python, TS, Go, Rust…), import into Postman/Insomnia, or browse
+                      interactively. All artifacts auto-generated from <code>/openapi.json</code>.
+                    </p>
+                  </div>
+                </div>
+                <div className="flex flex-wrap gap-2 sm:shrink-0">
+                  <a href="/openapi.json" target="_blank" rel="noopener">
+                    <Button size="sm" variant="outline" className="gap-1.5">
+                      <Download className="h-3.5 w-3.5" /> openapi.json
+                    </Button>
+                  </a>
+                  <a href="/openapi.html" target="_blank" rel="noopener">
+                    <Button size="sm" variant="default" className="gap-1.5">
+                      <Globe className="h-3.5 w-3.5" /> Swagger UI
+                    </Button>
+                  </a>
+                  <a href="/mrc-lite-api.postman_collection.json" download>
+                    <Button size="sm" variant="outline" className="gap-1.5">
+                      <Download className="h-3.5 w-3.5" /> Postman collection
+                    </Button>
+                  </a>
                 </div>
               </div>
-              <div className="flex flex-wrap gap-2 sm:shrink-0">
-                <a href="/openapi.json" target="_blank" rel="noopener">
-                  <Button size="sm" variant="outline" className="gap-1.5">
-                    <Download className="h-3.5 w-3.5" /> openapi.json
-                  </Button>
-                </a>
-                <a href="/openapi.html" target="_blank" rel="noopener">
-                  <Button size="sm" variant="default" className="gap-1.5">
-                    <Globe className="h-3.5 w-3.5" /> Swagger UI
-                  </Button>
-                </a>
+              <div className="mt-3 flex flex-wrap gap-3 text-[11px]">
+                <a href="#sdk-generation" className="text-primary hover:underline">→ Generate a typed SDK</a>
+                <a href="#headers-hmac" className="text-primary hover:underline">→ Headers, HMAC &amp; curl examples</a>
               </div>
             </div>
+
+            {/* ── Headers, HMAC, and curl Reference ── */}
+            <section id="headers-hmac" className="scroll-mt-24 mb-8">
+              <h3 className="mt-8 mb-2 text-lg font-semibold text-foreground flex items-center gap-2">
+                <Shield className="h-5 w-5 text-primary" />
+                Headers, HMAC &amp; curl reference
+              </h3>
+              <p className="text-sm text-muted-foreground mb-4 max-w-3xl">
+                Every request to the Lite API uses the same minimal header set. No API key, no bearer token —
+                rate limits are scoped per-IP and per-destination-wallet. Webhooks add an HMAC-SHA256 signature
+                so your receiver can verify authenticity.
+              </p>
+
+              <div className="overflow-x-auto rounded-lg border border-border mb-5">
+                <table className="w-full text-sm">
+                  <thead>
+                    <tr className="border-b border-border bg-muted/50">
+                      <th className="px-4 py-3 text-left font-semibold text-foreground">Header</th>
+                      <th className="px-4 py-3 text-left font-semibold text-foreground">Used on</th>
+                      <th className="px-4 py-3 text-left font-semibold text-foreground">Required</th>
+                      <th className="px-4 py-3 text-left font-semibold text-foreground">Description</th>
+                    </tr>
+                  </thead>
+                  <tbody className="text-muted-foreground">
+                    {[
+                      { h: "Content-Type: application/json", on: "POST (estimate, create)", req: "Yes", d: "Body must be JSON." },
+                      { h: "Accept: application/json", on: "All requests", req: "Recommended", d: "Forces JSON response shape." },
+                      { h: "User-Agent: <bot/version>", on: "All requests", req: "Recommended", d: "Helps us debug rate-limit issues for your bot." },
+                      { h: "Authorization", on: "—", req: "No", d: "Public API: no auth header. Reject any docs telling you otherwise." },
+                      { h: "X-MRC-Signature: sha256=<hex>", on: "Outgoing webhooks (we send this)", req: "—", d: "HMAC-SHA256 of raw body, hex-encoded, using your webhook_secret." },
+                      { h: "X-MRC-Idempotency-Key", on: "Outgoing webhooks (we send this)", req: "—", d: "Format: <order_id>:<event>:<state>. Dedupe replays by this key." },
+                      { h: "X-MRC-Event", on: "Outgoing webhooks (we send this)", req: "—", d: "e.g. swap.deposit_detected, swap.confirming, swap.finished, swap.failed." },
+                    ].map((r) => (
+                      <tr key={r.h} className="border-b border-border last:border-0 align-top">
+                        <td className="px-4 py-3"><code className="rounded bg-muted px-1.5 py-0.5 font-mono text-[11px] text-primary">{r.h}</code></td>
+                        <td className="px-4 py-3 text-xs">{r.on}</td>
+                        <td className="px-4 py-3 text-xs">{r.req}</td>
+                        <td className="px-4 py-3 text-xs">{r.d}</td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+              </div>
+
+              <h4 className="text-sm font-semibold text-foreground mb-2">curl — GET <code>action=rates</code> (live quote)</h4>
+              <CodeBlock
+                lang="bash"
+                code={`BASE="https://tjikwxkmsfmyjkssvyoh.supabase.co/functions/v1/lite-swap"
+
+curl -sS "$BASE?action=rates&from=btc&to=usdterc20&amount=0.01" \\
+  -H "Accept: application/json" \\
+  -H "User-Agent: my-bot/1.0"`}
+              />
+
+              <h4 className="text-sm font-semibold text-foreground mt-5 mb-2">curl — GET <code>action=status</code></h4>
+              <CodeBlock
+                lang="bash"
+                code={`curl -sS "$BASE?action=status&id=MRC-1A2B3C4D-XY9Z" \\
+  -H "Accept: application/json"`}
+              />
+
+              <h4 className="text-sm font-semibold text-foreground mt-5 mb-2">curl — POST <code>action=estimate</code></h4>
+              <CodeBlock
+                lang="bash"
+                code={`curl -sS -X POST "$BASE" \\
+  -H "Content-Type: application/json" \\
+  -H "Accept: application/json" \\
+  -d '{
+    "action": "estimate",
+    "from": "btc",
+    "to": "usdterc20",
+    "amount": 0.001
+  }'`}
+              />
+
+              <h4 className="text-sm font-semibold text-foreground mt-5 mb-2">curl — POST <code>action=create</code> (with webhook)</h4>
+              <CodeBlock
+                lang="bash"
+                code={`curl -sS -X POST "$BASE" \\
+  -H "Content-Type: application/json" \\
+  -H "Accept: application/json" \\
+  -d '{
+    "action": "create",
+    "from": "btc",
+    "to": "usdterc20",
+    "amount": 0.001,
+    "address": "0x742d35Cc6634C0532925a3b844Bc454e4438f44e",
+    "refundAddress": "bc1qxy2kgdygjrsqtzq2n0yrf2493p83kkfjhx0wlh",
+    "webhook_url": "https://example.com/mrc-webhook",
+    "webhook_secret": "s3cret_at_least_32_chars_long_xxxx"
+  }'`}
+              />
+
+              {/* HMAC verification */}
+              <div className="mt-6 rounded-xl border border-primary/20 bg-primary/5 p-5">
+                <div className="flex items-center gap-2 mb-2">
+                  <Webhook className="h-4 w-4 text-primary" />
+                  <h4 className="text-sm font-semibold text-foreground">Verifying webhook signatures (HMAC-SHA256)</h4>
+                </div>
+                <ol className="list-decimal list-inside text-xs text-muted-foreground space-y-1 mb-4">
+                  <li>Read the raw request body (do <strong>not</strong> reparse — use the byte stream).</li>
+                  <li>Compute <code className="rounded bg-muted px-1 font-mono text-[11px]">HMAC_SHA256(webhook_secret, raw_body)</code> as lowercase hex.</li>
+                  <li>Compare with <code className="rounded bg-muted px-1 font-mono text-[11px]">X-MRC-Signature</code> header (strip the <code>sha256=</code> prefix). Use a constant-time compare.</li>
+                  <li>Dedupe by <code className="rounded bg-muted px-1 font-mono text-[11px]">X-MRC-Idempotency-Key</code> — we may retry up to 8× over 24h with exponential backoff.</li>
+                </ol>
+
+                <p className="text-xs font-medium text-foreground mb-2">Node.js (Express)</p>
+                <CodeBlock
+                  lang="javascript"
+                  code={`import crypto from "node:crypto";
+import express from "express";
+const app = express();
+const SECRET = process.env.MRC_WEBHOOK_SECRET;
+
+app.post("/mrc-webhook", express.raw({ type: "application/json" }), (req, res) => {
+  const sig = (req.header("X-MRC-Signature") || "").replace(/^sha256=/, "");
+  const expected = crypto.createHmac("sha256", SECRET).update(req.body).digest("hex");
+  const ok = sig.length === expected.length &&
+    crypto.timingSafeEqual(Buffer.from(sig, "hex"), Buffer.from(expected, "hex"));
+  if (!ok) return res.status(401).send("bad signature");
+
+  const event = JSON.parse(req.body.toString("utf8"));
+  // dedupe via req.header("X-MRC-Idempotency-Key")
+  res.status(200).send("ok");
+});`}
+                />
+
+                <p className="text-xs font-medium text-foreground mt-4 mb-2">Python (Flask)</p>
+                <CodeBlock
+                  lang="python"
+                  code={`import hmac, hashlib, os
+from flask import Flask, request, abort
+app = Flask(__name__)
+SECRET = os.environ["MRC_WEBHOOK_SECRET"].encode()
+
+@app.post("/mrc-webhook")
+def webhook():
+    raw = request.get_data()
+    sig = request.headers.get("X-MRC-Signature", "").removeprefix("sha256=")
+    expected = hmac.new(SECRET, raw, hashlib.sha256).hexdigest()
+    if not hmac.compare_digest(sig, expected):
+        abort(401)
+    # dedupe via request.headers["X-MRC-Idempotency-Key"]
+    return ("ok", 200)`}
+                />
+              </div>
+            </section>
+
+            {/* ── Generate a typed SDK from OpenAPI ── */}
+            <section id="sdk-generation" className="scroll-mt-24 mb-8">
+              <h3 className="mt-8 mb-2 text-lg font-semibold text-foreground flex items-center gap-2">
+                <Code2 className="h-5 w-5 text-primary" />
+                Generate a typed SDK from the OpenAPI spec
+              </h3>
+              <p className="text-sm text-muted-foreground mb-4 max-w-3xl">
+                The <code className="rounded bg-muted px-1.5 py-0.5 font-mono text-xs text-primary">/openapi.json</code> contract is consumable by{" "}
+                <a href="https://openapi-generator.tech/" target="_blank" rel="noopener" className="text-primary hover:underline">openapi-generator</a>.
+                Two minutes to a fully typed client.
+              </p>
+
+              <ol className="list-decimal list-inside text-sm text-foreground space-y-1.5 mb-5 marker:text-primary marker:font-semibold">
+                <li>Install the generator (Java 11+ required), or use the Docker image — no local Java needed.</li>
+                <li>Point it at the published spec URL.</li>
+                <li>Pick a generator (<code>typescript-fetch</code>, <code>python</code>, <code>go</code>, <code>rust</code>, <code>kotlin</code>, …).</li>
+                <li>Import the generated client and call typed methods.</li>
+              </ol>
+
+              <h4 className="text-sm font-semibold text-foreground mb-2">JavaScript / TypeScript (typescript-fetch)</h4>
+              <CodeBlock
+                lang="bash"
+                code={`# Generate
+npx @openapitools/openapi-generator-cli generate \\
+  -i https://mrcglobalpay.com/openapi.json \\
+  -g typescript-fetch \\
+  -o ./mrc-sdk
+
+cd ./mrc-sdk && npm install`}
+              />
+              <p className="text-xs text-muted-foreground mt-2 mb-2">Use it in your bot:</p>
+              <CodeBlock
+                lang="typescript"
+                code={`import { Configuration, DefaultApi } from "./mrc-sdk";
+
+const api = new DefaultApi(new Configuration({
+  basePath: "https://tjikwxkmsfmyjkssvyoh.supabase.co/functions/v1",
+}));
+
+// Estimate
+const quote = await api.liteSwapPost({
+  body: { action: "estimate", from: "btc", to: "usdterc20", amount: 0.001 },
+});
+console.log("estimated_amount:", quote.estimated_amount);
+
+// Create
+const order = await api.liteSwapPost({
+  body: {
+    action: "create",
+    from: "btc", to: "usdterc20", amount: 0.001,
+    address: "0x742d35Cc6634C0532925a3b844Bc454e4438f44e",
+  },
+});
+console.log("deposit to:", order.deposit_address);`}
+              />
+
+              <h4 className="text-sm font-semibold text-foreground mt-6 mb-2">Python (python generator)</h4>
+              <CodeBlock
+                lang="bash"
+                code={`# Docker — no local Java needed
+docker run --rm -v "\${PWD}:/local" openapitools/openapi-generator-cli generate \\
+  -i https://mrcglobalpay.com/openapi.json \\
+  -g python \\
+  -o /local/mrc_sdk \\
+  --additional-properties=packageName=mrc_sdk,projectName=mrc-sdk
+
+cd mrc_sdk && pip install -e .`}
+              />
+              <p className="text-xs text-muted-foreground mt-2 mb-2">Use it in your bot:</p>
+              <CodeBlock
+                lang="python"
+                code={`from mrc_sdk import ApiClient, Configuration, DefaultApi
+
+cfg = Configuration(host="https://tjikwxkmsfmyjkssvyoh.supabase.co/functions/v1")
+api = DefaultApi(ApiClient(cfg))
+
+# Estimate
+quote = api.lite_swap_post(body={
+    "action": "estimate", "from": "btc", "to": "usdterc20", "amount": 0.001
+})
+print("estimated_amount:", quote["estimated_amount"])
+
+# Create
+order = api.lite_swap_post(body={
+    "action": "create", "from": "btc", "to": "usdterc20", "amount": 0.001,
+    "address": "0x742d35Cc6634C0532925a3b844Bc454e4438f44e",
+})
+print("deposit to:", order["deposit_address"])`}
+              />
+
+              <div className="mt-5 rounded-lg border border-border bg-muted/30 p-4 text-xs text-muted-foreground">
+                <strong className="text-foreground">Postman / Insomnia:</strong>{" "}
+                Import <a href="/mrc-lite-api.postman_collection.json" download className="text-primary hover:underline">mrc-lite-api.postman_collection.json</a>{" "}
+                directly, or in Postman use <em>File → Import → Link</em> and paste{" "}
+                <code className="rounded bg-muted px-1 font-mono text-[11px]">https://mrcglobalpay.com/openapi.json</code>.
+              </div>
+            </section>
 
             {/* Base URL */}
             <h3 className="mt-8 mb-2 text-lg font-semibold text-foreground">Base URL</h3>
