@@ -10,10 +10,34 @@
       "permanent": true
     }
   ],
+  "headers": [
+    {
+      "source": "/webhook-status.json",
+      "headers": [
+        { "key": "Access-Control-Allow-Origin", "value": "*" },
+        { "key": "Access-Control-Allow-Methods", "value": "GET, OPTIONS" },
+        { "key": "Access-Control-Allow-Headers", "value": "content-type" },
+        { "key": "Content-Type", "value": "application/json; charset=utf-8" },
+        { "key": "Cache-Control", "value": "public, max-age=60" }
+      ]
+    },
+    {
+      "source": "/api/v1/webhook-status",
+      "headers": [
+        { "key": "Access-Control-Allow-Origin", "value": "*" },
+        { "key": "Access-Control-Allow-Methods", "value": "GET, OPTIONS" },
+        { "key": "Access-Control-Allow-Headers", "value": "content-type" },
+        { "key": "Content-Type", "value": "application/json; charset=utf-8" },
+        { "key": "Cache-Control", "value": "public, max-age=60" }
+      ]
+    }
+  ],
   "rewrites": [
     { "source": "/api/rates.json",            "destination": "https://tjikwxkmsfmyjkssvyoh.supabase.co/functions/v1/live-rates" },
     { "source": "/api/v1/rates",              "destination": "https://tjikwxkmsfmyjkssvyoh.supabase.co/functions/v1/bot-rates" },
     { "source": "/api/v1/health",             "destination": "https://tjikwxkmsfmyjkssvyoh.supabase.co/functions/v1/health" },
+    { "source": "/webhook-status.json",       "destination": "https://tjikwxkmsfmyjkssvyoh.supabase.co/functions/v1/lite-webhook-status" },
+    { "source": "/api/v1/webhook-status",     "destination": "https://tjikwxkmsfmyjkssvyoh.supabase.co/functions/v1/lite-webhook-status" },
     { "source": "/export/rates.xml",          "destination": "https://tjikwxkmsfmyjkssvyoh.supabase.co/functions/v1/rates-xml" },
     { "source": "/feed.xml",                  "destination": "https://tjikwxkmsfmyjkssvyoh.supabase.co/functions/v1/live-feed" },
     { "source": "/feed.rss",                  "destination": "https://tjikwxkmsfmyjkssvyoh.supabase.co/functions/v1/live-feed?format=rss" },
