@@ -260,6 +260,7 @@ const DevelopersApi = () => {
             </h2>
             <ol className="grid gap-x-6 gap-y-1.5 text-sm sm:grid-cols-2 list-decimal list-inside marker:text-muted-foreground">
               <li><a href="#quick-start" className="text-foreground hover:text-primary">Quick Start for Trading Bots</a></li>
+              <li><a href="#embed-quickstart" className="text-foreground hover:text-primary">Embed the Widget (Copy &amp; Paste)</a></li>
               <li><a href="#url-params" className="text-foreground hover:text-primary">URL Parameter Reference</a></li>
               <li><a href="#autocorrect" className="text-foreground hover:text-primary">Solana Ticker Auto-Correct</a></li>
               <li><a href="#token-registry" className="text-foreground hover:text-primary">Solana Token Registry (50+)</a></li>
