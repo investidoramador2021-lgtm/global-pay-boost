@@ -627,16 +627,18 @@ console.log("State:", s.state);`} />
               Each delivery is a <code className="font-mono text-xs">POST</code> with these headers:
             </p>
             <pre className="bg-muted p-4 rounded-lg overflow-x-auto text-xs font-mono mb-4">
-{`Content-Type:    application/json
-X-MRC-Event:     swap.deposit_detected
-X-MRC-Signature: <hex HMAC-SHA256 of raw body, key = your webhook_secret>
-User-Agent:      MRC-LiteAPI-Webhook/1.0`}
+{`Content-Type:           application/json
+X-MRC-Event:            swap.deposit_detected
+X-MRC-Signature:        <hex HMAC-SHA256 of raw body, key = your webhook_secret>
+X-MRC-Idempotency-Key:  MRC-1A2B3C4D-XY9Z:swap.deposit_detected:confirming
+User-Agent:             MRC-LiteAPI-Webhook/1.0`}
             </pre>
 
             <p className="text-muted-foreground mb-3">Sample payload:</p>
             <pre className="bg-muted p-4 rounded-lg overflow-x-auto text-xs font-mono mb-4">
 {`{
   "event": "swap.deposit_detected",
+  "idempotency_key": "MRC-1A2B3C4D-XY9Z:swap.deposit_detected:confirming",
   "timestamp": "2026-04-23T15:42:11.118Z",
   "data": {
     "order_id": "MRC-1A2B3C4D-XY9Z",
@@ -652,6 +654,34 @@ User-Agent:      MRC-LiteAPI-Webhook/1.0`}
     "updated_at": "2026-04-23T15:42:09Z"
   }
 }`}
+            </pre>
+
+            <h4 className="text-base font-semibold text-foreground mt-6 mb-2">Idempotency &amp; de-duplication</h4>
+            <p className="text-muted-foreground mb-3">
+              Every delivery carries a stable <code className="font-mono text-xs">idempotency_key</code> formatted as{" "}
+              <code className="font-mono text-xs bg-muted px-1.5 py-0.5 rounded">{`<order_id>:<event>:<state>`}</code>{" "}
+              (also exposed as the <code className="font-mono text-xs">X-MRC-Idempotency-Key</code> header). The same key will be sent for any retry of the same state transition, so your handler MUST treat the key as unique and ignore duplicates. Recommended pattern: store the key in a small table (or Redis SET with a 7-day TTL) and short-circuit early if it already exists.
+            </p>
+            <pre className="bg-muted p-4 rounded-lg overflow-x-auto text-xs font-mono mb-4">
+{`// Node.js — Postgres-backed de-dup
+const key = req.header("X-MRC-Idempotency-Key");
+const { rowCount } = await pg.query(
+  "INSERT INTO mrc_webhook_seen(idempotency_key) VALUES ($1) ON CONFLICT DO NOTHING",
+  [key],
+);
+if (rowCount === 0) return res.status(200).send("duplicate-ignored");
+
+// schema:
+// CREATE TABLE mrc_webhook_seen (
+//   idempotency_key text PRIMARY KEY,
+//   received_at timestamptz NOT NULL DEFAULT now()
+// );`}
+            </pre>
+            <pre className="bg-muted p-4 rounded-lg overflow-x-auto text-xs font-mono mb-4">
+{`# Python — Redis-backed de-dup (7-day TTL)
+key = request.headers["X-MRC-Idempotency-Key"]
+if not redis.set(f"mrc:wh:{key}", "1", nx=True, ex=7 * 24 * 3600):
+    return {"ok": True, "duplicate": True}`}
             </pre>
 
             <h4 className="text-base font-semibold text-foreground mt-6 mb-2">Verifying the signature (Node.js)</h4>
