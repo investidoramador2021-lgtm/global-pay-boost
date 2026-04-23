@@ -122,7 +122,6 @@ export function generateSitemaps(outDir = "dist"): Plugin {
         // with bidirectional hreflang. Source = dynamic-sitemap/assets.xml on
         // the edge function (different host than dynamic-feed).
         const childPaths: string[] = [];
-        const pairChildPaths: string[] = [];
 
         // Pull assets sitemap from dynamic-sitemap (separate function).
         try {
