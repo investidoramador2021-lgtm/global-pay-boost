@@ -461,8 +461,8 @@ const DevelopersApi = () => {
                   </tr>
                   <tr className="border-b border-border">
                     <td className="px-4 py-3"><Badge variant="secondary" className="text-[10px]">POST</Badge></td>
-                    <td className="px-4 py-3"><code className="rounded bg-muted px-1.5 py-0.5 font-mono text-xs text-primary">{`{ action: "create", from, to, amount, address }`}</code></td>
-                    <td className="px-4 py-3 text-muted-foreground">Create a real swap. Returns deposit address + order ID</td>
+                    <td className="px-4 py-3"><code className="rounded bg-muted px-1.5 py-0.5 font-mono text-xs text-primary">{`{ action: "create", from, to, amount, address, webhook_url?, webhook_secret? }`}</code></td>
+                    <td className="px-4 py-3 text-muted-foreground">Create a real swap. Returns deposit address + order ID. Add <code className="font-mono text-xs">webhook_url</code> + <code className="font-mono text-xs">webhook_secret</code> to receive status callbacks.</td>
                   </tr>
                   <tr>
                     <td className="px-4 py-3"><Badge className="text-[10px]">GET</Badge></td>
