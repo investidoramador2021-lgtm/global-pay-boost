@@ -77,3 +77,6 @@ verify_jwt = false
 
 [functions.simpleswap]
 verify_jwt = false
+
+[functions.lite-swap]
+verify_jwt = false

@@ -784,6 +784,69 @@ export type Database = {
         }
         Relationships: []
       }
+      lite_api_blacklist: {
+        Row: {
+          created_at: string
+          id: string
+          reason: string
+          wallet_address: string
+        }
+        Insert: {
+          created_at?: string
+          id?: string
+          reason?: string
+          wallet_address: string
+        }
+        Update: {
+          created_at?: string
+          id?: string
+          reason?: string
+          wallet_address?: string
+        }
+        Relationships: []
+      }
+      lite_api_swaps: {
+        Row: {
+          amount_usd: number
+          country_code: string | null
+          created_at: string
+          destination_wallet: string
+          from_ticker: string
+          id: string
+          ip_hash: string
+          mrc_tx_id: string | null
+          outcome: string
+          provider_tx_id: string | null
+          to_ticker: string
+        }
+        Insert: {
+          amount_usd?: number
+          country_code?: string | null
+          created_at?: string
+          destination_wallet: string
+          from_ticker: string
+          id?: string
+          ip_hash: string
+          mrc_tx_id?: string | null
+          outcome?: string
+          provider_tx_id?: string | null
+          to_ticker: string
+        }
+        Update: {
+          amount_usd?: number
+          country_code?: string | null
+          created_at?: string
+          destination_wallet?: string
+          from_ticker?: string
+          id?: string
+          ip_hash?: string
+          mrc_tx_id?: string | null
+          outcome?: string
+          provider_tx_id?: string | null
+          to_ticker?: string
+        }
+        Relationships: []
+      }
       pairs: {
         Row: {
           content_json: Json
