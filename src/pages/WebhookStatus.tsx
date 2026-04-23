@@ -1,8 +1,9 @@
 import { useEffect, useState } from "react";
 import { Helmet } from "react-helmet-async";
-import { Activity, CheckCircle2, AlertTriangle, Clock, Code2 } from "lucide-react";
+import { Activity, Code2 } from "lucide-react";
 import SiteHeader from "@/components/SiteHeader";
 import SiteFooter from "@/components/SiteFooter";
+import WebhookStatusCard from "@/components/WebhookStatusCard";
 
 interface StatusPayload {
   status: string;
