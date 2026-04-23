@@ -39,6 +39,8 @@
 /sitemap-pairs-28.xml https://tjikwxkmsfmyjkssvyoh.supabase.co/functions/v1/dynamic-feed?p=/sitemap-pairs-28.xml 200
 /sitemap-pairs-29.xml https://tjikwxkmsfmyjkssvyoh.supabase.co/functions/v1/dynamic-feed?p=/sitemap-pairs-29.xml 200
 /api/v1/health https://tjikwxkmsfmyjkssvyoh.supabase.co/functions/v1/health 200
+/webhook-status.json https://tjikwxkmsfmyjkssvyoh.supabase.co/functions/v1/lite-webhook-status 200
+/api/v1/webhook-status https://tjikwxkmsfmyjkssvyoh.supabase.co/functions/v1/lite-webhook-status 200
 /rss.xml https://tjikwxkmsfmyjkssvyoh.supabase.co/functions/v1/dynamic-feed?format=rss 200
 /blog/feed.xml https://tjikwxkmsfmyjkssvyoh.supabase.co/functions/v1/dynamic-feed?format=rss 200
 
