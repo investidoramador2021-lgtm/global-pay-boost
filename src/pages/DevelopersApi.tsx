@@ -405,7 +405,7 @@ const DevelopersApi = () => {
           </section>
 
           {/* ── Section 2: Ticker Auto-Correct ── */}
-          <section className="mb-16">
+          <section id="autocorrect" className="mb-16 scroll-mt-24">
             <h2 className="text-2xl font-bold text-foreground mb-2 flex items-center gap-2">
               <Zap className="h-6 w-6 text-primary" />
               Solana Ticker Auto-Correct Layer
@@ -436,7 +436,7 @@ const DevelopersApi = () => {
           </section>
 
           {/* ── Section 3: Solana Token Registry ── */}
-          <section className="mb-16">
+          <section id="token-registry" className="mb-16 scroll-mt-24">
             <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 mb-6">
               <div>
                 <h2 className="text-2xl font-bold text-foreground flex items-center gap-2">
@@ -1288,7 +1288,7 @@ curl -i -X POST https://your-app.example.com/mrc-webhook \\
 
 
           {/* ── Section 4: Response DOM Identifiers ── */}
-          <section className="mb-16">
+          <section id="dom-ids" className="mb-16 scroll-mt-24">
             <h2 className="text-2xl font-bold text-foreground mb-2 flex items-center gap-2">
               <Shield className="h-6 w-6 text-primary" />
               DOM Identifiers for Bot Integration
@@ -1325,7 +1325,7 @@ console.log('Send funds to:', depositAddr);`} lang="javascript" />
           </section>
 
           {/* ── Section 5: Technical FAQ ── */}
-          <section className="mb-16">
+          <section id="faq" className="mb-16 scroll-mt-24">
             <h2 className="text-2xl font-bold text-foreground mb-6 flex items-center gap-2">
               <Shield className="h-6 w-6 text-primary" />
               Technical FAQ
