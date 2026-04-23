@@ -799,6 +799,37 @@ print("received:", RECEIVED_SIGNATURE)
 print("match:   ", hmac.compare_digest(expected, RECEIVED_SIGNATURE))  # -> True`}
             </pre>
 
+            <h4 className="text-base font-semibold text-foreground mt-6 mb-2">Replay a captured event with <code className="font-mono text-sm">curl</code></h4>
+            <p className="text-muted-foreground mb-3">
+              Use this to replay a real captured payload against your own endpoint while you build the verifier. The signature below is precomputed for the exact body bytes shown — change either and you must regenerate the header.
+            </p>
+            <pre className="bg-muted p-4 rounded-lg overflow-x-auto text-xs font-mono mb-4">
+{`# 1) Save the captured raw body to a file (NO trailing newline, NO reformat).
+printf '%s' '{"event":"swap.deposit_detected","idempotency_key":"MRC-1A2B3C4D-XY9Z:swap.deposit_detected:confirming","timestamp":"2026-04-23T15:42:11.118Z","data":{"order_id":"MRC-1A2B3C4D-XY9Z","state":"confirming","from":"btc","to":"usdterc20","amount_in":"0.001","amount_out":"63.84"}}' > /tmp/mrc-event.json
+
+# 2) Recompute the signature locally so you know what to expect.
+SECRET='s3cret_at_least_32_chars_long_xxxx'
+SIG=$(openssl dgst -sha256 -hmac "$SECRET" -hex /tmp/mrc-event.json | awk '{print $2}')
+echo "X-MRC-Signature: $SIG"
+# → 6569dff0a7d32d88f973a942e519f88f3e0a1f437946562bd9fae64cc7787e89
+
+# 3) POST it to your webhook EXACTLY as MRC GlobalPay would.
+curl -i -X POST https://your-app.example.com/mrc-webhook \\
+  -H "Content-Type: application/json" \\
+  -H "X-MRC-Event: swap.deposit_detected" \\
+  -H "X-MRC-Idempotency-Key: MRC-1A2B3C4D-XY9Z:swap.deposit_detected:confirming" \\
+  -H "X-MRC-Signature: $SIG" \\
+  -H "User-Agent: MRC-LiteAPI-Webhook/1.0" \\
+  --data-binary @/tmp/mrc-event.json
+
+# Expected: HTTP/1.1 200 OK   (your handler verified the signature and ack'd)
+# 401     → your verifier rejected the signature (good — flip a byte to confirm)
+# 5xx/timeout → MRC GlobalPay would retry with the same idempotency_key`}
+            </pre>
+            <p className="text-xs text-muted-foreground mb-6">
+              <strong className="text-foreground">Tip:</strong> tamper with one character of the body and re-run step 3 <em>without</em> recomputing <code className="font-mono">SIG</code> — your endpoint should respond <code className="font-mono">401</code>. That single test proves both the HMAC math and the constant-time comparison are wired correctly.
+            </p>
+
             <div className="rounded-lg border border-border bg-muted/30 p-4 text-xs text-muted-foreground space-y-2 mb-6">
               <p><strong className="text-foreground">Security:</strong> always verify <code className="font-mono">X-MRC-Signature</code> with constant-time comparison before trusting the payload. Choose a webhook_secret of at least 32 random characters and never log it.</p>
               <p><strong className="text-foreground">Delivery semantics:</strong> the initial <code className="font-mono">swap.created</code> webhook is sent inline (its delivery status is returned in the create response under <code className="font-mono">webhook</code>). Later events are fan-out from your <code className="font-mono">action: "status"</code> polls — each state is delivered at most once, then persisted in <code className="font-mono">last_webhook_state</code> so duplicate polls don't spam your endpoint. Time out your handler in 8 seconds or less.</p>
