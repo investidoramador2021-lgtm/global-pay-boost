@@ -1,3 +1,4 @@
+import { useEffect, useState } from "react";
 import { useParams, useLocation, Navigate, Link } from "react-router-dom";
 import { useQuery } from "@tanstack/react-query";
 import { Helmet } from "react-helmet-async";
@@ -13,7 +14,7 @@ import TokenIcon from "@/components/TokenIcon";
 import GoldSecurityBlock, { isGoldPair } from "@/components/GoldSecurityBlock";
 import AEOAssetBlock from "@/components/AEOAssetBlock";
 import PairEnrichmentBlock from "@/components/PairEnrichmentBlock";
-import { getPairEnrichment } from "@/lib/pair-enrichment";
+import { getPairEnrichment, type PairEnrichment } from "@/lib/pair-enrichment";
 import {
   Accordion,
   AccordionContent,
