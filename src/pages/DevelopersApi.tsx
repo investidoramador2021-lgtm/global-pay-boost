@@ -656,6 +656,20 @@ User-Agent:             MRC-LiteAPI-Webhook/1.0`}
 }`}
             </pre>
 
+            <div className="rounded-lg border border-primary/30 bg-primary/5 p-4 mb-6 text-sm">
+              <p className="text-foreground">
+                <strong>Live delivery health:</strong>{" "}
+                <a href="/webhook-status" className="text-primary hover:underline font-medium">
+                  /webhook-status
+                </a>{" "}
+                — public anonymized counts of <code className="font-mono text-xs">swap.created</code>,{" "}
+                <code className="font-mono text-xs">swap.deposit_detected</code>,{" "}
+                <code className="font-mono text-xs">swap.finished</code>, and{" "}
+                <code className="font-mono text-xs">swap.expired</code> over the last 24h, plus a copy-paste
+                receiver dashboard for your own endpoint.
+              </p>
+            </div>
+
             <h4 className="text-base font-semibold text-foreground mt-6 mb-2">Idempotency &amp; de-duplication</h4>
             <p className="text-muted-foreground mb-3">
               Every delivery carries a stable <code className="font-mono text-xs">idempotency_key</code> formatted as{" "}
