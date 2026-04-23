@@ -475,6 +475,7 @@ Deno.serve(async (req) => {
         // Fire the initial swap.created webhook (best-effort, non-blocking)
         let webhookDelivery: Record<string, unknown> | undefined;
         if (webhookUrl && webhookSecret) {
+          const idemKey = makeIdempotencyKey(mrcTxId, "swap.created", "waiting");
           const result = await dispatchWebhook(
             webhookUrl,
             webhookSecret,
@@ -491,10 +492,12 @@ Deno.serve(async (req) => {
               payout_address: tx.payoutAddress ?? address,
               expires_at: expiresAt,
             },
+            idemKey,
           );
           webhookDelivery = {
             url: webhookUrl,
             initial_event: "swap.created",
+            idempotency_key: idemKey,
             delivered: result.ok,
             response_status: result.status,
             ...(result.error ? { error: result.error } : {}),
