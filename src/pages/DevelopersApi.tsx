@@ -461,8 +461,8 @@ const DevelopersApi = () => {
                   </tr>
                   <tr className="border-b border-border">
                     <td className="px-4 py-3"><Badge variant="secondary" className="text-[10px]">POST</Badge></td>
-                    <td className="px-4 py-3"><code className="rounded bg-muted px-1.5 py-0.5 font-mono text-xs text-primary">{`{ action: "create", from, to, amount, address }`}</code></td>
-                    <td className="px-4 py-3 text-muted-foreground">Create a real swap. Returns deposit address + order ID</td>
+                    <td className="px-4 py-3"><code className="rounded bg-muted px-1.5 py-0.5 font-mono text-xs text-primary">{`{ action: "create", from, to, amount, address, webhook_url?, webhook_secret? }`}</code></td>
+                    <td className="px-4 py-3 text-muted-foreground">Create a real swap. Returns deposit address + order ID. Add <code className="font-mono text-xs">webhook_url</code> + <code className="font-mono text-xs">webhook_secret</code> to receive status callbacks.</td>
                   </tr>
                   <tr>
                     <td className="px-4 py-3"><Badge className="text-[10px]">GET</Badge></td>
@@ -593,10 +593,121 @@ console.log("State:", s.state);`} />
               </table>
             </div>
 
+            {/* ── Webhooks ── */}
+            <h3 className="text-xl font-semibold text-foreground mt-10 mb-3">
+              Optional: Webhook Callbacks
+            </h3>
+            <p className="text-muted-foreground mb-4">
+              Pass <code className="font-mono text-xs bg-muted px-1.5 py-0.5 rounded">webhook_url</code> and{" "}
+              <code className="font-mono text-xs bg-muted px-1.5 py-0.5 rounded">webhook_secret</code> when you call{" "}
+              <code className="font-mono text-xs bg-muted px-1.5 py-0.5 rounded">action: "create"</code> and we'll POST status updates to your URL each time the order changes state. The first event (<code className="font-mono text-xs">swap.created</code>) is fired synchronously; subsequent events fire on each <code className="font-mono text-xs">action: "status"</code> poll, so they only require you to keep polling — no inbound port from us is needed beyond your HTTPS endpoint.
+            </p>
+
+            <div className="overflow-x-auto rounded-lg border border-border mb-4">
+              <table className="w-full text-sm">
+                <thead>
+                  <tr className="border-b border-border bg-muted/50">
+                    <th className="px-4 py-3 text-left font-semibold text-foreground">Event</th>
+                    <th className="px-4 py-3 text-left font-semibold text-foreground">Fires when</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr className="border-b border-border"><td className="px-4 py-3"><code className="font-mono text-xs">swap.created</code></td><td className="px-4 py-3 text-muted-foreground">Order created, deposit address issued</td></tr>
+                  <tr className="border-b border-border"><td className="px-4 py-3"><code className="font-mono text-xs">swap.deposit_detected</code></td><td className="px-4 py-3 text-muted-foreground">User's deposit detected on-chain (confirming)</td></tr>
+                  <tr className="border-b border-border"><td className="px-4 py-3"><code className="font-mono text-xs">swap.processing</code></td><td className="px-4 py-3 text-muted-foreground">Exchanging or sending payout</td></tr>
+                  <tr className="border-b border-border"><td className="px-4 py-3"><code className="font-mono text-xs">swap.finished</code></td><td className="px-4 py-3 text-muted-foreground">Payout sent — payload includes <code className="font-mono text-xs">payout_hash</code></td></tr>
+                  <tr className="border-b border-border"><td className="px-4 py-3"><code className="font-mono text-xs">swap.expired</code></td><td className="px-4 py-3 text-muted-foreground">No deposit received in time</td></tr>
+                  <tr className="border-b border-border"><td className="px-4 py-3"><code className="font-mono text-xs">swap.failed</code></td><td className="px-4 py-3 text-muted-foreground">Liquidity provider could not complete</td></tr>
+                  <tr><td className="px-4 py-3"><code className="font-mono text-xs">swap.refunded</code></td><td className="px-4 py-3 text-muted-foreground">Funds returned to refund address</td></tr>
+                </tbody>
+              </table>
+            </div>
+
+            <p className="text-muted-foreground mb-3">
+              Each delivery is a <code className="font-mono text-xs">POST</code> with these headers:
+            </p>
+            <pre className="bg-muted p-4 rounded-lg overflow-x-auto text-xs font-mono mb-4">
+{`Content-Type:    application/json
+X-MRC-Event:     swap.deposit_detected
+X-MRC-Signature: <hex HMAC-SHA256 of raw body, key = your webhook_secret>
+User-Agent:      MRC-LiteAPI-Webhook/1.0`}
+            </pre>
+
+            <p className="text-muted-foreground mb-3">Sample payload:</p>
+            <pre className="bg-muted p-4 rounded-lg overflow-x-auto text-xs font-mono mb-4">
+{`{
+  "event": "swap.deposit_detected",
+  "timestamp": "2026-04-23T15:42:11.118Z",
+  "data": {
+    "order_id": "MRC-1A2B3C4D-XY9Z",
+    "provider_order_id": "abc123def456",
+    "state": "confirming",
+    "from": "btc",
+    "to": "usdterc20",
+    "amount_in": "0.005",
+    "amount_out": "319.42",
+    "deposit_address": "bc1q...",
+    "payout_address": "0x742d...",
+    "payout_hash": null,
+    "updated_at": "2026-04-23T15:42:09Z"
+  }
+}`}
+            </pre>
+
+            <h4 className="text-base font-semibold text-foreground mt-6 mb-2">Verifying the signature (Node.js)</h4>
+            <pre className="bg-muted p-4 rounded-lg overflow-x-auto text-xs font-mono mb-4">
+{`import crypto from "node:crypto";
+import express from "express";
+
+const app = express();
+const SECRET = process.env.MRC_WEBHOOK_SECRET;
+
+// IMPORTANT: capture the raw body BEFORE JSON-parsing, then verify
+app.post("/mrc-webhook", express.raw({ type: "application/json" }), (req, res) => {
+  const sig = req.header("X-MRC-Signature");
+  const expected = crypto.createHmac("sha256", SECRET).update(req.body).digest("hex");
+  if (!sig || !crypto.timingSafeEqual(Buffer.from(sig), Buffer.from(expected))) {
+    return res.status(401).send("bad signature");
+  }
+  const evt = JSON.parse(req.body.toString("utf8"));
+  console.log(evt.event, evt.data.order_id, "→", evt.data.state);
+  res.status(200).send("ok"); // ALWAYS 2xx within 8s
+});
+
+app.listen(3000);`}
+            </pre>
+
+            <h4 className="text-base font-semibold text-foreground mt-6 mb-2">Verifying the signature (Python / FastAPI)</h4>
+            <pre className="bg-muted p-4 rounded-lg overflow-x-auto text-xs font-mono mb-4">
+{`import os, hmac, hashlib
+from fastapi import FastAPI, Request, HTTPException
+
+app = FastAPI()
+SECRET = os.environ["MRC_WEBHOOK_SECRET"].encode()
+
+@app.post("/mrc-webhook")
+async def mrc_webhook(request: Request):
+    raw = await request.body()
+    sig = request.headers.get("X-MRC-Signature", "")
+    expected = hmac.new(SECRET, raw, hashlib.sha256).hexdigest()
+    if not hmac.compare_digest(sig, expected):
+        raise HTTPException(status_code=401, detail="bad signature")
+    evt = await request.json()
+    print(evt["event"], evt["data"]["order_id"], "→", evt["data"]["state"])
+    return {"ok": True}  # respond 2xx within 8s`}
+            </pre>
+
+            <div className="rounded-lg border border-border bg-muted/30 p-4 text-xs text-muted-foreground space-y-2 mb-6">
+              <p><strong className="text-foreground">Security:</strong> always verify <code className="font-mono">X-MRC-Signature</code> with constant-time comparison before trusting the payload. Choose a webhook_secret of at least 32 random characters and never log it.</p>
+              <p><strong className="text-foreground">Delivery semantics:</strong> the initial <code className="font-mono">swap.created</code> webhook is sent inline (its delivery status is returned in the create response under <code className="font-mono">webhook</code>). Later events are fan-out from your <code className="font-mono">action: "status"</code> polls — each state is delivered at most once, then persisted in <code className="font-mono">last_webhook_state</code> so duplicate polls don't spam your endpoint. Time out your handler in 8 seconds or less.</p>
+              <p><strong className="text-foreground">Limits:</strong> webhook URL must be HTTPS and ≤512 chars; secret must be 8–128 chars from <code className="font-mono">[A-Za-z0-9._-]</code>.</p>
+            </div>
+
             <p className="mt-6 text-xs text-muted-foreground">
               The Lite API is a thin, audited wrapper that routes through the same FINTRAC-registered liquidity rails as the public widget. It does not custody funds, store deposit addresses long-term, or hold balances on behalf of users.
             </p>
           </section>
+
 
           {/* ── Section 4: Response DOM Identifiers ── */}
           <section className="mb-16">

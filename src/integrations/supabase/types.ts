@@ -814,10 +814,13 @@ export type Database = {
           from_ticker: string
           id: string
           ip_hash: string
+          last_webhook_state: string | null
           mrc_tx_id: string | null
           outcome: string
           provider_tx_id: string | null
           to_ticker: string
+          webhook_secret: string | null
+          webhook_url: string | null
         }
         Insert: {
           amount_usd?: number
@@ -827,10 +830,13 @@ export type Database = {
           from_ticker: string
           id?: string
           ip_hash: string
+          last_webhook_state?: string | null
           mrc_tx_id?: string | null
           outcome?: string
           provider_tx_id?: string | null
           to_ticker: string
+          webhook_secret?: string | null
+          webhook_url?: string | null
         }
         Update: {
           amount_usd?: number
@@ -840,10 +846,13 @@ export type Database = {
           from_ticker?: string
           id?: string
           ip_hash?: string
+          last_webhook_state?: string | null
           mrc_tx_id?: string | null
           outcome?: string
           provider_tx_id?: string | null
           to_ticker?: string
+          webhook_secret?: string | null
+          webhook_url?: string | null
         }
         Relationships: []
       }

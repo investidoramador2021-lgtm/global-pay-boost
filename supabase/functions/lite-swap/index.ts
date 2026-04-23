@@ -58,6 +58,80 @@ const BLOCKED_COUNTRIES = new Set([
 const TICKER_RE = /^[a-z0-9]{1,20}$/i;
 const ADDRESS_RE = /^[a-zA-Z0-9_:.-]{8,128}$/;
 const ORDER_ID_RE = /^[a-zA-Z0-9_-]{1,64}$/;
+const WEBHOOK_URL_RE = /^https:\/\/[a-zA-Z0-9.\-_/:?=&%]{6,512}$/;
+const WEBHOOK_SECRET_RE = /^[a-zA-Z0-9._\-]{8,128}$/;
+
+// ─── Webhook helpers ───────────────────────────────────────────────────────
+async function hmacSign(payload: string, secret: string): Promise<string> {
+  const enc = new TextEncoder();
+  const key = await crypto.subtle.importKey(
+    "raw",
+    enc.encode(secret),
+    { name: "HMAC", hash: "SHA-256" },
+    false,
+    ["sign"],
+  );
+  const sig = await crypto.subtle.sign("HMAC", enc.encode(payload), key);
+  return Array.from(new Uint8Array(sig))
+    .map((b) => b.toString(16).padStart(2, "0"))
+    .join("");
+}
+
+/**
+ * Map an upstream provider state to one of our public webhook event names.
+ * Returns null if the state should not trigger a webhook (e.g. duplicate).
+ */
+function eventNameForState(state: string): string | null {
+  const s = (state || "").toLowerCase();
+  switch (s) {
+    case "waiting": return "swap.created";
+    case "confirming": return "swap.deposit_detected";
+    case "exchanging":
+    case "sending": return "swap.processing";
+    case "finished": return "swap.finished";
+    case "failed": return "swap.failed";
+    case "refunded": return "swap.refunded";
+    case "expired": return "swap.expired";
+    case "verifying": return "swap.verifying";
+    default: return null;
+  }
+}
+
+async function dispatchWebhook(
+  url: string,
+  secret: string,
+  event: string,
+  payload: Record<string, unknown>,
+): Promise<{ ok: boolean; status: number; error?: string }> {
+  try {
+    const body = JSON.stringify({
+      event,
+      timestamp: new Date().toISOString(),
+      data: payload,
+    });
+    const signature = await hmacSign(body, secret);
+    const resp = await fetch(url, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        "X-MRC-Event": event,
+        "X-MRC-Signature": signature,
+        "User-Agent": "MRC-LiteAPI-Webhook/1.0",
+      },
+      body,
+      signal: AbortSignal.timeout(8_000),
+    });
+    await resp.text();
+    return { ok: resp.ok, status: resp.status };
+  } catch (err) {
+    return {
+      ok: false,
+      status: 0,
+      error: err instanceof Error ? err.message : "delivery failed",
+    };
+  }
+}
+
 
 // ─── Helpers ───────────────────────────────────────────────────────────────
 async function sha256Hex(input: string): Promise<string> {
@@ -242,6 +316,12 @@ Deno.serve(async (req) => {
         const refundAddress = body.refundAddress
           ? String(body.refundAddress).trim()
           : undefined;
+        const webhookUrl = body.webhook_url
+          ? String(body.webhook_url).trim()
+          : undefined;
+        const webhookSecret = body.webhook_secret
+          ? String(body.webhook_secret).trim()
+          : undefined;
 
         if (!TICKER_RE.test(from) || !TICKER_RE.test(to)) return bad("Invalid ticker format.");
         if (!isFinite(amount) || amount <= 0) return bad("Invalid amount.");
@@ -249,6 +329,17 @@ Deno.serve(async (req) => {
         if (refundAddress && !ADDRESS_RE.test(refundAddress)) {
           return bad("Invalid refund address.");
         }
+        if (webhookUrl !== undefined) {
+          if (!WEBHOOK_URL_RE.test(webhookUrl)) {
+            return bad("Invalid webhook_url. Must be HTTPS, max 512 chars.");
+          }
+          if (!webhookSecret || !WEBHOOK_SECRET_RE.test(webhookSecret)) {
+            return bad(
+              "webhook_secret is required when webhook_url is set. Use 8-128 chars [A-Za-z0-9._-].",
+            );
+          }
+        }
+
 
         // Estimate USD value & enforce $1,000 cap
         const usd = await estimateUsd(from, amount);
@@ -338,7 +429,7 @@ Deno.serve(async (req) => {
           Math.random().toString(36).slice(2, 6).toUpperCase()
         }`;
 
-        // Audit log (rate-limit accounting)
+        // Audit log (rate-limit accounting + webhook config)
         await svc.from("lite_api_swaps").insert({
           ip_hash: ipHash,
           destination_wallet: address,
@@ -349,10 +440,42 @@ Deno.serve(async (req) => {
           outcome: "created",
           provider_tx_id: orderId,
           mrc_tx_id: mrcTxId,
+          webhook_url: webhookUrl ?? null,
+          webhook_secret: webhookSecret ?? null,
+          last_webhook_state: webhookUrl ? "waiting" : null,
         });
 
         // Estimated expiry — standard flow doesn't carry one; provider commonly waits ~20m for deposit.
         const expiresAt = new Date(Date.now() + 20 * 60 * 1000).toISOString();
+
+        // Fire the initial swap.created webhook (best-effort, non-blocking)
+        let webhookDelivery: Record<string, unknown> | undefined;
+        if (webhookUrl && webhookSecret) {
+          const result = await dispatchWebhook(
+            webhookUrl,
+            webhookSecret,
+            "swap.created",
+            {
+              order_id: mrcTxId,
+              provider_order_id: orderId,
+              state: "waiting",
+              from, to,
+              from_amount: tx.fromAmount ?? amount,
+              estimated_to_amount: tx.toAmount ?? null,
+              deposit_address: tx.payinAddress,
+              deposit_extra_id: tx.payinExtraId ?? null,
+              payout_address: tx.payoutAddress ?? address,
+              expires_at: expiresAt,
+            },
+          );
+          webhookDelivery = {
+            url: webhookUrl,
+            initial_event: "swap.created",
+            delivered: result.ok,
+            response_status: result.status,
+            ...(result.error ? { error: result.error } : {}),
+          };
+        }
 
         return json({
           status: "success",
@@ -371,33 +494,83 @@ Deno.serve(async (req) => {
             new URL(req.url).host
           }/functions/v1/lite-swap?action=status&id=${encodeURIComponent(mrcTxId)}`,
           custody: "non-custodial",
+          ...(webhookDelivery ? { webhook: webhookDelivery } : {}),
           documentation: "https://mrcglobalpay.com/developers#lite-api",
         });
       }
 
-      // ─── 4. Status passthrough ──────────────────────────────────────────
+      // ─── 4. Status passthrough (with webhook fan-out on state change) ──
       case "status": {
         const id = url.searchParams.get("id") || "";
         if (!ORDER_ID_RE.test(id)) return bad("Invalid order id.");
 
-        // Resolve MRC id → provider id
         const svc = createClient(
           Deno.env.get("SUPABASE_URL")!,
           Deno.env.get("SUPABASE_SERVICE_ROLE_KEY")!,
         );
+
+        // Resolve MRC id → provider id and pull webhook config (single round-trip)
         let providerId = id;
+        let webhookUrl: string | null = null;
+        let webhookSecret: string | null = null;
+        let lastWebhookState: string | null = null;
         if (id.startsWith("MRC-")) {
           const { data: row } = await svc
             .from("lite_api_swaps")
-            .select("provider_tx_id")
+            .select("provider_tx_id, webhook_url, webhook_secret, last_webhook_state")
             .eq("mrc_tx_id", id)
             .maybeSingle();
-          if (row?.provider_tx_id) providerId = row.provider_tx_id;
-          else return bad("Order not found.", 404);
+          if (!row?.provider_tx_id) return bad("Order not found.", 404);
+          providerId = row.provider_tx_id as string;
+          webhookUrl = (row.webhook_url as string) ?? null;
+          webhookSecret = (row.webhook_secret as string) ?? null;
+          lastWebhookState = (row.last_webhook_state as string) ?? null;
         }
+
         const r = await cnFetch(`/exchange/by-id?id=${encodeURIComponent(providerId)}`);
         if (!r.ok) return json({ status: "error", error: "Order not found." }, 404);
         const d = (r.data || {}) as Record<string, unknown>;
+        const currentState = String(d.status ?? "unknown").toLowerCase();
+
+        // Webhook fan-out: only fire on state change
+        let webhookFired: Record<string, unknown> | undefined;
+        if (
+          webhookUrl && webhookSecret && id.startsWith("MRC-") &&
+          currentState !== "unknown" && currentState !== lastWebhookState
+        ) {
+          const eventName = eventNameForState(currentState);
+          if (eventName) {
+            const result = await dispatchWebhook(
+              webhookUrl,
+              webhookSecret,
+              eventName,
+              {
+                order_id: id,
+                provider_order_id: providerId,
+                state: currentState,
+                from: d.fromCurrency,
+                to: d.toCurrency,
+                amount_in: d.expectedAmountFrom ?? d.fromAmount,
+                amount_out: d.amountTo ?? d.toAmount,
+                deposit_address: d.payinAddress,
+                payout_address: d.payoutAddress,
+                payout_hash: d.payoutHash ?? null,
+                updated_at: d.updatedAt ?? null,
+              },
+            );
+            // Persist new state regardless of delivery success (avoid retry storms)
+            await svc.from("lite_api_swaps")
+              .update({ last_webhook_state: currentState })
+              .eq("mrc_tx_id", id);
+            webhookFired = {
+              event: eventName,
+              delivered: result.ok,
+              response_status: result.status,
+              ...(result.error ? { error: result.error } : {}),
+            };
+          }
+        }
+
         return json({
           status: "success",
           order_id: id,
@@ -409,6 +582,7 @@ Deno.serve(async (req) => {
           payout_address: d.payoutAddress,
           payout_hash: d.payoutHash ?? null,
           updated_at: d.updatedAt ?? null,
+          ...(webhookFired ? { webhook: webhookFired } : {}),
         });
       }
 

@@ -133,6 +133,53 @@ Deno.test("create: rejects invalid destination address", async () => {
   assertEquals(r.body.status, "error");
 });
 
+// ─── Webhook param validation ──────────────────────────────────────────────
+Deno.test("create: rejects non-https webhook_url", async () => {
+  const r = await call("POST", {
+    action: "create",
+    from: "btc",
+    to: "usdterc20",
+    amount: 0.0001,
+    address: "0x742d35Cc6634C0532925a3b844Bc454e4438f44e",
+    webhook_url: "http://example.com/hook",
+    webhook_secret: "supersecret_test_value",
+  });
+  assertEquals(r.status, 400);
+  assert(
+    String(r.body.error).toLowerCase().includes("webhook_url"),
+    `expected webhook_url error, got ${JSON.stringify(r.body)}`,
+  );
+});
+
+Deno.test("create: rejects webhook_url without webhook_secret", async () => {
+  const r = await call("POST", {
+    action: "create",
+    from: "btc",
+    to: "usdterc20",
+    amount: 0.0001,
+    address: "0x742d35Cc6634C0532925a3b844Bc454e4438f44e",
+    webhook_url: "https://example.com/hook",
+  });
+  assertEquals(r.status, 400);
+  assert(
+    String(r.body.error).toLowerCase().includes("webhook_secret"),
+    `expected webhook_secret error, got ${JSON.stringify(r.body)}`,
+  );
+});
+
+Deno.test("create: rejects too-short webhook_secret", async () => {
+  const r = await call("POST", {
+    action: "create",
+    from: "btc",
+    to: "usdterc20",
+    amount: 0.0001,
+    address: "0x742d35Cc6634C0532925a3b844Bc454e4438f44e",
+    webhook_url: "https://example.com/hook",
+    webhook_secret: "short",
+  });
+  assertEquals(r.status, 400);
+});
+
 Deno.test("create: rejects invalid ticker", async () => {
   const r = await call("POST", {
     action: "create",
