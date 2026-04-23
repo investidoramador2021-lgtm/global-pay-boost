@@ -429,7 +429,7 @@ Deno.serve(async (req) => {
           Math.random().toString(36).slice(2, 6).toUpperCase()
         }`;
 
-        // Audit log (rate-limit accounting)
+        // Audit log (rate-limit accounting + webhook config)
         await svc.from("lite_api_swaps").insert({
           ip_hash: ipHash,
           destination_wallet: address,
@@ -440,10 +440,42 @@ Deno.serve(async (req) => {
           outcome: "created",
           provider_tx_id: orderId,
           mrc_tx_id: mrcTxId,
+          webhook_url: webhookUrl ?? null,
+          webhook_secret: webhookSecret ?? null,
+          last_webhook_state: webhookUrl ? "waiting" : null,
         });
 
         // Estimated expiry — standard flow doesn't carry one; provider commonly waits ~20m for deposit.
         const expiresAt = new Date(Date.now() + 20 * 60 * 1000).toISOString();
+
+        // Fire the initial swap.created webhook (best-effort, non-blocking)
+        let webhookDelivery: Record<string, unknown> | undefined;
+        if (webhookUrl && webhookSecret) {
+          const result = await dispatchWebhook(
+            webhookUrl,
+            webhookSecret,
+            "swap.created",
+            {
+              order_id: mrcTxId,
+              provider_order_id: orderId,
+              state: "waiting",
+              from, to,
+              from_amount: tx.fromAmount ?? amount,
+              estimated_to_amount: tx.toAmount ?? null,
+              deposit_address: tx.payinAddress,
+              deposit_extra_id: tx.payinExtraId ?? null,
+              payout_address: tx.payoutAddress ?? address,
+              expires_at: expiresAt,
+            },
+          );
+          webhookDelivery = {
+            url: webhookUrl,
+            initial_event: "swap.created",
+            delivered: result.ok,
+            response_status: result.status,
+            ...(result.error ? { error: result.error } : {}),
+          };
+        }
 
         return json({
           status: "success",
@@ -462,6 +494,7 @@ Deno.serve(async (req) => {
             new URL(req.url).host
           }/functions/v1/lite-swap?action=status&id=${encodeURIComponent(mrcTxId)}`,
           custody: "non-custodial",
+          ...(webhookDelivery ? { webhook: webhookDelivery } : {}),
           documentation: "https://mrcglobalpay.com/developers#lite-api",
         });
       }
