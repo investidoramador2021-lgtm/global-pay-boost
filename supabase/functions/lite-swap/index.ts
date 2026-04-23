@@ -567,6 +567,7 @@ Deno.serve(async (req) => {
         ) {
           const eventName = eventNameForState(currentState);
           if (eventName) {
+            const idemKey = makeIdempotencyKey(id, eventName, currentState);
             const result = await dispatchWebhook(
               webhookUrl,
               webhookSecret,
@@ -584,6 +585,7 @@ Deno.serve(async (req) => {
                 payout_hash: d.payoutHash ?? null,
                 updated_at: d.updatedAt ?? null,
               },
+              idemKey,
             );
             // Persist new state regardless of delivery success (avoid retry storms)
             await svc.from("lite_api_swaps")
@@ -591,6 +593,7 @@ Deno.serve(async (req) => {
               .eq("mrc_tx_id", id);
             webhookFired = {
               event: eventName,
+              idempotency_key: idemKey,
               delivered: result.ok,
               response_status: result.status,
               ...(result.error ? { error: result.error } : {}),
