@@ -103,10 +103,12 @@ async function dispatchWebhook(
   secret: string,
   event: string,
   payload: Record<string, unknown>,
+  idempotencyKey: string,
 ): Promise<{ ok: boolean; status: number; error?: string }> {
   try {
     const body = JSON.stringify({
       event,
+      idempotency_key: idempotencyKey,
       timestamp: new Date().toISOString(),
       data: payload,
     });
@@ -117,6 +119,7 @@ async function dispatchWebhook(
         "Content-Type": "application/json",
         "X-MRC-Event": event,
         "X-MRC-Signature": signature,
+        "X-MRC-Idempotency-Key": idempotencyKey,
         "User-Agent": "MRC-LiteAPI-Webhook/1.0",
       },
       body,
@@ -131,6 +134,15 @@ async function dispatchWebhook(
       error: err instanceof Error ? err.message : "delivery failed",
     };
   }
+}
+
+/** Stable idempotency key: `${order_id}:${event}:${state}`. */
+function makeIdempotencyKey(
+  orderId: string,
+  event: string,
+  state: string,
+): string {
+  return `${orderId}:${event}:${state}`;
 }
 
 
@@ -463,6 +475,7 @@ Deno.serve(async (req) => {
         // Fire the initial swap.created webhook (best-effort, non-blocking)
         let webhookDelivery: Record<string, unknown> | undefined;
         if (webhookUrl && webhookSecret) {
+          const idemKey = makeIdempotencyKey(mrcTxId, "swap.created", "waiting");
           const result = await dispatchWebhook(
             webhookUrl,
             webhookSecret,
@@ -479,10 +492,12 @@ Deno.serve(async (req) => {
               payout_address: tx.payoutAddress ?? address,
               expires_at: expiresAt,
             },
+            idemKey,
           );
           webhookDelivery = {
             url: webhookUrl,
             initial_event: "swap.created",
+            idempotency_key: idemKey,
             delivered: result.ok,
             response_status: result.status,
             ...(result.error ? { error: result.error } : {}),
@@ -552,6 +567,7 @@ Deno.serve(async (req) => {
         ) {
           const eventName = eventNameForState(currentState);
           if (eventName) {
+            const idemKey = makeIdempotencyKey(id, eventName, currentState);
             const result = await dispatchWebhook(
               webhookUrl,
               webhookSecret,
@@ -569,6 +585,7 @@ Deno.serve(async (req) => {
                 payout_hash: d.payoutHash ?? null,
                 updated_at: d.updatedAt ?? null,
               },
+              idemKey,
             );
             // Persist new state regardless of delivery success (avoid retry storms)
             await svc.from("lite_api_swaps")
@@ -576,6 +593,7 @@ Deno.serve(async (req) => {
               .eq("mrc_tx_id", id);
             webhookFired = {
               event: eventName,
+              idempotency_key: idemKey,
               delivered: result.ok,
               response_status: result.status,
               ...(result.error ? { error: result.error } : {}),
