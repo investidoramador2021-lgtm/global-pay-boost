@@ -1,6 +1,6 @@
 import { Helmet } from "react-helmet-async";
 import { Link } from "react-router-dom";
-import { Code2, Download, Globe, Shield, Zap, Clock, ArrowRight, Copy, Check, Search } from "lucide-react";
+import { Code2, Download, Globe, Shield, Zap, Clock, ArrowRight, Copy, Check, Search, Rocket, Link2, Webhook, Gauge, AlertTriangle, BookOpen } from "lucide-react";
 import { useState, useMemo } from "react";
 import SiteHeader from "@/components/SiteHeader";
 import SiteFooter from "@/components/SiteFooter";
