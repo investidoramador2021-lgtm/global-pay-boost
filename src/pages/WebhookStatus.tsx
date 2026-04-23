@@ -148,64 +148,8 @@ export default function WebhookStatus() {
           </p>
         </div>
 
-        {/* Hero status card */}
-        <div className="rounded-2xl border border-border bg-card p-6 md:p-8 mb-8 shadow-sm">
-          <div className="flex items-start justify-between gap-4 flex-wrap">
-            <div>
-              <div className="text-xs uppercase tracking-wider text-muted-foreground mb-1">
-                Overall delivery health
-              </div>
-              <div className="flex items-center gap-2">
-                {healthy ? (
-                  <CheckCircle2 className="h-6 w-6 text-primary" />
-                ) : (
-                  <AlertTriangle className="h-6 w-6 text-destructive" />
-                )}
-                <span className="text-2xl font-bold text-foreground">
-                  {error
-                    ? "Unknown"
-                    : successRate === null
-                      ? "Idle"
-                      : `${successRate}% delivered (24h)`}
-                </span>
-              </div>
-            </div>
-            <div className="text-right">
-              <div className="text-xs uppercase tracking-wider text-muted-foreground mb-1 flex items-center gap-1 justify-end">
-                <Clock className="h-3 w-3" /> Last successful delivery
-              </div>
-              <div className="text-lg font-mono text-foreground">
-                {timeAgo(data?.last_successful_delivery_at ?? null)}
-              </div>
-              {data?.last_successful_delivery_at && (
-                <div className="text-xs text-muted-foreground font-mono">
-                  {new Date(data.last_successful_delivery_at).toISOString()}
-                </div>
-              )}
-            </div>
-          </div>
-        </div>
-
-        {/* Per-event tiles */}
-        <h2 className="text-xl font-semibold text-foreground mb-4">Events delivered (last 24h)</h2>
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-10">
-          {(["swap.created", "swap.deposit_detected", "swap.finished", "swap.expired"] as const).map(
-            (evt) => (
-              <div
-                key={evt}
-                className="rounded-xl border border-border bg-muted/30 p-4"
-              >
-                <div className="text-xs font-mono text-muted-foreground mb-1">{evt}</div>
-                <div className="text-3xl font-bold text-foreground">
-                  {c24?.[evt] ?? 0}
-                </div>
-                <div className="text-xs text-muted-foreground mt-1">
-                  7d: {c7?.[evt] ?? 0}
-                </div>
-              </div>
-            ),
-          )}
-        </div>
+        {/* Hero status card + per-event grid (typed, self-fetching component) */}
+        <WebhookStatusCard className="mb-10" />
 
         {/* Receiver template */}
         <h2 className="text-xl font-semibold text-foreground mb-2 flex items-center gap-2">
