@@ -53,8 +53,10 @@ describe("webhook-status CORS preflight", () => {
         return;
       }
       // Alias may not be deployed yet (vercel.json rewrite pending). Only
-      // assert CORS once the route exists.
+      // assert CORS once the route actually proxies to the edge function.
       if (res.status === 404) return;
+      const ct = res.headers.get("content-type") ?? "";
+      if (ct.includes("text/html")) return; // SPA fallback, alias not live
       expect([200, 204]).toContain(res.status);
       assertCors(res);
     });
