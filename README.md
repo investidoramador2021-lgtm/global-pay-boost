@@ -115,7 +115,9 @@ https://tjikwxkmsfmyjkssvyoh.supabase.co/functions/v1/lite-swap
 | `502` | Upstream liquidity provider unavailable — retry |
 
 📖 **Full reference:** https://mrcglobalpay.com/developers#lite-api  
-📘 **Machine-readable contract (OpenAPI 3.1):** [`/openapi.json`](https://mrcglobalpay.com/openapi.json) — generate SDKs with `openapi-generator`, import into Postman/Insomnia, or browse interactively at [`/openapi.html`](https://mrcglobalpay.com/openapi.html).
+📘 **Machine-readable contract (OpenAPI 3.1):** [`/openapi.json`](https://mrcglobalpay.com/openapi.json) — generate SDKs with `openapi-generator`, import into Postman/Insomnia, or browse interactively at [`/openapi.html`](https://mrcglobalpay.com/openapi.html).  
+📮 **Postman collection:** [`/mrc-lite-api.postman_collection.json`](https://mrcglobalpay.com/mrc-lite-api.postman_collection.json) — auto-generated from the OpenAPI spec, drop-in importable.  
+🛠 **Generate a typed SDK** (TS / Python / Go / Rust): see [Generate a Typed SDK](https://mrcglobalpay.com/developers#sdk-generation).
 
 ---
 

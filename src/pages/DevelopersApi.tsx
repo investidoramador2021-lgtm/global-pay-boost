@@ -321,6 +321,8 @@ const DevelopersApi = () => {
               <li><a href="#autocorrect" className="text-foreground hover:text-primary">Solana Ticker Auto-Correct</a></li>
               <li><a href="#token-registry" className="text-foreground hover:text-primary">Solana Token Registry (50+)</a></li>
               <li><a href="#lite-api" className="text-foreground hover:text-primary">Public Lite API (No Approval)</a></li>
+              <li><a href="#headers-hmac" className="text-foreground hover:text-primary">Headers, HMAC &amp; curl Reference</a></li>
+              <li><a href="#sdk-generation" className="text-foreground hover:text-primary">Generate a Typed SDK (OpenAPI)</a></li>
               <li><a href="#best-practices" className="text-foreground hover:text-primary">Best Practices for Bots</a></li>
               <li><a href="#dom-ids" className="text-foreground hover:text-primary">DOM Identifiers for Bots</a></li>
               <li><a href="#faq" className="text-foreground hover:text-primary">Technical FAQ</a></li>
