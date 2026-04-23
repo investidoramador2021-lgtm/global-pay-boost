@@ -746,6 +746,59 @@ async def mrc_webhook(request: Request):
     return {"ok": True}  # respond 2xx within 8s`}
             </pre>
 
+            <h4 className="text-base font-semibold text-foreground mt-6 mb-2">Self-test: verify a captured webhook</h4>
+            <p className="text-muted-foreground mb-3">
+              Drop this script into a file and run it locally to confirm your HMAC implementation matches ours. It uses a real captured raw body and the matching <code className="font-mono text-xs">X-MRC-Signature</code> header. If your output prints <code className="font-mono text-xs">match: true</code>, your verifier is wired correctly.
+            </p>
+            <pre className="bg-muted p-4 rounded-lg overflow-x-auto text-xs font-mono mb-4">
+{`// test-mrc-signature.mjs  —  run: node test-mrc-signature.mjs
+import crypto from "node:crypto";
+
+// 1) Captured EXACTLY as received (no re-serialization, no trailing newline).
+const RAW_BODY =
+  '{"event":"swap.deposit_detected","idempotency_key":"MRC-1A2B3C4D-XY9Z:swap.deposit_detected:confirming","timestamp":"2026-04-23T15:42:11.118Z","data":{"order_id":"MRC-1A2B3C4D-XY9Z","state":"confirming","from":"btc","to":"usdterc20","amount_in":"0.001","amount_out":"63.84"}}';
+
+// 2) The webhook_secret you passed at create-time.
+const WEBHOOK_SECRET = "s3cret_at_least_32_chars_long_xxxx";
+
+// 3) The X-MRC-Signature header value that arrived with the request above.
+const RECEIVED_SIGNATURE =
+  "6569dff0a7d32d88f973a942e519f88f3e0a1f437946562bd9fae64cc7787e89";
+
+const expected = crypto
+  .createHmac("sha256", WEBHOOK_SECRET)
+  .update(RAW_BODY) // raw bytes, NOT JSON.parse(...)
+  .digest("hex");
+
+const a = Buffer.from(RECEIVED_SIGNATURE, "hex");
+const b = Buffer.from(expected, "hex");
+const ok = a.length === b.length && crypto.timingSafeEqual(a, b);
+
+console.log("expected:", expected);
+console.log("received:", RECEIVED_SIGNATURE);
+console.log("match:   ", ok); // → true`}
+            </pre>
+            <pre className="bg-muted p-4 rounded-lg overflow-x-auto text-xs font-mono mb-4">
+{`# test_mrc_signature.py  —  run: python test_mrc_signature.py
+import hmac, hashlib
+
+RAW_BODY = (
+    b'{"event":"swap.deposit_detected","idempotency_key":'
+    b'"MRC-1A2B3C4D-XY9Z:swap.deposit_detected:confirming",'
+    b'"timestamp":"2026-04-23T15:42:11.118Z","data":'
+    b'{"order_id":"MRC-1A2B3C4D-XY9Z","state":"confirming",'
+    b'"from":"btc","to":"usdterc20","amount_in":"0.001",'
+    b'"amount_out":"63.84"}}'
+)
+WEBHOOK_SECRET = b"s3cret_at_least_32_chars_long_xxxx"
+RECEIVED_SIGNATURE = "6569dff0a7d32d88f973a942e519f88f3e0a1f437946562bd9fae64cc7787e89"
+
+expected = hmac.new(WEBHOOK_SECRET, RAW_BODY, hashlib.sha256).hexdigest()
+print("expected:", expected)
+print("received:", RECEIVED_SIGNATURE)
+print("match:   ", hmac.compare_digest(expected, RECEIVED_SIGNATURE))  # -> True`}
+            </pre>
+
             <div className="rounded-lg border border-border bg-muted/30 p-4 text-xs text-muted-foreground space-y-2 mb-6">
               <p><strong className="text-foreground">Security:</strong> always verify <code className="font-mono">X-MRC-Signature</code> with constant-time comparison before trusting the payload. Choose a webhook_secret of at least 32 random characters and never log it.</p>
               <p><strong className="text-foreground">Delivery semantics:</strong> the initial <code className="font-mono">swap.created</code> webhook is sent inline (its delivery status is returned in the create response under <code className="font-mono">webhook</code>). Later events are fan-out from your <code className="font-mono">action: "status"</code> polls — each state is delivered at most once, then persisted in <code className="font-mono">last_webhook_state</code> so duplicate polls don't spam your endpoint. Time out your handler in 8 seconds or less.</p>
