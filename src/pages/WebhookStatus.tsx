@@ -1,8 +1,9 @@
 import { useEffect, useState } from "react";
 import { Helmet } from "react-helmet-async";
-import { Activity, CheckCircle2, AlertTriangle, Clock, Code2 } from "lucide-react";
+import { Activity, Code2 } from "lucide-react";
 import SiteHeader from "@/components/SiteHeader";
 import SiteFooter from "@/components/SiteFooter";
+import WebhookStatusCard from "@/components/WebhookStatusCard";
 
 interface StatusPayload {
   status: string;
@@ -90,38 +91,12 @@ app.post("/mrc-webhook", express.raw({ type: "application/json" }), (req, res) =
 -->`;
 
 export default function WebhookStatus() {
-  const [data, setData] = useState<StatusPayload | null>(null);
-  const [error, setError] = useState<string | null>(null);
   const [now, setNow] = useState(Date.now());
-
   useEffect(() => {
-    let cancelled = false;
-    async function load() {
-      try {
-        const r = await fetch(STATUS_ENDPOINT, { cache: "no-store" });
-        const j = (await r.json()) as StatusPayload;
-        if (!cancelled) {
-          setData(j);
-          setError(null);
-        }
-      } catch (e) {
-        if (!cancelled) setError(e instanceof Error ? e.message : "fetch failed");
-      }
-    }
-    load();
-    const id = setInterval(load, 30_000);
     const tick = setInterval(() => setNow(Date.now()), 1000);
-    return () => {
-      cancelled = true;
-      clearInterval(id);
-      clearInterval(tick);
-    };
+    return () => clearInterval(tick);
   }, []);
 
-  const c24 = data?.counts_24h;
-  const c7 = data?.counts_7d;
-  const successRate = c24?.success_rate_percent;
-  const healthy = successRate === null || successRate >= 95;
 
   return (
     <div className="min-h-screen bg-background">
@@ -147,64 +122,8 @@ export default function WebhookStatus() {
           </p>
         </div>
 
-        {/* Hero status card */}
-        <div className="rounded-2xl border border-border bg-card p-6 md:p-8 mb-8 shadow-sm">
-          <div className="flex items-start justify-between gap-4 flex-wrap">
-            <div>
-              <div className="text-xs uppercase tracking-wider text-muted-foreground mb-1">
-                Overall delivery health
-              </div>
-              <div className="flex items-center gap-2">
-                {healthy ? (
-                  <CheckCircle2 className="h-6 w-6 text-primary" />
-                ) : (
-                  <AlertTriangle className="h-6 w-6 text-destructive" />
-                )}
-                <span className="text-2xl font-bold text-foreground">
-                  {error
-                    ? "Unknown"
-                    : successRate === null
-                      ? "Idle"
-                      : `${successRate}% delivered (24h)`}
-                </span>
-              </div>
-            </div>
-            <div className="text-right">
-              <div className="text-xs uppercase tracking-wider text-muted-foreground mb-1 flex items-center gap-1 justify-end">
-                <Clock className="h-3 w-3" /> Last successful delivery
-              </div>
-              <div className="text-lg font-mono text-foreground">
-                {timeAgo(data?.last_successful_delivery_at ?? null)}
-              </div>
-              {data?.last_successful_delivery_at && (
-                <div className="text-xs text-muted-foreground font-mono">
-                  {new Date(data.last_successful_delivery_at).toISOString()}
-                </div>
-              )}
-            </div>
-          </div>
-        </div>
-
-        {/* Per-event tiles */}
-        <h2 className="text-xl font-semibold text-foreground mb-4">Events delivered (last 24h)</h2>
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-10">
-          {(["swap.created", "swap.deposit_detected", "swap.finished", "swap.expired"] as const).map(
-            (evt) => (
-              <div
-                key={evt}
-                className="rounded-xl border border-border bg-muted/30 p-4"
-              >
-                <div className="text-xs font-mono text-muted-foreground mb-1">{evt}</div>
-                <div className="text-3xl font-bold text-foreground">
-                  {c24?.[evt] ?? 0}
-                </div>
-                <div className="text-xs text-muted-foreground mt-1">
-                  7d: {c7?.[evt] ?? 0}
-                </div>
-              </div>
-            ),
-          )}
-        </div>
+        {/* Hero status card + per-event grid (typed, self-fetching component) */}
+        <WebhookStatusCard className="mb-10" />
 
         {/* Receiver template */}
         <h2 className="text-xl font-semibold text-foreground mb-2 flex items-center gap-2">
@@ -243,11 +162,6 @@ export default function WebhookStatus() {
             </a>{" "}
             — wire it into your own monitor (Datadog, Grafana, UptimeRobot, etc.).
           </p>
-          {error && (
-            <p className="text-destructive">
-              <strong>Fetch error:</strong> {error}
-            </p>
-          )}
         </div>
       </main>
 
