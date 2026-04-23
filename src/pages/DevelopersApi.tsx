@@ -253,8 +253,111 @@ const DevelopersApi = () => {
             </ul>
           </div>
 
+          {/* ── Table of Contents ── */}
+          <nav aria-label="On this page" className="rounded-xl border border-border bg-card/40 p-5 mb-12">
+            <h2 className="text-sm font-semibold uppercase tracking-wider text-muted-foreground mb-3 flex items-center gap-2">
+              <BookOpen className="h-4 w-4" /> On this page
+            </h2>
+            <ol className="grid gap-x-6 gap-y-1.5 text-sm sm:grid-cols-2 list-decimal list-inside marker:text-muted-foreground">
+              <li><a href="#quick-start" className="text-foreground hover:text-primary">Quick Start for Trading Bots</a></li>
+              <li><a href="#url-params" className="text-foreground hover:text-primary">URL Parameter Reference</a></li>
+              <li><a href="#autocorrect" className="text-foreground hover:text-primary">Solana Ticker Auto-Correct</a></li>
+              <li><a href="#token-registry" className="text-foreground hover:text-primary">Solana Token Registry (50+)</a></li>
+              <li><a href="#lite-api" className="text-foreground hover:text-primary">Public Lite API (No Approval)</a></li>
+              <li><a href="#best-practices" className="text-foreground hover:text-primary">Best Practices for Bots</a></li>
+              <li><a href="#dom-ids" className="text-foreground hover:text-primary">DOM Identifiers for Bots</a></li>
+              <li><a href="#faq" className="text-foreground hover:text-primary">Technical FAQ</a></li>
+            </ol>
+          </nav>
+
+          {/* ── Quick Start for Trading Bots ── */}
+          <section id="quick-start" className="mb-16 scroll-mt-24">
+            <Badge variant="outline" className="mb-3 border-primary/40 text-primary">
+              <Rocket className="mr-1 h-3 w-3" /> Start in &lt; 60 seconds
+            </Badge>
+            <h2 className="text-2xl font-bold text-foreground mb-2 flex items-center gap-2">
+              <Rocket className="h-6 w-6 text-primary" />
+              Quick Start for Trading Bots
+            </h2>
+            <p className="text-muted-foreground mb-6 max-w-3xl">
+              Three battle-tested integration paths, ranked from zero-code to fully programmatic. Pick the one
+              that matches your stack — all three share the same non-custodial liquidity rails, $0.30 minimum,
+              and FINTRAC MSB compliance.
+            </p>
+
+            <div className="grid gap-5 lg:grid-cols-3">
+              <Card className="border-primary/30 bg-card/60 flex flex-col">
+                <CardContent className="pt-5 flex-1 flex flex-col">
+                  <Badge variant="secondary" className="text-[10px] mb-2 self-start">Method 1 · Easiest</Badge>
+                  <Link2 className="h-7 w-7 text-primary mb-2" />
+                  <h3 className="font-semibold text-foreground mb-1">URL Parameter Pre-fill</h3>
+                  <p className="text-xs text-muted-foreground mb-3">
+                    Open a pre-filled swap page from any chat bot, Telegram link, or Discord post.
+                    Zero backend, zero auth.
+                  </p>
+                  <CodeBlock code={`https://mrcglobalpay.com/?from=sol&to=nos&amount=10`} />
+                  <div className="mt-auto pt-3">
+                    <a href="#url-params" className="text-xs text-primary hover:underline inline-flex items-center gap-1">
+                      Full reference <ArrowRight className="h-3 w-3" />
+                    </a>
+                  </div>
+                </CardContent>
+              </Card>
+
+              <Card className="border-primary/40 bg-primary/5 flex flex-col relative">
+                <Badge className="absolute -top-2 left-4 text-[10px]">Recommended for bots</Badge>
+                <CardContent className="pt-5 flex-1 flex flex-col">
+                  <Badge variant="secondary" className="text-[10px] mb-2 self-start">Method 2 · Programmatic</Badge>
+                  <Code2 className="h-7 w-7 text-primary mb-2" />
+                  <h3 className="font-semibold text-foreground mb-1">Lite API — Create Real Swaps</h3>
+                  <p className="text-xs text-muted-foreground mb-3">
+                    Public REST endpoint. Create non-custodial swap orders, get a deposit address back, poll
+                    or webhook for status. No API key needed up to $1,000/swap.
+                  </p>
+                  <CodeBlock lang="bash" code={`curl -X POST $BASE -H 'Content-Type: application/json' \\
+  -d '{"action":"create","from":"btc","to":"sol",
+       "amount":0.001,"address":"<your-wallet>"}'`} />
+                  <div className="mt-auto pt-3">
+                    <a href="#lite-api" className="text-xs text-primary hover:underline inline-flex items-center gap-1">
+                      Lite API docs <ArrowRight className="h-3 w-3" />
+                    </a>
+                  </div>
+                </CardContent>
+              </Card>
+
+              <Card className="border-primary/30 bg-card/60 flex flex-col">
+                <CardContent className="pt-5 flex-1 flex flex-col">
+                  <Badge variant="secondary" className="text-[10px] mb-2 self-start">Method 3 · UI</Badge>
+                  <Globe className="h-7 w-7 text-primary mb-2" />
+                  <h3 className="font-semibold text-foreground mb-1">Full Widget Embed</h3>
+                  <p className="text-xs text-muted-foreground mb-3">
+                    Drop the responsive iframe widget into any dashboard. Inherits all 50+ tokens, fiat
+                    on-ramp, and live rate locks. Backlink-attribution friendly.
+                  </p>
+                  <CodeBlock lang="html" code={`<iframe src="https://mrcglobalpay.com/embed/widget"
+  width="100%" height="640" frameborder="0"
+  allow="clipboard-write"></iframe>`} />
+                  <div className="mt-auto pt-3">
+                    <Link to="/embed/widget" className="text-xs text-primary hover:underline inline-flex items-center gap-1">
+                      Open widget preview <ArrowRight className="h-3 w-3" />
+                    </Link>
+                  </div>
+                </CardContent>
+              </Card>
+            </div>
+
+            <div className="mt-6 rounded-lg border border-border bg-muted/30 p-4 text-xs text-muted-foreground">
+              <strong className="text-foreground">Which should I pick?</strong>{" "}
+              Use <strong className="text-foreground">Method 1</strong> for share links and chat bots,{" "}
+              <strong className="text-foreground">Method 2</strong> for any automated trader, arbitrage script,
+              or AI agent that needs deposit addresses programmatically, and{" "}
+              <strong className="text-foreground">Method 3</strong> when you want a fully hosted UI inside your
+              own dashboard.
+            </div>
+          </section>
+
           {/* ── Section 1: Endpoint Documentation ── */}
-          <section className="mb-16">
+          <section id="url-params" className="mb-16 scroll-mt-24">
             <h2 className="text-2xl font-bold text-foreground mb-2 flex items-center gap-2">
               <Globe className="h-6 w-6 text-primary" />
               How to Use URL Parameters (Endpoint)
