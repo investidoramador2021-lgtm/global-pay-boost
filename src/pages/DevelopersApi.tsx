@@ -846,11 +846,106 @@ export interface WebhookStatusError {
 }`}
             </pre>
 
-            <p className="text-sm text-muted-foreground mb-2">Typed fetch helper:</p>
+            <p className="text-sm text-muted-foreground mb-2">
+              Zod schema (runtime validation):
+            </p>
+            <pre className="bg-muted p-4 rounded-lg overflow-x-auto text-xs font-mono mb-4">
+{`// webhook-status.schema.ts
+import { z } from "zod";
+
+export const WebhookEventSchema = z.enum([
+  "swap.created",
+  "swap.deposit_detected",
+  "swap.finished",
+  "swap.expired",
+]);
+
+const eventCountsShape = {
+  "swap.created":          z.number().int().nonnegative(),
+  "swap.deposit_detected": z.number().int().nonnegative(),
+  "swap.finished":         z.number().int().nonnegative(),
+  "swap.expired":          z.number().int().nonnegative(),
+};
+
+export const WebhookEventCountsSchema = z.object(eventCountsShape);
+
+export const WebhookStatusCounts24hSchema = z.object({
+  ...eventCountsShape,
+  total_with_webhook: z.number().int().nonnegative(),
+  success_rate_percent: z.number().min(0).max(100).nullable(),
+});
+
+export const WebhookStatusWindowSchema = z.object({
+  hours_24: z.string().datetime(),
+  days_7:   z.string().datetime(),
+});
+
+export const WebhookStatusResponseSchema = z.object({
+  status: z.literal("success"),
+  generated_at: z.string().datetime(),
+  window: WebhookStatusWindowSchema,
+  last_successful_delivery_at: z.string().datetime().nullable(),
+  counts_24h: WebhookStatusCounts24hSchema,
+  counts_7d:  WebhookEventCountsSchema,
+  provider: z.literal("MRC Global Pay Lite API"),
+  documentation: z.string().url(),
+});
+
+export const WebhookStatusErrorSchema = z.object({
+  status: z.literal("error"),
+  error: z.string(),
+});
+
+export const WebhookStatusEnvelopeSchema = z.discriminatedUnion("status", [
+  WebhookStatusResponseSchema,
+  WebhookStatusErrorSchema,
+]);
+
+// Inferred types — keep in sync with interfaces above.
+export type WebhookStatusResponse = z.infer<typeof WebhookStatusResponseSchema>;
+export type WebhookStatusError    = z.infer<typeof WebhookStatusErrorSchema>;`}
+            </pre>
+
+            <p className="text-sm text-muted-foreground mb-2">
+              Typed fetch helper with Zod parsing &amp; detailed errors:
+            </p>
             <pre className="bg-muted p-4 rounded-lg overflow-x-auto text-xs font-mono mb-6">
-{`import type { WebhookStatusResponse } from "./webhook-status";
+{`import { ZodError } from "zod";
+import {
+  WebhookStatusEnvelopeSchema,
+  type WebhookStatusResponse,
+} from "./webhook-status.schema";
 
 const FEED_URL = "https://mrcglobalpay.com/webhook-status.json";
+
+/** Thrown when the feed returns a non-2xx HTTP status. */
+export class WebhookStatusHttpError extends Error {
+  constructor(public readonly status: number, body: string) {
+    super(\`webhook-status: HTTP \${status} — \${body.slice(0, 200)}\`);
+    this.name = "WebhookStatusHttpError";
+  }
+}
+
+/** Thrown when the JSON shape does not match the schema. */
+export class WebhookStatusShapeError extends Error {
+  constructor(public readonly issues: ZodError["issues"], raw: unknown) {
+    const summary = issues
+      .map((i) => \`\${i.path.join(".") || "<root>"}: \${i.message}\`)
+      .join("; ");
+    super(\`webhook-status: invalid payload — \${summary}\`);
+    this.name = "WebhookStatusShapeError";
+    // Attach raw payload for debugging without spamming the message.
+    (this as unknown as { raw: unknown }).raw = raw;
+  }
+}
+
+/** Thrown when the feed returns { status: "error", error }. */
+export class WebhookStatusFeedError extends Error {
+  constructor(public readonly upstream: string) {
+    super(\`webhook-status: \${upstream}\`);
+    this.name = "WebhookStatusFeedError";
+  }
+}
 
 export async function fetchWebhookStatus(
   signal?: AbortSignal,
@@ -859,30 +954,45 @@ export async function fetchWebhookStatus(
     signal,
     headers: { Accept: "application/json" },
   });
-  if (!res.ok) {
-    throw new Error(\`webhook-status: HTTP \${res.status}\`);
+  const text = await res.text();
+  if (!res.ok) throw new WebhookStatusHttpError(res.status, text);
+
+  let json: unknown;
+  try {
+    json = JSON.parse(text);
+  } catch {
+    throw new WebhookStatusShapeError(
+      [{ path: [], message: "response was not valid JSON", code: "custom" } as never],
+      text,
+    );
   }
-  const body = (await res.json()) as
-    | WebhookStatusResponse
-    | { status: "error"; error: string };
-  if (body.status !== "success") {
-    throw new Error(\`webhook-status: \${body.error}\`);
+
+  const parsed = WebhookStatusEnvelopeSchema.safeParse(json);
+  if (!parsed.success) {
+    throw new WebhookStatusShapeError(parsed.error.issues, json);
   }
-  return body;
+  if (parsed.data.status === "error") {
+    throw new WebhookStatusFeedError(parsed.data.error);
+  }
+  return parsed.data;
 }
 
 // Usage:
-const status = await fetchWebhookStatus();
-console.log(
-  \`Last 24h: \${status.counts_24h["swap.finished"]} finished, \` +
-  \`\${status.counts_24h.success_rate_percent ?? "n/a"}% success\`,
-);
-console.log(
-  "Last delivery:",
-  status.last_successful_delivery_at
-    ? new Date(status.last_successful_delivery_at).toLocaleString()
-    : "none recorded",
-);`}
+try {
+  const status = await fetchWebhookStatus();
+  console.log(
+    \`Last 24h: \${status.counts_24h["swap.finished"]} finished, \` +
+    \`\${status.counts_24h.success_rate_percent ?? "n/a"}% success\`,
+  );
+} catch (err) {
+  if (err instanceof WebhookStatusShapeError) {
+    console.error("Schema mismatch:", err.issues);
+  } else if (err instanceof WebhookStatusHttpError) {
+    console.error("Upstream HTTP", err.status);
+  } else {
+    throw err;
+  }
+}`}
             </pre>
 
             <h4 className="text-base font-semibold text-foreground mt-6 mb-2">Idempotency &amp; de-duplication</h4>
