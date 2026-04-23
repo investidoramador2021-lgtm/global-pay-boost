@@ -227,6 +227,178 @@ function ErrorBanner({ title, body, hint }: { title: string; body: string; hint:
   );
 }
 
+// ─── CORS Troubleshooter ──────────────────────────────────────────────
+// Browsers surface CORS, DNS, mixed-content, and offline failures all as
+// the same opaque "TypeError: Failed to fetch". We classify the message
+// heuristically and show copy-paste headers + proxy guidance.
+
+type FailureKind = "cors" | "mixed_content" | "dns" | "offline" | "unknown";
+
+function classifyFailure(url: string, message: string): FailureKind {
+  const m = message.toLowerCase();
+  let parsed: URL | null = null;
+  try { parsed = new URL(url); } catch { /* ignore */ }
+  if (typeof navigator !== "undefined" && navigator.onLine === false) return "offline";
+  if (
+    typeof window !== "undefined" &&
+    window.location.protocol === "https:" &&
+    parsed?.protocol === "http:"
+  ) return "mixed_content";
+  if (m.includes("failed to fetch") || m.includes("networkerror") || m.includes("cors")) return "cors";
+  if (m.includes("name not resolved") || m.includes("dns")) return "dns";
+  return "unknown";
+}
+
+const CORS_HEADERS_SNIPPET = `Access-Control-Allow-Origin: *
+Access-Control-Allow-Methods: GET, OPTIONS
+Access-Control-Allow-Headers: content-type
+Content-Type: application/json; charset=utf-8
+Cache-Control: public, max-age=60`;
+
+const DENO_EDGE_SNIPPET = `// Deno / Supabase edge function
+const cors = {
+  "Access-Control-Allow-Origin": "*",
+  "Access-Control-Allow-Methods": "GET, OPTIONS",
+  "Access-Control-Allow-Headers": "content-type",
+};
+
+if (req.method === "OPTIONS") {
+  return new Response(null, { status: 204, headers: cors });
+}
+
+return new Response(JSON.stringify(payload), {
+  status: 200,
+  headers: { ...cors, "Content-Type": "application/json" },
+});`;
+
+const NODE_PROXY_SNIPPET = `// Node / Express proxy (server-side fetch bypasses CORS)
+import express from "express";
+app.get("/api/webhook-status", async (_req, res) => {
+  const r = await fetch("https://mrcglobalpay.com/webhook-status.json");
+  res.set("Cache-Control", "public, max-age=60");
+  res.status(r.status).type("application/json").send(await r.text());
+});`;
+
+function CopyableSnippet({ label, code }: { label: string; code: string }) {
+  const [copied, setCopied] = useState(false);
+  return (
+    <div className="rounded border border-border bg-background/60 mt-2">
+      <div className="flex items-center justify-between px-2 py-1 border-b border-border">
+        <span className="text-[10px] uppercase tracking-wider text-muted-foreground font-semibold">
+          {label}
+        </span>
+        <button
+          type="button"
+          onClick={async () => {
+            try {
+              await navigator.clipboard.writeText(code);
+              setCopied(true);
+              setTimeout(() => setCopied(false), 1500);
+            } catch { /* ignore */ }
+          }}
+          className="text-[10px] flex items-center gap-1 text-muted-foreground hover:text-foreground transition-colors"
+        >
+          {copied ? <Check className="h-3 w-3" /> : <Copy className="h-3 w-3" />}
+          {copied ? "Copied" : "Copy"}
+        </button>
+      </div>
+      <pre className="text-[11px] font-mono p-2 overflow-x-auto max-h-48 text-foreground">
+        {code}
+      </pre>
+    </div>
+  );
+}
+
+function CorsTroubleshooter({ url, message }: { url: string; message: string }) {
+  const kind = classifyFailure(url, message);
+  const origin = typeof window !== "undefined" ? window.location.origin : "your site";
+
+  const titles: Record<FailureKind, string> = {
+    cors: "Likely CORS or network error",
+    mixed_content: "Mixed-content blocked",
+    dns: "DNS resolution failed",
+    offline: "You appear to be offline",
+    unknown: "Network error",
+  };
+
+  const explanations: Record<FailureKind, string> = {
+    cors: `The browser couldn't read the response from ${url}. This is almost always a missing CORS header on the target server, or the request was blocked before it left the browser. The raw error "${message}" is intentionally opaque per the Fetch spec.`,
+    mixed_content: `Your page is served over HTTPS but the target URL is HTTP. Browsers block this. Use the https:// version of the endpoint.`,
+    dns: `The hostname could not be resolved. Double-check the URL for typos.`,
+    offline: `Your network is reporting offline. Reconnect and retry.`,
+    unknown: `The browser refused or failed the request. The error "${message}" most often means CORS, but can also be DNS, TLS, or an ad-blocker.`,
+  };
+
+  return (
+    <div className="rounded-lg border border-destructive/40 bg-destructive/5 p-3 space-y-3">
+      <div className="flex items-center gap-2 text-destructive font-semibold text-sm">
+        <ShieldAlert className="h-4 w-4" />
+        {titles[kind]}
+      </div>
+      <p className="text-xs text-muted-foreground leading-relaxed">
+        {explanations[kind]}
+      </p>
+
+      {(kind === "cors" || kind === "unknown") && (
+        <>
+          <div>
+            <div className="text-xs font-semibold text-foreground mb-1">
+              1. Add these response headers on the server
+            </div>
+            <p className="text-[11px] text-muted-foreground">
+              The endpoint must reply with <code className="font-mono">Access-Control-Allow-Origin</code> on
+              both the <code className="font-mono">OPTIONS</code> preflight and the actual <code className="font-mono">GET</code>.
+              For locked-down setups, replace <code className="font-mono">*</code> with{" "}
+              <code className="font-mono">{origin}</code>.
+            </p>
+            <CopyableSnippet label="Response headers" code={CORS_HEADERS_SNIPPET} />
+            <CopyableSnippet label="Edge function (Deno)" code={DENO_EDGE_SNIPPET} />
+          </div>
+
+          <div>
+            <div className="text-xs font-semibold text-foreground mb-1">
+              2. Or proxy the request server-side
+            </div>
+            <p className="text-[11px] text-muted-foreground">
+              If you can't change the upstream server, fetch from your own backend
+              and forward the JSON. Server-to-server requests have no CORS.
+            </p>
+            <CopyableSnippet label="Node / Express proxy" code={NODE_PROXY_SNIPPET} />
+          </div>
+
+          <div>
+            <div className="text-xs font-semibold text-foreground mb-1">
+              3. Verify the preflight from your terminal
+            </div>
+            <CopyableSnippet
+              label="curl OPTIONS preflight"
+              code={`curl -i -X OPTIONS '${url}' \\
+  -H 'Origin: ${origin}' \\
+  -H 'Access-Control-Request-Method: GET'`}
+            />
+          </div>
+        </>
+      )}
+
+      {kind === "mixed_content" && (
+        <CopyableSnippet
+          label="Use HTTPS"
+          code={url.replace(/^http:\/\//i, "https://")}
+        />
+      )}
+
+      <details>
+        <summary className="text-[11px] cursor-pointer text-muted-foreground hover:text-foreground">
+          Raw browser error
+        </summary>
+        <pre className="text-[11px] font-mono bg-muted p-2 rounded mt-1 overflow-x-auto">
+          {message}
+        </pre>
+      </details>
+    </div>
+  );
+}
+
 function SuccessView({ data, ms, raw }: { data: WebhookStatus; ms: number; raw: string }) {
   const c24 = data.counts_24h;
   return (
