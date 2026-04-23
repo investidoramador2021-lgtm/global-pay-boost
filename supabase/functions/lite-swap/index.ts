@@ -103,10 +103,12 @@ async function dispatchWebhook(
   secret: string,
   event: string,
   payload: Record<string, unknown>,
+  idempotencyKey: string,
 ): Promise<{ ok: boolean; status: number; error?: string }> {
   try {
     const body = JSON.stringify({
       event,
+      idempotency_key: idempotencyKey,
       timestamp: new Date().toISOString(),
       data: payload,
     });
@@ -117,6 +119,7 @@ async function dispatchWebhook(
         "Content-Type": "application/json",
         "X-MRC-Event": event,
         "X-MRC-Signature": signature,
+        "X-MRC-Idempotency-Key": idempotencyKey,
         "User-Agent": "MRC-LiteAPI-Webhook/1.0",
       },
       body,
@@ -131,6 +134,15 @@ async function dispatchWebhook(
       error: err instanceof Error ? err.message : "delivery failed",
     };
   }
+}
+
+/** Stable idempotency key: `${order_id}:${event}:${state}`. */
+function makeIdempotencyKey(
+  orderId: string,
+  event: string,
+  state: string,
+): string {
+  return `${orderId}:${event}:${state}`;
 }
 
 
