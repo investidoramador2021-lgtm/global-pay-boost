@@ -672,6 +672,31 @@ const DevelopersApi = () => {
               </p>
             </div>
 
+            {/* OpenAPI / Swagger callout */}
+            <div className="rounded-xl border border-primary/30 bg-card/60 p-5 mb-6 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3">
+              <div className="flex items-start gap-3">
+                <BookOpen className="h-5 w-5 text-primary shrink-0 mt-0.5" />
+                <div>
+                  <div className="text-sm font-semibold text-foreground">OpenAPI 3.1 spec available</div>
+                  <p className="text-xs text-muted-foreground mt-0.5 max-w-xl">
+                    Generate typed SDKs (Python, TS, Go, Rust…), import into Postman/Insomnia, or browse interactively. Spec lives at <code>/openapi.json</code>.
+                  </p>
+                </div>
+              </div>
+              <div className="flex flex-wrap gap-2 sm:shrink-0">
+                <a href="/openapi.json" target="_blank" rel="noopener">
+                  <Button size="sm" variant="outline" className="gap-1.5">
+                    <Download className="h-3.5 w-3.5" /> openapi.json
+                  </Button>
+                </a>
+                <a href="/openapi.html" target="_blank" rel="noopener">
+                  <Button size="sm" variant="default" className="gap-1.5">
+                    <Globe className="h-3.5 w-3.5" /> Swagger UI
+                  </Button>
+                </a>
+              </div>
+            </div>
+
             {/* Base URL */}
             <h3 className="mt-8 mb-2 text-lg font-semibold text-foreground">Base URL</h3>
             <CodeBlock code={`${import.meta.env.VITE_SUPABASE_URL || 'https://tjikwxkmsfmyjkssvyoh.supabase.co'}/functions/v1/lite-swap`} />
