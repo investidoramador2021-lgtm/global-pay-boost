@@ -803,6 +803,88 @@ document.getElementById("mrc-last").textContent =
   new Date(s.last_successful_delivery_at).toLocaleString();`}
             </pre>
 
+            <p className="text-sm text-muted-foreground mb-2">TypeScript interfaces:</p>
+            <pre className="bg-muted p-4 rounded-lg overflow-x-auto text-xs font-mono mb-4">
+{`// webhook-status.ts
+export type WebhookEvent =
+  | "swap.created"
+  | "swap.deposit_detected"
+  | "swap.finished"
+  | "swap.expired";
+
+export type WebhookEventCounts = Record<WebhookEvent, number>;
+
+export interface WebhookStatusCounts24h extends WebhookEventCounts {
+  total_with_webhook: number;
+  /** Percentage 0–100, or null when no webhook-enabled swaps in window. */
+  success_rate_percent: number | null;
+}
+
+export interface WebhookStatusWindow {
+  /** ISO 8601 lower bound of the 24-hour window. */
+  hours_24: string;
+  /** ISO 8601 lower bound of the 7-day window. */
+  days_7: string;
+}
+
+export interface WebhookStatusResponse {
+  status: "success";
+  /** ISO 8601 UTC timestamp the snapshot was computed. */
+  generated_at: string;
+  window: WebhookStatusWindow;
+  /** Most recent successful delivery, or null if none observed. */
+  last_successful_delivery_at: string | null;
+  counts_24h: WebhookStatusCounts24h;
+  counts_7d: WebhookEventCounts;
+  provider: "MRC Global Pay Lite API";
+  documentation: string;
+}
+
+export interface WebhookStatusError {
+  status: "error";
+  error: string;
+}`}
+            </pre>
+
+            <p className="text-sm text-muted-foreground mb-2">Typed fetch helper:</p>
+            <pre className="bg-muted p-4 rounded-lg overflow-x-auto text-xs font-mono mb-6">
+{`import type { WebhookStatusResponse } from "./webhook-status";
+
+const FEED_URL = "https://mrcglobalpay.com/webhook-status.json";
+
+export async function fetchWebhookStatus(
+  signal?: AbortSignal,
+): Promise<WebhookStatusResponse> {
+  const res = await fetch(FEED_URL, {
+    signal,
+    headers: { Accept: "application/json" },
+  });
+  if (!res.ok) {
+    throw new Error(\`webhook-status: HTTP \${res.status}\`);
+  }
+  const body = (await res.json()) as
+    | WebhookStatusResponse
+    | { status: "error"; error: string };
+  if (body.status !== "success") {
+    throw new Error(\`webhook-status: \${body.error}\`);
+  }
+  return body;
+}
+
+// Usage:
+const status = await fetchWebhookStatus();
+console.log(
+  \`Last 24h: \${status.counts_24h["swap.finished"]} finished, \` +
+  \`\${status.counts_24h.success_rate_percent ?? "n/a"}% success\`,
+);
+console.log(
+  "Last delivery:",
+  status.last_successful_delivery_at
+    ? new Date(status.last_successful_delivery_at).toLocaleString()
+    : "none recorded",
+);`}
+            </pre>
+
             <h4 className="text-base font-semibold text-foreground mt-6 mb-2">Idempotency &amp; de-duplication</h4>
             <p className="text-muted-foreground mb-3">
               Every delivery carries a stable <code className="font-mono text-xs">idempotency_key</code> formatted as{" "}
