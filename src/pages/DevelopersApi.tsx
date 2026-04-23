@@ -1,6 +1,6 @@
 import { Helmet } from "react-helmet-async";
 import { Link } from "react-router-dom";
-import { Code2, Download, Globe, Shield, Zap, Clock, ArrowRight, Copy, Check, Search } from "lucide-react";
+import { Code2, Download, Globe, Shield, Zap, Clock, ArrowRight, Copy, Check, Search, Rocket, Link2, Webhook, Gauge, AlertTriangle, BookOpen } from "lucide-react";
 import { useState, useMemo } from "react";
 import SiteHeader from "@/components/SiteHeader";
 import SiteFooter from "@/components/SiteFooter";
@@ -253,8 +253,111 @@ const DevelopersApi = () => {
             </ul>
           </div>
 
+          {/* ── Table of Contents ── */}
+          <nav aria-label="On this page" className="rounded-xl border border-border bg-card/40 p-5 mb-12">
+            <h2 className="text-sm font-semibold uppercase tracking-wider text-muted-foreground mb-3 flex items-center gap-2">
+              <BookOpen className="h-4 w-4" /> On this page
+            </h2>
+            <ol className="grid gap-x-6 gap-y-1.5 text-sm sm:grid-cols-2 list-decimal list-inside marker:text-muted-foreground">
+              <li><a href="#quick-start" className="text-foreground hover:text-primary">Quick Start for Trading Bots</a></li>
+              <li><a href="#url-params" className="text-foreground hover:text-primary">URL Parameter Reference</a></li>
+              <li><a href="#autocorrect" className="text-foreground hover:text-primary">Solana Ticker Auto-Correct</a></li>
+              <li><a href="#token-registry" className="text-foreground hover:text-primary">Solana Token Registry (50+)</a></li>
+              <li><a href="#lite-api" className="text-foreground hover:text-primary">Public Lite API (No Approval)</a></li>
+              <li><a href="#best-practices" className="text-foreground hover:text-primary">Best Practices for Bots</a></li>
+              <li><a href="#dom-ids" className="text-foreground hover:text-primary">DOM Identifiers for Bots</a></li>
+              <li><a href="#faq" className="text-foreground hover:text-primary">Technical FAQ</a></li>
+            </ol>
+          </nav>
+
+          {/* ── Quick Start for Trading Bots ── */}
+          <section id="quick-start" className="mb-16 scroll-mt-24">
+            <Badge variant="outline" className="mb-3 border-primary/40 text-primary">
+              <Rocket className="mr-1 h-3 w-3" /> Start in &lt; 60 seconds
+            </Badge>
+            <h2 className="text-2xl font-bold text-foreground mb-2 flex items-center gap-2">
+              <Rocket className="h-6 w-6 text-primary" />
+              Quick Start for Trading Bots
+            </h2>
+            <p className="text-muted-foreground mb-6 max-w-3xl">
+              Three battle-tested integration paths, ranked from zero-code to fully programmatic. Pick the one
+              that matches your stack — all three share the same non-custodial liquidity rails, $0.30 minimum,
+              and FINTRAC MSB compliance.
+            </p>
+
+            <div className="grid gap-5 lg:grid-cols-3">
+              <Card className="border-primary/30 bg-card/60 flex flex-col">
+                <CardContent className="pt-5 flex-1 flex flex-col">
+                  <Badge variant="secondary" className="text-[10px] mb-2 self-start">Method 1 · Easiest</Badge>
+                  <Link2 className="h-7 w-7 text-primary mb-2" />
+                  <h3 className="font-semibold text-foreground mb-1">URL Parameter Pre-fill</h3>
+                  <p className="text-xs text-muted-foreground mb-3">
+                    Open a pre-filled swap page from any chat bot, Telegram link, or Discord post.
+                    Zero backend, zero auth.
+                  </p>
+                  <CodeBlock code={`https://mrcglobalpay.com/?from=sol&to=nos&amount=10`} />
+                  <div className="mt-auto pt-3">
+                    <a href="#url-params" className="text-xs text-primary hover:underline inline-flex items-center gap-1">
+                      Full reference <ArrowRight className="h-3 w-3" />
+                    </a>
+                  </div>
+                </CardContent>
+              </Card>
+
+              <Card className="border-primary/40 bg-primary/5 flex flex-col relative">
+                <Badge className="absolute -top-2 left-4 text-[10px]">Recommended for bots</Badge>
+                <CardContent className="pt-5 flex-1 flex flex-col">
+                  <Badge variant="secondary" className="text-[10px] mb-2 self-start">Method 2 · Programmatic</Badge>
+                  <Code2 className="h-7 w-7 text-primary mb-2" />
+                  <h3 className="font-semibold text-foreground mb-1">Lite API — Create Real Swaps</h3>
+                  <p className="text-xs text-muted-foreground mb-3">
+                    Public REST endpoint. Create non-custodial swap orders, get a deposit address back, poll
+                    or webhook for status. No API key needed up to $1,000/swap.
+                  </p>
+                  <CodeBlock lang="bash" code={`curl -X POST $BASE -H 'Content-Type: application/json' \\
+  -d '{"action":"create","from":"btc","to":"sol",
+       "amount":0.001,"address":"<your-wallet>"}'`} />
+                  <div className="mt-auto pt-3">
+                    <a href="#lite-api" className="text-xs text-primary hover:underline inline-flex items-center gap-1">
+                      Lite API docs <ArrowRight className="h-3 w-3" />
+                    </a>
+                  </div>
+                </CardContent>
+              </Card>
+
+              <Card className="border-primary/30 bg-card/60 flex flex-col">
+                <CardContent className="pt-5 flex-1 flex flex-col">
+                  <Badge variant="secondary" className="text-[10px] mb-2 self-start">Method 3 · UI</Badge>
+                  <Globe className="h-7 w-7 text-primary mb-2" />
+                  <h3 className="font-semibold text-foreground mb-1">Full Widget Embed</h3>
+                  <p className="text-xs text-muted-foreground mb-3">
+                    Drop the responsive iframe widget into any dashboard. Inherits all 50+ tokens, fiat
+                    on-ramp, and live rate locks. Backlink-attribution friendly.
+                  </p>
+                  <CodeBlock lang="html" code={`<iframe src="https://mrcglobalpay.com/embed/widget"
+  width="100%" height="640" frameborder="0"
+  allow="clipboard-write"></iframe>`} />
+                  <div className="mt-auto pt-3">
+                    <Link to="/embed/widget" className="text-xs text-primary hover:underline inline-flex items-center gap-1">
+                      Open widget preview <ArrowRight className="h-3 w-3" />
+                    </Link>
+                  </div>
+                </CardContent>
+              </Card>
+            </div>
+
+            <div className="mt-6 rounded-lg border border-border bg-muted/30 p-4 text-xs text-muted-foreground">
+              <strong className="text-foreground">Which should I pick?</strong>{" "}
+              Use <strong className="text-foreground">Method 1</strong> for share links and chat bots,{" "}
+              <strong className="text-foreground">Method 2</strong> for any automated trader, arbitrage script,
+              or AI agent that needs deposit addresses programmatically, and{" "}
+              <strong className="text-foreground">Method 3</strong> when you want a fully hosted UI inside your
+              own dashboard.
+            </div>
+          </section>
+
           {/* ── Section 1: Endpoint Documentation ── */}
-          <section className="mb-16">
+          <section id="url-params" className="mb-16 scroll-mt-24">
             <h2 className="text-2xl font-bold text-foreground mb-2 flex items-center gap-2">
               <Globe className="h-6 w-6 text-primary" />
               How to Use URL Parameters (Endpoint)
@@ -302,7 +405,7 @@ const DevelopersApi = () => {
           </section>
 
           {/* ── Section 2: Ticker Auto-Correct ── */}
-          <section className="mb-16">
+          <section id="autocorrect" className="mb-16 scroll-mt-24">
             <h2 className="text-2xl font-bold text-foreground mb-2 flex items-center gap-2">
               <Zap className="h-6 w-6 text-primary" />
               Solana Ticker Auto-Correct Layer
@@ -333,7 +436,7 @@ const DevelopersApi = () => {
           </section>
 
           {/* ── Section 3: Solana Token Registry ── */}
-          <section className="mb-16">
+          <section id="token-registry" className="mb-16 scroll-mt-24">
             <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 mb-6">
               <div>
                 <h2 className="text-2xl font-bold text-foreground flex items-center gap-2">
@@ -1183,9 +1286,105 @@ curl -i -X POST https://your-app.example.com/mrc-webhook \\
             </p>
           </section>
 
+          {/* ── Best Practices for Bots ── */}
+          <section id="best-practices" className="mb-16 scroll-mt-24">
+            <Badge variant="outline" className="mb-3 border-primary/40 text-primary">
+              <Gauge className="mr-1 h-3 w-3" /> Production Hardening
+            </Badge>
+            <h2 className="text-2xl font-bold text-foreground mb-2 flex items-center gap-2">
+              <Gauge className="h-6 w-6 text-primary" />
+              Best Practices for Bots
+            </h2>
+            <p className="text-muted-foreground mb-6 max-w-3xl">
+              Patterns we&rsquo;ve seen survive 24/7 production traffic from arbitrage desks, Telegram bots, and AI agents.
+              Adopt all five and the Lite API will sit quietly in the background of your stack.
+            </p>
+
+            <div className="grid gap-4 md:grid-cols-2">
+              {/* Rate limiting */}
+              <Card className="border-border bg-card/60">
+                <CardContent className="pt-5">
+                  <div className="flex items-center gap-2 mb-2">
+                    <Gauge className="h-5 w-5 text-primary" />
+                    <h3 className="font-semibold text-foreground">1. Respect rate limits</h3>
+                  </div>
+                  <ul className="text-xs text-muted-foreground space-y-1.5 list-disc pl-4">
+                    <li>10 swaps/hour per IP and per destination wallet; 30/24h velocity per wallet.</li>
+                    <li>Cap concurrent <code className="font-mono">create</code> calls at <strong className="text-foreground">2/sec</strong> from a single host.</li>
+                    <li>On <code className="font-mono">429</code>, sleep for the returned <code className="font-mono">retry_after_seconds</code> — never tighter than 1s of jitter.</li>
+                    <li>Quotes (<code className="font-mono">action=rates</code>) are unmetered — cache 3-5s in memory instead of re-quoting per tick.</li>
+                  </ul>
+                </CardContent>
+              </Card>
+
+              {/* Polling status */}
+              <Card className="border-border bg-card/60">
+                <CardContent className="pt-5">
+                  <div className="flex items-center gap-2 mb-2">
+                    <Clock className="h-5 w-5 text-primary" />
+                    <h3 className="font-semibold text-foreground">2. Poll status with backoff</h3>
+                  </div>
+                  <ul className="text-xs text-muted-foreground space-y-1.5 list-disc pl-4">
+                    <li>Poll <code className="font-mono">action=status</code> every <strong className="text-foreground">15s</strong> while <code className="font-mono">waiting</code>/<code className="font-mono">confirming</code>.</li>
+                    <li>Slow to <strong className="text-foreground">30s</strong> once the deposit is detected — most providers settle &lt; 60s.</li>
+                    <li>Stop polling on terminal states: <code className="font-mono">finished</code>, <code className="font-mono">failed</code>, <code className="font-mono">refunded</code>, <code className="font-mono">expired</code>.</li>
+                    <li>If you wired a <code className="font-mono">webhook_url</code>, drop polling entirely and react to <code className="font-mono">swap.finished</code>.</li>
+                  </ul>
+                </CardContent>
+              </Card>
+
+              {/* Error handling */}
+              <Card className="border-border bg-card/60">
+                <CardContent className="pt-5">
+                  <div className="flex items-center gap-2 mb-2">
+                    <AlertTriangle className="h-5 w-5 text-primary" />
+                    <h3 className="font-semibold text-foreground">3. Handle errors deterministically</h3>
+                  </div>
+                  <ul className="text-xs text-muted-foreground space-y-1.5 list-disc pl-4">
+                    <li><code className="font-mono">400</code> &mdash; bad input. <strong className="text-foreground">Do not retry</strong>; fix the request.</li>
+                    <li><code className="font-mono">413</code> &mdash; over the $1k cap. Split the swap or upgrade to Partner API.</li>
+                    <li><code className="font-mono">429</code>/<code className="font-mono">502</code> &mdash; retry with exponential backoff (1s → 30s, max 5 tries).</li>
+                    <li><code className="font-mono">451</code> &mdash; geo-blocked at the edge. Stop, no retry will help.</li>
+                    <li>Always check <code className="font-mono">response.status === &quot;success&quot;</code> before trusting fields.</li>
+                  </ul>
+                </CardContent>
+              </Card>
+
+              {/* Webhooks */}
+              <Card className="border-border bg-card/60">
+                <CardContent className="pt-5">
+                  <div className="flex items-center gap-2 mb-2">
+                    <Webhook className="h-5 w-5 text-primary" />
+                    <h3 className="font-semibold text-foreground">4. Prefer webhooks over polling</h3>
+                  </div>
+                  <ul className="text-xs text-muted-foreground space-y-1.5 list-disc pl-4">
+                    <li>Pass <code className="font-mono">webhook_url</code> + <code className="font-mono">webhook_secret</code> at <code className="font-mono">create</code> time — saves your rate-limit budget.</li>
+                    <li>Always verify <code className="font-mono">X-MRC-Signature</code> with constant-time HMAC-SHA256 over the raw body.</li>
+                    <li>De-duplicate by <code className="font-mono">X-MRC-Idempotency-Key</code>; respond <code className="font-mono">2xx</code> within <strong className="text-foreground">8&nbsp;seconds</strong>.</li>
+                    <li>Watch <Link to="/webhook-status" className="text-primary hover:underline">/webhook-status</Link> for live delivery health and your endpoint&rsquo;s success rate.</li>
+                  </ul>
+                </CardContent>
+              </Card>
+            </div>
+
+            {/* Bonus: production checklist */}
+            <div className="mt-6 rounded-xl border border-primary/20 bg-primary/5 p-5">
+              <h3 className="text-sm font-semibold uppercase tracking-wider text-primary mb-3 flex items-center gap-2">
+                <Shield className="h-4 w-4" /> 5. Pre-flight production checklist
+              </h3>
+              <ul className="grid gap-2 text-sm text-foreground sm:grid-cols-2">
+                <li>✅ Validate destination address against the target network <em className="text-muted-foreground">before</em> calling <code className="font-mono text-xs">create</code>.</li>
+                <li>✅ Persist the <code className="font-mono text-xs">order_id</code> + <code className="font-mono text-xs">deposit_address</code> immediately on success.</li>
+                <li>✅ Refresh quotes every &lt; 30s — rates drift on volatile pairs (BTC, SOL, memecoins).</li>
+                <li>✅ Use a dedicated, monitored wallet as <code className="font-mono text-xs">address</code>; never reuse hot-wallet keys.</li>
+                <li>✅ Log <code className="font-mono text-xs">order_id</code>, <code className="font-mono text-xs">provider_order_id</code>, and webhook idempotency keys for audits.</li>
+                <li>✅ Alert on <code className="font-mono text-xs">expired</code> &gt; 2% over 1h — usually a deposit-flow regression.</li>
+              </ul>
+            </div>
+          </section>
 
           {/* ── Section 4: Response DOM Identifiers ── */}
-          <section className="mb-16">
+          <section id="dom-ids" className="mb-16 scroll-mt-24">
             <h2 className="text-2xl font-bold text-foreground mb-2 flex items-center gap-2">
               <Shield className="h-6 w-6 text-primary" />
               DOM Identifiers for Bot Integration
@@ -1222,7 +1421,7 @@ console.log('Send funds to:', depositAddr);`} lang="javascript" />
           </section>
 
           {/* ── Section 5: Technical FAQ ── */}
-          <section className="mb-16">
+          <section id="faq" className="mb-16 scroll-mt-24">
             <h2 className="text-2xl font-bold text-foreground mb-6 flex items-center gap-2">
               <Shield className="h-6 w-6 text-primary" />
               Technical FAQ
