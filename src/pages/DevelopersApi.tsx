@@ -400,6 +400,204 @@ const DevelopersApi = () => {
             )}
           </section>
 
+          {/* ── Section 3.5: Public Lite API for Small Swaps ── */}
+          <section id="lite-api" className="mb-16 scroll-mt-24">
+            <Badge variant="outline" className="mb-3 border-primary/40 text-primary">
+              <Zap className="mr-1 h-3 w-3" /> New · No Approval Needed
+            </Badge>
+            <h2 className="text-2xl font-bold text-foreground mb-2 flex items-center gap-2">
+              <Code2 className="h-6 w-6 text-primary" />
+              Public Lite API for Small Swaps (No Approval Needed)
+            </h2>
+            <p className="text-muted-foreground mb-6 max-w-3xl">
+              A public, non-custodial REST API designed for honest small-amount trading bots and arbitrage scripts.
+              Create real swap orders programmatically — no API key, no registration, no Partner approval.
+              Funds <strong className="text-foreground">never touch MRC wallets</strong>; the same liquidity provider that powers the widget settles the trade.
+            </p>
+
+            {/* Limits panel */}
+            <div className="rounded-xl border border-primary/20 bg-primary/5 p-5 mb-6">
+              <h3 className="text-sm font-semibold uppercase tracking-wider text-primary mb-3">Limits & Safety Rules</h3>
+              <ul className="grid gap-2 text-sm text-foreground sm:grid-cols-2">
+                <li><strong>Max per swap:</strong> $1,000 USD equivalent</li>
+                <li><strong>Per IP:</strong> 10 swaps / hour</li>
+                <li><strong>Per destination wallet:</strong> 10 swaps / hour</li>
+                <li><strong>Velocity check:</strong> 30 swaps / wallet / 24h</li>
+                <li><strong>Custody:</strong> Non-custodial (provider passthrough)</li>
+                <li><strong>Sanctioned countries:</strong> Blocked at the edge</li>
+                <li><strong>Auth:</strong> None required</li>
+                <li><strong>Need higher limits?</strong> <a href="mailto:contact@mrcglobalpay.com" className="text-primary hover:underline">Apply for Partner API</a></li>
+              </ul>
+              <p className="mt-3 text-xs text-muted-foreground">
+                Built for small automated trading. For volume above $1,000/swap or commission tracking, use the existing <Link to="/partner-portal" className="text-primary hover:underline">Partner Portal</Link>.
+              </p>
+            </div>
+
+            {/* Base URL */}
+            <h3 className="mt-8 mb-2 text-lg font-semibold text-foreground">Base URL</h3>
+            <CodeBlock code={`${import.meta.env.VITE_SUPABASE_URL || 'https://tjikwxkmsfmyjkssvyoh.supabase.co'}/functions/v1/lite-swap`} />
+
+            {/* Endpoints overview */}
+            <h3 className="mt-8 mb-3 text-lg font-semibold text-foreground">Endpoints</h3>
+            <div className="overflow-x-auto rounded-lg border border-border mb-6">
+              <table className="w-full text-sm">
+                <thead>
+                  <tr className="border-b border-border bg-muted/50">
+                    <th className="px-4 py-3 text-left font-semibold text-foreground">Method</th>
+                    <th className="px-4 py-3 text-left font-semibold text-foreground">Action</th>
+                    <th className="px-4 py-3 text-left font-semibold text-foreground">Purpose</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr className="border-b border-border">
+                    <td className="px-4 py-3"><Badge className="text-[10px]">GET</Badge></td>
+                    <td className="px-4 py-3"><code className="rounded bg-muted px-1.5 py-0.5 font-mono text-xs text-primary">?action=rates&from=btc&to=sol&amount=1</code></td>
+                    <td className="px-4 py-3 text-muted-foreground">Live rate quote for a pair (no rate-limit)</td>
+                  </tr>
+                  <tr className="border-b border-border">
+                    <td className="px-4 py-3"><Badge variant="secondary" className="text-[10px]">POST</Badge></td>
+                    <td className="px-4 py-3"><code className="rounded bg-muted px-1.5 py-0.5 font-mono text-xs text-primary">{`{ action: "estimate", from, to, amount }`}</code></td>
+                    <td className="px-4 py-3 text-muted-foreground">Estimate output + USD value, validates $1k cap</td>
+                  </tr>
+                  <tr className="border-b border-border">
+                    <td className="px-4 py-3"><Badge variant="secondary" className="text-[10px]">POST</Badge></td>
+                    <td className="px-4 py-3"><code className="rounded bg-muted px-1.5 py-0.5 font-mono text-xs text-primary">{`{ action: "create", from, to, amount, address }`}</code></td>
+                    <td className="px-4 py-3 text-muted-foreground">Create a real swap. Returns deposit address + order ID</td>
+                  </tr>
+                  <tr>
+                    <td className="px-4 py-3"><Badge className="text-[10px]">GET</Badge></td>
+                    <td className="px-4 py-3"><code className="rounded bg-muted px-1.5 py-0.5 font-mono text-xs text-primary">?action=status&id=MRC-XXXX</code></td>
+                    <td className="px-4 py-3 text-muted-foreground">Poll order status (waiting, confirming, sending, finished)</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+
+            {/* Sample response */}
+            <h3 className="mt-8 mb-3 text-lg font-semibold text-foreground">Successful <code className="rounded bg-muted px-1.5 py-0.5 font-mono text-sm text-primary">create</code> Response</h3>
+            <CodeBlock lang="json" code={`{
+  "status": "success",
+  "order_id": "MRC-A1B2C3D4XK9P",
+  "provider_order_id": "a1b2c3d4e5f6g7h8",
+  "deposit_address": "1A1zP1eP5QGefi2DMPTfTL5SLmv7DivfNa",
+  "deposit_extra_id": null,
+  "payout_address": "9WzDXwBbmkg8ZTbNMqUxvQRAyrZzDsGYdLVL9zYtAWWM",
+  "from": "btc",
+  "to": "sol",
+  "from_amount": 0.001,
+  "estimated_to_amount": 0.421,
+  "estimated_usd": 65.40,
+  "expires_at": "2026-04-23T20:30:00.000Z",
+  "status_url": "https://.../functions/v1/lite-swap?action=status&id=MRC-A1B2C3D4XK9P",
+  "custody": "non-custodial"
+}`} />
+
+            {/* Python example */}
+            <h3 className="mt-8 mb-3 text-lg font-semibold text-foreground">Example: Python</h3>
+            <CodeBlock lang="python" code={`import requests
+
+BASE = "${import.meta.env.VITE_SUPABASE_URL || 'https://tjikwxkmsfmyjkssvyoh.supabase.co'}/functions/v1/lite-swap"
+
+# 1. Estimate the trade (validates $1,000 cap)
+est = requests.post(BASE, json={
+    "action": "estimate",
+    "from": "btc",
+    "to": "sol",
+    "amount": 0.001,
+}).json()
+print("Estimated:", est["estimated_amount"], "SOL  (~$%.2f)" % est["estimated_usd"])
+
+# 2. Create the swap order (non-custodial)
+order = requests.post(BASE, json={
+    "action": "create",
+    "from": "btc",
+    "to": "sol",
+    "amount": 0.001,
+    "address": "9WzDXwBbmkg8ZTbNMqUxvQRAyrZzDsGYdLVL9zYtAWWM",
+}).json()
+
+if order["status"] != "success":
+    raise SystemExit(order["error"])
+
+print("Send", order["from_amount"], order["from"].upper(),
+      "to", order["deposit_address"])
+print("Order ID:", order["order_id"])
+
+# 3. Poll status
+import time
+while True:
+    s = requests.get(BASE, params={"action": "status", "id": order["order_id"]}).json()
+    print("State:", s["state"])
+    if s["state"] in ("finished", "failed", "refunded", "expired"):
+        break
+    time.sleep(15)`} />
+
+            {/* JS example */}
+            <h3 className="mt-8 mb-3 text-lg font-semibold text-foreground">Example: JavaScript / Node.js</h3>
+            <CodeBlock lang="javascript" code={`const BASE = "${import.meta.env.VITE_SUPABASE_URL || 'https://tjikwxkmsfmyjkssvyoh.supabase.co'}/functions/v1/lite-swap";
+
+async function call(body) {
+  const r = await fetch(BASE, {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify(body),
+  });
+  return r.json();
+}
+
+// 1. Estimate
+const est = await call({
+  action: "estimate",
+  from: "usdterc20",
+  to: "sol",
+  amount: 50,
+});
+console.log("You'll receive ~", est.estimated_amount, "SOL");
+
+// 2. Create the non-custodial order
+const order = await call({
+  action: "create",
+  from: "usdterc20",
+  to: "sol",
+  amount: 50,
+  address: "9WzDXwBbmkg8ZTbNMqUxvQRAyrZzDsGYdLVL9zYtAWWM",
+});
+
+if (order.status !== "success") throw new Error(order.error);
+
+console.log(\`Send \${order.from_amount} USDT (ERC-20) to \${order.deposit_address}\`);
+console.log("Order:", order.order_id);
+
+// 3. Poll status
+const s = await fetch(\`\${BASE}?action=status&id=\${order.order_id}\`).then(r => r.json());
+console.log("State:", s.state);`} />
+
+            {/* Error codes */}
+            <h3 className="mt-8 mb-3 text-lg font-semibold text-foreground">Error Codes</h3>
+            <div className="overflow-x-auto rounded-lg border border-border">
+              <table className="w-full text-sm">
+                <thead>
+                  <tr className="border-b border-border bg-muted/50">
+                    <th className="px-4 py-3 text-left font-semibold text-foreground">HTTP</th>
+                    <th className="px-4 py-3 text-left font-semibold text-foreground">When</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr className="border-b border-border"><td className="px-4 py-3"><code className="font-mono text-xs">400</code></td><td className="px-4 py-3 text-muted-foreground">Invalid ticker, address, or amount</td></tr>
+                  <tr className="border-b border-border"><td className="px-4 py-3"><code className="font-mono text-xs">403</code></td><td className="px-4 py-3 text-muted-foreground">Destination wallet on internal blacklist</td></tr>
+                  <tr className="border-b border-border"><td className="px-4 py-3"><code className="font-mono text-xs">413</code></td><td className="px-4 py-3 text-muted-foreground">Estimated USD value exceeds $1,000 cap</td></tr>
+                  <tr className="border-b border-border"><td className="px-4 py-3"><code className="font-mono text-xs">429</code></td><td className="px-4 py-3 text-muted-foreground">Hit IP / wallet / velocity rate limit (response includes <code className="font-mono text-xs">retry_after_seconds</code>)</td></tr>
+                  <tr className="border-b border-border"><td className="px-4 py-3"><code className="font-mono text-xs">451</code></td><td className="px-4 py-3 text-muted-foreground">Request from a sanctioned jurisdiction</td></tr>
+                  <tr><td className="px-4 py-3"><code className="font-mono text-xs">502</code></td><td className="px-4 py-3 text-muted-foreground">Upstream liquidity provider unavailable — retry</td></tr>
+                </tbody>
+              </table>
+            </div>
+
+            <p className="mt-6 text-xs text-muted-foreground">
+              The Lite API is a thin, audited wrapper that routes through the same FINTRAC-registered liquidity rails as the public widget. It does not custody funds, store deposit addresses long-term, or hold balances on behalf of users.
+            </p>
+          </section>
+
           {/* ── Section 4: Response DOM Identifiers ── */}
           <section className="mb-16">
             <h2 className="text-2xl font-bold text-foreground mb-2 flex items-center gap-2">
