@@ -157,7 +157,6 @@ export function generateSitemaps(outDir = "dist"): Plugin {
           const filename = `sitemap-pairs-${i}.xml`;
           writeFileSync(join(outDir, filename), wrapUrlset(slice), "utf8");
           childPaths.push(filename);
-          pairChildPaths.push(filename);
         }
         log(
           `Wrote ${totalFiles} pair sitemap files (${URLS_PER_FILE.toLocaleString()} URLs each).`,
@@ -165,7 +164,6 @@ export function generateSitemaps(outDir = "dist"): Plugin {
 
         // --- 4. Rewrite the same-host sitemap index -----------------------
         writeFileSync(join(outDir, "sitemap.xml"), wrapIndex(childPaths), "utf8");
-        writeFileSync(join(outDir, "sitemap-pairs-N"), wrapIndex(pairChildPaths), "utf8");
         log(
           `✓ Wrote sitemap.xml index with ${childPaths.length} children (covers ${allUrls.length.toLocaleString()} URLs).`,
         );
