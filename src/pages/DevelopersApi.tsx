@@ -547,6 +547,145 @@ const DevelopersApi = () => {
             </Card>
           </section>
 
+          {/* ── Widget URL Parameters: Full Reference ── */}
+          <section id="widget-params" className="mb-16 scroll-mt-24">
+            <Badge variant="outline" className="mb-3 border-primary/40 text-primary">
+              <Link2 className="mr-1 h-3 w-3" /> Deep-link reference
+            </Badge>
+            <h2 className="text-2xl font-bold text-foreground mb-2 flex items-center gap-2">
+              <Globe className="h-6 w-6 text-primary" />
+              Widget URL Parameters — Full Reference
+            </h2>
+            <p className="text-muted-foreground mb-6 max-w-3xl">
+              Every parameter the embeddable widget (<code className="rounded bg-muted px-1.5 py-0.5 font-mono text-xs text-primary">/embed/widget</code>)
+              and the homepage swap form (<code className="rounded bg-muted px-1.5 py-0.5 font-mono text-xs text-primary">/</code>) accept on page load.
+              All parameters are <strong className="text-foreground">optional</strong>, <strong className="text-foreground">case-insensitive</strong>,
+              and combine via standard query-string syntax.
+            </p>
+
+            <CodeBlock
+              code={`https://mrcglobalpay.com/embed/widget?from=btc&to=sol&amount=0.01&address=<wallet>&ref=YOUR_CODE&theme=dark&lang=en`}
+            />
+
+            <div className="mt-6 overflow-x-auto rounded-lg border border-border">
+              <table className="w-full text-sm">
+                <thead>
+                  <tr className="border-b border-border bg-muted/50">
+                    <th className="px-4 py-3 text-left font-semibold text-foreground">Parameter</th>
+                    <th className="px-4 py-3 text-left font-semibold text-foreground">Type</th>
+                    <th className="px-4 py-3 text-left font-semibold text-foreground">Default</th>
+                    <th className="px-4 py-3 text-left font-semibold text-foreground">Valid values</th>
+                    <th className="px-4 py-3 text-left font-semibold text-foreground">Description</th>
+                  </tr>
+                </thead>
+                <tbody className="text-muted-foreground">
+                  {[
+                    {
+                      param: "from",
+                      type: "string",
+                      def: "btc",
+                      values: "Any supported ticker (sol, eth, usdt, usdc, jup, nos, …)",
+                      desc: "Source token. Auto-corrected for Solana-specific tickers.",
+                    },
+                    {
+                      param: "to",
+                      type: "string",
+                      def: "usdt",
+                      values: "Any supported ticker (sol, eth, usdt, usdc, jup, nos, …)",
+                      desc: "Destination token. Falls back to default if invalid.",
+                    },
+                    {
+                      param: "amount",
+                      type: "number",
+                      def: "—",
+                      values: "Decimal ≥ pair minimum ($0.30 USD eq.)",
+                      desc: "Quantity of the source token. Below minimum, the widget shows a hint and adjusts to min.",
+                    },
+                    {
+                      param: "address",
+                      type: "string",
+                      def: "—",
+                      values: "Valid wallet for the destination chain",
+                      desc: "Pre-fills the recipient wallet and locks the field as read-only.",
+                    },
+                    {
+                      param: "ref",
+                      type: "string",
+                      def: "—",
+                      values: "Affiliate referral code (alphanumeric)",
+                      desc: "Attributes the swap to a registered affiliate for commission accrual.",
+                    },
+                    {
+                      param: "theme",
+                      type: "string",
+                      def: "dark",
+                      values: "dark · light",
+                      desc: (
+                        <>
+                          Visual theme. Alias: <code className="rounded bg-muted px-1.5 py-0.5 font-mono text-xs text-primary">mode</code>.
+                        </>
+                      ),
+                    },
+                    {
+                      param: "lang",
+                      type: "string",
+                      def: "en (or browser language if supported)",
+                      values: "en, es, pt, fr, ja, fa, ur, he, af, hi, vi, tr, uk",
+                      desc: "UI language. RTL is auto-applied for fa, ur, he. Invalid values fall back to en.",
+                    },
+                  ].map((p) => (
+                    <tr key={p.param} className="border-b border-border last:border-0 align-top">
+                      <td className="px-4 py-3">
+                        <code className="rounded bg-muted px-1.5 py-0.5 font-mono text-xs text-primary">{p.param}</code>
+                      </td>
+                      <td className="px-4 py-3 text-xs">{p.type}</td>
+                      <td className="px-4 py-3 text-xs">
+                        <code className="rounded bg-muted px-1.5 py-0.5 font-mono text-[11px]">{p.def}</code>
+                      </td>
+                      <td className="px-4 py-3 text-xs">{p.values}</td>
+                      <td className="px-4 py-3 text-xs">{p.desc}</td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
+
+            {/* Live recipes */}
+            <h3 className="mt-8 mb-3 text-lg font-semibold text-foreground">Common recipes</h3>
+            <div className="grid gap-3 md:grid-cols-2">
+              {[
+                {
+                  title: "Light theme, Spanish UI",
+                  url: "https://mrcglobalpay.com/embed/widget?theme=light&lang=es",
+                },
+                {
+                  title: "Pre-filled BTC → SOL with affiliate ref",
+                  url: "https://mrcglobalpay.com/embed/widget?from=btc&to=sol&amount=0.01&ref=YOUR_CODE",
+                },
+                {
+                  title: "USDC → JUP, locked recipient",
+                  url: "https://mrcglobalpay.com/embed/widget?from=usdc&to=jup&amount=50&address=<wallet>",
+                },
+                {
+                  title: "Persian (RTL) UI, dark mode",
+                  url: "https://mrcglobalpay.com/embed/widget?lang=fa&theme=dark",
+                },
+              ].map((r) => (
+                <div key={r.title} className="rounded-lg border border-border bg-muted/30 p-3">
+                  <div className="text-[11px] font-medium text-foreground mb-1.5">{r.title}</div>
+                  <CodeBlock code={r.url} />
+                </div>
+              ))}
+            </div>
+
+            <div className="mt-6 rounded-lg border border-border bg-muted/30 p-4 text-xs text-muted-foreground">
+              <strong className="text-foreground">Note:</strong>{" "}
+              The same parameters work on the homepage (<code className="rounded bg-muted px-1.5 py-0.5 font-mono text-[11px]">https://mrcglobalpay.com/?from=…</code>)
+              and on language-prefixed routes (e.g. <code className="rounded bg-muted px-1.5 py-0.5 font-mono text-[11px]">/pt/?from=…</code>).
+              Parameters take precedence over browser detection.
+            </div>
+          </section>
+
           {/* ── Section 1: Endpoint Documentation ── */}
           <section id="url-params" className="mb-16 scroll-mt-24">
             <h2 className="text-2xl font-bold text-foreground mb-2 flex items-center gap-2">
