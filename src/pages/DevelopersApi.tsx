@@ -139,11 +139,62 @@ const faqJsonLd = {
   "@context": "https://schema.org",
   "@type": "FAQPage",
   mainEntity: [
-    { "@type": "Question", name: "What is the architecture of MRC Global Pay?", acceptedAnswer: { "@type": "Answer", text: "MRC Global Pay operates as a high-performance, non-custodial liquidity gateway. We utilize a proprietary aggregation layer that routes trades through top-tier liquidity providers with sub-60-second settlement times and a strict Zero Data Retention policy." } },
-    { "@type": "Question", name: "Is there a Public API available for third-party developers?", acceptedAnswer: { "@type": "Answer", text: "Our full-service API is in Partner-Only mode. We provide a Public Read-Only Rates API for real-time market transparency. Developers requiring full automated swap capabilities can request a Partner Key via contact@mrcglobalpay.com." } },
-    { "@type": "Question", name: "How do you handle high-volume institutional swaps?", acceptedAnswer: { "@type": "Answer", text: "Our liquidity engine aggregates from over 700 sources globally. For large-scale transactions, the system routes through deep-liquidity institutional pools for minimal slippage and immediate on-chain settlement." } },
-    { "@type": "Question", name: "How is the System Status monitored?", acceptedAnswer: { "@type": "Answer", text: "We monitor Solana, Bitcoin, and Ethereum mainnets in real-time via high-availability RPC nodes. Our /status page serves as a live heartbeat with proactive congestion alerts." } },
-    { "@type": "Question", name: "What is the minimum swap amount?", acceptedAnswer: { "@type": "Answer", text: "$0.30 equivalent — the lowest in the industry. This enables micro-swaps for dust conversion, arbitrage, and automated trading strategies." } },
+    {
+      "@type": "Question",
+      name: "How do I embed the MRC Global Pay swap widget on my site?",
+      acceptedAnswer: {
+        "@type": "Answer",
+        text: "Drop a single iframe pointing to https://mrcglobalpay.com/embed/widget into any page. The widget is responsive (480×640 desktop, full-width mobile), supports lazy loading, and inherits all 50+ tokens, fiat on-ramp, and live rate locks. No API key, no registration, $0.30 minimum swap.",
+      },
+    },
+    {
+      "@type": "Question",
+      name: "Which URL parameters does the swap widget support?",
+      acceptedAnswer: {
+        "@type": "Answer",
+        text: "The widget supports seven URL parameters: from (source ticker, default btc), to (destination ticker, default usdt), amount (number ≥ pair minimum), address (recipient wallet — locks the field when set), ref (affiliate referral code), theme (light or dark, default dark; alias mode), and lang (one of en, es, pt, fr, ja, fa, ur, he, af, hi, vi, tr, uk — default en). All parameters are optional and case-insensitive.",
+      },
+    },
+    {
+      "@type": "Question",
+      name: "Can trading bots create real swaps without an API key?",
+      acceptedAnswer: {
+        "@type": "Answer",
+        text: "Yes. The Public Lite API at /functions/v1/lite-swap accepts unauthenticated POST requests up to $1,000 USD per swap, 10 swaps/hour per IP and per destination wallet. It returns a non-custodial deposit address and supports webhook callbacks with HMAC-SHA256 signatures.",
+      },
+    },
+    {
+      "@type": "Question",
+      name: "Is there an OpenAPI spec for the Public Lite API?",
+      acceptedAnswer: {
+        "@type": "Answer",
+        text: "Yes — a machine-readable OpenAPI 3.1 spec is published at https://mrcglobalpay.com/openapi.json with an interactive Swagger UI viewer at https://mrcglobalpay.com/openapi.html. Use it to generate typed SDKs in Python, TypeScript, Go, or Rust via openapi-generator.",
+      },
+    },
+    {
+      "@type": "Question",
+      name: "What are the rate limits for the Public Lite API?",
+      acceptedAnswer: {
+        "@type": "Answer",
+        text: "Hard cap of $1,000 USD equivalent per swap. 10 swaps per hour per IP, 10 swaps per hour per destination wallet, and 30 swaps per wallet per 24 hours. Higher limits available via the Partner Portal.",
+      },
+    },
+    {
+      "@type": "Question",
+      name: "What is the minimum swap amount?",
+      acceptedAnswer: {
+        "@type": "Answer",
+        text: "$0.30 USD equivalent — the lowest in the industry. This enables micro-swaps for dust conversion, arbitrage, and automated trading strategies.",
+      },
+    },
+    {
+      "@type": "Question",
+      name: "Is MRC Global Pay non-custodial?",
+      acceptedAnswer: {
+        "@type": "Answer",
+        text: "Yes. Funds never touch MRC wallets. The same liquidity provider that powers the widget settles every Lite API trade, with on-chain settlement in under 60 seconds and a strict Zero Data Retention policy.",
+      },
+    },
   ],
 };
 
@@ -195,18 +246,22 @@ const DevelopersApi = () => {
   return (
     <>
       <Helmet>
-        <title>Solana Swap API Docs — 50+ Tokens | MRC Global Pay</title>
-        <meta name="description" content="Programmatic non-custodial Solana swap API. $0.30 minimum, registration-free liquidity for NOS, ONDO and 50+ assets. Built for arbitrage bots and AI agents." />
+        <title>Crypto Swap Widget Embed & Trading Bot API — MRC Global Pay</title>
+        <meta
+          name="description"
+          content="Embed a non-custodial crypto swap widget with one iframe, or build a trading bot via the public Lite API (no key, $1,000/swap). Full URL parameter reference: from, to, amount, address, ref, theme, lang. OpenAPI 3.1 spec included."
+        />
+        <meta name="keywords" content="crypto swap widget, embed swap widget, trading bot api, non-custodial swap api, openapi crypto, swap iframe, public lite api, solana swap api, bitcoin swap api, no api key crypto" />
         <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1" />
         <link rel="canonical" href="https://mrcglobalpay.com/developers" />
-        <meta property="og:title" content="Solana Swap API Documentation — MRC Global Pay" />
-        <meta property="og:description" content="50+ Solana tokens with contract addresses, URL deep-linking docs, and downloadable JSON token list. $0.30 minimum, registration-free." />
+        <meta property="og:title" content="Crypto Swap Widget Embed & Trading Bot API — MRC Global Pay" />
+        <meta property="og:description" content="One-iframe embed + public Lite API for trading bots. URL params: from, to, amount, address, ref, theme, lang. OpenAPI 3.1, $0.30 min, FINTRAC MSB." />
         <meta property="og:url" content="https://mrcglobalpay.com/developers" />
         <meta property="og:type" content="website" />
         <meta property="og:site_name" content="MRC Global Pay" />
-        <meta name="twitter:card" content="summary" />
-        <meta name="twitter:title" content="Solana Swap API Docs — MRC Global Pay" />
-        <meta name="twitter:description" content="Non-custodial Solana swap API with 50+ tokens. $0.30 minimum, FINTRAC MSB registered." />
+        <meta name="twitter:card" content="summary_large_image" />
+        <meta name="twitter:title" content="Crypto Swap Widget Embed & Trading Bot API — MRC Global Pay" />
+        <meta name="twitter:description" content="Embed in one iframe or automate via Lite API. Full widget URL parameter reference + OpenAPI 3.1 spec." />
         <script type="application/ld+json">{JSON.stringify(jsonLd)}</script>
         <script type="application/ld+json">{JSON.stringify(faqJsonLd)}</script>
       </Helmet>
