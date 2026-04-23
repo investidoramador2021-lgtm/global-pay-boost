@@ -57,6 +57,7 @@ const CryptoDustCalculatorPage = lazy(() => import("./pages/CryptoDustCalculator
 const SolanaAI = lazy(() => import("./pages/SolanaAI.tsx"));
 const SolanaEcosystem = lazy(() => import("./pages/SolanaEcosystem.tsx"));
 const DevelopersApi = lazy(() => import("./pages/DevelopersApi.tsx"));
+const WebhookStatus = lazy(() => import("./pages/WebhookStatus.tsx"));
 const NetworkStatus = lazy(() => import("./pages/NetworkStatus.tsx"));
 const Referral = lazy(() => import("./pages/Referral.tsx"));
 const About = lazy(() => import("./pages/About.tsx"));
@@ -189,6 +190,7 @@ const AppRoutes = () => (
     <Route path="ecosystem/solana" element={<SolanaEcosystem />} />
     <Route path="ecosystem/solana-ai" element={<SolanaAI />} />
     <Route path="developers" element={<DevelopersApi />} />
+    <Route path="webhook-status" element={<WebhookStatus />} />
     <Route path="status" element={<NetworkStatus />} />
     <Route path="referral" element={<Referral />} />
     <Route path="about" element={<About />} />
