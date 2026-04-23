@@ -1,0 +1,30 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>MRC GlobalPay — Lite Swap API · OpenAPI 3.1</title>
+    <meta name="description" content="Interactive OpenAPI 3.1 reference for the MRC GlobalPay Public Lite Swap API. No registration required." />
+    <link rel="canonical" href="https://mrcglobalpay.com/openapi.html" />
+    <link rel="stylesheet" href="https://unpkg.com/swagger-ui-dist@5/swagger-ui.css" />
+    <style>
+      body { margin: 0; background: #0f172a; }
+      .topbar { display: none; }
+    </style>
+  </head>
+  <body>
+    <div id="swagger-ui"></div>
+    <script src="https://unpkg.com/swagger-ui-dist@5/swagger-ui-bundle.js" crossorigin></script>
+    <script>
+      window.addEventListener('load', () => {
+        window.ui = SwaggerUIBundle({
+          url: '/openapi.json',
+          dom_id: '#swagger-ui',
+          deepLinking: true,
+          docExpansion: 'list',
+          tryItOutEnabled: true,
+        });
+      });
+    </script>
+  </body>
+</html>

@@ -10,6 +10,7 @@
 
 🌐 **Live site:** https://mrcglobalpay.com  
 📚 **API docs:** https://mrcglobalpay.com/developers#lite-api  
+📘 **OpenAPI 3.1 spec:** https://mrcglobalpay.com/openapi.json · [Swagger UI](https://mrcglobalpay.com/openapi.html)  
 🤖 **Bot manifest:** https://mrcglobalpay.com/trading-bot-manifest.json  
 📡 **Webhook health:** https://mrcglobalpay.com/webhook-status.json
 
@@ -113,7 +114,8 @@ https://tjikwxkmsfmyjkssvyoh.supabase.co/functions/v1/lite-swap
 | `451` | Request from sanctioned jurisdiction |
 | `502` | Upstream liquidity provider unavailable — retry |
 
-📖 **Full reference:** https://mrcglobalpay.com/developers#lite-api
+📖 **Full reference:** https://mrcglobalpay.com/developers#lite-api  
+📘 **Machine-readable contract (OpenAPI 3.1):** [`/openapi.json`](https://mrcglobalpay.com/openapi.json) — generate SDKs with `openapi-generator`, import into Postman/Insomnia, or browse interactively at [`/openapi.html`](https://mrcglobalpay.com/openapi.html).
 
 ---
 
