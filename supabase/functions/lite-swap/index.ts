@@ -316,6 +316,12 @@ Deno.serve(async (req) => {
         const refundAddress = body.refundAddress
           ? String(body.refundAddress).trim()
           : undefined;
+        const webhookUrl = body.webhook_url
+          ? String(body.webhook_url).trim()
+          : undefined;
+        const webhookSecret = body.webhook_secret
+          ? String(body.webhook_secret).trim()
+          : undefined;
 
         if (!TICKER_RE.test(from) || !TICKER_RE.test(to)) return bad("Invalid ticker format.");
         if (!isFinite(amount) || amount <= 0) return bad("Invalid amount.");
@@ -323,6 +329,17 @@ Deno.serve(async (req) => {
         if (refundAddress && !ADDRESS_RE.test(refundAddress)) {
           return bad("Invalid refund address.");
         }
+        if (webhookUrl !== undefined) {
+          if (!WEBHOOK_URL_RE.test(webhookUrl)) {
+            return bad("Invalid webhook_url. Must be HTTPS, max 512 chars.");
+          }
+          if (!webhookSecret || !WEBHOOK_SECRET_RE.test(webhookSecret)) {
+            return bad(
+              "webhook_secret is required when webhook_url is set. Use 8-128 chars [A-Za-z0-9._-].",
+            );
+          }
+        }
+
 
         // Estimate USD value & enforce $1,000 cap
         const usd = await estimateUsd(from, amount);
